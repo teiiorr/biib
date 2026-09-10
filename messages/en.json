@@ -104,7 +104,9 @@
     "title": "Projects",
     "lead": "Each project has its own age range, its own classes and its own ending. Here are the four.",
     "factsLabel": "In brief",
-    "visitSite": "Visit the site"
+    "visitSite": "Visit the site",
+    "playVideo": "Watch the video",
+    "videoCaption": "A discussion of the project"
   },
   "news": {
     "title": "News",

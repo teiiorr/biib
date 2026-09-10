@@ -1,6 +1,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import { Icon } from "@/components/brand/Icon";
 import { Reveal } from "@/components/brand/Reveal";
+import { VideoFrame } from "@/components/brand/VideoFrame";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { pick } from "@/content";
 import type { Accent, ProjectItem } from "@/content/types";
@@ -98,6 +99,22 @@ export function ProjectFeature({
           </ul>
         </div>
       </Reveal>
+
+      {project.video ? (
+        <Reveal delay={200}>
+          <figure className="mt-8">
+            <VideoFrame
+              src={project.video.src}
+              poster={project.video.poster}
+              posterAlt={pick(project.video.posterAlt, locale)}
+              label={t("playVideo")}
+            />
+            <figcaption className="mt-3 text-[0.95rem] text-ink-muted">
+              {t("videoCaption")}
+            </figcaption>
+          </figure>
+        </Reveal>
+      ) : null}
 
       {project.external ? (
         <Reveal delay={360} pop>

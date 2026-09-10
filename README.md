@@ -102,6 +102,10 @@ UPOP TREND paneli ikki faylga tayanadi: `public/brand/upop-banner.jpg`
 örnida turadigan logotip). Banner qirqilgani bejiz emas: uning öng
 tomonida ham logotip bor, ikki marta körinmasin uçun.
 
+Loyihalar sahifasidagi UPOP TREND lavhasida video bor:
+`public/brand/upop-video.mp4`, posteri `upop-video-poster.jpg`.
+U özi boşlanmaydi va oldindan yuklanmaydi — faqat bosilganda.
+
 `photo`, `cover`, `logo` böş bölsa çizilgan örinbosar körsatiladi: böyalgan
 maydon va yozuv. Böş kulrang quti çiqmaydi, ammo nimani almaştiriş kerakligi
 darrov bilinadi.

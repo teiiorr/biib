@@ -107,7 +107,9 @@ declare const messages: {
     "title": "Loyihalar",
     "lead": "Har bir loyihaning oʻz yoshi, oʻz mashgʻuloti va oʻz yakuni bor. Quyida toʻrttasi.",
     "factsLabel": "Qisqacha",
-    "visitSite": "Saytga oʻtish"
+    "visitSite": "Saytga oʻtish",
+    "playVideo": "Videoni koʻrish",
+    "videoCaption": "Loyiha muhokamasi"
   },
   "news": {
     "title": "Yangiliklar",

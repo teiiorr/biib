@@ -104,7 +104,9 @@
     "title": "Loyihalar",
     "lead": "Har bir loyihaning öz yoşi, öz maşğuloti va öz yakuni bor. Quyida törttasi.",
     "factsLabel": "Qisqaça",
-    "visitSite": "Saytga ötiş"
+    "visitSite": "Saytga ötiş",
+    "playVideo": "Videoni köriş",
+    "videoCaption": "Loyiha muhokamasi"
   },
   "news": {
     "title": "Yangiliklar",

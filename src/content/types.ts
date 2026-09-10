@@ -23,6 +23,12 @@ export interface ProjectItem {
   readonly flagship?: boolean;
   /** Sanoq emas, tirik matn: "12 viloyat", "2019 yildan beri". */
   readonly facts: Localized<readonly string[]>;
+  /** Loyiha haqidagi video. Bosilgandan keyin yuklanadi. */
+  readonly video?: {
+    readonly src: string;
+    readonly poster: string;
+    readonly posterAlt: Localized;
+  };
 }
 
 export type ProjectIllustration = "stage" | "palette" | "curtain" | "storybook";

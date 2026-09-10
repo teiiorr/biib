@@ -79,6 +79,17 @@ export const PROJECTS: readonly ProjectItem[] = [
     illustration: "stage",
     flagship: true,
     external: { href: "https://upop.uz", label: "upop.uz" },
+    video: {
+      src: "/brand/upop-video.mp4",
+      poster: "/brand/upop-video-poster.jpg",
+      posterAlt: {
+        "uz-Latn": "Loyiha muhokamasi: yigʻilish stolida chiqish qilayotgan rahbar",
+        "uz-Cyrl": "Лойиҳа муҳокамаси: йиғилиш столида чиқиш қилаётган раҳбар",
+        "uz-Latn-x-reform": "Loyiha muhokamasi: yiğiliş stolida çiqiş qilayotgan rahbar",
+        ru: "Обсуждение проекта: выступление руководителя за столом совещания",
+        en: "A discussion of the project: a speaker at the meeting table",
+      },
+    },
   },
   {
     id: "rangli-olam",

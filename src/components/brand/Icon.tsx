@@ -10,6 +10,7 @@ import {
   Menu,
   Moon,
   Phone,
+  Play,
   Send,
   Sun,
   X,
@@ -37,6 +38,7 @@ const SET = {
   phone: Phone,
   pin: MapPin,
   clock: Clock,
+  play: Play,
   telegram: Send,
 } satisfies Record<string, LucideIcon>;
 
