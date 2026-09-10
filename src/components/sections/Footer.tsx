@@ -146,15 +146,19 @@ export function Footer() {
       </div>
 
       <div className="page-w page-x border-t border-line py-6">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-          <p className="text-[0.92rem] text-ink-muted">
+        {/*
+         * Bir qatorga sığadigan kenglik xl dan boşlanadi. Undan pastda
+         * ustma-ust turadi — yarim-yarim sinib qolgandan köra toza.
+         */}
+        <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between xl:gap-8">
+          <p className="max-w-xl text-[0.92rem] leading-relaxed text-ink-muted xl:max-w-[30rem]">
             © {year} {BRAND_NAME.full}. {t("footer.rights")}
           </p>
 
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 xl:flex-nowrap">
             <Link
               href="/privacy"
-              className="inline-flex min-h-11 items-center text-[0.92rem] text-ink-muted underline-offset-4 transition-colors duration-200 hover:text-blue-deep hover:underline"
+              className="inline-flex min-h-11 items-center whitespace-nowrap text-[0.92rem] text-ink-muted underline-offset-4 transition-colors duration-200 hover:text-blue-deep hover:underline"
             >
               {t("footer.privacy")}
             </Link>
@@ -162,11 +166,11 @@ export function Footer() {
               href="https://teiior.uz"
               target="_blank"
               rel="noreferrer noopener"
-              className="inline-flex min-h-11 items-center text-[0.92rem] font-semibold text-ink-2 underline-offset-4 transition-colors duration-200 hover:text-blue-deep hover:underline"
+              className="inline-flex min-h-11 items-center whitespace-nowrap text-[0.92rem] font-semibold text-ink-2 underline-offset-4 transition-colors duration-200 hover:text-blue-deep hover:underline"
             >
               {t("footer.credit")}
             </a>
-            <div className="flex items-center gap-2">
+            <div className="flex shrink-0 items-center gap-2">
               <LocaleMenu />
               <ThemeToggle />
             </div>

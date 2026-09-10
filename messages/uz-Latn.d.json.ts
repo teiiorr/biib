@@ -155,7 +155,7 @@ declare const messages: {
     "phonePlaceholder": "+998 90 000 00 00",
     "phoneHint": "Ixtiyoriy",
     "topic": "Mavzu",
-    "topicPlaceholder": "Masalan: studiyaga yozilish",
+    "topicPlaceholder": "Studiyaga yozilish",
     "message": "Xabar",
     "messagePlaceholder": "Qisqacha yozing: kim, qayerdan va nima haqida.",
     "submit": "Yuborish",

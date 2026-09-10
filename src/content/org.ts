@@ -1,8 +1,8 @@
 import type { SocialLink } from "./types";
 
 /**
- * TAŞKILOT MAʼLUMOTLARI — mijozdan tasdiq kerak.
- * Telefon, poçta, manzil va ijtimoiy tarmoq havolalari şu yerda turadi.
+ * TAŞKILOT MAʼLUMOTLARI. İjtimoiy tarmoq havolalari haqiqiy.
+ * Telefon, poçta va xarita nuqtasi hali mijozdan tasdiq kutyapti.
  * Tarjima qilinadigan qismi (manzil, iş vaqti) messages fayllarida emas,
  * quyidagi ORG_TEXT da — çunki bu kontent, interfeys emas.
  */
@@ -23,9 +23,18 @@ export const ORG = {
   /** Yandex Xarita havolasi — mijoz aniq nuqtani bergaç almaştiriladi. */
   mapUrl: "https://yandex.uz/maps/10335/tashkent/",
   socials: [
-    { id: "telegram", href: "https://t.me/biib_uz", label: "Telegram" },
-    { id: "instagram", href: "https://instagram.com/biib_uz", label: "Instagram" },
-    { id: "youtube", href: "https://youtube.com/@biib_uz", label: "YouTube" },
-    { id: "facebook", href: "https://facebook.com/biib.uz", label: "Facebook" },
+    { id: "telegram", href: "https://t.me/bolalar_ijodkorligi", label: "Telegram" },
+    {
+      id: "instagram",
+      href: "https://www.instagram.com/bolalar_ijodkorligi",
+      label: "Instagram",
+    },
+    { id: "youtube", href: "https://www.youtube.com/@bolalar_ijodkorligi", label: "YouTube" },
+    {
+      // m.facebook.com faqat telefon uçun; www hamma joyda toʻgʻri oçiladi.
+      id: "facebook",
+      href: "https://www.facebook.com/profile.php?id=61593281378591",
+      label: "Facebook",
+    },
   ] as const satisfies readonly SocialLink[],
 } as const;

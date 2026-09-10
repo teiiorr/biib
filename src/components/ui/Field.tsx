@@ -23,14 +23,20 @@ export interface FieldProps {
 export function Field({ id, label, children, error, hint, className }: FieldProps) {
   return (
     <div className={cn("flex flex-col gap-2", className)}>
-      <label htmlFor={id} className="font-display text-[0.98rem] font-bold text-ink">
-        {label}
-      </label>
-      {hint ? (
-        <p id={`${id}-hint`} className="text-[0.9rem] text-ink-muted">
-          {hint}
-        </p>
-      ) : null}
+      {/*
+       * İzoh yorliq bilan bir qatorda turadi. Pastga tuşsa, izohi bor maydon
+       * yonidagisidan pastroq boşlanib qolardi va qator tekisligi buzilardi.
+       */}
+      <div className="flex items-baseline justify-between gap-3">
+        <label htmlFor={id} className="font-display text-[0.98rem] font-bold text-ink">
+          {label}
+        </label>
+        {hint ? (
+          <span id={`${id}-hint`} className="shrink-0 text-[0.86rem] text-ink-muted">
+            {hint}
+          </span>
+        ) : null}
+      </div>
       {children}
       {error ? (
         <p id={`${id}-error`} className="text-[0.92rem] font-semibold text-coral-ink">
