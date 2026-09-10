@@ -1,12 +1,9 @@
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { BRAND_NAME } from "@/content";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/cn";
 
-/**
- * Belgi + til bilan yozilgan nom. PNG dagi lotin yozuvi kiril tillarda
- * toğri kelmaydi, şuning uçun nom matn bölib çiziladi.
- */
+/** Belgi va yonida taşkilot nomi. Nom barça tillarda bir xil. */
 export function Logo({
   className,
   showName = true,
@@ -14,12 +11,10 @@ export function Logo({
   className?: string;
   showName?: boolean;
 }) {
-  const t = useTranslations("org");
-
   return (
     <Link
       href="/"
-      aria-label={t("nameFull")}
+      aria-label={BRAND_NAME.full}
       className={cn(
         "group flex shrink-0 items-center gap-2.5 rounded-btn",
         "focus-visible:ring-4 focus-visible:ring-[var(--focus-ring)]",
@@ -39,12 +34,12 @@ export function Logo({
         )}
       />
       {showName ? (
-        <span className="hidden flex-col leading-[1.14] 2xl:flex">
-          <span className="whitespace-nowrap font-display text-[0.94rem] font-extrabold tracking-tight text-blue-deep">
-            {t("nameLine1")}
+        <span className="hidden flex-col leading-[1.2] xl:flex">
+          <span className="whitespace-nowrap font-display text-[0.82rem] font-extrabold tracking-[0.01em] text-blue-deep">
+            {BRAND_NAME.line1}
           </span>
-          <span className="whitespace-nowrap font-display text-[0.78rem] font-semibold text-ink-2">
-            {t("nameLine2")}
+          <span className="whitespace-nowrap font-display text-[0.7rem] font-semibold tracking-[0.02em] text-ink-2">
+            {BRAND_NAME.line2}
           </span>
         </span>
       ) : null}

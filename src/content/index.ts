@@ -8,7 +8,7 @@ export { NEWS } from "./news";
 export { PEOPLE } from "./people";
 export { PROJECTS } from "./projects";
 export { PARTNERS } from "./partners";
-export { ORG } from "./org";
+export { BRAND_NAME, ORG } from "./org";
 export { ORG_TEXT } from "./org-text";
 export type * from "./types";
 

@@ -57,8 +57,8 @@ export function Header() {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "relative flex h-11 items-center whitespace-nowrap rounded-btn px-2 xl:px-3",
-                      "font-display text-[0.82rem] font-bold leading-none xl:text-[0.92rem]",
+                      "relative flex h-11 items-center whitespace-nowrap rounded-btn px-2 2xl:px-3",
+                      "font-display text-[0.82rem] font-bold leading-none xl:text-[0.86rem] 2xl:text-[0.92rem]",
                       "transition-colors duration-200 ease-[var(--ease-micro)]",
                       "focus-visible:ring-4 focus-visible:ring-[var(--focus-ring)]",
                       active ? "text-blue-deep" : "text-ink-2 hover:text-blue-deep",
@@ -69,7 +69,7 @@ export function Header() {
                       aria-hidden="true"
                       className={cn(
                         "absolute inset-x-2 bottom-1.5 h-[3px] origin-left rounded-full bg-blue-cta",
-                        "transition-transform duration-300 ease-[var(--ease-pop)] xl:inset-x-3",
+                        "transition-transform duration-300 ease-[var(--ease-pop)] 2xl:inset-x-3",
                         active ? "scale-x-100" : "scale-x-0",
                       )}
                     />

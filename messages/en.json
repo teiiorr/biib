@@ -1,8 +1,6 @@
 {
   "org": {
     "nameFull": "Children’s Creativity Association",
-    "nameLine1": "Children’s Creativity",
-    "nameLine2": "Association",
     "nameShort": "BIIB",
     "tagline": "A creative association supporting children and teenagers in their creative work."
   },
@@ -47,7 +45,8 @@
     "flagship": {
       "heading": "UPOP TREND",
       "lead": "The association’s flagship project. Singing auditions held right across the country: from the regional rounds to the stage in the capital, voice, coaching and live performance.",
-      "cta": "Read more"
+      "cta": "Read more",
+      "bannerAlt": "UPOP TREND performers: four young women in national dress with a dutar, a frame drum and a microphone"
     },
     "projects": {
       "heading": "Our projects",

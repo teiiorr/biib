@@ -94,6 +94,14 @@ Ularni almaştiriş uçun rasm çiziş kerak emas — faqat maydonni töldiriş.
 | `src/content/org.ts` | Telefon, poçta, ijtimoiy tarmoq havolalari, xarita nuqtasi |
 | `src/content/org-text.ts` | Manzil va iş vaqti, beş tilda |
 
+Taşkilot nomi logotip yonida barça tillarda bir xil yoziladi va
+`src/content/org.ts` dagi `BRAND_NAME` da turadi.
+
+UPOP TREND paneli ikki faylga tayanadi: `public/brand/upop-banner.jpg`
+(sahna sureti, çapga qirqiladi) va `public/brand/upop-logo.png` (sarlavha
+örnida turadigan logotip). Banner qirqilgani bejiz emas: uning öng
+tomonida ham logotip bor, ikki marta körinmasin uçun.
+
 `photo`, `cover`, `logo` böş bölsa çizilgan örinbosar körsatiladi: böyalgan
 maydon va yozuv. Böş kulrang quti çiqmaydi, ammo nimani almaştiriş kerakligi
 darrov bilinadi.

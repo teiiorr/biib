@@ -63,6 +63,11 @@
   --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-micro: cubic-bezier(0.2, 0, 0, 1);
 
+  --color-stage-bg: var(--stage-bg);
+  --color-stage-ink: var(--stage-ink);
+  --color-stage-ink-2: var(--stage-ink-2);
+  --color-stage-line: var(--stage-line);
+
   --color-footer-from: var(--footer-from);
   --color-footer-to: var(--footer-to);
 

@@ -104,6 +104,9 @@ const PAIRS = [
   ["--grass-ink", "--grass-soft", "--surface"],
   ["--pink-ink", "--pink-soft", "--surface"],
   ["--grape-ink", "--grape-soft", "--surface"],
+  ["--stage-ink", "--stage-bg"],
+  ["--stage-ink-2", "--stage-bg"],
+  ["--ink-inverse", "--blue-cta", "--stage-bg"],
   ["--ink", "--glass-fill-strong", "--bg-top"],
   ["--ink-2", "--glass-fill", "--bg-top"],
 ];

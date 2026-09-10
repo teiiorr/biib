@@ -4,8 +4,6 @@
 declare const messages: {
   "org": {
     "nameFull": "Bolalar ijodkorligi ijodiy birlashmasi",
-    "nameLine1": "Bolalar ijodkorligi",
-    "nameLine2": "ijodiy birlashmasi",
     "nameShort": "BIIB",
     "tagline": "Bolalar va oʻsmirlar ijodini qoʻllab-quvvatlaydigan ijodiy birlashma."
   },
@@ -50,7 +48,8 @@ declare const messages: {
     "flagship": {
       "heading": "UPOP TREND",
       "lead": "Birlashmaning bosh loyihasi. Butun mamlakat boʻylab oʻtadigan qoʻshiqchilik kastingi: viloyat tanlovlaridan poytaxt sahnasigacha ovoz, mashgʻulot va jonli chiqish.",
-      "cta": "Batafsil"
+      "cta": "Batafsil",
+      "bannerAlt": "UPOP TREND ishtirokchilari: milliy liboslarda toʻrt qiz, dutor, doira va mikrofon bilan"
     },
     "projects": {
       "heading": "Bizning loyihalar",

@@ -5,7 +5,7 @@ import { LocaleMenu } from "./LocaleMenu";
 import { ThemeToggle } from "./ThemeToggle";
 import { NAV_ITEMS } from "./nav-items";
 import { Link } from "@/i18n/navigation";
-import { ORG } from "@/content/org";
+import { BRAND_NAME, ORG } from "@/content/org";
 import { PROJECTS } from "@/content/projects";
 import { ORG_TEXT, pick } from "@/content";
 import type { Locale } from "@/i18n/locales";
@@ -26,11 +26,11 @@ export function Footer() {
           <div className="flex items-center gap-3">
             <Image src="/brand/mark.png" alt="" width={112} height={112} sizes="56px" className="h-14 w-14" />
             <span className="flex flex-col leading-[1.15]">
-              <span className="font-display text-[1.02rem] font-extrabold text-blue-deep">
-                {t("org.nameLine1")}
+              <span className="font-display text-[0.92rem] font-extrabold tracking-[0.01em] text-blue-deep">
+                {BRAND_NAME.line1}
               </span>
-              <span className="font-display text-[0.86rem] font-semibold text-ink-2">
-                {t("org.nameLine2")}
+              <span className="font-display text-[0.78rem] font-semibold tracking-[0.02em] text-ink-2">
+                {BRAND_NAME.line2}
               </span>
             </span>
           </div>
@@ -148,7 +148,7 @@ export function Footer() {
       <div className="page-w page-x border-t border-line py-6">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <p className="text-[0.92rem] text-ink-muted">
-            © {year} {t("org.nameFull")}. {t("footer.rights")}
+            © {year} {BRAND_NAME.full}. {t("footer.rights")}
           </p>
 
           <div className="flex flex-wrap items-center gap-x-5 gap-y-3">

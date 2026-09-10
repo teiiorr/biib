@@ -1,8 +1,6 @@
 {
   "org": {
     "nameFull": "Bolalar ijodkorligi ijodiy birlaşmasi",
-    "nameLine1": "Bolalar ijodkorligi",
-    "nameLine2": "ijodiy birlaşmasi",
     "nameShort": "BIIB",
     "tagline": "Bolalar va ösmirlar ijodini qöllab-quvvatlaydigan ijodiy birlaşma."
   },
@@ -47,7 +45,8 @@
     "flagship": {
       "heading": "UPOP TREND",
       "lead": "Birlaşmaning boş loyihasi. Butun mamlakat böylab ötadigan qöşiqçilik kastingi: viloyat tanlovlaridan poytaxt sahnasigaça ovoz, maşğulot va jonli çiqiş.",
-      "cta": "Batafsil"
+      "cta": "Batafsil",
+      "bannerAlt": "UPOP TREND iştirokçilari: milliy liboslarda tört qiz, dutor, doira va mikrofon bilan"
     },
     "projects": {
       "heading": "Bizning loyihalar",

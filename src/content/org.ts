@@ -7,6 +7,16 @@ import type { SocialLink } from "./types";
  * quyidagi ORG_TEXT da — çunki bu kontent, interfeys emas.
  */
 
+/**
+ * Taşkilot nomi logotip yonida barça tillarda bir xil yoziladi:
+ * bu tarjima qilinadigan ibora emas, brendning öz yozuvi.
+ */
+export const BRAND_NAME = {
+  line1: "BOLALAR IJODKORLIGI",
+  line2: "IJODIY BIRLASHMASI",
+  full: "BOLALAR IJODKORLIGI IJODIY BIRLASHMASI",
+} as const;
+
 export const ORG = {
   phones: ["+998 71 200 00 00", "+998 90 000 00 00"],
   email: "info@biib.uz",
