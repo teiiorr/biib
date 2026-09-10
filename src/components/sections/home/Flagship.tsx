@@ -5,7 +5,6 @@ import { Reveal } from "@/components/brand/Reveal";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { flagshipProject, pick } from "@/content";
 import type { Locale } from "@/i18n/locales";
-import { cn } from "@/lib/cn";
 
 /**
  * Boş loyiha — UPOP TREND. Qoronği sahna paneli: rang ikkala mavzuda
@@ -67,17 +66,19 @@ export function Flagship() {
                 </ul>
 
                 {project.external ? (
-                  <a
-                    href={project.external.href}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className={cn(buttonVariants({ size: "lg" }), "mt-8")}
-                  >
-                    {t("cta")}
-                    <span className="opacity-80">{project.external.label}</span>
-                    <Icon name="arrow-out" className="h-[1.05rem] w-[1.05rem]" />
-                    <span className="sr-only">({tCommon("opensInNewTab")})</span>
-                  </a>
+                  <div className="mt-8 flex justify-end">
+                    <a
+                      href={project.external.href}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className={buttonVariants({ size: "lg" })}
+                    >
+                      {t("cta")}
+                      <span className="opacity-80">{project.external.label}</span>
+                      <Icon name="arrow-out" className="h-[1.05rem] w-[1.05rem]" />
+                      <span className="sr-only">({tCommon("opensInNewTab")})</span>
+                    </a>
+                  </div>
                 ) : null}
               </div>
             </div>

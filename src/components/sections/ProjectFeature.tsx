@@ -117,12 +117,12 @@ export function ProjectFeature({
       ) : null}
 
       {project.external ? (
-        <Reveal delay={360} pop>
+        <Reveal delay={360} pop className="mt-7 flex justify-end">
           <a
             href={project.external.href}
             target="_blank"
             rel="noreferrer noopener"
-            className={cn(buttonVariants({ size: "lg" }), "mt-7")}
+            className={buttonVariants({ size: "lg" })}
           >
               {t("visitSite")}
               <span className="opacity-80">{project.external.label}</span>

@@ -91,8 +91,8 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
           </Reveal>
           <Values />
 
-          <Reveal delay={140}>
-            <LinkButton href="/projects" size="lg" className="mt-12">
+          <Reveal delay={140} className="mt-12 flex justify-end">
+            <LinkButton href="/projects" size="lg">
               {tNav("projects")}
             </LinkButton>
           </Reveal>

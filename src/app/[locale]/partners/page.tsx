@@ -31,14 +31,16 @@ export default async function PartnersPage({ params }: PageProps<"/[locale]/part
       <section className="section-y pt-0" aria-labelledby="become-partner">
         <div className="page-w page-x">
           <Reveal pop>
-            <div className="flex flex-col items-start gap-5 rounded-[1.75rem] border border-line bg-grape-soft p-8 sm:p-12">
+            <div className="flex flex-col gap-5 rounded-[1.75rem] border border-line bg-grape-soft p-8 sm:p-12">
               <h2 id="become-partner" className="text-[clamp(1.7rem,4vw,2.4rem)]">
                 {t("becomeHeading")}
               </h2>
               <p className="max-w-xl text-[1.06rem] leading-relaxed text-ink-2">{t("becomeBody")}</p>
-              <LinkButton href="/contacts" size="lg">
-                {t("becomeCta")}
-              </LinkButton>
+              <div className="flex justify-end">
+                <LinkButton href="/contacts" size="lg">
+                  {t("becomeCta")}
+                </LinkButton>
+              </div>
             </div>
           </Reveal>
         </div>

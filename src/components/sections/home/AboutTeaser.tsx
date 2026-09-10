@@ -28,8 +28,8 @@ export function AboutTeaser() {
           </Reveal>
         </div>
 
-        <Reveal delay={330} pop>
-          <LinkButton href="/about" variant="secondary" size="lg" className="mt-10">
+        <Reveal delay={330} pop className="mt-10 flex justify-end">
+          <LinkButton href="/about" variant="secondary" size="lg">
             {t("cta")}
           </LinkButton>
         </Reveal>

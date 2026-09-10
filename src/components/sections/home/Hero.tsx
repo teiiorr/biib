@@ -11,9 +11,9 @@ export function Hero() {
   return (
     <section className="relative isolate overflow-hidden">
 
-      <div className="page-w page-x flex min-h-[clamp(28rem,68svh,42rem)] flex-col items-center justify-center py-16 text-center sm:py-20">
+      <div className="page-w page-x flex min-h-[clamp(28rem,68svh,42rem)] flex-col justify-center py-16 sm:py-20">
         <Reveal pop>
-          <h1 className="mx-auto max-w-[18ch] text-[clamp(2.35rem,6.6vw,4.4rem)]">
+          <h1 className="max-w-[18ch] text-[clamp(2.35rem,6.6vw,4.4rem)]">
             {t("titleStart")}{" "}
             <MarkerUnderline accent="sun" delay={420}>
               {t("titleAccent")}
@@ -22,20 +22,19 @@ export function Hero() {
         </Reveal>
 
         <Reveal delay={140}>
-          <p className="mx-auto mt-7 max-w-[52ch] text-[1.1rem] leading-relaxed text-ink-2 sm:text-[1.18rem]">
+          <p className="mt-7 max-w-[52ch] text-[1.1rem] leading-relaxed text-ink-2 sm:text-[1.18rem]">
             {t("subtitle")}
           </p>
         </Reveal>
 
-        <Reveal delay={260} pop>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <LinkButton href="/contacts" size="lg" confetti>
-              {t("ctaPrimary")}
-            </LinkButton>
-            <LinkButton href="/projects" size="lg" variant="secondary">
-              {t("ctaSecondary")}
-            </LinkButton>
-          </div>
+        {/* Amallar öngda, sahifadagi boşqa tugmalar bilan bir çiziqda. */}
+        <Reveal delay={260} pop className="mt-10 flex flex-wrap items-center justify-end gap-3">
+          <LinkButton href="/contacts" size="lg" confetti>
+            {t("ctaPrimary")}
+          </LinkButton>
+          <LinkButton href="/projects" size="lg" variant="secondary">
+            {t("ctaSecondary")}
+          </LinkButton>
         </Reveal>
 
         <Reveal delay={400}>

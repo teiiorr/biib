@@ -164,7 +164,8 @@ export function ContactForm() {
         <input id={`${baseId}-company`} name="company" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
-      <div className="flex items-center gap-4">
+      {/* Asosiy amal öngda — şakl va dialoglarda qabul qilingan tartib. */}
+      <div className="flex items-center justify-end gap-4">
         <Button type="submit" size="lg" disabled={pending} className={cn(pending && "opacity-70")}>
           {pending ? t("submitting") : t("submit")}
         </Button>

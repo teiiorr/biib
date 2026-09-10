@@ -1,9 +1,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import { Reveal } from "@/components/brand/Reveal";
-import { SectionHead } from "@/components/sections/SectionHead";
+import { SectionHead, SectionMore } from "@/components/sections/SectionHead";
 import { PersonPortrait } from "@/components/sections/PersonPortrait";
-import { Icon } from "@/components/brand/Icon";
-import { Link } from "@/i18n/navigation";
 import { peopleOf, pick } from "@/content";
 import type { Locale } from "@/i18n/locales";
 
@@ -22,7 +20,6 @@ export function PeopleTeaser() {
           id="home-people"
           heading={t("heading")}
           lead={t("lead")}
-          link={{ href: "/council", label: t("all") }}
         />
 
         <ul className="mt-10 grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
@@ -43,18 +40,14 @@ export function PeopleTeaser() {
           ))}
         </ul>
 
-        <Reveal delay={140}>
-          <Link
-            href="/leadership"
-            className="group mt-10 inline-flex min-h-11 items-center gap-2 rounded-btn px-1 font-display text-[1rem] font-bold text-blue-deep transition-colors duration-200 hover:text-blue-cta focus-visible:ring-4 focus-visible:ring-[var(--focus-ring)]"
-          >
-            {t("leadership")}
-            <Icon
-              name="arrow-right"
-              className="h-[1.1rem] w-[1.1rem] transition-transform duration-300 ease-[var(--ease-pop)] group-hover:translate-x-1"
-            />
-          </Link>
-        </Reveal>
+        <SectionMore
+          className="mt-10"
+          delay={140}
+          links={[
+            { href: "/council", label: t("all") },
+            { href: "/leadership", label: t("leadership") },
+          ]}
+        />
       </div>
     </section>
   );

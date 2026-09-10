@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Reveal } from "@/components/brand/Reveal";
-import { SectionHead } from "@/components/sections/SectionHead";
+import { SectionHead, SectionMore } from "@/components/sections/SectionHead";
 import { ProjectTile } from "./ProjectTile";
 import { otherProjects } from "@/content";
 
@@ -16,7 +16,6 @@ export function ProjectsOverview() {
           id="home-projects"
           heading={t("heading")}
           lead={t("lead")}
-          link={{ href: "/projects", label: t("all") }}
         />
 
         <ul className="row-even mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -28,6 +27,12 @@ export function ProjectsOverview() {
             </li>
           ))}
         </ul>
+
+        <SectionMore
+          className="mt-8"
+          delay={120}
+          links={[{ href: "/projects", label: t("all") }]}
+        />
       </div>
     </section>
   );
