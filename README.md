@@ -45,8 +45,8 @@ cp .env.example .env.local
 
 ```
 src/app/[locale]/…        yönalişlar
-src/components/ui/        tugma, maydon — Radix + CVA
-src/components/brand/     Doodle, Icon, Blob, MarkerUnderline, Reveal, örinbosarlar
+src/components/ui/        tugma, havola-tugma, maydon — CVA variantlari
+src/components/brand/     Icon, MarkerUnderline, Reveal, örinbosarlar
 src/components/sections/  sarlavha, podval, bölimlar
 src/content/              beş tilli maʼlumot: loyihalar, yangiliklar, odamlar
 messages/<locale>.json    interfeys matnlari
@@ -100,6 +100,17 @@ darrov bilinadi.
 
 Loyihalar va yangiliklar matni `src/content/*.ts` da, beş tilda birga turadi —
 bitta til tuşib qolsa TypeScript darrov aytadi.
+
+## Bezak haqida
+
+Sahifalarda suzuvçi bezak yöq: na çizma, na rangli dogʻ. Ritm faqat
+tipografika, boşliq, böyalgan panellar va qisqa rangli çiziqçalar bilan
+beriladi. Belgi qöyiladigan yagona joy — interfeys elementlari (til, mavzu,
+oʻq, telefon, ijtimoiy tarmoq), ular Lucide töplamidan.
+
+Tugma körinişidagi havola `LinkButton` orqali beriladi: Radix `Slot`
+ataylab işlatilmaydi, çunki server komponentidan mijoz komponenti bola
+sifatida uzatilganda u "lazy" bölib keladi va Slot xato beradi.
 
 ## Erişimlilik
 

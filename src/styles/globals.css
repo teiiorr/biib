@@ -163,19 +163,21 @@
 }
 
 @layer components {
-  /* Şişa. Ortida osmon yoki rasm bölsagina işlatiladi. */
+  /*
+   * Şişa. Ortida osmon yoki rasm bölsagina işlatiladi.
+   * Blur Tailwind utilitasi orqali beriladi: qölda yozilgan
+   * backdrop-filter ni minifikator tuşirib qoldirardi.
+   */
   .glass {
+    @apply backdrop-blur-[16px] backdrop-saturate-[1.4];
     background: var(--glass-fill);
-    backdrop-filter: blur(16px) saturate(1.4);
-    -webkit-backdrop-filter: blur(16px) saturate(1.4);
     border-top: 1px solid var(--glass-border);
     box-shadow: var(--shadow-glass);
   }
 
   .glass-strong {
+    @apply backdrop-blur-[20px] backdrop-saturate-150;
     background: var(--glass-fill-strong);
-    backdrop-filter: blur(20px) saturate(1.5);
-    -webkit-backdrop-filter: blur(20px) saturate(1.5);
     border: 1px solid var(--glass-border);
     box-shadow: var(--shadow-glass);
   }

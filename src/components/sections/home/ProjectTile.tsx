@@ -1,5 +1,4 @@
 import { useLocale } from "next-intl";
-import { Doodle } from "@/components/brand/Doodle";
 import { pick } from "@/content";
 import type { Accent, ProjectItem } from "@/content/types";
 import type { Locale } from "@/i18n/locales";
@@ -20,34 +19,20 @@ const PANEL: Record<Accent, string> = {
   blue: "bg-blue-soft",
 };
 
-const MARK: Record<Accent, string> = {
-  sun: "text-sun-ink",
-  coral: "text-coral-ink",
-  grass: "text-grass-ink",
-  pink: "text-pink-ink",
-  grape: "text-grape-ink",
-  blue: "text-blue-deep",
-};
-
 const DOT: Record<Accent, string> = {
-  sun: "text-sun",
-  coral: "text-coral",
-  grass: "text-grass",
-  pink: "text-pink",
-  grape: "text-grape",
-  blue: "text-blue",
+  sun: "bg-sun-ink",
+  coral: "bg-coral-ink",
+  grass: "bg-grass-ink",
+  pink: "bg-pink-ink",
+  grape: "bg-grape-ink",
+  blue: "bg-blue-deep",
 };
-
-/** Har loyihaga öz belgisi — kartalar bir-biriga öxşab qolmasin. */
-const SIGN = ["star", "brush", "note", "book"] as const;
 
 export function ProjectTile({
   project,
-  index,
   className,
 }: {
   project: ProjectItem;
-  index: number;
   className?: string;
 }) {
   const locale = useLocale() as Locale;
@@ -62,19 +47,11 @@ export function ProjectTile({
         className,
       )}
     >
-      <div className={cn("flex h-[8.5rem] items-end justify-between gap-4 p-6", PANEL[project.accent])}>
+      <div className={cn("flex h-[8.5rem] flex-col justify-end gap-3 p-6", PANEL[project.accent])}>
+        <span aria-hidden="true" className={cn("h-1.5 w-12 rounded-full", DOT[project.accent])} />
         <h3 className="lines-2 text-[1.42rem] leading-[1.15] tracking-tight sm:text-[1.5rem]">
           {pick(project.name, locale)}
         </h3>
-        <Doodle
-          name={SIGN[index % SIGN.length] ?? "star"}
-          className={cn(
-            "h-8 w-8 shrink-0 transition-transform duration-500 ease-[var(--ease-pop)]",
-            "group-hover:-rotate-12 group-hover:scale-110",
-            MARK[project.accent],
-          )}
-          strokeWidth={2.2}
-        />
       </div>
 
       <div className="flex flex-1 flex-col p-6">
@@ -84,10 +61,10 @@ export function ProjectTile({
 
         <ul className="mt-auto flex flex-col gap-2.5 border-t border-line pt-5">
           {facts.map((fact) => (
-            <li key={fact} className="flex items-start gap-2.5">
-              <Doodle
-                name="spark"
-                className={cn("mt-[0.3rem] h-3.5 w-3.5 shrink-0", DOT[project.accent])}
+            <li key={fact} className="flex items-start gap-3">
+              <span
+                aria-hidden="true"
+                className={cn("mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full", DOT[project.accent])}
               />
               <span className="lines-2 text-[0.98rem] leading-[1.5] text-ink-muted sm:lines-1">{fact}</span>
             </li>

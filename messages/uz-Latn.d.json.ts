@@ -49,8 +49,7 @@ declare const messages: {
     },
     "flagship": {
       "heading": "UPOP TREND",
-      "note": "bosh loyiha",
-      "lead": "Butun mamlakat boʻylab oʻtadigan qoʻshiqchilik kastingi. Viloyat tanlovlaridan poytaxt sahnasigacha bir yoʻl: ovoz, mashgʻulot, jonli chiqish.",
+      "lead": "Birlashmaning bosh loyihasi. Butun mamlakat boʻylab oʻtadigan qoʻshiqchilik kastingi: viloyat tanlovlaridan poytaxt sahnasigacha ovoz, mashgʻulot va jonli chiqish.",
       "cta": "Batafsil"
     },
     "projects": {

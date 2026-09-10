@@ -43,7 +43,7 @@ export function MarkerUnderline({
         viewBox="0 0 200 16"
         preserveAspectRatio="none"
         className={cn(
-          "pointer-events-none absolute -bottom-[0.17em] -left-[1.5%] z-0 h-[0.36em] w-[103%] overflow-visible",
+          "pointer-events-none absolute -bottom-[0.2em] -left-[2%] z-0 h-[0.4em] w-[104%] overflow-visible",
           ACCENT[accent],
         )}
         style={{ ["--reveal-delay" as string]: `${delay}ms` }}
@@ -58,7 +58,7 @@ export function MarkerUnderline({
           stroke="currentColor"
           strokeLinecap="round"
           vectorEffect="non-scaling-stroke"
-          style={{ strokeWidth: "0.135em" }}
+          style={{ strokeWidth: "0.17em" }}
         />
         <path
           d="M22 14.2c34-3.2 68-4 102-2.4"
@@ -69,7 +69,7 @@ export function MarkerUnderline({
           strokeLinecap="round"
           opacity={0.55}
           vectorEffect="non-scaling-stroke"
-          style={{ strokeWidth: "0.07em", transitionDelay: `${delay + 180}ms` }}
+          style={{ strokeWidth: "0.085em", transitionDelay: `${delay + 180}ms` }}
         />
       </svg>
     </span>

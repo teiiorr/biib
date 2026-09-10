@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
-import { Blob } from "@/components/brand/Blob";
-import { Doodle } from "@/components/brand/Doodle";
 import { Reveal } from "@/components/brand/Reveal";
-import { Button } from "@/components/ui/Button";
+import { LinkButton } from "@/components/ui/LinkButton";
 import { PageHeader } from "@/components/sections/PageHeader";
-import { Link } from "@/i18n/navigation";
 
 export async function generateMetadata(props: PageProps<"/[locale]/about">): Promise<Metadata> {
   const { locale } = await props.params;
@@ -15,10 +12,10 @@ export async function generateMetadata(props: PageProps<"/[locale]/about">): Pro
 }
 
 const VALUES = [
-  { key: "open", doodle: "circle", tone: "text-sun" },
-  { key: "craft", doodle: "brush", tone: "text-coral" },
-  { key: "stage", doodle: "star", tone: "text-grape" },
-  { key: "region", doodle: "wave", tone: "text-grass" },
+  { key: "open", bar: "bg-sun-ink" },
+  { key: "craft", bar: "bg-coral-ink" },
+  { key: "stage", bar: "bg-grape-ink" },
+  { key: "region", bar: "bg-grass-ink" },
 ] as const;
 
 function Values() {
@@ -28,14 +25,12 @@ function Values() {
     <ul className="mt-10 grid gap-x-10 gap-y-9 sm:grid-cols-2">
       {VALUES.map((value, index) => (
         <li key={value.key}>
-          <Reveal delay={index * 90} className="flex gap-4">
-            <Doodle name={value.doodle} className={`mt-1 h-8 w-8 shrink-0 ${value.tone}`} strokeWidth={2.2} />
-            <div>
-              <h3 className="text-[1.24rem]">{t(`${value.key}Heading` as "openHeading")}</h3>
-              <p className="mt-2 text-[1.02rem] leading-relaxed text-ink-2">
-                {t(`${value.key}Body` as "openBody")}
-              </p>
-            </div>
+          <Reveal delay={index * 90}>
+            <span aria-hidden="true" className={`block h-1.5 w-12 rounded-full ${value.bar}`} />
+            <h3 className="mt-4 text-[1.24rem]">{t(`${value.key}Heading` as "openHeading")}</h3>
+            <p className="mt-2 text-[1.02rem] leading-relaxed text-ink-2">
+              {t(`${value.key}Body` as "openBody")}
+            </p>
           </Reveal>
         </li>
       ))}
@@ -54,9 +49,6 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
       <PageHeader title={t("title")} lead={t("lead")} accent="grass" />
 
       <section className="section-y relative isolate overflow-hidden" aria-labelledby="about-mission">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-          <Blob name="petal" tone="text-sun-soft" className="-left-[40%] top-[10%] h-[24rem] w-[24rem] sm:-left-[26%] sm:h-[36rem] sm:w-[36rem]" />
-        </div>
 
         <div className="page-w page-x">
           <Reveal>
@@ -100,9 +92,9 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
           <Values />
 
           <Reveal delay={140}>
-            <Button asChild size="lg" className="mt-12">
-              <Link href="/projects">{tNav("projects")}</Link>
-            </Button>
+            <LinkButton href="/projects" size="lg" className="mt-12">
+              {tNav("projects")}
+            </LinkButton>
           </Reveal>
         </div>
       </section>

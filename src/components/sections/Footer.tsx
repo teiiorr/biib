@@ -1,6 +1,5 @@
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import { Doodle } from "@/components/brand/Doodle";
 import { Icon } from "@/components/brand/Icon";
 import { LocaleMenu } from "./LocaleMenu";
 import { ThemeToggle } from "./ThemeToggle";
@@ -21,13 +20,6 @@ export function Footer() {
 
   return (
     <footer className="relative isolate mt-24 overflow-hidden bg-gradient-to-b from-footer-from to-footer-to">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <Doodle name="cloud" className="absolute left-[6%] top-10 h-16 w-16 text-blue-light/45 drift" strokeWidth={2} />
-        <Doodle name="spark" className="absolute right-[10%] top-16 h-7 w-7 text-sun/60 twinkle" />
-        <Doodle name="squiggle" className="absolute left-[38%] bottom-24 h-10 w-10 text-grass/35" strokeWidth={2} />
-        <Doodle name="spark" className="absolute left-[18%] bottom-40 h-5 w-5 text-pink/50 twinkle" />
-        <Doodle name="wave" className="absolute right-[24%] bottom-16 h-10 w-14 text-blue/25" strokeWidth={2} />
-      </div>
 
       <div className="page-w page-x grid gap-12 pb-10 pt-20 sm:grid-cols-2 lg:grid-cols-[1.55fr_1fr_1fr_1.25fr] lg:gap-10">
         <div className="flex flex-col gap-5">
@@ -70,11 +62,11 @@ export function Footer() {
           <h2 id="footer-nav" className="font-display text-[0.94rem] font-extrabold uppercase tracking-wide text-ink">
             {t("footer.navHeading")}
           </h2>
-          <ul className="flex flex-col gap-2.5">
+          <ul className="flex flex-col gap-0.5">
             <li>
               <Link
                 href="/"
-                className="inline-flex min-h-8 items-center text-[0.98rem] text-ink-2 transition-colors duration-200 hover:text-blue-deep"
+                className="inline-flex min-h-11 items-center text-[0.98rem] text-ink-2 transition-colors duration-200 hover:text-blue-deep"
               >
                 {tNav("home")}
               </Link>
@@ -83,7 +75,7 @@ export function Footer() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="inline-flex min-h-8 items-center text-[0.98rem] text-ink-2 transition-colors duration-200 hover:text-blue-deep"
+                  className="inline-flex min-h-11 items-center text-[0.98rem] text-ink-2 transition-colors duration-200 hover:text-blue-deep"
                 >
                   {tNav(item.key)}
                 </Link>
@@ -96,7 +88,7 @@ export function Footer() {
           <h2 id="footer-projects" className="font-display text-[0.94rem] font-extrabold uppercase tracking-wide text-ink">
             {t("footer.projectsHeading")}
           </h2>
-          <ul className="flex flex-col gap-2.5">
+          <ul className="flex flex-col gap-0.5">
             {PROJECTS.map((project) => (
               <li key={project.id}>
                 {project.external ? (
@@ -104,7 +96,7 @@ export function Footer() {
                     href={project.external.href}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="group inline-flex min-h-8 items-center gap-1.5 text-[0.98rem] text-ink-2 transition-colors duration-200 hover:text-blue-deep"
+                    className="group inline-flex min-h-11 items-center gap-1.5 text-[0.98rem] text-ink-2 transition-colors duration-200 hover:text-blue-deep"
                   >
                     {pick(project.name, locale)}
                     <Icon name="arrow-out" className="h-[0.95rem] w-[0.95rem] opacity-60" />
@@ -113,7 +105,7 @@ export function Footer() {
                 ) : (
                   <Link
                     href="/projects"
-                    className="inline-flex min-h-8 items-center text-[0.98rem] text-ink-2 transition-colors duration-200 hover:text-blue-deep"
+                    className="inline-flex min-h-11 items-center text-[0.98rem] text-ink-2 transition-colors duration-200 hover:text-blue-deep"
                   >
                     {pick(project.name, locale)}
                   </Link>
@@ -136,7 +128,7 @@ export function Footer() {
               <a
                 key={phone}
                 href={`tel:${phone.replace(/[^+\d]/g, "")}`}
-                className="flex min-h-8 items-center gap-2.5 transition-colors duration-200 hover:text-blue-deep"
+                className="flex min-h-11 items-center gap-2.5 transition-colors duration-200 hover:text-blue-deep"
               >
                 <Icon name="phone" className="h-[1.1rem] w-[1.1rem] shrink-0 text-blue" />
                 <span>{phone}</span>
@@ -144,7 +136,7 @@ export function Footer() {
             ))}
             <a
               href={`mailto:${ORG.email}`}
-              className="flex min-h-8 items-center gap-2.5 transition-colors duration-200 hover:text-blue-deep"
+              className="flex min-h-11 items-center gap-2.5 transition-colors duration-200 hover:text-blue-deep"
             >
               <Icon name="mail" className="h-[1.1rem] w-[1.1rem] shrink-0 text-blue" />
               <span>{ORG.email}</span>
@@ -162,7 +154,7 @@ export function Footer() {
           <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
             <Link
               href="/privacy"
-              className="text-[0.92rem] text-ink-muted underline-offset-4 transition-colors duration-200 hover:text-blue-deep hover:underline"
+              className="inline-flex min-h-11 items-center text-[0.92rem] text-ink-muted underline-offset-4 transition-colors duration-200 hover:text-blue-deep hover:underline"
             >
               {t("footer.privacy")}
             </Link>
@@ -170,7 +162,7 @@ export function Footer() {
               href="https://teiior.uz"
               target="_blank"
               rel="noreferrer noopener"
-              className="text-[0.92rem] font-semibold text-ink-2 underline-offset-4 transition-colors duration-200 hover:text-blue-deep hover:underline"
+              className="inline-flex min-h-11 items-center text-[0.92rem] font-semibold text-ink-2 underline-offset-4 transition-colors duration-200 hover:text-blue-deep hover:underline"
             >
               {t("footer.credit")}
             </a>

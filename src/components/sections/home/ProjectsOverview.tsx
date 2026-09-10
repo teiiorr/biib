@@ -23,7 +23,7 @@ export function ProjectsOverview() {
           {projects.map((project, index) => (
             <li key={project.id}>
               <Reveal pop delay={index * 110} className="block h-full">
-                <ProjectTile project={project} index={index} />
+                <ProjectTile project={project} />
               </Reveal>
             </li>
           ))}

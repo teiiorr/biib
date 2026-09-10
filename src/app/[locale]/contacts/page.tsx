@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
-import { Doodle } from "@/components/brand/Doodle";
 import { Icon, type IconName } from "@/components/brand/Icon";
 import { Reveal } from "@/components/brand/Reveal";
 import { ContactForm } from "@/components/sections/ContactForm";
@@ -81,7 +80,7 @@ async function Details() {
               {row.href && !row.hrefLabel ? (
                 <a
                   href={row.href}
-                  className="mt-1 inline-flex min-h-8 items-center break-words text-[1.04rem] text-ink underline-offset-4 transition-colors duration-200 hover:text-blue-deep hover:underline"
+                  className="mt-1 inline-flex min-h-11 items-center break-words text-[1.04rem] text-ink underline-offset-4 transition-colors duration-200 hover:text-blue-deep hover:underline"
                 >
                   {row.value}
                 </a>
@@ -95,7 +94,7 @@ async function Details() {
                   href={row.href}
                   target={row.external ? "_blank" : undefined}
                   rel={row.external ? "noreferrer noopener" : undefined}
-                  className="mt-1.5 inline-flex min-h-8 items-center gap-1.5 text-[0.96rem] font-semibold text-blue-deep underline-offset-4 hover:underline"
+                  className="mt-1.5 inline-flex min-h-11 items-center gap-1.5 text-[0.96rem] font-semibold text-blue-deep underline-offset-4 hover:underline"
                 >
                   {row.hrefLabel}
                   {row.external ? (
@@ -152,10 +151,7 @@ export default async function ContactsPage({ params }: PageProps<"/[locale]/cont
 
           <Reveal delay={120}>
             <div className="rounded-[1.75rem] border border-line bg-surface p-6 shadow-soft sm:p-9">
-              <h2 className="flex items-center gap-3 text-[clamp(1.6rem,3.6vw,2.1rem)]">
-                {t("formHeading")}
-                <Doodle name="plane" className="h-7 w-7 text-blue" strokeWidth={2.2} />
-              </h2>
+              <h2 className="text-[clamp(1.6rem,3.6vw,2.1rem)]">{t("formHeading")}</h2>
               <div className="mt-7">
                 <ContactForm />
               </div>

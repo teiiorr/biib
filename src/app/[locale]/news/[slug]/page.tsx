@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Doodle } from "@/components/brand/Doodle";
 import { CoverPlaceholder } from "@/components/brand/Placeholder";
 import { Icon } from "@/components/brand/Icon";
 import { Reveal } from "@/components/brand/Reveal";
@@ -115,8 +114,7 @@ export default async function ArticlePage({ params }: PageProps<"/[locale]/news/
           </div>
 
           <Reveal delay={240}>
-            <div className="mx-auto mt-10 flex max-w-[42rem] items-center gap-3 border-t border-line pt-6 text-[0.95rem] text-ink-muted">
-              <Doodle name="spark" className="h-4 w-4 shrink-0 text-sun" />
+            <div className="mx-auto mt-10 flex max-w-[42rem] items-center gap-2 border-t border-line pt-6 text-[0.95rem] text-ink-muted">
               {t("published")}
               {": "}
               <time dateTime={isoDate(item.date)}>{formatDate(item.date, typed, "long")}</time>

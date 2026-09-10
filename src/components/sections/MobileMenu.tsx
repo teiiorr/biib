@@ -4,7 +4,6 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Icon } from "@/components/brand/Icon";
-import { Doodle } from "@/components/brand/Doodle";
 import { Link, usePathname } from "@/i18n/navigation";
 import { NAV_ITEMS } from "./nav-items";
 import { cn } from "@/lib/cn";
@@ -76,7 +75,7 @@ export function MobileMenu() {
                   )}
                 >
                   {active ? (
-                    <Doodle name="spark" className="h-5 w-5 text-sun" strokeWidth={2} />
+                    <span aria-hidden="true" className="h-7 w-1.5 shrink-0 rounded-full bg-blue-cta" />
                   ) : null}
                   {t(item.key)}
                 </Link>

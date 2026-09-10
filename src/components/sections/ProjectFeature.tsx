@@ -1,8 +1,7 @@
 import { useLocale, useTranslations } from "next-intl";
-import { Doodle } from "@/components/brand/Doodle";
 import { Icon } from "@/components/brand/Icon";
 import { Reveal } from "@/components/brand/Reveal";
-import { Button } from "@/components/ui/Button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { pick } from "@/content";
 import type { Accent, ProjectItem } from "@/content/types";
 import type { Locale } from "@/i18n/locales";
@@ -32,15 +31,6 @@ const BAR: Record<Accent, string> = {
   blue: "bg-blue",
 };
 
-const MARK: Record<Accent, string> = {
-  sun: "text-sun-ink",
-  coral: "text-coral-ink",
-  grass: "text-grass-ink",
-  pink: "text-pink-ink",
-  grape: "text-grape-ink",
-  blue: "text-blue-deep",
-};
-
 export type FeatureVariant = "panel" | "open" | "offset";
 
 export function ProjectFeature({
@@ -64,12 +54,10 @@ export function ProjectFeature({
             cn("rounded-[1.5rem] border border-line p-7 sm:p-9", PANEL[project.accent]),
         )}
       >
-        <div className="flex items-center gap-3">
-          <span className={cn("h-1.5 w-14 rounded-full", BAR[project.accent])} />
-          {project.flagship ? (
-            <Doodle name="spark" className={cn("h-6 w-6", MARK[project.accent])} />
-          ) : null}
-        </div>
+        <span
+          aria-hidden="true"
+          className={cn("block h-1.5 w-14 rounded-full", BAR[project.accent])}
+        />
 
         <h2 className="mt-5 text-[clamp(1.85rem,4.4vw,2.7rem)] tracking-tight">
           {pick(project.name, locale)}
@@ -99,10 +87,10 @@ export function ProjectFeature({
           </h3>
           <ul className="mt-3 flex flex-col gap-2.5">
             {pick(project.facts, locale).map((fact) => (
-              <li key={fact} className="flex items-start gap-2.5">
-                <Doodle
-                  name="spark"
-                  className={cn("mt-[0.3rem] h-3.5 w-3.5 shrink-0", MARK[project.accent])}
+              <li key={fact} className="flex items-start gap-3">
+                <span
+                  aria-hidden="true"
+                  className={cn("mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full", BAR[project.accent])}
                 />
                 <span className="lines-2 text-[1rem] leading-[1.5] text-ink-2">{fact}</span>
               </li>
@@ -113,14 +101,17 @@ export function ProjectFeature({
 
       {project.external ? (
         <Reveal delay={360} pop>
-          <Button asChild size="lg" className="mt-7">
-            <a href={project.external.href} target="_blank" rel="noreferrer noopener">
+          <a
+            href={project.external.href}
+            target="_blank"
+            rel="noreferrer noopener"
+            className={cn(buttonVariants({ size: "lg" }), "mt-7")}
+          >
               {t("visitSite")}
               <span className="opacity-80">{project.external.label}</span>
               <Icon name="arrow-out" className="h-[1.05rem] w-[1.05rem]" />
               <span className="sr-only">({tCommon("opensInNewTab")})</span>
-            </a>
-          </Button>
+          </a>
         </Reveal>
       ) : null}
     </div>
