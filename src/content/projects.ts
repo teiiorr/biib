@@ -51,27 +51,27 @@ export const PROJECTS: readonly ProjectItem[] = [
     facts: {
       "uz-Latn": [
         "Ariza bepul, tavsiya kerak emas",
-        "12 yoshdan 18 yoshgacha",
+        "14 yoshdan 19 yoshgacha",
         "Yakuniy konsert poytaxt sahnasida",
       ],
       "uz-Cyrl": [
         "Ариза бепул, тавсия керак эмас",
-        "12 ёшдан 18 ёшгача",
+        "14 ёшдан 19 ёшгача",
         "Якуний концерт пойтахт саҳнасида",
       ],
       "uz-Latn-x-reform": [
         "Ariza bepul, tavsiya kerak emas",
-        "12 yoşdan 18 yoşgaça",
+        "14 yoşdan 19 yoşgaça",
         "Yakuniy konsert poytaxt sahnasida",
       ],
       ru: [
         "Заявка бесплатная, рекомендации не нужны",
-        "От 12 до 18 лет",
+        "От 14 до 19 лет",
         "Финальный концерт на столичной сцене",
       ],
       en: [
         "Applying is free, no reference needed",
-        "From 12 to 18 years old",
+        "From 14 to 19 years old",
         "Final concert on a stage in the capital",
       ],
     },

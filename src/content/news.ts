@@ -34,27 +34,27 @@ export const NEWS: readonly NewsItem[] = [
       "uz-Latn": [
         "Yangi mavsumda tanlov barcha viloyatlarda oʻtadi. Har bir bosqichda ishtirokchi jonli chiqish qiladi va ustozlardan yozma izoh oladi. Bu izoh keyingi bosqichga oʻtmaganlarga ham beriladi.",
         "Bu yil tayyorgarlik qismi uzaytirildi: yarim finalga oʻtgan ishtirokchilar bilan ovoz va sahna ustida uch hafta ishlanadi.",
-        "Ariza topshirish uchun tavsiya, hujjat yoki toʻlov talab qilinmaydi. Yosh chegarasi — 12 dan 18 gacha.",
+        "Ariza topshirish uchun tavsiya, hujjat yoki toʻlov talab qilinmaydi. Yosh chegarasi — 14 dan 19 gacha.",
       ],
       "uz-Cyrl": [
         "Янги мавсумда танлов барча вилоятларда ўтади. Ҳар бир босқичда иштирокчи жонли чиқиш қилади ва устозлардан ёзма изоҳ олади. Бу изоҳ кейинги босқичга ўтмаганларга ҳам берилади.",
         "Бу йил тайёргарлик қисми узайтирилди: ярим финалга ўтган иштирокчилар билан овоз ва саҳна устида уч ҳафта ишланади.",
-        "Ариза топшириш учун тавсия, ҳужжат ёки тўлов талаб қилинмайди. Ёш чегараси — 12 дан 18 гача.",
+        "Ариза топшириш учун тавсия, ҳужжат ёки тўлов талаб қилинмайди. Ёш чегараси — 14 дан 19 гача.",
       ],
       "uz-Latn-x-reform": [
         "Yangi mavsumda tanlov barça viloyatlarda ötadi. Har bir bosqiçda iştirokçi jonli çiqiş qiladi va ustozlardan yozma izoh oladi. Bu izoh keyingi bosqiçga ötmaganlarga ham beriladi.",
         "Bu yil tayyorgarlik qismi uzaytirildi: yarim finalga ötgan iştirokçilar bilan ovoz va sahna ustida uç hafta işlanadi.",
-        "Ariza topşiriş uçun tavsiya, hujjat yoki tölov talab qilinmaydi. Yoş çegarasi — 12 dan 18 gaça.",
+        "Ariza topşiriş uçun tavsiya, hujjat yoki tölov talab qilinmaydi. Yoş çegarasi — 14 dan 19 gaça.",
       ],
       ru: [
         "В новом сезоне конкурс пройдёт во всех областях. На каждом этапе участник выступает вживую и получает письменный разбор от наставников — его отдают и тем, кто дальше не прошёл.",
         "В этом году подготовительная часть стала длиннее: с участниками полуфинала три недели работают над голосом и сценой.",
-        "Для заявки не нужны рекомендации, документы или оплата. Возраст участников — от 12 до 18 лет.",
+        "Для заявки не нужны рекомендации, документы или оплата. Возраст участников — от 14 до 19 лет.",
       ],
       en: [
         "In the new season the competition runs in every region. At each round the participant performs live and receives written comments from the mentors. Children who do not go through receive them too.",
         "This year the preparation part has been made longer: participants who reach the semi-final spend three weeks working on voice and stage.",
-        "No reference, papers or payment are required to apply. The age limit is 12 to 18.",
+        "No reference, papers or payment are required to apply. The age limit is 14 to 19.",
       ],
     },
     coverAlt: {
