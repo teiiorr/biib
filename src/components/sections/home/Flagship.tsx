@@ -1,12 +1,18 @@
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
+import { LivingVideo } from "@/components/brand/LivingVideo";
 import { Reveal } from "@/components/brand/Reveal";
-import { GemBullet, GemCard } from "@/components/ui/GemCard";
+import { GemBullet } from "@/components/ui/GemCard";
 import { ExternalButton } from "@/components/ui/LinkButton";
 import { flagshipProject, pick } from "@/content";
 import type { Locale } from "@/i18n/locales";
+import type { CSSProperties } from "react";
 
-/** Boş loyiha. Qattiq panel, samosveti — magenta. */
+/**
+ * Boş loyiha — butun ekranli jonli sahna. Fondagi surat Higgsfield
+ * orqali jonlantirilgan: qizlar nafas oladi, soçlar sekin tebranadi.
+ * prefers-reduced-motion da faqat asl surat qoladi.
+ */
 export function Flagship() {
   const t = useTranslations("home.flagship");
   const tCommon = useTranslations("common");
@@ -14,61 +20,73 @@ export function Flagship() {
   const project = flagshipProject();
 
   return (
-    <section className="page pb-4" aria-labelledby="home-flagship">
-      <Reveal>
-        <GemCard accent={project.accent} className="rounded-xl">
-          <div className="grid items-stretch lg:grid-cols-[1.05fr_1fr]">
-            <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-80">
-              <Image
-                src="/brand/upop-banner.jpg"
-                alt={t("bannerAlt")}
-                fill
-                sizes="(max-width: 1024px) 100vw, 52vw"
-                className="object-cover"
-              />
-            </div>
+    <section
+      aria-labelledby="home-flagship"
+      style={{ "--gem": "var(--magenta)", "--gem-line": "var(--magenta-line)" } as CSSProperties}
+      className="relative isolate overflow-hidden"
+    >
+      <LivingVideo
+        src="/brand/upop-live.mp4"
+        poster="/brand/upop-scene.jpg"
+        posterAlt={t("bannerAlt")}
+      />
 
-            <div className="flex flex-col gap-5 p-6 md:p-8">
-              {/* Tabiiy ölçam 900×703. self-start bölmasa flex ustun rasmni çözadi. */}
-              <Image
-                src="/brand/upop-logo.png"
-                alt=""
-                width={900}
-                height={703}
-                sizes="160px"
-                className="h-auto w-36 self-start sm:w-40"
-              />
+      {/* Matn ostidagi zich parda: video har qançalik yorugʻ bölsa ham
+          pastki üçdan bir qismida kontrast kafolatlanadi. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-[linear-gradient(180deg,rgb(10_28_38/0.22)_0%,rgb(10_28_38/0.06)_38%,rgb(10_28_38/0.55)_66%,rgb(10_28_38/0.94)_88%)]"
+      />
 
-              <h2 id="home-flagship" className="sr-only">
-                {t("heading")}
-              </h2>
+      <div className="page relative z-10 flex min-h-[100svh] flex-col">
+        <h2 id="home-flagship" className="sr-only">
+          {t("heading")}
+        </h2>
 
-              <p className="text-body text-label-secondary">{t("lead")}</p>
+        {/*
+         * Katta logotip joyi. Mijoz yangi faylni bergaç şu Image
+         * almaştiriladi — ölçam va örin şu yerda qoladi.
+         */}
+        <div id="flagship-logo-slot" className="flex flex-1 items-center justify-center py-20">
+          <Reveal>
+            <Image
+              src="/brand/upop-logo.png"
+              alt=""
+              width={900}
+              height={703}
+              sizes="(max-width: 768px) 60vw, 380px"
+              className="h-auto w-[min(58vw,24rem)] drop-shadow-[0_24px_48px_rgba(0,0,0,0.55)]"
+            />
+          </Reveal>
+        </div>
 
-              <ul className="flex flex-col gap-2">
-                {pick(project.facts, locale).map((fact) => (
-                  <li key={fact} className="flex gap-2.5 text-callout text-label-secondary">
-                    <GemBullet />
-                    {fact}
-                  </li>
-                ))}
-              </ul>
+        <div className="pb-12 md:pb-16">
+          <Reveal className="max-w-xl">
+            <p className="text-body text-label md:text-headline">{t("lead")}</p>
 
-              {project.external ? (
-                <div className="mt-auto flex justify-end pt-2">
-                  <ExternalButton
-                    href={project.external.href}
-                    newTabLabel={tCommon("opensInNewTab")}
-                    size="lg"
-                  >
-                    {t("cta")}
-                  </ExternalButton>
-                </div>
-              ) : null}
-            </div>
-          </div>
-        </GemCard>
-      </Reveal>
+            <ul className="mt-5 flex flex-col gap-2">
+              {pick(project.facts, locale).map((fact) => (
+                <li key={fact} className="flex gap-2.5 text-callout text-label-secondary">
+                  <GemBullet />
+                  {fact}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+
+          {project.external ? (
+            <Reveal delay={120} className="mt-7 flex justify-end">
+              <ExternalButton
+                href={project.external.href}
+                newTabLabel={tCommon("opensInNewTab")}
+                size="lg"
+              >
+                {t("cta")}
+              </ExternalButton>
+            </Reveal>
+          ) : null}
+        </div>
+      </div>
     </section>
   );
 }

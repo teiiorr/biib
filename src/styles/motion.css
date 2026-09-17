@@ -269,6 +269,29 @@ html[data-js] [data-reveal="in"] {
   --glow: 1;
 }
 
+/*
+ * ---- Skroll-parallaks ----
+ * Butun ekranli media bölim içidan ötayotganda ohista siljiydi.
+ * animation-timeline: view() — kompozitor oqimida, JS siz.
+ * scale 1.12 çetlarini yaşiradi, siljiş çegarasi undan kiçik.
+ */
+@supports (animation-timeline: view()) {
+  .parallax-media {
+    animation: parallax-drift linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}
+
+@keyframes parallax-drift {
+  from {
+    transform: translateY(-4.5%) scale(1.12);
+  }
+  to {
+    transform: translateY(4.5%) scale(1.12);
+  }
+}
+
 /* ---- Sekin tebraniş: bitta belgi uçun ---- */
 
 .drift {
@@ -300,6 +323,10 @@ html[data-js] [data-reveal="in"] {
   .card-light::after,
   .btn-liquid::before {
     display: none;
+  }
+
+  .parallax-media {
+    animation: none !important;
   }
 
   .aura {

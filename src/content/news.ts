@@ -7,6 +7,7 @@ import type { NewsItem } from "./types";
 export const NEWS: readonly NewsItem[] = [
   {
     slug: "upop-trend-yangi-mavsum",
+    cover: "/brand/news-upop-stage.jpg",
     date: "2026-08-28",
     accent: "magenta",
     topic: {
@@ -67,6 +68,7 @@ export const NEWS: readonly NewsItem[] = [
   },
   {
     slug: "rangli-olam-korgazmasi",
+    cover: "/brand/news-rangli-olam.jpg",
     date: "2026-07-14",
     accent: "gold",
     topic: {
@@ -127,6 +129,7 @@ export const NEWS: readonly NewsItem[] = [
   },
   {
     slug: "sahna-bolalari-yangi-studiyalar",
+    cover: "/brand/news-sahna.jpg",
     date: "2026-06-03",
     accent: "violet",
     topic: {
@@ -178,15 +181,16 @@ export const NEWS: readonly NewsItem[] = [
       ],
     },
     coverAlt: {
-      "uz-Latn": "Teatr pardasi va bolalar guruhi mashgʻulotda",
-      "uz-Cyrl": "Театр пардаси ва болалар гуруҳи машғулотда",
-      "uz-Latn-x-reform": "Teatr pardasi va bolalar guruhi maşğulotda",
-      ru: "Театральный занавес и группа детей на занятии",
-      en: "A theatre curtain and a group of children in class",
+      "uz-Latn": "Ochiq teatr pardasi va boʻsh sahnadagi yorugʻlik doirasi",
+      "uz-Cyrl": "Очиқ театр пардаси ва бўш саҳнадаги ёруғлик доираси",
+      "uz-Latn-x-reform": "Oçiq teatr pardasi va böş sahnadagi yoruğlik doirasi",
+      ru: "Открытый театральный занавес и круг света на пустой сцене",
+      en: "An open theatre curtain and a circle of light on an empty stage",
     },
   },
   {
     slug: "ustozlar-uchun-seminar",
+    cover: "/brand/news-seminar.jpg",
     date: "2026-05-20",
     accent: "turquoise",
     topic: {
@@ -238,15 +242,16 @@ export const NEWS: readonly NewsItem[] = [
       ],
     },
     coverAlt: {
-      "uz-Latn": "Doira shaklida oʻtirgan ustozlar va doskadagi yozuvlar",
-      "uz-Cyrl": "Доира шаклида ўтирган устозлар ва доскадаги ёзувлар",
-      "uz-Latn-x-reform": "Doira şaklida ötirgan ustozlar va doskadagi yozuvlar",
-      ru: "Наставники сидят в кругу, на доске записи",
-      en: "Mentors sitting in a circle and notes on a board",
+      "uz-Latn": "Doira qilib qoʻyilgan stullar va doskadagi chizmalar",
+      "uz-Cyrl": "Доира қилиб қўйилган стуллар ва доскадаги чизмалар",
+      "uz-Latn-x-reform": "Doira qilib qöyilgan stullar va doskadagi çizmalar",
+      ru: "Стулья, расставленные кругом, и схемы на доске",
+      en: "Chairs arranged in a circle and diagrams on a board",
     },
   },
   {
     slug: "ertak-ustaxonasi-birinchi-multfilmlar",
+    cover: "/brand/news-ertak.jpg",
     date: "2026-04-11",
     accent: "green",
     topic: {

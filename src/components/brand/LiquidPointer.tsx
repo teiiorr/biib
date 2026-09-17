@@ -19,7 +19,11 @@ export function LiquidPointer() {
     function onMove(event: PointerEvent) {
       if (event.pointerType !== "mouse") return;
 
-      const el = (event.target as HTMLElement | null)?.closest<HTMLElement>(".btn-liquid");
+      // target har doim ham Element emas (masalan, document) — tekşirmasak
+      // closest() yoq joyda yiqiladi.
+      const origin = event.target;
+      if (!(origin instanceof Element)) return;
+      const el = origin.closest<HTMLElement>(".btn-liquid");
       if (!el) return;
 
       const box = el.getBoundingClientRect();
