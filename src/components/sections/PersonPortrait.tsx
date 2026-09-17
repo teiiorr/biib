@@ -21,7 +21,7 @@ export function PersonPortrait({
   return (
     <div
       className={cn(
-        "relative overflow-hidden bg-sunken shadow-[inset_0_0_0_0.5px_var(--separator)]",
+        "relative overflow-hidden bg-graphite shadow-[inset_0_0_0_0.5px_var(--line-gold)]",
         shape === "circle" ? "aspect-square rounded-pill" : "aspect-[4/5] rounded-md",
         className,
       )}

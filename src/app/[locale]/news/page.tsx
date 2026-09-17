@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Reveal } from "@/components/brand/Reveal";
 import { NewsCard } from "@/components/sections/NewsCard";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { allNews } from "@/content";
@@ -27,9 +28,9 @@ export default async function NewsPage({ params }: PageProps<"/[locale]/news">) 
           ) : (
             <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {items.map((item, index) => (
-                <li key={item.slug} className="flex">
+                <Reveal as="li" key={item.slug} delay={(index % 3) * 90} className="flex">
                   <NewsCard item={item} className="w-full" priority={index < 3} />
-                </li>
+                </Reveal>
               ))}
             </ul>
           )}

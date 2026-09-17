@@ -7,8 +7,8 @@ import type { Locale } from "@/i18n/locales";
  */
 export type Localized<T = string> = Record<Locale, T>;
 
-/** Bölimga qöyiladigan böyoq. Bir ekranda ikki-uçtasi. */
-export type Accent = "sun" | "coral" | "grass" | "pink" | "grape" | "blue";
+/** Samosvet — bölimning sahna rangi. Bir ekranda ikki-uçtasi. */
+export type Accent = "gold" | "magenta" | "violet" | "turquoise";
 
 export interface ProjectItem {
   readonly id: string;

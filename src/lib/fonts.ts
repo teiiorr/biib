@@ -1,13 +1,21 @@
-import { Inter } from "next/font/google";
+import { Manrope, Unbounded } from "next/font/google";
 
 /**
- * Apple qurilmalarida SF Pro tizimdan keladi (globals.css dagi font-sans),
- * qolgan hamma joyda — Inter. Beş til uçun kerakli quyi töplamlar:
- * latin da ʻ (U+02BB) va ʼ (U+02BC), latin-ext da ç ş ö ğ,
- * cyrillic va cyrillic-ext da özbek kirili hamda rus tili.
+ * Unbounded — sarlavhalar, meros ovozi. Manrope — matn.
+ * İkkalasida ham latin, latin-ext, cyrillic va cyrillic-ext bor:
+ * ʻ (U+02BB), ʼ (U+02BC) va ç ş ö ğ beş tilning hammasida çiqadi.
  */
-export const inter = Inter({
+
+export const unbounded = Unbounded({
   subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
-  variable: "--font-inter",
+  weight: ["500", "600", "700"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+export const manrope = Manrope({
+  subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-body",
   display: "swap",
 });

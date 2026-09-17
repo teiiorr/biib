@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 import { Icon, type IconName } from "@/components/brand/Icon";
+import { Reveal } from "@/components/brand/Reveal";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { ORG, ORG_TEXT, pick } from "@/content";
@@ -123,14 +124,16 @@ export default async function ContactsPage({ params }: PageProps<"/[locale]/cont
 
       <section className="section pt-4">
         <div className="page grid items-start gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
-          <Details />
+          <Reveal>
+            <Details />
+          </Reveal>
 
-          <div className="rounded-lg bg-elevated p-5 shadow-[inset_0_0_0_0.5px_var(--separator)] md:p-7">
+          <Reveal delay={120} className="rounded-lg bg-elevated p-5 shadow-[inset_0_0_0_0.5px_var(--line-gold)] md:p-7">
             <h2 className="text-title2">{t("formHeading")}</h2>
             <div className="mt-6">
               <ContactForm />
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </>

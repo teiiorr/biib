@@ -24,12 +24,8 @@ function block(css, selector, from = 0) {
   return map;
 }
 
-const light = new Map([...block(tokens, ":root {"), ...block(glass, ":root {")]);
-const dark = new Map([
-  ...light,
-  ...block(tokens, ':root[data-theme="dark"] {'),
-  ...block(glass, ':root[data-theme="dark"] {'),
-]);
+// Sayt faqat qorongʻi: bitta token töplami.
+const theme = new Map([...block(tokens, ":root {"), ...block(glass, ":root {")]);
 
 /** calc(a - b * var(--glass-intensity)) ni standart 0.5 da hisoblaydi. */
 function alphaOf(raw) {
@@ -91,34 +87,42 @@ const PAIRS = [
   ["--label-primary", "--bg-base"],
   ["--label-primary", "--bg-elevated"],
   ["--label-primary", "--bg-sunken"],
+  ["--label-primary", "--graphite"],
   ["--label-secondary", "--bg-base"],
   ["--label-secondary", "--bg-elevated"],
-  ["--label-secondary", "--bg-sunken"],
-  ["--label-tertiary", "--bg-base", null, 3, "belgi va namuna matn"],
-  ["--label-tertiary", "--bg-elevated", null, 3, "belgi va namuna matn"],
+  ["--label-secondary", "--graphite"],
+  ["--label-tertiary", "--bg-elevated", null, 3, "belgi va bezak"],
   ["--accent-text", "--bg-base"],
   ["--accent-text", "--bg-elevated"],
-  ["--accent-text", "--bg-sunken"],
-  ["--accent-text", "--accent-wash", "--bg-elevated"],
+  ["--accent-text", "--graphite"],
+  ["--gold-hi", "--bg-elevated"],
+  ["--gem-turquoise-text", "--bg-elevated"],
+  ["--gem-magenta-text", "--bg-elevated"],
   ["--accent-contrast", "--accent"],
   ["--accent-contrast", "--accent-hover"],
   ["--accent-contrast", "--accent-pressed"],
   ["--label-primary", "--fill-secondary", "--bg-elevated"],
   ["--label-primary", "--fill-secondary", "--bg-base"],
   ["--danger", "--bg-elevated"],
+  ["--success", "--bg-elevated"],
   ["--label-primary", "@glass", "--bg-base"],
   ["--label-secondary", "@glass", "--bg-base"],
-  ["--label-primary", "@glass", "--bg-elevated"],
+  ["--accent-text", "@glass", "--bg-base"],
+  // Samosvetlar bezak sifatida: grafik uçun 3:1 yetadi.
+  ["--magenta", "--bg-base", null, 3, "samosvet çizigʻi"],
+  ["--violet", "--bg-base", null, 3, "samosvet çizigʻi"],
+  ["--turquoise", "--bg-base", null, 3, "samosvet çizigʻi"],
+  ["--gold", "--bg-base", null, 3, "samosvet çizigʻi"],
 ];
 
 let failed = 0;
 const rows = [];
 
-for (const [name, theme] of [["yorugʻ", light], ["qorongʻi", dark]]) {
+for (const [name, palette] of [["qorongʻi", theme]]) {
   for (const [fgToken, bgToken, baseToken, min = 4.5, note] of PAIRS) {
-    const base = parse(theme.get(baseToken ?? "--bg-base"), theme);
-    const bg = bgToken === "@glass" ? glassOver(theme, "regular", base) : over(parse(theme.get(bgToken), theme), base);
-    const fg = over(parse(theme.get(fgToken), theme), bg);
+    const base = parse(palette.get(baseToken ?? "--bg-base"), palette);
+    const bg = bgToken === "@glass" ? glassOver(palette, "regular", base) : over(parse(palette.get(bgToken), palette), base);
+    const fg = over(parse(palette.get(fgToken), palette), bg);
     const value = ratio(fg, bg);
     const ok = value >= min;
     if (!ok) failed += 1;
@@ -136,4 +140,4 @@ if (failed) {
   process.exit(1);
 }
 
-console.log(`\nKontrast toza — ${rows.length} juftlik, ikkala mavzu.`);
+console.log(`\nKontrast toza — ${rows.length} juftlik.`);

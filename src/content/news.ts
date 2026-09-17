@@ -8,7 +8,7 @@ export const NEWS: readonly NewsItem[] = [
   {
     slug: "upop-trend-yangi-mavsum",
     date: "2026-08-28",
-    accent: "coral",
+    accent: "magenta",
     topic: {
       "uz-Latn": "Kasting",
       "uz-Cyrl": "Кастинг",
@@ -68,7 +68,7 @@ export const NEWS: readonly NewsItem[] = [
   {
     slug: "rangli-olam-korgazmasi",
     date: "2026-07-14",
-    accent: "sun",
+    accent: "gold",
     topic: {
       "uz-Latn": "Koʻrgazma",
       "uz-Cyrl": "Кўргазма",
@@ -128,7 +128,7 @@ export const NEWS: readonly NewsItem[] = [
   {
     slug: "sahna-bolalari-yangi-studiyalar",
     date: "2026-06-03",
-    accent: "grape",
+    accent: "violet",
     topic: {
       "uz-Latn": "Studiya",
       "uz-Cyrl": "Студия",
@@ -188,7 +188,7 @@ export const NEWS: readonly NewsItem[] = [
   {
     slug: "ustozlar-uchun-seminar",
     date: "2026-05-20",
-    accent: "grass",
+    accent: "turquoise",
     topic: {
       "uz-Latn": "Taʼlim",
       "uz-Cyrl": "Таълим",
@@ -248,7 +248,7 @@ export const NEWS: readonly NewsItem[] = [
   {
     slug: "ertak-ustaxonasi-birinchi-multfilmlar",
     date: "2026-04-11",
-    accent: "pink",
+    accent: "magenta",
     topic: {
       "uz-Latn": "Loyiha",
       "uz-Cyrl": "Лойиҳа",

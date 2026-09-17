@@ -1,28 +1,36 @@
 import { useTranslations } from "next-intl";
-import { LinkButton } from "@/components/ui/LinkButton";
+import { Reveal } from "@/components/brand/Reveal";
+import { Girih } from "@/components/brand/Texture";
 import { SectionHead } from "@/components/sections/SectionHead";
+import { LinkButton } from "@/components/ui/LinkButton";
 
 export function AboutTeaser() {
   const t = useTranslations("home.about");
 
   return (
-    <section className="section bg-elevated" aria-labelledby="home-about">
-      <div className="page">
-        <SectionHead id="home-about" heading={t("heading")} />
+    <section className="section relative isolate overflow-hidden bg-elevated" aria-labelledby="home-about">
+      <Girih className="opacity-[0.035]" />
+
+      <div className="page relative">
+        <Reveal>
+          <SectionHead id="home-about" heading={t("heading")} />
+        </Reveal>
 
         <div className="mt-6 grid gap-5 lg:grid-cols-2 lg:gap-10">
-          <div className="flex flex-col gap-4 text-body text-label-secondary">
+          <Reveal delay={80} className="flex flex-col gap-4 text-body text-label-secondary">
             <p>{t("p1")}</p>
             <p>{t("p2")}</p>
-          </div>
-          <p className="text-body text-label">{t("p3")}</p>
+          </Reveal>
+          <Reveal delay={160}>
+            <p className="text-body text-label">{t("p3")}</p>
+          </Reveal>
         </div>
 
-        <div className="mt-8 flex justify-end">
+        <Reveal delay={220} className="mt-8 flex justify-end">
           <LinkButton href="/about" variant="secondary">
             {t("cta")}
           </LinkButton>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -2,23 +2,22 @@ import type { Metadata, Viewport } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { Grain } from "@/components/brand/Texture";
 import { Header } from "@/components/sections/Header";
 import { Footer } from "@/components/sections/Footer";
 import { getPathname } from "@/i18n/navigation";
 import { LOCALE_META, type Locale } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
 import { appearanceInitScript } from "@/lib/appearance";
-import { inter } from "@/lib/fonts";
+import { manrope, unbounded } from "@/lib/fonts";
 import "@/styles/globals.css";
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f1f3f7" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
-  ],
+  themeColor: "#000000",
+  colorScheme: "dark",
 };
 
 export function generateStaticParams() {
@@ -65,11 +64,11 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
     <html
       lang={locale}
       dir={LOCALE_META[locale as Locale].dir}
-      className={inter.variable}
+      className={`${unbounded.variable} ${manrope.variable}`}
       suppressHydrationWarning
     >
       <head>
-        {/* Mavzu va şişa zichligi birinçi çizişdan oldin qöyiladi. */}
+        {/* Şişa zichligi birinçi çizişdan oldin qöyiladi. */}
         <script dangerouslySetInnerHTML={{ __html: appearanceInitScript }} />
       </head>
       <body className="flex min-h-dvh flex-col">
@@ -87,6 +86,8 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
           </main>
           <Footer />
         </NextIntlClientProvider>
+
+        <Grain />
       </body>
     </html>
   );

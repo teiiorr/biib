@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { Reveal } from "@/components/brand/Reveal";
 import { NewsCard } from "@/components/sections/NewsCard";
 import { SectionHead, SectionMore } from "@/components/sections/SectionHead";
 import { latestNews } from "@/content";
@@ -12,17 +13,21 @@ export function LatestNews() {
   return (
     <section className="section" aria-labelledby="home-news">
       <div className="page">
-        <SectionHead id="home-news" heading={t("heading")} />
+        <Reveal>
+          <SectionHead id="home-news" heading={t("heading")} />
+        </Reveal>
 
         <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((item) => (
-            <li key={item.slug} className="flex">
+          {items.map((item, index) => (
+            <Reveal as="li" key={item.slug} delay={index * 90} className="flex">
               <NewsCard item={item} className="w-full" />
-            </li>
+            </Reveal>
           ))}
         </ul>
 
-        <SectionMore className="mt-6" links={[{ href: "/news", label: t("all") }]} />
+        <Reveal delay={120} className="mt-6">
+          <SectionMore links={[{ href: "/news", label: t("all") }]} />
+        </Reveal>
       </div>
     </section>
   );

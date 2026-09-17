@@ -1,23 +1,36 @@
 import { useLocale } from "next-intl";
-import { Card } from "@/components/ui/Card";
+import { GemBullet, GemCard } from "@/components/ui/GemCard";
 import { pick } from "@/content";
 import type { ProjectItem } from "@/content/types";
 import type { Locale } from "@/i18n/locales";
 import { cn } from "@/lib/cn";
 
-export function ProjectCard({ project, className }: { project: ProjectItem; className?: string }) {
+export function ProjectCard({
+  project,
+  index,
+  className,
+}: {
+  project: ProjectItem;
+  index: number;
+  className?: string;
+}) {
   const locale = useLocale() as Locale;
 
   return (
-    <Card as="article" className={cn("flex flex-col gap-3 p-5", className)}>
-      <h3 className="text-title3">{pick(project.name, locale)}</h3>
-      <p className="text-callout text-label-secondary">{pick(project.tagline, locale)}</p>
+    <GemCard accent={project.accent} index={index} className={cn("flex flex-col", className)}>
+      <div className="flex flex-1 flex-col gap-3 p-5 pt-6 sm:p-6 sm:pt-7">
+        <h3 className="max-w-[80%] text-title3">{project.name[locale]}</h3>
+        <p className="text-callout text-accent-text">{pick(project.tagline, locale)}</p>
 
-      <ul className="mt-1 flex flex-col gap-1 text-footnote text-label-secondary">
-        {pick(project.facts, locale).map((fact) => (
-          <li key={fact}>{fact}</li>
-        ))}
-      </ul>
-    </Card>
+        <ul className="mt-auto flex flex-col gap-2 pt-2">
+          {pick(project.facts, locale).map((fact) => (
+            <li key={fact} className="flex gap-2.5 text-footnote text-label-secondary">
+              <GemBullet />
+              {fact}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </GemCard>
   );
 }

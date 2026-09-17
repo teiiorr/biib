@@ -2,7 +2,7 @@ import { Link } from "@/i18n/navigation";
 import type { StaticPathname } from "@/i18n/routing";
 import { cn } from "@/lib/cn";
 
-/** Bölim boşi: H2 va ixtiyoriy kiriş. Sarlavha ustida hеç narsa turmaydi. */
+/** Bölim boşi: H2, ostida qisqa oltin çiziq va ixtiyoriy kiriş. */
 export function SectionHead({
   heading,
   lead,
@@ -19,6 +19,7 @@ export function SectionHead({
       <h2 id={id} className="text-title1">
         {heading}
       </h2>
+      <span aria-hidden="true" className="h-[2px] w-12 bg-[image:var(--metal)]" />
       {lead ? <p className="read text-body text-label-secondary">{lead}</p> : null}
     </div>
   );
@@ -42,8 +43,8 @@ export function SectionMore({
           key={link.href}
           href={link.href}
           className={cn(
-            "tap inline-flex min-h-10 items-center rounded-sm px-1 text-callout font-semibold",
-            "text-accent-text transition-colors duration-[var(--dur-fast)] hover:text-accent",
+            "tap inline-flex min-h-10 items-center rounded-sm pl-1 text-callout font-semibold",
+            "text-accent-text transition-colors duration-[var(--dur-fast)] hover:text-gold-hi",
           )}
         >
           {link.label}

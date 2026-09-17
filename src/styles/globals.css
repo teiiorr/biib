@@ -1,9 +1,7 @@
 @import "tailwindcss";
 @import "./tokens.css";
 @import "./glass.css";
-
-/* dark: variantini data-theme ga bogʻlaymiz. */
-@custom-variant dark (&:where(:root[data-theme="dark"], :root[data-theme="dark"] *));
+@import "./motion.css";
 
 @theme inline {
   --color-accent: var(--accent);
@@ -12,6 +10,16 @@
   --color-accent-contrast: var(--accent-contrast);
   --color-accent-wash: var(--accent-wash);
   --color-accent-text: var(--accent-text);
+
+  --color-gold: var(--gold);
+  --color-gold-hi: var(--gold-hi);
+  --color-gold-lo: var(--gold-lo);
+  --color-magenta: var(--magenta);
+  --color-magenta-text: var(--gem-magenta-text);
+  --color-violet: var(--violet);
+  --color-turquoise: var(--turquoise);
+  --color-ivory: var(--ivory);
+  --color-graphite: var(--graphite);
 
   --color-label: var(--label-primary);
   --color-label-secondary: var(--label-secondary);
@@ -22,6 +30,7 @@
   --color-elevated: var(--bg-elevated);
   --color-sunken: var(--bg-sunken);
   --color-separator: var(--separator);
+  --color-line-gold: var(--line-gold);
   --color-fill-secondary: var(--fill-secondary);
   --color-fill-secondary-hover: var(--fill-secondary-hover);
 
@@ -41,7 +50,7 @@
   --shadow-ambient: var(--shadow-ambient);
   --shadow-modal: var(--shadow-modal);
 
-  /* §4.6 şkalasi. Trekingi va qalinligi tokenning özida. */
+  /* §4.6 şkalasi; sarlavhalar Unbounded, qolgani Manrope. */
   --text-display: 2.75rem;
   --text-display--line-height: 3.125rem;
   --text-display--letter-spacing: -0.02em;
@@ -89,9 +98,11 @@
 
   --ease-standard: var(--ease-standard);
   --ease-exit: var(--ease-exit);
+  --ease-quint: var(--ease-quint);
+  --ease-magnet: var(--ease-magnet);
 
-  --font-sans:
-    -apple-system, BlinkMacSystemFont, "SF Pro Text", var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-display), "Trebuchet MS", system-ui, sans-serif;
+  --font-sans: var(--font-body), -apple-system, system-ui, sans-serif;
 
   --container-page: 1200px;
   --container-read: 680px;
@@ -100,17 +111,19 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    background-color: var(--bg-base);
   }
 
   body {
     background-color: var(--bg-base);
     color: var(--label-primary);
     font-family: var(--font-sans);
-    font-size: 1.0625rem; /* mobilda body 17px */
+    font-size: 1.0625rem;
     line-height: 1.625rem;
     font-synthesis-weight: none;
     -webkit-font-smoothing: antialiased;
     min-height: 100svh;
+    overflow-x: hidden;
   }
 
   @media (min-width: 768px) {
@@ -123,6 +136,7 @@
   h2,
   h3,
   h4 {
+    font-family: var(--font-display);
     color: var(--label-primary);
     text-wrap: balance;
   }
@@ -131,9 +145,8 @@
     text-wrap: pretty;
   }
 
-  /* Outline hеç qaçon olib taşlanmaydi. */
   :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--gold);
     outline-offset: 2px;
     border-radius: var(--radius-xs);
   }
@@ -143,22 +156,11 @@
     color: var(--label-primary);
   }
 
-  hr {
-    border: 0;
-    border-top: 0.5px solid var(--separator);
-  }
-
-  /*
-   * Mavzu yoki şişa zichligi almaşganda ranglar yumşoq öradi.
-   * Doimiy transition emas — faqat almaşiş payti.
-   */
   :root.tuning,
-  :root.tuning *,
-  :root.tuning *::before {
+  :root.tuning * {
     transition:
       background-color var(--dur-base) var(--ease-standard),
-      border-color var(--dur-base) var(--ease-standard),
-      color var(--dur-base) var(--ease-standard) !important;
+      border-color var(--dur-base) var(--ease-standard) !important;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -166,6 +168,7 @@
     *::before,
     *::after {
       animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
@@ -190,9 +193,19 @@
     max-width: var(--container-read);
   }
 
+  .section {
+    padding-block: var(--space-7);
+  }
+
+  @media (min-width: 768px) {
+    .section {
+      padding-block: var(--space-8);
+    }
+  }
+
   /*
-   * Körinadigan balandlik §6.5 böyiça (32/40/48), ammo barmoq uçun
-   * bosiş maydoni §8 talab qilgan 44 px dan kiçik bölmaydi.
+   * Körinadigan balandlik §6.5 böyiça, ammo barmoq uçun bosiş maydoni
+   * §8 talab qilgan 44 px dan kiçik bölmaydi.
    */
   .tap {
     position: relative;
@@ -208,71 +221,12 @@
       translate: 0 -50%;
     }
   }
-
-  /* Bölimlar orasi 48/64 — 4/8 şkalasidan çiqmaydi. */
-  .section {
-    padding-block: var(--space-7);
-  }
-
-  @media (min-width: 768px) {
-    .section {
-      padding-block: var(--space-8);
-    }
-  }
-}
-
-@layer utilities {
-  @keyframes veil-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes sheet-in {
-    from {
-      opacity: 0;
-      transform: translateY(12px) scale(0.98);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  /* Desktopda şit markazda turadi, şuning uçun köçiş boşqaça. */
-  @media (min-width: 768px) {
-    @keyframes sheet-in {
-      from {
-        opacity: 0;
-        transform: translate(-50%, calc(-50% + 12px)) scale(0.98);
-      }
-      to {
-        opacity: 1;
-        transform: translate(-50%, -50%);
-      }
-    }
-  }
-
-  @keyframes popover-in {
-    from {
-      opacity: 0;
-      transform: scale(0.96);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
 }
 
 @layer components {
   /*
    * Şaffoflik suruvçisi. Tabiiy input[type=range]: klaviatura, ARIA va
-   * ekran öqigiç semantikasi tayyor holda keladi.
-   * Trek 4 px, ruçka 28 px — §6.8.
+   * ekran öqigiç semantikasi tayyor holda keladi. Trek 4 px, ruçka 28 px.
    */
   .slider {
     -webkit-appearance: none;
@@ -301,10 +255,8 @@
     height: 28px;
     margin-top: -12px;
     border-radius: var(--radius-pill);
-    background: var(--bg-elevated);
-    box-shadow:
-      inset 0 0 0 0.5px var(--separator),
-      var(--shadow-contact);
+    background: var(--ivory);
+    box-shadow: var(--shadow-contact);
   }
 
   .slider::-moz-range-thumb {
@@ -312,10 +264,8 @@
     height: 28px;
     border: 0;
     border-radius: var(--radius-pill);
-    background: var(--bg-elevated);
-    box-shadow:
-      inset 0 0 0 0.5px var(--separator),
-      var(--shadow-contact);
+    background: var(--ivory);
+    box-shadow: var(--shadow-contact);
   }
 
   .slider:focus-visible {
@@ -323,12 +273,12 @@
   }
 
   .slider:focus-visible::-webkit-slider-thumb {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--gold);
     outline-offset: 2px;
   }
 
   .slider:focus-visible::-moz-range-thumb {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--gold);
     outline-offset: 2px;
   }
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Reveal } from "@/components/brand/Reveal";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { PeopleRoster } from "@/components/sections/PeopleRoster";
 import { peopleOf } from "@/content";
@@ -22,7 +23,9 @@ export default async function UcouncilPage({ params }: PageProps<"/[locale]/coun
       <PageHeader title={t("title")} lead={t("lead")} />
       <section className="section pt-4">
         <div className="page">
-          <PeopleRoster people={peopleOf("council")} roleLabel={t("roleLabel")} />
+          <Reveal>
+            <PeopleRoster people={peopleOf("council")} roleLabel={t("roleLabel")} />
+          </Reveal>
         </div>
       </section>
     </>

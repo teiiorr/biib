@@ -7,12 +7,12 @@ import type { Partner } from "./types";
  * Brendlar hurmat qilinadi: logotip qayta böyalmaydi, faqat kulrangdan rangga ötadi.
  */
 export const PARTNERS: readonly Partner[] = [
-  { id: "partner-1", accent: "blue" },
-  { id: "partner-2", accent: "sun" },
-  { id: "partner-3", accent: "coral" },
-  { id: "partner-4", accent: "grass" },
-  { id: "partner-5", accent: "grape" },
-  { id: "partner-6", accent: "pink" },
-  { id: "partner-7", accent: "blue" },
-  { id: "partner-8", accent: "sun" },
+  { id: "partner-1", accent: "violet" },
+  { id: "partner-2", accent: "gold" },
+  { id: "partner-3", accent: "magenta" },
+  { id: "partner-4", accent: "turquoise" },
+  { id: "partner-5", accent: "violet" },
+  { id: "partner-6", accent: "magenta" },
+  { id: "partner-7", accent: "violet" },
+  { id: "partner-8", accent: "gold" },
 ];

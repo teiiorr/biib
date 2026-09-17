@@ -1,9 +1,11 @@
+import type { CSSProperties } from "react";
+import type { Accent } from "@/content/types";
 import { cn } from "@/lib/cn";
 
 /**
  * Haqiqiy surat va logotip mijozdan kelmaguniça turadigan örinlar.
- * Böyalgan maydon va yozuv, boşqa hеç narsa: bo'ş kulrang quti tördan
- * çiqib turadi, bezakli çizma esa almaştiriş kerakligini yaşiradi.
+ * Böyalgan maydon va yozuv: bo'ş kulrang quti tördan çiqib turadi,
+ * bezakli çizma esa almaştiriş kerakligini yaşiradi.
  *
  * Almaştiriş: src/content dagi photo / cover / logo maydonini töldiriş kifoya.
  */
@@ -22,20 +24,38 @@ export function PortraitPlaceholder({ name, className }: { name: string; classNa
   return (
     <div
       aria-hidden="true"
-      className={cn("grid h-full w-full place-items-center bg-sunken", className)}
+      className={cn("grid h-full w-full place-items-center bg-graphite", className)}
     >
-      <span className="text-title2 text-label-secondary">{initials(name)}</span>
+      <span className="font-[family-name:var(--font-display)] text-title2 text-gold opacity-70">
+        {initials(name)}
+      </span>
     </div>
   );
 }
 
-export function CoverPlaceholder({ topic, className }: { topic: string; className?: string }) {
+/** Muqova örni: samosvet bilan tonlangan maydon va mavzu nomi. */
+export function CoverPlaceholder({
+  topic,
+  accent,
+  className,
+}: {
+  topic: string;
+  accent?: Accent;
+  className?: string;
+}) {
   return (
     <div
       aria-hidden="true"
-      className={cn("flex h-full w-full items-end bg-sunken p-4", className)}
+      style={accent ? ({ "--gem": `var(--${accent})` } as CSSProperties) : undefined}
+      className={cn(
+        "flex h-full w-full items-end p-4",
+        "bg-[color-mix(in_srgb,var(--gem,var(--violet))_14%,var(--bg-sunken))]",
+        className,
+      )}
     >
-      <span className="text-title3 text-label-secondary">{topic}</span>
+      <span className="font-[family-name:var(--font-display)] text-title3 text-label-secondary">
+        {topic}
+      </span>
     </div>
   );
 }
@@ -45,7 +65,8 @@ export function PartnerLogoPlaceholder({ name, className }: { name: string; clas
     <span
       aria-hidden="true"
       className={cn(
-        "flex h-14 w-full items-center justify-center rounded-sm bg-sunken px-3 text-center",
+        "flex h-14 w-full items-center justify-center rounded-sm px-3 text-center",
+        "bg-fill-secondary",
         className,
       )}
     >

@@ -1,47 +1,36 @@
 /*
- * Material. §5 ning töliq amalga oşiriliş.
+ * Material. Sayt qorongʻi bölgani uçun bitta variant — polunoç tonli
+ * şişa, oltin qirra va issiq yaltiroq.
  *
- * Şişa — funksional qatlam: suzuvçi chrome ni kontentdan ajratadi.
- * Kartalarda, jadvallarda, şakllarda va sahifa fonida işlatilmaydi.
+ * Şişa faqat suzuvçi chrome da: bar, şit, poverover, tost va media
+ * ustidagi boşqaruv. Kartalarda, jadvalda, şaklda va sahifa fonida yöq.
  */
 
 :root {
   /*
    * iOS 27 dagi şaffoflik suruvçisining veb muqobili.
    * 0 = töliq tonlangan (eng öqişli), 1 = ultra şaffof.
-   * Qiymat sozlamalardan keladi, standart 0.5.
    */
   --glass-intensity: 0.5;
 
   --glass-blur: 24px;
-  --glass-saturate: 175%;
-  --glass-tint: 255 255 255;
+  --glass-saturate: 165%;
+  /* Neytral qora emas, polunoç — brend fonidan ajralib turmasin. */
+  --glass-tint: 6 20 28;
 
-  /*
-   * Formula standart holatda §4.4 jadvalidagi zichlikni beradi:
-   * intensity 0.5 da regular uçun 0.72. iOS 27 da standart 26-siga
-   * qaraganda zichroq — şuning uçun yuqori çegara 0.86.
-   */
-  --glass-alpha: calc(0.86 - 0.28 * var(--glass-intensity));
+  /* 0.5 da 0.7 — 26-siga qaraganda zichroq, bu 27-sining oʻzgarişi. */
+  --glass-alpha: calc(0.82 - 0.24 * var(--glass-intensity));
 
-  /* Qorongʻi qirra — 27-sida çuqurlik va fondan ajraliş uçun kiritilgan. */
-  --glass-rim: rgb(0 0 0 / 0.16);
-  /* Spekulyar yaltiroq — 27-sida yorugʻroq. */
-  --glass-specular: rgb(255 255 255 / 0.6);
+  /* Qorongʻi qirra + ustiga ingiçka oltin çiziq: firma belgisi. */
+  --glass-rim: rgb(0 0 0 / 0.5);
+  --glass-gold-rim: rgb(201 162 90 / 0.22);
+  --glass-specular: rgb(244 225 160 / 0.18);
   --glass-sheen: linear-gradient(
     180deg,
-    rgb(255 255 255 / 0.22) 0%,
-    rgb(255 255 255 / 0.06) 38%,
-    rgb(255 255 255 / 0) 62%
+    rgb(244 225 160 / 0.09) 0%,
+    rgb(244 225 160 / 0.02) 40%,
+    rgb(244 225 160 / 0) 62%
   );
-}
-
-:root[data-theme="dark"] {
-  --glass-tint: 20 22 26;
-  --glass-alpha: calc(0.7 - 0.24 * var(--glass-intensity));
-  --glass-rim: rgb(0 0 0 / 0.48);
-  --glass-specular: rgb(255 255 255 / 0.22);
-  --glass-sheen: linear-gradient(180deg, rgb(255 255 255 / 0.1) 0%, rgb(255 255 255 / 0) 55%);
 }
 
 .glass {
@@ -51,19 +40,17 @@
 
   background-color: rgb(var(--glass-tint) / var(--glass-alpha));
   /*
-   * Yuqori qirradagi yaltiroq — "şişa torçasidagi yoruğlik". Psevdoelement
-   * emas, fon qatlami: ::before bölsa, uning ustidan çiqiş uçun barça
-   * bolalarga position: relative berişga toʻgʻri kelardi, bu esa
-   * absolute qöyilgan içki elementlarni (masalan segment plaşkasini)
-   * buzadi.
+   * Yaltiroq — fon qatlami, psevdoelement emas. ::before bölsa, uning
+   * ustidan çiqiş uçun barça bolalarga position: relative kerak bölardi,
+   * bu esa absolute qöyilgan içki elementlarni buzadi.
    */
   background-image: var(--glass-sheen);
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
 
   box-shadow:
-    inset 0 0 0 0.5px var(--glass-rim),
+    inset 0 0 0 0.5px var(--glass-gold-rim),
     inset 0 0.5px 0 0 var(--glass-specular),
-    var(--shadow-contact),
+    0 0 0 0.5px var(--glass-rim),
     var(--shadow-ambient);
 
   /* Qayta çiziliş çegaralanadi: busiz brauzer har skrollda butun
@@ -75,47 +62,22 @@
 
 .glass--thin {
   --glass-blur: 12px;
-  --glass-alpha: calc(0.69 - 0.28 * var(--glass-intensity));
+  --glass-alpha: calc(0.66 - 0.24 * var(--glass-intensity));
 }
 
 .glass--thick {
   --glass-blur: 36px;
-  --glass-alpha: calc(0.96 - 0.28 * var(--glass-intensity));
+  --glass-alpha: calc(0.92 - 0.2 * var(--glass-intensity));
 }
 
-/*
- * Rang-barang media ustida. Suruvçiga bögʻliq emas: bu yerda öqişlilik
- * foydalanuvçi tanloviga taşlab qöyilmaydi.
- */
+/* Rang-barang media ustida öqişlilik foydalanuvçi tanloviga taşlanmaydi. */
 .glass--tinted {
   --glass-blur: 24px;
-  --glass-alpha: 0.92;
-}
-
-:root[data-theme="dark"] .glass--thin {
-  --glass-alpha: calc(0.54 - 0.24 * var(--glass-intensity));
-}
-
-:root[data-theme="dark"] .glass--thick {
-  --glass-alpha: calc(0.82 - 0.24 * var(--glass-intensity));
-}
-
-:root[data-theme="dark"] .glass--tinted {
-  --glass-alpha: 0.88;
+  --glass-alpha: 0.9;
 }
 
 /*
- * Harakatlanayotgan video ustida backdrop-filter kompozitorni har kadrda
- * qayta hisoblaşga majbur qiladi. Öynayotgan video ostida xiralaştiradigan
- * narsaning özi yöq, şuning uçun qatlam butunlay öçiriladi.
- */
-.glass[data-over-video="true"] {
-  --glass-alpha: 0.94;
-  backdrop-filter: none;
-}
-
-/*
- * Scroll edge effect — §5.4. Sahifa tepasida bar körinmaydi; kontent
+ * Scroll edge effect (§5.4). Sahifa tepasida bar körinmaydi; kontent
  * ostiga kirgaç bitta yaxlit panel bölib paydo bölad. Chegara
  * IntersectionObserver orqali, scroll listener bilan emas.
  */
@@ -136,12 +98,18 @@
   background-image: var(--glass-sheen);
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   box-shadow:
-    inset 0 -0.5px 0 0 var(--separator),
+    inset 0 -0.5px 0 0 var(--line-gold),
     var(--shadow-contact);
   contain: paint;
 }
 
-.app-bar[data-over-video="true"] {
+/*
+ * Harakatlanayotgan video ustida backdrop-filter kompozitorni har kadrda
+ * qayta hisoblaşga majbur qiladi. Öynayotgan video ostida xiralaştiradigan
+ * narsaning özi yöq, şuning uçun qatlam butunlay öçiriladi.
+ */
+.app-bar[data-over-video="true"],
+.glass[data-over-video="true"] {
   background-color: rgb(var(--glass-tint) / 0.94);
   backdrop-filter: none;
 }
@@ -166,25 +134,19 @@
 }
 
 @media (prefers-contrast: more) {
+  :root {
+    --label-secondary: rgb(242 228 198 / 0.86);
+    --separator: rgb(242 228 198 / 0.32);
+    --line-gold: rgb(201 162 90 / 0.5);
+  }
+
+  .glass,
   .app-bar[data-scrolled="true"] {
     background-color: rgb(var(--glass-tint) / 0.97);
+    background-image: none;
     backdrop-filter: none;
-  }
-
-  .glass {
-    background-color: rgb(var(--glass-tint) / 0.97);
     box-shadow:
-      inset 0 0 0 1px rgb(0 0 0 / 0.42),
+      inset 0 0 0 1px var(--line-gold),
       var(--shadow-contact);
-  }
-
-  :root {
-    --label-secondary: rgb(0 0 0 / 0.78);
-    --separator: rgb(0 0 0 / 0.3);
-  }
-
-  :root[data-theme="dark"] {
-    --label-secondary: rgb(255 255 255 / 0.82);
-    --separator: rgb(255 255 255 / 0.34);
   }
 }

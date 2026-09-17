@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Reveal } from "@/components/brand/Reveal";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { ORG } from "@/content";
 
@@ -22,8 +23,8 @@ export default async function PrivacyPage({ params }: PageProps<"/[locale]/priva
 
       <section className="section pt-4">
         <div className="page read flex flex-col gap-7">
-          {BLOCKS.map((block) => (
-            <div key={block}>
+          {BLOCKS.map((block, index) => (
+            <Reveal key={block} delay={index * 70}>
               <h2 className="text-title3">{t(`${block}Heading` as "collectHeading")}</h2>
               <p className="mt-2 text-body text-label-secondary">
                 {t(`${block}Body` as "collectBody")}
@@ -35,7 +36,7 @@ export default async function PrivacyPage({ params }: PageProps<"/[locale]/priva
                   </a>
                 </p>
               ) : null}
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>

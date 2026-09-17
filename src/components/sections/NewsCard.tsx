@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useLocale } from "next-intl";
 import { CoverPlaceholder } from "@/components/brand/Placeholder";
-import { Card } from "@/components/ui/Card";
+import { GemCard } from "@/components/ui/GemCard";
 import { Link } from "@/i18n/navigation";
 import { pick } from "@/content";
 import type { NewsItem } from "@/content/types";
@@ -10,7 +10,7 @@ import { formatDate, isoDate } from "@/lib/format";
 import { cn } from "@/lib/cn";
 
 /**
- * Muqova boşda turadi, keyin mavzu va sana, keyin sarlavha.
+ * Muqova boşda, keyin mavzu va sana, keyin sarlavha.
  * Mavzu bilan sana " · " orqali birlaştirilmaydi (§12) — bular ikki
  * alohida maydon, orasi boşliq bilan ajratiladi.
  */
@@ -26,7 +26,7 @@ export function NewsCard({
   const locale = useLocale() as Locale;
 
   return (
-    <Card as="article" interactive className={cn("flex flex-col", className)}>
+    <GemCard accent={item.accent} interactive className={cn("flex flex-col", className)}>
       <div className="relative aspect-[16/10] overflow-hidden bg-sunken">
         {item.cover ? (
           <Image
@@ -44,7 +44,7 @@ export function NewsCard({
 
       <div className="flex flex-1 flex-col gap-2 p-4">
         <p className="flex flex-wrap items-baseline gap-x-3 text-footnote">
-          <span className="font-medium text-label">{pick(item.topic, locale)}</span>
+          <span className="font-medium text-accent-text">{pick(item.topic, locale)}</span>
           <time dateTime={isoDate(item.date)} className="text-label-secondary">
             {formatDate(item.date, locale, "long")}
           </time>
@@ -59,6 +59,6 @@ export function NewsCard({
           </Link>
         </h3>
       </div>
-    </Card>
+    </GemCard>
   );
 }

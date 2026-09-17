@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { Reveal } from "@/components/brand/Reveal";
 import { SectionHead, SectionMore } from "@/components/sections/SectionHead";
 import { ProjectCard } from "./ProjectCard";
 import { otherProjects } from "@/content";
@@ -10,17 +11,21 @@ export function ProjectsOverview() {
   return (
     <section className="section" aria-labelledby="home-projects">
       <div className="page">
-        <SectionHead id="home-projects" heading={t("heading")} lead={t("lead")} />
+        <Reveal>
+          <SectionHead id="home-projects" heading={t("heading")} lead={t("lead")} />
+        </Reveal>
 
         <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <li key={project.id} className="flex">
-              <ProjectCard project={project} className="w-full" />
-            </li>
+          {projects.map((project, index) => (
+            <Reveal as="li" key={project.id} delay={index * 90} className="flex">
+              <ProjectCard project={project} index={index + 2} className="w-full" />
+            </Reveal>
           ))}
         </ul>
 
-        <SectionMore className="mt-6" links={[{ href: "/projects", label: t("all") }]} />
+        <Reveal delay={120} className="mt-6">
+          <SectionMore links={[{ href: "/projects", label: t("all") }]} />
+        </Reveal>
       </div>
     </section>
   );

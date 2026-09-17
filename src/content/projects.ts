@@ -75,7 +75,7 @@ export const PROJECTS: readonly ProjectItem[] = [
         "Final concert on a stage in the capital",
       ],
     },
-    accent: "coral",
+    accent: "magenta",
     illustration: "stage",
     flagship: true,
     external: { href: "https://upop.uz", label: "upop.uz" },
@@ -161,7 +161,7 @@ export const PROJECTS: readonly ProjectItem[] = [
         "A shared exhibition at the end of the year",
       ],
     },
-    accent: "sun",
+    accent: "gold",
     illustration: "palette",
   },
   {
@@ -234,7 +234,7 @@ export const PROJECTS: readonly ProjectItem[] = [
         "A play at the end of the season",
       ],
     },
-    accent: "grape",
+    accent: "violet",
     illustration: "curtain",
   },
   {
@@ -307,7 +307,7 @@ export const PROJECTS: readonly ProjectItem[] = [
         "Work goes out under the names of the authors",
       ],
     },
-    accent: "grass",
+    accent: "turquoise",
     illustration: "storybook",
   },
 ];

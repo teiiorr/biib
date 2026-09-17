@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
+import { Reveal } from "@/components/brand/Reveal";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { SectionHead } from "@/components/sections/SectionHead";
@@ -42,24 +43,30 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
 
       <section className="section" aria-labelledby="about-mission">
         <div className="page">
-          <SectionHead id="about-mission" heading={t("missionHeading")} />
-          <p className="read mt-4 text-body text-label-secondary">{t("missionBody")}</p>
+          <Reveal>
+            <SectionHead id="about-mission" heading={t("missionHeading")} />
+            <p className="read mt-4 text-body text-label-secondary">{t("missionBody")}</p>
+          </Reveal>
         </div>
       </section>
 
       <section className="section bg-elevated" aria-labelledby="about-history">
         <div className="page">
-          <SectionHead id="about-history" heading={t("historyHeading")} />
-          <div className="mt-5 grid gap-5 text-body text-label-secondary lg:grid-cols-2 lg:gap-10">
-            <p>{t("historyBody1")}</p>
-            <p>{t("historyBody2")}</p>
-          </div>
+          <Reveal>
+            <SectionHead id="about-history" heading={t("historyHeading")} />
+            <div className="mt-5 grid gap-5 text-body text-label-secondary lg:grid-cols-2 lg:gap-10">
+              <p>{t("historyBody1")}</p>
+              <p>{t("historyBody2")}</p>
+            </div>
+          </Reveal>
         </div>
       </section>
 
       <section className="section" aria-labelledby="about-values">
         <div className="page">
-          <SectionHead id="about-values" heading={t("valuesHeading")} />
+          <Reveal>
+            <SectionHead id="about-values" heading={t("valuesHeading")} />
+          </Reveal>
           <Values />
 
           <div className="mt-10 flex justify-end">
