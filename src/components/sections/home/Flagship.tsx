@@ -9,9 +9,9 @@ import type { Locale } from "@/i18n/locales";
 import type { CSSProperties } from "react";
 
 /**
- * Boş loyiha — butun ekranli jonli sahna. Fondagi surat Higgsfield
- * orqali jonlantirilgan: qizlar nafas oladi, soçlar sekin tebranadi.
- * prefers-reduced-motion da faqat asl surat qoladi.
+ * Boş loyiha. Jonli kadr karta materialidagi romda turadi, logotip
+ * video ustida emas — yonida, oltin şuʼla bilan. Video Higgsfield
+ * orqali jonlantirilgan; prefers-reduced-motion da faqat surat qoladi.
  */
 export function Flagship() {
   const t = useTranslations("home.flagship");
@@ -23,68 +23,76 @@ export function Flagship() {
     <section
       aria-labelledby="home-flagship"
       style={{ "--gem": "var(--magenta)", "--gem-line": "var(--magenta-line)" } as CSSProperties}
-      className="relative isolate overflow-hidden"
+      className="section"
     >
-      <LivingVideo
-        src="/brand/upop-live.mp4"
-        poster="/brand/upop-scene.jpg"
-        posterAlt={t("bannerAlt")}
-      />
-
-      {/* Matn ostidagi zich parda: video har qançalik yorugʻ bölsa ham
-          pastki üçdan bir qismida kontrast kafolatlanadi. */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-[linear-gradient(180deg,rgb(10_28_38/0.22)_0%,rgb(10_28_38/0.06)_38%,rgb(10_28_38/0.55)_66%,rgb(10_28_38/0.94)_88%)]"
-      />
-
-      <div className="page relative z-10 flex min-h-[100svh] flex-col">
+      <div className="page">
         <h2 id="home-flagship" className="sr-only">
           {t("heading")}
         </h2>
 
-        {/*
-         * Katta logotip joyi. Mijoz yangi faylni bergaç şu Image
-         * almaştiriladi — ölçam va örin şu yerda qoladi.
-         */}
-        <div id="flagship-logo-slot" className="flex flex-1 items-center justify-center py-20">
-          <Reveal>
-            <Image
-              src="/brand/upop-logo.png"
-              alt=""
-              width={900}
-              height={703}
-              sizes="(max-width: 768px) 60vw, 380px"
-              className="h-auto w-[min(58vw,24rem)] drop-shadow-[0_24px_48px_rgba(0,0,0,0.55)]"
-            />
-          </Reveal>
-        </div>
-
-        <div className="pb-12 md:pb-16">
-          <Reveal className="max-w-xl">
-            <p className="text-body text-label md:text-headline">{t("lead")}</p>
-
-            <ul className="mt-5 flex flex-col gap-2">
-              {pick(project.facts, locale).map((fact) => (
-                <li key={fact} className="flex gap-2.5 text-callout text-label-secondary">
-                  <GemBullet />
-                  {fact}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-
-          {project.external ? (
-            <Reveal delay={120} className="mt-7 flex justify-end">
-              <ExternalButton
-                href={project.external.href}
-                newTabLabel={tCommon("opensInNewTab")}
-                size="lg"
-              >
-                {t("cta")}
-              </ExternalButton>
+        <div className="grid gap-y-9 lg:grid-cols-[1.08fr_0.92fr] lg:grid-rows-[auto_auto] lg:items-center lg:gap-x-14 lg:gap-y-8">
+          {/*
+           * Katta logotip joyi. Mijoz yangi faylni bergaç şu Image
+           * almaştiriladi — ölçam va örin şu yerda qoladi.
+           */}
+          <div
+            id="flagship-logo-slot"
+            className="flex justify-center lg:col-start-2 lg:row-start-1 lg:self-end"
+          >
+            <Reveal>
+              <div className="logo-glow relative isolate">
+                <Image
+                  src="/brand/upop-logo.png"
+                  alt=""
+                  width={900}
+                  height={703}
+                  sizes="(max-width: 768px) 52vw, 300px"
+                  className="h-auto w-[min(52vw,15rem)] drop-shadow-[0_0_30px_rgb(201_162_90/0.4)] lg:w-[min(24vw,19rem)]"
+                />
+              </div>
             </Reveal>
-          ) : null}
+          </div>
+
+          {/* Jonli kadr romda: şişa qirra, atrofida yumşoq şuʼla. */}
+          <Reveal className="lg:col-start-1 lg:row-start-1 lg:row-span-2">
+            <figure className="media-frame glass glass-card relative isolate rounded-xl p-2.5 sm:p-3">
+              <div className="relative aspect-video overflow-hidden rounded-lg">
+                <LivingVideo
+                  src="/brand/upop-live.mp4"
+                  poster="/brand/upop-scene.jpg"
+                  posterAlt={t("bannerAlt")}
+                />
+              </div>
+              <figcaption className="sr-only">{t("bannerAlt")}</figcaption>
+            </figure>
+          </Reveal>
+
+          <div className="lg:col-start-2 lg:row-start-2 lg:self-start">
+            <Reveal>
+              <p className="text-body text-label md:text-headline">{t("lead")}</p>
+
+              <ul className="mt-5 flex flex-col gap-2">
+                {pick(project.facts, locale).map((fact) => (
+                  <li key={fact} className="flex gap-2.5 text-callout text-label-secondary">
+                    <GemBullet />
+                    {fact}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+
+            {project.external ? (
+              <Reveal delay={120} className="mt-7 flex justify-end">
+                <ExternalButton
+                  href={project.external.href}
+                  newTabLabel={tCommon("opensInNewTab")}
+                  size="lg"
+                >
+                  {t("cta")}
+                </ExternalButton>
+              </Reveal>
+            ) : null}
+          </div>
         </div>
       </div>
     </section>

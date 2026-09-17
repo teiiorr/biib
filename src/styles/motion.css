@@ -308,6 +308,25 @@ html[data-js] [data-reveal="in"] {
   }
 }
 
+/* ---- Logotip ortidagi şuʼla: belgiga ergaşgan yumşoq oltin nur ---- */
+
+.logo-glow::before {
+  content: "";
+  position: absolute;
+  inset: -22%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgb(201 162 90 / 0.42),
+    rgb(214 62 140 / 0.16) 55%,
+    transparent 78%
+  );
+  filter: blur(30px);
+  animation: aura-pulse 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .gold-text,
   .aura,
@@ -326,6 +345,10 @@ html[data-js] [data-reveal="in"] {
   }
 
   .parallax-media {
+    animation: none !important;
+  }
+
+  .logo-glow::before {
     animation: none !important;
   }
 

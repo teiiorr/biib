@@ -102,6 +102,14 @@
   );
 }
 
+/* Jonli kadr romi: karta materiali, atrofida samosvet şuʼlasi. */
+.media-frame {
+  box-shadow:
+    0 30px 90px -28px rgb(214 62 140 / 0.32),
+    0 18px 60px -24px rgb(201 162 90 / 0.28),
+    var(--shadow-modal);
+}
+
 /*
  * Scroll edge effect (§5.4). Sahifa tepasida bar körinmaydi; kontent
  * ostiga kirgaç bitta yaxlit panel bölib paydo bölad. Chegara
