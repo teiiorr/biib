@@ -1,138 +1,116 @@
-/* Dizayn tokenlari. Barça ranglar faqat şu yerda — komponentlarda hex yöq. */
+/*
+ * Dizayn tokenlari. Barça qiymat faqat şu yerda — komponentda hex yöq.
+ * Materialning özi glass.css da.
+ */
 
 :root {
-  color-scheme: light;
+  /* ---- Tör: asos 4px, iş qadami 8px ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
 
-  /* Yuzalar. --bg-top va --bg-bottom osmon gradientini beradi. */
-  --bg-top: #f4f9ff;
-  --bg-bottom: #ffffff;
-  --bg: #f4f9ff;
-  --surface: #ffffff;
-  --surface-2: #f0f6ff;
-  --surface-3: #e7f0fe;
-
-  /* Matn. Har biri oq yuzada AA dan ötadi. */
-  --ink: #12233b;
-  --ink-2: #4a5e78;
-  --ink-muted: #5b6d82;
-  --ink-on-accent: #12233b;
-  --ink-inverse: #ffffff;
-
-  /* Kök — işonç rangi. --blue grafik uçun, matn uçun emas. */
-  --blue: #2e7df6;
-  --blue-deep: #1b4fb0;
-  --blue-light: #7fb2ff;
-  --blue-cta: #2569d6;
-  --blue-cta-hover: #1f62ce;
-  --blue-soft: rgba(46, 125, 246, 0.08);
-
-  --line: rgba(46, 125, 246, 0.16);
-  --line-strong: rgba(46, 125, 246, 0.3);
-
-  /* Soyalar haqiqiy: siljiş + blur, yoruğlik halqasi emas. */
-  --shadow: 0 20px 44px -24px rgba(30, 90, 200, 0.22);
-  --shadow-lift: 0 30px 60px -28px rgba(30, 90, 200, 0.3);
-  --shadow-glass: 0 18px 40px -26px rgba(20, 60, 140, 0.35);
-  --shadow-cta: 0 14px 28px -14px rgba(27, 79, 176, 0.55);
-  --shadow-cta-hover: 0 20px 34px -14px rgba(27, 79, 176, 0.62);
-
-  /* Şişa faqat suzuvçi elementlarda: header, mobil menyu, dropdown, dialog. */
-  --glass-fill: rgba(255, 255, 255, 0.62);
-  --glass-fill-strong: rgba(255, 255, 255, 0.86);
-  --glass-border: rgba(255, 255, 255, 0.75);
-
-  --focus-ring: rgba(46, 125, 246, 0.16);
-  --focus-color: #2569d6;
-
-  /* Böyoq. Ekranda ikki-uçtasi, beştasi hеç qaçon birga emas. */
-  --sun: #ffc53d;
-  --sun-ink: #8a5b00;
-  --sun-soft: rgba(255, 197, 61, 0.14);
-  --coral: #ff6b5a;
-  --coral-ink: #c42f1d;
-  --coral-soft: rgba(255, 107, 90, 0.13);
-  --grass: #39c36e;
-  --grass-ink: #12784a;
-  --grass-soft: rgba(57, 195, 110, 0.13);
-  --pink: #ff7bc5;
-  --pink-ink: #c22c86;
-  --pink-soft: rgba(255, 123, 197, 0.13);
-  --grape: #9873f8;
-  --grape-ink: #6a34d6;
-  --grape-soft: rgba(152, 115, 248, 0.13);
-
-  /* Qalam çizgisi — barça doodle va tagçizgilar bir qöl bilan çizilgan. */
-  --stroke-w: 3;
+  /* ---- Radiuslar ---- */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-bar: 26px;
+  --radius-pill: 999px;
 
   /*
-   * UPOP TREND paneli. Rang ikkala mavzuda bir xil: bu birlaşmaning emas,
-   * loyihaning öz brendi va u qoronği sahnada turadi.
+   * Aksent logotipdan olingan. Apple ning #0A84FF i oq matn bilan 3.65:1
+   * beradi va §8 dan ötmaydi — şuning uçun birlaşma vordmarkining kögi
+   * iş yoruğligigaça kötarildi: oq matn bilan 5.68:1.
    */
-  --stage-bg: #101f38;
-  --stage-ink: #eaf2ff;
-  --stage-ink-2: rgba(234, 242, 255, 0.74);
-  --stage-line: rgba(160, 196, 255, 0.2);
+  --accent: #1f62ce;
+  --accent-hover: #1b57b8;
+  --accent-pressed: #14509e;
+  --accent-contrast: #ffffff;
+  --accent-wash: rgb(31 98 206 / 0.1);
+  /*
+   * Aksent matn bölib turganda alohida token kerak: qorongʻida
+   * toʻldiriş rangi (#1F62CE) matn sifatida 3.19:1 beradi va §8 dan
+   * ötmaydi. Toʻldiriş qorongʻi qoladi, matn yoruğlaşadi.
+   */
+  --accent-text: #1f62ce;
 
-  /* Podval osmoni. Matn kontrasti şu ikki rangga qarab tekşiriladi. */
-  --footer-from: #f0f6ff;
-  --footer-to: #e8f1ff;
+  /* Ikkinçi darajali tugma va segment tagligi */
+  --fill-secondary: rgb(0 0 0 / 0.06);
+  --fill-secondary-hover: rgb(0 0 0 / 0.1);
+
+  /* ---- Matn (yoruğ) ---- */
+  --label-primary: rgb(0 0 0 / 0.88);
+  --label-secondary: rgb(0 0 0 / 0.58);
+  /* Faqat belgi va bezak uçun: 13 px matn bunda AA dan ötmaydi. */
+  --label-tertiary: rgb(0 0 0 / 0.5);
+  --label-quaternary: rgb(0 0 0 / 0.2);
+
+  /* ---- Fonlar (yoruğ) ---- */
+  --bg-base: #f1f3f7;
+  --bg-elevated: #ffffff;
+  --bg-sunken: #e7eaf1;
+  --separator: rgb(0 0 0 / 0.1);
+
+  /* ---- Maʼno ranglari ---- */
+  --success: #30a14e;
+  --warning: #c26a00;
+  --danger: #d7263d;
+
+  /* ---- Soyalar: kontakt + tarqoq, ikki qatlam ---- */
+  --shadow-contact: 0 1px 2px rgb(0 0 0 / 0.06);
+  --shadow-ambient: 0 8px 24px -8px rgb(0 0 0 / 0.18);
+  --shadow-modal: 0 24px 64px -16px rgb(0 0 0 / 0.32);
+
+  /* ---- Harakat ---- */
+  --dur-fast: 150ms;
+  --dur-base: 240ms;
+  --dur-slow: 320ms;
+  --ease-standard: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  /* ---- Qatlamlar. Şkaladan taşqari qiymat işlatilmaydi. ---- */
+  --z-content: 0;
+  --z-sticky: 10;
+  --z-bar: 100;
+  --z-dock: 200;
+  --z-popover: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-alert: 600;
 }
 
-html[data-theme="dark"] {
-  color-scheme: dark;
+:root[data-theme="dark"] {
+  --accent: #1f62ce;
+  /* Qorongʻida hover yoruğroq, ammo oq matn bilan 4.58:1 dan tuşmaydi. */
+  --accent-hover: #2b72e0;
+  --accent-pressed: #17539f;
+  --accent-wash: rgb(61 130 232 / 0.16);
+  --accent-text: #4d90f0;
 
-  --bg-top: #0a1526;
-  --bg-bottom: #0e1d33;
-  --bg: #0a1526;
-  --surface: #12233b;
-  --surface-2: #172c48;
-  --surface-3: #1e3557;
+  --fill-secondary: rgb(255 255 255 / 0.1);
+  --fill-secondary-hover: rgb(255 255 255 / 0.16);
 
-  --ink: #eaf2ff;
-  --ink-2: rgba(234, 242, 255, 0.66);
-  --ink-muted: rgba(234, 242, 255, 0.58);
-  --ink-on-accent: #0a1526;
-  --ink-inverse: #0a1526;
+  --label-primary: rgb(255 255 255 / 0.92);
+  --label-secondary: rgb(255 255 255 / 0.6);
+  --label-tertiary: rgb(255 255 255 / 0.48);
+  --label-quaternary: rgb(255 255 255 / 0.2);
 
-  --blue: #4c90ff;
-  --blue-deep: #bfd8ff;
-  --blue-light: #2e7df6;
-  --blue-cta: #4c90ff;
-  --blue-cta-hover: #6ba5ff;
-  --blue-soft: rgba(76, 144, 255, 0.12);
+  --bg-base: #000000;
+  --bg-elevated: #14161a;
+  --bg-sunken: #0a0b0d;
+  --separator: rgb(255 255 255 / 0.12);
 
-  --line: rgba(140, 180, 255, 0.14);
-  --line-strong: rgba(140, 180, 255, 0.26);
+  --success: #3fbb63;
+  --warning: #e08a1e;
+  --danger: #ef4a5e;
 
-  --shadow: 0 26px 54px -28px rgba(0, 0, 0, 0.7);
-  --shadow-lift: 0 36px 70px -30px rgba(0, 0, 0, 0.78);
-  --shadow-glass: 0 24px 50px -30px rgba(0, 0, 0, 0.8);
-  --shadow-cta: 0 14px 30px -14px rgba(0, 0, 0, 0.72);
-  --shadow-cta-hover: 0 20px 36px -14px rgba(0, 0, 0, 0.78);
-
-  --glass-fill: rgba(18, 35, 59, 0.55);
-  --glass-fill-strong: rgba(18, 35, 59, 0.8);
-  --glass-border: rgba(160, 196, 255, 0.16);
-
-  --focus-ring: rgba(76, 144, 255, 0.24);
-  --focus-color: #6ba5ff;
-
-  --sun: #ffd15c;
-  --sun-ink: #ffd15c;
-  --sun-soft: rgba(255, 209, 92, 0.16);
-  --coral: #ff7e6e;
-  --coral-ink: #ff7e6e;
-  --coral-soft: rgba(255, 126, 110, 0.16);
-  --grass: #4fd99a;
-  --grass-ink: #4fd99a;
-  --grass-soft: rgba(79, 217, 154, 0.16);
-  --pink: #ff93d0;
-  --pink-ink: #ff93d0;
-  --pink-soft: rgba(255, 147, 208, 0.16);
-  --grape: #9e7bf7;
-  --grape-ink: #b49cfb;
-  --grape-soft: rgba(158, 123, 247, 0.18);
-
-  --footer-from: #12233b;
-  --footer-to: #0a1526;
+  --shadow-contact: 0 1px 2px rgb(0 0 0 / 0.5);
+  --shadow-ambient: 0 8px 24px -8px rgb(0 0 0 / 0.6);
+  --shadow-modal: 0 24px 64px -16px rgb(0 0 0 / 0.72);
 }

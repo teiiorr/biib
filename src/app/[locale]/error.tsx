@@ -18,12 +18,11 @@ export default function ErrorBoundary({
   }, [error]);
 
   return (
-    <section className="section-y">
-      <div className="page-w page-x flex flex-col gap-6">
-        <span aria-hidden="true" className="block h-1.5 w-14 rounded-full bg-coral-ink" />
-        <h1 className="text-[clamp(2rem,5vw,3rem)]">{t("title")}</h1>
-        <p className="max-w-xl text-[1.08rem] text-ink-2">{t("lead")}</p>
-        <div className="flex justify-end">
+    <section className="section">
+      <div className="page read">
+        <h1 className="text-title1">{t("title")}</h1>
+        <p className="mt-4 text-body text-label-secondary">{t("lead")}</p>
+        <div className="mt-8 flex justify-end">
           <Button size="lg" onClick={reset}>
             {t("retry")}
           </Button>

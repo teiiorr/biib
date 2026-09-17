@@ -1,40 +1,31 @@
 import { cva, type VariantProps } from "class-variance-authority";
 
 /**
- * Tugma körinişlari. Server komponentlarda <Link> ni şu sinflar bilan
- * bezaş uçun alohida faylda turadi.
+ * Törtta köriniş — §6.5. Beşinçisi öylab topilmaydi.
+ * Alohida faylda: server komponentlarda <Link> ni şu sinflar bilan bezaymiz.
  */
 export const buttonVariants = cva(
   [
-    "inline-flex select-none items-center justify-center gap-2.5",
-    "rounded-btn font-display font-bold leading-none",
-    "transition-[transform,box-shadow,background-color,border-color,color]",
-    "duration-200 ease-[var(--ease-pop)]",
-    "focus-visible:ring-4 focus-visible:ring-[var(--focus-ring)]",
-    "disabled:pointer-events-none disabled:opacity-55",
-    "active:translate-y-0 active:scale-[0.99]",
+    "tap inline-flex select-none items-center justify-center gap-2",
+    "rounded-md font-semibold whitespace-nowrap",
+    "transition-[background-color,color,scale] duration-[var(--dur-fast)] ease-[var(--ease-standard)]",
+    "active:scale-[0.97]",
+    "disabled:pointer-events-none disabled:opacity-40",
+    "aria-disabled:pointer-events-none aria-disabled:opacity-40",
   ],
   {
     variants: {
       variant: {
-        primary: [
-          "bg-blue-cta text-ink-inverse shadow-cta",
-          "hover:-translate-y-0.5 hover:bg-blue-cta-hover hover:shadow-cta-hover",
-        ],
-        secondary: [
-          "border-2 border-blue-cta bg-surface/75 text-blue-deep",
-          "hover:-translate-y-0.5 hover:bg-surface hover:shadow-soft",
-        ],
-        quiet: [
-          "border border-line bg-transparent text-ink-2",
-          "hover:border-line-strong hover:bg-blue-soft hover:text-ink",
-        ],
-        link: ["text-blue-deep underline-offset-4 hover:underline"],
+        primary: "bg-accent text-accent-contrast hover:bg-accent-hover active:bg-accent-pressed",
+        secondary:
+          "bg-fill-secondary text-label hover:bg-fill-secondary-hover active:bg-fill-secondary-hover",
+        glass: "glass glass--thin text-label hover:brightness-[0.97]",
+        plain: "text-accent hover:bg-accent-wash",
       },
       size: {
-        md: "h-11 px-5 text-[0.98rem]",
-        lg: "h-13 px-7 text-[1.06rem]",
-        icon: "h-11 w-11 px-0",
+        sm: "h-8 px-3 text-footnote",
+        md: "h-10 px-4 text-callout",
+        lg: "h-12 px-5 text-headline",
       },
     },
     defaultVariants: { variant: "primary", size: "md" },

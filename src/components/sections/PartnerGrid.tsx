@@ -6,8 +6,8 @@ import type { Locale } from "@/i18n/locales";
 import { cn } from "@/lib/cn";
 
 /**
- * Logotiplar teng törda. Odatda kulrang, sıçkon ostida rangga kiradi —
- * brend qayta böyalmaydi, faqat filtr olinadi.
+ * Logotiplar teng törda. Haqiqiy logotip kulrangdan rangga ötadi —
+ * brend qayta böyalmaydi, faqat filtr olinadi. Örinbosarlar rangsiz.
  */
 export function PartnerGrid({ className }: { className?: string }) {
   const t = useTranslations("partners");
@@ -15,28 +15,30 @@ export function PartnerGrid({ className }: { className?: string }) {
   const locale = useLocale() as Locale;
 
   return (
-    <ul className={cn("grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4", className)}>
+    <ul className={cn("grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4", className)}>
       {PARTNERS.map((partner, index) => {
         const name = partner.name ? pick(partner.name, locale) : t("slot", { n: index + 1 });
 
-        const logo = (
-          <span
+        const logo = partner.logo ? (
+          <Image
+            src={partner.logo}
+            alt={name}
+            width={200}
+            height={72}
             className={cn(
-              "block w-full max-w-[10rem] grayscale transition-[filter,opacity,transform] duration-300 ease-[var(--ease-micro)]",
-              "opacity-85 group-hover:scale-[1.03] group-hover:opacity-100 group-hover:grayscale-0",
-              "group-focus-visible:opacity-100 group-focus-visible:grayscale-0",
+              "h-auto w-full max-w-40 grayscale transition-[filter] duration-[var(--dur-base)]",
+              "group-hover:grayscale-0 group-focus-visible:grayscale-0",
             )}
-          >
-            {partner.logo ? (
-              <Image src={partner.logo} alt={name} width={200} height={72} className="h-auto w-full" />
-            ) : (
-              <PartnerLogoPlaceholder name={name} accent={partner.accent} />
-            )}
-          </span>
+          />
+        ) : (
+          <PartnerLogoPlaceholder name={name} />
         );
 
-        const shell =
-          "group grid h-24 place-items-center rounded-card border border-line bg-surface px-5 shadow-soft transition-[transform,box-shadow] duration-300 ease-[var(--ease-pop)] sm:h-28";
+        const shell = [
+          "group grid h-24 place-items-center rounded-md bg-elevated px-4",
+          "shadow-[inset_0_0_0_0.5px_var(--separator)]",
+          "transition-colors duration-[var(--dur-fast)]",
+        ].join(" ");
 
         return (
           <li key={partner.id}>
@@ -46,7 +48,7 @@ export function PartnerGrid({ className }: { className?: string }) {
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label={`${name} (${tCommon("opensInNewTab")})`}
-                className={cn(shell, "hover:-translate-y-1 hover:shadow-lift focus-visible:ring-4 focus-visible:ring-[var(--focus-ring)]")}
+                className={cn(shell, "hover:bg-sunken")}
               >
                 {logo}
               </a>

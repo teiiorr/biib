@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Reveal } from "@/components/brand/Reveal";
 import { NewsCard } from "@/components/sections/NewsCard";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { allNews } from "@/content";
@@ -19,19 +18,17 @@ export default async function NewsPage({ params }: PageProps<"/[locale]/news">) 
 
   return (
     <>
-      <PageHeader title={t("title")} lead={t("lead")} accent="sun" />
+      <PageHeader title={t("title")} lead={t("lead")} />
 
-      <section className="section-y pt-10">
-        <div className="page-w page-x">
+      <section className="section pt-4">
+        <div className="page">
           {items.length === 0 ? (
-            <p className="text-[1.06rem] text-ink-2">{t("empty")}</p>
+            <p className="text-body text-label-secondary">{t("empty")}</p>
           ) : (
-            <ul className="row-even grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {items.map((item, index) => (
                 <li key={item.slug} className="flex">
-                  <Reveal pop delay={(index % 3) * 100} className="flex w-full">
-                    <NewsCard item={item} className="w-full" priority={index < 3} />
-                  </Reveal>
+                  <NewsCard item={item} className="w-full" priority={index < 3} />
                 </li>
               ))}
             </ul>

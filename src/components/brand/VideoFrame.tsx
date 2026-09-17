@@ -2,14 +2,18 @@
 
 import { useRef, useState } from "react";
 import { Icon } from "./Icon";
+import { announceVideo } from "@/lib/video-signal";
 import { cn } from "@/lib/cn";
 
 /**
  * Bosilganda oçiladigan video. Özi boşlanmaydi va oldindan yuklanmaydi:
- * bu 50 soniyalik suhbat, fon harakati emas.
+ * bu suhbat yozuvi, fon harakati emas.
  *
- * <video> hamişa DOM da turadi va play() bosiş içida çaqiriladi —
- * aks holda brauzer "foydalanuvçi ruxsati yöq" deb rad etadi.
+ * <video> hamişa DOM da turadi va play() bosiş içida çaqiriladi — aks
+ * holda brauzer "foydalanuvçi ruxsati yöq" deb rad etadi.
+ *
+ * Öynay boşlaganda butun sahifaga xabar beriladi: sarlavha şu payt
+ * backdrop-filter ni öçirib, zich tonlangan holatga ötadi.
  */
 export function VideoFrame({
   src,
@@ -20,7 +24,7 @@ export function VideoFrame({
 }: {
   src: string;
   poster: string;
-  /** Tugmaning oçiq nomi, masalan "Videoni koʻrish". */
+  /** Tugmaning oçiq nomi, masalan "Videoni körиş". */
   label: string;
   posterAlt: string;
   className?: string;
@@ -37,12 +41,7 @@ export function VideoFrame({
   }
 
   return (
-    <div
-      className={cn(
-        "relative aspect-video overflow-hidden rounded-[1.25rem] bg-stage-bg sm:rounded-[1.5rem]",
-        className,
-      )}
-    >
+    <div className={cn("relative aspect-video overflow-hidden rounded-lg bg-black", className)}>
       <video
         ref={ref}
         src={src}
@@ -50,33 +49,27 @@ export function VideoFrame({
         preload="none"
         playsInline
         aria-label={posterAlt}
-        className="h-full w-full bg-stage-bg object-cover"
+        onPlay={() => announceVideo(true)}
+        onPause={() => announceVideo(false)}
+        onEnded={() => announceVideo(false)}
+        className="h-full w-full object-cover"
       />
 
       {started ? null : (
         <button
           type="button"
           onClick={start}
-          className={cn(
-            "group absolute inset-0 grid place-items-center",
-            "bg-[color-mix(in_srgb,var(--stage-bg)_38%,transparent)]",
-            "transition-colors duration-300 ease-[var(--ease-micro)]",
-            "hover:bg-[color-mix(in_srgb,var(--stage-bg)_22%,transparent)]",
-            "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--focus-ring)]",
-          )}
+          className="group absolute inset-0 grid place-items-center bg-black/25 transition-colors duration-[var(--dur-fast)] hover:bg-black/15"
         >
-          <span className="flex flex-col items-center gap-3">
+          {/* Media ustidagi boşqaruv — şişa öz örnida turgan yagona joy. */}
+          <span className="glass glass--thin flex items-center gap-2.5 rounded-pill py-2.5 pl-3 pr-4 text-label">
             <span
               aria-hidden="true"
-              className={cn(
-                "grid h-16 w-16 place-items-center rounded-full bg-blue-cta text-ink-inverse shadow-cta",
-                "transition-transform duration-300 ease-[var(--ease-pop)]",
-                "group-hover:scale-110 sm:h-20 sm:w-20",
-              )}
+              className="grid h-8 w-8 place-items-center rounded-pill bg-accent text-accent-contrast"
             >
-              <Icon name="play" className="ml-1 h-7 w-7 sm:h-8 sm:w-8" strokeWidth={2.2} />
+              <Icon name="play" className="ml-0.5 h-4 w-4" />
             </span>
-            <span className="font-display text-[0.98rem] font-bold text-stage-ink">{label}</span>
+            <span className="text-callout font-semibold">{label}</span>
           </span>
         </button>
       )}

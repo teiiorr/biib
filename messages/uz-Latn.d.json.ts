@@ -22,11 +22,6 @@ declare const messages: {
     "partners": "Hamkorlar",
     "contacts": "Aloqa"
   },
-  "theme": {
-    "label": "Mavzu",
-    "toDark": "Qorongʻi mavzuga oʻtish",
-    "toLight": "Yorugʻ mavzuga oʻtish"
-  },
   "locale": {
     "label": "Tilni tanlash"
   },
@@ -34,7 +29,8 @@ declare const messages: {
     "all": "Barchasi",
     "backToNews": "Yangiliklarga qaytish",
     "opensInNewTab": "yangi oynada ochiladi",
-    "topic": "Mavzu"
+    "topic": "Mavzu",
+    "close": "Yopish"
   },
   "home": {
     "hero": {
@@ -212,6 +208,18 @@ declare const messages: {
     "title": "Nimadir buzildi",
     "lead": "Sahifani yuklashda xatolik yuz berdi.",
     "retry": "Qayta urinish"
+  },
+  "appearance": {
+    "label": "Koʻrinish sozlamalari",
+    "themeHeading": "Mavzu",
+    "themeSystem": "Tizim",
+    "themeLight": "Yorugʻ",
+    "themeDark": "Qorongʻi",
+    "glassHeading": "Shaffoflik",
+    "glassDense": "Zich",
+    "glassStandard": "Odatdagi",
+    "glassClear": "Shaffof",
+    "systemOverride": "Tizimda shaffoflik kamaytirilgan, shuning uchun sozlama ishlamaydi."
   }
 };
 export default messages;

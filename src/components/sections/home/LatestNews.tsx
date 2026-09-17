@@ -1,10 +1,8 @@
 import { useTranslations } from "next-intl";
-import { Reveal } from "@/components/brand/Reveal";
-import { SectionHead, SectionMore } from "@/components/sections/SectionHead";
 import { NewsCard } from "@/components/sections/NewsCard";
+import { SectionHead, SectionMore } from "@/components/sections/SectionHead";
 import { latestNews } from "@/content";
 
-/** Üç sönggi yangilik, ketma-ket çiqadi. */
 export function LatestNews() {
   const t = useTranslations("home.news");
   const items = latestNews(3);
@@ -12,21 +10,19 @@ export function LatestNews() {
   if (items.length === 0) return null;
 
   return (
-    <section className="section-y" aria-labelledby="home-news">
-      <div className="page-w page-x">
+    <section className="section" aria-labelledby="home-news">
+      <div className="page">
         <SectionHead id="home-news" heading={t("heading")} />
 
-        <ul className="row-even mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((item, index) => (
+        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {items.map((item) => (
             <li key={item.slug} className="flex">
-              <Reveal pop delay={index * 110} className="flex w-full">
-                <NewsCard item={item} className="w-full" />
-              </Reveal>
+              <NewsCard item={item} className="w-full" />
             </li>
           ))}
         </ul>
 
-        <SectionMore className="mt-8" delay={120} links={[{ href: "/news", label: t("all") }]} />
+        <SectionMore className="mt-6" links={[{ href: "/news", label: t("all") }]} />
       </div>
     </section>
   );

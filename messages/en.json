@@ -19,11 +19,6 @@
     "partners": "Partners",
     "contacts": "Contact"
   },
-  "theme": {
-    "label": "Theme",
-    "toDark": "Switch to dark theme",
-    "toLight": "Switch to light theme"
-  },
   "locale": {
     "label": "Choose language"
   },
@@ -31,7 +26,8 @@
     "all": "All",
     "backToNews": "Back to news",
     "opensInNewTab": "opens in a new tab",
-    "topic": "Topic"
+    "topic": "Topic",
+    "close": "Close"
   },
   "home": {
     "hero": {
@@ -209,5 +205,17 @@
     "title": "Something went wrong",
     "lead": "There was an error loading the page.",
     "retry": "Try again"
+  },
+  "appearance": {
+    "label": "Appearance settings",
+    "themeHeading": "Theme",
+    "themeSystem": "System",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "glassHeading": "Transparency",
+    "glassDense": "Solid",
+    "glassStandard": "Default",
+    "glassClear": "Clear",
+    "systemOverride": "Your system has reduce transparency turned on, so this setting is unavailable."
   }
 }

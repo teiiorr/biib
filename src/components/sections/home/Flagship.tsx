@@ -1,18 +1,10 @@
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { Icon } from "@/components/brand/Icon";
-import { Reveal } from "@/components/brand/Reveal";
-import { buttonVariants } from "@/components/ui/button-variants";
+import { ExternalButton } from "@/components/ui/LinkButton";
 import { flagshipProject, pick } from "@/content";
 import type { Locale } from "@/i18n/locales";
 
-/**
- * Boş loyiha — UPOP TREND. Qoronği sahna paneli: rang ikkala mavzuda
- * bir xil, çunki bu loyihaning öz brendi.
- *
- * Banner çapga qirqilgan (object-left): öng tomonida logotip bor edi,
- * u sarlavhadagi logotip bilan takrorlanib qolmasin.
- */
+/** Boş loyiha. Qattiq panel: şişa bu yerda kerak emas. */
 export function Flagship() {
   const t = useTranslations("home.flagship");
   const tCommon = useTranslations("common");
@@ -20,70 +12,56 @@ export function Flagship() {
   const project = flagshipProject();
 
   return (
-    <section id="flagship" className="scroll-mt-24 pt-4 sm:pt-8">
-      <div className="page-w page-x">
-        <Reveal pop>
-          <div className="overflow-hidden rounded-[1.75rem] bg-stage-bg sm:rounded-[2.25rem]">
-            <div className="grid gap-8 p-5 sm:p-7 lg:grid-cols-[1.02fr_0.98fr] lg:items-stretch lg:gap-12 lg:p-9">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-[1.25rem] sm:rounded-[1.5rem] lg:aspect-auto lg:h-full lg:min-h-[26rem]">
-                <Image
-                  src="/brand/upop-banner.jpg"
-                  alt={t("bannerAlt")}
-                  fill
-                  sizes="(max-width: 1024px) 92vw, 46vw"
-                  className="object-cover object-left"
-                />
-              </div>
-
-              <div className="pb-3 lg:py-4 lg:pr-4">
-                <h2>
-                  <Image
-                    src="/brand/upop-logo.png"
-                    alt={t("heading")}
-                    width={900}
-                    height={703}
-                    sizes="(max-width: 640px) 190px, 230px"
-                    className="h-auto w-[11.5rem] sm:w-[14rem]"
-                  />
-                </h2>
-
-                <p className="mt-6 max-w-[52ch] text-[1.04rem] leading-relaxed text-stage-ink-2 sm:text-[1.1rem]">
-                  {t("lead")}
-                </p>
-
-                <ul className="mt-7 flex flex-col divide-y divide-stage-line border-y border-stage-line">
-                  {pick(project.facts, locale).map((fact) => (
-                    <li key={fact} className="flex items-start gap-3 py-3.5">
-                      <span
-                        aria-hidden="true"
-                        className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-sun"
-                      />
-                      <span className="lines-2 text-[1rem] leading-[1.5] text-stage-ink">
-                        {fact}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                {project.external ? (
-                  <div className="mt-8 flex justify-end">
-                    <a
-                      href={project.external.href}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className={buttonVariants({ size: "lg" })}
-                    >
-                      {t("cta")}
-                      <span className="opacity-80">{project.external.label}</span>
-                      <Icon name="arrow-out" className="h-[1.05rem] w-[1.05rem]" />
-                      <span className="sr-only">({tCommon("opensInNewTab")})</span>
-                    </a>
-                  </div>
-                ) : null}
-              </div>
-            </div>
+    <section className="page pb-4" aria-labelledby="home-flagship">
+      <div className="overflow-hidden rounded-xl bg-elevated shadow-[inset_0_0_0_0.5px_var(--separator)]">
+        <div className="grid items-stretch lg:grid-cols-[1.05fr_1fr]">
+          <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-80">
+            <Image
+              src="/brand/upop-banner.jpg"
+              alt={t("bannerAlt")}
+              fill
+              sizes="(max-width: 1024px) 100vw, 52vw"
+              className="object-cover"
+            />
           </div>
-        </Reveal>
+
+          <div className="flex flex-col gap-5 p-6 md:p-8">
+            {/* Tabiiy ölçam 900×703. Noto'g'ri nisbat berilsa rasm çözilib ketadi. */}
+            <Image
+              src="/brand/upop-logo.png"
+              alt=""
+              width={900}
+              height={703}
+              sizes="160px"
+              /* self-start bölmasa flex ustun rasmni kengligiga çözadi. */
+              className="h-auto w-40 self-start"
+            />
+
+            <h2 id="home-flagship" className="sr-only">
+              {t("heading")}
+            </h2>
+
+            <p className="text-body text-label-secondary">{t("lead")}</p>
+
+            <ul className="flex flex-col gap-1.5 text-callout text-label-secondary">
+              {pick(project.facts, locale).map((fact) => (
+                <li key={fact}>{fact}</li>
+              ))}
+            </ul>
+
+            {project.external ? (
+              <div className="mt-auto flex justify-end pt-2">
+                <ExternalButton
+                  href={project.external.href}
+                  newTabLabel={tCommon("opensInNewTab")}
+                  size="lg"
+                >
+                  {t("cta")}
+                </ExternalButton>
+              </div>
+            ) : null}
+          </div>
+        </div>
       </div>
     </section>
   );

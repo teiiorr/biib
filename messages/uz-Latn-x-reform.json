@@ -19,11 +19,6 @@
     "partners": "Hamkorlar",
     "contacts": "Aloqa"
   },
-  "theme": {
-    "label": "Mavzu",
-    "toDark": "Qoronği mavzuga ötiş",
-    "toLight": "Yoruğ mavzuga ötiş"
-  },
   "locale": {
     "label": "Tilni tanlaş"
   },
@@ -31,7 +26,8 @@
     "all": "Barçasi",
     "backToNews": "Yangiliklarga qaytiş",
     "opensInNewTab": "yangi oynada oçiladi",
-    "topic": "Mavzu"
+    "topic": "Mavzu",
+    "close": "Yopiş"
   },
   "home": {
     "hero": {
@@ -209,5 +205,17 @@
     "title": "Nimadir buzildi",
     "lead": "Sahifani yuklaşda xatolik yuz berdi.",
     "retry": "Qayta uriniş"
+  },
+  "appearance": {
+    "label": "Köriniş sozlamalari",
+    "themeHeading": "Mavzu",
+    "themeSystem": "Tizim",
+    "themeLight": "Yoruğ",
+    "themeDark": "Qoronği",
+    "glassHeading": "Şaffoflik",
+    "glassDense": "Ziç",
+    "glassStandard": "Odatdagi",
+    "glassClear": "Şaffof",
+    "systemOverride": "Tizimda şaffoflik kamaytirilgan, şuning uçun sozlama işlamaydi."
   }
 }

@@ -12,22 +12,17 @@ export async function generateMetadata(
   return { title: t("leadership.title"), description: t("meta.leadershipDescription") };
 }
 
-export default async function LeadershipPage({ params }: PageProps<"/[locale]/leadership">) {
+export default async function UleadershipPage({ params }: PageProps<"/[locale]/leadership">) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "leadership" });
 
   return (
     <>
-      <PageHeader title={t("title")} lead={t("lead")} accent="blue" />
-
-      <section className="section-y pt-12">
-        <div className="page-w page-x">
-          <PeopleRoster
-            people={peopleOf("leadership")}
-            variant="leadership"
-            roleLabel={t("roleLabel")}
-          />
+      <PageHeader title={t("title")} lead={t("lead")} />
+      <section className="section pt-4">
+        <div className="page">
+          <PeopleRoster people={peopleOf("leadership")} roleLabel={t("roleLabel")} />
         </div>
       </section>
     </>

@@ -1,99 +1,114 @@
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Check,
-  ChevronDown,
-  Clock,
-  Globe,
-  Mail,
-  MapPin,
-  Menu,
-  Moon,
-  Phone,
-  Play,
-  Send,
-  Sun,
-  X,
-  type LucideIcon,
-} from "lucide-react";
 import { cn } from "@/lib/cn";
 
 /**
- * Interfeys belgilari. Lucide — bitta töplam, bitta qalam.
- * Ijtimoiy tarmoq belgilari Lucide dan çiqarilgan, şuning uçun ular
- * quyida qölda çizilgan, ammo öşa qalinlik va yumaloq uçlar bilan.
+ * Bitta töplam: 24 lik tör, çiziq qalinligi 1.75, yumaloq uçlar.
+ * Töplamlar aralaştirilmaydi va emoji işlatilmaydi.
  */
 
-const SET = {
-  globe: Globe,
-  check: Check,
-  "chevron-down": ChevronDown,
-  menu: Menu,
-  close: X,
-  "arrow-right": ArrowRight,
-  "arrow-out": ArrowUpRight,
-  sun: Sun,
-  moon: Moon,
-  mail: Mail,
-  phone: Phone,
-  pin: MapPin,
-  clock: Clock,
-  play: Play,
-  telegram: Send,
-} satisfies Record<string, LucideIcon>;
+export type IconName =
+  | "globe"
+  | "check"
+  | "chevron-down"
+  | "menu"
+  | "close"
+  | "arrow-out"
+  | "sun"
+  | "moon"
+  | "display"
+  | "mail"
+  | "phone"
+  | "pin"
+  | "clock"
+  | "play"
+  | "telegram"
+  | "instagram"
+  | "youtube"
+  | "facebook";
 
-/** Lucide da brend belgilari yöq — bu üçtasi qölda. */
-const BRAND = {
+const PATHS: Record<IconName, readonly string[]> = {
+  globe: [
+    "M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z",
+    "M3.6 9h16.8M3.6 15h16.8",
+    "M12 3c2.5 2.6 3.8 5.6 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z",
+  ],
+  check: ["m5 12.5 4.5 4.5L19 7.5"],
+  "chevron-down": ["m6 9.5 6 6 6-6"],
+  menu: ["M4 7h16M4 12h16M4 17h16"],
+  close: ["m6 6 12 12M18 6 6 18"],
+  "arrow-out": [
+    "M9.5 14.5 19.5 4.5",
+    "M13.5 4.5h6v6",
+    "M19 14.5v4a1.5 1.5 0 0 1-1.5 1.5h-12A1.5 1.5 0 0 1 4 18.5v-12A1.5 1.5 0 0 1 5.5 5h4",
+  ],
+  sun: [
+    "M16.2 12a4.2 4.2 0 1 1-8.4 0 4.2 4.2 0 0 1 8.4 0Z",
+    "M12 2.8V5M12 19v2.2M2.8 12H5M19 12h2.2M5.5 5.5 7 7M17 17l1.5 1.5M18.5 5.5 17 7M7 17l-1.5 1.5",
+  ],
+  moon: ["M20.5 14.3A8.8 8.8 0 0 1 9.7 3.5 8.9 8.9 0 1 0 20.5 14.3Z"],
+  display: ["M3.5 5.5h17v10h-17z", "M9 20h6M12 15.5V20"],
+  mail: ["M3.5 6.5h17v11h-17z", "m4 7 8 5.6L20 7"],
+  phone: [
+    "M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2C11.6 19.5 4.5 12.4 4.5 5.5a2 2 0 0 1 2-2Z",
+  ],
+  pin: [
+    "M19 10.3c0 5-7 11.2-7 11.2S5 15.3 5 10.3a7 7 0 1 1 14 0Z",
+    "M14.5 10a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z",
+  ],
+  clock: ["M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z", "M12 6.8V12l3.4 2"],
+  play: ["m9.5 7.4 7.6 4.6-7.6 4.6z"],
+  telegram: [
+    "M21.2 4.3 3.6 11.2a.4.4 0 0 0 0 .8l4.6 1.5 1.7 5.2a.4.4 0 0 0 .7.2l2.5-2.7 4.5 3.3a.4.4 0 0 0 .6-.2l3.5-14.4a.4.4 0 0 0-.5-.6Z",
+    "m8.2 13.5 10.2-7.2-6.3 9.9",
+  ],
   instagram: [
-    "M16.6 3.6H7.4A3.8 3.8 0 0 0 3.6 7.4v9.2a3.8 3.8 0 0 0 3.8 3.8h9.2a3.8 3.8 0 0 0 3.8-3.8V7.4a3.8 3.8 0 0 0-3.8-3.8z",
-    "M15.9 12a3.9 3.9 0 1 1-7.8 0 3.9 3.9 0 0 1 7.8 0z",
-    "M17.3 6.9h.01",
+    "M16.5 3.5h-9A4 4 0 0 0 3.5 7.5v9a4 4 0 0 0 4 4h9a4 4 0 0 0 4-4v-9a4 4 0 0 0-4-4Z",
+    "M15.8 12a3.8 3.8 0 1 1-7.6 0 3.8 3.8 0 0 1 7.6 0Z",
+    "M17.2 7.1h.01",
   ],
   youtube: [
-    "M20.4 8.2c-.2-1.4-.9-2.2-2.3-2.4C16.3 5.5 14.2 5.4 12 5.4s-4.3.1-6.1.4c-1.4.2-2.1 1-2.3 2.4-.2 1.3-.3 2.5-.3 3.8s.1 2.5.3 3.8c.2 1.4.9 2.2 2.3 2.4 1.8.3 3.9.4 6.1.4s4.3-.1 6.1-.4c1.4-.2 2.1-1 2.3-2.4.2-1.3.3-2.5.3-3.8s-.1-2.5-.3-3.8z",
-    "m10.3 9.2 4.6 2.8-4.6 2.8z",
+    "M21.4 8.3a2.6 2.6 0 0 0-1.8-1.8C18 6 12 6 12 6s-6 0-7.6.5a2.6 2.6 0 0 0-1.8 1.8A27 27 0 0 0 2.2 12a27 27 0 0 0 .4 3.7 2.6 2.6 0 0 0 1.8 1.8C6 18 12 18 12 18s6 0 7.6-.5a2.6 2.6 0 0 0 1.8-1.8 27 27 0 0 0 .4-3.7 27 27 0 0 0-.4-3.7Z",
+    "m10.2 9.4 4.6 2.6-4.6 2.6z",
   ],
-  facebook: ["M14.6 21.2v-8h2.8l.5-3.4h-3.3V7.5c0-1 .4-1.7 1.8-1.7h1.6V2.9c-.8-.1-1.7-.2-2.6-.2-2.6 0-4.4 1.6-4.4 4.5v2.6H8v3.4h3v8"],
-} as const;
+  facebook: [
+    "M14.4 21v-8h2.7l.4-3.1h-3.1V7.8c0-.9.3-1.5 1.6-1.5h1.7V3.5c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1v2.4H8.5V13h2.8v8z",
+  ],
+};
 
-export type IconName = keyof typeof SET | keyof typeof BRAND;
+/** Toʻldirilgan belgilar — ularga stroke berilmaydi. */
+const SOLID = new Set<IconName>(["play", "facebook"]);
 
-export interface IconProps {
+export function Icon({
+  name,
+  className,
+  title,
+}: {
   name: IconName;
   className?: string;
-  /** Belgi maʼnoli bölsa — nom beriladi, aks holda bezak sanaladi. */
+  /** Maʼnoli bölsa nom beriladi; aks holda bezak sanaladi. */
   title?: string;
-  strokeWidth?: number;
-}
+}) {
+  const solid = SOLID.has(name);
 
-export function Icon({ name, className, title, strokeWidth = 1.9 }: IconProps) {
-  const shared = {
-    className: cn("h-5 w-5 shrink-0", className),
-    "aria-hidden": title ? undefined : (true as const),
-    role: title ? ("img" as const) : undefined,
-    "aria-label": title,
-    focusable: "false" as const,
-  };
-
-  if (name in BRAND) {
-    const paths = BRAND[name as keyof typeof BRAND];
-    return (
-      <svg viewBox="0 0 24 24" {...shared}>
-        {paths.map((d) => (
-          <path
-            key={d}
-            d={d}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={strokeWidth}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        ))}
-      </svg>
-    );
-  }
-
-  const Glyph = SET[name as keyof typeof SET];
-  return <Glyph {...shared} strokeWidth={strokeWidth} absoluteStrokeWidth />;
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={cn("h-5 w-5 shrink-0", className)}
+      aria-hidden={title ? undefined : true}
+      role={title ? "img" : undefined}
+      focusable="false"
+    >
+      {title ? <title>{title}</title> : null}
+      {PATHS[name].map((d, index) => (
+        <path
+          key={index}
+          d={d}
+          fill={solid ? "currentColor" : "none"}
+          stroke={solid ? "none" : "currentColor"}
+          strokeWidth={solid ? undefined : 1.75}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      ))}
+    </svg>
+  );
 }

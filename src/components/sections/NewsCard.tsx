@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useLocale } from "next-intl";
 import { CoverPlaceholder } from "@/components/brand/Placeholder";
+import { Card } from "@/components/ui/Card";
 import { Link } from "@/i18n/navigation";
 import { pick } from "@/content";
 import type { NewsItem } from "@/content/types";
@@ -9,8 +10,9 @@ import { formatDate, isoDate } from "@/lib/format";
 import { cn } from "@/lib/cn";
 
 /**
- * Plakat karta: avval muqova, keyin "sana · mavzu" oddiy matn, keyin sarlavha.
- * Butun karta bosiladi, ammo havolaning nomi — sarlavhaning özi.
+ * Muqova boşda turadi, keyin mavzu va sana, keyin sarlavha.
+ * Mavzu bilan sana " · " orqali birlaştirilmaydi (§12) — bular ikki
+ * alohida maydon, orasi boşliq bilan ajratiladi.
  */
 export function NewsCard({
   item,
@@ -24,16 +26,8 @@ export function NewsCard({
   const locale = useLocale() as Locale;
 
   return (
-    <article
-      className={cn(
-        "group relative flex flex-col overflow-hidden rounded-card border border-line bg-surface shadow-soft",
-        "transition-[transform,box-shadow] duration-300 ease-[var(--ease-pop)]",
-        "hover:-translate-y-1.5 hover:rotate-[-0.7deg] hover:shadow-lift",
-        "focus-within:-translate-y-1.5 focus-within:shadow-lift",
-        className,
-      )}
-    >
-      <div className="relative aspect-[16/10] overflow-hidden bg-surface-2 [container-type:inline-size]">
+    <Card as="article" interactive className={cn("flex flex-col", className)}>
+      <div className="relative aspect-[16/10] overflow-hidden bg-sunken">
         {item.cover ? (
           <Image
             src={item.cover}
@@ -41,21 +35,22 @@ export function NewsCard({
             fill
             priority={priority}
             sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw"
-            className="object-cover transition-transform duration-500 ease-[var(--ease-pop)] group-hover:scale-[1.04]"
+            className="object-cover"
           />
         ) : (
-          <CoverPlaceholder accent={item.accent} topic={pick(item.topic, locale)} />
+          <CoverPlaceholder topic={pick(item.topic, locale)} />
         )}
       </div>
 
-      <div className="flex flex-1 flex-col gap-2.5 p-5 sm:p-6">
-        <p className="lines-1 text-[0.9rem] font-semibold leading-[1.5] text-ink-muted">
-          <time dateTime={isoDate(item.date)}>{formatDate(item.date, locale, "long")}</time>
-          {/* Muqova böş bölsa mavzu öşa yerda katta yozilgan — takrorlamaymiz. */}
-          {item.cover ? ` · ${pick(item.topic, locale)}` : null}
+      <div className="flex flex-1 flex-col gap-2 p-4">
+        <p className="flex flex-wrap items-baseline gap-x-3 text-footnote">
+          <span className="font-medium text-label">{pick(item.topic, locale)}</span>
+          <time dateTime={isoDate(item.date)} className="text-label-secondary">
+            {formatDate(item.date, locale, "long")}
+          </time>
         </p>
 
-        <h3 className="lines-3 text-[1.22rem] leading-[1.3] sm:text-[1.3rem]">
+        <h3 className="text-title3">
           <Link
             href={{ pathname: "/news/[slug]", params: { slug: item.slug } }}
             className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
@@ -64,6 +59,6 @@ export function NewsCard({
           </Link>
         </h3>
       </div>
-    </article>
+    </Card>
   );
 }

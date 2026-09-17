@@ -7,16 +7,17 @@ import { Footer } from "@/components/sections/Footer";
 import { getPathname } from "@/i18n/navigation";
 import { LOCALE_META, type Locale } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
-import { nunito, rubik } from "@/lib/fonts";
-import { themeInitScript } from "@/lib/theme";
+import { appearanceInitScript } from "@/lib/appearance";
+import { inter } from "@/lib/fonts";
 import "@/styles/globals.css";
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f4f9ff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a1526" },
+    { media: "(prefers-color-scheme: light)", color: "#f1f3f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
   ],
 };
 
@@ -33,10 +34,7 @@ export async function generateMetadata(props: LayoutProps<"/[locale]">): Promise
 
   return {
     metadataBase: new URL(site),
-    title: {
-      default: t("org.nameFull"),
-      template: `%s — ${t("org.nameShort")}`,
-    },
+    title: { default: t("org.nameFull"), template: `%s — ${t("org.nameShort")}` },
     description: t("meta.homeDescription"),
     applicationName: t("org.nameFull"),
     alternates: {
@@ -67,17 +65,17 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
     <html
       lang={locale}
       dir={LOCALE_META[locale as Locale].dir}
-      className={`${rubik.variable} ${nunito.variable}`}
+      className={inter.variable}
       suppressHydrationWarning
     >
       <head>
-        {/* Mavzuni hidratsiyadan oldin qöyadi — sahifa oq bölib çaqnamaydi. */}
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {/* Mavzu va şişa zichligi birinçi çizişdan oldin qöyiladi. */}
+        <script dangerouslySetInnerHTML={{ __html: appearanceInitScript }} />
       </head>
       <body className="flex min-h-dvh flex-col">
         <a
           href="#main"
-          className="sr-only rounded-btn bg-surface px-4 py-3 font-display font-bold text-blue-deep shadow-soft focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100]"
+          className="sr-only rounded-sm bg-elevated px-4 py-2.5 text-callout font-semibold text-label shadow-ambient focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[var(--z-alert)]"
         >
           {t("skipToContent")}
         </a>

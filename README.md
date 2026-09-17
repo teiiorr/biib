@@ -1,144 +1,174 @@
-# Bolalar ijodkorligi ijodiy birlaşmasi
+# Bolalar ijodkorligi ijodiy birlashmasi
 
-Birlaşmaning rasmiy sayti. Beş til, ikki mavzu, barça sahifalar statik
-oldindan render qilinadi.
-
-## Işga tuşiriş
+Официальный сайт объединения детского творчества. Next.js (App Router) + TypeScript strict +
+Tailwind CSS v4, пять языков, дизайн-система Apple Liquid Glass в редакции iOS 27.
 
 ```bash
-npm install
-npm run dev        # http://localhost:3000
+npm run dev       # разработка
+npm run verify    # typecheck + lint + контраст + орфография + паритет словарей
+npm run build     # прод-сборка (не запускать при работающем dev)
 ```
 
-Prod quriş va tekşiriş:
+`verify` — обязательный гейт перед сдачей. Он ловит то, что глазами не видно: провал контраста,
+неправильный апостроф в узбекском и разъехавшиеся словари.
 
-```bash
-npm run build
-npm run start
-npm run verify     # typecheck + lint + kontrast + imlo + lugat mosligi
-```
+---
 
-`npm run verify` deploydan oldin toza ötişi şart. U beşta narsani tekşiradi:
+## Токены
 
-| Buyruq | Nima tekşiradi |
-| --- | --- |
-| `npm run typecheck` | TypeScript, `strict` rejimda |
-| `npm run lint` | ESLint, ogohlantiriş ham xato sanaladi |
-| `npm run contrast` | 66 juft rang, ikkala mavzuda, WCAG AA (4.5:1) |
-| `npm run orthography` | oʻ/gʻ va ö/ğ/ş/ç imlosi, notöğri apostroflar |
-| `npm run parity` | beş lugatdagi kalitlar bir xilligi |
+Три файла, каждый со своей ответственностью:
 
-## Muhit özgaruvçilari
+| Файл | Что внутри |
+|---|---|
+| `src/styles/tokens.css` | цвет, спейсинг, радиусы, тени, движение, z-index — светлая и тёмная темы |
+| `src/styles/glass.css` | материал: `.glass`, четыре плотности, scroll edge effect, фоллбэки |
+| `src/styles/globals.css` | маппинг токенов в Tailwind через `@theme inline`, base-слой, утилиты |
 
-`.env.example` dan nusxa oling:
+Правило одно: **меняется токен, а не компонент**. Ни одного hex внутри `.tsx`.
 
-```bash
-cp .env.example .env.local
-```
+Спейсинг — шкала 4/8. Радиусы концентричны: внешний = внутренний + padding. Панель с padding 12
+и кнопками 14 получает 26 (`--radius-bar`).
 
-- `NEXT_PUBLIC_SITE_URL` — sitemap, robots va canonical uçun.
-- `CONTACT_TELEGRAM_BOT_TOKEN`, `CONTACT_TELEGRAM_CHAT_ID` — aloqa şakli
-  xabarni şu kanalga yuboradi. Ikkalasi böş bölsa şakl halol xato körsatadi
-  va "yuborildi" deb aldamaydi.
+### Цвет
 
-## Tuzilma
+Один акцент плюс нейтральная шкала. Акцент — синий из логотипа объединения, не системный Apple:
+`#0A84FF` с белым текстом даёт 3.65:1 и не проходит AA, поэтому взят `#1F62CE` (5.68:1).
 
-```
-src/app/[locale]/…        yönalişlar
-src/components/ui/        tugma, havola-tugma, maydon — CVA variantlari
-src/components/brand/     Icon, MarkerUnderline, Reveal, örinbosarlar
-src/components/sections/  sarlavha, podval, bölimlar
-src/content/              beş tilli maʼlumot: loyihalar, yangiliklar, odamlar
-messages/<locale>.json    interfeys matnlari
-src/i18n/                 tillar, yönaliş, imlo
-src/styles/tokens.css     ikkala mavzu uçun barça ranglar
-scripts/                  tekşiruv skriptlari
-design/logo-source/       logotipning asl fayllari (saytga çiqmaydi)
-```
+Акцент разведён на два токена, и это не дубль:
 
-## Beş til
+- `--accent` — заливка (кнопки, подложка активного пункта). Белый текст на ней проходит AA.
+- `--accent-text` — акцент как текст и иконка. В тёмной теме заливочный синий на тексте даёт
+  3.19:1, поэтому `--accent-text` там светлее.
 
-| Kod | URL | Nom |
-| --- | --- | --- |
-| `uz-Latn` | `/uz` | Oʻzbekcha |
+`--label-tertiary` — только иконки, плейсхолдеры и декор. Для 13px текста он не проходит AA;
+маленький текст берёт `--label-secondary`. Скрипт контраста проверяет tertiary по порогу 3:1,
+остальное по 4.5:1.
+
+### Типографика
+
+`-apple-system → SF Pro → Inter → system-ui`. Inter подключён через `next/font` с подмножествами
+`latin, latin-ext, cyrillic, cyrillic-ext` — это покрывает ʻ (U+02BB), ʼ (U+02BC) и ç ş ö ğ.
+Шкала §4.6 живёт в `@theme` как `text-display … text-caption`, вместе с трекингом и начертанием.
+
+---
+
+## Стекло
+
+Стекло — функциональный слой, отделяющий плавающий UI от контента, а не стиль страницы.
+
+**Где оно есть:** верхний бар, шит мобильной навигации, поповеры языка и внешнего вида, тост,
+контрол плеера поверх видео.
+
+**Где его нет и не будет:** карточки, списки, таблицы, формы, портреты, партнёрская сетка, футер,
+фон страницы. Одновременно во вьюпорте не больше двух поверхностей. Стекла на стекле нет нигде.
+
+Плотность задаётся классом: `.glass` (regular), `.glass--thin`, `.glass--thick`, `.glass--tinted`.
+Пятой не изобретать.
+
+Две вещи, на которых легко обжечься:
+
+1. **Блик — это `background-image`, а не `::before`.** Псевдоэлемент потребовал бы
+   `.glass > * { position: relative }`, а это ломает любой абсолютно спозиционированный потомок —
+   например, едущую плашку сегментированного контрола.
+2. **Префикс `-webkit-backdrop-filter` в исходнике писать нельзя.** Если в CSS стоят оба свойства,
+   сборщик оставляет только префиксное, и в современном Chromium стекло перестаёт работать
+   полностью. Пишем одно стандартное свойство — префиксы расставит тулчейн.
+
+### Scroll edge effect
+
+Класс `.app-bar`: наверху страницы прозрачный, после порога — сплошная панель. Порог ловит
+`IntersectionObserver` по однопиксельному сентинелу (`src/hooks/use-scrolled.ts`), а не
+scroll-листенер: пересчёт backdrop на каждый кадр роняет fps до ~40 на среднем Android.
+
+Отдельно: пока играет видео UPOP, бар переключается в `data-over-video` и **выключает**
+`backdrop-filter`, оставаясь плотным. Под движущимся видео размывать нечего, а стоимость композита
+падает до нуля. Сигнал идёт событием из `src/lib/video-signal.ts`.
+
+### Ползунок прозрачности
+
+`--glass-intensity` (0…1, шаг 0.1) живёт на `:root`, пишется в `localStorage` и применяется
+инлайн-скриптом до первой отрисовки (`src/lib/appearance.ts`), поэтому вспышки нет. Формула
+подобрана так, что при 0.5 плотность совпадает с таблицей §4.4 (regular = 0.72 в светлой).
+
+Если в системе включено «уменьшить прозрачность», ползунок показывается в положении «Плотно» и
+выключен — системная настройка выше пользовательской.
+
+---
+
+## Как добавить компонент
+
+1. Примитив — в `src/components/ui/`, вариантами через CVA, без своих цветов.
+2. Все состояния обязательны: default, hover, focus-visible, active, disabled, loading.
+   Компонент без состояний считается несделанным.
+3. Видимая высота — по §6.5 (32/40/48), но интерактив получает класс `.tap`: на тач-устройствах он
+   расширяет зону нажатия до 44px, не трогая вёрстку.
+4. Если понадобился новый цвет — сначала токен в `tokens.css`, потом пара в `scripts/contrast.mjs`.
+   Непроверенных цветов в системе нет.
+5. Новый ключ интерфейса — сразу во все пять словарей, иначе `npm run verify` не пройдёт.
+
+---
+
+## Пять языков
+
+| Код | URL | Язык |
+|---|---|---|
+| `uz-Latn` | `/uz` | Oʻzbekcha (действующая латиница) |
 | `uz-Cyrl` | `/oz` | Ўзбекча |
-| `uz-Latn-x-reform` | `/ozbekca` | Özbekça |
+| `uz-Latn-x-reform` | `/ozbekca` | Özbekça (реформированная латиница) |
 | `ru` | `/ru` | Русский |
 | `en` | `/en` | English |
 
-Har bir til alohida lugat: hеç narsa iş paytida transliteratsiya qilinmaydi.
-Yagona istisno — sana va oy nomlari: CLDR da yangi imlo yöq, şuning uçun
-`src/i18n/orthography.ts` Intl çiqişini `ö ğ ş ç` ga öfiradi.
+Три узбекских варианта — отдельные словари, а не транслитерация друг друга. Реформированная
+латиница помечена приватным подтегом `x-reform`: `Intl` принимает его и корректно откатывается на
+данные `uz-Latn`. Даты форматируются через `Intl` и для этой локали дополнительно проходят через
+`src/i18n/orthography.ts` — CLDR отдаёт «dushanba», а нужно «duşanba».
 
-Yangi kalit qöşsangiz beşta faylga ham qöşing, keyin `npm run parity`.
+`scripts/orthography.mjs` следит, чтобы в `uz-Latn` не появились ö ğ ş ç, в реформе не осталось
+oʻ gʻ sh ch, а прямой апостроф не попал никуда. `scripts/i18n-parity.mjs` сверяет наборы ключей.
 
-## Mavzular
+---
 
-Barça ranglar `src/styles/tokens.css` da. Komponentlarda hex yozilmaydi.
-Yoruğ — asosiy, qoronği alohida sozlangan, "teskari" qilinmagan.
-Tanlov brauzerda saqlanadi; hidratsiyadan oldin ingiçka skript `data-theme`
-ni qöyadi, şuning uçun sahifa oq bölib çaqnamaydi.
+## Что должен заполнить заказчик
 
-Rang özgartirsangiz `npm run contrast` ni qayta yuriting.
+Дизайн собран так, что пустых мест не видно, но данные ниже — подстановочные:
 
-## Mijozdan kutilayotgan maʼlumot
+- `src/content/people.ts` — имена, должности и фото Экспертного совета и Руководства.
+  Без `photo` рисуются инициалы на плашке.
+- `src/content/partners.ts` — названия, логотипы и ссылки партнёров. Без `logo` выводится название
+  текстом. Настоящие логотипы показываются в градациях серого и расцветают на наведении.
+- `src/content/news.ts` — поле `cover` у новостей. Без него обложкой служит тема материала.
+- `src/content/org.ts` — телефоны, почта и точка на карте. Ссылки на соцсети уже настоящие.
 
-Sayt töliq işlaydi, ammo quyidagi joylarda vaqtinça örinbosar turibdi.
-Ularni almaştiriş uçun rasm çiziş kerak emas — faqat maydonni töldiriş.
+---
 
-| Fayl | Nima kerak |
-| --- | --- |
-| `src/content/people.ts` | Kengaş aʼzolari va rahbariyatning haqiqiy ism-şarifi, lavozimi, tavsifi; `photo` maydoniga surat yöli |
-| `src/content/partners.ts` | Hamkorlarning nomi (`name`), logotipi (`logo`) va sayti (`href`) |
-| `src/content/news.ts` | Har bir yangilikka `cover` — muqova sureti |
-| `src/content/org.ts` | Telefon, poçta, ijtimoiy tarmoq havolalari, xarita nuqtasi |
-| `src/content/org-text.ts` | Manzil va iş vaqti, beş tilda |
+## Переменные окружения
 
-Taşkilot nomi logotip yonida barça tillarda bir xil yoziladi va
-`src/content/org.ts` dagi `BRAND_NAME` da turadi.
+```
+CONTACT_TELEGRAM_BOT_TOKEN   токен бота, принимающего заявки с формы
+CONTACT_TELEGRAM_CHAT_ID     чат или канал, куда падают заявки
+NEXT_PUBLIC_SITE_URL         базовый адрес для sitemap, canonical и hreflang
+```
 
-UPOP TREND paneli ikki faylga tayanadi: `public/brand/upop-banner.jpg`
-(sahna sureti, çapga qirqiladi) va `public/brand/upop-logo.png` (sarlavha
-örnida turadigan logotip). Banner qirqilgani bejiz emas: uning öng
-tomonida ham logotip bor, ikki marta körinmasin uçun.
+Если токен или чат не заданы, форма **не** показывает «отправлено». Она честно сообщает об ошибке
+и предлагает позвонить или написать напрямую.
 
-Loyihalar sahifasidagi UPOP TREND lavhasida video bor:
-`public/brand/upop-video.mp4`, posteri `upop-video-poster.jpg`.
-U özi boşlanmaydi va oldindan yuklanmaydi — faqat bosilganda.
+---
 
-`photo`, `cover`, `logo` böş bölsa çizilgan örinbosar körsatiladi: böyalgan
-maydon va yozuv. Böş kulrang quti çiqmaydi, ammo nimani almaştiriş kerakligi
-darrov bilinadi.
+## Осознанные отступления от промпта
 
-Loyihalar va yangiliklar matni `src/content/*.ts` da, beş tilda birga turadi —
-bitta til tuşib qolsa TypeScript darrov aytadi.
+Каждое — с причиной, а не по невнимательности:
 
-## Bezak haqida
-
-Sahifalarda suzuvçi bezak yöq: na çizma, na rangli dogʻ. Ritm faqat
-tipografika, boşliq, böyalgan panellar va qisqa rangli çiziqçalar bilan
-beriladi. Belgi qöyiladigan yagona joy — interfeys elementlari (til, mavzu,
-oʻq, telefon, ijtimoiy tarmoq), ular Lucide töplamidan.
-
-Tugma körinişidagi havola `LinkButton` orqali beriladi: Radix `Slot`
-ataylab işlatilmaydi, çunki server komponentidan mijoz komponenti bola
-sifatida uzatilganda u "lazy" bölib keladi va Slot xato beradi.
-
-## Erişimlilik
-
-- Matn kontrasti ikkala mavzuda AA dan ötadi, şişa ustidagi matn ham.
-- Klaviatura bilan töliq işlaydi, fokus halqasi hamma joyda körinadi.
-- Menyu va dialogda fokus ipatib turiladi, Escape yopadi.
-- Bosiş maydonlari 44 px dan kiçik emas.
-- `prefers-reduced-motion` hurmat qilinadi: çiqişlar bir zumda, tebraniş öçadi.
-- Har sahifada bitta H1, landmarklar joyida, bezak belgilar `aria-hidden`.
-
-## Tekislik qoidasi
-
-Beş tilda söz uzunligi har xil. Yonma-yon turgan bandlarda sarlavha, izoh va
-röyxat qatʼiy qator sonida turadi (`lines-1`, `lines-2`, `lines-3`), şuning
-uçun matn uzun bölsa ham hamma yozuv bir çiziqda qoladi. Ustma-ust turganda
-(telefon) çegara yumşoqroq.
+1. **Акцент не `#0A84FF`.** Системный синий Apple проваливает §8, объявленный блокирующим.
+2. **Кредит в футере — `--label-secondary`, не `--label-tertiary`.** §15 просит tertiary на 12px,
+   это 2.49:1. Текст оставлен дословно, изменён только токен.
+3. **Нет рефракции края (§5.5).** Она опциональна и по умолчанию выключена, а выключенный навсегда
+   SVG-фильтр — мёртвый код, который запрещает §10.
+4. **Нет отдельного слоя `.scroll-edge`.** Он дал бы второй `backdrop-filter` поверх того же
+   участка, что и бар, — ровно то «стекло на стекле», которое запрещает §3.
+5. **Заголовок страницы не схлопывается в бар (§6.2).** Бар постоянно несёт лого и название
+   объединения; второй заголовок рядом — дублирование, запрещённое §12.
+6. **Десктопная навигация с 1280, а не с 1024.** Семь пунктов в русском и узбекском на 1024
+   ломаются на две строки. Ниже 1280 — шит.
 
 ---
 

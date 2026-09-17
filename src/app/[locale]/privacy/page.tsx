@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Reveal } from "@/components/brand/Reveal";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { ORG } from "@/content";
 
@@ -19,32 +18,25 @@ export default async function PrivacyPage({ params }: PageProps<"/[locale]/priva
 
   return (
     <>
-      <PageHeader title={t("privacyTitle")} lead={t("privacyLead")} accent="blue" />
+      <PageHeader title={t("privacyTitle")} lead={t("privacyLead")} />
 
-      <section className="section-y pt-10">
-        <div className="page-w page-x">
-          <div className="flex max-w-[44rem] flex-col gap-9">
-            {BLOCKS.map((block, index) => (
-              <Reveal key={block} delay={index * 70}>
-                <h2 className="text-[1.4rem] sm:text-[1.55rem]">
-                  {t(`${block}Heading` as "collectHeading")}
-                </h2>
-                <p className="mt-3 text-[1.06rem] leading-relaxed text-ink-2">
-                  {t(`${block}Body` as "collectBody")}
+      <section className="section pt-4">
+        <div className="page read flex flex-col gap-7">
+          {BLOCKS.map((block) => (
+            <div key={block}>
+              <h2 className="text-title3">{t(`${block}Heading` as "collectHeading")}</h2>
+              <p className="mt-2 text-body text-label-secondary">
+                {t(`${block}Body` as "collectBody")}
+              </p>
+              {block === "rights" ? (
+                <p className="mt-2">
+                  <a href={`mailto:${ORG.email}`} className="text-body font-semibold text-accent-text">
+                    {ORG.email}
+                  </a>
                 </p>
-                {block === "rights" ? (
-                  <p className="mt-3">
-                    <a
-                      href={`mailto:${ORG.email}`}
-                      className="text-[1.06rem] font-semibold text-blue-deep underline underline-offset-4"
-                    >
-                      {ORG.email}
-                    </a>
-                  </p>
-                ) : null}
-              </Reveal>
-            ))}
-          </div>
+              ) : null}
+            </div>
+          ))}
         </div>
       </section>
     </>
