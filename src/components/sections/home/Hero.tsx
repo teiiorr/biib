@@ -1,48 +1,86 @@
+import { getImageProps } from "next/image";
 import { useTranslations } from "next-intl";
 import { GoldText } from "@/components/brand/GoldText";
-import { LogoScene } from "@/components/brand/LogoScene";
+import { HeroLive } from "@/components/brand/HeroLive";
 import { Reveal } from "@/components/brand/Reveal";
-import { Aura, Girih } from "@/components/brand/Texture";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { BRAND_NAME } from "@/content/org";
+import type { CSSProperties } from "react";
 
 /**
- * Ekranga çiqiş: çapda matn, öngda jonli 3D belgi.
- * Bölimning muallif jesti — belgining özi; qolgani sokin.
+ * Olovli qahramon: butun ekran. Oq belgi qimirlamaydi — atrofidagi
+ * olov va uçqunlar Higgsfield videosida uzluksiz yonadi. Nomi niqob
+ * içidan qatorma-qator kötariladi, skrollda sahna suzib ketadi.
+ * Fon ikki yönalişda alohida kadr.
  */
 export function Hero() {
   const t = useTranslations("home.hero");
 
+  const shared = { alt: "", sizes: "100vw", quality: 88 };
+  const { props: mobile } = getImageProps({
+    ...shared,
+    src: "/brand/hero-fire-mobile.jpg",
+    width: 1080,
+    height: 1920,
+  });
+  const { props: desktop } = getImageProps({
+    ...shared,
+    src: "/brand/hero-fire.jpg",
+    width: 1920,
+    height: 1080,
+  });
+
   return (
-    <section className="relative isolate overflow-hidden">
-      <Girih className="opacity-[0.04]" />
-      <Aura className="-right-[18%] -top-[42%] w-[min(86vw,780px)] md:-right-[6%]" />
+    <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden">
+      {/* Fon: poster darrov, skroll-video tayyor bölgaç ustiga çiqadi. */}
+      <div aria-hidden="true" className="hero-bg absolute inset-0 -z-10">
+        <picture className="absolute inset-0">
+          <source media="(max-width: 767px)" srcSet={mobile.srcSet} sizes="100vw" />
+          <img
+            {...desktop}
+            alt=""
+            fetchPriority="high"
+            decoding="async"
+            className="h-full w-full object-cover"
+          />
+        </picture>
+        <HeroLive desktopBase="/brand/hero-logo-d" mobileBase="/brand/hero-logo-m" />
+      </div>
 
-      <div className="page relative grid items-center gap-10 pb-14 pt-10 md:pb-20 md:pt-14 lg:grid-cols-[1.08fr_0.92fr] lg:gap-14">
-        <div>
-          <Reveal as="header">
-            <h1 className="max-w-[16ch] text-title1 md:text-display">
-              {t("titleStart")} <GoldText>{t("titleAccent")}</GoldText>
-            </h1>
+      {/* Parda pastda — matn şu yerda turadi, belgi tepada oçiq qoladi. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(6_20_28/0.34)_0%,rgb(6_20_28/0.04)_26%,rgb(6_20_28/0.1)_52%,rgb(6_20_28/0.62)_76%,rgb(6_20_28/0.85)_100%)]"
+      />
 
-            <p className="read mt-5 text-body text-label-secondary">{t("subtitle")}</p>
-          </Reveal>
+      <div className="hero-stage flex flex-1 flex-col">
+        <div className="page flex flex-1 flex-col items-center justify-end pb-4 text-center">
+          <h1
+            lang="uz-Latn"
+            className="text-balance font-semibold uppercase leading-[1.06] tracking-[0.04em] text-label text-[clamp(1.8rem,5.8vw,4.2rem)]"
+          >
+            <span className="hero-line">
+              <span style={{ "--line-delay": "160ms" } as CSSProperties}>{BRAND_NAME.line1}</span>
+            </span>
+            <span className="hero-line">
+              <span style={{ "--line-delay": "360ms" } as CSSProperties}>
+                <GoldText>{BRAND_NAME.line2}</GoldText>
+              </span>
+            </span>
+          </h1>
 
-          <Reveal delay={140} className="mt-9 flex flex-wrap items-center justify-end gap-3">
-            <LinkButton href="/projects" variant="secondary" size="lg">
-              {t("ctaSecondary")}
-            </LinkButton>
-            <LinkButton href="/contacts" size="lg">
-              {t("ctaPrimary")}
-            </LinkButton>
+          <Reveal delay={520} className="mt-5">
+            <p className="read text-body text-label-secondary">{t("subtitle")}</p>
           </Reveal>
         </div>
 
-        <Reveal delay={100} className="order-first lg:order-none">
-          <LogoScene
-            label={BRAND_NAME.full}
-            className="mx-auto max-w-[15rem] sm:max-w-[17rem] lg:max-w-[22rem]"
-          />
+        <Reveal delay={640} className="page flex flex-wrap items-center justify-end gap-3 pb-9 pt-5">
+          <LinkButton href="/projects" variant="secondary" size="lg">
+            {t("ctaSecondary")}
+          </LinkButton>
+          <LinkButton href="/contacts" size="lg">
+            {t("ctaPrimary")}
+          </LinkButton>
         </Reveal>
       </div>
     </section>
