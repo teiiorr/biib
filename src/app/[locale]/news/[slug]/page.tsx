@@ -59,7 +59,7 @@ export default async function ArticlePage({ params }: PageProps<"/[locale]/news/
           </Link>
         </div>
 
-        <header className="page read pt-4">
+        <header className="page pt-4">
           <p className="flex flex-wrap items-baseline gap-x-3 text-footnote">
             <span className="font-medium text-label">{pick(item.topic, typed)}</span>
             <time dateTime={isoDate(item.date)} className="text-label-secondary">
@@ -67,12 +67,12 @@ export default async function ArticlePage({ params }: PageProps<"/[locale]/news/
             </time>
           </p>
 
-          <h1 className="mt-3 text-title1 md:text-display">{pick(item.title, typed)}</h1>
-          <p className="mt-4 text-headline text-label-secondary">{pick(item.lead, typed)}</p>
+          <h1 className="read mt-3 text-title1 md:text-display">{pick(item.title, typed)}</h1>
+          <p className="read mt-4 text-headline text-label-secondary">{pick(item.lead, typed)}</p>
         </header>
 
         <div className="page mt-8">
-          <div className="relative mx-auto aspect-[16/9] max-w-4xl overflow-hidden rounded-lg bg-sunken shadow-[inset_0_0_0_0.5px_var(--separator)]">
+          <div className="relative aspect-[16/9] max-w-4xl overflow-hidden rounded-lg bg-sunken shadow-[inset_0_0_0_0.5px_var(--separator)]">
             {item.cover ? (
               <Image
                 src={item.cover}
@@ -88,14 +88,19 @@ export default async function ArticlePage({ params }: PageProps<"/[locale]/news/
           </div>
         </div>
 
-        <div className="page read mt-8 flex flex-col gap-4 text-body text-label-secondary">
-          {pick(item.body, typed).map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
+        <div className="page mt-8">
+          <div className="read flex flex-col gap-4 text-body text-label-secondary">
+            {pick(item.body, typed).map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
         </div>
 
-        <div className="page read mt-8 border-t border-separator pt-5 text-footnote text-label-secondary">
-          {t("published")}: <time dateTime={isoDate(item.date)}>{formatDate(item.date, typed, "long")}</time>
+        <div className="page mt-8">
+          <div className="read border-t border-separator pt-5 text-footnote text-label-secondary">
+            {t("published")}:{" "}
+            <time dateTime={isoDate(item.date)}>{formatDate(item.date, typed, "long")}</time>
+          </div>
         </div>
       </article>
 

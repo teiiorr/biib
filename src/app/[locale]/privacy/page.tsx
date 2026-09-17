@@ -22,22 +22,24 @@ export default async function PrivacyPage({ params }: PageProps<"/[locale]/priva
       <PageHeader title={t("privacyTitle")} lead={t("privacyLead")} />
 
       <section className="section pt-4">
-        <div className="page read flex flex-col gap-7">
-          {BLOCKS.map((block, index) => (
-            <Reveal key={block} delay={index * 70}>
-              <h2 className="text-title3">{t(`${block}Heading` as "collectHeading")}</h2>
-              <p className="mt-2 text-body text-label-secondary">
-                {t(`${block}Body` as "collectBody")}
-              </p>
-              {block === "rights" ? (
-                <p className="mt-2">
-                  <a href={`mailto:${ORG.email}`} className="text-body font-semibold text-accent-text">
-                    {ORG.email}
-                  </a>
+        <div className="page">
+          <div className="read flex flex-col gap-7">
+            {BLOCKS.map((block, index) => (
+              <Reveal key={block} delay={index * 70}>
+                <h2 className="text-title3">{t(`${block}Heading` as "collectHeading")}</h2>
+                <p className="mt-2 text-body text-label-secondary">
+                  {t(`${block}Body` as "collectBody")}
                 </p>
-              ) : null}
-            </Reveal>
-          ))}
+                {block === "rights" ? (
+                  <p className="mt-2">
+                    <a href={`mailto:${ORG.email}`} className="text-body font-semibold text-accent-text">
+                      {ORG.email}
+                    </a>
+                  </p>
+                ) : null}
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
     </>
