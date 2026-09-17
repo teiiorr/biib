@@ -61,11 +61,6 @@ export function ProjectFeature({
           ) : null}
 
           <Reveal delay={hasMedia ? 100 : 0} className={cn(!hasMedia && "read")}>
-            <span
-              aria-hidden="true"
-              className="mb-5 block h-[2px] w-16 bg-[linear-gradient(90deg,var(--gem-line),transparent)]"
-            />
-
             <h2 className="text-title1">{project.name[locale]}</h2>
             <p className="mt-2 text-headline text-accent-text">{pick(project.tagline, locale)}</p>
 

@@ -18,7 +18,7 @@ export function ProjectsOverview() {
         <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <Reveal as="li" key={project.id} delay={index * 90} className="flex">
-              <ProjectCard project={project} index={index + 2} className="w-full" />
+              <ProjectCard project={project} className="w-full" />
             </Reveal>
           ))}
         </ul>

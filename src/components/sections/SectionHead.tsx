@@ -20,7 +20,6 @@ export function SectionHead({
       <h2 id={id} className="text-title1">
         <GoldText>{heading}</GoldText>
       </h2>
-      <span aria-hidden="true" className="h-[3px] w-16 bg-[image:var(--metal)]" />
       {lead ? <p className="read text-body text-label-secondary">{lead}</p> : null}
     </div>
   );

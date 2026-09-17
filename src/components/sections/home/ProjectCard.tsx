@@ -7,19 +7,17 @@ import { cn } from "@/lib/cn";
 
 export function ProjectCard({
   project,
-  index,
   className,
 }: {
   project: ProjectItem;
-  index: number;
   className?: string;
 }) {
   const locale = useLocale() as Locale;
 
   return (
-    <GemCard accent={project.accent} index={index} className={cn("flex flex-col", className)}>
+    <GemCard accent={project.accent} className={cn("flex flex-col", className)}>
       <div className="flex flex-1 flex-col gap-3 p-5 pt-6 sm:p-6 sm:pt-7">
-        <h3 className="max-w-[80%] text-title3">{project.name[locale]}</h3>
+        <h3 className="text-title3">{project.name[locale]}</h3>
         <p className="text-callout text-accent-text">{pick(project.tagline, locale)}</p>
 
         <ul className="mt-auto flex flex-col gap-2 pt-2">

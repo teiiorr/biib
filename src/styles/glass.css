@@ -92,7 +92,7 @@
   --glass-alpha: calc(0.9 - 0.42 * var(--glass-intensity));
   background-color: color-mix(
     in srgb,
-    var(--gem, var(--violet)) 12%,
+    var(--gem, var(--violet)) 17%,
     rgb(var(--glass-tint) / var(--glass-alpha))
   );
 }

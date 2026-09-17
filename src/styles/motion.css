@@ -65,9 +65,9 @@
 }
 
 /* ---- Skrollda çiqiş: pastdan, yumşoq blur bilan ---- */
-/* JS öçiq bölsa .js sinfi qöyilmaydi va matn darrov körinadi. */
+/* JS öçiq bölsa data-js qöyilmaydi va matn darrov körinadi. */
 
-html.js [data-reveal] {
+html[data-js] [data-reveal] {
   opacity: 0;
   transform: translateY(26px);
   filter: blur(7px);
@@ -79,7 +79,7 @@ html.js [data-reveal] {
   will-change: transform, opacity, filter;
 }
 
-html.js [data-reveal="in"] {
+html[data-js] [data-reveal="in"] {
   opacity: 1;
   transform: none;
   filter: none;
@@ -103,13 +103,17 @@ html.js [data-reveal="in"] {
    * darajali matn 5.07:1 dan tuşmaydi. Undan kuçliroq qilinsa 3.57 ga
    * tuşib, AA dan çiqadi.
    */
+  /*
+   * Yumşoqlik gradientning özidan keladi, filter dan emas.
+   * Butun ekranga blur() qöyilsa, animatsiyaning har kadrida katta
+   * yuza qayta çiziladi — örtaça telefonda bu sezilarli yuk.
+   */
   background:
-    radial-gradient(36% 32% at 80% 8%, rgb(214 62 140 / 0.26), transparent 68%),
-    radial-gradient(32% 30% at 8% 38%, rgb(201 162 90 / 0.18), transparent 70%),
-    radial-gradient(42% 38% at 58% 90%, rgb(106 56 217 / 0.26), transparent 68%),
-    radial-gradient(26% 24% at 95% 62%, rgb(24 184 201 / 0.16), transparent 70%),
-    radial-gradient(30% 28% at 20% 88%, rgb(47 190 138 / 0.2), transparent 70%);
-  filter: blur(26px) saturate(150%);
+    radial-gradient(42% 38% at 80% 6%, rgb(214 62 140 / 0.26), transparent 62%),
+    radial-gradient(38% 36% at 6% 36%, rgb(201 162 90 / 0.18), transparent 64%),
+    radial-gradient(48% 44% at 58% 92%, rgb(106 56 217 / 0.26), transparent 62%),
+    radial-gradient(32% 30% at 96% 60%, rgb(24 184 201 / 0.16), transparent 64%),
+    radial-gradient(36% 34% at 18% 90%, rgb(47 190 138 / 0.2), transparent 64%);
   animation: ambient-drift 34s ease-in-out infinite alternate;
   will-change: transform;
 }
@@ -172,8 +176,8 @@ html.js [data-reveal="in"] {
     opacity: 0.2;
   }
 
-  html.js [data-reveal],
-  html.js [data-reveal="in"] {
+  html[data-js] [data-reveal],
+  html[data-js] [data-reveal="in"] {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
