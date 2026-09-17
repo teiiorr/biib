@@ -7,7 +7,6 @@ import { pick } from "@/content";
 import type { NewsItem } from "@/content/types";
 import type { Locale } from "@/i18n/locales";
 import { formatDate, isoDate } from "@/lib/format";
-import { cn } from "@/lib/cn";
 
 /**
  * Muqova boşda, keyin mavzu va sana, keyin sarlavha.
@@ -26,8 +25,8 @@ export function NewsCard({
   const locale = useLocale() as Locale;
 
   return (
-    <GemCard accent={item.accent} interactive className={cn("flex flex-col", className)}>
-      <div className="relative aspect-[16/10] overflow-hidden bg-sunken">
+    <GemCard accent={item.accent} interactive className={className}>
+      <div className="relative aspect-[16/11] overflow-hidden bg-sunken">
         {item.cover ? (
           <Image
             src={item.cover}
@@ -42,7 +41,7 @@ export function NewsCard({
         )}
       </div>
 
-      <div className="flex flex-1 flex-col gap-2 p-4">
+      <div className="flex flex-1 flex-col gap-3 p-5 @[20rem]:p-6">
         <p className="flex flex-wrap items-baseline gap-x-3 text-footnote">
           <span className="font-medium text-accent-text">{pick(item.topic, locale)}</span>
           <time dateTime={isoDate(item.date)} className="text-label-secondary">
@@ -50,7 +49,7 @@ export function NewsCard({
           </time>
         </p>
 
-        <h3 className="text-title3">
+        <h3 className="text-title3 @[20rem]:text-title2">
           <Link
             href={{ pathname: "/news/[slug]", params: { slug: item.slug } }}
             className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"

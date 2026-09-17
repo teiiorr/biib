@@ -39,10 +39,15 @@
   );
 }
 
+/*
+ * Radius bu yerda berilmaydi. .glass qatlamsiz CSS da turadi va
+ * Tailwind ning rounded-* utilitalaridan ustun keladi — natijada
+ * şitning yuqori burçaklari ham, kartaning 28 px i ham 20 px ga
+ * tuşib qolardi. Radiusni har bir işlatgan joy özi beradi.
+ */
 .glass {
   position: relative;
   isolation: isolate;
-  border-radius: var(--radius-lg);
 
   background-color: rgb(var(--glass-tint) / var(--glass-alpha));
   /*

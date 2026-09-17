@@ -103,7 +103,7 @@ export default async function ArticlePage({ params }: PageProps<"/[locale]/news/
         <section className="section" aria-labelledby="related-news">
           <div className="page">
             <SectionHead id="related-news" heading={t("otherNews")} />
-            <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
               {related.map((other) => (
                 <li key={other.slug} className="flex">
                   <NewsCard item={other} className="w-full" />

@@ -15,7 +15,7 @@ export function ProjectsOverview() {
           <SectionHead id="home-projects" heading={t("heading")} lead={t("lead")} />
         </Reveal>
 
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {projects.map((project, index) => (
             <Reveal as="li" key={project.id} delay={index * 90} className="flex">
               <ProjectCard project={project} className="w-full" />

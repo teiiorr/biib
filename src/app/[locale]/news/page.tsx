@@ -26,7 +26,7 @@ export default async function NewsPage({ params }: PageProps<"/[locale]/news">) 
           {items.length === 0 ? (
             <p className="text-body text-label-secondary">{t("empty")}</p>
           ) : (
-            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
               {items.map((item, index) => (
                 <Reveal as="li" key={item.slug} delay={(index % 3) * 90} className="flex">
                   <NewsCard item={item} className="w-full" priority={index < 3} />
