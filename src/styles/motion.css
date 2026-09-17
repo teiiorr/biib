@@ -231,6 +231,44 @@ html[data-js] [data-reveal="in"] {
   --glow: 1;
 }
 
+/*
+ * ---- Asosiy tugma: sıçkon ortidan yuradigan şişa yaltiroği ----
+ * Haqiqiy Liquid Glass materialining spekulyar bligi harakatga javob
+ * beradi (§2.2.4). ::before işlatiladi, ::after emas — .tap ning özi
+ * (barça tugmalarda bor) qöpol barmoq uçun ::after ni band qilgan,
+ * ikkalasi bir elementda toqnaşardi.
+ *
+ * z-index: -1 + .btn-liquid dagi isolate: yaltiroq tugmaning öz fon
+ * rangi ustiga, ammo matni tagiga tuşadi — GemCard dagi kabi qölda
+ * "z-10 öragiç" yasaş şart emas, çunki manfiy z-index oddiy statik
+ * matndan öz-özidan pastda çiziladi.
+ */
+.btn-liquid {
+  isolation: isolate;
+}
+
+.btn-liquid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(
+    9rem 9rem at var(--mx) var(--my),
+    rgb(255 255 255 / 0.42),
+    transparent 68%
+  );
+  opacity: var(--glow);
+  transition: opacity 280ms var(--ease-standard);
+}
+
+/* Klaviaturadan fokus — sıçkon yöq, şuning uçun markazda statik yorugʻlik. */
+.btn-liquid:hover,
+.btn-liquid:focus-visible {
+  --glow: 1;
+}
+
 /* ---- Sekin tebraniş: bitta belgi uçun ---- */
 
 .drift {
@@ -259,7 +297,8 @@ html[data-js] [data-reveal="in"] {
     animation: none !important;
   }
 
-  .card-light::after {
+  .card-light::after,
+  .btn-liquid::before {
     display: none;
   }
 

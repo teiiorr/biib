@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { LiquidPointer } from "@/components/brand/LiquidPointer";
 import { Ambient, Grain } from "@/components/brand/Texture";
 import { Header } from "@/components/sections/Header";
 import { Footer } from "@/components/sections/Footer";
@@ -89,6 +90,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         </NextIntlClientProvider>
 
         <Grain />
+        <LiquidPointer />
       </body>
     </html>
   );

@@ -18,7 +18,7 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         primary: [
-          "bg-[image:var(--pop-btn)] text-accent-contrast",
+          "btn-liquid bg-[image:var(--pop-btn)] text-accent-contrast",
           "shadow-[inset_0_0.5px_0_0_rgb(242_228_198/0.28)]",
           "hover:bg-[image:var(--pop-btn-hover)]",
         ],
