@@ -33,7 +33,12 @@ export function ProjectFeature({
   return (
     <section
       aria-label={project.name[locale]}
-      style={{ "--gem": `var(--${project.accent})` } as CSSProperties}
+      style={
+        {
+          "--gem": `var(--${project.accent})`,
+          "--gem-line": `var(--${project.accent}-line)`,
+        } as CSSProperties
+      }
       className={cn(
         "relative isolate overflow-hidden",
         !first && "border-t border-separator",
@@ -58,7 +63,7 @@ export function ProjectFeature({
           <Reveal delay={hasMedia ? 100 : 0} className={cn(!hasMedia && "read")}>
             <span
               aria-hidden="true"
-              className="mb-5 block h-[2px] w-16 bg-[linear-gradient(90deg,var(--gem),transparent)]"
+              className="mb-5 block h-[2px] w-16 bg-[linear-gradient(90deg,var(--gem-line),transparent)]"
             />
 
             <h2 className="text-title1">{project.name[locale]}</h2>

@@ -128,7 +128,7 @@ export default async function ContactsPage({ params }: PageProps<"/[locale]/cont
             <Details />
           </Reveal>
 
-          <Reveal delay={120} className="rounded-lg bg-elevated p-5 shadow-[inset_0_0_0_0.5px_var(--line-gold)] md:p-7">
+          <Reveal delay={120} className="panel panel-line rounded-lg p-5 md:p-7">
             <h2 className="text-title2">{t("formHeading")}</h2>
             <div className="mt-6">
               <ContactForm />

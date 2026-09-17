@@ -35,8 +35,8 @@ export function PartnerGrid({ className }: { className?: string }) {
         );
 
         const shell = [
-          "group grid h-24 place-items-center rounded-md bg-elevated px-4",
-          "shadow-[inset_0_0_0_0.5px_var(--separator)] hover:shadow-[inset_0_0_0_0.5px_var(--line-gold)]",
+          "panel group grid h-24 place-items-center rounded-md px-4",
+          "shadow-[inset_0_0_0_0.5px_var(--separator)] hover:shadow-[inset_0_0_0_0.5px_var(--line-gold-strong)]",
           "transition-colors duration-[var(--dur-fast)]",
         ].join(" ");
 

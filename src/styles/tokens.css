@@ -37,6 +37,18 @@
   --magenta: #d63e8c;
   --violet: #6a38d9;
   --turquoise: #18b8c9;
+  --green: #2fbe8a;
+
+  /*
+   * Çiziq va belgi uçun alohida variant. Binafşaning toʻldiriş rangi
+   * grafik sifatida 2.83:1 beradi — 3:1 dan tuşadi; yorugʻroq qilsak
+   * esa ustidagi ivory matn buziladi. Şuning uçun ikkita qiymat.
+   */
+  --gold-line: #c9a25a;
+  --magenta-line: #d63e8c;
+  --violet-line: #8b5cf6;
+  --turquoise-line: #18b8c9;
+  --green-line: #2fbe8a;
   --ivory: #f2e4c6;
   --graphite: #2a2f35;
 
@@ -51,12 +63,17 @@
     #a0721e 100%
   );
 
-  /* ---- Fonlar ---- */
-  --bg-base: #000000;
-  --bg-elevated: #0b1e29;
-  --bg-sunken: #040e14;
-  --separator: rgb(242 228 198 / 0.12);
-  --line-gold: rgb(201 162 90 / 0.26);
+  /*
+   * ---- Fonlar ----
+   * Qop-qora emas, polunoç: ustidagi rangli dogʻlar körinsin va
+   * şişaning ostida xiralaştiradigan narsa bölsin.
+   */
+  --bg-base: #0a1c26;
+  --bg-elevated: #142c3a;
+  --bg-sunken: #0c2029;
+  --separator: rgb(242 228 198 / 0.14);
+  --line-gold: rgb(201 162 90 / 0.34);
+  --line-gold-strong: rgb(201 162 90 / 0.62);
 
   /* ---- Matn: issiq ivory, kulrang emas ---- */
   --label-primary: rgb(242 228 198 / 0.92);

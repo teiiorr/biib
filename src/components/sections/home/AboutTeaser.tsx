@@ -8,7 +8,7 @@ export function AboutTeaser() {
   const t = useTranslations("home.about");
 
   return (
-    <section className="section relative isolate overflow-hidden bg-elevated" aria-labelledby="home-about">
+    <section className="panel section relative isolate overflow-hidden" aria-labelledby="home-about">
       <Girih className="opacity-[0.035]" />
 
       <div className="page relative">

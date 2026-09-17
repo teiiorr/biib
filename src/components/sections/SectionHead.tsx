@@ -1,3 +1,4 @@
+import { GoldText } from "@/components/brand/GoldText";
 import { Link } from "@/i18n/navigation";
 import type { StaticPathname } from "@/i18n/routing";
 import { cn } from "@/lib/cn";
@@ -17,9 +18,9 @@ export function SectionHead({
   return (
     <div className={cn("flex flex-col gap-3", className)}>
       <h2 id={id} className="text-title1">
-        {heading}
+        <GoldText>{heading}</GoldText>
       </h2>
-      <span aria-hidden="true" className="h-[2px] w-12 bg-[image:var(--metal)]" />
+      <span aria-hidden="true" className="h-[3px] w-16 bg-[image:var(--metal)]" />
       {lead ? <p className="read text-body text-label-secondary">{lead}</p> : null}
     </div>
   );

@@ -29,7 +29,7 @@ export default async function PartnersPage({ params }: PageProps<"/[locale]/part
         </div>
       </section>
 
-      <section className="section bg-elevated pt-0" aria-labelledby="become-partner">
+      <section className="panel section pt-0" aria-labelledby="become-partner">
         <div className="page pt-12">
           <Reveal>
             <SectionHead id="become-partner" heading={t("becomeHeading")} lead={t("becomeBody")} />

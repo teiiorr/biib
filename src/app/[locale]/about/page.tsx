@@ -50,7 +50,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
         </div>
       </section>
 
-      <section className="section bg-elevated" aria-labelledby="about-history">
+      <section className="panel section" aria-labelledby="about-history">
         <div className="page">
           <Reveal>
             <SectionHead id="about-history" heading={t("historyHeading")} />

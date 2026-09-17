@@ -1,5 +1,13 @@
 import { cn } from "@/lib/cn";
 
+/**
+ * Sahifa ortidagi rangli muhit. Bitta qatlam, butun sayt uçun:
+ * fon qora bölmasin va şişaning ostida xiralaştiradigan narsa bölsin.
+ */
+export function Ambient() {
+  return <div aria-hidden="true" className="ambient" />;
+}
+
 /** Plyonka zarrasi — butun sahifa ustida bitta statik qatlam. */
 export function Grain() {
   return <div aria-hidden="true" className="grain" />;

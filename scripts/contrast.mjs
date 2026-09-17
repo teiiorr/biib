@@ -27,10 +27,14 @@ function block(css, selector, from = 0) {
 // Sayt faqat qorongʻi: bitta token töplami.
 const theme = new Map([...block(tokens, ":root {"), ...block(glass, ":root {")]);
 
-/** calc(a - b * var(--glass-intensity)) ni standart 0.5 da hisoblaydi. */
-function alphaOf(raw) {
+/**
+ * calc(a - b * var(--glass-intensity)) ni berilgan suruvçi holatida
+ * hisoblaydi. Suruvçi endi zichlikni keskin özgartirgani uçun ikkala
+ * uçi ham tekşiriladi: eng şaffof holatda ham matn öqilişi kerak.
+ */
+function alphaOf(raw, intensity) {
   const calc = /^calc\(([\d.]+)\s*-\s*([\d.]+)\s*\*\s*var\(--glass-intensity\)\)$/.exec(raw.trim());
-  if (calc) return Number(calc[1]) - Number(calc[2]) * 0.5;
+  if (calc) return Number(calc[1]) - Number(calc[2]) * intensity;
   return Number(raw);
 }
 
@@ -53,13 +57,9 @@ function parse(raw, theme) {
 }
 
 /** Şişa yuzasi: tint + hisoblangan alfa. */
-function glassOver(theme, variant, base) {
+function glassOver(theme, base, intensity) {
   const tint = (theme.get("--glass-tint") ?? "255 255 255").split(/\s+/).map(Number);
-  const raw =
-    variant === "thick"
-      ? theme.get("--glass-thick-alpha") ?? theme.get("--glass-alpha")
-      : theme.get("--glass-alpha");
-  return over([...tint, alphaOf(raw ?? "0.7")], base);
+  return over([...tint, alphaOf(theme.get("--glass-alpha") ?? "0.7", intensity)], base);
 }
 
 function over(fg, bg) {
@@ -108,27 +108,36 @@ const PAIRS = [
   ["--label-primary", "@glass", "--bg-base"],
   ["--label-secondary", "@glass", "--bg-base"],
   ["--accent-text", "@glass", "--bg-base"],
-  // Samosvetlar bezak sifatida: grafik uçun 3:1 yetadi.
-  ["--magenta", "--bg-base", null, 3, "samosvet çizigʻi"],
-  ["--violet", "--bg-base", null, 3, "samosvet çizigʻi"],
-  ["--turquoise", "--bg-base", null, 3, "samosvet çizigʻi"],
-  ["--gold", "--bg-base", null, 3, "samosvet çizigʻi"],
+  // Samosvet çiziqlari: maʼnoli grafik, §8 böyiça 3:1 yetadi.
+  // Toʻldiriş emas, aynan -line variantlari tekşiriladi.
+  ["--gold-line", "--bg-elevated", null, 3, "samosvet çizigʻi"],
+  ["--magenta-line", "--bg-elevated", null, 3, "samosvet çizigʻi"],
+  ["--violet-line", "--bg-elevated", null, 3, "samosvet çizigʻi"],
+  ["--turquoise-line", "--bg-elevated", null, 3, "samosvet çizigʻi"],
+  ["--green-line", "--bg-elevated", null, 3, "samosvet çizigʻi"],
+  // Toʻldiriş sifatida: ustidagi matn öqilişi kerak.
+  ["--accent-contrast", "--violet"],
+  // Yaşil yorugʻ: uning ustida matn qorongʻi bölişi kerak, ivory emas.
+  ["--bg-base", "--green", null, 4.5, "yaşil toʻldiriş ustida qorongʻi matn"],
 ];
 
 let failed = 0;
 const rows = [];
 
-for (const [name, palette] of [["qorongʻi", theme]]) {
+for (const intensity of [0, 0.5, 1]) {
+  const palette = theme;
+  const name = `şaffoflik ${intensity}`;
   for (const [fgToken, bgToken, baseToken, min = 4.5, note] of PAIRS) {
     const base = parse(palette.get(baseToken ?? "--bg-base"), palette);
-    const bg = bgToken === "@glass" ? glassOver(palette, "regular", base) : over(parse(palette.get(bgToken), palette), base);
+    const bg = bgToken === "@glass" ? glassOver(palette, base, intensity) : over(parse(palette.get(bgToken), palette), base);
     const fg = over(parse(palette.get(fgToken), palette), bg);
     const value = ratio(fg, bg);
+    if (intensity !== 0.5 && bgToken !== "@glass") continue;
     const ok = value >= min;
     if (!ok) failed += 1;
     const where = baseToken ? `${bgToken} / ${baseToken}` : bgToken;
     rows.push(
-      `${ok ? "  ok " : "  XATO"} ${name.padEnd(9)} ${fgToken.padEnd(19)} on ${where.padEnd(28)} ${value.toFixed(2)}  (min ${min})${note ? " — " + note : ""}`,
+      `${ok ? "  ok " : "  XATO"} ${name.padEnd(15)} ${fgToken.padEnd(19)} on ${where.padEnd(28)} ${value.toFixed(2)}  (min ${min})${note ? " — " + note : ""}`,
     );
   }
 }

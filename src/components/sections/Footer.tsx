@@ -21,7 +21,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-16 bg-elevated shadow-[inset_0_0.5px_0_0_var(--separator)]">
+    <footer className="panel mt-16 shadow-[inset_0_0.5px_0_0_var(--line-gold)]">
       <div className="page grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2.5">

@@ -14,7 +14,7 @@ export function PeopleTeaser() {
   if (members.length === 0) return null;
 
   return (
-    <section className="section bg-elevated" aria-labelledby="home-people">
+    <section className="panel section" aria-labelledby="home-people">
       <div className="page">
         <Reveal>
           <SectionHead id="home-people" heading={t("heading")} lead={t("lead")} />

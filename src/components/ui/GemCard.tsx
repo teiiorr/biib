@@ -31,12 +31,16 @@ export function GemCard({
 
   return (
     <Tag
-      style={{ "--gem": `var(--${accent})` } as CSSProperties}
+      style={
+        {
+          "--gem": `var(--${accent})`,
+          "--gem-line": `var(--${accent}-line)`,
+        } as CSSProperties
+      }
       className={cn(
-        "group relative isolate overflow-hidden rounded-lg bg-elevated",
-        "shadow-[inset_0_0_0_0.5px_var(--separator)]",
-        "transition-colors duration-[var(--dur-base)] ease-[var(--ease-standard)]",
-        interactive && "hover:bg-sunken focus-within:bg-sunken",
+        "glass glass-card group relative isolate overflow-hidden rounded-lg",
+        "transition-[filter] duration-[var(--dur-base)] ease-[var(--ease-standard)]",
+        interactive && "hover:brightness-110 focus-within:brightness-110",
         className,
       )}
     >
@@ -44,9 +48,9 @@ export function GemCard({
       <span
         aria-hidden="true"
         className={cn(
-          "absolute inset-x-0 top-0 z-10 h-[2px]",
-          "bg-[linear-gradient(90deg,var(--gem),color-mix(in_srgb,var(--gem)_20%,transparent))]",
-          "opacity-70 transition-opacity duration-[var(--dur-base)]",
+          "absolute inset-x-0 top-0 z-10 h-[3px]",
+          "bg-[linear-gradient(90deg,var(--gem-line),color-mix(in_srgb,var(--gem-line)_20%,transparent))]",
+          "opacity-80 transition-opacity duration-[var(--dur-base)]",
           "group-hover:opacity-100 group-focus-within:opacity-100",
         )}
       />
@@ -55,8 +59,8 @@ export function GemCard({
 
       {index !== undefined ? (
         <span aria-hidden="true" className="pointer-events-none absolute right-4 top-3 z-0">
-          <span className="absolute -inset-3 rounded-pill bg-[color-mix(in_srgb,var(--gem)_16%,transparent)] blur-md" />
-          <span className="relative font-[family-name:var(--font-display)] text-title1 font-bold text-gold opacity-25">
+          <span className="absolute -inset-3 rounded-pill bg-[color-mix(in_srgb,var(--gem)_30%,transparent)] blur-md" />
+          <span className="relative font-[family-name:var(--font-display)] text-title1 font-bold text-gold opacity-40">
             {String(index).padStart(2, "0")}
           </span>
         </span>
@@ -72,7 +76,7 @@ export function GemBullet() {
   return (
     <span
       aria-hidden="true"
-      className="mt-[0.45rem] block h-1.5 w-1.5 shrink-0 rotate-45 bg-[var(--gem)]"
+      className="mt-[0.45rem] block h-1.5 w-1.5 shrink-0 rotate-45 bg-[var(--gem-line,var(--gem))]"
     />
   );
 }

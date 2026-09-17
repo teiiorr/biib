@@ -8,7 +8,7 @@ import type { Locale } from "@/i18n/locales";
 export type Localized<T = string> = Record<Locale, T>;
 
 /** Samosvet — bölimning sahna rangi. Bir ekranda ikki-uçtasi. */
-export type Accent = "gold" | "magenta" | "violet" | "turquoise";
+export type Accent = "gold" | "magenta" | "violet" | "turquoise" | "green";
 
 export interface ProjectItem {
   readonly id: string;

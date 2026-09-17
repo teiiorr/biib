@@ -248,7 +248,7 @@ export const NEWS: readonly NewsItem[] = [
   {
     slug: "ertak-ustaxonasi-birinchi-multfilmlar",
     date: "2026-04-11",
-    accent: "magenta",
+    accent: "green",
     topic: {
       "uz-Latn": "Loyiha",
       "uz-Cyrl": "Лойиҳа",

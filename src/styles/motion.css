@@ -34,11 +34,12 @@
     rgb(214 62 140 / 0.5),
     rgb(106 56 217 / 0.5),
     rgb(24 184 201 / 0.4),
-    rgb(201 162 90 / 0.35),
+    rgb(47 190 138 / 0.4),
+    rgb(201 162 90 / 0.38),
     rgb(214 62 140 / 0.5)
   );
-  filter: blur(90px);
-  opacity: 0.26;
+  filter: blur(80px);
+  opacity: 0.38;
   animation:
     aura-spin 26s linear infinite,
     aura-pulse 8s ease-in-out infinite;
@@ -54,12 +55,12 @@
 @keyframes aura-pulse {
   0%,
   100% {
-    opacity: 0.22;
+    opacity: 0.32;
     scale: 1;
   }
   50% {
-    opacity: 0.36;
-    scale: 1.07;
+    opacity: 0.5;
+    scale: 1.08;
   }
 }
 
@@ -83,6 +84,43 @@ html.js [data-reveal="in"] {
   transform: none;
   filter: none;
   will-change: auto;
+}
+
+/*
+ * ---- Rangli muhit ----
+ * Sahifa ortidagi doimiy qatlam: magenta, oltin, binafşa va bir çimdim
+ * feruza. İkki iş qiladi — fonni qora bölişdan qutqaradi va şişaga
+ * xiralaştiradigan narsa beradi. Busiz şişa oddiy yarim şaffof quti.
+ */
+
+.ambient {
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  /*
+   * Kuçi ölçab qöyilgan: ikki dogʻ ustma-ust tuşganda ham ikkinçi
+   * darajali matn 5.07:1 dan tuşmaydi. Undan kuçliroq qilinsa 3.57 ga
+   * tuşib, AA dan çiqadi.
+   */
+  background:
+    radial-gradient(36% 32% at 80% 8%, rgb(214 62 140 / 0.26), transparent 68%),
+    radial-gradient(32% 30% at 8% 38%, rgb(201 162 90 / 0.18), transparent 70%),
+    radial-gradient(42% 38% at 58% 90%, rgb(106 56 217 / 0.26), transparent 68%),
+    radial-gradient(26% 24% at 95% 62%, rgb(24 184 201 / 0.16), transparent 70%),
+    radial-gradient(30% 28% at 20% 88%, rgb(47 190 138 / 0.2), transparent 70%);
+  filter: blur(26px) saturate(150%);
+  animation: ambient-drift 34s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes ambient-drift {
+  from {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(2%, 2%, 0) scale(1.08);
+  }
 }
 
 /* ---- Plyonka zarrasi va girih suv belgisi: statik fakturalar ---- */
@@ -125,6 +163,7 @@ html.js [data-reveal="in"] {
 @media (prefers-reduced-motion: reduce) {
   .gold-text,
   .aura,
+  .ambient,
   .drift {
     animation: none !important;
   }
