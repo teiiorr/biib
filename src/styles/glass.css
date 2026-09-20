@@ -149,10 +149,19 @@
 }
 
 /*
- * Tekis premium karta: silueti to'g'ri to'rtburchak (barça karta bir
- * xil), oltin ràm şişaning öz rimidan keladi. Hover da ràm yorishadi
- * va soya çuqurlaşadi — kötariliş transform bilan.
+ * Portal-karta: BARÇA karta bir xil uçli ravoq siluetiga ega (bir xil
+ * toj balandligi → ideal bir xillik), mask backdrop-filter ni ham
+ * qirqadi. Hover da içki oltin ràm yorishadi (inset mask içida qoladi),
+ * kötariliş soyasini .ravoq-shadow beradi.
  */
+.glass-card--ravoq {
+  mask:
+    var(--ravoq-mask) top left / 100% var(--ravoq-h, 74px) no-repeat,
+    linear-gradient(#000, #000) bottom left / 100%
+      calc(100% - var(--ravoq-h, 74px) + 1px) no-repeat;
+  mask-composite: add;
+}
+
 .gem-card:hover,
 .gem-card:focus-within {
   box-shadow:

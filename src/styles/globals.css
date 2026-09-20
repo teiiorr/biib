@@ -52,25 +52,26 @@
   --shadow-ambient: var(--shadow-ambient);
   --shadow-modal: var(--shadow-modal);
 
-  /* §4.6 şkalasi; sarlavhalar Unbounded, qolgani Manrope. */
-  --text-display: 2.75rem;
-  --text-display--line-height: 3.125rem;
-  --text-display--letter-spacing: -0.02em;
+  /* Sarlavhalar Cormorant (luks serif) — optik kiçik yuradi, şkala
+   * kattaroq; serifga keskin manfiy tracking kerak emas. Qolgani Manrope. */
+  --text-display: clamp(2.6rem, 1.9rem + 2.6vw, 3.6rem);
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.01em;
   --text-display--font-weight: 700;
 
-  --text-title1: 2rem;
-  --text-title1--line-height: 2.375rem;
-  --text-title1--letter-spacing: -0.02em;
+  --text-title1: clamp(2.1rem, 1.7rem + 1.4vw, 2.7rem);
+  --text-title1--line-height: 1.12;
+  --text-title1--letter-spacing: -0.01em;
   --text-title1--font-weight: 700;
 
-  --text-title2: 1.5rem;
-  --text-title2--line-height: 1.875rem;
-  --text-title2--letter-spacing: -0.01em;
+  --text-title2: clamp(1.7rem, 1.5rem + 0.7vw, 2rem);
+  --text-title2--line-height: 1.18;
+  --text-title2--letter-spacing: -0.005em;
   --text-title2--font-weight: 600;
 
-  --text-title3: 1.25rem;
-  --text-title3--line-height: 1.625rem;
-  --text-title3--letter-spacing: -0.01em;
+  --text-title3: clamp(1.45rem, 1.32rem + 0.4vw, 1.6rem);
+  --text-title3--line-height: 1.25;
+  --text-title3--letter-spacing: -0.005em;
   --text-title3--font-weight: 600;
 
   --text-headline: 1.0625rem;
@@ -103,7 +104,7 @@
   --ease-quint: var(--ease-quint);
   --ease-magnet: var(--ease-magnet);
 
-  --font-display: var(--font-display), "Trebuchet MS", system-ui, sans-serif;
+  --font-display: var(--font-display), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-body), -apple-system, system-ui, sans-serif;
 
   --container-page: 1200px;
@@ -149,16 +150,8 @@
     text-wrap: balance;
   }
 
-  /*
-   * Unbounded да ўзбек кирилл ҳарфлари (ҳ қ ғ ў) йўқ — улар ингичка
-   * заҳира шрифтга тушиб, битта сўз ичида қалин ҳарфлар билан аралашиб
-   * қоларди. Кирилл-ўзбекча сарлавҳалар тўлиқ қамровли Manrope да.
-   * Рус тили бу ҳарфларни ишлатмайди, шунинг учун фақат uz-Cyrl.
-   */
-  html[lang="uz-Cyrl"] :is(h1, h2, h3, h4) {
-    font-family: var(--font-body);
-    letter-spacing: -0.015em;
-  }
+  /* Cormorant cyrillic-ext bilan keladi — ҳ қ ғ ў barça tillarda
+   * öz serif şriftida, zaxira şrift aralaşmaydi. */
 
   p {
     text-wrap: pretty;

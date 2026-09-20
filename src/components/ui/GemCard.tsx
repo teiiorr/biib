@@ -6,14 +6,14 @@ import type { Accent } from "@/content/types";
 import { cn } from "@/lib/cn";
 
 /**
- * Karta — tekis, premium. Silueti bir xil to'g'ri to'rtburchak, şuning
- * uçun barça karta ideal tekis turadi; tepasida esa ingiçka oltin
- * ravoq toji — cho'qqida kalit toş, yelkalarida islimi. Özbek ruhi
- * tekislikni buzmaydi.
+ * Portal-karta. BARÇA karta bir xil uçli ravoq (peştoq) siluetida —
+ * toj balandligi hamma joyda bir xil, şuning uçun tör ideal tekis.
+ * Cho'qqida kalit toş, yelkalarida islimi; skrollda toj öz-özini
+ * yigʻadi, üstidagi muz pardasi eriydi (backdrop-filter ga tegilmaydi).
  *
- * Oltin ràm hover da yorishadi. Sıçkon ortidan samosvet nuri yuradi:
- * koordinata CSS özgaruvçisiga rAF bilan yoziladi, React qayta render
- * qilmaydi. Karta skrollda toj bilan yigʻiladi (--asm).
+ * Tuzilişi: taşqi .ravoq öramasi ark soyasini tutadi (mask outset
+ * soyani qirqadi), içki şişa yuzasi mask + kontent + bezaklar.
+ * Sıçkon ortidan samosvet nuri — rAF, React qayta render qilmaydi.
  */
 export function GemCard({
   accent,
@@ -53,50 +53,68 @@ export function GemCard({
         {
           "--gem": `var(--${accent})`,
           "--gem-line": `var(--${accent}-line)`,
-          containerType: "inline-size",
         } as CSSProperties
       }
       className={cn(
-        "ravoq gem-card card-light group relative isolate flex flex-col overflow-hidden rounded-2xl",
-        "glass glass-card",
-        "transition-[transform,box-shadow] duration-[var(--dur-base)] ease-[var(--ease-magnet)]",
-        "hover:-translate-y-1.5 focus-within:-translate-y-1.5 active:scale-[0.994]",
+        "ravoq group relative flex flex-col",
         interactive && "cursor-pointer",
         className,
       )}
     >
-      {/* Ravoq toji ostida samosvet nuri. */}
-      <span aria-hidden="true" className="ravoq-crownlight" />
+      {/* Ark şaklidagi kötariliş soyasi — maskadan taşqarida. */}
+      <span aria-hidden="true" className="ravoq-shadow" />
 
-      {/* Kontent. */}
-      <div className="relative z-10 flex h-full flex-col">{children}</div>
-
-      {/* Oltin ravoq toji — tekis kartaning tepasidagi bezak. */}
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 120 80"
-        preserveAspectRatio="none"
-        fill="none"
-        className="ravoq-edge z-20"
+      {/* İçki şişa yuzasi: ark maskasi, kontent va bezaklar. */}
+      <div
+        style={{ containerType: "inline-size" } as CSSProperties}
+        className={cn(
+          "gem-card glass glass-card glass-card--ravoq card-light relative z-[1] flex flex-1 flex-col overflow-hidden rounded-xl",
+          "transition-transform duration-[420ms] ease-[var(--ease-magnet)]",
+          "group-hover:-translate-y-1.5 focus-within:-translate-y-1.5 group-active:scale-[0.99]",
+        )}
       >
-        <path
-          d="M0 58C6 33 33 8 60 0C87 8 114 33 120 58"
-          stroke="currentColor"
-          strokeWidth={1}
-          vectorEffect="non-scaling-stroke"
-        />
-        <path
-          d="M0 61C6 37 33 12 60 4C87 12 114 37 120 61"
-          stroke="var(--gold-hi)"
-          strokeWidth={0.75}
-          strokeOpacity={0.4}
-          vectorEffect="non-scaling-stroke"
-        />
-      </svg>
+        {/* Ravoq toji ostida samosvet nuri. */}
+        <span aria-hidden="true" className="ravoq-crownlight" />
 
-      <ArchKeystone className="absolute left-1/2 top-[4px] z-20 w-[18px] -translate-x-1/2" />
-      <IslimiSpandrel side="left" className="absolute left-[7px] top-[calc(var(--ravoq-h,66px)-46px)] z-20 w-9" />
-      <IslimiSpandrel side="right" className="absolute right-[7px] top-[calc(var(--ravoq-h,66px)-46px)] z-20 w-9" />
+        {/* Kontent. */}
+        <div className="relative z-10 flex h-full flex-col">{children}</div>
+
+        {/* Eriydigan muz — kontent üstida, bezaklar tagida. */}
+        <span aria-hidden="true" className="frost z-20" />
+
+        {/* Ravoqning oltin qirrasi. */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 120 80"
+          preserveAspectRatio="none"
+          fill="none"
+          className="ravoq-edge z-30"
+        >
+          <path
+            d="M0 58C6 33 33 8 60 0C87 8 114 33 120 58"
+            stroke="currentColor"
+            strokeWidth={1}
+            vectorEffect="non-scaling-stroke"
+          />
+          <path
+            d="M0 61C6 37 33 12 60 4C87 12 114 37 120 61"
+            stroke="var(--gold-hi)"
+            strokeWidth={0.75}
+            strokeOpacity={0.4}
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+
+        <ArchKeystone className="absolute left-1/2 top-[4px] z-30 w-[18px] -translate-x-1/2" />
+        <IslimiSpandrel
+          side="left"
+          className="absolute left-[7px] top-[calc(var(--ravoq-h,74px)-46px)] z-30 w-9"
+        />
+        <IslimiSpandrel
+          side="right"
+          className="absolute right-[7px] top-[calc(var(--ravoq-h,74px)-46px)] z-30 w-9"
+        />
+      </div>
     </Tag>
   );
 }

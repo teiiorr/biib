@@ -13,7 +13,7 @@ import { LOCALE_META, type Locale } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
 import { appearanceInitScript } from "@/lib/appearance";
 import { SITE_URL } from "@/lib/site";
-import { manrope, unbounded } from "@/lib/fonts";
+import { cormorant, manrope } from "@/lib/fonts";
 import "@/styles/globals.css";
 
 export const viewport: Viewport = {
@@ -69,7 +69,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
     <html
       lang={locale}
       dir={LOCALE_META[locale as Locale].dir}
-      className={`${unbounded.variable} ${manrope.variable}`}
+      className={`${cormorant.variable} ${manrope.variable}`}
       suppressHydrationWarning
     >
       <head>

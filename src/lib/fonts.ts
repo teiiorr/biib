@@ -1,12 +1,13 @@
-import { Manrope, Unbounded } from "next/font/google";
+import { Cormorant, Manrope } from "next/font/google";
 
 /**
- * Unbounded — sarlavhalar, meros ovozi. Manrope — matn.
- * İkkalasida ham latin, latin-ext, cyrillic va cyrillic-ext bor:
- * ʻ (U+02BB), ʼ (U+02BC) va ç ş ö ğ beş tilning hammasida çiqadi.
+ * Cormorant — sarlavhalar: nozik kontrastli, qölyozma-luks serif;
+ * Registon ruhi + jurnal darajasi. cyrillic-ext bor — ҳ қ ғ ў
+ * beş tilning hammasida öz şriftida çiqadi (zaxira şrift kerak emas).
+ * Manrope — matn va UI.
  */
 
-export const unbounded = Unbounded({
+export const cormorant = Cormorant({
   subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
   weight: ["500", "600", "700"],
   variable: "--font-display",
