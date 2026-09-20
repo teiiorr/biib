@@ -136,6 +136,18 @@
   }
 }
 
+/* Bosh (featured) karta katta — arkni balandroq qilamiz, aks holda toj
+ * yassi köringardi. Toj balandligini kalit toş/yelka/qirra öqiydi. */
+.ravoq.is-featured {
+  --ravoq-h: 104px;
+}
+
+@media (max-width: 767px) {
+  .ravoq.is-featured {
+    --ravoq-h: 100px;
+  }
+}
+
 .glass-card--ravoq {
   mask:
     var(--ravoq-mask) top left / 100% var(--ravoq-h, 74px) no-repeat,
