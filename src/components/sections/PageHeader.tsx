@@ -20,13 +20,11 @@ export function PageHeader({
     <section className="relative isolate overflow-hidden">
       <Aura className="-right-[26%] -top-[58%] w-[min(72vw,620px)]" />
 
-      <Reveal as="header" className="page relative pb-6 pt-10 text-center md:pt-16">
+      <Reveal as="header" className="page relative pb-6 pt-10 md:pt-16">
         <h1 className="text-title1 md:text-display">
           <GoldText>{title}</GoldText>
         </h1>
-        {lead ? (
-          <p className="read mx-auto mt-4 text-body text-label-secondary">{lead}</p>
-        ) : null}
+        {lead ? <p className="read mt-4 text-body text-label-secondary">{lead}</p> : null}
         {children}
       </Reveal>
     </section>

@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { Girih } from "@/components/brand/Texture";
 import type { Accent } from "@/content/types";
 import { cn } from "@/lib/cn";
 
@@ -24,9 +25,14 @@ export function PortraitPlaceholder({ name, className }: { name: string; classNa
   return (
     <div
       aria-hidden="true"
-      className={cn("grid h-full w-full place-items-center bg-graphite", className)}
+      className={cn(
+        "relative grid h-full w-full place-items-center overflow-hidden",
+        "bg-[radial-gradient(120%_120%_at_50%_16%,color-mix(in_srgb,var(--gold)_18%,var(--bg-elevated)),var(--bg-sunken))]",
+        className,
+      )}
     >
-      <span className="font-[family-name:var(--font-display)] text-title2 text-gold opacity-70">
+      <Girih className="opacity-[0.09]" />
+      <span className="relative font-[family-name:var(--font-display)] text-title1 font-semibold text-gold-hi">
         {initials(name)}
       </span>
     </div>

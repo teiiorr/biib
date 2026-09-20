@@ -18,8 +18,8 @@ export function ProjectCard({
   return (
     <GemCard accent={project.accent} className={cn("min-h-72", className)}>
       <div className="flex flex-1 flex-col gap-4 px-6 pb-6 pt-[calc(var(--ravoq-h,74px)-28px)] @[20rem]:px-8 @[20rem]:pb-8">
-        <h3 className="text-center text-title3 @[20rem]:text-title2">{project.name[locale]}</h3>
-        <p className="text-center text-callout text-accent-text @[20rem]:text-body">
+        <h3 className="text-title3 @[20rem]:text-title2">{project.name[locale]}</h3>
+        <p className="text-callout text-accent-text @[20rem]:text-body">
           {pick(project.tagline, locale)}
         </p>
 

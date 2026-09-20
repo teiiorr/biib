@@ -19,7 +19,7 @@ export function ProjectsOverview() {
           <SectionHead id="home-projects" heading={t("heading")} />
         </Reveal>
 
-        <div className="mt-10 flex justify-center">
+        <div className="mt-10">
           <Reveal className="flex w-full max-w-md">
             <ProjectCard project={project} className="w-full" />
           </Reveal>
