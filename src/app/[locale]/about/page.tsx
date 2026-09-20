@@ -18,11 +18,11 @@ function Values() {
   const t = useTranslations("about.values");
 
   return (
-    <ul className="mt-8 grid gap-x-10 gap-y-7 sm:grid-cols-2">
+    <ul className="mt-8 grid gap-x-10 gap-y-7 text-center sm:grid-cols-2">
       {VALUES.map((value) => (
         <li key={value}>
           <h3 className="text-headline">{t(`${value}Heading` as "openHeading")}</h3>
-          <p className="mt-2 text-callout text-label-secondary">
+          <p className="mx-auto mt-2 max-w-[26rem] text-callout text-label-secondary">
             {t(`${value}Body` as "openBody")}
           </p>
         </li>
@@ -56,7 +56,8 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
         <div className="page">
           <Reveal>
             <SectionHead id="about-history" heading={t("historyHeading")} />
-            <div className="mt-5 grid gap-5 text-body text-label-secondary lg:grid-cols-2 lg:gap-10">
+            {/* Hikoya — portal ostidagi qölyozma: bitta markaziy ustun. */}
+            <div className="read mx-auto mt-5 flex flex-col gap-5 text-center text-body text-label-secondary">
               <p>{t("historyBody1")}</p>
               <p>{t("historyBody2")}</p>
             </div>
@@ -71,7 +72,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
           </Reveal>
           <Values />
 
-          <div className="mt-10 flex justify-end">
+          <div className="mt-10 flex justify-center">
             <LinkButton href="/projects">{tNav("projects")}</LinkButton>
           </div>
         </div>

@@ -9,7 +9,7 @@ import { MobileNav } from "./MobileNav";
 import { NAV_ITEMS } from "./nav-items";
 import { Link, usePathname } from "@/i18n/navigation";
 import { useScrolled } from "@/hooks/use-scrolled";
-import { onVideoPlaying } from "@/lib/video-signal";
+import { isVideoPlaying, onVideoPlaying } from "@/lib/video-signal";
 import { cn } from "@/lib/cn";
 
 /**
@@ -23,7 +23,10 @@ export function Header() {
   const scrolled = useScrolled(sentinel);
   const [overVideo, setOverVideo] = useState(false);
 
-  useEffect(() => onVideoPlaying(setOverVideo), []);
+  useEffect(() => {
+    setOverVideo(isVideoPlaying());
+    return onVideoPlaying(setOverVideo);
+  }, []);
 
   return (
     <>

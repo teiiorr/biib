@@ -49,7 +49,7 @@ export function NewsCard({
                 ? "(max-width: 640px) 92vw, 62vw"
                 : "(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw"
             }
-            className="object-cover"
+            className="parallax-media object-cover"
           />
         ) : (
           <CoverPlaceholder topic={pick(item.topic, locale)} />

@@ -45,8 +45,13 @@
  * şitning yuqori burçaklari ham, kartaning 28 px i ham 20 px ga
  * tuşib qolardi. Radiusni har bir işlatgan joy özi beradi.
  */
+/*
+ * position bu yerda BERILMAYDI. Qatlamsiz CSS Tailwind utilitalaridan
+ * ustun keladi: ilgari şu yerdagi position: relative şitning "fixed"
+ * ini yengib, menyuni hujjatning eng pastiga — ekran tašqarisiga —
+ * uloqtirardi. Joylaşişni har bir işlatgan joy özi beradi.
+ */
 .glass {
-  position: relative;
   isolation: isolate;
 
   background-color: rgb(var(--glass-tint) / var(--glass-alpha));
@@ -382,6 +387,23 @@
   }
 }
 
+/* Saytdagi kontrast tumbleri — tizim sozlamasining aynan özi. */
+html[data-contrast="more"] {
+  --label-secondary: rgb(242 228 198 / 0.86);
+  --separator: rgb(242 228 198 / 0.32);
+  --line-gold: rgb(201 162 90 / 0.5);
+}
+
+html[data-contrast="more"] .glass,
+html[data-contrast="more"] .app-bar[data-scrolled="true"] {
+  background-color: rgb(var(--glass-tint) / 0.97);
+  background-image: none;
+  backdrop-filter: none;
+  box-shadow:
+    inset 0 0 0 1px var(--line-gold),
+    var(--shadow-contact);
+}
+
 /*
  * ---- Nav: oltin skroll-progress rel + siljiydigan kalit belgisi ----
  * Barning pastki qirrasida oltin çiziq skroll böyiça ösadi; faol havola
@@ -438,11 +460,20 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .app-bar::after {
+  html:not([data-motion="full"]) .app-bar::after {
     animation: none !important;
     transform: scaleX(1);
   }
-  .nav-link::after {
+  html:not([data-motion="full"]) .nav-link::after {
     transition: none;
   }
+}
+
+html[data-motion="reduce"] .app-bar::after {
+  animation: none !important;
+  transform: scaleX(1);
+}
+
+html[data-motion="reduce"] .nav-link::after {
+  transition: none;
 }

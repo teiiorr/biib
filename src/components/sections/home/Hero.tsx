@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import { GoldText } from "@/components/brand/GoldText";
 import { HeroArch } from "@/components/brand/HeroArch";
-import { LivingVideo } from "@/components/brand/LivingVideo";
+import { LivingVideo, VideoToggle } from "@/components/brand/LivingVideo";
 import { Reveal } from "@/components/brand/Reveal";
 import { Aura } from "@/components/brand/Texture";
 import { LinkButton } from "@/components/ui/LinkButton";
@@ -21,7 +21,7 @@ export function Hero() {
     <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden">
       {/* Jonli sahna: nafas oladigan fon. */}
       <div aria-hidden="true" className="hero-bg absolute inset-0 -z-10">
-        <LivingVideo src="/brand/upop-live.mp4" poster="/brand/upop-scene.jpg" posterAlt="" />
+        <LivingVideo src="/brand/upop-live.mp4" poster="/brand/upop-scene.jpg" posterAlt="" control />
       </div>
 
       {/* Parda: tepada yengil, matn turgan pastda zich — kontrast AA. */}
@@ -29,6 +29,15 @@ export function Hero() {
         aria-hidden="true"
         className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(5_12_20/0.5)_0%,rgb(5_12_20/0.12)_30%,rgb(5_12_20/0.22)_55%,rgb(5_12_20/0.74)_78%,rgb(5_12_20/0.92)_100%)]"
       />
+
+      {/* Video pauzasi — WCAG 2.2.2. Media qatlami aria-hidden, tugma emas. */}
+      <div className="page pointer-events-none absolute inset-x-0 top-4 z-10 flex justify-end">
+        <VideoToggle
+          pauseLabel={t("videoPause")}
+          playLabel={t("videoPlay")}
+          className="pointer-events-auto"
+        />
+      </div>
 
       <div className="hero-stage flex flex-1 flex-col">
         <div className="page relative flex flex-1 flex-col items-center justify-end pb-4 text-center">
@@ -56,7 +65,18 @@ export function Hero() {
           </Reveal>
         </div>
 
-        <Reveal delay={640} className="page flex flex-wrap items-center justify-end gap-3 pb-9 pt-5">
+        {/*
+         * Tugmalar sarlavha öqiga markazlanadi — butun qahramon bitta
+         * marosim ustunida. Mobilda ustma-ust: asosiy tugma tepada,
+         * desktopda row-reverse uni öngga qöyadi (öqiş tartibi saqlanadi).
+         */}
+        <Reveal
+          delay={640}
+          className="page flex flex-col items-center gap-3 pb-10 pt-6 sm:flex-row-reverse sm:justify-center"
+        >
+          <LinkButton href="/contacts" size="lg" className="w-full justify-center sm:w-auto">
+            {t("ctaPrimary")}
+          </LinkButton>
           <LinkButton
             href="/projects"
             variant="secondary"
@@ -64,9 +84,6 @@ export function Hero() {
             className="w-full justify-center sm:w-auto"
           >
             {t("ctaSecondary")}
-          </LinkButton>
-          <LinkButton href="/contacts" size="lg" className="w-full justify-center sm:w-auto">
-            {t("ctaPrimary")}
           </LinkButton>
         </Reveal>
       </div>

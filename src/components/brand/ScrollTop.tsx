@@ -24,7 +24,7 @@ export function ScrollTop({ label }: { label: string }) {
       aria-label={label}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className={cn(
-        "tap fixed bottom-5 right-5 z-[var(--z-dock)] grid h-12 w-12 place-items-center rounded-pill",
+        "scroll-top tap fixed bottom-5 right-5 z-[var(--z-dock)] grid h-12 w-12 place-items-center rounded-pill",
         "bg-[image:var(--metal)] text-[#0a1622]",
         "shadow-[inset_0_0.5px_0_0_rgb(255_255_255/0.45),0_10px_28px_-10px_rgb(201_162_90/0.6)]",
         "transition-[opacity,transform,filter] duration-[var(--dur-base)] ease-[var(--ease-magnet)]",

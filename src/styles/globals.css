@@ -175,15 +175,52 @@
       border-color var(--dur-base) var(--ease-standard) !important;
   }
 
+  /*
+   * Universal söndirgiç. Tizim sozlamasi saytdagi aniq "harakat
+   * kerak" tanlovi (data-motion="full") bilan bekor qilinadi;
+   * saytdagi "kamaytiriş" tumbleri esa tizimsiz ham işlaydi.
+   */
   @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
+    html:not([data-motion="full"]) *,
+    html:not([data-motion="full"]) *::before,
+    html:not([data-motion="full"]) *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+  }
+
+  html[data-motion="reduce"] *,
+  html[data-motion="reduce"] *::before,
+  html[data-motion="reduce"] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Silliq skroll html ning özida turadi — "*" uni qamramaydi. */
+  @media (prefers-reduced-motion: reduce) {
+    html:not([data-motion="full"]) {
+      scroll-behavior: auto;
+    }
+  }
+
+  html[data-motion="reduce"] {
+    scroll-behavior: auto;
+  }
+
+  /*
+   * Matn ölçami — saytdagi qulaylik tanlovi. Hamma ölçam rem da,
+   * şuning uçun ildiz foizi butun tipografiyani mutanosib kötaradi.
+   */
+  html[data-text="lg"] {
+    font-size: 112.5%;
+  }
+
+  html[data-text="xl"] {
+    font-size: 125%;
   }
 }
 
@@ -231,8 +268,12 @@
   /*
    * Körinadigan balandlik §6.5 böyiça, ammo barmoq uçun bosiş maydoni
    * §8 talab qilgan 44 px dan kiçik bölmaydi.
+   *
+   * position faqat statik elementga beriladi: bu qoida Tailwind ning
+   * fixed/absolute utilitalaridan KEYİN keladi va ilgari ularni yengib
+   * qöyardi — "Yuqoriga" tugmasi oqimga tuşib, çap pastda qolgan edi.
    */
-  .tap {
+  .tap:not([class~="fixed"]):not([class~="absolute"]):not([class~="sticky"]) {
     position: relative;
   }
 
@@ -310,5 +351,52 @@
   .slider:disabled {
     opacity: 0.4;
     cursor: default;
+  }
+}
+
+/*
+ * ---- Bosma (print) ----
+ * Yangilik yoki kontaktni qogʻozga çiqarayotgan odam tun palitrani
+ * emas, öqiladigan hujjatni oladi: oq fon, qora matn, chrome yöq.
+ */
+@media print {
+  html {
+    background: #fff;
+  }
+
+  body {
+    background: #fff !important;
+    color: #111 !important;
+  }
+
+  body * {
+    color: inherit !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  .app-bar,
+  .skyline-field,
+  .ambient,
+  .grain,
+  .aura,
+  .gem-wash,
+  .frost,
+  .liquid-pointer,
+  .scroll-top,
+  .hero-bg,
+  video {
+    display: none !important;
+  }
+
+  .gold-text {
+    background: none !important;
+    -webkit-text-fill-color: initial;
+    color: #111 !important;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
   }
 }

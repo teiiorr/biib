@@ -37,7 +37,9 @@
       "subtitle": "Auditions, studios, exhibitions and festivals. We work so that every child finds their own voice, their own colour and their own stage.",
       "ctaPrimary": "Join a project",
       "ctaSecondary": "Projects",
-      "scrollCue": "Scroll"
+      "scrollCue": "Scroll",
+      "videoPause": "Pause background video",
+      "videoPlay": "Play background video"
     },
     "flagship": {
       "heading": "UPOP TREND",
@@ -217,6 +219,13 @@
     "glassDense": "Solid",
     "glassStandard": "Default",
     "glassClear": "Clear",
-    "systemOverride": "Your system has reduce transparency turned on, so this setting is unavailable."
+    "systemOverride": "Your system has reduce transparency turned on, so this setting is unavailable.",
+    "a11yHeading": "Accessibility",
+    "motionReduce": "Reduce animations",
+    "contrastMore": "Increase contrast",
+    "textHeading": "Text size",
+    "textDefault": "Default",
+    "textLarge": "Large",
+    "textXL": "Extra large"
   }
 }

@@ -34,7 +34,7 @@ export default async function PartnersPage({ params }: PageProps<"/[locale]/part
           <Reveal>
             <SectionHead id="become-partner" heading={t("becomeHeading")} lead={t("becomeBody")} />
           </Reveal>
-          <div className="mt-8 flex justify-end">
+          <div className="mt-8 flex justify-center">
             <LinkButton href="/contacts" size="lg">
               {t("becomeCta")}
             </LinkButton>

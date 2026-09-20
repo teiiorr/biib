@@ -18,6 +18,7 @@ export type IconName =
   | "pin"
   | "clock"
   | "play"
+  | "pause"
   | "telegram"
   | "instagram"
   | "youtube"
@@ -52,6 +53,7 @@ const PATHS: Record<IconName, readonly string[]> = {
   ],
   clock: ["M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z", "M12 6.8V12l3.4 2"],
   play: ["m9.5 7.4 7.6 4.6-7.6 4.6z"],
+  pause: ["M9 7v10M15 7v10"],
   telegram: [
     "M21.2 4.3 3.6 11.2a.4.4 0 0 0 0 .8l4.6 1.5 1.7 5.2a.4.4 0 0 0 .7.2l2.5-2.7 4.5 3.3a.4.4 0 0 0 .6-.2l3.5-14.4a.4.4 0 0 0-.5-.6Z",
     "m8.2 13.5 10.2-7.2-6.3 9.9",

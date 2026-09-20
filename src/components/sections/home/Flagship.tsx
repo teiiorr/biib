@@ -74,9 +74,12 @@ export function Flagship() {
           {/* Matn pastda, töliq kenglikda. */}
           <div className="lg:order-4 lg:col-span-3">
             <Reveal>
-              <p className="read text-body text-label md:text-headline">{t("lead")}</p>
+              <p className="read mx-auto text-center text-body text-label md:text-headline">
+                {t("lead")}
+              </p>
 
-              <ul className="mt-5 grid gap-x-8 gap-y-2 sm:grid-cols-2">
+              {/* Faktlar bloki markazda; bandlar röyxat sifatida çapdan öqiladi. */}
+              <ul className="mx-auto mt-6 grid max-w-[46rem] gap-x-8 gap-y-2 sm:grid-cols-2">
                 {pick(project.facts, locale).map((fact) => (
                   <li key={fact} className="flex gap-2.5 text-callout text-label-secondary">
                     <GemBullet />
@@ -87,7 +90,7 @@ export function Flagship() {
             </Reveal>
 
             {project.external ? (
-              <Reveal delay={120} className="mt-7 flex justify-end">
+              <Reveal delay={120} className="mt-7 flex justify-center">
                 <ExternalButton
                   href={project.external.href}
                   newTabLabel={tCommon("opensInNewTab")}

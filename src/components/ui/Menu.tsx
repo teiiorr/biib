@@ -29,7 +29,7 @@ export function MenuContent({
         sideOffset={8}
         collisionPadding={16}
         className={cn(
-          "glass z-[var(--z-popover)] min-w-56 rounded-lg p-1.5 shadow-ambient",
+          "glass relative z-[var(--z-popover)] min-w-56 rounded-lg p-1.5 shadow-ambient",
           "origin-(--radix-dropdown-menu-content-transform-origin)",
           "data-[state=open]:animate-[popover-in_180ms_var(--ease-standard)]",
           className,

@@ -28,7 +28,13 @@ export function PeopleTeaser() {
 
         <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-6">
           {members.map((person, index) => (
-            <Reveal as="li" key={person.id} delay={index * 60} index={index} className="flex flex-col gap-2.5">
+            <Reveal
+              as="li"
+              key={person.id}
+              delay={index * 60}
+              index={index}
+              className="flex flex-col items-center gap-2.5 text-center"
+            >
               <PersonPortrait person={person} shape="circle" className="w-full max-w-32" />
               <div>
                 <p className="text-callout font-semibold text-label">{pick(person.name, locale)}</p>
@@ -40,7 +46,7 @@ export function PeopleTeaser() {
           ))}
         </ul>
 
-        <Reveal delay={120} className="mt-8">
+        <Reveal delay={120} className="mt-6">
           <SectionMore
             links={[
               { href: "/council", label: t("all") },

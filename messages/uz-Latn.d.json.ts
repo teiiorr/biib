@@ -40,7 +40,9 @@ declare const messages: {
       "subtitle": "Kasting, studiya, koʻrgazma va festival. Har bir bola oʻz ovozini, rangini va sahnasini topsin deb ishlaymiz.",
       "ctaPrimary": "Loyihaga qoʻshilish",
       "ctaSecondary": "Loyihalar",
-      "scrollCue": "Pastga"
+      "scrollCue": "Pastga",
+      "videoPause": "Fon videosini toʻxtatib turish",
+      "videoPlay": "Fon videosini yoqish"
     },
     "flagship": {
       "heading": "UPOP TREND",
@@ -220,7 +222,14 @@ declare const messages: {
     "glassDense": "Zich",
     "glassStandard": "Odatdagi",
     "glassClear": "Shaffof",
-    "systemOverride": "Tizimda shaffoflik kamaytirilgan, shuning uchun sozlama ishlamaydi."
+    "systemOverride": "Tizimda shaffoflik kamaytirilgan, shuning uchun sozlama ishlamaydi.",
+    "a11yHeading": "Qulaylik",
+    "motionReduce": "Harakatni kamaytirish",
+    "contrastMore": "Kontrastni oshirish",
+    "textHeading": "Matn oʻlchami",
+    "textDefault": "Odatiy",
+    "textLarge": "Katta",
+    "textXL": "Juda katta"
   }
 };
 export default messages;

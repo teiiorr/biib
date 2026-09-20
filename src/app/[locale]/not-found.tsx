@@ -7,10 +7,10 @@ export default function NotFound() {
   return (
     <section className="section">
       <div className="page">
-        <div className="read">
+        <div className="read mx-auto text-center">
           <h1 className="text-title1">{t("title")}</h1>
           <p className="mt-4 text-body text-label-secondary">{t("lead")}</p>
-          <div className="mt-8 flex justify-end">
+          <div className="mt-8 flex justify-center">
             <LinkButton href="/" size="lg">
               {t("cta")}
             </LinkButton>

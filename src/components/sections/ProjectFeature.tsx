@@ -79,8 +79,9 @@ export function ProjectFeature({
               </ul>
             </div>
 
+            {/* İkki ustunli lavhada tugma matn ustunining öz öqida turadi. */}
             {project.external ? (
-              <div className="mt-6 flex justify-end">
+              <div className="mt-6 flex justify-start">
                 <ExternalButton
                   href={project.external.href}
                   newTabLabel={tCommon("opensInNewTab")}

@@ -13,7 +13,8 @@ export function AboutTeaser() {
           <SectionHead id="home-about" heading={t("heading")} />
         </Reveal>
 
-        <div className="mt-6 grid gap-5 lg:grid-cols-2 lg:gap-10">
+        {/* Bitta markaziy ustun — sarlavha, matn va tugma bir öqda. */}
+        <div className="read mx-auto mt-6 flex flex-col gap-4 text-center">
           <Reveal delay={80} className="flex flex-col gap-4 text-body text-label-secondary">
             <p>{t("p1")}</p>
             <p>{t("p2")}</p>
@@ -23,7 +24,7 @@ export function AboutTeaser() {
           </Reveal>
         </div>
 
-        <Reveal delay={220} className="mt-8 flex justify-end">
+        <Reveal delay={220} className="mt-8 flex justify-center">
           <LinkButton href="/about" variant="secondary" className="w-full justify-center sm:w-auto">
             {t("cta")}
           </LinkButton>

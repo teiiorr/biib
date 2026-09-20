@@ -41,6 +41,46 @@
   initial-value: 1;
 }
 
+/*
+ * ---- Chrome kirişlari: parda, şit, poverover ----
+ * Şit va menyu Tailwind ning animate-[...] utilitasi orqali şu
+ * keyframe larni çaqiradi. Faqat opacity va transform; şitning
+ * desktop dagi markazlaşi translate XUSUSIYATIDA turadi, keyframe
+ * transform ga tegib uni buzmaydi.
+ */
+@keyframes veil-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+
+@keyframes popover-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+/* Şit içidagi bandlar darvoza oçilgandek ketma-ket kötariladi. */
+.sheet-item {
+  animation: sheet-item-in 460ms var(--ease-quint) both;
+  animation-delay: calc(90ms + var(--i, 0) * 45ms);
+}
+
+@keyframes sheet-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
 /* ---- Oltin matn: urilgan zar-varaq. Metall ustidan tor yorugʻ
  * çizigʻi ötadi — yaltiroq oynadan emas, urilgan oltindan. Faqat
  * matn maydoni qayta çiziladi, backdrop-filter emas; yorugʻlik faqat
@@ -148,15 +188,27 @@ html[data-js] [data-reveal="in"] {
     transform: none;
     filter: none;
     transition: none;
-    animation: reveal-in linear both;
-    animation-timeline: view();
+    /*
+     * İkki tomonlama Apple sahnasi: kiraverişda kötarilib oçiladi,
+     * tepadan çiqaverişda yumşoq yuqoriga suzib söniladi. İkkalasi
+     * ham skroll bilan surtiladi — orqaga aylantirsangiz aynan
+     * teskarisi öynaydi. reveal-out röyxatda keyin turadi: uning
+     * yozilmagan boşlanish kadri ostidagi reveal-in qiymatini oladi,
+     * şuning uçun ikkalasi toqnaşmaydi.
+     */
+    animation:
+      reveal-in linear both,
+      reveal-out linear both;
+    animation-timeline: view(), view();
     /*
      * Kеçikişni endi skroll çizigʻi beradi: har element boşlaniş
      * nuqtasi --reveal-i böyiça suriladi, şunda toʻrdagi kartalar
      * ketma-ket kötariladi (ilgari hammasi birga sakrardi). 8 da
      * çeklanadi — eng oxirgi ham töliq çiqib ulguradi.
      */
-    animation-range: entry calc(3% + min(var(--reveal-i, 0), 8) * 3.2%) cover 30%;
+    animation-range:
+      entry calc(3% + min(var(--reveal-i, 0), 8) * 3.2%) cover 30%,
+      exit 55% exit 100%;
   }
 }
 
@@ -168,6 +220,13 @@ html[data-js] [data-reveal="in"] {
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes reveal-out {
+  to {
+    opacity: 0.1;
+    transform: translateY(-20px);
   }
 }
 
@@ -231,6 +290,28 @@ html[data-js] [data-reveal="in"] {
   }
   to {
     transform: translateY(5%);
+  }
+}
+
+/*
+ * Samarqand ufqi ham skrollga nafas oladi: butun sahifa böyiça sekin
+ * yuqoriga suziladi — fon, örta (aura) va old (matn) tekisliklari har
+ * xil tezlikda yurib, çuqurlik hissi beradi. scroll(root) ikki
+ * tomonlama: yuqoriga qaytsangiz ufq ham qaytadi.
+ */
+@supports (animation-timeline: scroll()) {
+  html[data-js] .skyline-field {
+    animation: sky-drift linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+@keyframes sky-drift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-44px);
   }
 }
 
@@ -577,76 +658,100 @@ html[data-js] .hero-line > span {
   }
 }
 
+/*
+ * ---- Harakat kamaytirilgan rejim ----
+ * Yagona manba — <html data-motion="reduce">. Uni birinçi çizişdan
+ * oldin appearanceInitScript qöyadi: tizim sozlamasidan (prefers-
+ * reduced-motion) YOKI foydalanuvçining saytdagi öz tumbleridan.
+ * Şu tufayli qoidalar bir joyda yoziladi va ikkala yöl ham bir xil
+ * işlaydi; globals.css dagi universal söndirgiç ham şu atributga
+ * körpalangan.
+ */
+html[data-motion="reduce"] :is(.gold-text, .aura, .hero-aura, .ambient, .drift) {
+  animation: none !important;
+}
+
+html[data-motion="reduce"][data-js] [data-reveal] {
+  animation: none !important;
+}
+
+html[data-motion="reduce"] .card-light::after,
+html[data-motion="reduce"] .btn-liquid::before {
+  display: none;
+}
+
+/* Ravoq bezaklari statik turadi (--asm boşlangʻiçda 1). */
+html[data-motion="reduce"] :is(.ravoq .ravoq-edge, .ravoq .islimi, .ravoq .keystone) {
+  animation: none !important;
+}
+
+html[data-motion="reduce"] .parallax-media,
+html[data-motion="reduce"] .skyline-field {
+  animation: none !important;
+}
+
+/* Muz erimaydi — statik yupqa parda bolib qoladi. */
+html[data-motion="reduce"] .glass-card .frost {
+  animation: none !important;
+  opacity: var(--frost-opacity, 0.14) !important;
+  transform: none !important;
+}
+
+html[data-motion="reduce"] .glass-card .frost::after {
+  animation: none !important;
+  opacity: 0 !important;
+}
+
+html[data-motion="reduce"] .ambient::before,
+html[data-motion="reduce"] .hero-bg,
+html[data-motion="reduce"] .hero-stage {
+  animation: none !important;
+}
+
+html[data-motion="reduce"][data-js] .hero-line > span {
+  animation: none !important;
+  transform: none;
+  opacity: 1;
+}
+
+html[data-motion="reduce"][data-js] .hero-arch__stroke {
+  stroke-dashoffset: 0 !important;
+  animation: none !important;
+}
+
+html[data-motion="reduce"][data-js] .hero-arch__orn {
+  opacity: 1 !important;
+  animation: none !important;
+}
+
+html[data-motion="reduce"] .aura {
+  opacity: 0.2;
+}
+
+html[data-motion="reduce"] .sheet-item {
+  animation: none !important;
+}
+
+html[data-motion="reduce"][data-js] [data-reveal],
+html[data-motion="reduce"][data-js] [data-reveal="in"] {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+/*
+ * JS öçiq bölganda atribut qöyilmaydi — skroll çizigʻiga bogʻlangan,
+ * data-js bilan himoyalanmagan ikki animatsiya uçun tizim sozlamasining
+ * özi yetadi (qolganini globals.css dagi universal media bloki öçiradi).
+ */
 @media (prefers-reduced-motion: reduce) {
-  .gold-text,
-  .aura,
-  .ambient,
-  .drift {
+  html:not([data-motion="full"]) .parallax-media,
+  html:not([data-motion="full"]) .ambient::before {
     animation: none !important;
   }
+}
 
-  html[data-js] [data-reveal] {
-    animation: none !important;
-  }
-
-  .card-light::after,
-  .btn-liquid::before {
-    display: none;
-  }
-
-  /* Ravoq bezaklari statik turadi (--asm boşlangʻiçda 1). */
-  .ravoq .ravoq-edge,
-  .ravoq .islimi,
-  .ravoq .keystone {
-    animation: none !important;
-  }
-
-  .parallax-media {
-    animation: none !important;
-  }
-
-  /* Muz erimaydi — statik yupqa parda bolib qoladi. */
-  .glass-card .frost {
-    animation: none !important;
-    opacity: var(--frost-opacity, 0.14) !important;
-    transform: none !important;
-  }
-
-  .glass-card .frost::after {
-    animation: none !important;
-    opacity: 0 !important;
-  }
-
-  .ambient::before,
-  .hero-bg,
-  .hero-stage {
-    animation: none !important;
-  }
-
-  html[data-js] .hero-line > span {
-    animation: none !important;
-    transform: none;
-    opacity: 1;
-  }
-
-  html[data-js] .hero-arch__stroke {
-    stroke-dashoffset: 0 !important;
-    animation: none !important;
-  }
-
-  html[data-js] .hero-arch__orn {
-    opacity: 1 !important;
-    animation: none !important;
-  }
-
-  .aura {
-    opacity: 0.2;
-  }
-
-  html[data-js] [data-reveal],
-  html[data-js] [data-reveal="in"] {
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
-  }
+html[data-motion="reduce"] .parallax-media,
+html[data-motion="reduce"] .ambient::before {
+  animation: none !important;
 }

@@ -23,7 +23,7 @@ export function LatestNews() {
           <SectionHead id="home-news" heading={t("heading")} />
         </Reveal>
 
-        <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {items.map((item, index) => (
             <Reveal as="li" key={item.slug} delay={index * 90} index={index} className="flex">
               <NewsCard item={item} priority={index === 0} className="w-full" />

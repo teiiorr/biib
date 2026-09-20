@@ -2,6 +2,7 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import { useRef, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
+import { Icon } from "@/components/brand/Icon";
 import { cn } from "@/lib/cn";
 
 /**
@@ -19,6 +20,7 @@ export function Sheet({
   open,
   onOpenChange,
   title,
+  closeLabel,
   description,
   children,
   footer,
@@ -26,6 +28,7 @@ export function Sheet({
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
+  closeLabel: string;
   description?: string;
   children: ReactNode;
   footer?: ReactNode;
@@ -68,7 +71,7 @@ export function Sheet({
         />
         <Dialog.Content
           ref={panel}
-          aria-describedby={description ? undefined : undefined}
+          {...(description ? {} : { "aria-describedby": undefined })}
           className={cn(
             "glass glass--thick fixed z-[var(--z-modal)] flex flex-col",
             "inset-x-0 bottom-0 max-h-[92svh] rounded-t-xl rounded-b-none",
@@ -97,6 +100,18 @@ export function Sheet({
                 </Dialog.Description>
               ) : null}
             </div>
+
+            {/* Oçiq yopiş tugmasi: Escape va tortişni bilmaganlar uçun. */}
+            <Dialog.Close
+              aria-label={closeLabel}
+              className={cn(
+                "tap -mr-1.5 -mt-1 grid h-10 w-10 shrink-0 place-items-center rounded-sm",
+                "text-label-secondary transition-colors duration-[var(--dur-fast)]",
+                "hover:bg-fill-secondary hover:text-label",
+              )}
+            >
+              <Icon name="close" className="h-[1.15rem] w-[1.15rem]" />
+            </Dialog.Close>
           </div>
 
           <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-5">{children}</div>

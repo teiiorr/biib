@@ -26,8 +26,9 @@ export function SectionHead({
 }
 
 /**
- * Röyxatdan keyingi havolalar, öngda. Strelka qöyilmaydi — §12 da
- * tugma va havola oxiridagi "→" taqiqlangan.
+ * Röyxatdan keyingi havolalar — bölim öqida, markazda: sarlavha ham,
+ * tör ham, davomi ham bitta marosim ustunida turadi. Strelka
+ * qöyilmaydi — §12 da tugma va havola oxiridagi "→" taqiqlangan.
  */
 export function SectionMore({
   links,
@@ -37,13 +38,13 @@ export function SectionMore({
   className?: string;
 }) {
   return (
-    <div className={cn("flex flex-wrap justify-end gap-x-6 gap-y-1", className)}>
+    <div className={cn("flex flex-wrap justify-center gap-x-8 gap-y-1", className)}>
       {links.map((link) => (
         <Link
           key={link.href}
           href={link.href}
           className={cn(
-            "tap inline-flex min-h-10 items-center rounded-sm pl-1 text-callout font-semibold",
+            "tap inline-flex min-h-10 items-center rounded-sm px-1 text-callout font-semibold",
             "text-accent-text transition-colors duration-[var(--dur-fast)] hover:text-gold-hi",
           )}
         >

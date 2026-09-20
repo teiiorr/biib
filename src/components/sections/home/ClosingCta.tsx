@@ -13,14 +13,14 @@ export function ClosingCta() {
       <Aura className="-bottom-[48%] -left-[16%] w-[min(80vw,660px)]" />
 
       <div className="page relative">
-        <Reveal>
-          <h2 id="home-closing" className="max-w-[18ch] text-title1">
+        <Reveal className="text-center">
+          <h2 id="home-closing" className="mx-auto max-w-[18ch] text-title1">
             <GoldText>{t("heading")}</GoldText>
           </h2>
-          <p className="read mt-4 text-body text-label-secondary">{t("lead")}</p>
+          <p className="read mx-auto mt-4 text-body text-label-secondary">{t("lead")}</p>
         </Reveal>
 
-        <Reveal delay={140} className="mt-8 flex justify-end">
+        <Reveal delay={140} className="mt-8 flex justify-center">
           <LinkButton href="/contacts" size="lg" className="w-full justify-center sm:w-auto">
             {t("cta")}
           </LinkButton>

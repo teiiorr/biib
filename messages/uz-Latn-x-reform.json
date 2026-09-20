@@ -37,7 +37,9 @@
       "subtitle": "Kasting, studiya, körgazma va festival. Har bir bola öz ovozini, rangini va sahnasini topsin deb işlaymiz.",
       "ctaPrimary": "Loyihaga qöşiliş",
       "ctaSecondary": "Loyihalar",
-      "scrollCue": "Pastga"
+      "scrollCue": "Pastga",
+      "videoPause": "Fon videosini töxtatib turiş",
+      "videoPlay": "Fon videosini yoqiş"
     },
     "flagship": {
       "heading": "UPOP TREND",
@@ -217,6 +219,13 @@
     "glassDense": "Ziç",
     "glassStandard": "Odatdagi",
     "glassClear": "Şaffof",
-    "systemOverride": "Tizimda şaffoflik kamaytirilgan, şuning uçun sozlama işlamaydi."
+    "systemOverride": "Tizimda şaffoflik kamaytirilgan, şuning uçun sozlama işlamaydi.",
+    "a11yHeading": "Qulaylik",
+    "motionReduce": "Harakatni kamaytiriş",
+    "contrastMore": "Kontrastni oşiriş",
+    "textHeading": "Matn ölçami",
+    "textDefault": "Odatiy",
+    "textLarge": "Katta",
+    "textXL": "Juda katta"
   }
 }
