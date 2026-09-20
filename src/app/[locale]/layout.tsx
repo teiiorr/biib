@@ -10,6 +10,7 @@ import { getPathname } from "@/i18n/navigation";
 import { LOCALE_META, type Locale } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
 import { appearanceInitScript } from "@/lib/appearance";
+import { SITE_URL } from "@/lib/site";
 import { manrope, unbounded } from "@/lib/fonts";
 import "@/styles/globals.css";
 
@@ -30,7 +31,7 @@ export async function generateMetadata(props: LayoutProps<"/[locale]">): Promise
   if (!hasLocale(routing.locales, locale)) notFound();
 
   const t = await getTranslations({ locale });
-  const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://biib.uz";
+  const site = SITE_URL;
 
   return {
     metadataBase: new URL(site),

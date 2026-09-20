@@ -3,8 +3,7 @@ import { NEWS } from "@/content";
 import { getPathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import type { StaticPathname } from "@/i18n/routing";
-
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://biib.uz";
+import { SITE_URL as SITE } from "@/lib/site";
 
 const STATIC: readonly { href: StaticPathname; priority: number }[] = [
   { href: "/", priority: 1 },
