@@ -32,109 +32,32 @@
   filter: drop-shadow(0.6px 0.6px 0 rgb(0 0 0 / 0.5));
 }
 
-/* ---- Fon naqşi: skrollda almaşadigan üç qatlam ---- */
-.orn-field {
+/* ---- Fon: yagona Samarqand ufqi (statik, tinç) ---- */
+.skyline-field {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  /* Çetlarga qarab söniladi — markazdagi matn tagida naqş yengillaşadi. */
-  -webkit-mask-image: radial-gradient(
-    135% 108% at 50% 30%,
-    #000 36%,
-    rgb(0 0 0 / 0.22) 100%
-  );
-  mask-image: radial-gradient(135% 108% at 50% 30%, #000 36%, rgb(0 0 0 / 0.22) 100%);
-}
-
-.orn-layer {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
   color: var(--gold);
+  opacity: 0.07;
+  /* Çetlarga qarab söniladi — matn tagida naqş yengillaşadi. */
+  -webkit-mask-image: radial-gradient(
+    140% 115% at 50% 26%,
+    #000 30%,
+    rgb(0 0 0 / 0.18) 100%
+  );
+  mask-image: radial-gradient(140% 115% at 50% 26%, #000 30%, rgb(0 0 0 / 0.18) 100%);
 }
 
-.orn-layer svg {
+.skyline-field svg {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-/* Rişton koşinlari saldroq sovuq tonda — ranglar almaşuvini his qildiradi. */
-.orn-layer--rishton {
-  color: var(--turquoise);
-}
-
-/* scroll() bölmasa: ikat statik körinadi. */
-.orn-layer--ikat {
-  opacity: 0.075;
-}
-
-@supports (animation-timeline: scroll()) {
-  .orn-layer--ikat {
-    opacity: 0;
-    animation: orn-a linear both;
-    animation-timeline: scroll(root);
-  }
-  .orn-layer--rishton {
-    animation: orn-b linear both;
-    animation-timeline: scroll(root);
-  }
-  .orn-layer--skyline {
-    animation: orn-c linear both;
-    animation-timeline: scroll(root);
-  }
-}
-
-/*
- * Üç naqş uçburçak tölqin bilan navbatlaşadi: skroll böyiça ikki töliq
- * aylanma. Har nuqtada qöşni ikki qatlam bir-biriga öadi — yigʻindi
- * xiralik deyarli özgarmaydi.
- */
-@keyframes orn-a {
-  0% { opacity: 0.085; }
-  16.6% { opacity: 0; }
-  33.3% { opacity: 0; }
-  50% { opacity: 0.085; }
-  66.6% { opacity: 0; }
-  83.3% { opacity: 0; }
-  100% { opacity: 0.085; }
-}
-@keyframes orn-b {
-  0% { opacity: 0; }
-  16.6% { opacity: 0.085; }
-  33.3% { opacity: 0; }
-  50% { opacity: 0; }
-  66.6% { opacity: 0.085; }
-  83.3% { opacity: 0; }
-  100% { opacity: 0; }
-}
-@keyframes orn-c {
-  0% { opacity: 0; }
-  16.6% { opacity: 0; }
-  33.3% { opacity: 0.085; }
-  50% { opacity: 0; }
-  66.6% { opacity: 0; }
-  83.3% { opacity: 0.085; }
-  100% { opacity: 0; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .orn-layer {
-    animation: none !important;
-  }
-  .orn-layer--ikat {
-    opacity: 0.06;
-  }
-  .orn-layer--rishton,
-  .orn-layer--skyline {
-    opacity: 0;
-  }
-}
-
 @media (prefers-contrast: more) {
-  .orn-field {
-    opacity: 0.7;
+  .skyline-field {
+    opacity: 0.045;
   }
 }
 

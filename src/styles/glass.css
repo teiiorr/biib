@@ -148,12 +148,18 @@
   }
 }
 
-.glass-card--ravoq {
-  mask:
-    var(--ravoq-mask) top left / 100% var(--ravoq-h, 74px) no-repeat,
-    linear-gradient(#000, #000) bottom left / 100%
-      calc(100% - var(--ravoq-h, 74px) + 1px) no-repeat;
-  mask-composite: add;
+/*
+ * Tekis premium karta: silueti to'g'ri to'rtburchak (barça karta bir
+ * xil), oltin ràm şişaning öz rimidan keladi. Hover da ràm yorishadi
+ * va soya çuqurlaşadi — kötariliş transform bilan.
+ */
+.gem-card:hover,
+.gem-card:focus-within {
+  box-shadow:
+    inset 0 0 0 1px var(--line-gold-strong),
+    inset 0 0.5px 0 0 var(--glass-specular),
+    0 0 0 0.5px var(--glass-rim),
+    var(--shadow-modal);
 }
 
 /*
