@@ -4,7 +4,6 @@ import { Reveal } from "@/components/brand/Reveal";
 import { NewsCard } from "@/components/sections/NewsCard";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { allNews } from "@/content";
-import { cn } from "@/lib/cn";
 
 export async function generateMetadata(props: PageProps<"/[locale]/news">): Promise<Metadata> {
   const { locale } = await props.params;
@@ -27,21 +26,16 @@ export default async function NewsPage({ params }: PageProps<"/[locale]/news">) 
           {items.length === 0 ? (
             <p className="text-body text-label-secondary">{t("empty")}</p>
           ) : (
-            <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 lg:auto-rows-[minmax(0,1fr)]">
+            <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
               {items.map((item, index) => (
                 <Reveal
                   as="li"
                   key={item.slug}
                   delay={(index % 3) * 90}
                   index={index % 3}
-                  className={cn("flex", index === 0 && "sm:col-span-2 lg:row-span-2")}
+                  className="flex"
                 >
-                  <NewsCard
-                    item={item}
-                    featured={index === 0}
-                    className="w-full"
-                    priority={index < 3}
-                  />
+                  <NewsCard item={item} className="w-full" priority={index < 3} />
                 </Reveal>
               ))}
             </ul>

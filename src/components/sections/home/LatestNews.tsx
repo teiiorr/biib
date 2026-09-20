@@ -3,7 +3,6 @@ import { Reveal } from "@/components/brand/Reveal";
 import { NewsCard } from "@/components/sections/NewsCard";
 import { SectionHead, SectionMore } from "@/components/sections/SectionHead";
 import { latestNews } from "@/content";
-import { cn } from "@/lib/cn";
 
 export function LatestNews() {
   const t = useTranslations("home.news");
@@ -18,21 +17,10 @@ export function LatestNews() {
           <SectionHead id="home-news" heading={t("heading")} />
         </Reveal>
 
-        <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 lg:auto-rows-[minmax(0,1fr)]">
+        <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {items.map((item, index) => (
-            <Reveal
-              as="li"
-              key={item.slug}
-              delay={index * 90}
-              index={index}
-              className={cn("flex", index === 0 && "sm:col-span-2 lg:row-span-2")}
-            >
-              <NewsCard
-                item={item}
-                featured={index === 0}
-                priority={index === 0}
-                className="w-full"
-              />
+            <Reveal as="li" key={item.slug} delay={index * 90} index={index} className="flex">
+              <NewsCard item={item} priority={index === 0} className="w-full" />
             </Reveal>
           ))}
         </ul>
