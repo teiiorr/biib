@@ -49,11 +49,11 @@ export function Header() {
                       href={item.href}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "tap flex h-10 items-center whitespace-nowrap rounded-sm px-3 text-callout font-medium",
+                        "nav-link tap relative flex h-10 items-center whitespace-nowrap rounded-sm px-3 text-callout font-medium",
                         "transition-colors duration-[var(--dur-fast)] ease-[var(--ease-standard)]",
                         active
-                          ? "bg-accent-wash text-accent-text"
-                          : "text-label-secondary hover:bg-fill-secondary hover:text-label",
+                          ? "text-accent-text"
+                          : "text-label-secondary hover:text-label",
                       )}
                     >
                       {t(item.key)}

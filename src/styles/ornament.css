@@ -28,6 +28,8 @@
   color: var(--gem-line, var(--gold));
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23C9A25A' stroke-width='1.1'%3E%3Cpath d='M60 18 102 60 60 102 18 60Z'/%3E%3Cpath d='M34 34 86 34 86 86 34 86Z'/%3E%3Cpath d='M60 18V0M60 102v18M18 60H0M102 60h18'/%3E%3Cpath d='M34 34 12 12M86 34 108 12M86 86 108 108M34 86 12 108'/%3E%3Ccircle cx='60' cy='60' r='9'/%3E%3C/g%3E%3C/svg%3E");
   background-size: 132px 132px;
+  /* İntaglio — naqş kartaga öyilgandek: pastki-öng yumşoq soya. */
+  filter: drop-shadow(0.6px 0.6px 0 rgb(0 0 0 / 0.5));
 }
 
 /* ---- Fon naqşi: skrollda almaşadigan üç qatlam ---- */
@@ -175,16 +177,53 @@
   filter: drop-shadow(0 1px 0 rgb(0 0 0 / 0.4));
 }
 
-/* ---- Islimi: ravoq yelkasidagi novda ---- */
+/* ---- Islimi: ravoq yelkasidagi novda ----
+ * Öng yelka --flip: -1 bilan aynalanadi. Aynaliş "scale" xususiyatida —
+ * şunda karta yigʻilişida (--asm) va hover da bemalol qoşiladi. */
 .islimi {
   color: var(--gold-hi);
   filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.5));
+  scale: var(--flip, 1) 1;
+  rotate: 0deg;
+  transition:
+    scale var(--dur-base) var(--ease-magnet),
+    rotate var(--dur-base) var(--ease-magnet);
+}
+
+.ravoq .islimi {
+  opacity: var(--asm, 1);
+  scale: calc(var(--flip, 1) * var(--asm, 1)) var(--asm, 1);
+}
+
+.ravoq:hover .islimi,
+.ravoq:focus-within .islimi {
+  scale: calc(var(--flip, 1) * 1.09) 1.09;
+  rotate: -2deg;
 }
 
 /* ---- Kalit toş: cho'qqidagi finial ---- */
 .keystone {
   color: var(--gold-hi);
   filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.55));
+  transition:
+    scale var(--dur-base) var(--ease-magnet),
+    filter var(--dur-base) var(--ease-magnet);
+}
+
+.ravoq .keystone {
+  opacity: var(--asm, 1);
+  scale: var(--asm, 1);
+}
+
+.ravoq:hover .keystone,
+.ravoq:focus-within .keystone {
+  scale: 1.08;
+  filter: brightness(1.3) drop-shadow(0 1px 2px rgb(0 0 0 / 0.55));
+}
+
+/* Oltin qirra ham skrollda öadi (--asm ni motion.css haydaydi). */
+.ravoq .ravoq-edge {
+  opacity: var(--asm, 1);
 }
 
 /* ---- Paxta ---- */

@@ -19,7 +19,7 @@ export function LatestNews() {
 
         <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {items.map((item, index) => (
-            <Reveal as="li" key={item.slug} delay={index * 90} className="flex">
+            <Reveal as="li" key={item.slug} delay={index * 90} index={index} className="flex">
               <NewsCard item={item} className="w-full" />
             </Reveal>
           ))}

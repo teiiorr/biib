@@ -78,9 +78,12 @@ export function GemCard({
         className={cn(
           "glass glass-card glass-card--ravoq card-light relative z-[1] flex flex-1 flex-col overflow-hidden rounded-xl",
           "transition-transform duration-[420ms] ease-[var(--ease-magnet)]",
-          "group-hover:-translate-y-1.5 focus-within:-translate-y-1.5",
+          "group-hover:-translate-y-1.5 focus-within:-translate-y-1.5 group-active:scale-[0.985]",
         )}
       >
+        {/* Ravoq toji ostida samosvet nuri — ark zonasida yigʻiladi. */}
+        <span aria-hidden="true" className="ravoq-crownlight" />
+
         {/* Samosvet toniga bo'yalgan girih suv belgisi. */}
         <Girih className="girih--gem opacity-[0.07]" />
 

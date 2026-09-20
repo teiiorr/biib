@@ -187,6 +187,38 @@
 }
 
 /*
+ * Ravoq toji ostidagi samosvet nuri. Ark zonasida yigʻiladi (mask uni
+ * arkka qirqadi), screen bilan faqat oqartadi — matn ivory qoladi.
+ * Hover da kuçayadi.
+ */
+.ravoq-crownlight {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(
+    130% 72% at 50% -6%,
+    color-mix(in srgb, var(--gem, var(--gold)) 24%, transparent),
+    transparent 60%
+  );
+  mix-blend-mode: screen;
+  opacity: 0.5;
+  transition: opacity var(--dur-base) var(--ease-standard);
+}
+
+.ravoq:hover .ravoq-crownlight,
+.ravoq:focus-within .ravoq-crownlight {
+  opacity: 0.82;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .ravoq-crownlight {
+    opacity: 0.26;
+  }
+}
+
+/*
  * ---- Eriydigan muz (Apple uslubidagi skroll) ----
  * Karta körinişga kirganda üsti muzlagan bolib turadi, keyin skrollda
  * "eriydi": frost pardasi söniladi va pastga suriladi. backdrop-filter
@@ -320,5 +352,70 @@
     box-shadow:
       inset 0 0 0 1px var(--line-gold),
       var(--shadow-contact);
+  }
+}
+
+/*
+ * ---- Nav: oltin skroll-progress rel + siljiydigan kalit belgisi ----
+ * Barning pastki qirrasida oltin çiziq skroll böyiça ösadi; faol havola
+ * ostida metall çiziq markazdan oçiladi (töldirilgan tabletka örniga).
+ * Faqat transform/opacity — kompozitor oqimida.
+ */
+.app-bar::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 1.5px;
+  transform-origin: left;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--gold-lo), var(--gold-hi), var(--gold));
+  opacity: 0;
+  pointer-events: none;
+}
+
+.app-bar[data-scrolled="true"]::after {
+  opacity: 0.9;
+}
+
+@supports (animation-timeline: scroll()) {
+  .app-bar::after {
+    animation: nav-progress linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+@keyframes nav-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 5px;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--metal);
+  transform-origin: center;
+  transform: scaleX(0);
+  transition: transform var(--dur-base) var(--ease-magnet);
+}
+
+.nav-link:hover::after,
+.nav-link[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-bar::after {
+    animation: none !important;
+    transform: scaleX(1);
+  }
+  .nav-link::after {
+    transition: none;
   }
 }

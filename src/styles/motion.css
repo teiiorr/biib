@@ -29,21 +29,49 @@
   initial-value: 0;
 }
 
-/* ---- Oltin matn: metall gradient + sekin yaltiraş ---- */
+/*
+ * Ravoq öz-özini yigʻish darajasi. Son bölgani uçun scale/opacity uni
+ * calc bilan öqiydi — animatsiya transform ga tegmaydi, şuning uçun
+ * hover/press bemalol üstiga qoşiladi. Boşlangʻiç 1: view() bölmasa
+ * yoki harakat kamaytirilsa — bezaklar töliq turadi.
+ */
+@property --asm {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
+
+/* ---- Oltin matn: urilgan zar-varaq. Metall ustidan tor yorugʻ
+ * çizigʻi ötadi — yaltiroq oynadan emas, urilgan oltindan. Faqat
+ * matn maydoni qayta çiziladi, backdrop-filter emas; yorugʻlik faqat
+ * oqartadi, şuning uçun 7.82:1 zaxira saqlanadi. ---- */
 
 .gold-text {
-  background: var(--metal);
-  background-size: 220% auto;
+  background-image:
+    linear-gradient(
+      105deg,
+      transparent 42%,
+      rgb(255 255 255 / 0.85) 49%,
+      transparent 57%
+    ),
+    var(--metal);
+  background-size:
+    280% auto,
+    220% auto;
+  background-position:
+    -80% center,
+    0 center;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  /* Orqada yoruğliк halqasi yöq — faqat metallning özi. */
-  animation: gold-shimmer 8s var(--ease-quint) infinite;
+  animation: gold-foil 7.5s var(--ease-quint) infinite;
 }
 
-@keyframes gold-shimmer {
+@keyframes gold-foil {
   to {
-    background-position: 220% center;
+    background-position:
+      210% center,
+      220% center;
   }
 }
 
@@ -122,7 +150,13 @@ html[data-js] [data-reveal="in"] {
     transition: none;
     animation: reveal-in linear both;
     animation-timeline: view();
-    animation-range: entry 6% cover 24%;
+    /*
+     * Kеçikişni endi skroll çizigʻi beradi: har element boşlaniş
+     * nuqtasi --reveal-i böyiça suriladi, şunda toʻrdagi kartalar
+     * ketma-ket kötariladi (ilgari hammasi birga sakrardi). 8 da
+     * çeklanadi — eng oxirgi ham töliq çiqib ulguradi.
+     */
+    animation-range: entry calc(3% + min(var(--reveal-i, 0), 8) * 3.2%) cover 30%;
   }
 }
 
@@ -249,6 +283,40 @@ html[data-js] [data-reveal="in"] {
 }
 
 /*
+ * ---- Ravoq öz-özini yigʻadi ----
+ * Karta körinişga kirganda darvoza quriladi: avval oltin qirra öadi,
+ * keyin ikki yelkadagi islimi oçiladi, oxirida kalit toş cho'qqiga
+ * qadaladi. --asm ni haydaydi (scale/opacity uni ornament.css/glass.css
+ * da öqiydi) — transform ga tegilmaydi, kompozitor oqimida.
+ */
+@supports (animation-timeline: view()) {
+  html[data-js] .ravoq .ravoq-edge {
+    animation: ravoq-asm linear both;
+    animation-timeline: view();
+    animation-range: entry 2% cover 14%;
+  }
+  html[data-js] .ravoq .islimi {
+    animation: ravoq-asm linear both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 18%;
+  }
+  html[data-js] .ravoq .keystone {
+    animation: ravoq-asm linear both;
+    animation-timeline: view();
+    animation-range: entry 11% cover 26%;
+  }
+}
+
+@keyframes ravoq-asm {
+  from {
+    --asm: 0;
+  }
+  to {
+    --asm: 1;
+  }
+}
+
+/*
  * ---- Asosiy tugma: sıçkon ortidan yuradigan şişa yaltiroği ----
  * Haqiqiy Liquid Glass materialining spekulyar bligi harakatga javob
  * beradi (§2.2.4). ::before işlatiladi, ::after emas — .tap ning özi
@@ -284,6 +352,13 @@ html[data-js] [data-reveal="in"] {
 .btn-liquid:hover,
 .btn-liquid:focus-visible {
   --glow: 1;
+}
+
+/* Bosilganda spekulyar blik bosiş nuqtasida keskin kengayadi — suyuq
+ * şişaning javob berişi. Faqat transform. */
+.btn-liquid:active::before {
+  transform: scale(1.35);
+  transition: transform 140ms var(--ease-magnet);
 }
 
 /*
@@ -451,6 +526,13 @@ html[data-js] .hero-line > span {
   .card-light::after,
   .btn-liquid::before {
     display: none;
+  }
+
+  /* Ravoq bezaklari statik turadi (--asm boşlangʻiçda 1). */
+  .ravoq .ravoq-edge,
+  .ravoq .islimi,
+  .ravoq .keystone {
+    animation: none !important;
   }
 
   .parallax-media {

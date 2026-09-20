@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { cn } from "@/lib/cn";
 
 /*
@@ -26,7 +27,7 @@ export function IslimiSpandrel({
       fill="none"
       aria-hidden="true"
       className={cn("islimi", className)}
-      style={side === "right" ? { transform: "scaleX(-1)" } : undefined}
+      style={{ "--flip": side === "right" ? -1 : 1 } as CSSProperties}
     >
       <g
         stroke="currentColor"
