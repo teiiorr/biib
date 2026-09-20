@@ -114,6 +114,7 @@
   html {
     -webkit-text-size-adjust: 100%;
     background-color: var(--bg-base);
+    scroll-behavior: smooth;
   }
 
   body {

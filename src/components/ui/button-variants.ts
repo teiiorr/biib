@@ -18,9 +18,10 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         primary: [
-          "btn-liquid bg-[image:var(--pop-btn)] text-accent-contrast",
-          "shadow-[inset_0_0.5px_0_0_rgb(242_228_198/0.28)]",
-          "hover:bg-[image:var(--pop-btn-hover)]",
+          // Premium oltin metall tugma: qorongʻi matn, oltin şuʼla soyasi.
+          "btn-liquid bg-[image:var(--metal)] text-[#0a1622] font-semibold",
+          "shadow-[inset_0_0.5px_0_0_rgb(255_255_255/0.45),0_8px_24px_-10px_rgb(201_162_90/0.55)]",
+          "hover:brightness-[1.06]",
         ],
         secondary: [
           "bg-fill-secondary text-label",

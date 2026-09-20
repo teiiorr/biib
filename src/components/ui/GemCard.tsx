@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, type CSSProperties, type PointerEvent, type ReactNode } from "react";
-import { Girih } from "@/components/brand/Texture";
 import { ArchKeystone, IslimiSpandrel } from "@/components/brand/Ornament";
 import type { Accent } from "@/content/types";
 import { cn } from "@/lib/cn";
@@ -66,9 +65,6 @@ export function GemCard({
         className,
       )}
     >
-      {/* Samosvet toniga bo'yalgan girih suv belgisi — juda yengil. */}
-      <Girih className="girih--gem opacity-[0.05]" />
-
       {/* Ravoq toji ostida samosvet nuri. */}
       <span aria-hidden="true" className="ravoq-crownlight" />
 

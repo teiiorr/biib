@@ -68,12 +68,14 @@
    * Qop-qora emas, polunoç: ustidagi rangli dogʻlar körinsin va
    * şişaning ostida xiralaştiradigan narsa bölsin.
    */
-  --bg-base: #0a1c26;
-  --bg-elevated: #142c3a;
-  --bg-sunken: #0c2029;
+  /* Çuqurroq tun — oltin haqiqiy metalldek yonsin. Fon qoraygani sayin
+   * ivory matn kontrasti faqat oşadi. */
+  --bg-base: #081521;
+  --bg-elevated: #102331;
+  --bg-sunken: #05101a;
   --separator: rgb(242 228 198 / 0.14);
-  --line-gold: rgb(201 162 90 / 0.34);
-  --line-gold-strong: rgb(201 162 90 / 0.62);
+  --line-gold: rgb(201 162 90 / 0.38);
+  --line-gold-strong: rgb(201 162 90 / 0.7);
 
   /* ---- Matn: issiq ivory, kulrang emas ---- */
   --label-primary: rgb(242 228 198 / 0.92);
