@@ -30,7 +30,8 @@ declare const messages: {
     "backToNews": "Yangiliklarga qaytish",
     "opensInNewTab": "yangi oynada ochiladi",
     "topic": "Mavzu",
-    "close": "Yopish"
+    "close": "Yopish",
+    "backToTop": "Yuqoriga"
   },
   "home": {
     "hero": {

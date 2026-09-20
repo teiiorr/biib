@@ -1,5 +1,6 @@
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
+import { GoldText } from "@/components/brand/GoldText";
 import { Icon } from "@/components/brand/Icon";
 import { AppearanceMenu } from "./AppearanceMenu";
 import { LocaleMenu } from "./LocaleMenu";
@@ -21,13 +22,22 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="panel mt-16 shadow-[inset_0_0.5px_0_0_var(--line-gold)]">
+    <footer className="panel relative mt-20 shadow-[inset_0_1px_0_0_var(--line-gold-strong)] before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-[linear-gradient(90deg,transparent,var(--line-gold-strong)_50%,transparent)]">
       <div className="page grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
         <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-2.5">
-            <Image src="/brand/mark.png" alt="" width={96} height={96} sizes="40px" className="h-10 w-10" />
+          <div className="flex items-center gap-3">
+            <Image
+              src="/brand/logo-mark.png"
+              alt=""
+              width={96}
+              height={96}
+              sizes="52px"
+              className="h-13 w-13 shrink-0"
+            />
             <span className="flex flex-col leading-tight">
-              <span className="text-subhead font-semibold text-label">{BRAND_NAME.line1}</span>
+              <span className="text-subhead font-semibold">
+                <GoldText>{BRAND_NAME.line1}</GoldText>
+              </span>
               <span className="text-caption text-label-secondary">{BRAND_NAME.line2}</span>
             </span>
           </div>

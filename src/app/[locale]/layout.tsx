@@ -3,6 +3,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { LiquidPointer } from "@/components/brand/LiquidPointer";
+import { ScrollTop } from "@/components/brand/ScrollTop";
 import { Ambient, Grain } from "@/components/brand/Texture";
 import { OrnamentField } from "@/components/brand/OrnamentField";
 import { Header } from "@/components/sections/Header";
@@ -62,6 +63,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
 
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "nav" });
+  const tCommon = await getTranslations({ locale, namespace: "common" });
 
   return (
     <html
@@ -94,6 +96,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
 
         <Grain />
         <LiquidPointer />
+        <ScrollTop label={tCommon("backToTop")} />
       </body>
     </html>
   );
