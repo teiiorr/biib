@@ -1,7 +1,6 @@
 import type { CSSProperties } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Reveal } from "@/components/brand/Reveal";
-import { Girih } from "@/components/brand/Texture";
 import { VideoFrame } from "@/components/brand/VideoFrame";
 import { GemBullet } from "@/components/ui/GemCard";
 import { ExternalButton } from "@/components/ui/LinkButton";
@@ -44,8 +43,6 @@ export function ProjectFeature({
         !first && "border-t border-separator",
       )}
     >
-      <Girih className="opacity-[0.03]" />
-
       <div className="page section relative">
         <div className={cn("grid gap-8", hasMedia && "lg:grid-cols-2 lg:gap-12")}>
           {hasMedia && project.video ? (

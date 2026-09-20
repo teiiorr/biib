@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { GoldText } from "@/components/brand/GoldText";
 import { Reveal } from "@/components/brand/Reveal";
-import { Aura, Girih } from "@/components/brand/Texture";
+import { Aura } from "@/components/brand/Texture";
 
 /**
  * Sahifa boşi: bitta H1 va qisqa kiriş. Kiker yöq.
@@ -18,7 +18,6 @@ export function PageHeader({
 }) {
   return (
     <section className="relative isolate overflow-hidden">
-      <Girih className="opacity-[0.04]" />
       <Aura className="-right-[26%] -top-[58%] w-[min(72vw,620px)]" />
 
       <Reveal as="header" className="page relative pb-6 pt-10 md:pt-16">

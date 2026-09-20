@@ -101,7 +101,7 @@ declare const messages: {
   },
   "projects": {
     "title": "Loyihalar",
-    "lead": "Har bir loyihaning oʻz yoshi, oʻz mashgʻuloti va oʻz yakuni bor. Quyida toʻrttasi.",
+    "lead": "UPOP TREND — birlashmaning bosh loyihasi: milliy qoʻshiqchilik kastingi.",
     "factsLabel": "Qisqacha",
     "visitSite": "Saytga oʻtish",
     "playVideo": "Videoni koʻrish",
@@ -192,7 +192,7 @@ declare const messages: {
     "homeTitle": "Bosh sahifa",
     "homeDescription": "Bolalar ijodkorligi ijodiy birlashmasi: kasting, studiya, koʻrgazma va festival. UPOP TREND milliy kastingi.",
     "aboutDescription": "Birlashmaning maqsadi, tarixi va qadriyatlari.",
-    "projectsDescription": "Birlashmaning toʻrt yoʻnalishi: UPOP TREND, Rangli olam, Sahna bolalari, Ertak ustaxonasi.",
+    "projectsDescription": "UPOP TREND — birlashmaning bosh loyihasi, milliy qoʻshiqchilik kastingi.",
     "newsDescription": "Tanlov muddatlari, koʻrgazmalar va birlashma yangiliklari.",
     "councilDescription": "Ekspertlar kengashi aʼzolari va ularning yoʻnalishlari.",
     "leadershipDescription": "Birlashma rahbariyati.",

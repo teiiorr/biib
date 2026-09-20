@@ -1,6 +1,5 @@
 import { useTranslations } from "next-intl";
 import { Reveal } from "@/components/brand/Reveal";
-import { Girih } from "@/components/brand/Texture";
 import { SectionHead } from "@/components/sections/SectionHead";
 import { LinkButton } from "@/components/ui/LinkButton";
 
@@ -9,8 +8,6 @@ export function AboutTeaser() {
 
   return (
     <section className="panel section relative isolate overflow-hidden" aria-labelledby="home-about">
-      <Girih className="opacity-[0.035]" />
-
       <div className="page relative">
         <Reveal>
           <SectionHead id="home-about" heading={t("heading")} />

@@ -74,7 +74,7 @@ export function Footer() {
             {t("footer.projectsHeading")}
           </h2>
           <ul className="flex flex-col gap-1">
-            {PROJECTS.map((project) => (
+            {PROJECTS.filter((project) => project.flagship).map((project) => (
               <li key={project.id}>
                 {project.external ? (
                   <a
