@@ -1,6 +1,7 @@
 import { getImageProps } from "next/image";
 import { useTranslations } from "next-intl";
 import { GoldText } from "@/components/brand/GoldText";
+import { HeroArch } from "@/components/brand/HeroArch";
 import { HeroLive } from "@/components/brand/HeroLive";
 import { Reveal } from "@/components/brand/Reveal";
 import { LinkButton } from "@/components/ui/LinkButton";
@@ -55,19 +56,21 @@ export function Hero() {
 
       <div className="hero-stage flex flex-1 flex-col">
         <div className="page flex flex-1 flex-col items-center justify-end pb-4 text-center">
-          <h1
-            lang="uz-Latn"
-            className="text-balance font-semibold uppercase leading-[1.06] tracking-[0.04em] text-label text-[clamp(1.8rem,5.8vw,4.2rem)]"
-          >
-            <span className="hero-line">
-              <span style={{ "--line-delay": "160ms" } as CSSProperties}>{BRAND_NAME.line1}</span>
-            </span>
-            <span className="hero-line">
-              <span style={{ "--line-delay": "360ms" } as CSSProperties}>
-                <GoldText>{BRAND_NAME.line2}</GoldText>
+          <HeroArch>
+            <h1
+              lang="uz-Latn"
+              className="text-balance font-semibold uppercase leading-[1.06] tracking-[0.04em] text-label text-[clamp(1.8rem,5.8vw,4.2rem)]"
+            >
+              <span className="hero-line">
+                <span style={{ "--line-delay": "160ms" } as CSSProperties}>{BRAND_NAME.line1}</span>
               </span>
-            </span>
-          </h1>
+              <span className="hero-line">
+                <span style={{ "--line-delay": "360ms" } as CSSProperties}>
+                  <GoldText>{BRAND_NAME.line2}</GoldText>
+                </span>
+              </span>
+            </h1>
+          </HeroArch>
 
           <Reveal delay={520} className="mt-5">
             <p className="read text-body text-label-secondary">{t("subtitle")}</p>
