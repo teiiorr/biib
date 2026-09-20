@@ -61,6 +61,32 @@
   }
 }
 
+/* ---- Samosvet yuvindisi: bölimga yorqin rangli "vitraj" nuri ----
+ * Tun ustidagi jonli rang vstavkalari (2d javobi). Faqat fon gradienti,
+ * filter yöq; matn ivory bölib qoladi, kontrast saqlanadi. */
+.gem-wash {
+  position: absolute;
+  inset: -12% -18%;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      42% 55% at 82% 10%,
+      color-mix(in srgb, var(--gem, var(--magenta)) 30%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      36% 48% at 8% 90%,
+      color-mix(in srgb, var(--gem2, var(--turquoise)) 22%, transparent),
+      transparent 60%
+    );
+}
+
+@media (prefers-contrast: more) {
+  .gem-wash {
+    opacity: 0.5;
+  }
+}
+
 /* ---- Bölim ajratgiçi: ortada girih medaloni, yonida islimi ---- */
 .ornament-band {
   display: flex;

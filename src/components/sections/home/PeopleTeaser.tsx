@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Reveal } from "@/components/brand/Reveal";
 import { PersonPortrait } from "@/components/sections/PersonPortrait";
@@ -14,8 +15,13 @@ export function PeopleTeaser() {
   if (members.length === 0) return null;
 
   return (
-    <section className="panel section" aria-labelledby="home-people">
-      <div className="page">
+    <section
+      className="panel section relative isolate overflow-hidden"
+      aria-labelledby="home-people"
+      style={{ "--gem": "var(--turquoise)", "--gem2": "var(--green)" } as CSSProperties}
+    >
+      <div aria-hidden="true" className="gem-wash" />
+      <div className="page relative">
         <Reveal>
           <SectionHead id="home-people" heading={t("heading")} lead={t("lead")} />
         </Reveal>

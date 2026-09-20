@@ -3,6 +3,7 @@ import { GoldText } from "@/components/brand/GoldText";
 import { HeroArch } from "@/components/brand/HeroArch";
 import { LivingVideo } from "@/components/brand/LivingVideo";
 import { Reveal } from "@/components/brand/Reveal";
+import { Aura } from "@/components/brand/Texture";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { BRAND_NAME } from "@/content/org";
 import type { CSSProperties } from "react";
@@ -30,7 +31,10 @@ export function Hero() {
       />
 
       <div className="hero-stage flex flex-1 flex-col">
-        <div className="page flex flex-1 flex-col items-center justify-end pb-4 text-center">
+        <div className="page relative flex flex-1 flex-col items-center justify-end pb-4 text-center">
+          {/* Nom ortidagi samosvet aurasi — ekranda bittasi (§16.5). */}
+          <Aura className="hero-aura" />
+
           <HeroArch>
             <h1
               lang="uz-Latn"
@@ -47,7 +51,7 @@ export function Hero() {
             </h1>
           </HeroArch>
 
-          <Reveal delay={520} className="mt-5">
+          <Reveal delay={520} className="relative mt-5">
             <p className="read text-body text-label-secondary">{t("subtitle")}</p>
           </Reveal>
         </div>

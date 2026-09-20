@@ -45,7 +45,9 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
         <div className="page">
           <Reveal>
             <SectionHead id="about-mission" heading={t("missionHeading")} />
-            <p className="read mt-4 text-body text-label-secondary">{t("missionBody")}</p>
+            <p className="read mx-auto mt-4 text-center text-body text-label-secondary">
+              {t("missionBody")}
+            </p>
           </Reveal>
         </div>
       </section>

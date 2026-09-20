@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { useTranslations } from "next-intl";
 import { Reveal } from "@/components/brand/Reveal";
 import { NewsCard } from "@/components/sections/NewsCard";
@@ -11,8 +12,13 @@ export function LatestNews() {
   if (items.length === 0) return null;
 
   return (
-    <section className="section" aria-labelledby="home-news">
-      <div className="page">
+    <section
+      className="section relative isolate overflow-hidden"
+      aria-labelledby="home-news"
+      style={{ "--gem": "var(--magenta)", "--gem2": "var(--violet)" } as CSSProperties}
+    >
+      <div aria-hidden="true" className="gem-wash" />
+      <div className="page relative">
         <Reveal>
           <SectionHead id="home-news" heading={t("heading")} />
         </Reveal>

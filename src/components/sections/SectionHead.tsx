@@ -16,7 +16,7 @@ export function SectionHead({
   className?: string;
 }) {
   return (
-    <div className={cn("flex flex-col gap-3", className)}>
+    <div className={cn("flex flex-col items-center gap-3 text-center", className)}>
       <h2 id={id} className="text-title1">
         <GoldText>{heading}</GoldText>
       </h2>

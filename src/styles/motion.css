@@ -468,6 +468,38 @@ html[data-js] [data-reveal="in"] {
   }
 }
 
+/* ---- Qahramon aurasi: nom ortidagi aylanuvçi samosvet nuri ----
+ * screen bilan faqat yorugʻlik qöşadi; skroll çiqişida qisqarib
+ * söniladi — sahna "kameradan uzoqlaşadi" (üç tekislikli çuqurlik:
+ * video sekin, aura örtaça, matn tez). */
+.hero-aura {
+  left: 50%;
+  bottom: 4%;
+  z-index: 0;
+  width: min(70vw, 38rem);
+  translate: -50% 0;
+  mix-blend-mode: screen;
+  opacity: 0.32;
+  animation: aura-spin 26s linear infinite;
+}
+
+@supports (animation-timeline: view()) {
+  html[data-js] .hero-aura {
+    animation:
+      aura-spin 26s linear infinite,
+      hero-aura-out linear both;
+    animation-timeline: auto, view();
+    animation-range: normal, exit 0% exit 70%;
+  }
+}
+
+@keyframes hero-aura-out {
+  to {
+    opacity: 0;
+    scale: 0.8;
+  }
+}
+
 /* ---- Qahramon ravogʻi: oltin qirra özini çizadi ---- */
 .hero-arch__edge {
   position: absolute;
