@@ -2,6 +2,7 @@
 @import "./tokens.css";
 @import "./glass.css";
 @import "./motion.css";
+@import "./ornament.css";
 
 @theme inline {
   --color-accent: var(--accent);
@@ -116,7 +117,12 @@
   }
 
   body {
-    background-color: var(--bg-base);
+    /*
+     * Fon rangi html da (u kanvasni bo'yaydi). Body şaffof — şunda
+     * z-index:-1 dagi Ambient va Samarqand ufqi ko'rinadi; ilgari
+     * body ning to'q foni ularni yopib turardi.
+     */
+    background-color: transparent;
     color: var(--label-primary);
     font-family: var(--font-sans);
     font-size: 1.0625rem;

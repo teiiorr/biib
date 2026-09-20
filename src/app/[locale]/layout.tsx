@@ -3,7 +3,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { LiquidPointer } from "@/components/brand/LiquidPointer";
-import { Ambient, Grain } from "@/components/brand/Texture";
+import { Ambient, Grain, SamarkandField } from "@/components/brand/Texture";
 import { Header } from "@/components/sections/Header";
 import { Footer } from "@/components/sections/Footer";
 import { getPathname } from "@/i18n/navigation";
@@ -74,6 +74,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
       </head>
       <body className="flex min-h-dvh flex-col">
         <Ambient />
+        <SamarkandField />
         <a
           href="#main"
           className="sr-only rounded-sm bg-elevated px-4 py-2.5 text-callout font-semibold text-label shadow-ambient focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[var(--z-alert)]"

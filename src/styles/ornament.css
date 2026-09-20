@@ -1,0 +1,117 @@
+/*
+ * Milliy naqş qatlami — "feature layer". Girih suv belgisi endi
+ * haqiqiy Özbek girihi: markazda sakkiz burçakli yulduz, çetlarga
+ * tutaşadigan straplar bilan çeksiz tökiladi. Bölim ajratgiçlari,
+ * ravoq yelkasidagi islimi va cho'qqidagi kalit toş şu yerdan rang
+ * va ölçam oladi.
+ *
+ * Bezakning barçasi öqigiçdan yaşiringan; rang currentColor yoki
+ * --gem orqali keladi, alohida palitra generatsiya qilinmaydi.
+ */
+
+/* ---- Girih suv belgisi: sakkiz burçakli yulduz laticasi ---- */
+.girih {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  color: var(--gold);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23C9A25A' stroke-width='1.1'%3E%3Cpath d='M60 18 102 60 60 102 18 60Z'/%3E%3Cpath d='M34 34 86 34 86 86 34 86Z'/%3E%3Cpath d='M60 18V0M60 102v18M18 60H0M102 60h18'/%3E%3Cpath d='M34 34 12 12M86 34 108 12M86 86 108 108M34 86 12 108'/%3E%3Ccircle cx='60' cy='60' r='9'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 120px 120px;
+}
+
+/*
+ * Kartada girih samosvet toniga bo'yaladi — naqş materialning bir
+ * qismi bo'lib, ustiga yopishtirilgan begona narsa emas.
+ */
+.girih--gem {
+  color: var(--gem-line, var(--gold));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23C9A25A' stroke-width='1.1'%3E%3Cpath d='M60 18 102 60 60 102 18 60Z'/%3E%3Cpath d='M34 34 86 34 86 86 34 86Z'/%3E%3Cpath d='M60 18V0M60 102v18M18 60H0M102 60h18'/%3E%3Cpath d='M34 34 12 12M86 34 108 12M86 86 108 108M34 86 12 108'/%3E%3Ccircle cx='60' cy='60' r='9'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 132px 132px;
+}
+
+/* ---- Samarqand ufqi: sahifa foni naqşi ---- */
+.samarkand {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  color: var(--gold);
+  opacity: 0.08;
+  /* Çetlarga qarab söniladi — markazdagi matn tagida naqş yengillaşadi. */
+  -webkit-mask-image: radial-gradient(
+    135% 108% at 50% 30%,
+    #000 38%,
+    rgb(0 0 0 / 0.28) 100%
+  );
+  mask-image: radial-gradient(135% 108% at 50% 30%, #000 38%, rgb(0 0 0 / 0.28) 100%);
+}
+
+@media (prefers-contrast: more) {
+  .samarkand {
+    opacity: 0.05;
+  }
+}
+
+/* ---- Bölim ajratgiçi: ortada girih medaloni, yonida islimi ---- */
+.ornament-band {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 30rem;
+  margin-inline: auto;
+  color: var(--line-gold-strong);
+}
+
+.ornament-band__rule {
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--line-gold) 30%,
+    var(--line-gold-strong) 100%
+  );
+}
+
+.ornament-band__rule:last-child {
+  background: linear-gradient(
+    270deg,
+    transparent,
+    var(--line-gold) 30%,
+    var(--line-gold-strong) 100%
+  );
+}
+
+.ornament-band__mark {
+  width: 132px;
+  height: 34px;
+  flex: none;
+  color: var(--gold);
+  filter: drop-shadow(0 1px 0 rgb(0 0 0 / 0.4));
+}
+
+/* ---- Islimi: ravoq yelkasidagi novda ---- */
+.islimi {
+  color: var(--gold-hi);
+  filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.5));
+}
+
+/* ---- Kalit toş: cho'qqidagi finial ---- */
+.keystone {
+  color: var(--gold-hi);
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.55));
+}
+
+/* ---- Paxta ---- */
+.pakhta {
+  color: var(--gem-line, var(--gold));
+}
+
+@media (prefers-contrast: more) {
+  .girih,
+  .girih--gem {
+    opacity: 0.09;
+  }
+}
