@@ -15,13 +15,13 @@ export function Logo({ className }: { className?: string }) {
       className={cn("tap flex shrink-0 items-center gap-2.5 rounded-sm", className)}
     >
       <Image
-        src="/brand/mark.png"
+        src="/brand/logo-mark.png"
         alt=""
         width={96}
         height={96}
         priority
-        sizes="40px"
-        className="h-9 w-9 shrink-0 sm:h-10 sm:w-10"
+        sizes="44px"
+        className="h-11 w-11 shrink-0"
       />
       <span className="hidden flex-col leading-tight sm:flex">
         <span className="text-subhead font-semibold text-label">{BRAND_NAME.line1}</span>

@@ -24,7 +24,7 @@ export function AboutTeaser() {
         </div>
 
         <Reveal delay={220} className="mt-8 flex justify-end">
-          <LinkButton href="/about" variant="secondary">
+          <LinkButton href="/about" variant="secondary" className="w-full justify-center sm:w-auto">
             {t("cta")}
           </LinkButton>
         </Reveal>

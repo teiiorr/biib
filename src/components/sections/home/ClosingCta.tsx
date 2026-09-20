@@ -21,7 +21,7 @@ export function ClosingCta() {
         </Reveal>
 
         <Reveal delay={140} className="mt-8 flex justify-end">
-          <LinkButton href="/contacts" size="lg">
+          <LinkButton href="/contacts" size="lg" className="w-full justify-center sm:w-auto">
             {t("cta")}
           </LinkButton>
         </Reveal>

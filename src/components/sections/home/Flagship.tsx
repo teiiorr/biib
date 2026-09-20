@@ -92,6 +92,7 @@ export function Flagship() {
                   href={project.external.href}
                   newTabLabel={tCommon("opensInNewTab")}
                   size="lg"
+                  className="w-full justify-center sm:w-auto"
                 >
                   {t("cta")}
                 </ExternalButton>

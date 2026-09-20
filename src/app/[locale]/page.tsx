@@ -4,6 +4,7 @@ import { Reveal } from "@/components/brand/Reveal";
 import { OrnamentBand } from "@/components/brand/Ornament";
 import { Hero } from "@/components/sections/home/Hero";
 import { Flagship } from "@/components/sections/home/Flagship";
+import { ProjectsOverview } from "@/components/sections/home/ProjectsOverview";
 import { AboutTeaser } from "@/components/sections/home/AboutTeaser";
 import { LatestNews } from "@/components/sections/home/LatestNews";
 import { PeopleTeaser } from "@/components/sections/home/PeopleTeaser";
@@ -33,6 +34,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     <>
       <Hero />
       <Flagship />
+      <ProjectsOverview />
       <SectionDivider />
       <AboutTeaser />
       <LatestNews />

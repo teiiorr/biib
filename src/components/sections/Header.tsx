@@ -35,7 +35,7 @@ export function Header() {
         data-over-video={overVideo ? "true" : undefined}
         className="app-bar"
       >
-        <div className="page flex h-14 items-center gap-2 md:h-16">
+        <div className="page flex h-16 items-center gap-2 md:h-[68px]">
           <Logo />
 
           {/* Yettita band uzun tarjimalarda 1024 da ikki qatorga tuşadi, şuning uçun xl dan. */}
