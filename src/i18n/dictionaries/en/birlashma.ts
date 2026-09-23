@@ -23,7 +23,7 @@ export const birlashma: typeof source = {
   horizon: "A horizon line drawn in pencil",
   gallery: {
     wall: "Wall",
-    caption: "{name}, age {age}, {region} · «{title}»",
+    caption: "{name}, age {age}, {region} · “{title}”",
   },
   sounds: {
     pencil: "Pencil sound",

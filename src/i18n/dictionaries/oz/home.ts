@@ -18,7 +18,7 @@ export const home: typeof source = {
     lead: "Тўрт йўналиш: қўшиқ, театр, тасвирий санъат ва анимация.",
     all: "Барча лойиҳалар",
     open: "Лойиҳани очиш",
-    external: "upop.уз сайтига ўтиш",
+    external: "upop.uz сайтига ўтиш",
     starLabel: "Чор-боғ кесишмаси",
   },
   news: {

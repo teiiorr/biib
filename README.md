@@ -17,21 +17,21 @@ pnpm verify:full      # toʻliq tekshiruv: yigʻma, 70 sahifa, brauzer matritsas
 
 ## Tuzilma
 
-| Papka | Vazifasi |
-|---|---|
-| `src/app` | Marshrutlar: `[locale]/…`. Faqat yupqa sahifa fayllari. |
-| `src/components/ui` | Tugma, matn, shakl maydonlari, jadval, ikonkalar. |
-| `src/components/glass` | Boshqaruv qatlami materiali: Oyna (Atlas) va Kalka (Birlashma), koʻrinish paneli. |
-| `src/components/ornament` | Oʻzbek naqshlari: ravoq, girih, islimiy, palak, zardoʻzi, Chust, ganch, kundal, Xiva. |
-| `src/components/motion` | Harakat: GSAP sozlovi, Lenis, ochilishlar, sahifa oʻtishlari. |
-| `src/components/layout` | Sarlavha, tab-bar, futer, boʻlim ramkalari. |
-| `src/components/sections` | Sahifalar boʻlimlari. |
-| `src/designs/atlas`, `src/designs/birlashma` | Dizaynga xos badiiy qatlam (shader, qogʻoz, boʻyash sahifasi). |
-| `src/content` | Kontent: loyihalar, yangiliklar, odamlar, hamkorlar, aloqa. |
-| `src/i18n` | Tillar, marshrut xaritasi, lugʻatlar, transliteratsiya. |
-| `src/styles` | Tokenlar (ikki dizayn × ikki mavzu), Tailwind mavzusi, materiallar. |
-| `scripts` | Tekshiruv (`verify.mjs`), transliteratsiya, media, poster. |
-| `tests` | Playwright: marshrutlar, joylashuv, qulaylik, unumdorlik, vizual. |
+| Papka                                        | Vazifasi                                                                              |
+| -------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `src/app`                                    | Marshrutlar: `[locale]/…`. Faqat yupqa sahifa fayllari.                               |
+| `src/components/ui`                          | Tugma, matn, shakl maydonlari, jadval, ikonkalar.                                     |
+| `src/components/glass`                       | Boshqaruv qatlami materiali: Oyna (Atlas) va Kalka (Birlashma), koʻrinish paneli.     |
+| `src/components/ornament`                    | Oʻzbek naqshlari: ravoq, girih, islimiy, palak, zardoʻzi, Chust, ganch, kundal, Xiva. |
+| `src/components/motion`                      | Harakat: GSAP sozlovi, Lenis, ochilishlar, sahifa oʻtishlari.                         |
+| `src/components/layout`                      | Sarlavha, tab-bar, futer, boʻlim ramkalari.                                           |
+| `src/components/sections`                    | Sahifalar boʻlimlari.                                                                 |
+| `src/designs/atlas`, `src/designs/birlashma` | Dizaynga xos badiiy qatlam (shader, qogʻoz, boʻyash sahifasi).                        |
+| `src/content`                                | Kontent: loyihalar, yangiliklar, odamlar, hamkorlar, aloqa.                           |
+| `src/i18n`                                   | Tillar, marshrut xaritasi, lugʻatlar, transliteratsiya.                               |
+| `src/styles`                                 | Tokenlar (ikki dizayn × ikki mavzu), Tailwind mavzusi, materiallar.                   |
+| `scripts`                                    | Tekshiruv (`verify.mjs`), transliteratsiya, media, poster.                            |
+| `tests`                                      | Playwright: marshrutlar, joylashuv, qulaylik, unumdorlik, vizual.                     |
 
 ## Tillar
 

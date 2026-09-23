@@ -21,10 +21,5 @@ export {
   subscribeAppearance,
 } from "./store";
 export type { AppearanceSnapshot } from "./store";
-export {
-  useMediaQuery,
-  useReducedTransparency,
-  useReducedMotion,
-  useIsDesktop,
-} from "./media";
+export { useMediaQuery, useReducedTransparency, useReducedMotion, useIsDesktop } from "./media";
 export { readAppearanceFromDocument, resolveTheme } from "./dom";

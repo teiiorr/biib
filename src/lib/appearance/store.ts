@@ -1,9 +1,4 @@
-import {
-  applyAppearance,
-  readAppearanceFromDocument,
-  resolveTheme,
-  writeStorage,
-} from "./dom";
+import { applyAppearance, readAppearanceFromDocument, resolveTheme, writeStorage } from "./dom";
 import {
   DEFAULT_APPEARANCE,
   normalizeAppearance,

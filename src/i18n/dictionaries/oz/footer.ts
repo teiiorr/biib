@@ -7,7 +7,7 @@ export const footer: typeof source = {
   contacts: "Алоқа",
   follow: "Ижтимоий тармоқлар",
   copyright: "© {year} Болалар Ижодкорлиги Ижодий Бирлашмаси",
-  credit: "Десигнед & Девелопед бй teiior",
+  credit: "Designed & Developed by teiior",
   privacy: "Махфийлик",
   crownAlt: "Чуст дўпписининг ўн олти равоқли ҳошияси",
   label: "Сайт охири",

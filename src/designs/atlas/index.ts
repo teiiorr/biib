@@ -1,4 +1,7 @@
 import type { ArtMap } from "../registry";
 
-/** Atlas badiiy qatlami: uyalar sahifa quruvchilar tomonidan toʻldiriladi. */
-export const art: ArtMap = {};
+/** Atlas badiiy qatlami: har uya alohida chunk. */
+export const art: ArtMap = {
+  "home-hero": () => import("./AbrSilk"),
+  "project-media": () => import("./AbrReveal"),
+};

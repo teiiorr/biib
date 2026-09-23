@@ -31,7 +31,7 @@ export default async function Image({ params }: ImageProps) {
   const { locale, section } = await params;
   const dict = getDictionary(locale);
   return new ImageResponse(
-    <OgImage locale={locale} title={titleFor(locale, section)} kicker={dict.meta.siteName} />,
+    <OgImage locale={locale} title={titleFor(locale, section)} topic={dict.meta.siteName} />,
     { ...OG_SIZE, fonts: await loadOgFonts() },
   );
 }

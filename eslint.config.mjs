@@ -13,7 +13,7 @@ export default tseslint.config(
       "next-env.d.ts",
       "docs/**",
       ".verify/**",
-      ".claude/**",
+      ".??*/**",
       "public/**",
     ],
   },
@@ -30,7 +30,7 @@ export default tseslint.config(
         "error",
         {
           selector: "JSXAttribute[name.name='href'][value.value='#']",
-          message: "href=\"#\" taqiqlangan: oʻlik havola.",
+          message: 'href="#" taqiqlangan: oʻlik havola.',
         },
       ],
     },

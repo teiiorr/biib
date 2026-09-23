@@ -34,7 +34,7 @@ export const privacy: typeof source = {
       id: "where",
       heading: "Where it goes",
       paragraphs: [
-        "The form sends the message to the association's service chat through the Telegram Bot API, so the data passes through Telegram's servers. Compliance with the Law of the Republic of Uzbekistan «On Personal Data» (ZRU-547 of 2 July 2019) is under legal review.",
+        "The form sends the message to the association's service chat through the Telegram Bot API, so the data passes through Telegram's servers. Compliance with the Law of the Republic of Uzbekistan “On Personal Data” (ZRU-547 of 2 July 2019) is under legal review.",
       ],
     },
     {

@@ -16,7 +16,7 @@ interface HomePageProps {
 export function HomePage({ locale, dict }: HomePageProps) {
   return (
     <>
-      <Section tone="light" labelledBy="hero-title" className="min-h-[100svh] flex items-end">
+      <Section tone="light" labelledBy="hero-title" className="min-h-svh flex items-end">
         <Container className="grid gap-6 pb-12">
           <Heading level={1} size="display-xl" id="hero-title">
             {dict.common.brand.name}

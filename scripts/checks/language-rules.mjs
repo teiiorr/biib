@@ -18,8 +18,12 @@ export const ROMANIAN_LETTERS = /[ȘșȚț]/;
 export const LOREM = /\blorem\b/i;
 
 /** Tekshiruvga aloqasi yoʻq boʻlaklar: oʻrinbosarlar, havolalar, pochta. */
+/* Futer imzosi barcha tillarda aynan shu koʻrinishda (D18). */
+const CREDIT = /Designed & Developed by teiior/g;
+
 export function stripNonWords(value) {
   return value
+    .replace(CREDIT, " ")
     .replace(/\{\{?\w+\}?\}/g, " ")
     .replace(/https?:\/\/\S+/g, " ")
     .replace(/\S+@\S+\.\S+/g, " ")

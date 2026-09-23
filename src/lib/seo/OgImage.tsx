@@ -34,15 +34,15 @@ function starPath(cx: number, cy: number, outer: number, inner: number): string 
 export interface OgImageProps {
   readonly locale: Locale;
   readonly title: string;
-  readonly kicker: string;
+  readonly topic: string;
   readonly design?: "atlas" | "birlashma";
 }
 
-export function ogAlt(kicker: string, title: string): string {
-  return `${kicker}: ${title}`;
+export function ogAlt(topic: string, title: string): string {
+  return `${topic}: ${title}`;
 }
 
-export function OgImage({ title, kicker, design = "atlas" }: OgImageProps) {
+export function OgImage({ title, topic, design = "atlas" }: OgImageProps) {
   const c = design === "birlashma" ? BIRLASHMA : ATLAS;
   const titleFont = design === "birlashma" ? "Nunito" : "Playfair";
   const size = title.length > 48 ? 56 : title.length > 28 ? 68 : 84;
@@ -72,7 +72,7 @@ export function OgImage({ title, kicker, design = "atlas" }: OgImageProps) {
         <path d={starPath(180, 180, 60, 24)} fill={c.tint} stroke="none" />
       </svg>
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        <div style={{ fontSize: 26, color: c.goldText, letterSpacing: 1 }}>{kicker}</div>
+        <div style={{ fontSize: 26, color: c.goldText, letterSpacing: 1 }}>{topic}</div>
         <div
           style={{
             display: "flex",
