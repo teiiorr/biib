@@ -2,6 +2,9 @@ import Link from "next/link";
 
 import { Icon } from "@/components/icons/Icon";
 import type { IconName } from "@/components/icons/paths";
+import { Islimiy } from "@/components/ornament/Islimiy";
+import { IslimiyScroll } from "@/components/ornament/IslimiyScroll";
+import { ExternalLink } from "@/components/ui/ExternalLink";
 import { getContacts, getProjects, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
@@ -32,6 +35,11 @@ export function Footer({ locale, dict }: FooterProps) {
           <DesignArt slot="footer-crown" locale={locale} />
           <span className="footer-crown-line" aria-hidden="true" />
         </div>
+        <div className="footer-islimiy birlashma:hidden" aria-hidden="true">
+          <IslimiyScroll>
+            <Islimiy length={720} width={120} seed="futer" side="left" scroll />
+          </IslimiyScroll>
+        </div>
         <div className="footer-groups">
           <div className="footer-group">
             <p className="t-label text-ink">{dict.footer.organization}</p>
@@ -45,17 +53,14 @@ export function Footer({ locale, dict }: FooterProps) {
             <p className="t-label text-ink">{dict.footer.projects}</p>
             {projects.map((project) =>
               project.external ? (
-                <a
+                <ExternalLink
                   key={project.key}
                   href={project.external.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  hint={dict.common.hints.external}
                   className="footer-link t-small"
                 >
                   {t(project.name, locale)}
-                  <span className="sr-only"> ({dict.common.hints.external})</span>
-                  <Icon name="external" size={16} className="ml-1" />
-                </a>
+                </ExternalLink>
               ) : (
                 <Link
                   key={project.key}

@@ -115,12 +115,6 @@ export function allRoutes(): readonly RouteEntry[] {
   return out;
 }
 
-export function breadcrumbKeys(key: PageKey): readonly PageKey[] {
-  if (key === "home") return ["home"];
-  if (key === "newsItem") return ["home", "news", "newsItem"];
-  return ["home", key];
-}
-
 export interface ResolvedPath {
   readonly locale: Locale;
   readonly key: PageKey;

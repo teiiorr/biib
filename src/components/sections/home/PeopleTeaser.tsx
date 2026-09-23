@@ -1,5 +1,6 @@
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
+import { Reveal } from "@/components/motion/Reveal";
 import { KundalPanel } from "@/components/ornament/KundalPanel";
 import { RavoqFrame } from "@/components/ornament/RavoqFrame";
 import { Heading } from "@/components/ui/Heading";
@@ -76,11 +77,17 @@ export function PeopleTeaser({ locale, dict }: PeopleTeaserProps) {
                 {dict.common.actions.viewAll}
               </LinkButton>
             </div>
-            <ul className="people-row" data-card-group="" aria-label={h.leadership}>
+            <Reveal
+              as="ul"
+              className="people-row"
+              stagger
+              attrs={{ "data-card-group": "" }}
+              label={h.leadership}
+            >
               {leaders.map((p) => (
                 <PersonCard key={p.id} person={p} locale={locale} />
               ))}
-            </ul>
+            </Reveal>
           </div>
           <div>
             <div className="section-head-row">
@@ -97,11 +104,17 @@ export function PeopleTeaser({ locale, dict }: PeopleTeaserProps) {
                 {dict.common.actions.viewAll}
               </LinkButton>
             </div>
-            <ul className="people-row" data-card-group="" aria-label={h.experts}>
+            <Reveal
+              as="ul"
+              className="people-row"
+              stagger
+              attrs={{ "data-card-group": "" }}
+              label={h.experts}
+            >
               {experts.map((p) => (
                 <PersonCard key={p.id} person={p} locale={locale} />
               ))}
-            </ul>
+            </Reveal>
           </div>
         </div>
         <p className="t-small text-ink-3 pt-6">{dict.people.experts.pending}</p>

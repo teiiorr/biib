@@ -27,7 +27,6 @@
   .home-hero-art {
     position: absolute;
     inset: 0;
-    z-index: -3;
   }
   .home-hero-slot,
   .home-hero-slot > .abr-silk {
@@ -37,13 +36,11 @@
   .home-hero-ganch {
     position: absolute;
     inset: 0;
-    z-index: -2;
     pointer-events: none;
   }
   .home-hero-lattice {
     position: absolute;
     inset: 0;
-    z-index: -1;
     opacity: 0.16;
     pointer-events: none;
     color: var(--accent-art);
@@ -53,7 +50,6 @@
     content: "";
     position: absolute;
     inset: 0 -100vw -100% -100vw;
-    z-index: -1;
     background: linear-gradient(
       180deg,
       transparent 0%,
@@ -64,6 +60,7 @@
   }
   .home-hero-content {
     position: relative;
+    isolation: isolate;
     display: grid;
     gap: 24px;
     padding-top: calc(var(--header-h) + 48px + var(--safe-top));
@@ -128,43 +125,24 @@
   .home-portal-ravoq .ravoq-media {
     background: var(--art-5);
   }
-  .key-word {
+  .portal-words .zardozi-word {
     position: relative;
     white-space: nowrap;
+    font-style: normal;
   }
-  .key-word::after {
-    content: "";
+  .portal-words .zardozi-underline {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -0.1em;
-    height: 5px;
-    transform-origin: left;
-    transform: scaleX(0);
-    transition: transform var(--dur-reveal) var(--ease-out);
-    background:
-      repeating-linear-gradient(90deg, var(--accent-art) 0 1px, transparent 1px 6px) 0 0 / 6px 5px,
-      linear-gradient(var(--accent-art), var(--accent-art)) 0 0 / 100% 1px no-repeat,
-      linear-gradient(var(--accent-art), var(--accent-art)) 0 4px / 100% 1px no-repeat;
+    bottom: -0.12em;
+    opacity: 0;
+    transition: opacity var(--dur-reveal) var(--ease-out);
   }
-  .key-word[data-reveal="done"]::after {
-    transform: scaleX(1);
+  .portal-words .zardozi-word[data-reveal="done"] .zardozi-underline {
+    opacity: 1;
   }
-  :root[data-motion="off"] .key-word::after {
-    transform: scaleX(1);
-    transition: none;
-  }
-  :root[data-design="birlashma"] .key-word::after {
-    height: 0.3em;
-    bottom: -0.05em;
-    z-index: -1;
-    opacity: 0.6;
-    border-radius: 2px;
-    background: var(--art-2);
-    transform: scaleX(0) rotate(-0.5deg);
-  }
-  :root[data-design="birlashma"] .key-word[data-reveal="done"]::after {
-    transform: scaleX(1) rotate(-0.5deg);
+  :root[data-motion="off"] .portal-words .zardozi-underline {
+    opacity: 1;
   }
 
   /* Chor-bogʻ */
@@ -190,7 +168,6 @@
     top: 50%;
     transform: translate(-50%, -50%);
     color: var(--accent-art);
-    z-index: 1;
     pointer-events: none;
     display: none;
   }
@@ -301,11 +278,9 @@
     inset: 0 -16px;
     border-radius: var(--radius-card);
     overflow: hidden;
-    z-index: 0;
   }
   .people-head-text {
     position: relative;
-    z-index: 1;
     display: grid;
     gap: 12px;
     padding: 0 16px;
@@ -355,6 +330,27 @@
   }
   .people-portrait {
     width: 100%;
+  }
+
+  /* Galereya devori */
+  .gallery-wall {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  @media (min-width: 1024px) {
+    .gallery-wall {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 32px 24px;
+    }
+  }
+  .gallery-item figure {
+    display: grid;
+    gap: 8px;
+    margin: 0;
   }
 
   /* Aloqa lentasi */

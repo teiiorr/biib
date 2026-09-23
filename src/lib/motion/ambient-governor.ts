@@ -102,13 +102,3 @@ export function registerAmbient(
     reconcile();
   };
 }
-
-export function isAmbientActive(el: Element): boolean {
-  return entries.get(el)?.active ?? false;
-}
-
-export function activeAmbientCount(kind?: AmbientKind): number {
-  let n = 0;
-  for (const e of entries.values()) if (e.active && (!kind || e.kind === kind)) n++;
-  return n;
-}

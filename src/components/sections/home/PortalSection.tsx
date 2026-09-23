@@ -6,10 +6,9 @@ import { Container } from "@/components/layout/Container";
 import { DesignArt } from "@/components/layout/DesignArt";
 import { usePortalScene } from "@/components/motion/usePortalScene";
 import { Ravoq } from "@/components/ornament/Ravoq";
+import { ZardoziText } from "@/components/ornament/ZardoziText";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
-
-import { KeyWords } from "./KeyWords";
 
 interface PortalSectionProps {
   readonly locale: Locale;
@@ -27,7 +26,7 @@ export function PortalSection({ locale, dict }: PortalSectionProps) {
     build: (tl, scope) => {
       const window_ = scope.querySelector<HTMLElement>("[data-portal-window]");
       const text = scope.querySelector<HTMLElement>("[data-portal-text]");
-      const words = scope.querySelectorAll<HTMLElement>(".key-word");
+      const words = scope.querySelectorAll<HTMLElement>(".zardozi-word");
       if (window_) {
         tl.fromTo(
           window_,
@@ -60,7 +59,12 @@ export function PortalSection({ locale, dict }: PortalSectionProps) {
             {dict.home.portal.label}
           </p>
           <p className="t-h2 home-portal-statement">
-            <KeyWords text={dict.home.portal.statement} />
+            <ZardoziText
+              text={dict.home.portal.statement}
+              lines={2}
+              draw="none"
+              className="portal-words"
+            />
           </p>
           <p
             className="t-note text-ink-3 home-portal-note birlashma:block hidden"

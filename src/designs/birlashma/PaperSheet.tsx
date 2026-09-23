@@ -35,10 +35,11 @@ export function PaperSheet({
   } as CSSProperties;
   return (
     <Tag className={cn("paper-sheet", className)} style={style} data-fixing={fixing}>
+      {children}
+      {/* Mahkamlagich bolalardan keyin: z-index siz ustida turadi. */}
       {fixing !== "none" ? (
         <span className={`paper-fixing paper-fixing-${fixing}`} aria-hidden="true" />
       ) : null}
-      {children}
     </Tag>
   );
 }

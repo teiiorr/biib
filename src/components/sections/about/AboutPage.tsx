@@ -3,6 +3,7 @@ import { DesignArt } from "@/components/layout/DesignArt";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { GanchLayers } from "@/components/ornament/GanchLayers";
+import { GirihDivider } from "@/components/ornament/GirihDivider";
 import { IslimiyBullet } from "@/components/ornament/IslimiyBullet";
 import { XivaTimeline } from "@/components/ornament/XivaTimeline";
 import { Heading } from "@/components/ui/Heading";
@@ -71,6 +72,9 @@ export function AboutPage({ locale, dict }: PageProps) {
           </div>
         </Container>
       </Section>
+      <div className="about-divider birlashma:hidden" aria-hidden="true">
+        <GirihDivider symmetry={10} draw />
+      </div>
       <Section labelledBy="about-values" tone="light">
         <Container grid>
           <div className="col-span-4 md:col-span-8 lg:col-span-4" data-grid-item="">

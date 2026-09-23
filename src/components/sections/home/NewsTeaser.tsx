@@ -2,6 +2,7 @@ import { ViewTransition } from "react";
 
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
+import { Reveal } from "@/components/motion/Reveal";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { OrnamentCover } from "@/components/ornament/OrnamentCover";
 import { Heading } from "@/components/ui/Heading";
@@ -47,7 +48,7 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
             {h.all}
           </LinkButton>
         </div>
-        <div className="news-teaser" data-card-group="">
+        <Reveal as="div" className="news-teaser" stagger attrs={{ "data-card-group": "" }}>
           <article className="news-lead paper-look" data-card="">
             <TransitionLink
               href={pathFor(locale, "newsItem", lead.slug)}
@@ -99,7 +100,7 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
               </article>
             ))}
           </div>
-        </div>
+        </Reveal>
       </Container>
     </Section>
   );

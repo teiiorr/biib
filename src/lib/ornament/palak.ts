@@ -62,17 +62,3 @@ function chainLoop(at: Point, angleDeg: number, rx: number, ry: number): string 
   const b = polar(at, rx, tangent + 180);
   return `M${fmt(a.x)} ${fmt(a.y)} A${fmt(rx)} ${fmt(ry)} ${fmt(tangent)} 0 1 ${fmt(b.x)} ${fmt(b.y)} A${fmt(rx)} ${fmt(ry)} ${fmt(tangent)} 0 1 ${fmt(a.x)} ${fmt(a.y)}`;
 }
-
-/**
- * Mavzu almashinuvi niqobi: toʻldirilgan disk va uning chetidagi nuqtali halqa (boʻshliq bilan).
- * mask-image uchun oq = koʻrinadi.
- */
-export function palakMaskDataUri(size: number): string {
-  const g = palakGeometry(size, "palak-mask");
-  const svg =
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">` +
-    `<circle cx="${fmt(g.center.x)}" cy="${fmt(g.center.y)}" r="${fmt(g.radius - g.pitch)}" fill="white"/>` +
-    `<path d="${g.ringPath}" fill="none" stroke="white" stroke-width="${fmt(g.pitch * 0.5)}" stroke-linecap="round" stroke-dasharray="0.1 ${fmt(g.pitch)}"/>` +
-    `</svg>`;
-  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
-}

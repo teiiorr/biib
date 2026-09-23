@@ -18,7 +18,6 @@ import type {
   Partner,
   Person,
   Project,
-  ProjectKey,
 } from "./types";
 
 /**
@@ -27,17 +26,6 @@ import type {
  */
 export function getProjects(_locale?: Locale): readonly Project[] {
   return PROJECTS;
-}
-
-export function getProject(key: ProjectKey): Project {
-  const project = PROJECTS.find((p) => p.key === key);
-  if (!project) throw new Error(`Loyiha topilmadi: ${key}`);
-  return project;
-}
-
-export function getFlagship(): Project {
-  const flagship = PROJECTS.find((p) => p.flagship);
-  return flagship ?? (PROJECTS[0] as Project);
 }
 
 export function getNews(_locale?: Locale): readonly NewsArticle[] {

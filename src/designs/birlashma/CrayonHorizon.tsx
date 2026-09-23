@@ -1,3 +1,4 @@
+import { Boil } from "./Boil";
 import { Doodle } from "./Doodles";
 import type { ArtProps } from "../registry";
 
@@ -20,7 +21,9 @@ export default function CrayonHorizon({ className }: ArtProps) {
         />
       </svg>
       <div className="crayon-doodles">
-        <Doodle name="sun" size={32} tone="art-2" />
+        <Boil>
+          <Doodle name="sun" size={32} tone="art-2" />
+        </Boil>
         <Doodle name="cloud" size={32} tone="art-4" />
         <Doodle name="star" size={24} tone="art-1" />
       </div>

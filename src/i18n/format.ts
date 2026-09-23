@@ -25,15 +25,6 @@ export function formatDate(locale: Locale, iso: string): string {
   }).format(date);
 }
 
-/** Minglik ajratgichi sifatida buzilmas boʻshliq: 12 500. */
-export function formatNumber(value: number): string {
-  return new Intl.NumberFormat("ru-RU", { useGrouping: true }).format(value).replace(/ |\s/g, NBSP);
-}
-
-export function withUnit(value: number | string, unit: string): string {
-  return `${value}${NBSP}${unit}`;
-}
-
 /** Oʻqish vaqti: 180 soʻz/daqiqa, kamida 1 daqiqa. */
 export function readingMinutes(paragraphs: readonly string[]): number {
   const words = paragraphs.join(" ").split(/\s+/).filter(Boolean).length;

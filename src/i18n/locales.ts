@@ -72,8 +72,3 @@ export const LOCALE_META: Record<Locale, LocaleMeta> = {
 export function isLocale(value: unknown): value is Locale {
   return typeof value === "string" && (LOCALES as readonly string[]).includes(value);
 }
-
-/** Uchta oʻzbek varianti bitta til: slug va tarjima manbai umumiy. */
-export function isUzbek(locale: Locale): boolean {
-  return locale === "uz" || locale === "oz" || locale === "ozbekca";
-}

@@ -5,9 +5,11 @@ import { Section } from "@/components/layout/Section";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { OrnamentCover } from "@/components/ornament/OrnamentCover";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { Divider } from "@/components/ui/Divider";
 import { Heading } from "@/components/ui/Heading";
 import { Prose } from "@/components/ui/Prose";
 import { PullQuote } from "@/components/ui/PullQuote";
+import { Tag } from "@/components/ui/Tag";
 import { Text } from "@/components/ui/Text";
 import { getArticle, getArticleNeighbours, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -65,12 +67,10 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
               {title}
             </Heading>
             <p className="t-small text-ink-3 tnum article-meta">
+              <Tag tone={article.story.primary}>{t(article.topic, locale)}</Tag>
               {article.status === "confirmed" ? (
                 <span>{formatDate(locale, article.date)}</span>
-              ) : (
-                <span>{t(article.topic, locale)}</span>
-              )}
-              <span aria-hidden="true"> · </span>
+              ) : null}
               <span>{fill(dict.common.time.readingTime, { minutes })}</span>
             </p>
             {article.status !== "confirmed" ? (
@@ -111,6 +111,7 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
               ))}
             </Prose>
             {quote ? <PullQuote>{quote}</PullQuote> : null}
+            <Divider />
             <ShareButtons url={absoluteUrl(path)} title={title} dict={dict.common.actions} />
           </div>
           <aside

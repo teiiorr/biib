@@ -1,7 +1,8 @@
 import { Container } from "@/components/layout/Container";
 import { DesignArt } from "@/components/layout/DesignArt";
 import { Section } from "@/components/layout/Section";
-import { GirihDivider } from "@/components/ornament/GirihDivider";
+import { Reveal } from "@/components/motion/Reveal";
+import { Girih } from "@/components/ornament/Girih";
 import { Palak } from "@/components/ornament/Palak";
 import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
@@ -23,7 +24,7 @@ export function ContactBand({ locale, dict }: ContactBandProps) {
   return (
     <Section labelledBy="home-contact" tone="light" className="contact-band">
       <div className="contact-band-girih birlashma:hidden" aria-hidden="true">
-        <GirihDivider symmetry={8} draw />
+        <Girih symmetry={8} width={1200} height={192} cell={96} draw="enter" />
       </div>
       <Container className="contact-band-grid paper-look">
         <DesignArt slot="contacts-band" locale={locale} className="contact-band-art" />
@@ -36,7 +37,7 @@ export function ContactBand({ locale, dict }: ContactBandProps) {
             gapText={dict.ornament.palakGap}
           />
         </div>
-        <div className="contact-band-text">
+        <Reveal className="contact-band-text">
           <Heading level={2} size="h2" id="home-contact">
             {h.heading}
           </Heading>
@@ -74,7 +75,7 @@ export function ContactBand({ locale, dict }: ContactBandProps) {
               {h.open}
             </LinkButton>
           </div>
-        </div>
+        </Reveal>
       </Container>
     </Section>
   );

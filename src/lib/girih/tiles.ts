@@ -83,17 +83,6 @@ export function bowtieTile(center: Point, edge: number, rotationDeg = 0): Tile {
 }
 
 /** Romb (72°/108°), oʻtkir uchlari ±x da. */
-export function rhombusTile(center: Point, edge: number, rotationDeg = 0): Tile {
-  const dx = edge * Math.cos((36 * Math.PI) / 180);
-  const dy = edge * Math.sin((36 * Math.PI) / 180);
-  const base: Point[] = [
-    { x: -dx, y: 0 },
-    { x: 0, y: -dy },
-    { x: dx, y: 0 },
-    { x: 0, y: dy },
-  ];
-  return { kind: "rhombus", vertices: placeShape(base, center, rotationDeg) };
-}
 
 function placeShape(base: readonly Point[], center: Point, rotationDeg: number): Point[] {
   const c = Math.cos((rotationDeg * Math.PI) / 180);

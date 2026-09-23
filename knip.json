@@ -2,12 +2,17 @@
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "entry": [
     "src/app/**/{page,layout,not-found,error,global-not-found,sitemap,robots,manifest,opengraph-image}.{ts,tsx}",
-    "scripts/**/*.{mjs,ts}",
-    "tests/**/*.ts",
-    "playwright.config.ts"
+    "scripts/**/*.{mjs,mts,ts}",
+    "tests/**/*.ts"
   ],
-  "project": ["src/**/*.{ts,tsx}", "scripts/**/*.{mjs,ts}", "tests/**/*.ts"],
-  "ignore": ["src/i18n/dictionaries/oz/**", "src/i18n/dictionaries/ozbekca/**"],
-  "ignoreDependencies": ["babel-plugin-react-compiler", "sharp", "eslint-plugin-jsx-a11y"],
-  "ignoreBinaries": ["playwright"]
+  "project": ["src/**/*.{ts,tsx}", "scripts/**/*.{mjs,mts,ts}", "tests/**/*.ts"],
+  "ignore": [],
+  "ignoreDependencies": [
+    "babel-plugin-react-compiler",
+    "eslint-plugin-jsx-a11y",
+    "sharp",
+    "tailwindcss"
+  ],
+  "ignoreBinaries": ["ffmpeg", "ffprobe", "playwright"],
+  "ignoreExportsUsedInFile": true
 }

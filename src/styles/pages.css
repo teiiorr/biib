@@ -120,6 +120,10 @@
     pointer-events: none;
     opacity: 0.9;
   }
+  .about-divider {
+    color: var(--accent-art);
+    opacity: 0.7;
+  }
   .about-mission {
     display: grid;
     gap: 24px;

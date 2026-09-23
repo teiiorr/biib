@@ -44,7 +44,6 @@
   }
   .paper-fixing {
     position: absolute;
-    z-index: 2;
     pointer-events: none;
   }
   .paper-fixing-tape {
@@ -548,7 +547,6 @@
     border-radius: 3px;
     background: var(--accent-lo);
     box-shadow: var(--shadow-contact);
-    z-index: 2;
   }
   .clothesline-card {
     display: grid;

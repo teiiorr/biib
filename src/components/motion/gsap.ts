@@ -38,9 +38,6 @@ export function doiraDelay(index: number, unit = 0.09): number {
 }
 
 /** Roʻyxat uchun kechikishlar massivi, s: [0, .09, .18, .36, .45, .54, .72, …]. */
-export function doiraStagger(count: number, unit = 0.09): number[] {
-  return Array.from({ length: Math.max(0, count) }, (_, i) => doiraDelay(i, unit));
-}
 
 /** gsap `stagger` uchun funksiya: har nishon oʻz indeksiga koʻra doira ritmida kiradi. */
 export function doiraStaggerFn(unit = 0.09): (index: number) => number {
@@ -48,8 +45,5 @@ export function doiraStaggerFn(unit = 0.09): (index: number) => number {
 }
 
 /** Ritm oxirgi elementdan keyingi dam bilan tugaydi: umumiy kirish davomiyligini hisoblash uchun. */
-export function doiraTotal(count: number, unit = 0.09): number {
-  return count <= 0 ? 0 : doiraDelay(count - 1, unit);
-}
 
 export { gsap, ScrollTrigger, SplitText, DrawSVGPlugin, Flip, CustomEase };

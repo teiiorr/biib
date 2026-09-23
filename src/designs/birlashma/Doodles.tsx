@@ -48,5 +48,3 @@ export function Doodle({ name, size = 48, className, tone = "ink", boil = false 
     </svg>
   );
 }
-
-export const DOODLE_NAMES = Object.keys(PATHS) as readonly DoodleName[];

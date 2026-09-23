@@ -1,5 +1,7 @@
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
+import { Reveal } from "@/components/motion/Reveal";
+import { SplitLines } from "@/components/motion/SplitLines";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { GirihStar } from "@/components/ornament/GirihStar";
 import { OrnamentCover } from "@/components/ornament/OrnamentCover";
@@ -26,18 +28,15 @@ export function ProjectsQuadrant({ locale, dict }: ProjectsQuadrantProps) {
   return (
     <Section labelledBy="home-projects" tone="light">
       <Container>
-        <div className="section-head">
-          <Heading level={2} size="h2" id="home-projects">
+        <Reveal className="section-head">
+          <SplitLines as="h2" className="t-h2" id="home-projects">
             {h.heading}
-          </Heading>
+          </SplitLines>
           <Text as="p" size="body-l" tone="ink-2" measure>
             {h.lead}
           </Text>
-        </div>
-        <div className="chorbogh" data-card-group="">
-          <span className="chorbogh-star birlashma:hidden" aria-hidden="true">
-            <GirihStar symmetry={10} size={96} ring />
-          </span>
+        </Reveal>
+        <Reveal as="div" className="chorbogh" stagger attrs={{ "data-card-group": "" }}>
           {projects.map((project, i) => {
             const name = t(project.name, locale);
             const href = project.external
@@ -89,7 +88,11 @@ export function ProjectsQuadrant({ locale, dict }: ProjectsQuadrantProps) {
               </article>
             );
           })}
-        </div>
+          {/* Yulduz kataklardan keyin: DOM tartibi bilan ustida, z-index siz. */}
+          <span className="chorbogh-star birlashma:hidden" aria-hidden="true">
+            <GirihStar symmetry={10} size={96} ring />
+          </span>
+        </Reveal>
       </Container>
     </Section>
   );

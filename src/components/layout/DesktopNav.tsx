@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import { GlassDropdownMenu, type GlassMenuItem } from "@/components/glass/GlassDropdownMenu";
 import { Surface } from "@/components/glass/Surface";
 import { Icon } from "@/components/icons/Icon";
+import { ZardoziMark } from "@/components/ornament/ZardoziMark";
+import { ZardoziUnderline } from "@/components/ornament/ZardoziUnderline";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
 import { pathFor, resolvePath, type PageKey } from "@/i18n/routes";
@@ -48,12 +50,14 @@ export function DesktopNav({ locale, dict }: DesktopNavProps) {
         trigger={
           <button
             type="button"
-            className="nav-item t-label"
+            className="nav-item zardozi-host t-label"
             data-active={aboutActive ? "true" : undefined}
             aria-haspopup="menu"
           >
             <span className="text-trim">{dict.aboutGroup}</span>
             <Icon name="chevron-down" size={16} />
+            <ZardoziUnderline draw="hover" className="nav-underline" />
+            {aboutActive ? <ZardoziMark className="nav-mark" /> : null}
           </button>
         }
       />
@@ -63,10 +67,12 @@ export function DesktopNav({ locale, dict }: DesktopNavProps) {
           <Link
             key={key}
             href={pathFor(locale, key)}
-            className="nav-item t-label"
+            className="nav-item zardozi-host t-label"
             aria-current={active ? "page" : undefined}
           >
             <span className="text-trim">{dict[key as "projects"]}</span>
+            <ZardoziUnderline draw="hover" className="nav-underline" />
+            {active ? <ZardoziMark className="nav-mark" /> : null}
           </Link>
         );
       })}

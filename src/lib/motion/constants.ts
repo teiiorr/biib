@@ -1,14 +1,4 @@
 /** Kadr byudjeti (§14.5, §17): testlar shu qiymatlarni oʻlchaydi. */
-export const FRAME_BUDGET = {
-  /** 60 fps da bitta kadr, ms. */
-  frameMs: 16.7,
-  /** Yuklanishdan keyin ruxsat etilgan eng uzun vazifa, ms. */
-  longTaskMs: 50,
-  /** Skriptli skrollda byudjetga sigʻishi shart boʻlgan kadrlar ulushi. */
-  minFrameShare: 0.95,
-} as const;
-
-export const FRAME_BUDGET_MS = FRAME_BUDGET.frameMs;
 
 /** GSAP uchun sekundlarda; CSS tomoni --dur-* tokenlarida (globals.css). */
 export const DURATION = {
@@ -47,18 +37,9 @@ export const PIN_LENGTH = {
 export const SCRUB = 0.8;
 
 /** Ambient sikllar 6–16 s; hech narsa 4 s dan tez takrorlanmaydi. */
-export const AMBIENT = {
-  minLoopS: 6,
-  maxLoopS: 16,
-  minCycleS: 4,
-} as const;
 
 /** Doira usuli birligi, s (90 ms). */
-export const DOIRA_UNIT = 0.09;
 
 /** Parallaks qatlamlarining sukut boʻyicha yurish masofasi, px. */
-export const DEPTH_RANGE = 120;
 
 /** Faqat kompozitorga qulay xususiyatlar animatsiya qilinadi. */
-export const COMPOSITOR_PROPS = ["transform", "opacity", "clip-path", "filter"] as const;
-export type CompositorProp = (typeof COMPOSITOR_PROPS)[number];

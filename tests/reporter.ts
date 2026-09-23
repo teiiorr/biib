@@ -1,12 +1,6 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import type {
-  FullConfig,
-  FullResult,
-  Reporter,
-  TestCase,
-  TestResult,
-} from "@playwright/test/reporter";
+import type { FullConfig, Reporter, TestCase, TestResult } from "@playwright/test/reporter";
 
 import { CHECK_ATTACHMENT } from "./helpers/results";
 
@@ -52,7 +46,7 @@ class GateReporter implements Reporter {
     }
   }
 
-  onEnd(_result: FullResult): void {
+  onEnd(): void {
     const dir = path.join(this.rootDir, ".verify", "results");
     mkdirSync(dir, { recursive: true });
     for (const [gate, checks] of this.checks) {

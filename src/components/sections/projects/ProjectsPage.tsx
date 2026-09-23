@@ -59,9 +59,6 @@ export function ProjectsPage({ locale, dict }: PageProps) {
             {p.index}
           </h2>
           <ol className="projects-index" data-card-group="">
-            <span className="chorbogh-star birlashma:hidden" aria-hidden="true">
-              <GirihStar symmetry={10} size={72} ring />
-            </span>
             {projects.map((project) => (
               <li key={project.key} data-card="">
                 <a
@@ -76,6 +73,9 @@ export function ProjectsPage({ locale, dict }: PageProps) {
                 </a>
               </li>
             ))}
+            <span className="chorbogh-star birlashma:hidden" aria-hidden="true">
+              <GirihStar symmetry={10} size={72} ring />
+            </span>
           </ol>
         </Container>
       </Section>

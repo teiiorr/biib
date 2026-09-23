@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { useAmbientGovernor } from "@/components/motion/useAmbientGovernor";
+
 import { notifyHeroReady } from "@/lib/motion/refresh";
 import { cn } from "@/lib/cn";
 
@@ -17,7 +19,13 @@ const REDUCED = "(prefers-reduced-motion: reduce)";
  */
 export default function AbrSilk({ className }: ArtProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const handleRef = useRef<SilkHandle | null>(null);
   const [ready, setReady] = useState(false);
+  /* Ambient reyestr: viewportda bitta ipak sikli ishlaydi (§8 XII.3); ikkinchisi toʻxtaydi. */
+  useAmbientGovernor(canvasRef, "ambient", {
+    pause: () => handleRef.current?.setVisible(false),
+    resume: () => handleRef.current?.setVisible(true),
+  });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -43,6 +51,7 @@ export default function AbrSilk({ className }: ArtProps) {
       notifyHeroReady();
       return;
     }
+    handleRef.current = handle;
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) handle?.setVisible(entry.isIntersecting);
@@ -67,6 +76,7 @@ export default function AbrSilk({ className }: ArtProps) {
       document.removeEventListener("visibilitychange", onVisibility);
       themeObserver.disconnect();
       motionObserver.disconnect();
+      handleRef.current = null;
       handle?.destroy();
     };
   }, []);

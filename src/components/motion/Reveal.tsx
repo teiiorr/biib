@@ -32,6 +32,9 @@ export interface RevealProps {
   readonly start?: string;
   /** Qoʻshimcha kechikish, s. */
   readonly delay?: number;
+  /** Audit va test belgilari (data-*), oʻramga oʻtkaziladi. */
+  readonly attrs?: Readonly<Record<`data-${string}`, string>>;
+  readonly label?: string;
 }
 
 /** reveal-rise: opacity 0→1, y 24→0, 900 ms. Matn DOM da; harakat taqiqlanganda darhol koʻrinadi. */
@@ -43,6 +46,8 @@ export function Reveal({
   stagger = false,
   start = "top 85%",
   delay = 0,
+  attrs,
+  label,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const prefs = useMotionPrefs();
@@ -72,7 +77,7 @@ export function Reveal({
   // Teg birligi uchun bitta intrinsik tur: barcha ruxsat etilgan teglar HTMLElement beradi.
   const Tag = as as "div";
   return (
-    <Tag ref={ref} className={className} id={id}>
+    <Tag ref={ref} className={className} id={id} aria-label={label} {...attrs}>
       {children}
     </Tag>
   );

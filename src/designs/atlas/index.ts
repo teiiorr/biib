@@ -5,4 +5,5 @@ export const art: ArtMap = {
   "home-hero": () => import("./AbrSilk"),
   "home-portal": () => import("./AbrSilk"),
   "project-media": () => import("./AbrReveal"),
+  "footer-crown": () => import("./FooterCrown"),
 };

@@ -53,28 +53,27 @@
   .nav-item:hover {
     background: color-mix(in oklab, var(--material-ink) 7%, transparent);
   }
-  /* Faol belgi: ikki oltin ip va tikish choklari (zardoʻzi). */
-  .nav-item[aria-current="page"]::after,
-  .nav-item[data-active="true"]::after {
-    content: "";
+  .nav-mark {
     position: absolute;
     left: 16px;
     right: 16px;
-    bottom: 8px;
+    bottom: 7px;
     height: 5px;
-    background:
-      repeating-linear-gradient(90deg, var(--accent-art) 0 1px, transparent 1px 6px) 0 0 / 6px 5px,
-      linear-gradient(var(--accent-art), var(--accent-art)) 0 0 / 100% 1px no-repeat,
-      linear-gradient(var(--accent-art), var(--accent-art)) 0 4px / 100% 1px no-repeat;
-    opacity: 0.9;
+    width: auto;
   }
-  :root[data-design="birlashma"] .nav-item[aria-current="page"]::after,
-  :root[data-design="birlashma"] .nav-item[data-active="true"]::after {
-    height: 4px;
-    background: var(--tint);
-    border-radius: 2px;
-    opacity: 0.8;
-    transform: rotate(-0.6deg);
+  .nav-underline {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 7px;
+  }
+  .nav-item[aria-current="page"] .nav-underline,
+  .nav-item[data-active="true"] .nav-underline {
+    display: none;
+  }
+  :root[data-design="birlashma"] .nav-mark,
+  :root[data-design="birlashma"] .nav-underline {
+    color: var(--tint);
   }
 
   /* Telefon: yupqa yuqori panel va suzuvchi tab-bar. */
@@ -196,9 +195,13 @@
   }
   .footer-crown {
     position: relative;
-    height: 32px;
+    min-height: 32px;
     margin-bottom: 32px;
     color: var(--accent-art);
+  }
+  .footer-chust {
+    display: block;
+    width: 100%;
   }
   .footer-crown-line {
     position: absolute;
@@ -206,6 +209,15 @@
     height: 1px;
     background: var(--accent-art);
     opacity: 0.6;
+  }
+  .footer-islimiy {
+    position: absolute;
+    top: 0;
+    right: var(--margin);
+    width: 120px;
+    color: var(--accent-art);
+    opacity: 0.7;
+    pointer-events: none;
   }
   .footer-groups {
     display: grid;
