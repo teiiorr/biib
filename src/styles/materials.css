@@ -1,0 +1,42 @@
+/* Boshqaruv qatlami materiallari: Oyna (Atlas) va Kalka (Birlashma).
+   backdrop-filter faqat shu faylda va src/components/glass/ ichida boʻlishi mumkin. */
+
+.material {
+  --m-tint: var(--g-tint);
+  position: relative;
+  isolation: isolate;
+  color: var(--material-ink);
+  background: color-mix(in oklab, var(--material-base) calc(var(--m-tint) * 100%), transparent);
+  -webkit-backdrop-filter: blur(var(--g-blur)) saturate(var(--material-sat));
+  backdrop-filter: blur(var(--g-blur)) saturate(var(--material-sat));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--material-rim) calc(var(--g-rim) * 100%), transparent),
+    var(--shadow-floating);
+}
+.material[data-text="true"] {
+  --m-tint: var(--g-tint-text);
+}
+
+/* Shaffoflikni kamaytirish, kontrastni oshirish va backdrop-filter yoʻq brauzerlar: qattiq sirt. */
+@supports not (backdrop-filter: blur(1px)) {
+  .material {
+    background: var(--material-base);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .material {
+    background: var(--material-base);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+@media (prefers-contrast: more) {
+  .material {
+    background: var(--material-base);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow:
+      inset 0 0 0 1px var(--ink),
+      var(--shadow-floating);
+  }
+}

@@ -1,0 +1,26 @@
+export const people = {
+  experts: {
+    title: "Ekspertlar kengashi",
+    lead: "Kengash studiyalar dasturini koʻrib chiqadi, kasting va koʻrgazmalarda ishlarni baholaydi.",
+    field: "Soha",
+    role: "Vazifa",
+    bio: "Qisqacha",
+    open: "Batafsil",
+    pending: "Kengash aʼzolarining ismi va surati tashkilot tasdigʻini kutmoqda",
+  },
+  leadership: {
+    title: "Rahbariyat",
+    lead: "Birlashma rahbariyati va qabul tartibi.",
+    position: "Lavozim",
+    reception: "Qabul kunlari",
+    receptionPending: "Qabul kunlari tasdiq kutilmoqda",
+    email: "Rasmiy pochta",
+    emailPending: "Pochta manzili tasdiq kutilmoqda",
+    day: "Kun",
+    hours: "Soat",
+    pending: "Rahbarning ismi va surati tashkilot tasdigʻini kutmoqda",
+  },
+  portraitAlt: "{name} portreti",
+  placeholderAlt: "Ravoq shaklidagi boʻsh portret oʻrni",
+  dialogLabel: "{name} haqida",
+};

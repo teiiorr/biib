@@ -1,38 +1,40 @@
-import type { ProjectItem } from "./types";
+import type { Project } from "./types";
 
 /**
- * LOYIHALAR. Matnlar beş tilda; id, rang va rasm kodda turadi.
- * Yangi loyiha qöşilsa — illustration nomi ProjectIllustration ga ham qöşiladi.
+ * Loyihalar. Matnlar qoralama (draft): tashkilot tasdiqlaguncha sahifa noindex.
+ * Joy, vaqt va ustoz tashkilotdan kelishi kerak (pending).
  */
-export const PROJECTS: readonly ProjectItem[] = [
+export const PROJECTS: readonly Project[] = [
   {
-    id: "upop-trend",
+    key: "upop-trend",
+    status: "draft",
+    flagship: true,
     name: {
-      "uz-Latn": "UPOP TREND",
-      "uz-Cyrl": "UPOP TREND",
-      "uz-Latn-x-reform": "UPOP TREND",
+      uz: "UPOP TREND",
+      oz: "UPOP TREND",
+      ozbekca: "UPOP TREND",
       ru: "UPOP TREND",
       en: "UPOP TREND",
     },
     tagline: {
-      "uz-Latn": "Milliy qoʻshiqchilik kastingi",
-      "uz-Cyrl": "Миллий қўшиқчилик кастинги",
-      "uz-Latn-x-reform": "Milliy qöşiqçilik kastingi",
+      uz: "Milliy qoʻshiqchilik kastingi",
+      oz: "Миллий қўшиқчилик кастинги",
+      ozbekca: "Milliy qöşiqçilik kastingi",
       ru: "Национальный вокальный кастинг",
       en: "National singing auditions",
     },
     body: {
-      "uz-Latn": [
+      uz: [
         "Birlashmaning bosh loyihasi. Tanlov viloyat bosqichlaridan boshlanadi: ariza topshirgan har bir bola jonli chiqish qiladi va ustozlardan izoh oladi.",
         "Keyingi bosqichga oʻtganlar bilan bir necha hafta ishlanadi: ovoz, nafas, sahnada turish. Yakunda poytaxtdagi katta konsert.",
         "Kastingning oʻz sayti bor: muddatlar, shartlar va ariza shakli oʻsha yerda.",
       ],
-      "uz-Cyrl": [
+      oz: [
         "Бирлашманинг бош лойиҳаси. Танлов вилоят босқичларидан бошланади: ариза топширган ҳар бир бола жонли чиқиш қилади ва устозлардан изоҳ олади.",
         "Кейинги босқичга ўтганлар билан бир неча ҳафта ишланади: овоз, нафас, саҳнада туриш. Якунда пойтахтдаги катта концерт.",
         "Кастингнинг ўз сайти бор: муддатлар, шартлар ва ариза шакли ўша ерда.",
       ],
-      "uz-Latn-x-reform": [
+      ozbekca: [
         "Birlaşmaning boş loyihasi. Tanlov viloyat bosqiçlaridan boşlanadi: ariza topşirgan har bir bola jonli çiqiş qiladi va ustozlardan izoh oladi.",
         "Keyingi bosqiçga ötganlar bilan bir neça hafta işlanadi: ovoz, nafas, sahnada turiş. Yakunda poytaxtdagi katta konsert.",
         "Kastingning öz sayti bor: muddatlar, şartlar va ariza şakli öşa yerda.",
@@ -48,18 +50,49 @@ export const PROJECTS: readonly ProjectItem[] = [
         "The auditions have a site of their own, with the dates, the terms and the application form.",
       ],
     },
-    facts: {
-      "uz-Latn": [
+    age: {
+      from: 14,
+      to: 19,
+      status: "draft",
+    },
+    format: {
+      value: {
+        uz: "Yakuniy konsert poytaxt sahnasida",
+        oz: "Якуний концерт пойтахт саҳнасида",
+        ozbekca: "Yakuniy konsert poytaxt sahnasida",
+        ru: "Финальный концерт на столичной сцене",
+        en: "Final concert on a stage in the capital",
+      },
+      status: "draft",
+    },
+    place: {
+      value: null,
+      status: "pending",
+    },
+    schedule: {
+      value: null,
+      status: "pending",
+    },
+    cost: {
+      free: true,
+      status: "draft",
+    },
+    teacher: {
+      value: null,
+      status: "pending",
+    },
+    highlights: {
+      uz: [
         "Ariza bepul, tavsiya kerak emas",
         "14 yoshdan 19 yoshgacha",
         "Yakuniy konsert poytaxt sahnasida",
       ],
-      "uz-Cyrl": [
+      oz: [
         "Ариза бепул, тавсия керак эмас",
         "14 ёшдан 19 ёшгача",
         "Якуний концерт пойтахт саҳнасида",
       ],
-      "uz-Latn-x-reform": [
+      ozbekca: [
         "Ariza bepul, tavsiya kerak emas",
         "14 yoşdan 19 yoşgaça",
         "Yakuniy konsert poytaxt sahnasida",
@@ -75,123 +108,60 @@ export const PROJECTS: readonly ProjectItem[] = [
         "Final concert on a stage in the capital",
       ],
     },
-    accent: "magenta",
-    illustration: "stage",
-    flagship: true,
-    external: { href: "https://upop.uz", label: "upop.uz" },
-    video: {
+    external: {
+      href: "https://upop.uz",
+      label: "upop.uz",
+    },
+    media: {
+      kind: "video",
       src: "/brand/upop-video.mp4",
       poster: "/brand/upop-video-poster.jpg",
-      posterAlt: {
-        "uz-Latn": "Loyiha muhokamasi: yigʻilish stolida chiqish qilayotgan rahbar",
-        "uz-Cyrl": "Лойиҳа муҳокамаси: йиғилиш столида чиқиш қилаётган раҳбар",
-        "uz-Latn-x-reform": "Loyiha muhokamasi: yiğiliş stolida çiqiş qilayotgan rahbar",
+      alt: {
+        uz: "Loyiha muhokamasi: yigʻilish stolida chiqish qilayotgan rahbar",
+        oz: "Лойиҳа муҳокамаси: йиғилиш столида чиқиш қилаётган раҳбар",
+        ozbekca: "Loyiha muhokamasi: yiğiliş stolida çiqiş qilayotgan rahbar",
         ru: "Обсуждение проекта: выступление руководителя за столом совещания",
         en: "A discussion of the project: a speaker at the meeting table",
       },
+      status: "draft",
     },
+    story: {
+      primary: "art-1",
+      secondary: "art-2",
+    },
+    paper: "poster",
+    videoBrief: "V4",
   },
   {
-    id: "rangli-olam",
+    key: "sahna-bolalari",
+    status: "draft",
+    flagship: false,
     name: {
-      "uz-Latn": "Rangli olam",
-      "uz-Cyrl": "Рангли олам",
-      "uz-Latn-x-reform": "Rangli olam",
-      ru: "Рангли олам",
-      en: "Rangli olam",
-    },
-    tagline: {
-      "uz-Latn": "Tasviriy sanʼat studiyalari va koʻrgazmalar",
-      "uz-Cyrl": "Тасвирий санъат студиялари ва кўргазмалар",
-      "uz-Latn-x-reform": "Tasviriy sanʼat studiyalari va körgazmalar",
-      ru: "Студии изобразительного искусства и выставки",
-      en: "Fine art studios and exhibitions",
-    },
-    body: {
-      "uz-Latn": [
-        "Rasm, grafika va amaliy sanʼat studiyalari. Mashgʻulotlar hafta oxirida oʻtadi, materiallar studiya hisobidan.",
-        "Yil davomida yigʻilgan ishlardan viloyat koʻrgazmalari tuziladi, eng yaxshilari umumiy katalogga kiradi.",
-        "Studiyaga yozilish uchun rasm chizishni bilish shart emas — boshlovchi guruhlar alohida.",
-      ],
-      "uz-Cyrl": [
-        "Расм, графика ва амалий санъат студиялари. Машғулотлар ҳафта охирида ўтади, материаллар студия ҳисобидан.",
-        "Йил давомида йиғилган ишлардан вилоят кўргазмалари тузилади, энг яхшилари умумий каталогга киради.",
-        "Студияга ёзилиш учун расм чизишни билиш шарт эмас — бошловчи гуруҳлар алоҳида.",
-      ],
-      "uz-Latn-x-reform": [
-        "Rasm, grafika va amaliy sanʼat studiyalari. Maşğulotlar hafta oxirida ötadi, materiallar studiya hisobidan.",
-        "Yil davomida yiğilgan işlardan viloyat körgazmalari tuziladi, eng yaxşilari umumiy katalogga kiradi.",
-        "Studiyaga yoziliş uçun rasm çizişni biliş şart emas — boşlovçi guruhlar alohida.",
-      ],
-      ru: [
-        "Студии рисунка, графики и прикладного искусства. Занятия проходят по выходным, материалы за счёт студии.",
-        "Из работ, собранных за год, составляют областные выставки, а лучшие попадают в общий каталог.",
-        "Чтобы записаться в студию, уметь рисовать не обязательно: для начинающих есть отдельные группы.",
-      ],
-      en: [
-        "Studios for drawing, graphic art and applied art. Classes run at the weekend and the materials are paid for by the studio.",
-        "The work collected over the year becomes the regional exhibitions, and the best of it goes into a shared catalogue.",
-        "You do not need to know how to draw to sign up: beginners have their own groups.",
-      ],
-    },
-    facts: {
-      "uz-Latn": [
-        "Materiallar studiya hisobidan",
-        "7 yoshdan 16 yoshgacha",
-        "Yil yakunida umumiy koʻrgazma",
-      ],
-      "uz-Cyrl": [
-        "Материаллар студия ҳисобидан",
-        "7 ёшдан 16 ёшгача",
-        "Йил якунида умумий кўргазма",
-      ],
-      "uz-Latn-x-reform": [
-        "Materiallar studiya hisobidan",
-        "7 yoşdan 16 yoşgaça",
-        "Yil yakunida umumiy körgazma",
-      ],
-      ru: [
-        "Материалы за счёт студии",
-        "От 7 до 16 лет",
-        "В конце года общая выставка",
-      ],
-      en: [
-        "Materials paid for by the studio",
-        "From 7 to 16 years old",
-        "A shared exhibition at the end of the year",
-      ],
-    },
-    accent: "gold",
-    illustration: "palette",
-  },
-  {
-    id: "sahna-bolalari",
-    name: {
-      "uz-Latn": "Sahna bolalari",
-      "uz-Cyrl": "Саҳна болалари",
-      "uz-Latn-x-reform": "Sahna bolalari",
+      uz: "Sahna bolalari",
+      oz: "Саҳна болалари",
+      ozbekca: "Sahna bolalari",
       ru: "Сахна болалари",
       en: "Sahna bolalari",
     },
     tagline: {
-      "uz-Latn": "Bolalar teatri va sahna nutqi",
-      "uz-Cyrl": "Болалар театри ва саҳна нутқи",
-      "uz-Latn-x-reform": "Bolalar teatri va sahna nutqi",
+      uz: "Bolalar teatri va sahna nutqi",
+      oz: "Болалар театри ва саҳна нутқи",
+      ozbekca: "Bolalar teatri va sahna nutqi",
       ru: "Детский театр и сценическая речь",
       en: "Children’s theatre and stage speech",
     },
     body: {
-      "uz-Latn": [
+      uz: [
         "Teatr mashgʻulotlari nutqdan boshlanadi: nafas, talaffuz, matn bilan ishlash. Keyin sahna harakati va kichik sahnachalar.",
         "Har mavsum oxirida guruhlar oʻz spektaklini koʻrsatadi. Tomoshabin — ota-onalar, maktab va shahar.",
         "Loyiha ayniqsa uyalchan bolalar uchun foydali: matn ortida turish oson, sahnaga chiqish esa oʻrganiladi.",
       ],
-      "uz-Cyrl": [
+      oz: [
         "Театр машғулотлари нутқдан бошланади: нафас, талаффуз, матн билан ишлаш. Кейин саҳна ҳаракати ва кичик саҳначалар.",
         "Ҳар мавсум охирида гуруҳлар ўз спектаклини кўрсатади. Томошабин — ота-оналар, мактаб ва шаҳар.",
         "Лойиҳа айниқса уялчан болалар учун фойдали: матн ортида туриш осон, саҳнага чиқиш эса ўрганилади.",
       ],
-      "uz-Latn-x-reform": [
+      ozbekca: [
         "Teatr maşğulotlari nutqdan boşlanadi: nafas, talaffuz, matn bilan işlaş. Keyin sahna harakati va kiçik sahnaçalar.",
         "Har mavsum oxirida guruhlar öz spektaklini körsatadi. Tomoşabin — ota-onalar, maktab va şahar.",
         "Loyiha ayniqsa uyalçan bolalar uçun foydali: matn ortida turiş oson, sahnaga çiqiş esa örganiladi.",
@@ -207,64 +177,85 @@ export const PROJECTS: readonly ProjectItem[] = [
         "The project is especially good for shy children: standing behind a text is easy, and stepping onto the stage is something you learn.",
       ],
     },
-    facts: {
-      "uz-Latn": [
-        "Nutq va sahna harakati birga",
-        "9 yoshdan 17 yoshgacha",
-        "Mavsum yakunida spektakl",
-      ],
-      "uz-Cyrl": [
-        "Нутқ ва саҳна ҳаракати бирга",
-        "9 ёшдан 17 ёшгача",
-        "Мавсум якунида спектакль",
-      ],
-      "uz-Latn-x-reform": [
-        "Nutq va sahna harakati birga",
-        "9 yoşdan 17 yoşgaça",
-        "Mavsum yakunida spektakl",
-      ],
-      ru: [
-        "Речь и сценическое движение вместе",
-        "От 9 до 17 лет",
-        "В конце сезона спектакль",
-      ],
+    age: {
+      from: 9,
+      to: 17,
+      status: "draft",
+    },
+    format: {
+      value: {
+        uz: "Mavsum yakunida spektakl",
+        oz: "Мавсум якунида спектакль",
+        ozbekca: "Mavsum yakunida spektakl",
+        ru: "В конце сезона спектакль",
+        en: "A play at the end of the season",
+      },
+      status: "draft",
+    },
+    place: {
+      value: null,
+      status: "pending",
+    },
+    schedule: {
+      value: null,
+      status: "pending",
+    },
+    cost: {
+      free: null,
+      status: "pending",
+    },
+    teacher: {
+      value: null,
+      status: "pending",
+    },
+    highlights: {
+      uz: ["Nutq va sahna harakati birga", "9 yoshdan 17 yoshgacha", "Mavsum yakunida spektakl"],
+      oz: ["Нутқ ва саҳна ҳаракати бирга", "9 ёшдан 17 ёшгача", "Мавсум якунида спектакль"],
+      ozbekca: ["Nutq va sahna harakati birga", "9 yoşdan 17 yoşgaça", "Mavsum yakunida spektakl"],
+      ru: ["Речь и сценическое движение вместе", "От 9 до 17 лет", "В конце сезона спектакль"],
       en: [
         "Speech and stage movement together",
         "From 9 to 17 years old",
         "A play at the end of the season",
       ],
     },
-    accent: "violet",
-    illustration: "curtain",
+    story: {
+      primary: "art-5",
+      secondary: "art-2",
+    },
+    paper: "curtain",
+    videoBrief: "V4",
   },
   {
-    id: "ertak-ustaxonasi",
+    key: "ertak-ustaxonasi",
+    status: "draft",
+    flagship: false,
     name: {
-      "uz-Latn": "Ertak ustaxonasi",
-      "uz-Cyrl": "Эртак устахонаси",
-      "uz-Latn-x-reform": "Ertak ustaxonasi",
+      uz: "Ertak ustaxonasi",
+      oz: "Эртак устахонаси",
+      ozbekca: "Ertak ustaxonasi",
       ru: "Эртак устахонаси",
       en: "Ertak ustaxonasi",
     },
     tagline: {
-      "uz-Latn": "Yosh yozuvchilar va animatsiya",
-      "uz-Cyrl": "Ёш ёзувчилар ва анимация",
-      "uz-Latn-x-reform": "Yoş yozuvçilar va animatsiya",
+      uz: "Yosh yozuvchilar va animatsiya",
+      oz: "Ёш ёзувчилар ва анимация",
+      ozbekca: "Yoş yozuvçilar va animatsiya",
       ru: "Юные писатели и анимация",
       en: "Young writers and animation",
     },
     body: {
-      "uz-Latn": [
+      uz: [
         "Bolalar oʻz hikoyasini yozadi, keyin uni rasm va ovoz bilan qisqa multfilmga aylantiradi.",
         "Ustaxonada yozuvchi, rassom va montajchi birga ishlaydi: bir hikoya bir necha qoʻldan oʻtadi.",
         "Tayyor ishlar birlashmaning kanalida chiqadi, mualliflar ismi bilan.",
       ],
-      "uz-Cyrl": [
+      oz: [
         "Болалар ўз ҳикоясини ёзади, кейин уни расм ва овоз билан қисқа мультфильмга айлантиради.",
         "Устахонада ёзувчи, рассом ва монтажчи бирга ишлайди: бир ҳикоя бир неча қўлдан ўтади.",
         "Тайёр ишлар бирлашманинг каналида чиқади, муаллифлар исми билан.",
       ],
-      "uz-Latn-x-reform": [
+      ozbekca: [
         "Bolalar öz hikoyasini yozadi, keyin uni rasm va ovoz bilan qisqa multfilmga aylantiradi.",
         "Ustaxonada yozuvçi, rassom va montajçi birga işlaydi: bir hikoya bir neça qöldan ötadi.",
         "Tayyor işlar birlaşmaning kanalida çiqadi, mualliflar ismi bilan.",
@@ -280,18 +271,49 @@ export const PROJECTS: readonly ProjectItem[] = [
         "Finished work goes out on the channel of the association, under the names of the authors.",
       ],
     },
-    facts: {
-      "uz-Latn": [
+    age: {
+      from: 10,
+      to: 16,
+      status: "draft",
+    },
+    format: {
+      value: {
+        uz: "Ishlar mualliflar ismi bilan chiqadi",
+        oz: "Ишлар муаллифлар исми билан чиқади",
+        ozbekca: "Işlar mualliflar ismi bilan çiqadi",
+        ru: "Работы выходят с именами авторов",
+        en: "Work goes out under the names of the authors",
+      },
+      status: "draft",
+    },
+    place: {
+      value: null,
+      status: "pending",
+    },
+    schedule: {
+      value: null,
+      status: "pending",
+    },
+    cost: {
+      free: null,
+      status: "pending",
+    },
+    teacher: {
+      value: null,
+      status: "pending",
+    },
+    highlights: {
+      uz: [
         "Hikoyadan multfilmgacha bir mavsum",
         "10 yoshdan 16 yoshgacha",
         "Ishlar mualliflar ismi bilan chiqadi",
       ],
-      "uz-Cyrl": [
+      oz: [
         "Ҳикоядан мультфильмгача бир мавсум",
         "10 ёшдан 16 ёшгача",
         "Ишлар муаллифлар исми билан чиқади",
       ],
-      "uz-Latn-x-reform": [
+      ozbekca: [
         "Hikoyadan multfilmgaça bir mavsum",
         "10 yoşdan 16 yoşgaça",
         "Işlar mualliflar ismi bilan çiqadi",
@@ -307,7 +329,113 @@ export const PROJECTS: readonly ProjectItem[] = [
         "Work goes out under the names of the authors",
       ],
     },
-    accent: "turquoise",
-    illustration: "storybook",
+    story: {
+      primary: "art-3",
+      secondary: "art-7",
+    },
+    paper: "filmstrip",
+    videoBrief: "V5",
+  },
+  {
+    key: "rangli-olam",
+    status: "draft",
+    flagship: false,
+    name: {
+      uz: "Rangli olam",
+      oz: "Рангли олам",
+      ozbekca: "Rangli olam",
+      ru: "Рангли олам",
+      en: "Rangli olam",
+    },
+    tagline: {
+      uz: "Tasviriy sanʼat studiyalari va koʻrgazmalar",
+      oz: "Тасвирий санъат студиялари ва кўргазмалар",
+      ozbekca: "Tasviriy sanʼat studiyalari va körgazmalar",
+      ru: "Студии изобразительного искусства и выставки",
+      en: "Fine art studios and exhibitions",
+    },
+    body: {
+      uz: [
+        "Rasm, grafika va amaliy sanʼat studiyalari. Mashgʻulotlar hafta oxirida oʻtadi, materiallar studiya hisobidan.",
+        "Yil davomida yigʻilgan ishlardan viloyat koʻrgazmalari tuziladi, eng yaxshilari umumiy katalogga kiradi.",
+        "Studiyaga yozilish uchun rasm chizishni bilish shart emas — boshlovchi guruhlar alohida.",
+      ],
+      oz: [
+        "Расм, графика ва амалий санъат студиялари. Машғулотлар ҳафта охирида ўтади, материаллар студия ҳисобидан.",
+        "Йил давомида йиғилган ишлардан вилоят кўргазмалари тузилади, энг яхшилари умумий каталогга киради.",
+        "Студияга ёзилиш учун расм чизишни билиш шарт эмас — бошловчи гуруҳлар алоҳида.",
+      ],
+      ozbekca: [
+        "Rasm, grafika va amaliy sanʼat studiyalari. Maşğulotlar hafta oxirida ötadi, materiallar studiya hisobidan.",
+        "Yil davomida yiğilgan işlardan viloyat körgazmalari tuziladi, eng yaxşilari umumiy katalogga kiradi.",
+        "Studiyaga yoziliş uçun rasm çizişni biliş şart emas — boşlovçi guruhlar alohida.",
+      ],
+      ru: [
+        "Студии рисунка, графики и прикладного искусства. Занятия проходят по выходным, материалы за счёт студии.",
+        "Из работ, собранных за год, составляют областные выставки, а лучшие попадают в общий каталог.",
+        "Чтобы записаться в студию, уметь рисовать не обязательно: для начинающих есть отдельные группы.",
+      ],
+      en: [
+        "Studios for drawing, graphic art and applied art. Classes run at the weekend and the materials are paid for by the studio.",
+        "The work collected over the year becomes the regional exhibitions, and the best of it goes into a shared catalogue.",
+        "You do not need to know how to draw to sign up: beginners have their own groups.",
+      ],
+    },
+    age: {
+      from: 7,
+      to: 16,
+      status: "draft",
+    },
+    format: {
+      value: {
+        uz: "Yil yakunida umumiy koʻrgazma",
+        oz: "Йил якунида умумий кўргазма",
+        ozbekca: "Yil yakunida umumiy körgazma",
+        ru: "В конце года общая выставка",
+        en: "A shared exhibition at the end of the year",
+      },
+      status: "draft",
+    },
+    place: {
+      value: null,
+      status: "pending",
+    },
+    schedule: {
+      value: null,
+      status: "pending",
+    },
+    cost: {
+      free: null,
+      status: "pending",
+    },
+    teacher: {
+      value: null,
+      status: "pending",
+    },
+    highlights: {
+      uz: [
+        "Materiallar studiya hisobidan",
+        "7 yoshdan 16 yoshgacha",
+        "Yil yakunida umumiy koʻrgazma",
+      ],
+      oz: ["Материаллар студия ҳисобидан", "7 ёшдан 16 ёшгача", "Йил якунида умумий кўргазма"],
+      ozbekca: [
+        "Materiallar studiya hisobidan",
+        "7 yoşdan 16 yoşgaça",
+        "Yil yakunida umumiy körgazma",
+      ],
+      ru: ["Материалы за счёт студии", "От 7 до 16 лет", "В конце года общая выставка"],
+      en: [
+        "Materials paid for by the studio",
+        "From 7 to 16 years old",
+        "A shared exhibition at the end of the year",
+      ],
+    },
+    story: {
+      primary: "art-4",
+      secondary: "art-6",
+    },
+    paper: "easel",
+    videoBrief: "V2",
   },
 ];

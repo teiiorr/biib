@@ -1,0 +1,26 @@
+import type { nav as source } from "../uz/nav";
+
+export const nav: typeof source = {
+  home: "Главная",
+  about: "О нас",
+  projects: "Проекты",
+  news: "Новости",
+  experts: "Экспертный совет",
+  leadership: "Руководство",
+  partners: "Партнёры",
+  contacts: "Контакты",
+  privacy: "Политика конфиденциальности",
+  menu: "Меню",
+  openMenu: "Открыть меню",
+  closeMenu: "Закрыть меню",
+  primaryLabel: "Основное меню",
+  tabBarLabel: "Разделы",
+  aboutGroup: "О нас",
+  aboutGroupHint: "Разделы об организации",
+  otherPages: "Другие страницы",
+  language: "Язык",
+  chooseLanguage: "Выбрать язык",
+  currentLanguage: "Текущий язык",
+  upop: "UPOP TREND",
+  upopHint: "Сайт кастинга",
+};

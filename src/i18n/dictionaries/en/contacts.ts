@@ -1,0 +1,48 @@
+import type { contacts as source } from "../uz/contacts";
+
+export const contacts: typeof source = {
+  title: "Contacts",
+  lead: "For questions, suggestions and partnership. On working days we answer within the day.",
+  details: {
+    heading: "Details",
+    address: "Address",
+    phone: "Phone",
+    email: "Email",
+    telegram: "Telegram",
+    hours: "Working hours",
+    hoursValue: "Monday to Friday, 09:00–18:00",
+    copy: "Copy",
+    copied: "Copied",
+    pending: "Awaiting confirmation",
+  },
+  map: {
+    heading: "On the map",
+    yandex: "Open in Yandex Maps",
+    google: "Open in Google Maps",
+    pending: "The map location awaits confirmation by the association",
+  },
+  form: {
+    heading: "Send a message",
+    name: "Your name",
+    contact: "Phone or email",
+    message: "Message",
+    consent: "I agree to the processing of my details under the {privacy}",
+    consentLink: "privacy policy",
+    submit: "Send",
+    sending: "Sending",
+    success: "Message sent. Thank you, we will answer soon.",
+    error: "Could not send. Write on Telegram or try again later.",
+    tooFast: "The form was filled in too quickly, please send it again.",
+    required: "This field is required",
+    invalidContact: "Enter a phone number or an email address",
+    tooShort: "The message should be at least {min} characters",
+    consentRequired: "Consent is needed to send",
+    fallbackHeading: "Write on Telegram",
+    fallbackText: "The form is not connected yet; you can send the message directly on Telegram.",
+    fallbackCta: "Write on Telegram",
+    postcardLabel: "Postcard",
+  },
+  socials: {
+    heading: "Social media",
+  },
+};

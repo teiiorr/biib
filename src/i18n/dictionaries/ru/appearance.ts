@@ -1,0 +1,32 @@
+import type { appearance as source } from "../uz/appearance";
+
+export const appearance: typeof source = {
+  panel: "Оформление",
+  open: "Настроить оформление",
+  close: "Закрыть",
+  theme: {
+    label: "Тема",
+    light: "Светлая",
+    dark: "Тёмная",
+    system: "Системная",
+  },
+  transparency: "Прозрачность",
+  transparencyFrom: "Матовое",
+  transparencyTo: "Прозрачное",
+  density: "Плотность",
+  densityFrom: "Тонкое",
+  densityTo: "Плотное",
+  reset: "Сбросить",
+  sound: "Звук",
+  soundHint: "Тихий звук дойры при смене темы и раздела",
+  motion: "Анимация",
+  motionHint: "Декоративное движение; текст и переходы страниц остаются",
+  design: "Дизайн",
+  designAtlas: "Атлас",
+  designAtlasHint: "Национальные узоры и стекло",
+  designBirlashma: "Бирлашма",
+  designBirlashmaHint: "В духе детского творчества",
+  valueText: "{value}%",
+  reducedTransparency: "В системе уменьшена прозрачность, поэтому ползунки отключены",
+  previewAlt: "Миниатюра дизайна {design}",
+};

@@ -1,11 +1,42 @@
-import { defineConfig, globalIgnores } from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
-import nextTs from "eslint-config-next/typescript";
+import nextConfig from "eslint-config-next";
+import jsxA11y from "eslint-plugin-jsx-a11y";
+import tseslint from "typescript-eslint";
 
-const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
-  globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
-]);
-
-export default eslintConfig;
+export default tseslint.config(
+  {
+    ignores: [
+      ".next/**",
+      "node_modules/**",
+      "out/**",
+      "test-results/**",
+      "playwright-report/**",
+      "next-env.d.ts",
+      "docs/**",
+      ".verify/**",
+      ".claude/**",
+      "public/**",
+    ],
+  },
+  ...nextConfig,
+  ...tseslint.configs.strict,
+  jsxA11y.flatConfigs.strict,
+  {
+    files: ["src/**/*.{ts,tsx}"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/consistent-type-imports": "error",
+      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "JSXAttribute[name.name='href'][value.value='#']",
+          message: "href=\"#\" taqiqlangan: oʻlik havola.",
+        },
+      ],
+    },
+  },
+  {
+    files: ["scripts/**/*.{mjs,ts}", "tests/**/*.ts", "playwright.config.ts"],
+    rules: { "@typescript-eslint/no-non-null-assertion": "off" },
+  },
+);

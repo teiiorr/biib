@@ -1,19 +1,46 @@
 import type { NextConfig } from "next";
-import createNextIntlPlugin from "next-intl/plugin";
 
-const withNextIntl = createNextIntlPlugin({
-  experimental: {
-    // messages/uz-Latn.d.json.ts yaratadi — t() kalitlari tekşiriladi.
-    createMessagesDeclaration: "./messages/uz-Latn.json",
-  },
-});
+// Statik sahifalar uchun CSP: Next oʻz yuklovchi skriptlarini inline qoʻyadi,
+// nonce esa dinamik renderga majbur qilardi, shu sabab 'unsafe-inline'.
+const csp = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob:",
+  "font-src 'self'",
+  "media-src 'self'",
+  "connect-src 'self'",
+  "worker-src 'self' blob:",
+  "frame-ancestors 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+].join("; ");
+
+const securityHeaders = [
+  { key: "Content-Security-Policy", value: csp },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+  { key: "X-Frame-Options", value: "DENY" },
+];
 
 const nextConfig: NextConfig = {
+  reactCompiler: true,
+  poweredByHeader: false,
+  experimental: {
+    globalNotFound: true,
+  },
   images: {
     formats: ["image/avif", "image/webp"],
-    // 90 — portretlar uçun; 75 da yumşoq soyalar zinapoyaga aylanadi.
     qualities: [75, 90],
+  },
+  async redirects() {
+    // 307: keyinroq til aniqlash qoʻshilsa kesh zaharlanmaydi.
+    return [{ source: "/", destination: "/uz", permanent: false }];
+  },
+  async headers() {
+    return [{ source: "/(.*)", headers: securityHeaders }];
   },
 };
 
-export default withNextIntl(nextConfig);
+export default nextConfig;

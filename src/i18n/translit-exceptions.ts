@@ -1,0 +1,75 @@
+/**
+ * Transliteratsiya istisnolari: atoqli otlar, brendlar va rus tilidan kirgan soʻzlar.
+ * Kalitlar kichik harfda; bosh harf avtomatik saqlanadi.
+ */
+
+/** Ikkala imloda ham oʻzgarmaydigan soʻzlar (brendlar, qisqartmalar). */
+export const KEEP_WORDS: ReadonlySet<string> = new Set([
+  "upop",
+  "trend",
+  "teiior",
+  "youtube",
+  "facebook",
+  "google",
+  "higgsfield",
+  "vercel",
+  "pdf",
+  "svg",
+  "png",
+  "mp4",
+  "url",
+  "id",
+]);
+
+/** Lotin → kirill: qoida bilan notoʻgʻri chiqadigan soʻzlar (yumshoq belgi, ц, atoqli otlar). */
+export const CYRILLIC_WORDS: Readonly<Record<string, string>> = {
+  yanvar: "январь",
+  fevral: "февраль",
+  aprel: "апрель",
+  iyun: "июнь",
+  iyul: "июль",
+  sentabr: "сентябрь",
+  oktabr: "октябрь",
+  noyabr: "ноябрь",
+  dekabr: "декабрь",
+  konsert: "концерт",
+  konsertlar: "концертлар",
+  litsey: "лицей",
+  spektakl: "спектакль",
+  spektakllar: "спектакллар",
+  spektaklni: "спектаклни",
+  spektaklini: "спектаклини",
+  festival: "фестиваль",
+  festivallar: "фестиваллар",
+  multfilm: "мультфильм",
+  multfilmlar: "мультфильмлар",
+  multfilmga: "мультфильмга",
+  multfilmgacha: "мультфильмгача",
+  kompyuter: "компьютер",
+  obyekt: "объект",
+  subyekt: "субъект",
+  telegram: "Телеграм",
+  telegramda: "Телеграмда",
+  telegramga: "Телеграмга",
+  instagram: "Инстаграм",
+  yandex: "Яндекс",
+  modul: "модуль",
+  stil: "стиль",
+  ansambl: "ансамбль",
+  albom: "альбом",
+  filial: "филиал",
+  sirk: "цирк",
+  sirkda: "циркда",
+  animatsiya: "анимация",
+  animatsiyasi: "анимацияси",
+  animatsion: "анимацион",
+  eʼlon: "эълон",
+  poyezd: "поезд",
+};
+
+/** Lotin → 2026 imlosi: s|h va c|h chegarasi, atoqli otlar. */
+export const REFORM_WORDS: Readonly<Record<string, string>> = {
+  isʼhoq: "Isʼhoq",
+  asʼhob: "asʼhob",
+  mashʼal: "maşʼal",
+};

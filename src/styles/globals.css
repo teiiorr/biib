@@ -1,402 +1,416 @@
 @import "tailwindcss";
-@import "./tokens.css";
-@import "./glass.css";
-@import "./motion.css";
-@import "./ornament.css";
+@import "./designs/atlas.css";
+@import "./designs/birlashma.css";
+@import "./materials.css";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant atlas (&:where([data-design="atlas"], [data-design="atlas"] *));
+@custom-variant birlashma (&:where([data-design="birlashma"], [data-design="birlashma"] *));
+@custom-variant motion-off (&:where([data-motion="off"], [data-motion="off"] *));
+
+@theme {
+  --color-*: initial;
+  --font-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --breakpoint-*: initial;
+  --ease-*: initial;
+  --animate-*: initial;
+
+  --breakpoint-xs: 390px;
+  --breakpoint-md: 600px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1440px;
+}
 
 @theme inline {
-  --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --color-accent-pressed: var(--accent-pressed);
-  --color-accent-contrast: var(--accent-contrast);
-  --color-accent-wash: var(--accent-wash);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-tint: var(--tint);
+  --color-tint-hover: var(--tint-hover);
+  --color-on-tint: var(--on-tint);
+  --color-focus: var(--focus);
   --color-accent-text: var(--accent-text);
-
-  --color-gold: var(--gold);
-  --color-gold-hi: var(--gold-hi);
-  --color-gold-lo: var(--gold-lo);
-  --color-magenta: var(--magenta);
-  --color-magenta-text: var(--gem-magenta-text);
-  --color-violet: var(--violet);
-  --color-turquoise: var(--turquoise);
-  --color-green: var(--green);
-  --color-ivory: var(--ivory);
-  --color-graphite: var(--graphite);
-
-  --color-label: var(--label-primary);
-  --color-label-secondary: var(--label-secondary);
-  --color-label-tertiary: var(--label-tertiary);
-  --color-label-quaternary: var(--label-quaternary);
-
-  --color-base: var(--bg-base);
-  --color-elevated: var(--bg-elevated);
-  --color-sunken: var(--bg-sunken);
-  --color-separator: var(--separator);
-  --color-line-gold: var(--line-gold);
-  --color-fill-secondary: var(--fill-secondary);
-  --color-fill-secondary-hover: var(--fill-secondary-hover);
-
+  --color-accent-art: var(--accent-art);
+  --color-accent-hi: var(--accent-hi);
+  --color-accent-lo: var(--accent-lo);
   --color-success: var(--success);
-  --color-warning: var(--warning);
+  --color-info: var(--info);
   --color-danger: var(--danger);
+  --color-art-1: var(--art-1);
+  --color-art-1-text: var(--art-1-text);
+  --color-art-2: var(--art-2);
+  --color-art-2-text: var(--art-2-text);
+  --color-art-3: var(--art-3);
+  --color-art-3-text: var(--art-3-text);
+  --color-art-4: var(--art-4);
+  --color-art-4-text: var(--art-4-text);
+  --color-art-5: var(--art-5);
+  --color-art-5-text: var(--art-5-text);
+  --color-art-6: var(--art-6);
+  --color-art-6-text: var(--art-6-text);
+  --color-art-7: var(--art-7);
+  --color-art-7-text: var(--art-7-text);
+  --color-material-ink: var(--material-ink);
 
-  --radius-xs: 6px;
-  --radius-sm: 10px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
-  --radius-bar: 26px;
-  --radius-pill: 999px;
+  --font-ui: var(--font-ui);
+  --font-display: var(--font-display);
+  --font-note: var(--font-note);
 
+  --radius-s: var(--radius-s);
+  --radius-m: var(--radius-m);
+  --radius-card: var(--radius-card);
+  --radius-control: var(--radius-control);
+  --radius-panel: var(--radius-panel);
+
+  --shadow-raised: var(--shadow-raised);
+  --shadow-floating: var(--shadow-floating);
+  --shadow-overlay: var(--shadow-overlay);
   --shadow-contact: var(--shadow-contact);
-  --shadow-ambient: var(--shadow-ambient);
-  --shadow-modal: var(--shadow-modal);
 
-  /* Sarlavhalar Cormorant (luks serif) — optik kiçik yuradi, şkala
-   * kattaroq; serifga keskin manfiy tracking kerak emas. Qolgani Manrope. */
-  --text-display: clamp(2.6rem, 1.9rem + 2.6vw, 3.6rem);
-  --text-display--line-height: 1.08;
-  --text-display--letter-spacing: -0.01em;
-  --text-display--font-weight: 700;
+  --ease-out: var(--ease-out);
+  --ease-in-out: var(--ease-in-out);
+  --ease-ui: var(--ease-ui);
+  --ease-reveal: var(--ease-reveal);
+  --ease-pop: var(--ease-pop);
+  --ease-spring: var(--spring-glass);
+}
 
-  --text-title1: clamp(2.1rem, 1.7rem + 1.4vw, 2.7rem);
-  --text-title1--line-height: 1.12;
-  --text-title1--letter-spacing: -0.01em;
-  --text-title1--font-weight: 700;
+:root {
+  /* Koʻrinish paneli oʻzgartiradigan ikkita qiymat; qolgani calc(). */
+  --g-t: 0.5;
+  --g-d: 0.5;
+  --g-tint: calc(0.78 - 0.56 * var(--g-t));
+  --g-blur: calc(4px + 28px * var(--g-d));
+  --g-sat: calc(1.1 + 0.8 * var(--g-d));
+  --g-rim: calc(0.25 + 0.45 * var(--g-d));
+  /* Matn ostidagi material haddan tashqari tiniq boʻlib qolmasligi uchun pastki chegara. */
+  --g-tint-text: max(var(--g-tint), calc(0.62 - 0.4 * var(--g-d)));
+  --g-refract: calc(8 + 56 * var(--g-d));
+  --light-x: 30%;
+  --light-y: 0%;
 
-  --text-title2: clamp(1.7rem, 1.5rem + 0.7vw, 2rem);
-  --text-title2--line-height: 1.18;
-  --text-title2--letter-spacing: -0.005em;
-  --text-title2--font-weight: 600;
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 20;
+  --z-header: 30;
+  --z-tabbar: 30;
+  --z-overlay: 40;
+  --z-modal: 50;
+  --z-toast: 60;
 
-  --text-title3: clamp(1.45rem, 1.32rem + 0.4vw, 1.6rem);
-  --text-title3--line-height: 1.25;
-  --text-title3--letter-spacing: -0.005em;
-  --text-title3--font-weight: 600;
+  --content-max: 1312px;
+  --measure: 65ch;
+  --columns: 4;
+  --margin: 16px;
+  --gutter: 16px;
+  --section-gap: 48px;
+  --block-gap: 16px;
+  --header-h: 56px;
+  --tabbar-h: 64px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
 
-  --text-headline: 1.0625rem;
-  --text-headline--line-height: 1.5rem;
-  --text-headline--font-weight: 600;
+@media (min-width: 390px) {
+  :root {
+    --margin: 20px;
+  }
+}
+@media (min-width: 600px) {
+  :root {
+    --columns: 8;
+    --margin: 32px;
+    --gutter: 24px;
+    --section-gap: 64px;
+    --block-gap: 24px;
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    --columns: 12;
+    --margin: 48px;
+    --gutter: 24px;
+    --section-gap: 96px;
+    --block-gap: 32px;
+    --header-h: 64px;
+  }
+}
+@media (min-width: 1440px) {
+  :root {
+    --margin: 64px;
+    --gutter: 32px;
+  }
+}
 
-  --text-body: 1rem;
-  --text-body--line-height: 1.625rem;
-  --text-body--font-weight: 400;
-
-  --text-callout: 0.9375rem;
-  --text-callout--line-height: 1.375rem;
-  --text-callout--font-weight: 400;
-
-  --text-subhead: 0.875rem;
-  --text-subhead--line-height: 1.25rem;
-  --text-subhead--font-weight: 500;
-
-  --text-footnote: 0.8125rem;
-  --text-footnote--line-height: 1.125rem;
-  --text-footnote--font-weight: 400;
-
-  --text-caption: 0.75rem;
-  --text-caption--line-height: 1rem;
-  --text-caption--letter-spacing: 0.01em;
-  --text-caption--font-weight: 500;
-
-  --ease-standard: var(--ease-standard);
-  --ease-exit: var(--ease-exit);
-  --ease-quint: var(--ease-quint);
-  --ease-magnet: var(--ease-magnet);
-
-  --font-display: var(--font-display), Georgia, "Times New Roman", serif;
-  --font-sans: var(--font-body), -apple-system, system-ui, sans-serif;
-
-  --container-page: 1200px;
-  --container-read: 680px;
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-ui: 150ms;
+    --dur-panel: 150ms;
+    --dur-reveal: 150ms;
+    --dur-draw: 0ms;
+    --dur-transition: 150ms;
+  }
+}
+:root[data-motion="off"] {
+  --dur-reveal: 150ms;
+  --dur-draw: 0ms;
+  --dur-transition: 150ms;
 }
 
 @layer base {
   html {
-    -webkit-text-size-adjust: 100%;
-    background-color: var(--bg-base);
-    scroll-behavior: smooth;
-  }
-
-  body {
-    /*
-     * Fon rangi html da (u kanvasni bo'yaydi). Body şaffof — şunda
-     * z-index:-1 dagi Ambient va Samarqand ufqi ko'rinadi; ilgari
-     * body ning to'q foni ularni yopib turardi.
-     */
-    background-color: transparent;
-    color: var(--label-primary);
-    font-family: var(--font-sans);
-    font-size: 1.0625rem;
-    line-height: 1.625rem;
-    font-synthesis-weight: none;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-ui);
+    font-size: 100%;
+    font-optical-sizing: auto;
+    font-size-adjust: from-font;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+  }
+  body {
     min-height: 100svh;
-    overflow-x: hidden;
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls-body);
+    font-weight: var(--fw-body);
+    overflow-x: clip;
   }
-
-  @media (min-width: 768px) {
-    body {
-      font-size: 1rem;
-    }
-  }
-
   h1,
   h2,
   h3,
   h4 {
-    font-family: var(--font-display);
-    color: var(--label-primary);
     text-wrap: balance;
+    margin: 0;
   }
-
-  /* Cormorant cyrillic-ext bilan keladi — ҳ қ ғ ў barça tillarda
-   * öz serif şriftida, zaxira şrift aralaşmaydi. */
-
   p {
     text-wrap: pretty;
+    margin: 0;
   }
-
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
   :focus-visible {
-    outline: 2px solid var(--gold);
+    outline: 2px solid var(--focus);
     outline-offset: 2px;
-    border-radius: var(--radius-xs);
+    border-radius: var(--radius-s);
   }
-
   ::selection {
-    background: var(--accent-wash);
-    color: var(--label-primary);
+    background: color-mix(in oklab, var(--tint) 24%, transparent);
   }
-
-  :root.tuning,
-  :root.tuning * {
-    transition:
-      background-color var(--dur-base) var(--ease-standard),
-      border-color var(--dur-base) var(--ease-standard) !important;
+  img,
+  video,
+  svg {
+    display: block;
+    max-width: 100%;
   }
-
-  /*
-   * Universal söndirgiç. Tizim sozlamasi saytdagi aniq "harakat
-   * kerak" tanlovi (data-motion="full") bilan bekor qilinadi;
-   * saytdagi "kamaytiriş" tumbleri esa tizimsiz ham işlaydi.
-   */
-  @media (prefers-reduced-motion: reduce) {
-    html:not([data-motion="full"]) *,
-    html:not([data-motion="full"]) *::before,
-    html:not([data-motion="full"]) *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
-
-  html[data-motion="reduce"] *,
-  html[data-motion="reduce"] *::before,
-  html[data-motion="reduce"] *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  /* Silliq skroll html ning özida turadi — "*" uni qamramaydi. */
-  @media (prefers-reduced-motion: reduce) {
-    html:not([data-motion="full"]) {
-      scroll-behavior: auto;
-    }
-  }
-
-  html[data-motion="reduce"] {
-    scroll-behavior: auto;
-  }
-
-  /*
-   * Matn ölçami — saytdagi qulaylik tanlovi. Hamma ölçam rem da,
-   * şuning uçun ildiz foizi butun tipografiyani mutanosib kötaradi.
-   */
-  html[data-text="lg"] {
-    font-size: 112.5%;
-  }
-
-  html[data-text="xl"] {
-    font-size: 125%;
-  }
-}
-
-@layer utilities {
-  .page {
-    width: 100%;
-    max-width: var(--container-page);
-    margin-inline: auto;
-    padding-inline: var(--space-4);
-  }
-
-  @media (min-width: 768px) {
-    .page {
-      padding-inline: var(--space-5);
-    }
-  }
-
-  .read {
-    max-width: var(--container-read);
-  }
-
-  .section {
-    padding-block: var(--space-7);
-  }
-
-  @media (min-width: 768px) {
-    .section {
-      padding-block: var(--space-8);
-    }
-  }
-
-  /*
-   * Yarim şaffof yuza: ortidagi rangli muhit körinib turadi, ammo
-   * backdrop-filter qöşmaydi — şişa poverxnostlari soni oşmaydi
-   * va hisoblaş narxi nolga teng.
-   */
-  .panel {
-    background-color: color-mix(in srgb, var(--bg-elevated) 80%, transparent);
-  }
-
-  .panel-line {
-    box-shadow: inset 0 0 0 0.5px var(--line-gold);
-  }
-
-  /*
-   * Körinadigan balandlik §6.5 böyiça, ammo barmoq uçun bosiş maydoni
-   * §8 talab qilgan 44 px dan kiçik bölmaydi.
-   *
-   * position faqat statik elementga beriladi: bu qoida Tailwind ning
-   * fixed/absolute utilitalaridan KEYİN keladi va ilgari ularni yengib
-   * qöyardi — "Yuqoriga" tugmasi oqimga tuşib, çap pastda qolgan edi.
-   */
-  .tap:not([class~="fixed"]):not([class~="absolute"]):not([class~="sticky"]) {
-    position: relative;
-  }
-
-  @media (pointer: coarse) {
-    .tap::after {
-      content: "";
-      position: absolute;
-      inset-inline: 0;
-      top: 50%;
-      height: max(44px, 100%);
-      translate: 0 -50%;
-    }
-  }
-}
-
-@layer components {
-  /*
-   * Şaffoflik suruvçisi. Tabiiy input[type=range]: klaviatura, ARIA va
-   * ekran öqigiç semantikasi tayyor holda keladi. Trek 4 px, ruçka 28 px.
-   */
-  .slider {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 28px;
-    background: transparent;
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
     cursor: pointer;
   }
-
-  .slider::-webkit-slider-runnable-track {
-    height: 4px;
-    border-radius: var(--radius-pill);
-    background: var(--fill-secondary);
+  input,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
   }
-
-  .slider::-moz-range-track {
-    height: 4px;
-    border-radius: var(--radius-pill);
-    background: var(--fill-secondary);
+  [hidden] {
+    display: none !important;
   }
-
-  .slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 28px;
-    height: 28px;
-    margin-top: -12px;
-    border-radius: var(--radius-pill);
-    background: var(--ivory);
-    box-shadow: var(--shadow-contact);
-  }
-
-  .slider::-moz-range-thumb {
-    width: 28px;
-    height: 28px;
-    border: 0;
-    border-radius: var(--radius-pill);
-    background: var(--ivory);
-    box-shadow: var(--shadow-contact);
-  }
-
-  .slider:focus-visible {
-    outline: none;
-  }
-
-  .slider:focus-visible::-webkit-slider-thumb {
-    outline: 2px solid var(--gold);
-    outline-offset: 2px;
-  }
-
-  .slider:focus-visible::-moz-range-thumb {
-    outline: 2px solid var(--gold);
-    outline-offset: 2px;
-  }
-
-  .slider:disabled {
-    opacity: 0.4;
-    cursor: default;
+  .tnum {
+    font-variant-numeric: tabular-nums;
   }
 }
 
-/*
- * ---- Bosma (print) ----
- * Yangilik yoki kontaktni qogʻozga çiqarayotgan odam tun palitrani
- * emas, öqiladigan hujjatni oladi: oq fon, qora matn, chrome yöq.
- */
-@media print {
-  html {
-    background: #fff;
-  }
+/* Matn shkalasi: qiymatlar dizayn fayllaridan keladi. */
+@utility t-display-xl {
+  font-family: var(--font-display);
+  font-size: var(--fs-display-xl);
+  line-height: var(--lh-display-xl);
+  letter-spacing: var(--ls-display-xl);
+  font-weight: var(--fw-display-xl);
+}
+@utility t-display-l {
+  font-family: var(--font-display);
+  font-size: var(--fs-display-l);
+  line-height: var(--lh-display-l);
+  letter-spacing: var(--ls-display-l);
+  font-weight: var(--fw-display-l);
+}
+@utility t-h1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  letter-spacing: var(--ls-h1);
+  font-weight: var(--fw-h1);
+}
+@utility t-h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+  font-weight: var(--fw-h2);
+}
+@utility t-h3 {
+  font-family: var(--font-ui);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: var(--ls-h3);
+  font-weight: var(--fw-h3);
+}
+@utility t-h4 {
+  font-family: var(--font-ui);
+  font-size: var(--fs-h4);
+  line-height: var(--lh-h4);
+  letter-spacing: var(--ls-h4);
+  font-weight: var(--fw-h4);
+}
+@utility t-body-l {
+  font-family: var(--font-ui);
+  font-size: var(--fs-body-l);
+  line-height: var(--lh-body-l);
+  letter-spacing: var(--ls-body-l);
+  font-weight: var(--fw-body-l);
+}
+@utility t-body {
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  font-weight: var(--fw-body);
+}
+@utility t-small {
+  font-family: var(--font-ui);
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  letter-spacing: var(--ls-small);
+  font-weight: var(--fw-small);
+}
+@utility t-label {
+  font-family: var(--font-ui);
+  font-size: var(--fs-label);
+  line-height: var(--lh-label);
+  letter-spacing: var(--ls-label);
+  font-weight: var(--fw-label);
+}
+@utility t-label-l {
+  font-family: var(--font-ui);
+  font-size: var(--fs-label-l);
+  line-height: var(--lh-label);
+  letter-spacing: var(--ls-label);
+  font-weight: var(--fw-label);
+}
+@utility t-micro {
+  font-family: var(--font-ui);
+  font-size: var(--fs-micro);
+  line-height: var(--lh-micro);
+  letter-spacing: var(--ls-micro);
+  font-weight: var(--fw-micro);
+}
+@utility t-note {
+  font-family: var(--font-note);
+  font-size: var(--fs-note);
+  line-height: var(--lh-note);
+  letter-spacing: var(--ls-note);
+  font-weight: var(--fw-note);
+}
+/* Tugma, yorliq va bir qatorli sarlavhalar: matn cap-height va baseline boʻyicha tekislanadi. */
+@utility text-trim {
+  text-box: trim-both cap alphabetic;
+}
+@utility measure {
+  max-width: var(--measure);
+}
 
-  body {
-    background: #fff !important;
-    color: #111 !important;
-  }
+/* Toʻr: ustunlar va chetlar breakpointga qarab :root da oʻzgaradi. */
+@utility container-site {
+  width: 100%;
+  max-width: calc(var(--content-max) + 2 * var(--margin));
+  margin-inline: auto;
+  padding-inline: max(var(--margin), var(--safe-left)) max(var(--margin), var(--safe-right));
+}
+@utility grid-site {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  column-gap: var(--gutter);
+}
+@utility section-pad {
+  padding-block: var(--section-gap);
+}
+@utility section-gap {
+  gap: var(--section-gap);
+}
+@utility block-gap {
+  gap: var(--block-gap);
+}
 
-  body * {
-    color: inherit !important;
-    text-shadow: none !important;
-    box-shadow: none !important;
-  }
+@utility z-base {
+  z-index: var(--z-base);
+}
+@utility z-raised {
+  z-index: var(--z-raised);
+}
+@utility z-sticky {
+  z-index: var(--z-sticky);
+}
+@utility z-header {
+  z-index: var(--z-header);
+}
+@utility z-tabbar {
+  z-index: var(--z-tabbar);
+}
+@utility z-overlay {
+  z-index: var(--z-overlay);
+}
+@utility z-modal {
+  z-index: var(--z-modal);
+}
+@utility z-toast {
+  z-index: var(--z-toast);
+}
 
-  .app-bar,
-  .skyline-field,
-  .ambient,
-  .grain,
-  .aura,
-  .gem-wash,
-  .frost,
-  .liquid-pointer,
-  .scroll-top,
-  .hero-bg,
-  video {
-    display: none !important;
-  }
+@utility inner-highlight {
+  box-shadow: var(--inner-highlight);
+}
+@utility safe-bottom {
+  padding-bottom: var(--safe-bottom);
+}
+@utility safe-top {
+  padding-top: var(--safe-top);
+}
 
-  .gold-text {
-    background: none !important;
-    -webkit-text-fill-color: initial;
-    color: #111 !important;
-  }
-
-  a[href^="http"]::after {
-    content: " (" attr(href) ")";
-    font-size: 0.8em;
+@utility sr-only-focusable {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  &:focus-visible {
+    position: fixed;
+    width: auto;
+    height: auto;
+    clip-path: none;
+    white-space: normal;
   }
 }

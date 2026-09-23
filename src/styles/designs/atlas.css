@@ -1,0 +1,209 @@
+/* ATLAS — Oʻzbek hunarmandchiligi. Kunduz «Atlas», tun «Rishton». Nomlar birlashma.css bilan bir xil. */
+
+:root[data-design="atlas"] {
+  --font-ui: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), "Noto Serif Display", Georgia, serif;
+  --font-note: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --fs-display-xl: clamp(3rem, 1.3333rem + 7.4074vw, 8rem);
+  --lh-display-xl: 0.98;
+  --ls-display-xl: -0.02em;
+  --fw-display-xl: 500;
+  --fs-display-l: clamp(2.5rem, 1.5rem + 4.4444vw, 5.5rem);
+  --lh-display-l: 1.02;
+  --ls-display-l: -0.015em;
+  --fw-display-l: 500;
+  --fs-h1: clamp(2.25rem, 1.6667rem + 2.5926vw, 4rem);
+  --lh-h1: 1.06;
+  --ls-h1: -0.01em;
+  --fw-h1: 500;
+  --fs-h2: clamp(1.75rem, 1.4167rem + 1.4815vw, 2.75rem);
+  --lh-h2: 1.12;
+  --ls-h2: -0.01em;
+  --fw-h2: 500;
+  --fs-h3: clamp(1.25rem, 1.1667rem + 0.3704vw, 1.5rem);
+  --lh-h3: 1.25;
+  --ls-h3: -0.02em;
+  --fw-h3: 600;
+  --fs-h4: clamp(1.125rem, 1.0833rem + 0.1852vw, 1.25rem);
+  --lh-h4: 1.3;
+  --ls-h4: -0.014em;
+  --fw-h4: 600;
+  --fs-body-l: clamp(1.125rem, 1.0833rem + 0.1852vw, 1.25rem);
+  --lh-body-l: 1.6;
+  --ls-body-l: -0.014em;
+  --fw-body-l: 400;
+  --fs-body: 1rem;
+  --lh-body: 1.6;
+  --ls-body: -0.011em;
+  --fw-body: 400;
+  --fs-small: 0.875rem;
+  --lh-small: 1.5;
+  --ls-small: -0.006em;
+  --fw-small: 400;
+  --fs-label: 0.875rem;
+  --fs-label-l: 1rem;
+  --lh-label: 1.2;
+  --ls-label: -0.006em;
+  --fw-label: 500;
+  --fs-micro: 0.75rem;
+  --lh-micro: 1.3;
+  --ls-micro: 0;
+  --fw-micro: 500;
+  --fs-note: 1rem;
+  --lh-note: 1.5;
+  --ls-note: 0;
+  --fw-note: 500;
+  --fw-display-strong: 600;
+
+  --radius-s: 6px;
+  --radius-m: 8px;
+  --radius-card: 12px;
+  --radius-control: 999px;
+  --radius-panel: 24px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-ui: cubic-bezier(0.2, 0, 0, 1);
+  --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* scripts/spring-curve.mjs 0.4 0.86 32 */
+  --spring-glass: linear(
+    0,
+    0.0728,
+    0.2277,
+    0.4015,
+    0.5618,
+    0.6949,
+    0.7977,
+    0.8729,
+    0.9251,
+    0.9597,
+    0.9813,
+    0.9941,
+    1.0009,
+    1.004,
+    1.005,
+    1.0048,
+    1.0041,
+    1.0032,
+    1.0024,
+    1.0017,
+    1.0011,
+    1.0007,
+    1.0004,
+    1.0003,
+    1.0001,
+    1.0001,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  );
+  --dur-ui: 240ms;
+  --dur-panel: 420ms;
+  --dur-reveal: 900ms;
+  --dur-draw: 1600ms;
+  --dur-transition: 700ms;
+
+  --material-sat: var(--g-sat);
+  --material-fiber: none;
+}
+
+:root[data-design="atlas"][data-theme="light"] {
+  --bg: #f7f3ea;
+  --surface: #fffcf6;
+  --surface-2: #ffffff;
+  --ink: #0e1733;
+  --ink-2: #3a4466;
+  --ink-3: #5a6380;
+  --line: #d9d2c3;
+  --line-strong: #8e8672;
+  --tint: #b8306a;
+  --tint-hover: #a42a5e;
+  --on-tint: #ffffff;
+  --focus: #b8306a;
+  --accent-text: #7a5c1a;
+  --accent-art: #c9a646;
+  --accent-hi: #e8cf7a;
+  --accent-lo: #8a6a22;
+  --success: #1d7a55;
+  --info: #173a8c;
+  --danger: #a5162f;
+  --art-1: #d6457f;
+  --art-1-text: #b8306a;
+  --art-2: #c9a646;
+  --art-2-text: #7a5c1a;
+  --art-3: #2fa878;
+  --art-3-text: #1d7a55;
+  --art-4: #1fa2a6;
+  --art-4-text: #0e6f6e;
+  --art-5: #26619c;
+  --art-5-text: #173a8c;
+  --art-6: #a5162f;
+  --art-6-text: #a5162f;
+  --art-7: #e2b434;
+  --art-7-text: #7a5c1a;
+
+  --material-base: #fffcf6;
+  --material-ink: #0e1733;
+  --material-rim: #ffffff;
+  --material-shadow: rgba(14, 23, 51, 0.1);
+
+  --shadow-raised: 0 2px 8px rgba(14, 23, 51, 0.08);
+  --shadow-floating: 0 8px 24px rgba(14, 23, 51, 0.1);
+  --shadow-overlay: 0 16px 48px rgba(14, 23, 51, 0.14);
+  --shadow-contact: 0 1px 0 rgba(14, 23, 51, 0.06);
+  --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+:root[data-design="atlas"][data-theme="dark"] {
+  --bg: #0a1026;
+  --surface: #111a38;
+  --surface-2: #17214a;
+  --ink: #f7f3ea;
+  --ink-2: #a9b1cc;
+  --ink-3: #8c95b4;
+  --line: #2a3560;
+  --line-strong: #6a76a2;
+  --tint: #e8699f;
+  --tint-hover: #f48ab5;
+  --on-tint: #0a1026;
+  --focus: #e8699f;
+  --accent-text: #e3c46e;
+  --accent-art: #d9b75a;
+  --accent-hi: #f0d488;
+  --accent-lo: #a88a3a;
+  --success: #3fbf8a;
+  --info: #6f95f0;
+  --danger: #ff7a8a;
+  --art-1: #f07aae;
+  --art-1-text: #e8699f;
+  --art-2: #d9b75a;
+  --art-2-text: #e3c46e;
+  --art-3: #2fa878;
+  --art-3-text: #3fbf8a;
+  --art-4: #4ccbcb;
+  --art-4-text: #4ccbcb;
+  --art-5: #26619c;
+  --art-5-text: #6f95f0;
+  --art-6: #ff7a8a;
+  --art-6-text: #ff7a8a;
+  --art-7: #e2b434;
+  --art-7-text: #e3c46e;
+
+  --material-base: #111a38;
+  --material-ink: #f7f3ea;
+  --material-rim: #8c95b4;
+  --material-shadow: rgba(2, 5, 20, 0.5);
+
+  /* Tunda balandlik soyada emas, yorugʻroq sirt va 1 px ichki chiziqda. */
+  --shadow-raised: 0 1px 2px rgba(2, 5, 20, 0.4);
+  --shadow-floating: 0 6px 20px rgba(2, 5, 20, 0.45);
+  --shadow-overlay: 0 12px 40px rgba(2, 5, 20, 0.55);
+  --shadow-contact: 0 1px 0 rgba(2, 5, 20, 0.5);
+  --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}

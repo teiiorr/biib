@@ -1,80 +1,71 @@
-/**
- * Beş til. Kodlar — haqiqiy BCP-47 teglari, çunki ularni Intl,
- * <html lang> va hreflang öqiydi.
- *
- * Yangi lotin uçun uz-Latn-x-reform: x- xususiy quyi teg, Intl uni
- * uz-Latn ga tuşiradi va sanalar töğri çiqadi. Imlo farqi keyin
- * reformOrthography() bilan qöyiladi.
- */
-
-export const LOCALES = ["uz-Latn", "uz-Cyrl", "uz-Latn-x-reform", "ru", "en"] as const;
-
+export const LOCALES = ["uz", "oz", "ozbekca", "ru", "en"] as const;
 export type Locale = (typeof LOCALES)[number];
-
-export const DEFAULT_LOCALE: Locale = "uz-Latn";
-
-/** Yangi imloli lotin — Intl çiqişini tözatiş kerak bölgan yagona til. */
-export const REFORM_LOCALE: Locale = "uz-Latn-x-reform";
+export const DEFAULT_LOCALE: Locale = "uz";
 
 export interface LocaleMeta {
   readonly code: Locale;
-  /** URL daki birinçi segment. routing.localePrefix bilan bir xil. */
-  readonly prefix: string;
-  /** Til özini qanday ataydi. */
+  /** `<html lang>` qiymati. */
+  readonly htmlLang: "uz-Latn" | "uz-Cyrl" | "ru" | "en";
+  /** Intl uchun BCP-47 tegi. 2026 imlosi ham uz-Latn orqali formatlanadi. */
+  readonly intl: "uz-Latn" | "uz-Cyrl" | "ru" | "en";
+  /** hreflang: 2026 imlosi uchun alohida kod yoʻq, shu sabab null (6.5). */
+  readonly hreflang: "uz-Latn" | "uz-Cyrl" | "ru" | "en" | null;
   readonly nativeName: string;
-  /** Menyudagi qisqa belgi. */
   readonly shortName: string;
-  /** Yözuv turi — dropdown da tartiblaş uçun. */
   readonly script: "latin" | "cyrillic";
-  readonly englishName: string;
-  readonly dir: "ltr";
+  readonly orthography: "current" | "2026" | null;
 }
 
 export const LOCALE_META: Record<Locale, LocaleMeta> = {
-  "uz-Latn": {
-    code: "uz-Latn",
-    prefix: "/uz",
+  uz: {
+    code: "uz",
+    htmlLang: "uz-Latn",
+    intl: "uz-Latn",
+    hreflang: "uz-Latn",
     nativeName: "Oʻzbekcha",
     shortName: "UZ",
     script: "latin",
-    englishName: "Uzbek (Latin)",
-    dir: "ltr",
+    orthography: "current",
   },
-  "uz-Cyrl": {
-    code: "uz-Cyrl",
-    prefix: "/oz",
+  oz: {
+    code: "oz",
+    htmlLang: "uz-Cyrl",
+    intl: "uz-Cyrl",
+    hreflang: "uz-Cyrl",
     nativeName: "Ўзбекча",
     shortName: "ЎЗ",
     script: "cyrillic",
-    englishName: "Uzbek (Cyrillic)",
-    dir: "ltr",
+    orthography: null,
   },
-  "uz-Latn-x-reform": {
-    code: "uz-Latn-x-reform",
-    prefix: "/ozbekca",
+  ozbekca: {
+    code: "ozbekca",
+    htmlLang: "uz-Latn",
+    intl: "uz-Latn",
+    hreflang: null,
     nativeName: "Özbekça",
     shortName: "ÖZ",
     script: "latin",
-    englishName: "Uzbek (reformed Latin)",
-    dir: "ltr",
+    orthography: "2026",
   },
   ru: {
     code: "ru",
-    prefix: "/ru",
+    htmlLang: "ru",
+    intl: "ru",
+    hreflang: "ru",
     nativeName: "Русский",
     shortName: "RU",
     script: "cyrillic",
-    englishName: "Russian",
-    dir: "ltr",
+    orthography: null,
   },
   en: {
     code: "en",
-    prefix: "/en",
+    htmlLang: "en",
+    intl: "en",
+    hreflang: "en",
     nativeName: "English",
     shortName: "EN",
     script: "latin",
-    englishName: "English",
-    dir: "ltr",
+    orthography: null,
   },
 };
 
@@ -82,6 +73,7 @@ export function isLocale(value: unknown): value is Locale {
   return typeof value === "string" && (LOCALES as readonly string[]).includes(value);
 }
 
-export function localeMeta(locale: Locale): LocaleMeta {
-  return LOCALE_META[locale];
+/** Uchta oʻzbek varianti bitta til: slug va tarjima manbai umumiy. */
+export function isUzbek(locale: Locale): boolean {
+  return locale === "uz" || locale === "oz" || locale === "ozbekca";
 }

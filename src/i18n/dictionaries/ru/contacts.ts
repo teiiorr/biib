@@ -1,0 +1,48 @@
+import type { contacts as source } from "../uz/contacts";
+
+export const contacts: typeof source = {
+  title: "Контакты",
+  lead: "Для вопросов, предложений и сотрудничества. В рабочие дни отвечаем в течение дня.",
+  details: {
+    heading: "Реквизиты",
+    address: "Адрес",
+    phone: "Телефон",
+    email: "Почта",
+    telegram: "Telegram",
+    hours: "Часы работы",
+    hoursValue: "Понедельник – пятница, 09:00–18:00",
+    copy: "Скопировать",
+    copied: "Скопировано",
+    pending: "Ожидает подтверждения",
+  },
+  map: {
+    heading: "На карте",
+    yandex: "Открыть в Яндекс Картах",
+    google: "Открыть в Google Картах",
+    pending: "Точка на карте ожидает подтверждения объединения",
+  },
+  form: {
+    heading: "Написать нам",
+    name: "Ваше имя",
+    contact: "Телефон или почта",
+    message: "Сообщение",
+    consent: "Согласен на обработку данных согласно {privacy}",
+    consentLink: "политике конфиденциальности",
+    submit: "Отправить",
+    sending: "Отправляем",
+    success: "Сообщение отправлено. Спасибо, скоро ответим.",
+    error: "Не удалось отправить. Напишите в Telegram или попробуйте позже.",
+    tooFast: "Форма заполнена слишком быстро, отправьте ещё раз.",
+    required: "Это поле обязательно",
+    invalidContact: "Введите номер телефона или адрес почты",
+    tooShort: "Сообщение должно быть не короче {min} символов",
+    consentRequired: "Для отправки нужно согласие",
+    fallbackHeading: "Напишите в Telegram",
+    fallbackText: "Форма пока не подключена, сообщение можно отправить напрямую в Telegram.",
+    fallbackCta: "Написать в Telegram",
+    postcardLabel: "Открытка",
+  },
+  socials: {
+    heading: "Соцсети",
+  },
+};
