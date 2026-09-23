@@ -36,9 +36,7 @@ export function auditSpacing(opts: SpacingOptions): Finding[] {
   for (const el of Array.from(document.querySelectorAll(opts.selector))) {
     const cs = getComputedStyle(el);
     if (cs.display === "none") continue;
-    const groups = (el.getAttribute("data-audit") ?? "")
-      .split(/\s+/)
-      .filter((g) => g in PROPS);
+    const groups = (el.getAttribute("data-audit") ?? "").split(/\s+/).filter((g) => g in PROPS);
     const wanted = groups.length > 0 ? groups : ["gap", "padding"];
     for (const group of wanted) {
       for (const prop of PROPS[group] ?? []) {

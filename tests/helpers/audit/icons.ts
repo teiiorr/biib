@@ -48,8 +48,7 @@ export function auditIcons(opts: IconsOptions): Finding[] {
     const content = (text.textContent ?? "").trim();
     const letters = content.replace(/[^\p{L}]/gu, "");
     const useCap =
-      mode === "cap" ||
-      (mode !== "x" && letters.length > 0 && letters === letters.toUpperCase());
+      mode === "cap" || (mode !== "x" && letters.length > 0 && letters === letters.toUpperCase());
 
     const probe = document.createElement("span");
     probe.style.display = "inline-block";

@@ -31,7 +31,12 @@ export function auditCards(opts: CardsOptions): Finding[] {
     const rect = el.getBoundingClientRect();
     return rect.width > 0 && rect.height > 0;
   };
-  const pick = (card: Element, explicit: string, fallback: string, last: boolean): Element | null => {
+  const pick = (
+    card: Element,
+    explicit: string,
+    fallback: string,
+    last: boolean,
+  ): Element | null => {
     const marked = card.querySelector(explicit);
     if (marked) return marked;
     const candidates = Array.from(card.querySelectorAll(fallback)).filter(visible);

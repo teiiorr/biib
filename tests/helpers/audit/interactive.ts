@@ -94,7 +94,8 @@ export function auditInteractive(): Finding[] {
   const items: Item[] = [];
   for (const el of Array.from(document.body.querySelectorAll(SELECTOR))) {
     const cs = getComputedStyle(el);
-    if (cs.display === "none" || cs.visibility === "hidden" || cs.pointerEvents === "none") continue;
+    if (cs.display === "none" || cs.visibility === "hidden" || cs.pointerEvents === "none")
+      continue;
     if (el.closest("[inert]")) continue;
     const rect = el.getBoundingClientRect();
     if (rect.width <= 0 || rect.height <= 0) continue;
