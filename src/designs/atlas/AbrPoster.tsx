@@ -15,6 +15,7 @@ export function AbrPoster({ alt, className }: AbrPosterProps) {
         fill
         sizes="100vw"
         priority={false}
+        loading="eager"
         className="object-cover dark:hidden"
       />
       <Image
@@ -23,6 +24,7 @@ export function AbrPoster({ alt, className }: AbrPosterProps) {
         fill
         sizes="100vw"
         priority={false}
+        loading="eager"
         className="hidden object-cover dark:block"
       />
     </span>

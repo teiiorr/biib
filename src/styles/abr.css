@@ -1,95 +1,98 @@
-/* Abr ipagi (Atlas): kanvas va poster, hamda abr ochilishi. */
-.abr-silk {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background: var(--bg);
-}
-.abr-poster {
-  position: absolute;
-  inset: 0;
-}
-.abr-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 900ms var(--ease-out);
-}
-.abr-silk[data-ready="true"] .abr-canvas {
-  opacity: 1;
-}
-.abr-poster {
-  transition: opacity 900ms var(--ease-out);
-}
-.abr-silk[data-ready="true"] .abr-poster {
-  opacity: 0;
-}
-
-.abr-reveal {
-  position: relative;
-  overflow: hidden;
-}
-.abr-reveal-content {
-  transform: translateY(0);
-}
-.abr-reveal[data-state="idle"] .abr-reveal-content {
-  opacity: 0;
-}
-.abr-reveal[data-state="play"] .abr-reveal-content {
-  animation: abr-settle 900ms steps(4, end) forwards;
-}
-.abr-reveal-bands {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  pointer-events: none;
-}
-.abr-reveal-band {
-  display: block;
-  background: var(--bg);
-  transform-origin: top;
-}
-.abr-reveal[data-state="done"] .abr-reveal-bands {
-  display: none;
-}
-.abr-reveal[data-state="play"] .abr-reveal-band {
-  animation: abr-band 700ms steps(5, end) forwards;
-  /* Doira: 90, 90, 180 ms guruhlari */
-  animation-delay: calc(
-    (var(--band-index) - mod(var(--band-index), 3)) / 3 * 360ms + mod(var(--band-index), 3) * 90ms
-  );
-}
-@keyframes abr-band {
-  to {
-    transform: scaleY(0);
+@layer components {
+  /* Abr ipagi (Atlas): kanvas va poster, hamda abr ochilishi. */
+  .abr-silk {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: var(--bg);
   }
-}
-@keyframes abr-settle {
-  from {
-    opacity: 0.6;
-    transform: translateY(16px);
+  .abr-poster {
+    position: absolute;
+    inset: 0;
+    display: block;
   }
-  to {
+  .abr-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 900ms var(--ease-out);
+  }
+  .abr-silk[data-ready="true"] .abr-canvas {
     opacity: 1;
-    transform: translateY(0);
   }
-}
-@media (prefers-reduced-motion: reduce) {
-  .abr-reveal[data-state="play"] .abr-reveal-content {
-    animation: abr-fade 150ms var(--ease-ui) forwards;
+  .abr-poster {
+    transition: opacity 900ms var(--ease-out);
   }
-  .abr-reveal[data-state="play"] .abr-reveal-bands {
-    display: none;
-  }
-}
-@keyframes abr-fade {
-  from {
+  .abr-silk[data-ready="true"] .abr-poster {
     opacity: 0;
   }
-  to {
-    opacity: 1;
+
+  .abr-reveal {
+    position: relative;
+    overflow: hidden;
+  }
+  .abr-reveal-content {
+    transform: translateY(0);
+  }
+  .abr-reveal[data-state="idle"] .abr-reveal-content {
+    opacity: 0;
+  }
+  .abr-reveal[data-state="play"] .abr-reveal-content {
+    animation: abr-settle 900ms steps(4, end) forwards;
+  }
+  .abr-reveal-bands {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    pointer-events: none;
+  }
+  .abr-reveal-band {
+    display: block;
+    background: var(--bg);
+    transform-origin: top;
+  }
+  .abr-reveal[data-state="done"] .abr-reveal-bands {
+    display: none;
+  }
+  .abr-reveal[data-state="play"] .abr-reveal-band {
+    animation: abr-band 700ms steps(5, end) forwards;
+    /* Doira: 90, 90, 180 ms guruhlari */
+    animation-delay: calc(
+      (var(--band-index) - mod(var(--band-index), 3)) / 3 * 360ms + mod(var(--band-index), 3) * 90ms
+    );
+  }
+  @keyframes abr-band {
+    to {
+      transform: scaleY(0);
+    }
+  }
+  @keyframes abr-settle {
+    from {
+      opacity: 0.6;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .abr-reveal[data-state="play"] .abr-reveal-content {
+      animation: abr-fade 150ms var(--ease-ui) forwards;
+    }
+    .abr-reveal[data-state="play"] .abr-reveal-bands {
+      display: none;
+    }
+  }
+  @keyframes abr-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }

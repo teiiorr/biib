@@ -80,20 +80,20 @@ export function Button(props: ButtonProps) {
       disabled={!asChild && disabled && !disabledReason ? true : undefined}
       onClick={inactive ? undefined : onClick}
     >
-      {iconSlot === "only" ? (
-        graphic
-      ) : (
-        <>
-          {iconPosition === "start" ? graphic : null}
-          {/* asChild da yorliq oʻrash tashqarida (LinkButton kabi), Slottable bolasi ildiz element boʻladi. */}
-          {asChild ? (
-            <Slottable>{children}</Slottable>
-          ) : (
-            <span className="text-trim">{children}</span>
-          )}
-          {iconPosition === "end" ? graphic : null}
-        </>
-      )}
+      {iconSlot === "only"
+        ? graphic
+        : [
+            iconPosition === "start" ? <span key="start">{graphic}</span> : null,
+            /* Slot faqat toʻgʻridan-toʻgʻri bolalar orasidan Slottable ni topadi: Fragment emas, massiv. */
+            asChild ? (
+              <Slottable key="label">{children}</Slottable>
+            ) : (
+              <span key="label" className="text-trim">
+                {children}
+              </span>
+            ),
+            iconPosition === "end" ? <span key="end">{graphic}</span> : null,
+          ]}
     </Component>
   );
 

@@ -9,6 +9,7 @@
 @import "./ui.css";
 @import "./layout.css";
 @import "./abr.css";
+@import "./home.css";
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 @custom-variant atlas (&:where([data-design="atlas"], [data-design="atlas"] *));

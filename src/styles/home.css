@@ -1,0 +1,415 @@
+@layer components {
+  /* Bosh sahifa: Darvoza, portal, chor-bogʻ, yangiliklar, odamlar, aloqa lentasi. */
+
+  .section-head {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .section-head-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px 24px;
+    margin-bottom: 24px;
+  }
+
+  /* Darvoza */
+  .home-hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    align-items: end;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .home-hero-art {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+  }
+  .home-hero-slot,
+  .home-hero-slot > .abr-silk {
+    position: absolute;
+    inset: 0;
+  }
+  .home-hero-ganch {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+  }
+  .home-hero-lattice {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.16;
+    pointer-events: none;
+    color: var(--accent-art);
+  }
+  /* Matn ostidagi yumshoq ostlik: ipak ustida 4.5:1 kontrast (§8 IV.8). */
+  .home-hero-content::before {
+    content: "";
+    position: absolute;
+    inset: 0 -100vw -100% -100vw;
+    z-index: -1;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      color-mix(in oklab, var(--bg) 78%, transparent) 38%,
+      color-mix(in oklab, var(--bg) 92%, transparent) 100%
+    );
+    pointer-events: none;
+  }
+  .home-hero-content {
+    position: relative;
+    display: grid;
+    gap: 24px;
+    padding-top: calc(var(--header-h) + 48px + var(--safe-top));
+    padding-bottom: calc(var(--tabbar-h) + 48px + var(--safe-bottom));
+  }
+  @media (min-width: 1024px) {
+    .home-hero-content {
+      padding-bottom: 96px;
+    }
+  }
+  .home-hero-title {
+    max-width: 12ch;
+    /* Bosh harfning yon boʻshligʻi: chap chetga optik tekislash (§8 III.6). */
+    margin-inline-start: -0.04em;
+  }
+  .home-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  /* Kunduzgi ipak ustida matn: sut-oq ostlik yoʻq, ipak oʻzi och; tunda ipak toʻq. */
+
+  /* Portal */
+  .home-portal {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    align-items: center;
+    padding-block: var(--section-gap);
+    overflow: hidden;
+  }
+  .home-portal-grid {
+    display: grid;
+    gap: 32px;
+    align-items: center;
+  }
+  @media (min-width: 1024px) {
+    .home-portal-grid {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: 64px;
+    }
+  }
+  .home-portal-text {
+    display: grid;
+    gap: 16px;
+    max-width: 28ch;
+  }
+  .home-portal-statement {
+    text-wrap: balance;
+  }
+  .home-portal-window {
+    justify-self: center;
+    width: min(100%, 420px);
+    transform-origin: center;
+    will-change: transform;
+  }
+  .home-portal-silk,
+  .home-portal-silk > .abr-silk {
+    position: absolute;
+    inset: 0;
+  }
+  .home-portal-ravoq .ravoq-media {
+    background: var(--art-5);
+  }
+  .key-word {
+    position: relative;
+    white-space: nowrap;
+  }
+  .key-word::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.1em;
+    height: 5px;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform var(--dur-reveal) var(--ease-out);
+    background:
+      repeating-linear-gradient(90deg, var(--accent-art) 0 1px, transparent 1px 6px) 0 0 / 6px 5px,
+      linear-gradient(var(--accent-art), var(--accent-art)) 0 0 / 100% 1px no-repeat,
+      linear-gradient(var(--accent-art), var(--accent-art)) 0 4px / 100% 1px no-repeat;
+  }
+  .key-word[data-reveal="done"]::after {
+    transform: scaleX(1);
+  }
+  :root[data-motion="off"] .key-word::after {
+    transform: scaleX(1);
+    transition: none;
+  }
+  :root[data-design="birlashma"] .key-word::after {
+    height: 0.3em;
+    bottom: -0.05em;
+    z-index: -1;
+    opacity: 0.6;
+    border-radius: 2px;
+    background: var(--art-2);
+    transform: scaleX(0) rotate(-0.5deg);
+  }
+  :root[data-design="birlashma"] .key-word[data-reveal="done"]::after {
+    transform: scaleX(1) rotate(-0.5deg);
+  }
+
+  /* Chor-bogʻ */
+  .chorbogh {
+    position: relative;
+    display: grid;
+    gap: 32px;
+  }
+  @media (min-width: 600px) {
+    .chorbogh {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px 48px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .chorbogh {
+      gap: 48px 64px;
+    }
+  }
+  .chorbogh-star {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--accent-art);
+    z-index: 1;
+    pointer-events: none;
+    display: none;
+  }
+  @media (min-width: 600px) {
+    .chorbogh-star {
+      display: block;
+    }
+  }
+  .chorbogh-cell {
+    display: grid;
+    gap: 12px;
+    grid-template-rows: auto auto auto 1fr auto;
+  }
+  .chorbogh-media {
+    width: 100%;
+    margin-bottom: 4px;
+    color: var(--accent-art);
+  }
+  .chorbogh-cell:hover .chorbogh-media {
+    filter: saturate(1.15);
+  }
+  .chorbogh-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .chorbogh-cta {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+  }
+  .chorbogh-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    color: var(--tint);
+  }
+
+  /* Yangiliklar */
+  .news-teaser {
+    display: grid;
+    gap: 32px;
+  }
+  @media (min-width: 1024px) {
+    .news-teaser {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: 48px;
+    }
+  }
+  .news-lead {
+    display: grid;
+    gap: 12px;
+  }
+  .news-cover {
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+  }
+  .news-cover-link {
+    display: block;
+  }
+  .news-title a {
+    color: var(--ink);
+  }
+  .news-title a:hover {
+    color: var(--tint);
+  }
+  .news-lead-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .news-side {
+    display: grid;
+    gap: 24px;
+    align-content: start;
+  }
+  .news-row {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+  @media (min-width: 1024px) {
+    .news-row {
+      grid-template-columns: 160px minmax(0, 1fr);
+    }
+  }
+  .news-row-text {
+    display: grid;
+    gap: 8px;
+  }
+
+  /* Odamlar */
+  .people-section {
+    background: var(--surface);
+  }
+  .people-head {
+    position: relative;
+    margin-bottom: 32px;
+    padding: 24px 0;
+  }
+  .people-kundal {
+    position: absolute;
+    inset: 0 -16px;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    z-index: 0;
+  }
+  .people-head-text {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 12px;
+    padding: 0 16px;
+  }
+  .people-lead {
+    color: var(--ink-2);
+  }
+  :root[data-design="atlas"] .people-head-text {
+    color: var(--kundal-ink, var(--ink));
+  }
+  .people-groups {
+    display: grid;
+    gap: 48px;
+  }
+  .people-row {
+    display: flex;
+    gap: 16px;
+    margin: 0;
+    padding: 0 0 12px;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--margin);
+    -webkit-overflow-scrolling: touch;
+  }
+  .people-card {
+    flex: 0 0 68%;
+    scroll-snap-align: start;
+    display: grid;
+    gap: 8px;
+  }
+  @media (min-width: 600px) {
+    .people-card {
+      flex-basis: 40%;
+    }
+  }
+  @media (min-width: 1024px) {
+    .people-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px;
+      overflow: visible;
+    }
+    .people-card {
+      flex-basis: auto;
+    }
+  }
+  .people-portrait {
+    width: 100%;
+  }
+
+  /* Aloqa lentasi */
+  .contact-band {
+    position: relative;
+  }
+  .contact-band-girih {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    color: var(--accent-art);
+    opacity: 0.8;
+  }
+  .contact-band-grid {
+    position: relative;
+    display: grid;
+    gap: 32px;
+    padding-block: 32px;
+  }
+  @media (min-width: 1024px) {
+    .contact-band-grid {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      align-items: center;
+      gap: 64px;
+    }
+  }
+  .contact-band-palak {
+    justify-self: center;
+    color: var(--accent-art);
+  }
+  .contact-band-text {
+    display: grid;
+    gap: 16px;
+  }
+  .contact-band-list {
+    display: grid;
+    gap: 16px;
+    margin: 8px 0 0;
+  }
+  @media (min-width: 600px) {
+    .contact-band-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .contact-band-list dd {
+    margin: 4px 0 0;
+  }
+  .contact-band-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 8px;
+  }
+  .contact-band-art {
+    display: none;
+  }
+}

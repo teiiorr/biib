@@ -1,377 +1,380 @@
-/* UI primitivlari: boshqaruv oʻlchamlari, zardoʻzi ostchiziq, qogʻoz tugma, stikerlar, prose. */
+@layer components {
+  /* UI primitivlari: boshqaruv oʻlchamlari, zardoʻzi ostchiziq, qogʻoz tugma, stikerlar, prose. */
 
-:root {
-  --control-s: 40px;
-  --control-m: 48px;
-  --control-l: 56px;
-  --icon-s: 16px;
-  --icon-m: 20px;
-  --icon-l: 24px;
-  --hit-min: 44px;
-  --hit-kid: 64px;
-  --input-h: 48px;
-  /* Oʻchirilgan boshqaruv chegarasi 3:1 ni saqlaydi. */
-  --ring-boundary: inset 0 0 0 1px var(--line-strong);
-  /* Birlashma: bosilgan qogʻoz tagligi, 2 px toʻqroq pastki qirra. */
-  --shadow-paper-edge: 0 2px 0 var(--tint-hover);
-  --shadow-paper-edge-pressed: 0 0 0 var(--tint-hover);
-}
-
-/* ---------- Tugma ---------- */
-.ui-button {
-  --btn-h: var(--control-m);
-  --btn-px: 24px;
-  --hit: var(--hit-min);
-  height: var(--btn-h);
-  padding-inline: var(--btn-px);
-  border-radius: var(--radius-control);
-  -webkit-tap-highlight-color: transparent;
-  transition: transform 200ms var(--ease-ui);
-}
-.ui-button[data-size="40"] {
-  --btn-h: var(--control-s);
-  --btn-px: 20px;
-}
-.ui-button[data-size="56"] {
-  --btn-h: var(--control-l);
-  --btn-px: 28px;
-}
-.ui-button[data-size="kid"] {
-  --btn-h: var(--control-l);
-  --btn-px: 28px;
-  --hit: var(--hit-kid);
-}
-/* Belgi tomonida gorizontal boʻshliq 4 px kam. */
-.ui-button[data-icon="start"] {
-  padding-inline-start: calc(var(--btn-px) - 4px);
-}
-.ui-button[data-icon="end"] {
-  padding-inline-end: calc(var(--btn-px) - 4px);
-}
-.ui-button[data-icon="only"] {
-  width: var(--btn-h);
-  padding-inline: 0;
-}
-/* Konsentrik: 56 px oyna tugmasi kapsula emas, panel radiusidan kelib chiqadi. */
-.ui-button[data-variant="glass"][data-size="56"],
-.ui-button[data-variant="glass"][data-size="kid"] {
-  border-radius: min(var(--radius-control), var(--radius-panel));
-}
-/* Koʻrinish 44 px dan kichik boʻlsa, sezish maydoni psevdoelement bilan toʻldiriladi. */
-.ui-button[data-size="40"]::after,
-.ui-button[data-size="kid"]::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: max(100%, var(--hit));
-  height: max(100%, var(--hit));
-  translate: -50% -50%;
-}
-.ui-button:active:not([aria-disabled="true"]) {
-  transform: scale(0.97);
-}
-.ui-button[data-variant="link"] {
-  height: auto;
-  padding-inline: 0;
-  border-radius: var(--radius-s);
-}
-.ui-button[data-variant="link"]::after {
-  content: none;
-}
-
-/* Zardoʻzi ostchiziq: ikki oltin ip va har 6 px da koʻndalang chok, faqat sichqoncha bor qurilmada. */
-.ui-button[data-variant="ghost"]::before {
-  content: "";
-  position: absolute;
-  inset-inline: var(--btn-px);
-  bottom: 22%;
-  height: 5px;
-  color: var(--accent-text);
-  background-image:
-    repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 6px),
-    linear-gradient(currentColor, currentColor), linear-gradient(currentColor, currentColor);
-  background-size:
-    100% 5px,
-    100% 1px,
-    100% 1px;
-  background-position:
-    0 0,
-    0 0,
-    0 4px;
-  background-repeat: no-repeat;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--dur-ui) var(--ease-ui);
-}
-@media (hover: hover) {
-  .ui-button[data-variant="ghost"]:hover:not([aria-disabled="true"])::before {
-    transform: scaleX(1);
+  :root {
+    --control-s: 40px;
+    --control-m: 48px;
+    --control-l: 56px;
+    --icon-s: 16px;
+    --icon-m: 20px;
+    --icon-l: 24px;
+    --hit-min: 44px;
+    --hit-kid: 64px;
+    --input-h: 48px;
+    /* Oʻchirilgan boshqaruv chegarasi 3:1 ni saqlaydi. */
+    --ring-boundary: inset 0 0 0 1px var(--line-strong);
+    /* Birlashma: bosilgan qogʻoz tagligi, 2 px toʻqroq pastki qirra. */
+    --shadow-paper-edge: 0 2px 0 var(--tint-hover);
+    --shadow-paper-edge-pressed: 0 0 0 var(--tint-hover);
   }
-}
 
-.ui-button[aria-disabled="true"] {
-  cursor: not-allowed;
-  color: var(--ink-3);
-  background: var(--surface-2);
-  box-shadow: var(--ring-boundary);
-}
-.ui-button[data-variant="ghost"][aria-disabled="true"],
-.ui-button[data-variant="link"][aria-disabled="true"] {
-  background: none;
-  box-shadow: none;
-}
-.ui-button[aria-busy="true"] {
-  cursor: progress;
-}
-
-/* Birlashma: bosilgan qogʻoz. Bosishda 2 px choʻkadi, qoʻyib yuborilganda ease-pop. */
-[data-design="birlashma"] .ui-button[data-variant="primary"] {
-  box-shadow: var(--shadow-paper-edge);
-  transition: transform 200ms var(--ease-pop);
-}
-[data-design="birlashma"] .ui-button[data-variant="primary"]:active:not([aria-disabled="true"]) {
-  transform: translateY(2px);
-  box-shadow: var(--shadow-paper-edge-pressed);
-  transition-timing-function: var(--ease-ui);
-}
-
-.ui-spinner {
-  animation: ui-spin 900ms linear infinite;
-}
-@keyframes ui-spin {
-  to {
-    transform: rotate(360deg);
+  /* ---------- Tugma ---------- */
+  .ui-button {
+    --btn-h: var(--control-m);
+    --btn-px: 24px;
+    --hit: var(--hit-min);
+    height: var(--btn-h);
+    padding-inline: var(--btn-px);
+    border-radius: var(--radius-control);
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 200ms var(--ease-ui);
   }
-}
+  .ui-button[data-size="40"] {
+    --btn-h: var(--control-s);
+    --btn-px: 20px;
+  }
+  .ui-button[data-size="56"] {
+    --btn-h: var(--control-l);
+    --btn-px: 28px;
+  }
+  .ui-button[data-size="kid"] {
+    --btn-h: var(--control-l);
+    --btn-px: 28px;
+    --hit: var(--hit-kid);
+  }
+  /* Belgi tomonida gorizontal boʻshliq 4 px kam. */
+  .ui-button[data-icon="start"] {
+    padding-inline-start: calc(var(--btn-px) - 4px);
+  }
+  .ui-button[data-icon="end"] {
+    padding-inline-end: calc(var(--btn-px) - 4px);
+  }
+  .ui-button[data-icon="only"] {
+    width: var(--btn-h);
+    padding-inline: 0;
+  }
+  /* Konsentrik: 56 px oyna tugmasi kapsula emas, panel radiusidan kelib chiqadi. */
+  .ui-button[data-variant="glass"][data-size="56"],
+  .ui-button[data-variant="glass"][data-size="kid"] {
+    border-radius: min(var(--radius-control), var(--radius-panel));
+  }
+  /* Koʻrinish 44 px dan kichik boʻlsa, sezish maydoni psevdoelement bilan toʻldiriladi. */
+  .ui-button[data-size="40"]::after,
+  .ui-button[data-size="kid"]::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, var(--hit));
+    height: max(100%, var(--hit));
+    translate: -50% -50%;
+  }
+  .ui-button:active:not([aria-disabled="true"]) {
+    transform: scale(0.97);
+  }
+  .ui-button[data-variant="link"] {
+    height: auto;
+    padding-inline: 0;
+    border-radius: var(--radius-s);
+  }
+  .ui-button[data-variant="link"]::after {
+    content: none;
+  }
 
-/* ---------- Teg ---------- */
-.ui-tag[data-tone="art-1"] {
-  background: color-mix(in oklab, var(--art-1) 16%, transparent);
-  color: var(--art-1-text);
-}
-.ui-tag[data-tone="art-2"] {
-  background: color-mix(in oklab, var(--art-2) 18%, transparent);
-  color: var(--art-2-text);
-}
-.ui-tag[data-tone="art-3"] {
-  background: color-mix(in oklab, var(--art-3) 16%, transparent);
-  color: var(--art-3-text);
-}
-.ui-tag[data-tone="art-4"] {
-  background: color-mix(in oklab, var(--art-4) 16%, transparent);
-  color: var(--art-4-text);
-}
-.ui-tag[data-tone="art-5"] {
-  background: color-mix(in oklab, var(--art-5) 16%, transparent);
-  color: var(--art-5-text);
-}
-.ui-tag[data-tone="art-6"] {
-  background: color-mix(in oklab, var(--art-6) 16%, transparent);
-  color: var(--art-6-text);
-}
-.ui-tag[data-tone="art-7"] {
-  background: color-mix(in oklab, var(--art-7) 18%, transparent);
-  color: var(--art-7-text);
-}
+  /* Zardoʻzi ostchiziq: ikki oltin ip va har 6 px da koʻndalang chok, faqat sichqoncha bor qurilmada. */
+  .ui-button[data-variant="ghost"]::before {
+    content: "";
+    position: absolute;
+    inset-inline: var(--btn-px);
+    bottom: 22%;
+    height: 5px;
+    color: var(--accent-text);
+    background-image:
+      repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 6px),
+      linear-gradient(currentColor, currentColor), linear-gradient(currentColor, currentColor);
+    background-size:
+      100% 5px,
+      100% 1px,
+      100% 1px;
+    background-position:
+      0 0,
+      0 0,
+      0 4px;
+    background-repeat: no-repeat;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-ui) var(--ease-ui);
+  }
+  @media (hover: hover) {
+    .ui-button[data-variant="ghost"]:hover:not([aria-disabled="true"])::before {
+      transform: scaleX(1);
+    }
+  }
 
-/* ---------- Stiker ---------- */
-.ui-sticker {
-  --sticker-rotate: 0deg;
-  --sticker-paint: var(--art-2);
-  --sticker-ink: var(--art-2-text);
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
-}
-.ui-sticker-paper {
-  position: relative;
-  display: grid;
-  place-items: center;
-  padding: 4px;
-  border-radius: var(--radius-s);
-  background: var(--surface-2);
-  color: var(--sticker-ink);
-  transition: transform var(--dur-ui) var(--ease-ui);
-}
-.ui-sticker-fill {
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-s);
-  background: color-mix(in oklab, var(--sticker-paint) 22%, var(--surface-2));
-}
-.ui-sticker-label {
-  position: relative;
-  padding: 6px 10px;
-}
-/* Atlas: bir xil DOM, oddiy toʻrtburchak belgi; qirqilgan shakl faqat Birlashmada. */
-[data-design="birlashma"] .ui-sticker {
-  rotate: var(--sticker-rotate);
-  filter: drop-shadow(0 1px 0 var(--material-shadow)) drop-shadow(0 4px 8px var(--material-shadow));
-}
-[data-design="birlashma"] .ui-sticker-paper {
-  clip-path: var(--sticker-clip);
-  border-radius: 0;
-}
-[data-design="birlashma"] .ui-sticker-fill {
-  inset: 4px;
-  border-radius: 0;
-  clip-path: var(--sticker-clip);
-  background: color-mix(in oklab, var(--sticker-paint) 38%, var(--surface-2));
-}
-[data-design="birlashma"] .ui-sticker[data-shape="circle"] .ui-sticker-paper,
-[data-design="birlashma"] .ui-sticker[data-shape="star"] .ui-sticker-paper {
-  aspect-ratio: 1;
-}
-[data-design="birlashma"] .ui-sticker[data-shape="circle"] .ui-sticker-label {
-  padding: 12px;
-}
-[data-design="birlashma"] .ui-sticker[data-shape="star"] .ui-sticker-label {
-  padding: 24px 14px 20px;
-}
-[data-design="birlashma"] .ui-sticker[data-shape="cloud"] .ui-sticker-label {
-  padding: 16px 20px 12px;
-}
-[data-design="birlashma"] .ui-sticker[data-shape="ticket"] .ui-sticker-label {
-  padding: 8px 18px;
-}
-/* Yopishish: 300 ms sakrash bilan; harakat oʻchiq boʻlsa darhol koʻrinadi. */
-@media (prefers-reduced-motion: no-preference) {
-  :root:not([data-motion="off"])[data-design="birlashma"] .ui-sticker[data-reveal="pending"] {
-    opacity: 0;
+  .ui-button[aria-disabled="true"] {
+    cursor: not-allowed;
+    color: var(--ink-3);
+    background: var(--surface-2);
+    box-shadow: var(--ring-boundary);
   }
-  :root:not([data-motion="off"])[data-design="birlashma"] .ui-sticker[data-reveal="done"] {
-    animation: ui-slap 300ms var(--ease-pop) both;
+  .ui-button[data-variant="ghost"][aria-disabled="true"],
+  .ui-button[data-variant="link"][aria-disabled="true"] {
+    background: none;
+    box-shadow: none;
   }
-}
-@keyframes ui-slap {
-  from {
-    opacity: 0;
-    transform: scale(1.12);
-    rotate: calc(var(--sticker-rotate) - 6deg);
+  .ui-button[aria-busy="true"] {
+    cursor: progress;
   }
-  to {
-    opacity: 1;
-    transform: scale(1);
+
+  /* Birlashma: bosilgan qogʻoz. Bosishda 2 px choʻkadi, qoʻyib yuborilganda ease-pop. */
+  [data-design="birlashma"] .ui-button[data-variant="primary"] {
+    box-shadow: var(--shadow-paper-edge);
+    transition: transform 200ms var(--ease-pop);
+  }
+  [data-design="birlashma"] .ui-button[data-variant="primary"]:active:not([aria-disabled="true"]) {
+    transform: translateY(2px);
+    box-shadow: var(--shadow-paper-edge-pressed);
+    transition-timing-function: var(--ease-ui);
+  }
+
+  .ui-spinner {
+    animation: ui-spin 900ms linear infinite;
+  }
+  @keyframes ui-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* ---------- Teg ---------- */
+  .ui-tag[data-tone="art-1"] {
+    background: color-mix(in oklab, var(--art-1) 16%, transparent);
+    color: var(--art-1-text);
+  }
+  .ui-tag[data-tone="art-2"] {
+    background: color-mix(in oklab, var(--art-2) 18%, transparent);
+    color: var(--art-2-text);
+  }
+  .ui-tag[data-tone="art-3"] {
+    background: color-mix(in oklab, var(--art-3) 16%, transparent);
+    color: var(--art-3-text);
+  }
+  .ui-tag[data-tone="art-4"] {
+    background: color-mix(in oklab, var(--art-4) 16%, transparent);
+    color: var(--art-4-text);
+  }
+  .ui-tag[data-tone="art-5"] {
+    background: color-mix(in oklab, var(--art-5) 16%, transparent);
+    color: var(--art-5-text);
+  }
+  .ui-tag[data-tone="art-6"] {
+    background: color-mix(in oklab, var(--art-6) 16%, transparent);
+    color: var(--art-6-text);
+  }
+  .ui-tag[data-tone="art-7"] {
+    background: color-mix(in oklab, var(--art-7) 18%, transparent);
+    color: var(--art-7-text);
+  }
+
+  /* ---------- Stiker ---------- */
+  .ui-sticker {
+    --sticker-rotate: 0deg;
+    --sticker-paint: var(--art-2);
+    --sticker-ink: var(--art-2-text);
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .ui-sticker-paper {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: 4px;
+    border-radius: var(--radius-s);
+    background: var(--surface-2);
+    color: var(--sticker-ink);
+    transition: transform var(--dur-ui) var(--ease-ui);
+  }
+  .ui-sticker-fill {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-s);
+    background: color-mix(in oklab, var(--sticker-paint) 22%, var(--surface-2));
+  }
+  .ui-sticker-label {
+    position: relative;
+    padding: 6px 10px;
+  }
+  /* Atlas: bir xil DOM, oddiy toʻrtburchak belgi; qirqilgan shakl faqat Birlashmada. */
+  [data-design="birlashma"] .ui-sticker {
     rotate: var(--sticker-rotate);
+    filter: drop-shadow(0 1px 0 var(--material-shadow))
+      drop-shadow(0 4px 8px var(--material-shadow));
   }
-}
-/* Koʻchayotgan burchak: faqat sichqoncha bor qurilmada. */
-.ui-sticker-corner {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 18px;
-  height: 18px;
-  clip-path: polygon(100% 0, 100% 100%, 0 100%);
-  background: var(--surface);
-  transform: scale(0);
-  transform-origin: bottom right;
-  transition: transform var(--dur-ui) var(--ease-pop);
-}
-@media (hover: hover) {
-  [data-design="birlashma"] .ui-sticker:hover .ui-sticker-paper {
-    transform: translateY(-2px) rotate(1deg);
+  [data-design="birlashma"] .ui-sticker-paper {
+    clip-path: var(--sticker-clip);
+    border-radius: 0;
   }
-  [data-design="birlashma"] .ui-sticker:hover .ui-sticker-corner {
-    transform: scale(1);
+  [data-design="birlashma"] .ui-sticker-fill {
+    inset: 4px;
+    border-radius: 0;
+    clip-path: var(--sticker-clip);
+    background: color-mix(in oklab, var(--sticker-paint) 38%, var(--surface-2));
   }
-}
+  [data-design="birlashma"] .ui-sticker[data-shape="circle"] .ui-sticker-paper,
+  [data-design="birlashma"] .ui-sticker[data-shape="star"] .ui-sticker-paper {
+    aspect-ratio: 1;
+  }
+  [data-design="birlashma"] .ui-sticker[data-shape="circle"] .ui-sticker-label {
+    padding: 12px;
+  }
+  [data-design="birlashma"] .ui-sticker[data-shape="star"] .ui-sticker-label {
+    padding: 24px 14px 20px;
+  }
+  [data-design="birlashma"] .ui-sticker[data-shape="cloud"] .ui-sticker-label {
+    padding: 16px 20px 12px;
+  }
+  [data-design="birlashma"] .ui-sticker[data-shape="ticket"] .ui-sticker-label {
+    padding: 8px 18px;
+  }
+  /* Yopishish: 300 ms sakrash bilan; harakat oʻchiq boʻlsa darhol koʻrinadi. */
+  @media (prefers-reduced-motion: no-preference) {
+    :root:not([data-motion="off"])[data-design="birlashma"] .ui-sticker[data-reveal="pending"] {
+      opacity: 0;
+    }
+    :root:not([data-motion="off"])[data-design="birlashma"] .ui-sticker[data-reveal="done"] {
+      animation: ui-slap 300ms var(--ease-pop) both;
+    }
+  }
+  @keyframes ui-slap {
+    from {
+      opacity: 0;
+      transform: scale(1.12);
+      rotate: calc(var(--sticker-rotate) - 6deg);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+      rotate: var(--sticker-rotate);
+    }
+  }
+  /* Koʻchayotgan burchak: faqat sichqoncha bor qurilmada. */
+  .ui-sticker-corner {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 18px;
+    height: 18px;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    background: var(--surface);
+    transform: scale(0);
+    transform-origin: bottom right;
+    transition: transform var(--dur-ui) var(--ease-pop);
+  }
+  @media (hover: hover) {
+    [data-design="birlashma"] .ui-sticker:hover .ui-sticker-paper {
+      transform: translateY(-2px) rotate(1deg);
+    }
+    [data-design="birlashma"] .ui-sticker:hover .ui-sticker-corner {
+      transform: scale(1);
+    }
+  }
 
-/* ---------- Tooltip ---------- */
-.ui-tooltip {
-  animation: ui-fade-in var(--dur-ui) var(--ease-ui);
-  transform-origin: var(--radix-tooltip-content-transform-origin);
-}
-@keyframes ui-fade-in {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
+  /* ---------- Tooltip ---------- */
+  .ui-tooltip {
+    animation: ui-fade-in var(--dur-ui) var(--ease-ui);
+    transform-origin: var(--radix-tooltip-content-transform-origin);
   }
-  to {
-    opacity: 1;
-    transform: scale(1);
+  @keyframes ui-fade-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
-}
 
-/* ---------- Prose ---------- */
-.ui-prose {
-  --prose-gap: 16px;
-}
-.ui-prose > * + * {
-  margin-top: var(--prose-gap);
-}
-.ui-prose > h2,
-.ui-prose > h3 {
-  margin-top: 48px;
-}
-.ui-prose > h2 + *,
-.ui-prose > h3 + * {
-  margin-top: 12px;
-}
-.ui-prose ul,
-.ui-prose ol {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.ui-prose ol {
-  counter-reset: prose-item;
-}
-.ui-prose li {
-  position: relative;
-}
-.ui-prose li + li {
-  margin-top: 8px;
-}
-/* Osilgan belgilar: nuqta va raqam matn chetidan tashqarida turadi. */
-.ui-prose ul > li::before {
-  content: "";
-  position: absolute;
-  inset-inline-start: -1.1em;
-  top: 0.68em;
-  width: 0.35em;
-  height: 0.35em;
-  border-radius: 50%;
-  background: var(--accent-art);
-}
-.ui-prose ol > li::before {
-  counter-increment: prose-item;
-  content: counter(prose-item) ".";
-  position: absolute;
-  inset-inline-start: -1.9em;
-  min-width: 1.6em;
-  text-align: end;
-  color: var(--ink-3);
-  font-variant-numeric: tabular-nums;
-}
-.ui-prose figcaption {
-  margin-top: 8px;
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
-  color: var(--ink-3);
-}
-.ui-prose a {
-  color: var(--tint);
-  text-decoration: underline;
-  text-underline-offset: 0.18em;
-  text-decoration-thickness: 1px;
-}
-[data-design="birlashma"] .ui-prose a {
-  text-decoration: none;
-  font-weight: 700;
-}
-.ui-prose strong {
-  font-weight: var(--fw-display-strong);
-}
+  /* ---------- Prose ---------- */
+  .ui-prose {
+    --prose-gap: 16px;
+  }
+  .ui-prose > * + * {
+    margin-top: var(--prose-gap);
+  }
+  .ui-prose > h2,
+  .ui-prose > h3 {
+    margin-top: 48px;
+  }
+  .ui-prose > h2 + *,
+  .ui-prose > h3 + * {
+    margin-top: 12px;
+  }
+  .ui-prose ul,
+  .ui-prose ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .ui-prose ol {
+    counter-reset: prose-item;
+  }
+  .ui-prose li {
+    position: relative;
+  }
+  .ui-prose li + li {
+    margin-top: 8px;
+  }
+  /* Osilgan belgilar: nuqta va raqam matn chetidan tashqarida turadi. */
+  .ui-prose ul > li::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: -1.1em;
+    top: 0.68em;
+    width: 0.35em;
+    height: 0.35em;
+    border-radius: 50%;
+    background: var(--accent-art);
+  }
+  .ui-prose ol > li::before {
+    counter-increment: prose-item;
+    content: counter(prose-item) ".";
+    position: absolute;
+    inset-inline-start: -1.9em;
+    min-width: 1.6em;
+    text-align: end;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .ui-prose figcaption {
+    margin-top: 8px;
+    font-size: var(--fs-small);
+    line-height: var(--lh-small);
+    color: var(--ink-3);
+  }
+  .ui-prose a {
+    color: var(--tint);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+    text-decoration-thickness: 1px;
+  }
+  [data-design="birlashma"] .ui-prose a {
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .ui-prose strong {
+    font-weight: var(--fw-display-strong);
+  }
 
-/* Osilgan tinish belgisi: Safari hanging-punctuation, boshqalarda manfiy text-indent. */
-.ui-pullquote-text {
-  text-indent: -0.42em;
-}
-@supports (hanging-punctuation: first) {
+  /* Osilgan tinish belgisi: Safari hanging-punctuation, boshqalarda manfiy text-indent. */
   .ui-pullquote-text {
-    text-indent: 0;
-    hanging-punctuation: first last;
+    text-indent: -0.42em;
+  }
+  @supports (hanging-punctuation: first) {
+    .ui-pullquote-text {
+      text-indent: 0;
+      hanging-punctuation: first last;
+    }
   }
 }

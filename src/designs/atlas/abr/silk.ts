@@ -14,8 +14,18 @@ const MOBILE_MAX = 1024;
 /** Kanvasni ishga tushiradi; WebGL2 boʻlmasa null qaytaradi. */
 export function startSilk(canvas: HTMLCanvasElement, onFirstFrame: () => void): SilkHandle | null {
   const dprCap = window.innerWidth <= MOBILE_MAX ? 1.5 : 2;
+  /* Oʻlcham ota elementning layout kengligidan: kanvasning oʻz inline uslubi va CSS transform
+     (portal oynasi scale) getBoundingClientRect ni buzadi va cheksiz kattalashishga olib keladi. */
+  const host = canvas.parentElement ?? canvas;
+  const hostSize = () => ({
+    width: Math.max(1, host.clientWidth),
+    height: Math.max(1, host.clientHeight),
+  });
+  const initial = hostSize();
   const renderer = new Renderer({
     canvas,
+    width: initial.width,
+    height: initial.height,
     dpr: Math.min(window.devicePixelRatio || 1, dprCap),
     alpha: false,
     antialias: false,
@@ -24,6 +34,8 @@ export function startSilk(canvas: HTMLCanvasElement, onFirstFrame: () => void): 
   });
   const gl = renderer.gl;
   if (!(gl instanceof WebGL2RenderingContext)) return null;
+  /* Bir kanvasga qayta ulanish (StrictMode, marshrut qaytishi): yoʻqolgan kontekst tiklanadi. */
+  if (gl.isContextLost()) gl.getExtension("WEBGL_lose_context")?.restoreContext();
 
   const colors = readSilkColors();
   const program = new Program(gl, {
@@ -51,16 +63,16 @@ export function startSilk(canvas: HTMLCanvasElement, onFirstFrame: () => void): 
   let pointer = { x: 0.5, y: 0.5, strength: 0 };
 
   const resize = (): void => {
-    const rect = canvas.getBoundingClientRect();
-    renderer.setSize(Math.max(1, rect.width), Math.max(1, rect.height));
+    const size = hostSize();
+    renderer.setSize(size.width, size.height);
     program.uniforms.uRes.value = [gl.drawingBufferWidth, gl.drawingBufferHeight];
   };
   const observer = new ResizeObserver(resize);
-  observer.observe(canvas);
+  observer.observe(host);
   resize();
 
   const onPointer = (event: PointerEvent): void => {
-    const rect = canvas.getBoundingClientRect();
+    const rect = host.getBoundingClientRect();
     pointer = {
       x: (event.clientX - rect.left) / rect.width,
       y: 1 - (event.clientY - rect.top) / rect.height,
@@ -107,7 +119,7 @@ export function startSilk(canvas: HTMLCanvasElement, onFirstFrame: () => void): 
       if (frame) cancelAnimationFrame(frame);
       observer.disconnect();
       canvas.parentElement?.removeEventListener("pointermove", onPointer);
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      /* Kontekst ataylab yoʻqotilmaydi: kanvas bilan birga yigʻishtiriladi, qayta ulanish oson. */
     },
   };
 }

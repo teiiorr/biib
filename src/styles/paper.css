@@ -1,559 +1,627 @@
-/* Birlashma qogʻoz materiali va imzolari: faqat [data-design="birlashma"] ichida. */
+@layer components {
+  /* Birlashma qogʻoz materiali va imzolari: faqat [data-design="birlashma"] ichida. */
 
-:root[data-design="birlashma"] body {
-  background-image: var(--paper-grain, none);
-}
-:root[data-design="birlashma"][data-theme="light"] {
-  --paper-grain: url("/textures/paper-grain.avif");
-}
-:root[data-design="birlashma"][data-theme="dark"] {
-  --paper-grain: url("/textures/chalk-board.avif");
-}
-:root[data-design="birlashma"] body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image: var(--paper-grain);
-  background-size: 320px 320px;
-  opacity: 0.35;
-}
+  :root[data-design="birlashma"] body {
+    background-image: var(--paper-grain, none);
+  }
+  :root[data-design="birlashma"][data-theme="light"] {
+    --paper-grain: url("/textures/paper-grain.avif");
+  }
+  :root[data-design="birlashma"][data-theme="dark"] {
+    --paper-grain: url("/textures/chalk-board.avif");
+  }
+  :root[data-design="birlashma"] body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: var(--paper-grain);
+    background-size: 320px 320px;
+    opacity: 0.35;
+  }
 
-/* Qogʻoz varagʻi */
-.paper-sheet {
-  position: relative;
-  background: var(--surface);
-  color: var(--ink);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-raised);
-  transform: rotate(var(--paper-rotate, 0deg));
-  -webkit-mask-image: var(--paper-mask);
-  mask-image: var(--paper-mask);
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-}
-/* Maska soyani kesadi: soya alohida qatlamda */
-.paper-sheet::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  z-index: -1;
-}
-.paper-fixing {
-  position: absolute;
-  z-index: 2;
-  pointer-events: none;
-}
-.paper-fixing-tape {
-  top: -8px;
-  left: 50%;
-  width: 72px;
-  height: 20px;
-  transform: translateX(-50%) rotate(-2deg);
-  background: color-mix(in oklab, var(--accent-art) 40%, var(--surface-2) 60%);
-  opacity: 0.85;
-}
-.paper-fixing-magnet {
-  top: -10px;
-  right: 16px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--art-4);
-  box-shadow: var(--shadow-raised);
-}
-.paper-fixing-pin {
-  top: -6px;
-  left: 20px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--art-6);
-  box-shadow: var(--shadow-contact);
-}
-.torn-edge {
-  display: block;
-  width: 100%;
-  height: 12px;
-}
+  /* Qogʻoz varagʻi */
+  .paper-sheet {
+    position: relative;
+    background: var(--surface);
+    color: var(--ink);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-raised);
+    transform: rotate(var(--paper-rotate, 0deg));
+    -webkit-mask-image: var(--paper-mask);
+    mask-image: var(--paper-mask);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+  }
+  /* Maska soyani kesadi: soya alohida qatlamda */
+  .paper-sheet::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: -1;
+  }
+  .paper-fixing {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .paper-fixing-tape {
+    top: -8px;
+    left: 50%;
+    width: 72px;
+    height: 20px;
+    transform: translateX(-50%) rotate(-2deg);
+    background: color-mix(in oklab, var(--accent-art) 40%, var(--surface-2) 60%);
+    opacity: 0.85;
+  }
+  .paper-fixing-magnet {
+    top: -10px;
+    right: 16px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--art-4);
+    box-shadow: var(--shadow-raised);
+  }
+  .paper-fixing-pin {
+    top: -6px;
+    left: 20px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--art-6);
+    box-shadow: var(--shadow-contact);
+  }
+  .torn-edge {
+    display: block;
+    width: 100%;
+    height: 12px;
+  }
 
-/* Doodle va qaynash */
-.doodle {
-  display: block;
-}
-.doodle-ink {
-  color: var(--ink-2);
-}
-.doodle-art-1 {
-  color: var(--art-1);
-}
-.doodle-art-2 {
-  color: var(--art-2);
-}
-.doodle-art-3 {
-  color: var(--art-3);
-}
-.doodle-art-4 {
-  color: var(--art-4);
-}
-.doodle-art-5 {
-  color: var(--art-5);
-}
-.doodle-art-6 {
-  color: var(--art-6);
-}
-.doodle-art-7 {
-  color: var(--art-7);
-}
-.boil {
-  display: inline-block;
-}
-.boil-defs {
-  position: absolute;
-  width: 0;
-  height: 0;
-}
-.boil-frame {
-  display: inline-block;
-  animation: boil-cycle 300ms steps(3, end) infinite;
-}
-@keyframes boil-cycle {
-  0% {
-    filter: url(#boil-1);
+  /* Doodle va qaynash */
+  .doodle {
+    display: block;
   }
-  33.4% {
-    filter: url(#boil-2);
+  .doodle-ink {
+    color: var(--ink-2);
   }
-  66.7% {
-    filter: url(#boil-3);
+  .doodle-art-1 {
+    color: var(--art-1);
   }
-  100% {
-    filter: url(#boil-1);
+  .doodle-art-2 {
+    color: var(--art-2);
   }
-}
-:root[data-motion="off"] .boil-frame {
-  animation: none;
-  filter: url(#boil-1);
-}
-@media (prefers-reduced-motion: reduce) {
+  .doodle-art-3 {
+    color: var(--art-3);
+  }
+  .doodle-art-4 {
+    color: var(--art-4);
+  }
+  .doodle-art-5 {
+    color: var(--art-5);
+  }
+  .doodle-art-6 {
+    color: var(--art-6);
+  }
+  .doodle-art-7 {
+    color: var(--art-7);
+  }
+  .boil {
+    display: inline-block;
+  }
+  .boil-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
   .boil-frame {
+    display: inline-block;
+    animation: boil-cycle 300ms steps(3, end) infinite;
+  }
+  @keyframes boil-cycle {
+    0% {
+      filter: url(#boil-1);
+    }
+    33.4% {
+      filter: url(#boil-2);
+    }
+    66.7% {
+      filter: url(#boil-3);
+    }
+    100% {
+      filter: url(#boil-1);
+    }
+  }
+  :root[data-motion="off"] .boil-frame {
     animation: none;
     filter: url(#boil-1);
   }
-}
-
-/* Marker ostchiziq */
-.marker-underline {
-  position: relative;
-  display: inline-block;
-  white-space: nowrap;
-}
-.marker-stroke {
-  position: absolute;
-  left: -2%;
-  right: -2%;
-  bottom: -0.08em;
-  width: 104%;
-  height: 0.28em;
-  opacity: 0.75;
-  z-index: -1;
-}
-.marker-stroke path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 0;
-}
-.marker-art-1 .marker-stroke {
-  color: var(--art-1);
-}
-.marker-art-2 .marker-stroke {
-  color: var(--art-2);
-}
-.marker-art-3 .marker-stroke {
-  color: var(--art-3);
-}
-.marker-art-4 .marker-stroke {
-  color: var(--art-4);
-}
-.marker-art-6 .marker-stroke {
-  color: var(--art-6);
-}
-[data-reveal="pending"] .marker-stroke path {
-  stroke-dashoffset: 1;
-}
-[data-reveal="done"] .marker-stroke path {
-  transition: stroke-dashoffset 700ms var(--ease-out);
-  stroke-dashoffset: 0;
-}
-
-/* Boʻyash sahifasi */
-.coloring {
-  display: grid;
-  gap: 12px;
-}
-.coloring-palette {
-  display: flex;
-  gap: 8px;
-}
-.coloring-paint {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  box-shadow:
-    inset 0 0 0 3px var(--surface-2),
-    var(--shadow-contact);
-  transition: transform var(--dur-ui) var(--ease-pop);
-}
-.coloring-paint[data-state="checked"] {
-  transform: scale(1.12);
-  box-shadow:
-    inset 0 0 0 3px var(--surface-2),
-    0 0 0 2px var(--ink);
-}
-.coloring-canvas {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  border-radius: var(--radius-m);
-  background: var(--surface-2);
-  touch-action: manipulation;
-}
-.coloring-region {
-  cursor: pointer;
-  transition: fill 200ms var(--ease-ui);
-  outline: none;
-}
-.coloring-region:focus-visible {
-  stroke: var(--focus);
-  stroke-width: 4;
-}
-.coloring-lines {
-  pointer-events: none;
-  stroke: var(--ink);
-  stroke-width: 2.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.coloring-actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-.coloring-hero {
-  position: relative;
-  display: grid;
-  gap: 24px;
-}
-.coloring-sheet {
-  padding: 16px;
-}
-.pinned-placeholder {
-  display: grid;
-  gap: 8px;
-  justify-items: center;
-  padding: 24px;
-  max-width: 240px;
-}
-.hero-note {
-  color: var(--ink-3);
-  transform: rotate(-3deg);
-  display: inline-block;
-}
-
-/* Chizish 404 */
-.draw-canvas {
-  display: grid;
-  gap: 12px;
-  width: min(100%, 480px);
-}
-.draw-palette {
-  display: flex;
-  gap: 8px;
-}
-.draw-paint {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  box-shadow:
-    inset 0 0 0 3px var(--surface-2),
-    var(--shadow-contact);
-}
-.draw-paint[aria-checked="true"] {
-  box-shadow:
-    inset 0 0 0 3px var(--surface-2),
-    0 0 0 2px var(--ink);
-}
-.draw-surface {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  background: var(--surface-2);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-raised);
-  touch-action: none;
-  cursor: crosshair;
-}
-.draw-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-/* Konfetti */
-.confetti-layer {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: var(--z-toast);
-}
-.confetti-piece {
-  position: absolute;
-  width: 10px;
-  height: 14px;
-  border-radius: 2px;
-  transform: translate(-50%, -50%) rotate(var(--rot));
-  animation: confetti-fly 900ms var(--ease-out) var(--delay) forwards;
-  opacity: 0;
-}
-@keyframes confetti-fly {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, -50%) rotate(var(--rot)) scale(0.6);
+  @media (prefers-reduced-motion: reduce) {
+    .boil-frame {
+      animation: none;
+      filter: url(#boil-1);
+    }
   }
-  70% {
-    opacity: 1;
+
+  /* Marker ostchiziq */
+  .marker-underline {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
   }
-  100% {
-    opacity: 0;
-    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy) + 60px))
-      rotate(calc(var(--rot) + 180deg)) scale(1);
+  .marker-stroke {
+    position: absolute;
+    left: -2%;
+    right: -2%;
+    bottom: -0.08em;
+    width: 104%;
+    height: 0.28em;
+    opacity: 0.75;
+    z-index: -1;
   }
-}
+  .marker-stroke path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  .marker-art-1 .marker-stroke {
+    color: var(--art-1);
+  }
+  .marker-art-2 .marker-stroke {
+    color: var(--art-2);
+  }
+  .marker-art-3 .marker-stroke {
+    color: var(--art-3);
+  }
+  .marker-art-4 .marker-stroke {
+    color: var(--art-4);
+  }
+  .marker-art-6 .marker-stroke {
+    color: var(--art-6);
+  }
+  [data-reveal="pending"] .marker-stroke path {
+    stroke-dashoffset: 1;
+  }
+  [data-reveal="done"] .marker-stroke path {
+    transition: stroke-dashoffset 700ms var(--ease-out);
+    stroke-dashoffset: 0;
+  }
 
-/* Qalam chizigʻi va ufq */
-.pencil-progress {
-  color: var(--tint);
-  height: 8px;
-}
-.pencil-line {
-  width: 100%;
-  height: 8px;
-}
-.crayon-horizon {
-  position: relative;
-  color: var(--art-3);
-  height: 40px;
-}
-.crayon-line {
-  width: 100%;
-  height: 24px;
-  position: absolute;
-  bottom: 0;
-}
-.crayon-doodles {
-  position: absolute;
-  right: 8px;
-  bottom: 14px;
-  display: flex;
-  gap: 16px;
-}
-
-/* Otkritka, gazeta sarlavhasi */
-.postcard {
-  padding: 24px;
-}
-.postcard-stamp {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 48px;
-  height: 56px;
-  display: grid;
-  place-items: center;
-  background: var(--surface-2);
-  outline: 2px dashed var(--line-strong);
-  outline-offset: -4px;
-}
-.masthead {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--ink-2);
-}
-.masthead-text {
-  transform: rotate(-2deg);
-  display: inline-block;
-}
-
-/* Parda */
-.curtain {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-card);
-}
-.curtain-stage {
-  position: relative;
-}
-.curtain-panel {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 56%;
-  background:
-    repeating-linear-gradient(90deg, transparent 0 22px, rgba(0, 0, 0, 0.08) 22px 30px),
-    var(--art-5);
-  will-change: transform;
-}
-.curtain-left {
-  left: 0;
-  border-radius: 0 40% 40% 0 / 0 20% 20% 0;
-}
-.curtain-right {
-  right: 0;
-  border-radius: 40% 0 0 40% / 20% 0 0 20%;
-}
-.curtain-valance {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 28px;
-  background: var(--art-5);
-  -webkit-mask-image: radial-gradient(circle at 20px 0, transparent 18px, black 19px);
-  mask-image: radial-gradient(circle at 20px 0, transparent 18px, black 19px);
-  -webkit-mask-size: 40px 100%;
-  mask-size: 40px 100%;
-}
-.curtain[data-open="true"] .curtain-left {
-  transform: translateX(-88%);
-}
-.curtain[data-open="true"] .curtain-right {
-  transform: translateX(88%);
-}
-
-/* Qogʻoz obyektlari */
-.paper-object {
-  position: relative;
-}
-.paper-object-media {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-m);
-}
-.paper-poster {
-  padding: 16px 16px 40px;
-}
-.poster-band {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 12px;
-}
-.poster-ticket {
-  position: absolute;
-  right: -12px;
-  bottom: 12px;
-  width: 96px;
-  height: 36px;
-  transform: rotate(6deg);
-  border-radius: 4px;
-  box-shadow: var(--shadow-raised);
-}
-.poster-ticket-holes {
-  position: absolute;
-  inset: 0 auto 0 30px;
-  border-left: 2px dashed var(--surface-2);
-}
-.paper-curtain {
-  padding: 12px 32px;
-}
-.curtain-frame-side {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 24px;
-  border-radius: 0 12px 12px 0;
-}
-.curtain-frame-right {
-  left: auto;
-  right: 0;
-  border-radius: 12px 0 0 12px;
-}
-.paper-film {
-  padding: 12px;
-}
-.film-holes {
-  display: block;
-  height: 12px;
-  margin-block: 4px;
-  background: radial-gradient(circle, var(--ink) 3px, transparent 3.5px) 0 0 / 20px 12px repeat-x;
-  opacity: 0.6;
-}
-.paper-easel {
-  position: relative;
-  padding-bottom: 64px;
-}
-.easel-canvas {
-  padding: 12px;
-}
-.easel-legs {
-  position: absolute;
-  bottom: 0;
-  left: 10%;
-  width: 80%;
-  height: 64px;
-}
-.easel-doodle {
-  position: absolute;
-  top: -12px;
-  right: -6px;
-}
-
-/* Kir qisqichli ip */
-.clothesline {
-  position: relative;
-  padding-top: 24px;
-}
-.clothesline-rope {
-  width: 100%;
-  height: 40px;
-}
-.clothesline-items {
-  display: grid;
-  gap: 32px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-@media (min-width: 1024px) {
-  .clothesline-items {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Boʻyash sahifasi */
+  .coloring {
+    display: grid;
+    gap: 12px;
+  }
+  .coloring-palette {
+    display: flex;
+    gap: 8px;
+  }
+  .coloring-paint {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    box-shadow:
+      inset 0 0 0 3px var(--surface-2),
+      var(--shadow-contact);
+    transition: transform var(--dur-ui) var(--ease-pop);
+  }
+  .coloring-paint[data-state="checked"] {
+    transform: scale(1.12);
+    box-shadow:
+      inset 0 0 0 3px var(--surface-2),
+      0 0 0 2px var(--ink);
+  }
+  .coloring-canvas {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-m);
+    background: var(--surface-2);
+    touch-action: manipulation;
+  }
+  .coloring-region {
+    cursor: pointer;
+    transition: fill 200ms var(--ease-ui);
+    outline: none;
+  }
+  .coloring-region:focus-visible {
+    stroke: var(--focus);
+    stroke-width: 4;
+  }
+  .coloring-lines {
+    pointer-events: none;
+    stroke: var(--ink);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .coloring-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .coloring-hero {
+    position: relative;
+    display: grid;
     gap: 24px;
   }
+  .coloring-sheet {
+    padding: 16px;
+  }
+  .pinned-placeholder {
+    display: grid;
+    gap: 8px;
+    justify-items: center;
+    padding: 24px;
+    max-width: 240px;
+  }
+  .hero-note {
+    color: var(--ink-3);
+    transform: rotate(-3deg);
+    display: inline-block;
+  }
+
+  /* Chizish 404 */
+  .draw-canvas {
+    display: grid;
+    gap: 12px;
+    width: min(100%, 480px);
+  }
+  .draw-palette {
+    display: flex;
+    gap: 8px;
+  }
+  .draw-paint {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    box-shadow:
+      inset 0 0 0 3px var(--surface-2),
+      var(--shadow-contact);
+  }
+  .draw-paint[aria-checked="true"] {
+    box-shadow:
+      inset 0 0 0 3px var(--surface-2),
+      0 0 0 2px var(--ink);
+  }
+  .draw-surface {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--surface-2);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-raised);
+    touch-action: none;
+    cursor: crosshair;
+  }
+  .draw-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* Konfetti */
+  .confetti-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: var(--z-toast);
+  }
+  .confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 14px;
+    border-radius: 2px;
+    transform: translate(-50%, -50%) rotate(var(--rot));
+    animation: confetti-fly 900ms var(--ease-out) var(--delay) forwards;
+    opacity: 0;
+  }
+  @keyframes confetti-fly {
+    0% {
+      opacity: 1;
+      transform: translate(-50%, -50%) rotate(var(--rot)) scale(0.6);
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy) + 60px))
+        rotate(calc(var(--rot) + 180deg)) scale(1);
+    }
+  }
+
+  /* Qalam chizigʻi va ufq */
+  .pencil-progress {
+    color: var(--tint);
+    height: 8px;
+  }
+  .pencil-line {
+    width: 100%;
+    height: 8px;
+  }
+  .crayon-horizon {
+    position: relative;
+    color: var(--art-3);
+    height: 40px;
+  }
+  .crayon-line {
+    width: 100%;
+    height: 24px;
+    position: absolute;
+    bottom: 0;
+  }
+  .crayon-doodles {
+    position: absolute;
+    right: 8px;
+    bottom: 14px;
+    display: flex;
+    gap: 16px;
+  }
+
+  /* Otkritka, gazeta sarlavhasi */
+  .postcard {
+    padding: 24px;
+  }
+  .postcard-stamp {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 48px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    background: var(--surface-2);
+    outline: 2px dashed var(--line-strong);
+    outline-offset: -4px;
+  }
+  .masthead {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--ink-2);
+  }
+  .masthead-text {
+    transform: rotate(-2deg);
+    display: inline-block;
+  }
+
+  /* Parda */
+  .curtain {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+  }
+  .curtain-stage {
+    position: relative;
+  }
+  .curtain-panel {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 56%;
+    background:
+      repeating-linear-gradient(90deg, transparent 0 22px, rgba(0, 0, 0, 0.08) 22px 30px),
+      var(--art-5);
+    will-change: transform;
+  }
+  .curtain-left {
+    left: 0;
+    border-radius: 0 40% 40% 0 / 0 20% 20% 0;
+  }
+  .curtain-right {
+    right: 0;
+    border-radius: 40% 0 0 40% / 20% 0 0 20%;
+  }
+  .curtain-valance {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 28px;
+    background: var(--art-5);
+    -webkit-mask-image: radial-gradient(circle at 20px 0, transparent 18px, black 19px);
+    mask-image: radial-gradient(circle at 20px 0, transparent 18px, black 19px);
+    -webkit-mask-size: 40px 100%;
+    mask-size: 40px 100%;
+  }
+  .curtain[data-open="true"] .curtain-left {
+    transform: translateX(-88%);
+  }
+  .curtain[data-open="true"] .curtain-right {
+    transform: translateX(88%);
+  }
+
+  /* Qogʻoz obyektlari */
+  .paper-object {
+    position: relative;
+  }
+  .paper-object-media {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-m);
+  }
+  .paper-poster {
+    padding: 16px 16px 40px;
+  }
+  .poster-band {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 12px;
+  }
+  .poster-ticket {
+    position: absolute;
+    right: -12px;
+    bottom: 12px;
+    width: 96px;
+    height: 36px;
+    transform: rotate(6deg);
+    border-radius: 4px;
+    box-shadow: var(--shadow-raised);
+  }
+  .poster-ticket-holes {
+    position: absolute;
+    inset: 0 auto 0 30px;
+    border-left: 2px dashed var(--surface-2);
+  }
+  .paper-curtain {
+    padding: 12px 32px;
+  }
+  .curtain-frame-side {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 24px;
+    border-radius: 0 12px 12px 0;
+  }
+  .curtain-frame-right {
+    left: auto;
+    right: 0;
+    border-radius: 12px 0 0 12px;
+  }
+  .paper-film {
+    padding: 12px;
+  }
+  .film-holes {
+    display: block;
+    height: 12px;
+    margin-block: 4px;
+    background: radial-gradient(circle, var(--ink) 3px, transparent 3.5px) 0 0 / 20px 12px repeat-x;
+    opacity: 0.6;
+  }
+  .paper-easel {
+    position: relative;
+    padding-bottom: 64px;
+  }
+  .easel-canvas {
+    padding: 12px;
+  }
+  .easel-legs {
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    height: 64px;
+  }
+  .easel-doodle {
+    position: absolute;
+    top: -12px;
+    right: -6px;
+  }
+
+  /* Kir qisqichli ip */
+  .clothesline {
+    position: relative;
+    padding-top: 24px;
+  }
+  .clothesline-rope {
+    width: 100%;
+    height: 40px;
+  }
+  .clothesline-items {
+    display: grid;
+    gap: 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  @media (min-width: 1024px) {
+    .clothesline-items {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+  }
+  .clothesline-item {
+    position: relative;
+    padding-top: 12px;
+  }
+  .clothespin {
+    position: absolute;
+    top: -8px;
+    left: 24px;
+    width: 12px;
+    height: 28px;
+    border-radius: 3px;
+    background: var(--accent-lo);
+    box-shadow: var(--shadow-contact);
+    z-index: 2;
+  }
+  .clothesline-card {
+    display: grid;
+    gap: 8px;
+    padding: 24px;
+  }
+  .project-media {
+    padding: 12px;
+  }
 }
-.clothesline-item {
-  position: relative;
-  padding-top: 12px;
-}
-.clothespin {
-  position: absolute;
-  top: -8px;
-  left: 24px;
-  width: 12px;
-  height: 28px;
-  border-radius: 3px;
-  background: var(--accent-lo);
-  box-shadow: var(--shadow-contact);
-  z-index: 2;
-}
-.clothesline-card {
-  display: grid;
-  gap: 8px;
-  padding: 24px;
-}
-.project-media {
-  padding: 12px;
+
+@layer components {
+  /* Umumiy komponentlarga qogʻoz koʻrinishi: faqat Birlashma dizaynida ishlaydi. */
+  :root[data-design="birlashma"] .paper-look {
+    position: relative;
+    padding: 16px;
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-raised);
+  }
+  :root[data-design="birlashma"] .chorbogh-cell.paper-look:nth-child(odd) {
+    transform: rotate(-0.8deg);
+  }
+  :root[data-design="birlashma"] .chorbogh-cell.paper-look:nth-child(even) {
+    transform: rotate(0.6deg);
+  }
+  /* Birlashma da ravoq arki ishlatilmaydi: qirqish va oltin chiziq oʻchadi. */
+  :root[data-design="birlashma"] .ravoq-media {
+    clip-path: none;
+    border-radius: var(--radius-m);
+    overflow: hidden;
+  }
+  :root[data-design="birlashma"] .ravoq-line {
+    display: none;
+  }
+  :root[data-design="birlashma"] .home-hero {
+    align-items: center;
+  }
+  :root[data-design="birlashma"] .home-hero-art {
+    position: relative;
+    inset: auto;
+    z-index: 0;
+  }
+  :root[data-design="birlashma"] .home-hero-slot,
+  :root[data-design="birlashma"] .home-hero-slot > * {
+    position: relative;
+    inset: auto;
+  }
+  @media (min-width: 1024px) {
+    :root[data-design="birlashma"] .home-hero {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+      column-gap: var(--gutter);
+      padding-inline: var(--margin);
+      max-width: calc(var(--content-max) + 2 * var(--margin));
+      margin-inline: auto;
+    }
+    :root[data-design="birlashma"] .home-hero-content {
+      padding-inline: 0;
+    }
+  }
+  :root[data-design="birlashma"] .contact-band-art {
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .postcard-art {
+    position: absolute;
+    inset: 0;
+  }
+  .postcard-art .postcard-stamp {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+  }
 }

@@ -22,7 +22,11 @@ export function Ravoq({ ratio = "3:4", children, hairline = true, className }: R
   const [w, h] = ratioParts(ratio);
   const boxW = w * 100;
   const boxH = h * 100;
-  const style = { "--ravoq-ratio": ratioCss(ratio) } as CSSProperties;
+  /* Qirqish CSS oʻzgaruvchida: Birlashma dizaynida ark ishlatilmaydi va CSS uni oʻchiradi. */
+  const style = {
+    "--ravoq-ratio": ratioCss(ratio),
+    "--ravoq-clip": `url(#${clipId})`,
+  } as CSSProperties;
   return (
     <div className={cn("ravoq", className)} style={style} data-ratio={ratio}>
       <svg className="orn-defs" aria-hidden="true" focusable="false">
@@ -32,9 +36,7 @@ export function Ravoq({ ratio = "3:4", children, hairline = true, className }: R
           </clipPath>
         </defs>
       </svg>
-      <div className="ravoq-media" style={{ clipPath: `url(#${clipId})` }}>
-        {children}
-      </div>
+      <div className="ravoq-media">{children}</div>
       {hairline ? (
         <svg
           className="ravoq-line"

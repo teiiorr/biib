@@ -56,7 +56,7 @@ export function DesignArt({
       data-art-design={design}
       aria-hidden={meaningful ? undefined : true}
     >
-      {Component ? <Component {...art} /> : fallback}
+      {Component ? <Component {...art} /> : (fallback ?? art.children)}
     </div>
   );
 }

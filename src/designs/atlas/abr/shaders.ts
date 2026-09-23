@@ -11,16 +11,18 @@ void main() {
 /**
  * Margʻilon xon-atlas: vertikal arqoq yoʻllari, har yoʻl alohida boʻyoq vannasi (pogʻonali chet),
  * ipak yaltirashi (anizotrop), sekin drift (12–16 s) va kursordan yumshoq toʻlqin.
+ * GLSL ichida izoh yoʻq: ANGLE manbada ASCII dan tashqari belgini rad etadi.
+ * Tartib: yoʻl indeksi → kursor toʻlqini → har yoʻlning boʻyoq siljishi → abr shakli (fbm, pogʻona,
+ * patli chet) → boʻyoq tanlovi → arqoq tolasi → anizotrop yaltirash → yoʻl chegarasi.
  */
-export const ABR_FRAGMENT = /* glsl */ `#version 300 es
+export const ABR_FRAGMENT = `#version 300 es
 precision highp float;
 in vec2 vUv;
 out vec4 outColor;
 
 uniform float uTime;
 uniform vec2 uRes;
-uniform vec3 uPointer;   /* x, y (0..1), kuch */
-uniform vec3 uBg;
+uniform vec3 uPointer;uniform vec3 uBg;
 uniform vec3 uC1;
 uniform vec3 uC2;
 uniform vec3 uC3;
@@ -58,22 +60,18 @@ void main() {
   vec2 uv = vUv;
   float drift = uTime / 14.0;
 
-  /* Yoʻllar: kenglik har yoʻl uchun turlicha, chegara 20–40 px */
   float bandsPerScreen = mix(22.0, 34.0, clamp(aspect - 0.5, 0.0, 1.0));
   float bx = uv.x * bandsPerScreen;
   float band = floor(bx);
   float inBand = fract(bx);
 
-  /* Kursor toʻlqini: masofa boʻyicha soʻnuvchi siljish */
   vec2 d = (uv - uPointer.xy) * vec2(aspect, 1.0);
   float dist = length(d);
   float ripple = uPointer.z * exp(-dist * 4.0) * sin(dist * 22.0 - uTime * 3.0) * 0.06;
 
-  /* Har yoʻlning oʻz boʻyoq siljishi: bir-biriga toʻliq toʻgʻri kelmaydi (abrbandi) */
   float shift = (hash(band) - 0.5) * 0.18;
   float y = uv.y + shift + ripple + sin(drift * 6.2831 + band * 0.4) * 0.02;
 
-  /* Bulut (abr) shakli: pogʻonali chegara, patli (feathered) chet */
   float n = fbm(vec2(band * 0.37 + drift * 0.6, y * 2.2));
   float m = fbm(vec2(band * 0.11 - drift * 0.4, y * 0.9 + 7.0));
   float steps = 5.0;
@@ -91,16 +89,13 @@ void main() {
   float cover = smoothstep(0.18, 0.32, n) * mix(0.7, 1.0, feather);
   col = mix(col, dye, cover * mix(0.85, 0.95, uNight));
 
-  /* Arqoq tolasi: yoʻl ichida yengil chiziqlar */
   float thread = 0.5 + 0.5 * sin(inBand * 6.2831 * 3.0);
   col *= 1.0 - 0.04 * thread;
 
-  /* Ipak yaltirashi: anizotrop, sekin yuradi */
   float sheenPos = fract(drift * 0.5);
   float sheen = pow(1.0 - abs(uv.x * 0.7 + uv.y * 0.3 - sheenPos), 18.0);
   col += sheen * mix(0.10, 0.07, uNight) * mix(vec3(1.0), uC2, 0.5);
 
-  /* Yoʻl chegarasi: juda yupqa soya */
   float gap = smoothstep(0.0, 0.05, inBand) * smoothstep(1.0, 0.95, inBand);
   col *= mix(0.93, 1.0, gap);
 

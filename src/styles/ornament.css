@@ -1,451 +1,454 @@
-/* Naqsh dvigateli (§11): oʻn ikki imzo uchun tokenlar va sinflar. Ranglar semantik tokenlardan. */
+@layer components {
+  /* Naqsh dvigateli (§11): oʻn ikki imzo uchun tokenlar va sinflar. Ranglar semantik tokenlardan. */
 
-:root {
-  /* Gʻijduvon jigarrang oilasi: Xiva ustuni yogʻochi. */
-  --wood-1: #8b5a2b;
-  --wood-2: #6b4423;
-  --wood-3: #4a2e17;
-  --wood-rim: #e8cf7a;
-  /* Ganch: kunduzi oq gips, soya lojuvardga boʻyalgan. */
-  --ganch-fill: var(--surface);
-  --ganch-shadow: rgba(14, 23, 51, 0.22);
-  --ganch-rim: rgba(255, 255, 255, 0.85);
-  --ganch-opacity: 0.9;
-  /* Kundal: lojuvard zamin, ustidagi matn uchun sut-oq (6.3:1), tunda --ink (5.8:1). */
-  --kundal-ground: var(--art-5);
-  --kundal-ink: var(--surface);
-  --kundal-relief-opacity: 0.32;
-  --zardozi-height: 7px;
-}
-:root[data-theme="dark"] {
-  --wood-1: #7a4f27;
-  --wood-2: #5a3a1c;
-  --wood-3: #2e1c0d;
-  --wood-rim: #f0d488;
-  /* Tunda ganch lojuvard relyefga aylanadi, chetida ingichka yorugʻ qirra. */
-  --ganch-fill: var(--art-5);
-  --ganch-shadow: rgba(2, 5, 20, 0.6);
-  --ganch-rim: rgba(240, 212, 136, 0.5);
-  --ganch-opacity: 0.55;
-  --kundal-ink: var(--ink);
-  --kundal-relief-opacity: 0.28;
-}
+  :root {
+    /* Gʻijduvon jigarrang oilasi: Xiva ustuni yogʻochi. */
+    --wood-1: #8b5a2b;
+    --wood-2: #6b4423;
+    --wood-3: #4a2e17;
+    --wood-rim: #e8cf7a;
+    /* Ganch: kunduzi oq gips, soya lojuvardga boʻyalgan. */
+    --ganch-fill: var(--surface);
+    --ganch-shadow: rgba(14, 23, 51, 0.22);
+    --ganch-rim: rgba(255, 255, 255, 0.85);
+    --ganch-opacity: 0.9;
+    /* Kundal: lojuvard zamin, ustidagi matn uchun sut-oq (6.3:1), tunda --ink (5.8:1). */
+    --kundal-ground: var(--art-5);
+    --kundal-ink: var(--surface);
+    --kundal-relief-opacity: 0.32;
+    --zardozi-height: 7px;
+  }
+  :root[data-theme="dark"] {
+    --wood-1: #7a4f27;
+    --wood-2: #5a3a1c;
+    --wood-3: #2e1c0d;
+    --wood-rim: #f0d488;
+    /* Tunda ganch lojuvard relyefga aylanadi, chetida ingichka yorugʻ qirra. */
+    --ganch-fill: var(--art-5);
+    --ganch-shadow: rgba(2, 5, 20, 0.6);
+    --ganch-rim: rgba(240, 212, 136, 0.5);
+    --ganch-opacity: 0.55;
+    --kundal-ink: var(--ink);
+    --kundal-relief-opacity: 0.28;
+  }
 
-.orn {
-  display: block;
-  color: inherit;
-}
-.orn-strand {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
-}
+  .orn {
+    display: block;
+    color: inherit;
+  }
+  .orn-strand {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
 
-/* Girih */
-.girih-lattice {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0.22;
-}
-:root[data-theme="dark"] .girih-lattice {
-  opacity: 0.16;
-}
-.girih-divider {
-  display: block;
-  width: 100%;
-  height: 40px;
-  -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
-  mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
-}
+  /* Girih */
+  .girih-lattice {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.22;
+  }
+  :root[data-theme="dark"] .girih-lattice {
+    opacity: 0.16;
+  }
+  .girih-divider {
+    display: block;
+    width: 100%;
+    height: 40px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+  }
 
-/* Ravoq: aspect-ratio qulflangan, kontur objectBoundingBox da; oltin chiziq 6 px ichkarida. */
-.ravoq {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: var(--ravoq-ratio);
-  width: 100%;
-}
-.ravoq-media {
-  position: absolute;
-  inset: 0;
-}
-.ravoq-media > * {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.ravoq-line {
-  position: absolute;
-  inset: 6px;
-  width: calc(100% - 12px);
-  height: calc(100% - 12px);
-  overflow: visible;
-  pointer-events: none;
-}
-.ravoq-placeholder {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  align-content: center;
-  gap: 16px;
-  padding: 24px;
-  background: var(--surface-2);
-  color: var(--ink-3);
-  text-align: center;
-}
+  /* Ravoq: aspect-ratio qulflangan, kontur objectBoundingBox da; oltin chiziq 6 px ichkarida. */
+  .ravoq {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: var(--ravoq-ratio);
+    width: 100%;
+  }
+  .ravoq-media {
+    clip-path: var(--ravoq-clip);
+    position: absolute;
+    inset: 0;
+  }
+  .ravoq-media > * {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .ravoq-line {
+    position: absolute;
+    inset: 6px;
+    width: calc(100% - 12px);
+    height: calc(100% - 12px);
+    overflow: visible;
+    pointer-events: none;
+  }
+  .ravoq-placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 16px;
+    padding: 24px;
+    background: var(--surface-2);
+    color: var(--ink-3);
+    text-align: center;
+  }
 
-/* Islimiy */
-.islimiy {
-  display: block;
-  pointer-events: none;
-}
-.islimiy-bud {
-  fill: var(--bg);
-  stroke: currentColor;
-  stroke-linejoin: round;
-}
-.islimiy-margin {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 96px;
-  pointer-events: none;
-}
-.islimiy-margin[data-side="left"] {
-  left: 0;
-}
-.islimiy-margin[data-side="right"] {
-  right: 0;
-}
-.islimiy-bullet {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  vertical-align: -0.15em;
-  margin-inline-end: 8px;
-}
+  /* Islimiy */
+  .islimiy {
+    display: block;
+    pointer-events: none;
+  }
+  .islimiy-bud {
+    fill: var(--bg);
+    stroke: currentColor;
+    stroke-linejoin: round;
+  }
+  .islimiy-margin {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 96px;
+    pointer-events: none;
+  }
+  .islimiy-margin[data-side="left"] {
+    left: 0;
+  }
+  .islimiy-margin[data-side="right"] {
+    right: 0;
+  }
+  .islimiy-bullet {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: -0.15em;
+    margin-inline-end: 8px;
+  }
 
-/* Palak oy: boʻshliq — 44 px nishonli tugma, izoh hover/fokusda. */
-.palak {
-  position: relative;
-  display: inline-block;
-  line-height: 0;
-}
-.palak-gap {
-  position: absolute;
-  width: 44px;
-  height: 44px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  color: inherit;
-}
-.palak-gap::after {
-  content: "";
-  position: absolute;
-  inset: 16px;
-  border-radius: 50%;
-  border: 1px dashed currentColor;
-  opacity: 0.45;
-  transition:
-    opacity var(--dur-ui) var(--ease-ui),
-    transform var(--dur-ui) var(--ease-ui);
-}
-.palak-gap:focus-visible::after,
-.palak-gap:hover::after {
-  opacity: 1;
-  transform: scale(1.15);
-}
-.palak-tip {
-  position: absolute;
-  left: var(--tip-x);
-  top: var(--tip-y);
-  width: max-content;
-  max-width: min(280px, 80vw);
-  padding: 8px 12px;
-  border-radius: var(--radius-m);
-  background: var(--surface);
-  color: var(--ink);
-  box-shadow: var(--shadow-floating);
-  font-family: var(--font-ui);
-  font-size: var(--fs-small);
-  line-height: var(--lh-small);
-  letter-spacing: var(--ls-small);
-  text-align: start;
-  opacity: 0;
-  transform: translate(var(--tip-shift), 4px);
-  pointer-events: none;
-  transition:
-    opacity var(--dur-ui) var(--ease-ui),
-    transform var(--dur-ui) var(--ease-ui);
-}
-.palak-gap:hover + .palak-tip,
-.palak-gap:focus-visible + .palak-tip {
-  opacity: 1;
-  transform: translate(var(--tip-shift), 0);
-}
+  /* Palak oy: boʻshliq — 44 px nishonli tugma, izoh hover/fokusda. */
+  .palak {
+    position: relative;
+    display: inline-block;
+    line-height: 0;
+  }
+  .palak-gap {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    color: inherit;
+  }
+  .palak-gap::after {
+    content: "";
+    position: absolute;
+    inset: 16px;
+    border-radius: 50%;
+    border: 1px dashed currentColor;
+    opacity: 0.45;
+    transition:
+      opacity var(--dur-ui) var(--ease-ui),
+      transform var(--dur-ui) var(--ease-ui);
+  }
+  .palak-gap:focus-visible::after,
+  .palak-gap:hover::after {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  .palak-tip {
+    position: absolute;
+    left: var(--tip-x);
+    top: var(--tip-y);
+    width: max-content;
+    max-width: min(280px, 80vw);
+    padding: 8px 12px;
+    border-radius: var(--radius-m);
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: var(--shadow-floating);
+    font-family: var(--font-ui);
+    font-size: var(--fs-small);
+    line-height: var(--lh-small);
+    letter-spacing: var(--ls-small);
+    text-align: start;
+    opacity: 0;
+    transform: translate(var(--tip-shift), 4px);
+    pointer-events: none;
+    transition:
+      opacity var(--dur-ui) var(--ease-ui),
+      transform var(--dur-ui) var(--ease-ui);
+  }
+  .palak-gap:hover + .palak-tip,
+  .palak-gap:focus-visible + .palak-tip {
+    opacity: 1;
+    transform: translate(var(--tip-shift), 0);
+  }
 
-/* Zardoʻzi: yotqizilgan oltin iplar; chizilish faqat transform bilan. */
-.zardozi {
-  display: block;
-  width: 100%;
-  height: var(--zardozi-height);
-  overflow: visible;
-}
-.zardozi-thread {
-  stroke: currentColor;
-  stroke-width: 1;
-  fill: none;
-}
-.zardozi-stitch {
-  stroke: currentColor;
-  stroke-width: 0.75;
-  fill: none;
-  opacity: 0.8;
-}
-.zardozi-underline {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -0.2em;
-  height: var(--zardozi-height);
-  transform-origin: left center;
-  pointer-events: none;
-  transition: transform var(--dur-reveal) var(--ease-reveal);
-}
-.zardozi-underline[data-draw="hover"],
-.zardozi-underline[data-draw="view"][data-drawn="false"] {
-  transform: scaleX(0);
-}
-.zardozi-host:focus-visible .zardozi-underline[data-draw="hover"],
-.zardozi-host[aria-current] .zardozi-underline[data-draw="hover"] {
-  transform: scaleX(1);
-}
-@media (hover: hover) {
-  .zardozi-host:hover .zardozi-underline[data-draw="hover"] {
+  /* Zardoʻzi: yotqizilgan oltin iplar; chizilish faqat transform bilan. */
+  .zardozi {
+    display: block;
+    width: 100%;
+    height: var(--zardozi-height);
+    overflow: visible;
+  }
+  .zardozi-thread {
+    stroke: currentColor;
+    stroke-width: 1;
+    fill: none;
+  }
+  .zardozi-stitch {
+    stroke: currentColor;
+    stroke-width: 0.75;
+    fill: none;
+    opacity: 0.8;
+  }
+  .zardozi-underline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.2em;
+    height: var(--zardozi-height);
+    transform-origin: left center;
+    pointer-events: none;
+    transition: transform var(--dur-reveal) var(--ease-reveal);
+  }
+  .zardozi-underline[data-draw="hover"],
+  .zardozi-underline[data-draw="view"][data-drawn="false"] {
+    transform: scaleX(0);
+  }
+  .zardozi-host:focus-visible .zardozi-underline[data-draw="hover"],
+  .zardozi-host[aria-current] .zardozi-underline[data-draw="hover"] {
     transform: scaleX(1);
   }
-}
-.zardozi-word {
-  position: relative;
-  font-style: normal;
-  white-space: nowrap;
-}
-.zardozi-mark {
-  display: block;
-  width: 20px;
-  height: 5px;
-  overflow: visible;
-}
-
-/* Chust doʻppi hoshiyasi va qalampir */
-.chust-band {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 64px;
-}
-.qalampir {
-  display: inline-flex;
-  align-items: flex-end;
-  gap: 4px;
-}
-.qalampir-pod {
-  width: 12px;
-  height: 20px;
-  overflow: visible;
-}
-.qalampir-outline {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1;
-  stroke-linejoin: round;
-}
-.qalampir-fill {
-  fill: currentColor;
-  clip-path: inset(calc((1 - var(--fill)) * 100%) 0 0 0);
-  transition: clip-path var(--dur-ui) var(--ease-ui);
-}
-
-/* Ganch: uch qatlam, ichki soyalar SVG filtrida. */
-.ganch {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-.ganch-layer {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: var(--ganch-opacity);
-}
-.ganch-relief {
-  fill: var(--ganch-fill);
-}
-
-/* Kundal: lojuvard zamin, oltin relyef, yumshoq yurar yorugʻlik. Matn rangi doim tekshirilgan. */
-.kundal-panel {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-card);
-  background: var(--kundal-ground);
-  color: var(--kundal-ink);
-  isolation: isolate;
-}
-.kundal-art {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  color: var(--accent-art);
-  opacity: var(--kundal-relief-opacity);
-}
-.kundal-content {
-  position: relative;
-}
-
-/* Xiva ustuni va tarix chizigʻi */
-.xiva-column {
-  display: block;
-  width: 80px;
-  height: auto;
-}
-.xiva-body {
-  fill: var(--wood-1);
-}
-.xiva-carving {
-  fill: none;
-  stroke: var(--wood-3);
-  stroke-width: 1;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-}
-.xiva-rim {
-  fill: none;
-  stroke: var(--wood-rim);
-  stroke-width: 1;
-  opacity: 0.7;
-}
-.xiva-timeline {
-  display: grid;
-  gap: 32px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.xiva-item {
-  display: grid;
-  grid-template-columns: 80px minmax(0, 1fr);
-  gap: 16px;
-  align-items: end;
-}
-.xiva-item[data-status="pending"] .xiva-body {
-  fill: var(--wood-2);
-  opacity: 0.7;
-}
-.xiva-year {
-  font-variant-numeric: tabular-nums;
-  color: var(--accent-text);
-}
-@media (min-width: 1024px) {
-  .xiva-stage {
-    height: 150vh;
+  @media (hover: hover) {
+    .zardozi-host:hover .zardozi-underline[data-draw="hover"] {
+      transform: scaleX(1);
+    }
   }
-  .xiva-scene {
-    position: sticky;
-    top: var(--header-h);
-    min-height: calc(100svh - var(--header-h));
-    display: flex;
-    align-items: center;
+  .zardozi-word {
+    position: relative;
+    font-style: normal;
+    white-space: nowrap;
+  }
+  .zardozi-mark {
+    display: block;
+    width: 20px;
+    height: 5px;
+    overflow: visible;
+  }
+
+  /* Chust doʻppi hoshiyasi va qalampir */
+  .chust-band {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 64px;
+  }
+  .qalampir {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 4px;
+  }
+  .qalampir-pod {
+    width: 12px;
+    height: 20px;
+    overflow: visible;
+  }
+  .qalampir-outline {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1;
+    stroke-linejoin: round;
+  }
+  .qalampir-fill {
+    fill: currentColor;
+    clip-path: inset(calc((1 - var(--fill)) * 100%) 0 0 0);
+    transition: clip-path var(--dur-ui) var(--ease-ui);
+  }
+
+  /* Ganch: uch qatlam, ichki soyalar SVG filtrida. */
+  .ganch {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .ganch-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: var(--ganch-opacity);
+  }
+  .ganch-relief {
+    fill: var(--ganch-fill);
+  }
+
+  /* Kundal: lojuvard zamin, oltin relyef, yumshoq yurar yorugʻlik. Matn rangi doim tekshirilgan. */
+  .kundal-panel {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    background: var(--kundal-ground);
+    color: var(--kundal-ink);
+    isolation: isolate;
+  }
+  .kundal-art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    color: var(--accent-art);
+    opacity: var(--kundal-relief-opacity);
+  }
+  .kundal-content {
+    position: relative;
+  }
+
+  /* Xiva ustuni va tarix chizigʻi */
+  .xiva-column {
+    display: block;
+    width: 80px;
+    height: auto;
+  }
+  .xiva-body {
+    fill: var(--wood-1);
+  }
+  .xiva-carving {
+    fill: none;
+    stroke: var(--wood-3);
+    stroke-width: 1;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  .xiva-rim {
+    fill: none;
+    stroke: var(--wood-rim);
+    stroke-width: 1;
+    opacity: 0.7;
   }
   .xiva-timeline {
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(0, 1fr);
-    align-items: end;
+    display: grid;
+    gap: 32px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
   .xiva-item {
-    grid-template-columns: none;
-    grid-template-rows: auto auto;
-    justify-items: start;
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr);
+    gap: 16px;
+    align-items: end;
   }
-}
-
-/* Naqshli muqova */
-.orn-cover {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: var(--cover-ratio);
-  background: var(--bg);
-}
-
-/* Kamaytirilgan harakat va Harakat oʻchiq: hamma naqsh toʻliq chizilgan, statik. */
-@media (prefers-reduced-motion: reduce) {
-  .zardozi-underline,
-  .palak-tip,
-  .qalampir-fill {
-    transition: none;
+  .xiva-item[data-status="pending"] .xiva-body {
+    fill: var(--wood-2);
+    opacity: 0.7;
   }
-  .zardozi-underline[data-draw="view"][data-drawn="false"] {
+  .xiva-year {
+    font-variant-numeric: tabular-nums;
+    color: var(--accent-text);
+  }
+  @media (min-width: 1024px) {
+    .xiva-stage {
+      height: 150vh;
+    }
+    .xiva-scene {
+      position: sticky;
+      top: var(--header-h);
+      min-height: calc(100svh - var(--header-h));
+      display: flex;
+      align-items: center;
+    }
+    .xiva-timeline {
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
+      align-items: end;
+    }
+    .xiva-item {
+      grid-template-columns: none;
+      grid-template-rows: auto auto;
+      justify-items: start;
+    }
+  }
+
+  /* Naqshli muqova */
+  .orn-cover {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: var(--cover-ratio);
+    background: var(--bg);
+  }
+
+  /* Kamaytirilgan harakat va Harakat oʻchiq: hamma naqsh toʻliq chizilgan, statik. */
+  @media (prefers-reduced-motion: reduce) {
+    .zardozi-underline,
+    .palak-tip,
+    .qalampir-fill {
+      transition: none;
+    }
+    .zardozi-underline[data-draw="view"][data-drawn="false"] {
+      transform: none;
+    }
+  }
+  :root[data-motion="off"] .zardozi-underline[data-draw="view"][data-drawn="false"] {
     transform: none;
   }
-}
-:root[data-motion="off"] .zardozi-underline[data-draw="view"][data-drawn="false"] {
-  transform: none;
-}
 
-/* Yordamchi: koʻrinmas defs konteyneri, kurtak konturi, palak halqalari, ganch va kundal filtr ranglari. */
-.orn-defs {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-.islimiy-bud {
-  vector-effect: non-scaling-stroke;
-}
-.palak-ring {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2.5;
-  stroke-linecap: round;
-}
-.palak-loop {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1;
-}
-.ganch-relief {
-  stroke: var(--ganch-rim);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
-}
-.ganch-flood {
-  flood-color: var(--ganch-shadow);
-}
-.kundal-spec {
-  lighting-color: var(--accent-hi);
-}
-.kundal-relief {
-  fill: currentColor;
-  stroke: currentColor;
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.kundal-relief-line {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  /* Yordamchi: koʻrinmas defs konteyneri, kurtak konturi, palak halqalari, ganch va kundal filtr ranglari. */
+  .orn-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+  .islimiy-bud {
+    vector-effect: non-scaling-stroke;
+  }
+  .palak-ring {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+  }
+  .palak-loop {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1;
+  }
+  .ganch-relief {
+    stroke: var(--ganch-rim);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+  .ganch-flood {
+    flood-color: var(--ganch-shadow);
+  }
+  .kundal-spec {
+    lighting-color: var(--accent-hi);
+  }
+  .kundal-relief {
+    fill: currentColor;
+    stroke: currentColor;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .kundal-relief-line {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
 }
