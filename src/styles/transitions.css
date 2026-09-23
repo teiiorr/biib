@@ -1,0 +1,198 @@
+/*
+ * Sahifa oʻtishlari (§14.4, §11.2) va silliq skroll qobigʻi.
+ * Qatlam tartibi kaskadni hal qiladi: reduced har doim typed/design dan ustun.
+ */
+@layer vt-base, vt-typed, vt-design, vt-reduced, vt-fallback;
+
+:root {
+  /* Abr tasmalari registrga kirguncha bir oʻq boʻylab pogʻonali siljish. */
+  --abr-shift: 24px;
+  --dur-fade: 150ms;
+}
+
+/* Lenis: silliq skroll faol boʻlganda hujjat balandligi tabiiy qoladi. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Taroq-poligonlar: 6 vertikal tasma, har biri oʻz navbatida ochiladi/yigʻiladi (kadrlar hosil qilingan). */
+/* prettier-ignore */
+@keyframes abr-in-ltr {
+  0% { clip-path: polygon(0% 0%, 0% 0%, 16.667% 0%, 16.667% 0%, 16.667% 0%, 16.667% 0%, 33.333% 0%, 33.333% 0%, 33.333% 0%, 33.333% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 66.667% 0%, 66.667% 0%, 66.667% 0%, 66.667% 0%, 83.333% 0%, 83.333% 0%, 83.333% 0%, 83.333% 0%, 100% 0%, 100% 0%); }
+  16.667% { clip-path: polygon(0% 0%, 0% 100%, 16.667% 100%, 16.667% 0%, 16.667% 0%, 16.667% 0%, 33.333% 0%, 33.333% 0%, 33.333% 0%, 33.333% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 66.667% 0%, 66.667% 0%, 66.667% 0%, 66.667% 0%, 83.333% 0%, 83.333% 0%, 83.333% 0%, 83.333% 0%, 100% 0%, 100% 0%); }
+  33.333% { clip-path: polygon(0% 0%, 0% 100%, 16.667% 100%, 16.667% 0%, 16.667% 0%, 16.667% 100%, 33.333% 100%, 33.333% 0%, 33.333% 0%, 33.333% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 66.667% 0%, 66.667% 0%, 66.667% 0%, 66.667% 0%, 83.333% 0%, 83.333% 0%, 83.333% 0%, 83.333% 0%, 100% 0%, 100% 0%); }
+  50% { clip-path: polygon(0% 0%, 0% 100%, 16.667% 100%, 16.667% 0%, 16.667% 0%, 16.667% 100%, 33.333% 100%, 33.333% 0%, 33.333% 0%, 33.333% 100%, 50% 100%, 50% 0%, 50% 0%, 50% 0%, 66.667% 0%, 66.667% 0%, 66.667% 0%, 66.667% 0%, 83.333% 0%, 83.333% 0%, 83.333% 0%, 83.333% 0%, 100% 0%, 100% 0%); }
+  66.667% { clip-path: polygon(0% 0%, 0% 100%, 16.667% 100%, 16.667% 0%, 16.667% 0%, 16.667% 100%, 33.333% 100%, 33.333% 0%, 33.333% 0%, 33.333% 100%, 50% 100%, 50% 0%, 50% 0%, 50% 100%, 66.667% 100%, 66.667% 0%, 66.667% 0%, 66.667% 0%, 83.333% 0%, 83.333% 0%, 83.333% 0%, 83.333% 0%, 100% 0%, 100% 0%); }
+  83.333% { clip-path: polygon(0% 0%, 0% 100%, 16.667% 100%, 16.667% 0%, 16.667% 0%, 16.667% 100%, 33.333% 100%, 33.333% 0%, 33.333% 0%, 33.333% 100%, 50% 100%, 50% 0%, 50% 0%, 50% 100%, 66.667% 100%, 66.667% 0%, 66.667% 0%, 66.667% 100%, 83.333% 100%, 83.333% 0%, 83.333% 0%, 83.333% 0%, 100% 0%, 100% 0%); }
+  100% { clip-path: polygon(0% 0%, 0% 100%, 16.667% 100%, 16.667% 0%, 16.667% 0%, 16.667% 100%, 33.333% 100%, 33.333% 0%, 33.333% 0%, 33.333% 100%, 50% 100%, 50% 0%, 50% 0%, 50% 100%, 66.667% 100%, 66.667% 0%, 66.667% 0%, 66.667% 100%, 83.333% 100%, 83.333% 0%, 83.333% 0%, 83.333% 100%, 100% 100%, 100% 0%); }
+}
+/* prettier-ignore */
+@keyframes abr-in-rtl {
+  0% { clip-path: polygon(0% 0%, 0% 0%, 16.667% 0%, 16.667% 0%, 16.667% 0%, 16.667% 0%, 33.333% 0%, 33.333% 0%, 33.333% 0%, 33.333% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 66.667% 0%, 66.667% 0%, 66.667% 0%, 66.667% 0%, 83.333% 0%, 83.333% 0%, 83.333% 0%, 83.333% 0%, 100% 0%, 100% 0%); }
+  16.667% { clip-path: polygon(0% 0%, 0% 0%, 16.667% 0%, 16.667% 0%, 16.667% 0%, 16.667% 0%, 33.333% 0%, 33.333% 0%, 33.333% 0%, 33.333% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 66.667% 0%, 66.667% 0%, 66.667% 0%, 66.667% 0%, 83.333% 0%, 83.333% 0%, 83.333% 0%, 83.333% 100%, 100% 100%, 100% 0%); }
+  33.333% { clip-path: polygon(0% 0%, 0% 0%, 16.667% 0%, 16.667% 0%, 16.667% 0%, 16.667% 0%, 33.333% 0%, 33.333% 0%, 33.333% 0%, 33.333% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 66.667% 0%, 66.667% 0%, 66.667% 0%, 66.667% 100%, 83.333% 100%, 83.333% 0%, 83.333% 0%, 83.333% 100%, 100% 100%, 100% 0%); }
+  50% { clip-path: polygon(0% 0%, 0% 0%, 16.667% 0%, 16.667% 0%, 16.667% 0%, 16.667% 0%, 33.333% 0%, 33.333% 0%, 33.333% 0%, 33.333% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 100%, 66.667% 100%, 66.667% 0%, 66.667% 0%, 66.667% 100%, 83.333% 100%, 83.333% 0%, 83.333% 0%, 83.333% 100%, 100% 100%, 100% 0%); }
+  66.667% { clip-path: polygon(0% 0%, 0% 0%, 16.667% 0%, 16.667% 0%, 16.667% 0%, 16.667% 0%, 33.333% 0%, 33.333% 0%, 33.333% 0%, 33.333% 100%, 50% 100%, 50% 0%, 50% 0%, 50% 100%, 66.667% 100%, 66.667% 0%, 66.667% 0%, 66.667% 100%, 83.333% 100%, 83.333% 0%, 83.333% 0%, 83.333% 100%, 100% 100%, 100% 0%); }
+  83.333% { clip-path: polygon(0% 0%, 0% 0%, 16.667% 0%, 16.667% 0%, 16.667% 0%, 16.667% 100%, 33.333% 100%, 33.333% 0%, 33.333% 0%, 33.333% 100%, 50% 100%, 50% 0%, 50% 0%, 50% 100%, 66.667% 100%, 66.667% 0%, 66.667% 0%, 66.667% 100%, 83.333% 100%, 83.333% 0%, 83.333% 0%, 83.333% 100%, 100% 100%, 100% 0%); }
+  100% { clip-path: polygon(0% 0%, 0% 100%, 16.667% 100%, 16.667% 0%, 16.667% 0%, 16.667% 100%, 33.333% 100%, 33.333% 0%, 33.333% 0%, 33.333% 100%, 50% 100%, 50% 0%, 50% 0%, 50% 100%, 66.667% 100%, 66.667% 0%, 66.667% 0%, 66.667% 100%, 83.333% 100%, 83.333% 0%, 83.333% 0%, 83.333% 100%, 100% 100%, 100% 0%); }
+}
+/* prettier-ignore */
+@keyframes abr-out-ltr {
+  0% { clip-path: polygon(0% 100%, 0% 0%, 16.667% 0%, 16.667% 100%, 16.667% 100%, 16.667% 0%, 33.333% 0%, 33.333% 100%, 33.333% 100%, 33.333% 0%, 50% 0%, 50% 100%, 50% 100%, 50% 0%, 66.667% 0%, 66.667% 100%, 66.667% 100%, 66.667% 0%, 83.333% 0%, 83.333% 100%, 83.333% 100%, 83.333% 0%, 100% 0%, 100% 100%); }
+  16.667% { clip-path: polygon(0% 100%, 0% 100%, 16.667% 100%, 16.667% 100%, 16.667% 100%, 16.667% 0%, 33.333% 0%, 33.333% 100%, 33.333% 100%, 33.333% 0%, 50% 0%, 50% 100%, 50% 100%, 50% 0%, 66.667% 0%, 66.667% 100%, 66.667% 100%, 66.667% 0%, 83.333% 0%, 83.333% 100%, 83.333% 100%, 83.333% 0%, 100% 0%, 100% 100%); }
+  33.333% { clip-path: polygon(0% 100%, 0% 100%, 16.667% 100%, 16.667% 100%, 16.667% 100%, 16.667% 100%, 33.333% 100%, 33.333% 100%, 33.333% 100%, 33.333% 0%, 50% 0%, 50% 100%, 50% 100%, 50% 0%, 66.667% 0%, 66.667% 100%, 66.667% 100%, 66.667% 0%, 83.333% 0%, 83.333% 100%, 83.333% 100%, 83.333% 0%, 100% 0%, 100% 100%); }
+  50% { clip-path: polygon(0% 100%, 0% 100%, 16.667% 100%, 16.667% 100%, 16.667% 100%, 16.667% 100%, 33.333% 100%, 33.333% 100%, 33.333% 100%, 33.333% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 0%, 66.667% 0%, 66.667% 100%, 66.667% 100%, 66.667% 0%, 83.333% 0%, 83.333% 100%, 83.333% 100%, 83.333% 0%, 100% 0%, 100% 100%); }
+  66.667% { clip-path: polygon(0% 100%, 0% 100%, 16.667% 100%, 16.667% 100%, 16.667% 100%, 16.667% 100%, 33.333% 100%, 33.333% 100%, 33.333% 100%, 33.333% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 66.667% 100%, 66.667% 100%, 66.667% 100%, 66.667% 0%, 83.333% 0%, 83.333% 100%, 83.333% 100%, 83.333% 0%, 100% 0%, 100% 100%); }
+  83.333% { clip-path: polygon(0% 100%, 0% 100%, 16.667% 100%, 16.667% 100%, 16.667% 100%, 16.667% 100%, 33.333% 100%, 33.333% 100%, 33.333% 100%, 33.333% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 66.667% 100%, 66.667% 100%, 66.667% 100%, 66.667% 100%, 83.333% 100%, 83.333% 100%, 83.333% 100%, 83.333% 0%, 100% 0%, 100% 100%); }
+  100% { clip-path: polygon(0% 100%, 0% 100%, 16.667% 100%, 16.667% 100%, 16.667% 100%, 16.667% 100%, 33.333% 100%, 33.333% 100%, 33.333% 100%, 33.333% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 66.667% 100%, 66.667% 100%, 66.667% 100%, 66.667% 100%, 83.333% 100%, 83.333% 100%, 83.333% 100%, 83.333% 100%, 100% 100%, 100% 100%); }
+}
+/* prettier-ignore */
+@keyframes abr-out-rtl {
+  0% { clip-path: polygon(0% 100%, 0% 0%, 16.667% 0%, 16.667% 100%, 16.667% 100%, 16.667% 0%, 33.333% 0%, 33.333% 100%, 33.333% 100%, 33.333% 0%, 50% 0%, 50% 100%, 50% 100%, 50% 0%, 66.667% 0%, 66.667% 100%, 66.667% 100%, 66.667% 0%, 83.333% 0%, 83.333% 100%, 83.333% 100%, 83.333% 0%, 100% 0%, 100% 100%); }
+  16.667% { clip-path: polygon(0% 100%, 0% 0%, 16.667% 0%, 16.667% 100%, 16.667% 100%, 16.667% 0%, 33.333% 0%, 33.333% 100%, 33.333% 100%, 33.333% 0%, 50% 0%, 50% 100%, 50% 100%, 50% 0%, 66.667% 0%, 66.667% 100%, 66.667% 100%, 66.667% 0%, 83.333% 0%, 83.333% 100%, 83.333% 100%, 83.333% 100%, 100% 100%, 100% 100%); }
+  33.333% { clip-path: polygon(0% 100%, 0% 0%, 16.667% 0%, 16.667% 100%, 16.667% 100%, 16.667% 0%, 33.333% 0%, 33.333% 100%, 33.333% 100%, 33.333% 0%, 50% 0%, 50% 100%, 50% 100%, 50% 0%, 66.667% 0%, 66.667% 100%, 66.667% 100%, 66.667% 100%, 83.333% 100%, 83.333% 100%, 83.333% 100%, 83.333% 100%, 100% 100%, 100% 100%); }
+  50% { clip-path: polygon(0% 100%, 0% 0%, 16.667% 0%, 16.667% 100%, 16.667% 100%, 16.667% 0%, 33.333% 0%, 33.333% 100%, 33.333% 100%, 33.333% 0%, 50% 0%, 50% 100%, 50% 100%, 50% 100%, 66.667% 100%, 66.667% 100%, 66.667% 100%, 66.667% 100%, 83.333% 100%, 83.333% 100%, 83.333% 100%, 83.333% 100%, 100% 100%, 100% 100%); }
+  66.667% { clip-path: polygon(0% 100%, 0% 0%, 16.667% 0%, 16.667% 100%, 16.667% 100%, 16.667% 0%, 33.333% 0%, 33.333% 100%, 33.333% 100%, 33.333% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 66.667% 100%, 66.667% 100%, 66.667% 100%, 66.667% 100%, 83.333% 100%, 83.333% 100%, 83.333% 100%, 83.333% 100%, 100% 100%, 100% 100%); }
+  83.333% { clip-path: polygon(0% 100%, 0% 0%, 16.667% 0%, 16.667% 100%, 16.667% 100%, 16.667% 100%, 33.333% 100%, 33.333% 100%, 33.333% 100%, 33.333% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 66.667% 100%, 66.667% 100%, 66.667% 100%, 66.667% 100%, 83.333% 100%, 83.333% 100%, 83.333% 100%, 83.333% 100%, 100% 100%, 100% 100%); }
+  100% { clip-path: polygon(0% 100%, 0% 100%, 16.667% 100%, 16.667% 100%, 16.667% 100%, 16.667% 100%, 33.333% 100%, 33.333% 100%, 33.333% 100%, 33.333% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 66.667% 100%, 66.667% 100%, 66.667% 100%, 66.667% 100%, 83.333% 100%, 83.333% 100%, 83.333% 100%, 83.333% 100%, 100% 100%, 100% 100%); }
+}
+
+/* prettier-ignore */
+@keyframes abr-shift-in { from { transform: translateY(var(--abr-shift)); } to { transform: translateY(0); } }
+/* prettier-ignore */
+@keyframes abr-shift-out { from { transform: translateY(0); } to { transform: translateY(calc(-1 * var(--abr-shift))); } }
+/* prettier-ignore */
+@keyframes abr-shift-in-back { from { transform: translateY(calc(-1 * var(--abr-shift))); } to { transform: translateY(0); } }
+/* prettier-ignore */
+@keyframes abr-shift-out-back { from { transform: translateY(0); } to { transform: translateY(var(--abr-shift)); } }
+/* prettier-ignore */
+@keyframes vt-fade-in { from { opacity: 0; } to { opacity: 1; } }
+/* prettier-ignore */
+@keyframes vt-fade-out { from { opacity: 1; } to { opacity: 0; } }
+/* Birlashma: qogʻoz varaq 6 kadrli flipbook kabi ochiladi (steps). */
+/* prettier-ignore */
+@keyframes flip-in { from { transform: perspective(1400px) rotateY(72deg); filter: brightness(0.86); } to { transform: perspective(1400px) rotateY(0deg); filter: brightness(1); } }
+/* prettier-ignore */
+@keyframes flip-in-back { from { transform: perspective(1400px) rotateY(-72deg); filter: brightness(0.86); } to { transform: perspective(1400px) rotateY(0deg); filter: brightness(1); } }
+
+@layer vt-base {
+  /* Qobiq (header/futer) ildiz guruhida: qisqa oʻzaro soʻnish. */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: var(--dur-ui);
+    animation-timing-function: var(--ease-ui);
+  }
+  /* Guruh oʻlchamini morflamaymiz (layout xususiyati); old/new oʻzi hal qiladi. */
+  ::view-transition-group(.vt-page) {
+    animation: none;
+  }
+  ::view-transition-image-pair(.vt-page) {
+    isolation: isolate;
+  }
+  /* Sukut = oldinga abr: tasmalar chapdan oʻngga, sahifa pastdan registrga keladi. */
+  ::view-transition-old(.vt-page) {
+    animation:
+      abr-out-ltr var(--dur-transition) linear both,
+      abr-shift-out var(--dur-transition) steps(6, end) both;
+  }
+  ::view-transition-new(.vt-page) {
+    animation:
+      abr-in-ltr var(--dur-transition) linear both,
+      abr-shift-in var(--dur-transition) steps(6, end) both;
+  }
+  /* Umumiy elementlar (yangilik muqovasi, loyiha mediasi): joy va oʻlcham morfi. */
+  ::view-transition-group(.vt-shared) {
+    animation-duration: var(--dur-transition);
+    animation-timing-function: var(--ease-in-out);
+  }
+}
+
+@layer vt-typed {
+  :root:active-view-transition-type(nav-back)::view-transition-old(.vt-page) {
+    animation-name: abr-out-rtl, abr-shift-out-back;
+  }
+  :root:active-view-transition-type(nav-back)::view-transition-new(.vt-page) {
+    animation-name: abr-in-rtl, abr-shift-in-back;
+  }
+  /* Til almashuvi: matn joyida soʻnib almashadi, siljish yoʻq. */
+  :root:active-view-transition-type(locale-switch)::view-transition-old(.vt-page) {
+    animation: vt-fade-out var(--dur-ui) var(--ease-ui) both;
+  }
+  :root:active-view-transition-type(locale-switch)::view-transition-new(.vt-page) {
+    animation: vt-fade-in var(--dur-ui) var(--ease-ui) both;
+  }
+  :root:active-view-transition-type(locale-switch)::view-transition-image-pair(.vt-page) {
+    isolation: auto;
+  }
+}
+
+@layer vt-design {
+  :root[data-design="birlashma"]::view-transition-old(.vt-page) {
+    animation: none;
+  }
+  :root[data-design="birlashma"]::view-transition-new(.vt-page) {
+    transform-origin: left center;
+    animation: flip-in var(--dur-transition) steps(6, end) both;
+  }
+  :root[data-design="birlashma"]:active-view-transition-type(nav-back)::view-transition-new(
+      .vt-page
+    ) {
+    transform-origin: right center;
+    animation-name: flip-in-back;
+  }
+  :root[data-design="birlashma"]:active-view-transition-type(locale-switch)::view-transition-old(
+      .vt-page
+    ) {
+    animation: vt-fade-out var(--dur-ui) var(--ease-ui) both;
+  }
+  :root[data-design="birlashma"]:active-view-transition-type(locale-switch)::view-transition-new(
+      .vt-page
+    ) {
+    transform-origin: center;
+    animation: vt-fade-in var(--dur-ui) var(--ease-ui) both;
+  }
+}
+
+@layer vt-reduced {
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(.vt-page),
+    ::view-transition-old(root) {
+      animation: vt-fade-out var(--dur-fade) var(--ease-ui) both;
+    }
+    ::view-transition-new(.vt-page),
+    ::view-transition-new(root) {
+      animation: vt-fade-in var(--dur-fade) var(--ease-ui) both;
+    }
+    ::view-transition-group(.vt-shared) {
+      animation-duration: var(--dur-fade);
+    }
+  }
+  :root[data-motion="off"]::view-transition-old(.vt-page),
+  :root[data-motion="off"]::view-transition-old(root) {
+    animation: vt-fade-out var(--dur-fade) var(--ease-ui) both;
+  }
+  :root[data-motion="off"]::view-transition-new(.vt-page),
+  :root[data-motion="off"]::view-transition-new(root) {
+    animation: vt-fade-in var(--dur-fade) var(--ease-ui) both;
+  }
+  :root[data-motion="off"]::view-transition-group(.vt-shared) {
+    animation-duration: var(--dur-fade);
+  }
+}
+
+@layer vt-fallback {
+  /* View Transitions boʻlmagan brauzer: TransitionLink body ga nav-fade qoʻyadi, PageTransition oladi. */
+  body {
+    transition: opacity var(--dur-fade) var(--ease-ui);
+  }
+  body.nav-fade {
+    opacity: 0;
+  }
+}

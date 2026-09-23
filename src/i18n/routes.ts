@@ -120,3 +120,25 @@ export function breadcrumbKeys(key: PageKey): readonly PageKey[] {
   if (key === "newsItem") return ["home", "news", "newsItem"];
   return ["home", key];
 }
+
+export interface ResolvedPath {
+  readonly locale: Locale;
+  readonly key: PageKey;
+  readonly slug?: NewsSlug;
+}
+
+/** Brauzer yoʻlidan sahifa kalitini topadi: til menyusi va faol belgi uchun. */
+export function resolvePath(pathname: string): ResolvedPath | null {
+  const parts = pathname.split("/").filter(Boolean);
+  const [first, second, third] = parts;
+  if (!first || !(LOCALES as readonly string[]).includes(first)) return null;
+  const locale = first as Locale;
+  if (!second) return { locale, key: "home" };
+  const key = resolveSection(locale, second);
+  if (!key) return null;
+  if (key === "news" && third) {
+    return isNewsSlug(third) ? { locale, key: "newsItem", slug: third } : null;
+  }
+  if (third) return null;
+  return { locale, key };
+}

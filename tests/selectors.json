@@ -1,0 +1,33 @@
+{
+  "testid": {
+    "skipLink": "skip-link",
+    "header": "header",
+    "tabBar": "tab-bar",
+    "menuOpen": "menu-open",
+    "menuSheet": "menu-sheet",
+    "appearanceOpen": "appearance-open",
+    "appearancePanel": "appearance-panel",
+    "sliderTransparency": "slider-transparency",
+    "sliderDensity": "slider-density",
+    "designAtlas": "design-atlas",
+    "designBirlashma": "design-birlashma",
+    "languageOpen": "language-open",
+    "languageMenu": "language-menu",
+    "contactForm": "contact-form",
+    "footerCrown": "footer-crown",
+    "portalScene": "portal-scene"
+  },
+  "attr": {
+    "cardGroup": "[data-card-group]",
+    "card": "[data-card]",
+    "cardTitle": "[data-card-title]",
+    "cardCta": "[data-card-cta]",
+    "gridItem": "[data-grid-item]",
+    "audit": "[data-audit]",
+    "clamp": "[data-clamp]",
+    "iconOptical": "[data-icon-optical]",
+    "buttonPrimary": "[data-button=\"primary\"]",
+    "buttonGlass": "[data-button=\"glass\"]",
+    "container": ".container-site"
+  }
+}

@@ -19,7 +19,7 @@ export default tseslint.config(
   },
   ...nextConfig,
   ...tseslint.configs.strict,
-  jsxA11y.flatConfigs.strict,
+  { rules: jsxA11y.flatConfigs.strict.rules },
   {
     files: ["src/**/*.{ts,tsx}"],
     rules: {

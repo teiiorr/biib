@@ -2,6 +2,12 @@
 @import "./designs/atlas.css";
 @import "./designs/birlashma.css";
 @import "./materials.css";
+@import "./ornament.css";
+@import "./paper.css";
+@import "./transitions.css";
+@import "./appearance-transitions.css";
+@import "./ui.css";
+@import "./layout.css";
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 @custom-variant atlas (&:where([data-design="atlas"], [data-design="atlas"] *));
@@ -209,7 +215,6 @@
   :focus-visible {
     outline: 2px solid var(--focus);
     outline-offset: 2px;
-    border-radius: var(--radius-s);
   }
   ::selection {
     background: color-mix(in oklab, var(--tint) 24%, transparent);

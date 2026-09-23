@@ -11,10 +11,358 @@
   backdrop-filter: blur(var(--g-blur)) saturate(var(--material-sat));
   box-shadow:
     inset 0 0 0 1px color-mix(in oklab, var(--material-rim) calc(var(--g-rim) * 100%), transparent),
+    inset 0 1px 0 color-mix(in oklab, var(--material-rim) calc(var(--g-rim) * 120%), transparent),
+    inset 0 -6px 12px -8px
+      color-mix(in oklab, var(--material-shadow) calc(var(--g-d) * 100%), transparent),
     var(--shadow-floating);
 }
 .material[data-text="true"] {
   --m-tint: var(--g-tint-text);
+}
+
+/* Sirt: radius konsentrik, padding ichki radiusni belgilaydi. */
+.surface {
+  border-radius: var(--surface-radius);
+  corner-shape: squircle;
+}
+.surface[data-refract="on"] {
+  -webkit-backdrop-filter: var(--surface-refract) blur(var(--g-blur)) saturate(var(--material-sat));
+  backdrop-filter: var(--surface-refract) blur(var(--g-blur)) saturate(var(--material-sat));
+}
+.surface-filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Yaltiroq nuqta: --sheen-x/--sheen-y kursor yoki skroll ortidan yuradi. */
+.surface[data-material]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    140px circle at var(--sheen-x, 30%) var(--sheen-y, 0%),
+    color-mix(in oklab, var(--material-rim) calc(var(--g-rim) * 55%), transparent),
+    transparent 70%
+  );
+  opacity: 0.9;
+  z-index: -1;
+}
+.surface[data-material="kalka"]::before,
+:root[data-design="birlashma"] .surface[data-material="auto"]::before {
+  background: none;
+}
+
+/* Variantlar */
+.surface[data-variant="clear"] {
+  --m-tint: calc(var(--g-tint) * 0.45);
+}
+.surface[data-variant="clear"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: color-mix(in oklab, var(--ink) 18%, transparent);
+  z-index: -1;
+  pointer-events: none;
+}
+.surface[data-variant="tinted"] {
+  background: color-mix(in oklab, var(--tint) calc(var(--m-tint) * 100%), transparent);
+  color: var(--on-tint);
+}
+
+/* Ostidagi boʻlim ohangi: tungi boʻlim ustida yorliq oq, kunduzgi ustida siyoh. */
+.surface[data-tone="dark"] {
+  --material-ink: #f7f3ea;
+  --material-base: #111a38;
+  --material-rim: #8c95b4;
+}
+.surface[data-tone="light"] {
+  --material-ink: #0e1733;
+  --material-base: #fffcf6;
+  --material-rim: #ffffff;
+}
+
+/* Kalka: qogʻoz tolasi, qirqilgan chet va skotch. */
+.surface-paper {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: color-mix(in oklab, var(--material-base) calc(var(--m-tint) * 60%), transparent);
+}
+.surface-paper[data-deckle="true"] {
+  inset: -3px;
+  border-radius: 0;
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><path d='M1.2 1.8 6 1.1 11 1.9 16 1 21 1.6 26 1.2 31 2 36 1.1 41 1.7 46 1 51 1.9 56 1.2 61 1.6 66 1 71 1.8 76 1.3 81 1.9 86 1.1 91 1.7 96 1.2 98.8 1.6 99 6 98.2 11 99 16 98.4 21 98.9 26 98.1 31 98.8 36 98.3 41 99 46 98.2 51 98.7 56 98.1 61 98.9 66 98.3 71 98.8 76 98.2 81 99 86 98.4 91 98.9 96 98.3 98.6 98.9 94 98.1 89 98.9 84 98.2 79 98.8 74 98.1 69 98.7 64 98.3 59 99 54 98.2 49 98.8 44 98.1 39 98.9 34 98.3 29 98.8 24 98.2 19 98.9 14 98.1 9 98.7 4 98.3 1.1 98.2 1.8 94 1.1 89 1.9 84 1.2 79 1.8 74 1.1 69 1.7 64 1.2 59 1.9 54 1.1 49 1.8 44 1.2 39 1.9 34 1.1 29 1.7 24 1.2 19 1.8 14 1.1 9 1.9 4Z' fill='black'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><path d='M1.2 1.8 6 1.1 11 1.9 16 1 21 1.6 26 1.2 31 2 36 1.1 41 1.7 46 1 51 1.9 56 1.2 61 1.6 66 1 71 1.8 76 1.3 81 1.9 86 1.1 91 1.7 96 1.2 98.8 1.6 99 6 98.2 11 99 16 98.4 21 98.9 26 98.1 31 98.8 36 98.3 41 99 46 98.2 51 98.7 56 98.1 61 98.9 66 98.3 71 98.8 76 98.2 81 99 86 98.4 91 98.9 96 98.3 98.6 98.9 94 98.1 89 98.9 84 98.2 79 98.8 74 98.1 69 98.7 64 98.3 59 99 54 98.2 49 98.8 44 98.1 39 98.9 34 98.3 29 98.8 24 98.2 19 98.9 14 98.1 9 98.7 4 98.3 1.1 98.2 1.8 94 1.1 89 1.9 84 1.2 79 1.8 74 1.1 69 1.7 64 1.2 59 1.9 54 1.1 49 1.8 44 1.2 39 1.9 34 1.1 29 1.7 24 1.2 19 1.8 14 1.1 9 1.9 4Z' fill='black'/></svg>");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+.surface-fiber {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background-image: var(--material-fiber);
+  background-size: 160px 160px;
+  opacity: calc(0.12 + 0.5 * var(--g-d));
+  mix-blend-mode: multiply;
+}
+:root[data-theme="dark"] .surface-fiber {
+  mix-blend-mode: screen;
+  opacity: calc(0.05 + 0.25 * var(--g-d));
+}
+.surface-tape {
+  position: absolute;
+  top: -8px;
+  left: 24px;
+  width: 64px;
+  height: 18px;
+  transform: rotate(-3deg);
+  background: color-mix(in oklab, var(--accent-art) 35%, var(--surface-2) 65%);
+  opacity: 0.85;
+  pointer-events: none;
+  box-shadow: var(--shadow-contact);
+}
+:root[data-design="birlashma"] .material {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--line-strong) calc(var(--g-rim) * 60%), transparent),
+    var(--shadow-floating);
+}
+
+/* Morf: Flip transformni boshqaradi, CSS faqat kamaytirilgan harakatda ishlaydi. */
+.surface-morph {
+  transform-origin: top right;
+}
+html.vt-reduced .surface-morph,
+:root[data-motion="off"] .surface-morph {
+  animation: material-fade 150ms var(--ease-ui);
+}
+@keyframes material-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.glass-popover {
+  min-width: 280px;
+  max-width: min(360px, calc(100vw - 32px));
+}
+
+/* Segmentli boshqaruv: linza tanlangan element ostida prujina bilan suriladi. */
+.segmented {
+  display: inline-flex;
+  position: relative;
+  height: 40px;
+}
+.segmented-group {
+  position: relative;
+  display: flex;
+  gap: 4px;
+  z-index: 1;
+}
+.segmented-item {
+  height: 32px;
+  padding-inline: 12px;
+  border-radius: var(--surface-radius);
+  color: var(--material-ink);
+  display: inline-flex;
+  align-items: center;
+  min-width: 44px;
+  transition: color var(--dur-ui) var(--ease-ui);
+}
+.segmented-item[data-state="on"] .segmented-label {
+  transform: scale(1.04);
+}
+.segmented-label {
+  display: inline-block;
+  transition: transform var(--dur-ui) var(--ease-ui);
+}
+.segmented-lens {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: 0;
+  transform-origin: left center;
+  border-radius: var(--surface-radius);
+  background: color-mix(in oklab, var(--material-base) 90%, var(--material-ink) 10%);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--material-rim) 60%, transparent),
+    var(--shadow-raised);
+  will-change: transform;
+}
+
+/* Sozlagich: 4 px yoʻl, pushti toʻldirish, kapsula tugmacha; tortganda linza. */
+.glass-slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 44px;
+  touch-action: none;
+  user-select: none;
+}
+.glass-slider[data-disabled] {
+  opacity: 0.5;
+}
+.glass-slider-track {
+  position: relative;
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--material-ink) 22%, transparent);
+}
+.glass-slider-range {
+  position: absolute;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--tint);
+}
+.glass-slider-thumb {
+  position: relative;
+  display: block;
+  width: 28px;
+  height: 20px;
+  border-radius: var(--radius-control);
+  background: var(--surface-2);
+  box-shadow:
+    inset 0 0 0 1px var(--line-strong),
+    var(--shadow-raised);
+  transition: transform var(--dur-ui) var(--ease-ui);
+}
+.glass-slider-thumb::after {
+  content: "";
+  position: absolute;
+  inset: -12px;
+}
+.glass-slider-cap {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--material-rim) 70%, transparent),
+    transparent 60%
+  );
+}
+.glass-slider-lens {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  transform: translate(-50%, 8px) scale(0.6);
+  opacity: 0;
+  pointer-events: none;
+  background: color-mix(in oklab, var(--material-base) 70%, transparent);
+  -webkit-backdrop-filter: blur(2px) saturate(1.2);
+  backdrop-filter: blur(2px) saturate(1.2);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--material-rim) 80%, transparent),
+    var(--shadow-floating);
+  transition:
+    transform var(--dur-ui) var(--ease-ui),
+    opacity var(--dur-ui) var(--ease-ui);
+}
+.glass-slider[data-dragging="true"] .glass-slider-lens {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+.glass-slider-lens-track {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 50%;
+  height: 6px;
+  margin-top: -3px;
+  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--tint) 50%,
+    color-mix(in oklab, var(--material-ink) 22%, transparent) 50%
+  );
+}
+.glass-slider-lens-marker {
+  display: none;
+  position: absolute;
+  inset: -6px;
+  color: var(--ink);
+}
+:root[data-design="birlashma"] .glass-slider-lens {
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+:root[data-design="birlashma"] .glass-slider-lens-marker {
+  display: block;
+}
+:root[data-design="birlashma"] .glass-slider-thumb {
+  border-radius: 6px;
+}
+
+/* Kalit */
+.glass-switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 44px;
+}
+.glass-switch-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.glass-switch-hint {
+  color: color-mix(in oklab, var(--material-ink) 70%, transparent);
+}
+.glass-switch {
+  position: relative;
+  flex: none;
+  width: 48px;
+  height: 28px;
+  border-radius: var(--radius-control);
+  background: color-mix(in oklab, var(--material-ink) 22%, transparent);
+  transition: background var(--dur-ui) var(--ease-ui);
+}
+.glass-switch::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+}
+.glass-switch[aria-checked="true"] {
+  background: var(--tint);
+}
+.glass-switch:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.glass-switch-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  box-shadow: var(--shadow-raised);
+  transition: transform var(--dur-ui) var(--ease-ui);
+}
+.glass-switch[aria-checked="true"] .glass-switch-knob {
+  transform: translateX(20px);
+}
+:root[data-design="birlashma"] .glass-switch,
+:root[data-design="birlashma"] .glass-switch-knob {
+  border-radius: 6px;
 }
 
 /* Shaffoflikni kamaytirish, kontrastni oshirish va backdrop-filter yoʻq brauzerlar: qattiq sirt. */
@@ -24,14 +372,16 @@
   }
 }
 @media (prefers-reduced-transparency: reduce) {
-  .material {
+  .material,
+  .surface[data-refract="on"] {
     background: var(--material-base);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
 }
 @media (prefers-contrast: more) {
-  .material {
+  .material,
+  .surface[data-refract="on"] {
     background: var(--material-base);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
@@ -39,4 +389,176 @@
       inset 0 0 0 1px var(--ink),
       var(--shadow-floating);
   }
+}
+
+/* Dialog, varaq va menyu */
+.glass-overlay {
+  position: fixed;
+  inset: 0;
+  background: color-mix(in oklab, var(--ink) 32%, transparent);
+  animation: material-fade var(--dur-ui) var(--ease-ui);
+}
+.glass-dialog {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: min(480px, calc(100vw - 32px));
+  max-height: calc(100svh - 48px);
+  overflow: auto;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+}
+.glass-sheet {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  width: min(100vw, 560px);
+  max-height: calc(100svh - 48px - var(--safe-top));
+  overflow: auto;
+  transform: translateX(-50%);
+  transform-origin: bottom center;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-bottom: calc(24px + var(--safe-bottom));
+}
+.glass-sheet-grip {
+  display: block;
+  width: 40px;
+  height: 4px;
+  margin: 0 auto 12px;
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--material-ink) 30%, transparent);
+}
+.glass-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.glass-dialog-description {
+  color: color-mix(in oklab, var(--material-ink) 75%, transparent);
+  margin-bottom: 16px;
+}
+.glass-close {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-control);
+  color: var(--material-ink);
+  transition: transform 200ms var(--ease-ui);
+}
+.glass-close::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+}
+.glass-close:active {
+  transform: scale(0.97);
+}
+.glass-menu {
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.glass-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: var(--surface-radius);
+  color: var(--material-ink);
+  text-align: left;
+  outline: none;
+  transition: background var(--dur-ui) var(--ease-ui);
+}
+.glass-menu-item[data-highlighted] {
+  background: color-mix(in oklab, var(--material-ink) 8%, transparent);
+}
+.glass-menu-item:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+.glass-menu-item.is-current {
+  color: var(--tint);
+}
+.glass-menu-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.glass-menu-hint {
+  color: color-mix(in oklab, var(--material-ink) 65%, transparent);
+}
+
+/* Koʻrinish paneli */
+.appearance-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.appearance-title {
+  margin-bottom: 16px;
+}
+.appearance-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.design-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.design-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border-radius: var(--surface-radius);
+  text-align: left;
+  color: var(--material-ink);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--material-ink) 16%, transparent);
+  transition: box-shadow var(--dur-ui) var(--ease-ui);
+}
+.design-card[data-state="checked"] {
+  box-shadow: inset 0 0 0 2px var(--tint);
+}
+.design-preview {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  display: block;
+}
+.design-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.design-card-hint {
+  color: color-mix(in oklab, var(--material-ink) 70%, transparent);
+}
+.slider-ends {
+  display: flex;
+  justify-content: space-between;
+  color: color-mix(in oklab, var(--material-ink) 70%, transparent);
+}
+.appearance-note {
+  color: color-mix(in oklab, var(--material-ink) 80%, transparent);
+}
+.appearance-reset {
+  align-self: flex-start;
+  min-height: 44px;
+  padding-inline: 4px;
+  color: var(--tint);
 }

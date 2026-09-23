@@ -1,0 +1,120 @@
+/* Mavzu va dizayn almashinuvi: View Transition turlari theme-switch va design-switch. */
+
+@property --vt-r {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+/* Mavzu: palak oy medalyoni tugma joyidan kengayadi; halqada bitta ingichka boʻshliq. */
+html.vt-theme-switch::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+html.vt-theme-switch::view-transition-new(root) {
+  animation: palak-bloom 700ms var(--ease-out) forwards;
+  mix-blend-mode: normal;
+  -webkit-mask-image: radial-gradient(
+    circle at var(--vt-x, 50%) var(--vt-y, 0px),
+    black calc(var(--vt-r) - 14px),
+    transparent calc(var(--vt-r) - 12px),
+    transparent calc(var(--vt-r) - 6px),
+    black calc(var(--vt-r) - 4px),
+    black var(--vt-r),
+    transparent calc(var(--vt-r) + 1px)
+  );
+  mask-image: radial-gradient(
+    circle at var(--vt-x, 50%) var(--vt-y, 0px),
+    black calc(var(--vt-r) - 14px),
+    transparent calc(var(--vt-r) - 12px),
+    transparent calc(var(--vt-r) - 6px),
+    black calc(var(--vt-r) - 4px),
+    black var(--vt-r),
+    transparent calc(var(--vt-r) + 1px)
+  );
+}
+@keyframes palak-bloom {
+  from {
+    --vt-r: 0px;
+  }
+  to {
+    --vt-r: 170vmax;
+  }
+}
+
+/* Dizayn: Atlas → Birlashma — qogʻoz varagʻi tepadan tushadi, sahifa 6 kadrda chiziladi. */
+html.vt-design-switch[data-design-to="birlashma"]::view-transition-old(root) {
+  animation: none;
+}
+html.vt-design-switch[data-design-to="birlashma"]::view-transition-new(root) {
+  animation:
+    paper-drop 900ms steps(6, end) forwards,
+    paper-shadow 900ms steps(6, end) forwards;
+}
+@keyframes paper-drop {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes paper-shadow {
+  from {
+    box-shadow: 0 24px 48px rgba(27, 35, 64, 0.3);
+  }
+  to {
+    box-shadow: 0 0 0 rgba(27, 35, 64, 0);
+  }
+}
+
+/* Birlashma → Atlas — qogʻoz koʻtariladi, abr yoʻllari joyiga tushadi. */
+html.vt-design-switch[data-design-to="atlas"]::view-transition-old(root) {
+  animation: paper-lift 900ms var(--ease-in-out) forwards;
+  transform-origin: top center;
+}
+html.vt-design-switch[data-design-to="atlas"]::view-transition-new(root) {
+  animation: abr-register 900ms var(--ease-out) forwards;
+}
+@keyframes paper-lift {
+  to {
+    transform: translateY(-104%) rotate(-1.5deg);
+  }
+}
+@keyframes abr-register {
+  0% {
+    -webkit-mask-image: repeating-linear-gradient(90deg, black 0 6%, transparent 6% 12.5%);
+    mask-image: repeating-linear-gradient(90deg, black 0 6%, transparent 6% 12.5%);
+    transform: translateY(16px);
+  }
+  50% {
+    -webkit-mask-image: repeating-linear-gradient(90deg, black 0 10%, transparent 10% 12.5%);
+    mask-image: repeating-linear-gradient(90deg, black 0 10%, transparent 10% 12.5%);
+    transform: translateY(6px);
+  }
+  100% {
+    -webkit-mask-image: repeating-linear-gradient(90deg, black 0 12.5%, transparent 12.5% 12.5%);
+    mask-image: repeating-linear-gradient(90deg, black 0 12.5%, transparent 12.5% 12.5%);
+    transform: translateY(0);
+  }
+}
+
+/* Kamaytirilgan harakat va Harakat oʻchiq: 150 ms xira oʻtish. */
+html.vt-reduced::view-transition-old(root),
+html.vt-reduced::view-transition-new(root),
+:root[data-motion="off"].vt-theme-switch::view-transition-new(root),
+:root[data-motion="off"].vt-design-switch::view-transition-new(root),
+:root[data-motion="off"].vt-design-switch::view-transition-old(root) {
+  animation: vt-fade 150ms var(--ease-ui) forwards;
+  -webkit-mask-image: none;
+  mask-image: none;
+  transform: none;
+}
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
