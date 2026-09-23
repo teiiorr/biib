@@ -23,11 +23,14 @@ export function Breadcrumbs({ items, label, className }: BreadcrumbsProps) {
           <li key={item.href} className="inline-flex items-center gap-1">
             {index > 0 ? <Icon name="chevron-right" size={16} className="text-ink-3" /> : null}
             {item.current ? (
-              <span aria-current="page" className="py-3 text-ink">
+              <span aria-current="page" className="inline-flex min-h-11 items-center px-1 text-ink">
                 {item.label}
               </span>
             ) : (
-              <Link href={item.href} className="py-3 hover:text-ink">
+              <Link
+                href={item.href}
+                className="inline-flex min-h-11 min-w-11 items-center px-1 hover:text-ink"
+              >
                 {item.label}
               </Link>
             )}

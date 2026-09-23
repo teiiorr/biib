@@ -85,7 +85,7 @@ test.describe("G2 marshrutlar", () => {
     const slug = NEWS_SLUGS[0];
     await page.goto(pathFor("uz", "newsItem", slug));
     await settle(page);
-    await page.getByTestId("language-open").first().click();
+    await page.getByTestId("language-open").locator("visible=true").first().click();
     const menu = page.getByTestId("language-menu");
     await expect(menu).toBeVisible();
     const bad: string[] = [];

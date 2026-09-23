@@ -33,7 +33,7 @@ export function AppearanceControl({ dict }: AppearanceControlProps) {
         triggerRef.current = node;
       }}
       variant="glass"
-      size="40"
+      size="48"
       icon="sliders"
       iconOnly
       aria-label={dict.open}

@@ -67,7 +67,9 @@ export function auditClip(): Finding[] {
 
     const trim = cs.getPropertyValue("text-box-trim").trim();
     const ratio = parseFloat(cs.lineHeight) / parseFloat(cs.fontSize);
-    const againstParent = (trim !== "" && trim !== "none") || (Number.isFinite(ratio) && ratio < 1);
+    /* Zich qatorli sarlavhalar (≤1.2): glif chegarasi qator qutisidan chiqadi, ota quti hisob. */
+    const againstParent =
+      (trim !== "" && trim !== "none") || (Number.isFinite(ratio) && ratio < 1.2);
     if (againstParent) {
       // Qirqilgan sarlavha: oʻz qutisi emas, ota quti hisob. Qatorning toʻliq balandligi sigʻishi kerak.
       const parent = el.parentElement;

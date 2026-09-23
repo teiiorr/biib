@@ -13,12 +13,16 @@ async function load(file: string): Promise<ArrayBuffer> {
   ) as ArrayBuffer;
 }
 
-/** Satori uchun kirillcha glifli TTF fayllar aniq beriladi (§17 SEO). */
+/**
+ * Satori uchun kirillcha glifli TTF fayllar aniq beriladi (§17 SEO).
+ * Oʻzgaruvchan shriftlarni Satori oʻqiy olmaydi: fontTools instancer bilan statik nusxalar
+ * (Playfair 500/opsz 60, Inter 400/opsz 32, Nunito 700) yonida saqlanadi.
+ */
 export async function loadOgFonts(): Promise<OgFont[]> {
   const [playfair, inter, nunito] = await Promise.all([
-    load("Playfair[opsz,wdth,wght].ttf"),
-    load("Inter[opsz,wght].ttf"),
-    load("Nunito[wght].ttf"),
+    load("Playfair-500.ttf"),
+    load("Inter-400.ttf"),
+    load("Nunito-700.ttf"),
   ]);
   return [
     { name: "Playfair", data: playfair, weight: 500, style: "normal" },

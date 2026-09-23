@@ -5,7 +5,10 @@ export interface BarsOptions {
   readonly check: "under-header" | "under-tabbar";
 }
 
-/** Brauzer ichida ishlaydi. Joriy skroll holatida qotirilgan panel ostida qolgan matnni topadi. */
+/**
+ * Brauzer ichida ishlaydi. Hujjat koordinatalarida: sarlavha ostida hujjat boshidagi matn,
+ * tab-bar ostida hujjat oxiridagi matn qolmasligi kerak (oʻrtada suzuvchi panel ostidan matn oʻtishi tabiiy).
+ */
 export function auditUnderBars(opts: BarsOptions): Finding[] {
   const findings: Finding[] = [];
   const label = (el: Element): string => {
@@ -52,11 +55,11 @@ export function auditUnderBars(opts: BarsOptions): Finding[] {
     }
     const box = bar.getBoundingClientRect();
     if (box.height === 0 || box.width === 0) continue;
-    const top = opts.check === "under-header" ? Math.min(box.top, safeTop) : box.top;
-    const bottom =
-      opts.check === "under-tabbar"
-        ? Math.max(box.bottom, window.innerHeight - safeBottom)
-        : box.bottom;
+    const docHeight = document.documentElement.scrollHeight;
+    const barHeight = box.height + (opts.check === "under-header" ? safeTop : safeBottom);
+    /* Hujjat koordinatalari: sarlavha zonasi [0, barHeight], tab-bar zonasi [docHeight - barHeight, docHeight]. */
+    const zoneTop = opts.check === "under-header" ? 0 : docHeight - barHeight - 12;
+    const zoneBottom = opts.check === "under-header" ? barHeight + 12 : docHeight;
 
     for (const el of Array.from(document.body.querySelectorAll("*"))) {
       if (!(el instanceof HTMLElement) || bar.contains(el)) continue;
@@ -68,8 +71,10 @@ export function auditUnderBars(opts: BarsOptions): Finding[] {
       if (!ownText(el)) continue;
       const rect = el.getBoundingClientRect();
       if (rect.width <= 1 || rect.height <= 1) continue;
+      const docTop = rect.top + window.scrollY;
+      const docBottom = rect.bottom + window.scrollY;
       const overlapX = Math.min(rect.right, box.right) - Math.max(rect.left, box.left);
-      const overlapY = Math.min(rect.bottom, bottom) - Math.max(rect.top, top);
+      const overlapY = Math.min(docBottom, zoneBottom) - Math.max(docTop, zoneTop);
       if (overlapX > 1 && overlapY > 1) {
         findings.push({
           check: opts.check,

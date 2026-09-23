@@ -153,7 +153,7 @@ for (const design of DESIGNS) {
             }
           }
           if (page === "home") {
-            const openBtn = tab.getByTestId("appearance-open").first();
+            const openBtn = tab.getByTestId("appearance-open").locator("visible=true").first();
             for (const [t, d] of [
               [0, 50],
               [100, 50],

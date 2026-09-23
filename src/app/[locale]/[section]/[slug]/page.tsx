@@ -8,7 +8,8 @@ import { LOCALES, type Locale } from "@/i18n/locales";
 import { NEWS_SLUGS, isNewsSlug, resolveSection, sectionSegment } from "@/i18n/routes";
 import { buildMetadata } from "@/lib/seo/metadata";
 
-export const dynamicParams = false;
+/* Nomaʼlum segment lokal 404 ni koʻrsatishi uchun (G2): 70 sahifa statik, qolgani notFound(). */
+export const dynamicParams = true;
 
 /** Faqat yangiliklar: 5 slug × 5 til = 25 sahifa. */
 export function generateStaticParams() {

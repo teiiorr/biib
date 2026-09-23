@@ -27,7 +27,7 @@ for (const design of designs) {
         browserName,
         isMobile,
       }, testInfo) => {
-        await primeAppearance(page, { design, theme });
+        await primeAppearance(page, { design, theme, motion: false });
         await page.goto(route.path);
         await settle(page);
         await revealAll(page);

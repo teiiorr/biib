@@ -4,7 +4,6 @@
   .skip-link {
     top: 12px;
     left: 12px;
-    padding: 12px 16px;
     background: var(--tint);
     color: var(--on-tint);
     border-radius: var(--radius-m);
@@ -32,12 +31,12 @@
     height: 64px;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
   }
   .header-group {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
   }
   .nav-item {
     position: relative;
@@ -96,6 +95,7 @@
   .tab-bar {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
     height: 64px;
     padding: 4px;
     transition:
@@ -266,7 +266,7 @@
   .footer-langs {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 8px;
   }
   .footer-langs a {
     display: inline-flex;

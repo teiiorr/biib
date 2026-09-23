@@ -39,7 +39,7 @@ for (const design of designs) {
         await primeAppearance(page, { design, theme, transparency: t, density: d });
         await page.goto(pathFor("uz", "home"));
         await settle(page);
-        await page.getByTestId("appearance-open").first().click();
+        await page.getByTestId("appearance-open").locator("visible=true").first().click();
         await expect(page.getByTestId("appearance-panel")).toBeVisible();
         const violations = await axeViolations(page);
         if (violations.length) failures.push(`t${t}/d${d}: ${violations.join("; ")}`);
@@ -65,7 +65,7 @@ for (const design of designs) {
     const first = await page.evaluate(() => document.activeElement?.getAttribute("data-testid"));
     if (first !== "skip-link") failures.push(`birinchi fokus: ${first}`);
 
-    const langOpen = page.getByTestId("language-open").first();
+    const langOpen = page.getByTestId("language-open").locator("visible=true").first();
     await langOpen.focus();
     await page.keyboard.press("Enter");
     if (
@@ -84,7 +84,7 @@ for (const design of designs) {
     )
       failures.push("Escape til menyusini yopmadi");
 
-    await page.getByTestId("appearance-open").first().focus();
+    await page.getByTestId("appearance-open").locator("visible=true").first().focus();
     await page.keyboard.press("Enter");
     await expect(page.getByTestId("appearance-panel")).toBeVisible();
     const slider = page.getByTestId("slider-transparency").locator('[role="slider"]');

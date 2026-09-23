@@ -38,7 +38,7 @@ test.describe("G13 dizayn almashinuvi", () => {
           );
           return visible?.textContent?.trim() ?? null;
         });
-        await page.getByTestId("appearance-open").first().click();
+        await page.getByTestId("appearance-open").locator("visible=true").first().click();
         await expect(page.getByTestId("appearance-panel")).toBeVisible();
         await page.getByTestId(`design-${target}`).click();
         await expect

@@ -73,9 +73,9 @@ export function ProjectsPage({ locale, dict }: PageProps) {
                 </a>
               </li>
             ))}
-            <span className="chorbogh-star birlashma:hidden" aria-hidden="true">
+            <li className="chorbogh-star birlashma:hidden" aria-hidden="true">
               <GirihStar symmetry={10} size={72} ring />
-            </span>
+            </li>
           </ol>
         </Container>
       </Section>

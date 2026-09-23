@@ -98,7 +98,8 @@ export function auditInteractive(): Finding[] {
       continue;
     if (el.closest("[inert]")) continue;
     const rect = el.getBoundingClientRect();
-    if (rect.width <= 0 || rect.height <= 0) continue;
+    /* Ekrandan tashqari (sr-only) 1×1 elementlar oʻlchanmaydi: fokusda kattalashadi. */
+    if (rect.width <= 1 || rect.height <= 1) continue;
     let box = toBox(rect);
     // Belgilash katakchasi yorligʻi bilan birga bosiladi: nishon ikkalasining birlashmasi.
     if (el instanceof HTMLInputElement && el.labels) {

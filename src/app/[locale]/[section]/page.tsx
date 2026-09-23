@@ -15,7 +15,8 @@ import { SECTION_KEYS, resolveSection, sectionSegment, type SectionKey } from "@
 import { buildMetadata } from "@/lib/seo/metadata";
 import { statusForPage } from "@/lib/seo/status";
 
-export const dynamicParams = false;
+/* Nomaʼlum segment lokal 404 ni koʻrsatishi uchun (G2): 70 sahifa statik, qolgani notFound(). */
+export const dynamicParams = true;
 
 /** 8 boʻlim × 5 til = 40 sahifa; slug segmentlari boshqa faylda. */
 export function generateStaticParams() {

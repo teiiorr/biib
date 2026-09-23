@@ -17,7 +17,8 @@ class GateReporter implements Reporter {
   private rootDir = process.cwd();
 
   onBegin(config: FullConfig): void {
-    this.rootDir = config.rootDir;
+    /* rootDir bu testDir (tests/): natijalar loyiha ildizidagi .verify/ ga yoziladi. */
+    this.rootDir = config.configFile ? path.dirname(config.configFile) : process.cwd();
   }
 
   onTestEnd(test: TestCase, result: TestResult): void {
