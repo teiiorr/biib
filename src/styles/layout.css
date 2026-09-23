@@ -308,3 +308,96 @@
   width: min(280px, 60vw);
   color: var(--accent-art);
 }
+
+/* Aloqa */
+.contact-details {
+  display: grid;
+  gap: 16px;
+  margin: 24px 0 0;
+}
+.contact-row {
+  display: grid;
+  gap: 4px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.contact-row-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.contact-row-value {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0;
+  min-height: 44px;
+}
+.contact-form {
+  display: grid;
+  gap: 16px;
+  padding-top: 24px;
+}
+.contact-trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.contact-submit {
+  padding-top: 8px;
+}
+
+/* Maxfiylik */
+.privacy-kid {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow-raised);
+}
+.privacy-kid-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding-left: 24px;
+}
+.privacy-toc {
+  display: grid;
+  gap: 12px;
+  align-self: start;
+}
+@media (min-width: 1024px) {
+  .privacy-toc {
+    position: sticky;
+    top: calc(var(--header-h) + 24px + var(--safe-top));
+  }
+}
+.privacy-toc-list {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.privacy-toc-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ink-2);
+}
+.privacy-toc-link:hover {
+  color: var(--tint);
+}
+.privacy-section {
+  display: grid;
+  gap: 16px;
+  padding-block: 24px;
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+.privacy-section + .privacy-section {
+  border-top: 1px solid var(--line);
+}
