@@ -161,3 +161,184 @@
     padding-block: 32px;
   }
 }
+
+@layer components {
+  /* Yangiliklar roʻyxati */
+  .news-header-art {
+    position: absolute;
+    right: var(--margin);
+    top: 24px;
+  }
+  .news-grid {
+    display: grid;
+    gap: 32px;
+  }
+  @media (min-width: 600px) {
+    .news-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px 24px;
+    }
+    .news-grid-lead {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (min-width: 1024px) {
+    .news-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 48px 32px;
+    }
+    .news-grid-lead {
+      grid-column: 1 / span 2;
+    }
+    .news-grid-wide {
+      grid-column: span 2;
+    }
+  }
+  .news-grid-lead,
+  .news-grid-item {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+  }
+
+  /* Maqola */
+  .article-head {
+    display: grid;
+    gap: 16px;
+    padding-bottom: 32px;
+  }
+  .article-meta {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .article-cover {
+    padding-bottom: 32px;
+  }
+  .article-body {
+    display: grid;
+    gap: 24px;
+  }
+  .article-lead {
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .article-aside {
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .article-aside {
+      display: block;
+      position: sticky;
+      top: calc(var(--header-h) + 24px + var(--safe-top));
+      align-self: start;
+    }
+  }
+  .reading-progress {
+    color: var(--accent-art);
+  }
+  .share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 16px;
+  }
+  .article-nav {
+    display: grid;
+    gap: 16px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  @media (min-width: 600px) {
+    .article-nav {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+  }
+  .article-nav-link {
+    display: grid;
+    gap: 4px;
+    min-height: 44px;
+    color: var(--ink);
+  }
+  .article-nav-link:hover .t-label {
+    color: var(--tint);
+  }
+  .article-nav-next {
+    text-align: right;
+    justify-items: end;
+  }
+}
+
+@layer components {
+  /* Rasmiy sahifalar: kundal paneli sarlavha ortida */
+  .official-kundal {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .people-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  @media (min-width: 600px) {
+    .people-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 32px 24px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .people-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .people-card-text {
+    display: grid;
+    gap: 4px;
+  }
+  .people-open {
+    justify-self: start;
+    min-height: 44px;
+    color: var(--tint);
+  }
+  .leaders {
+    display: grid;
+    gap: 48px;
+  }
+  .leader {
+    display: grid;
+    gap: 24px;
+  }
+  @media (min-width: 600px) {
+    .leader {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 5fr);
+      gap: 32px;
+      align-items: start;
+    }
+  }
+  @media (min-width: 1024px) {
+    .leader {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+      gap: 48px;
+    }
+  }
+  .leader-portrait {
+    width: 100%;
+    color: var(--accent-art);
+  }
+  .leader-text {
+    display: grid;
+    gap: 16px;
+  }
+  .leader-facts {
+    display: grid;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+}
