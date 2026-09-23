@@ -14,7 +14,7 @@ export default defineConfig({
   snapshotPathTemplate: "{testDir}/__screenshots__/{projectName}/{testFilePath}/{arg}{ext}",
   fullyParallel: true,
   retries: 0,
-  workers: Math.max(2, Math.floor(cpus().length / 2)),
+  workers: Math.max(2, cpus().length - 2),
   timeout: 180_000,
   expect: {
     timeout: 15_000,

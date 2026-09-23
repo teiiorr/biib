@@ -1,6 +1,12 @@
 import { expect, test } from "@playwright/test";
 
-import { designsFromEnv, primeAppearance, settle, THEMES } from "./helpers/appearance";
+import {
+  applyAppearance,
+  designsFromEnv,
+  primeAppearance,
+  settle,
+  THEMES,
+} from "./helpers/appearance";
 import { axeViolations } from "./helpers/axe";
 import { checkId, evidenceFile, recordCheck, relativeEvidence, summarize } from "./helpers/results";
 import { allRoutes, pathFor } from "./helpers/routes";
@@ -19,18 +25,27 @@ test.describe.configure({ mode: "parallel" });
 /* G6: axe WCAG 2.2 AA har sahifa × til × mavzu × dizayn; panel toʻrt burchakda; klaviatura yoʻli. */
 for (const design of designs) {
   for (const theme of THEMES) {
+    /* Har manzil bir yuklash: dizayn/mavzu sahifa ichida almashtiriladi, axe har kombinatsiyada. */
+    if (design !== designs[0] || theme !== "light") continue;
     for (const route of routes) {
-      test(`axe ${design}/${theme} ${route.path}`, async ({ page }, testInfo) => {
+      test(`axe ${route.path}`, async ({ page }, testInfo) => {
         await primeAppearance(page, { design, theme });
         await page.goto(route.path);
         await settle(page);
-        const violations = await axeViolations(page);
+        const failures: string[] = [];
+        for (const d of designs) {
+          for (const t of THEMES) {
+            await applyAppearance(page, d, t);
+            const violations = await axeViolations(page);
+            if (violations.length) failures.push(`${d}/${t}: ${violations.join("; ")}`);
+          }
+        }
         await recordCheck(testInfo, "G6", {
-          id: checkId(testInfo, "axe", design, theme, route.path),
-          status: violations.length ? "fail" : "pass",
-          detail: summarize(violations),
+          id: checkId(testInfo, "axe", route.path),
+          status: failures.length ? "fail" : "pass",
+          detail: summarize(failures),
         });
-        expect(violations).toEqual([]);
+        expect(failures).toEqual([]);
       });
     }
     test(`panel burchaklari ${design}/${theme}`, async ({ page }, testInfo) => {

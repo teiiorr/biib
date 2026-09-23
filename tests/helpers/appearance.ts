@@ -96,3 +96,17 @@ export async function revealAll(page: Page): Promise<void> {
   });
   await page.waitForTimeout(400);
 }
+
+/** Sahifani qayta yuklamay dizayn va mavzuni almashtiradi (CSS tokenlari darhol qoʻllanadi). */
+export async function applyAppearance(page: Page, design: Design, theme: Theme): Promise<void> {
+  await page.evaluate(
+    ([d, t]) => {
+      const html = document.documentElement;
+      html.setAttribute("data-design", d);
+      html.setAttribute("data-theme", t);
+      html.style.colorScheme = t;
+    },
+    [design, theme] as const,
+  );
+  await page.waitForTimeout(150);
+}

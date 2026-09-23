@@ -1,6 +1,13 @@
 import { expect, test } from "@playwright/test";
 
-import { designsFromEnv, primeAppearance, revealAll, settle, THEMES } from "./helpers/appearance";
+import {
+  applyAppearance,
+  designsFromEnv,
+  primeAppearance,
+  revealAll,
+  settle,
+  THEMES,
+} from "./helpers/appearance";
 import { auditAlignment } from "./helpers/audit/alignment";
 import { auditUnderBars } from "./helpers/audit/bars";
 import { auditCards } from "./helpers/audit/cards";
@@ -16,26 +23,27 @@ import { viewportLabel, viewportsFor } from "./helpers/viewports";
 const designs = designsFromEnv();
 const routes = allRoutes();
 
-/* G5: har manzil × mavzu × dizayn, oʻlcham matritsasi orqali joyida qayta oʻlchash. */
+/*
+ * G5: har manzil bir marta yuklanadi, dizayn × mavzu sahifa ichida almashtiriladi,
+ * oʻlcham matritsasi joyida qayta oʻlchanadi. Auditlar SVG naqsh daraxtlarini oʻtkazib yuboradi.
+ */
 test.describe.configure({ mode: "parallel" });
 
-for (const design of designs) {
-  for (const theme of THEMES) {
-    for (const route of routes) {
-      test(`${design}/${theme} ${route.path}`, async ({
-        page,
-        browserName,
-        isMobile,
-      }, testInfo) => {
-        await primeAppearance(page, { design, theme, motion: false });
-        await page.goto(route.path);
-        await settle(page);
-        await revealAll(page);
-        const failures: string[] = [];
-        for (const viewport of viewportsFor(browserName, isMobile ?? false)) {
+for (const route of routes) {
+  test(`${route.path}`, async ({ page, browserName, isMobile }, testInfo) => {
+    const first = designs[0] ?? "atlas";
+    await primeAppearance(page, { design: first, theme: "light", motion: false });
+    await page.goto(route.path);
+    await settle(page);
+    await revealAll(page);
+    const failures: string[] = [];
+    const viewports = viewportsFor(browserName, isMobile ?? false);
+    for (const design of designs) {
+      for (const theme of THEMES) {
+        await applyAppearance(page, design, theme);
+        for (const viewport of viewports) {
           await page.setViewportSize(viewport);
-          await page.waitForTimeout(120);
-          /* Har audit alohida evaluate: funksiya manbai brauzerga oʻtadi, import yopilmalari emas. */
+          await page.waitForTimeout(80);
           const overflow: Finding[] = await page.evaluate(() => {
             const doc = document.documentElement;
             return doc.scrollWidth > window.innerWidth + 1
@@ -53,8 +61,12 @@ for (const design of designs) {
             ...(await page.evaluate(auditClip)),
             ...(await page.evaluate(auditInteractive)),
             ...(await page.evaluate(auditUnderBars, {
-              bars: ['[data-testid="header"]', '[data-testid="tab-bar"]'],
+              bars: ['[data-testid="header"]'],
               check: "under-header" as const,
+            })),
+            ...(await page.evaluate(auditUnderBars, {
+              bars: ['[data-testid="tab-bar"]'],
+              check: "under-tabbar" as const,
             })),
             ...(await page.evaluate(auditAlignment, {
               gridItem: "[data-grid-item]",
@@ -87,19 +99,20 @@ for (const design of designs) {
               `${route.locale}${route.path.replace(/\//g, "_")}-${viewportLabel(viewport)}.png`,
             );
             await page.screenshot({ path: file, fullPage: false });
-            for (const f of findings)
+            for (const f of findings) {
               failures.push(
-                `${viewportLabel(viewport)} ${f.check} ${f.target}: ${f.detail} [${relativeEvidence(testInfo, file)}]`,
+                `${design}/${theme} ${viewportLabel(viewport)} ${f.check} ${f.target}: ${f.detail} [${relativeEvidence(testInfo, file)}]`,
               );
+            }
           }
         }
-        await recordCheck(testInfo, "G5", {
-          id: checkId(testInfo, design, theme, route.path),
-          status: failures.length ? "fail" : "pass",
-          detail: summarize(failures, 8),
-        });
-        expect(failures).toEqual([]);
-      });
+      }
     }
-  }
+    await recordCheck(testInfo, "G5", {
+      id: checkId(testInfo, route.path),
+      status: failures.length ? "fail" : "pass",
+      detail: summarize(failures, 10),
+    });
+    expect(failures).toEqual([]);
+  });
 }

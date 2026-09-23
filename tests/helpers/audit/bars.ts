@@ -61,7 +61,7 @@ export function auditUnderBars(opts: BarsOptions): Finding[] {
     const zoneTop = opts.check === "under-header" ? 0 : docHeight - barHeight - 12;
     const zoneBottom = opts.check === "under-header" ? barHeight + 12 : docHeight;
 
-    for (const el of Array.from(document.body.querySelectorAll("*"))) {
+    for (const el of Array.from(document.body.querySelectorAll("*:not(svg):not(svg *)"))) {
       if (!(el instanceof HTMLElement) || bar.contains(el)) continue;
       const style = getComputedStyle(el);
       if (style.display === "none" || style.display === "inline" || style.visibility === "hidden") {

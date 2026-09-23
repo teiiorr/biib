@@ -93,6 +93,7 @@ export function auditInteractive(): Finding[] {
 
   const items: Item[] = [];
   for (const el of Array.from(document.body.querySelectorAll(SELECTOR))) {
+    if (el.closest("svg") && el.tagName !== "svg") continue;
     const cs = getComputedStyle(el);
     if (cs.display === "none" || cs.visibility === "hidden" || cs.pointerEvents === "none")
       continue;

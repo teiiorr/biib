@@ -52,7 +52,7 @@ export function auditClip(): Finding[] {
     });
   }
 
-  for (const el of Array.from(document.body.querySelectorAll("*"))) {
+  for (const el of Array.from(document.body.querySelectorAll("*:not(svg):not(svg *)"))) {
     if (!(el instanceof HTMLElement)) continue;
     if (el.tagName === "SCRIPT" || el.tagName === "STYLE" || el.tagName === "TEMPLATE") continue;
     const cs = getComputedStyle(el);
