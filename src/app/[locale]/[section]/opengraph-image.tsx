@@ -1,13 +1,14 @@
 import { ImageResponse } from "next/og";
 
 import { getDictionary } from "@/i18n/dictionaries";
-import type { Locale } from "@/i18n/locales";
+import { isLocale, type Locale } from "@/i18n/locales";
 import { resolveSection } from "@/i18n/routes";
 import { OgImage, OG_SIZE, ogAlt } from "@/lib/seo/OgImage";
 import { loadOgFonts } from "@/lib/seo/og-fonts";
 
 export const size = OG_SIZE;
 export const contentType = "image/png";
+const SITE_ALT = "Bolalar Ijodkorligi Ijodiy Birlashmasi";
 
 interface ImageProps {
   readonly params: Promise<{ locale: Locale; section: string }>;
@@ -19,8 +20,10 @@ function titleFor(locale: Locale, section: string): string {
   return key ? dict.meta[key].title : dict.meta.notFound.title;
 }
 
+/* Sahifa maʼlumoti yigʻilayotganda params boʻsh kelishi mumkin: shunda umumiy alt. */
 export async function generateImageMetadata({ params }: ImageProps) {
   const { locale, section } = await params;
+  if (!isLocale(locale)) return [{ id: "og", alt: SITE_ALT, size, contentType }];
   const dict = getDictionary(locale);
   return [
     { id: "og", alt: ogAlt(dict.meta.siteName, titleFor(locale, section)), size, contentType },

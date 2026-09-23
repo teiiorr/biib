@@ -6,10 +6,15 @@ import { LOCALE_META, LOCALES } from "@/i18n/locales";
 import { APPEARANCE_BOOT_SCRIPT } from "@/lib/appearance/boot";
 import { fontsFor } from "@/lib/fonts";
 import { pathFor } from "@/i18n/routes";
+import { siteUrl } from "@/lib/site";
 
 import "@/styles/globals.css";
 
-export const metadata = { title: "Sahifa topilmadi", robots: { index: false, follow: false } };
+export const metadata = {
+  metadataBase: new URL(siteUrl()),
+  title: "Sahifa topilmadi",
+  robots: { index: false, follow: false },
+};
 
 /** Nomaʼlum til yoki xaritadan tashqari yoʻl: 404 oʻzbek lotinida, beshta til bosh sahifasiga havola. */
 export default function GlobalNotFound() {
