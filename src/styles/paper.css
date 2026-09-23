@@ -625,3 +625,47 @@
     right: 16px;
   }
 }
+
+@layer components {
+  /* Birlashma: Xiva ustunlari oʻrniga ipga osilgan qogʻoz kartalar (bir xil DOM). */
+  :root[data-design="birlashma"] .about-timeline-art {
+    display: block;
+    position: absolute;
+    top: -12px;
+    left: 0;
+    right: 0;
+    height: 40px;
+  }
+  :root[data-design="birlashma"] .xiva-column {
+    display: none;
+  }
+  :root[data-design="birlashma"] .xiva-item {
+    position: relative;
+    padding: 24px;
+    margin-top: 28px;
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-raised);
+  }
+  :root[data-design="birlashma"] .xiva-item::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 24px;
+    width: 12px;
+    height: 28px;
+    border-radius: 3px;
+    background: var(--accent-lo);
+    box-shadow: var(--shadow-contact);
+  }
+  :root[data-design="birlashma"] .xiva-item:nth-child(odd) {
+    transform: rotate(-1.2deg);
+  }
+  :root[data-design="birlashma"] .xiva-item:nth-child(even) {
+    transform: rotate(1.4deg);
+  }
+  :root[data-design="birlashma"] .clothesline-rope {
+    width: 100%;
+    height: 40px;
+  }
+}

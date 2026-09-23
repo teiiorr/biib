@@ -21,11 +21,18 @@ function PersonCard({ person, locale }: { person: Person; locale: Locale }) {
   const field = person.field ? t(person.field, locale) : null;
   return (
     <li className="people-card paper-look" data-card="">
-      <RavoqFrame ratio="3:4" role={field ?? role} className="people-portrait" />
-      <p className="t-label people-name" data-card-title="">
-        {person.name ? t(person.name, locale) : role}
-      </p>
-      {field ? <p className="t-small text-ink-3">{field}</p> : null}
+      <RavoqFrame ratio="3:4" role={role} className="people-portrait" />
+      {/* Ism boʻlmasa ramka ichidagi lavozim yetarli: takrorlanmaydi. */}
+      {person.name ? (
+        <p className="t-label people-name" data-card-title="">
+          {t(person.name, locale)}
+        </p>
+      ) : null}
+      {field ? (
+        <p className="t-small text-ink-3" data-card-title={person.name ? undefined : ""}>
+          {field}
+        </p>
+      ) : null}
     </li>
   );
 }
