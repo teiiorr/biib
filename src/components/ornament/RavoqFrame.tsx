@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import type { RavoqRatio } from "@/lib/ornament/ratio";
+import type { RavoqRatio } from "@/lib/ornament/ravoq";
 import { GirihStar } from "./GirihStar";
 import { Ravoq } from "./Ravoq";
 

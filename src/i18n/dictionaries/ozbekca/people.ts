@@ -24,6 +24,6 @@ export const people: typeof source = {
     pending: "Rahbarning ismi va surati taşkilot tasdiğini kutmoqda",
   },
   portraitAlt: "{name} portreti",
-  placeholderAlt: "Ravoq şaklidagi böş portret örni",
+  placeholderAlt: "Böş portret ramkasi: surat taşkilot tasdiğini kutmoqda",
   dialogLabel: "{name} haqida",
 };

@@ -3,32 +3,31 @@ import type { home as source } from "../uz/home";
 
 export const home: typeof source = {
   hero: {
-    mission: "Bolalar va ösmirlar ijodi uçun sahna, studiya va körgazma taşkil qilamiz: kastingdan multfilmgaça.",
-    ctaProjects: "Loyihalar",
+    mission: "Bolalar va ösmirlar ijodi uçun sahna, studiya va körgazma taşkil qilamiz. Boş loyiha — UPOP TREND milliy kastingi.",
+    ctaProjects: "UPOP TREND",
     ctaAbout: "Biz haqimizda",
-    silkAlt: "Marğilon atlasining abr naqşi",
+    videoAlt: "Birlaşma belgisi qoronği sahnada, atrofida oltin va puşti ipak tölqinlari",
     scroll: "Pastga",
   },
   portal: {
     statement: "Har bir bola öz {{ovozini}}, {{rangini}} va {{sahnasini}} topsin deb işlaymiz. Viloyat studiyalaridan poytaxt konsertigaça bitta yöl.",
     label: "Darvoza",
   },
-  projects: {
-    heading: "Loyihalar",
-    lead: "Tört yönaliş: qöşiq, teatr, tasviriy sanʼat va animatsiya.",
-    all: "Barça loyihalar",
-    open: "Loyihani oçiş",
-    external: "upop.uz saytiga ötiş",
-    starLabel: "Çor-boğ kesişmasi",
+  upop: {
+    heading: "UPOP TREND",
+    lead: "Birlaşmaning boş loyihasi: 14–19 yoşli qöşiqçilar uçun milliy kasting, viloyat bosqiçlaridan poytaxt konsertigaça.",
+    watch: "Videoni köriş",
+    register: "upop.uz saytida röyxatdan ötiş",
+    open: "Loyiha haqida",
   },
   news: {
     heading: "Yangiliklar",
     all: "Barça yangiliklar",
-    lead: "Kasting, körgazma va studiyalar haqida sönggi xabarlar.",
+    lead: "Kasting, körgazma, studiya va seminarlar haqida sönggi xabarlar.",
   },
   people: {
     heading: "Rahbariyat va ekspertlar",
-    lead: "Loyihalar rejasini rahbariyat tuzadi, dasturlar sifatini ekspertlar kengaşi köradi.",
+    lead: "Iş rejasini rahbariyat tuzadi, dasturlar sifatini ekspertlar kengaşi köradi.",
     leadership: "Rahbariyat",
     experts: "Ekspertlar kengaşi",
     scrollHint: "Portretlar qatori, yon tomonga suring",

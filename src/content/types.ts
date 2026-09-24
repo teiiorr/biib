@@ -17,17 +17,44 @@ export interface ColorStory {
   readonly secondary: ArtSlot;
 }
 
-export type ProjectKey = "upop-trend" | "sahna-bolalari" | "ertak-ustaxonasi" | "rangli-olam";
+export type ProjectKey = "upop-trend";
 
-/** Birlashma dizaynidagi qogʻoz obyekt turi (25.8). */
-export type PaperObject = "poster" | "curtain" | "filmstrip" | "easel";
+export interface VideoSources {
+  readonly webm: string;
+  readonly mp4: string;
+}
 
-export interface ProjectMedia {
-  readonly kind: "video" | "photo";
-  readonly src: string;
-  readonly poster?: string;
+/** Ovozsiz halqa: faqat koʻrinishda ijro etiladi, telefonga alohida kichik nusxa. */
+export interface LoopMedia {
+  readonly desktop: VideoSources;
+  readonly mobile: VideoSources;
+  readonly poster: string;
+  readonly width: number;
+  readonly height: number;
   readonly alt: Localized;
   readonly status: ContentStatus;
+}
+
+/** Bosilganda yuklanadigan film: ovozi saqlanadi, davomiyligi soniyada. */
+export interface FilmMedia {
+  readonly src: string;
+  readonly poster: string;
+  readonly duration: number;
+  readonly alt: Localized;
+  readonly status: ContentStatus;
+}
+
+export interface WordmarkMedia {
+  readonly src: string;
+  readonly width: number;
+  readonly height: number;
+  readonly alt: Localized;
+}
+
+export interface ProjectMedia {
+  readonly loop: LoopMedia;
+  readonly film: FilmMedia;
+  readonly wordmark: WordmarkMedia;
 }
 
 export interface ProjectFact<T = string> {
@@ -50,12 +77,9 @@ export interface Project {
   readonly teacher: ProjectFact;
   /** Qisqa dalillar (qoralama): yosh, shakl, yakun. */
   readonly highlights: Localized<readonly string[]>;
-  readonly external?: { readonly href: string; readonly label: string };
-  readonly media?: ProjectMedia;
+  readonly external: { readonly href: string; readonly label: string };
+  readonly media: ProjectMedia;
   readonly story: ColorStory;
-  readonly paper: PaperObject;
-  /** Higgsfield video identifikatori (18.3), kelgach media ga ulanadi. */
-  readonly videoBrief: "V1" | "V2" | "V3" | "V4" | "V5";
 }
 
 export interface NewsArticle {
@@ -63,7 +87,6 @@ export interface NewsArticle {
   readonly status: ContentStatus;
   /** ISO sana. Faqat confirmed boʻlganda koʻrsatiladi. */
   readonly date: string;
-  readonly project: ProjectKey | null;
   readonly topic: Localized;
   readonly title: Localized;
   readonly lead: Localized;
@@ -88,7 +111,7 @@ export interface Person {
   readonly id: string;
   readonly kind: PersonKind;
   readonly status: ContentStatus;
-  /** pending boʻlsa null: ravoq ramkasi va faqat lavozim koʻrsatiladi. */
+  /** pending boʻlsa null: boʻsh portret ramkasi va faqat lavozim koʻrsatiladi. */
   readonly name: Localized | null;
   readonly role: Localized;
   readonly field: Localized | null;

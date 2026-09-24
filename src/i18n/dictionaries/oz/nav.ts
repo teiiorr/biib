@@ -4,7 +4,7 @@ import type { nav as source } from "../uz/nav";
 export const nav: typeof source = {
   home: "Бош саҳифа",
   about: "Биз ҳақимизда",
-  projects: "Лойиҳалар",
+  projects: "UPOP TREND",
   news: "Янгиликлар",
   experts: "Экспертлар кенгаши",
   leadership: "Раҳбарият",
@@ -22,6 +22,6 @@ export const nav: typeof source = {
   language: "Тил",
   chooseLanguage: "Тилни танлаш",
   currentLanguage: "Жорий тил",
-  upop: "UPOP TREND",
-  upopHint: "Кастинг сайти",
+  upop: "upop.uz",
+  upopHint: "Рўйхатдан ўтиш",
 };

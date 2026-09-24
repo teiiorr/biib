@@ -2,8 +2,8 @@ import { Container } from "@/components/layout/Container";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { KundalPanel } from "@/components/ornament/KundalPanel";
-import { RavoqFrame } from "@/components/ornament/RavoqFrame";
 import { Heading } from "@/components/ui/Heading";
+import { PortraitFrame } from "@/components/ui/PortraitFrame";
 import { Table } from "@/components/ui/Table";
 import { Text } from "@/components/ui/Text";
 import { getLeadership, t } from "@/content";
@@ -18,7 +18,7 @@ interface PageProps {
   readonly dict: Dictionary;
 }
 
-/** Rahbariyat: eng qatʼiy sahifa. Katta ravoq portret 4:5, lavozim, qabul kunlari jadvali, rasmiy pochta. */
+/** Rahbariyat: eng qatʼiy sahifa. Katta portret 4:5, lavozim, qabul kunlari jadvali, rasmiy pochta. */
 export function LeadershipPage({ locale, dict }: PageProps) {
   const leaders = getLeadership();
   const l = dict.people.leadership;
@@ -58,7 +58,7 @@ export function LeadershipPage({ locale, dict }: PageProps) {
                 data-card=""
                 aria-labelledby={`${person.id}-name`}
               >
-                <RavoqFrame ratio="4:5" role={role} className="leader-portrait" />
+                <PortraitFrame ratio="4:5" role={role} className="leader-portrait" />
                 <div className="leader-text">
                   <Heading level={2} size="h3" id={`${person.id}-name`} data-card-title="">
                     {name ?? role}

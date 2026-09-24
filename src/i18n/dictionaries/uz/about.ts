@@ -14,13 +14,22 @@ export const about = {
   values: {
     heading: "Yoʻnalishlar",
     items: [
-      { title: "Qoʻshiq va vokal", text: "UPOP TREND kastingi va tayyorgarlik mashgʻulotlari." },
+      {
+        title: "Qoʻshiq va vokal",
+        text: "UPOP TREND milliy kastingi va unga tayyorgarlik mashgʻulotlari.",
+      },
       {
         title: "Teatr va sahna nutqi",
-        text: "Sahna bolalari studiyalari: nutq, harakat, spektakl.",
+        text: "Teatr studiyalari: nutq, harakat, mavsum yakunida spektakl.",
       },
-      { title: "Tasviriy sanʼat", text: "Rangli olam studiyalari va koʻchma koʻrgazmalar." },
-      { title: "Animatsiya va adabiyot", text: "Ertak ustaxonasi: hikoyadan multfilmgacha." },
+      {
+        title: "Tasviriy sanʼat",
+        text: "Rasm studiyalari va bolalar ishlarining koʻchma koʻrgazmalari.",
+      },
+      {
+        title: "Animatsiya va adabiyot",
+        text: "Animatsiya ustaxonasi: bola yozgan hikoyadan multfilmgacha.",
+      },
     ],
   },
   history: {
@@ -34,8 +43,8 @@ export const about = {
     pending: "Hujjatlar tashkilot tomonidan taqdim etilgach shu yerda chiqadi.",
   },
   next: {
-    heading: "Loyihalar",
-    text: "Toʻrt yoʻnalishning har biri haqida batafsil.",
-    cta: "Loyihalarga oʻtish",
+    heading: "UPOP TREND",
+    text: "Bosh loyiha haqida batafsil: bosqichlar, yosh chegarasi va roʻyxatdan oʻtish.",
+    cta: "Loyihaga oʻtish",
   },
 };

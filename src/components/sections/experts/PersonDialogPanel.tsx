@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { GlassDialog } from "@/components/glass/GlassDialog";
 import { GlassSheet } from "@/components/glass/GlassSheet";
 import { useFocusTrigger } from "@/components/glass/useLazyOverlay";
-import { RavoqFrame } from "@/components/ornament/RavoqFrame";
+import { PortraitFrame } from "@/components/ui/PortraitFrame";
 import { Text } from "@/components/ui/Text";
 import { useIsDesktop } from "@/lib/appearance/media";
 
@@ -42,7 +42,7 @@ export default function PersonDialogPanel({
   );
   const body = (
     <div className="grid gap-3">
-      <RavoqFrame ratio="3:4" role={role} className="mx-auto w-40" />
+      <PortraitFrame ratio="3:4" role={role} className="mx-auto w-40" />
       {field ? (
         <Text as="p" size="small" tone="ink-3">
           {field}

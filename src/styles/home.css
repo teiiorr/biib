@@ -88,8 +88,8 @@
   }
   .home-hero-title {
     max-width: 12ch;
-    /* Bosh harfning yon boʻshligʻi: chap chetga optik tekislash (§8 III.6). */
-    margin-inline-start: -0.04em;
+    /* Bosh harfning yon boʻshligʻi: chap chetga optik tekislash (§8 III.6). Akt 700 da B/Б lsb = 67/1000 em. */
+    margin-inline-start: -0.067em;
   }
   .home-hero-actions {
     display: flex;
@@ -504,7 +504,8 @@
 }
 
 /* Qatlamdan tashqarida: t-display-xl (utilities qatlami) shrift oilasini beradi, bu qoida undan ustun.
-   Til boʻyicha mayda preload toʻplami (Playfair Hero): birinchi kadrda haqiqiy shrift, almashinuv yoʻq. */
+   Til boʻyicha mayda preload toʻplami (Akt Hero): birinchi kadrda haqiqiy shrift, almashinuv yoʻq.
+   cv05 (serifli I) t-display-xl dan keladi, bu yerda takrorlanmaydi. */
 .home-hero-title {
-  font-family: "Playfair Hero", var(--font-display);
+  font-family: "Akt Hero", var(--font-display);
 }

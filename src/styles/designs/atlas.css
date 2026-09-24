@@ -2,25 +2,25 @@
 
 :root[data-design="atlas"] {
   --font-ui: "Inter", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Playfair", "Playfair Fallback", "Noto Serif Display", Georgia, serif;
+  --font-display: "Akt", "Akt Fallback", ui-sans-serif, system-ui, sans-serif;
   --font-note: "Inter", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
 
   --fs-display-xl: clamp(3rem, 1.3333rem + 7.4074vw, 8rem);
   --lh-display-xl: 0.98;
-  --ls-display-xl: -0.02em;
-  --fw-display-xl: 500;
+  --ls-display-xl: -0.025em;
+  --fw-display-xl: 700;
   --fs-display-l: clamp(2.5rem, 1.5rem + 4.4444vw, 5.5rem);
   --lh-display-l: 1.02;
-  --ls-display-l: -0.015em;
-  --fw-display-l: 500;
+  --ls-display-l: -0.02em;
+  --fw-display-l: 700;
   --fs-h1: clamp(2.25rem, 1.6667rem + 2.5926vw, 4rem);
-  --lh-h1: 1.06;
-  --ls-h1: -0.01em;
-  --fw-h1: 500;
+  --lh-h1: 1.04;
+  --ls-h1: -0.02em;
+  --fw-h1: 700;
   --fs-h2: clamp(1.75rem, 1.4167rem + 1.4815vw, 2.75rem);
-  --lh-h2: 1.12;
-  --ls-h2: -0.01em;
-  --fw-h2: 500;
+  --lh-h2: 1.1;
+  --ls-h2: -0.015em;
+  --fw-h2: 600;
   --fs-h3: clamp(1.25rem, 1.1667rem + 0.3704vw, 1.5rem);
   --lh-h3: 1.25;
   --ls-h3: -0.02em;

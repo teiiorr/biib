@@ -1,5 +1,8 @@
 import { fmt } from "./geometry";
-import { ratioParts, type RavoqRatio } from "./ratio";
+import { ratioParts } from "./ratio";
+
+/** Ark faqat ikki nisbatda; yakuniy birlashtirishda fayl bilan birga oʻchadi. */
+export type RavoqRatio = "3:4" | "4:5";
 
 export interface RavoqArch {
   /** Pastki markazlar radiusi (span / 4). */

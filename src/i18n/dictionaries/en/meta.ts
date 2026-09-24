@@ -6,7 +6,7 @@ export const meta: typeof source = {
   home: {
     title: "Bolalar Ijodkorligi Ijodiy Birlashmasi",
     description:
-      "An association for the creativity of children and young people in Uzbekistan: the UPOP TREND auditions, theatre and art studios, an animation workshop.",
+      "An association for the creativity of children and young people in Uzbekistan: the UPOP TREND auditions, theatre and art studios, exhibitions.",
   },
   about: {
     title: "About",
@@ -14,9 +14,9 @@ export const meta: typeof source = {
       "The purpose, directions and history of the association: studios, a stage and exhibitions for children's creativity.",
   },
   projects: {
-    title: "Projects",
+    title: "UPOP TREND",
     description:
-      "UPOP TREND, Sahna bolalari, Ertak ustaxonasi and Rangli olam: age range, schedule and how to take part.",
+      "The national singing auditions: age range, rounds, the final concert and registration on upop.uz.",
   },
   news: {
     title: "News",

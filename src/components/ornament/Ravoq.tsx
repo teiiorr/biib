@@ -1,8 +1,8 @@
 import { useId, type CSSProperties, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { ratioCss, ratioParts, type RavoqRatio } from "@/lib/ornament/ratio";
+import { ratioCss, ratioParts } from "@/lib/ornament/ratio";
 import { safeId } from "@/lib/ornament/ids";
-import { ravoqClipPath, ravoqPath, ravoqRise } from "@/lib/ornament/ravoq";
+import { ravoqClipPath, ravoqPath, ravoqRise, type RavoqRatio } from "@/lib/ornament/ravoq";
 
 export interface RavoqProps {
   readonly ratio?: RavoqRatio;

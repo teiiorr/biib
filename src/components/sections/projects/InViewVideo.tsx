@@ -1,11 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
+import { Surface } from "@/components/glass/Surface";
 import { Icon } from "@/components/icons/Icon";
+import { useInViewPlayback } from "@/components/media/useInViewPlayback";
+import { VideoSourceList } from "@/components/media/VideoSourceList";
+import type { VideoSources } from "@/content/types";
+import { useMediaQuery } from "@/lib/appearance/media";
+import { cn } from "@/lib/cn";
+
+const COMPACT_QUERY = "(max-width: 599px)";
 
 interface InViewVideoProps {
-  readonly src: string;
+  /** Bitta fayl; `sources` berilsa hisobga olinmaydi. */
+  readonly src?: string;
+  /** WebM (AV1) + MP4 (H.264) juftligi; telefon uchun alohida kichik nusxa. */
+  readonly sources?: VideoSources;
+  readonly mobileSources?: VideoSources;
   readonly poster: string;
   readonly alt: string;
   readonly pauseLabel: string;
@@ -13,14 +25,15 @@ interface InViewVideoProps {
   readonly className?: string;
 }
 
-const REDUCED = "(prefers-reduced-motion: reduce)";
-
 /**
- * Video faqat koʻrinishda ijro etiladi; kamaytirilgan harakatda poster turadi (WCAG 2.2.2).
- * Kichik oyna tugmasi bilan toʻxtatiladi. preload="none": tarmoq tejaladi.
+ * Ovozsiz halqa: faqat koʻrinishda va ambient reyestr ruxsati bilan ijro etiladi; kamaytirilgan
+ * harakatda va Harakat = off da manba qoʻyilmaydi, poster turadi (WCAG 2.2.2). preload="none":
+ * tarmoq faqat ijro boshlanganda band boʻladi. Manba oʻlchami bir marta, gidratsiyadan keyin tanlanadi.
  */
 export function InViewVideo({
   src,
+  sources,
+  mobileSources,
   poster,
   alt,
   pauseLabel,
@@ -28,75 +41,41 @@ export function InViewVideo({
   className,
 }: InViewVideoProps) {
   const ref = useRef<HTMLVideoElement | null>(null);
-  const [paused, setPaused] = useState(false);
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    const video = ref.current;
-    if (!video) return;
-    const mql = window.matchMedia(REDUCED);
-    const apply = (): void =>
-      setReduced(mql.matches || document.documentElement.getAttribute("data-motion") === "off");
-    mql.addEventListener("change", apply);
-    const observer = new MutationObserver(apply);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-motion"],
-    });
-    queueMicrotask(apply);
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting && !paused && !reduced) void video.play().catch(() => undefined);
-          else video.pause();
-        }
-      },
-      { threshold: 0.4 },
-    );
-    io.observe(video);
-    return () => {
-      io.disconnect();
-      mql.removeEventListener("change", apply);
-      observer.disconnect();
-    };
-  }, [paused, reduced]);
-
-  const toggle = (): void => {
-    const video = ref.current;
-    if (!video) return;
-    if (video.paused) {
-      setPaused(false);
-      void video.play().catch(() => undefined);
-    } else {
-      setPaused(true);
-      video.pause();
-    }
-  };
+  const { allowed, paused, toggle } = useInViewPlayback(ref);
+  const compact = useMediaQuery(COMPACT_QUERY);
+  const set = compact && mobileSources ? mobileSources : sources;
+  const state = allowed ? (paused ? "paused" : "playing") : "still";
 
   return (
-    <div className={className ? `inview-video ${className}` : "inview-video"}>
+    <div className={cn("media-video", className)} data-state={state}>
       <video
         ref={ref}
-        src={reduced ? undefined : src}
+        src={allowed && !set ? src : undefined}
         poster={poster}
         muted
         playsInline
         loop
+        disablePictureInPicture
         preload="none"
         aria-label={alt}
-      />
-      {reduced ? null : (
-        <button
+      >
+        {allowed && set ? <VideoSourceList sources={set} /> : null}
+      </video>
+      {allowed ? (
+        <Surface
+          as="button"
           type="button"
-          className="material inview-video-control"
-          data-text="true"
+          radius="control"
+          padding={0}
+          text
+          className="media-video-control"
           onClick={toggle}
           aria-pressed={paused}
           aria-label={paused ? playLabel : pauseLabel}
         >
-          <Icon name={paused ? "play" : "pause"} size={20} />
-        </button>
-      )}
+          <Icon name={paused ? "play" : "pause"} size={20} className={cn(paused && "icon-play")} />
+        </Surface>
+      ) : null}
     </div>
   );
 }

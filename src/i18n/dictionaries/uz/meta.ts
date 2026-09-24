@@ -4,7 +4,7 @@ export const meta = {
   home: {
     title: "Bolalar Ijodkorligi Ijodiy Birlashmasi",
     description:
-      "Oʻzbekistonda bolalar va oʻsmirlar ijodini qoʻllab-quvvatlaydigan birlashma: UPOP TREND kastingi, teatr va rasm studiyalari, animatsiya ustaxonasi.",
+      "Oʻzbekistonda bolalar va oʻsmirlar ijodini qoʻllab-quvvatlaydigan birlashma: UPOP TREND milliy kastingi, teatr va rasm studiyalari, koʻrgazmalar.",
   },
   about: {
     title: "Biz haqimizda",
@@ -12,9 +12,9 @@ export const meta = {
       "Birlashmaning maqsadi, yoʻnalishlari va tarixi: bolalar ijodi uchun studiya, sahna va koʻrgazma tashkil qilamiz.",
   },
   projects: {
-    title: "Loyihalar",
+    title: "UPOP TREND",
     description:
-      "UPOP TREND, Sahna bolalari, Ertak ustaxonasi va Rangli olam: yosh chegarasi, mashgʻulot tartibi va qatnashish sharti.",
+      "Milliy qoʻshiqchilik kastingi: yosh chegarasi, bosqichlar, yakuniy konsert va upop.uz saytida roʻyxatdan oʻtish.",
   },
   news: {
     title: "Yangiliklar",

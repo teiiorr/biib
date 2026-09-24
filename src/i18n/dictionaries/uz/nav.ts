@@ -1,7 +1,7 @@
 export const nav = {
   home: "Bosh sahifa",
   about: "Biz haqimizda",
-  projects: "Loyihalar",
+  projects: "UPOP TREND",
   news: "Yangiliklar",
   experts: "Ekspertlar kengashi",
   leadership: "Rahbariyat",
@@ -19,6 +19,6 @@ export const nav = {
   language: "Til",
   chooseLanguage: "Tilni tanlash",
   currentLanguage: "Joriy til",
-  upop: "UPOP TREND",
-  upopHint: "Kasting sayti",
+  upop: "upop.uz",
+  upopHint: "Roʻyxatdan oʻtish",
 };

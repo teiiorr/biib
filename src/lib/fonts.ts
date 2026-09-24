@@ -3,7 +3,7 @@ import { Nunito, Playpen_Sans } from "next/font/google";
 import { LOCALE_META, type Locale } from "@/i18n/locales";
 
 /**
- * Inter va Playfair oʻz-oʻzidan xizmat qilinadi (public/fonts, scripts/fonts.mjs): next/font til boʻyicha
+ * Inter va Akt oʻz-oʻzidan xizmat qilinadi (public/fonts, scripts/fonts.mts): next/font til boʻyicha
  * preload qila olmaydi (modul grafidagi har nusxa uchun yozadi). Toʻplamlar unicode-range bilan boʻlingan,
  * preload faqat shu tilga kerak fayllar uchun, sahifada ≤ 4 (§17).
  * Birlashma shriftlari next/font orqali, preloadsiz: faqat faol dizayn soʻraydi.
@@ -45,5 +45,5 @@ export function fontPreloads(locale: Locale): readonly string[] {
 
 /** Qahramon sarlavhasining til toʻplami: block — preload bilan keladi, zaxira shrift miltillamaydi. */
 export function heroFontFace(locale: Locale): string {
-  return `@font-face{font-family:"Playfair Hero";font-weight:500;font-display:block;src:url(/fonts/hero-${locale}.woff2) format("woff2")}`;
+  return `@font-face{font-family:"Akt Hero";font-weight:700;font-display:block;src:url(/fonts/hero-${locale}.woff2) format("woff2")}`;
 }

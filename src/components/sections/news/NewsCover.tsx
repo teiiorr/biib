@@ -1,0 +1,63 @@
+import Image from "next/image";
+import type { CSSProperties } from "react";
+
+import { GirihStar } from "@/components/ornament/GirihStar";
+import { MediaFrame } from "@/components/ui/MediaFrame";
+import { t } from "@/content";
+import type { NewsArticle } from "@/content/types";
+import type { Locale } from "@/i18n/locales";
+import { cn } from "@/lib/cn";
+import type { AspectRatio } from "@/lib/ornament/ratio";
+
+export interface NewsCoverProps {
+  readonly article: Pick<NewsArticle, "cover" | "story">;
+  readonly ratio: AspectRatio;
+  readonly locale: Locale;
+  /** next/image uchun: ramka viewportning qancha qismini egallaydi. */
+  readonly sizes: string;
+  /** Maʼnoli surat (maqola boshi): alt matni oʻqiladi; aks holda bezak, sarlavha havolasi yetarli. */
+  readonly meaningful?: boolean;
+  readonly priority?: boolean;
+  readonly className?: string;
+}
+
+/**
+ * Yangilik muqovasi: surat bor va tasdiq kutmayotgan boʻlsa next/image, aks holda sokin oʻrin
+ * (hikoya rangida yengil zamin va kichik belgi). Naqshli tasmalar yoʻq.
+ */
+export function NewsCover({
+  article,
+  ratio,
+  locale,
+  sizes,
+  meaningful = false,
+  priority = false,
+  className,
+}: NewsCoverProps) {
+  const { cover, story } = article;
+  const alt = meaningful ? t(cover.alt, locale) : "";
+  const src = cover.status === "pending" ? null : cover.src;
+  const style = { "--cover-tint": `var(--${story.primary})` } as CSSProperties;
+  return (
+    <MediaFrame ratio={ratio} className={cn("news-cover", className)} style={style}>
+      {src ? (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          style={{ objectFit: "cover" }}
+        />
+      ) : (
+        <div
+          className="news-cover-placeholder"
+          data-status={cover.status}
+          {...(alt ? { role: "img", "aria-label": alt } : { "aria-hidden": true })}
+        >
+          <GirihStar symmetry={8} size={20} ring={false} className="news-cover-mark" />
+        </div>
+      )}
+    </MediaFrame>
+  );
+}

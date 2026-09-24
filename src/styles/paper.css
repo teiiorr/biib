@@ -694,23 +694,27 @@
     background: color-mix(in oklab, var(--art-6) 30%, var(--surface-2));
   }
 
-  /* Birlashma da ravoq arki ishlatilmaydi: qirqish va oltin chiziq oʻchadi. */
-  :root[data-design="birlashma"] .ravoq-media {
-    clip-path: none;
-    border-radius: var(--radius-m);
-    overflow: hidden;
+  /* Media ramkasi qogʻoz bosma: 8 px oq hoshiya, toʻgʻri burchaklar, oltin chiziq va yulduz yoʻq. */
+  :root[data-design="birlashma"] .media-frame {
+    --frame-pad: 8px;
+    border-radius: 0;
+    background: var(--surface-2);
+    box-shadow: var(--shadow-contact);
   }
-  :root[data-design="birlashma"] .ravoq-line {
+  :root[data-design="birlashma"] .media-frame-media {
+    border-radius: 0;
+  }
+  :root[data-design="birlashma"] .media-frame-line,
+  :root[data-design="birlashma"] .media-frame-corner,
+  :root[data-design="birlashma"] .portrait-frame-mark,
+  :root[data-design="birlashma"] .news-cover-mark {
     display: none;
   }
-  /* Surat kutilayotgan portret: girih yulduzi oʻrniga marker yulduzi. */
-  :root[data-design="birlashma"] .ravoq-placeholder > svg {
-    display: none;
-  }
-  :root[data-design="birlashma"] .ravoq-placeholder::before {
+  /* Surat kutilayotgan portret: girih belgisi oʻrniga kichik marker yulduzi. */
+  :root[data-design="birlashma"] .portrait-frame-placeholder::before {
     content: "";
-    width: 64px;
-    height: 64px;
+    width: 32px;
+    height: 32px;
     background: var(--art-2);
     -webkit-mask-image: var(--doodle-star-mask);
     mask-image: var(--doodle-star-mask);
@@ -719,15 +723,9 @@
   }
 
   /* ---------- Devoriy gazeta (yangiliklar) ---------- */
+  /* Bosma surat: oq hoshiya va soya umumiy .media-frame qoidasidan, bu yerda faqat qiyalik. */
   :root[data-design="birlashma"] .news-cover {
-    padding: 8px;
-    border-radius: 0;
-    background: var(--surface-2);
-    box-shadow: var(--shadow-contact);
     transform: rotate(var(--print-rotate, 0deg));
-  }
-  :root[data-design="birlashma"] .news-cover > * {
-    border-radius: 0;
   }
   :root[data-design="birlashma"] .news-lead {
     --print-rotate: -1.2deg;
@@ -813,7 +811,7 @@
   }
   :root[data-design="birlashma"] .article-cover .news-cover {
     --print-rotate: 0deg;
-    padding: 12px;
+    --frame-pad: 12px;
   }
 
   /* ---------- Galereya devori ---------- */
@@ -833,17 +831,10 @@
   }
 
   /* ---------- Odamlar: qogʻozga yopishtirilgan suratlar ---------- */
+  /* Skotch chetdan chiqadi: faqat shu ramkalarda overflow ochiq. */
   :root[data-design="birlashma"] .people-portrait,
   :root[data-design="birlashma"] .leader-portrait {
-    padding: 8px;
-    background: var(--surface-2);
-    box-shadow: var(--shadow-contact);
     overflow: visible;
-  }
-  :root[data-design="birlashma"] .people-portrait .ravoq-media,
-  :root[data-design="birlashma"] .leader-portrait .ravoq-media {
-    inset: 8px;
-    border-radius: 0;
   }
   :root[data-design="birlashma"] .people-portrait::before,
   :root[data-design="birlashma"] .people-portrait::after {

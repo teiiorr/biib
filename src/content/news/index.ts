@@ -1,15 +1,15 @@
 import { upopTrendYangiMavsum } from "./upop-trend-yangi-mavsum";
-import { rangliOlamKorgazmasi } from "./rangli-olam-korgazmasi";
-import { sahnaBolalariYangiStudiyalar } from "./sahna-bolalari-yangi-studiyalar";
+import { bolalarIshlariKorgazmasi } from "./bolalar-ishlari-korgazmasi";
+import { teatrStudiyalariKorsatuvi } from "./teatr-studiyalari-korsatuvi";
 import { ustozlarUchunSeminar } from "./ustozlar-uchun-seminar";
-import { ertakUstaxonasiBirinchiMultfilmlar } from "./ertak-ustaxonasi-birinchi-multfilmlar";
+import { birinchiMultfilmlar } from "./birinchi-multfilmlar";
 import type { NewsArticle } from "../types";
 
 /** Yangidan eskiga tartiblangan. */
 export const NEWS: readonly NewsArticle[] = [
   upopTrendYangiMavsum,
-  rangliOlamKorgazmasi,
-  sahnaBolalariYangiStudiyalar,
+  bolalarIshlariKorgazmasi,
+  teatrStudiyalariKorsatuvi,
   ustozlarUchunSeminar,
-  ertakUstaxonasiBirinchiMultfilmlar,
+  birinchiMultfilmlar,
 ].sort((a, b) => (a.date < b.date ? 1 : -1));

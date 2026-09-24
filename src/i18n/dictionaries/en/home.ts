@@ -3,10 +3,10 @@ import type { home as source } from "../uz/home";
 export const home: typeof source = {
   hero: {
     mission:
-      "A stage, a studio and an exhibition for the creativity of children and young people: from auditions to animated films.",
-    ctaProjects: "Projects",
+      "A stage, a studio and an exhibition for the creativity of children and young people. The flagship project is the UPOP TREND national auditions.",
+    ctaProjects: "UPOP TREND",
     ctaAbout: "About",
-    silkAlt: "The abr pattern of Margilan atlas silk",
+    videoAlt: "The mark of the association on a dark stage, gold and pink waves of silk around it",
     scroll: "Scroll down",
   },
   portal: {
@@ -14,22 +14,21 @@ export const home: typeof source = {
       "We work so that every child finds their {{voice}}, their {{colour}} and their {{stage}}. One road from a regional studio to a concert in the capital.",
     label: "The gate",
   },
-  projects: {
-    heading: "Projects",
-    lead: "Four directions: singing, theatre, visual art and animation.",
-    all: "All projects",
-    open: "Open project",
-    external: "Go to upop.uz",
-    starLabel: "The chor-bogh crossing",
+  upop: {
+    heading: "UPOP TREND",
+    lead: "The flagship project of the association: national auditions for singers aged 14 to 19, from the regional rounds to a final concert in the capital.",
+    watch: "Watch the video",
+    register: "Register on upop.uz",
+    open: "About the project",
   },
   news: {
     heading: "News",
     all: "All news",
-    lead: "The latest on the auditions, exhibitions and studios.",
+    lead: "The latest on the auditions, exhibitions, studios and seminars.",
   },
   people: {
     heading: "Leadership and experts",
-    lead: "The leadership plans the projects; the Expert Council reviews the quality of the programmes.",
+    lead: "The leadership plans the work; the Expert Council reviews the quality of the programmes.",
     leadership: "Leadership",
     experts: "Expert Council",
     scrollHint: "A row of portraits, scroll sideways",
@@ -45,7 +44,7 @@ export const home: typeof source = {
     telegram: "Write on Telegram",
   },
   gallery: {
-    heading: "Children's gallery",
+    heading: "Children’s gallery",
     lead: "Work made in the studios. First name, age and region are shown with parental consent.",
     caption: "{name}, age {age}, {region}",
     pending: "Work is being collected with parental consent",

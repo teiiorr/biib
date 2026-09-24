@@ -28,6 +28,13 @@ export function getProjects(_locale?: Locale): readonly Project[] {
   return PROJECTS;
 }
 
+/** Bosh loyiha (UPOP TREND): bosh sahifa boʻlimi va loyiha sahifasi shu yozuvni koʻrsatadi. */
+export function getFlagship(): Project {
+  const flagship = PROJECTS.find((p) => p.flagship);
+  if (!flagship) throw new Error("Bosh loyiha topilmadi");
+  return flagship;
+}
+
 export function getNews(_locale?: Locale): readonly NewsArticle[] {
   return NEWS;
 }
@@ -113,8 +120,18 @@ export function listPendingContent(): readonly PendingItem[] {
     }
     if (p.cost.status === "pending")
       out.push({ area: "projects", id: `${p.key}.cost`, status: "pending", note: "cost" });
-    if (p.media && p.media.status !== "confirmed")
-      out.push({ area: "projects", id: `${p.key}.media`, status: p.media.status, note: "media" });
+    for (const [field, media] of [
+      ["loop", p.media.loop],
+      ["film", p.media.film],
+    ] as const) {
+      if (media.status !== "confirmed")
+        out.push({
+          area: "projects",
+          id: `${p.key}.${field}`,
+          status: media.status,
+          note: "video",
+        });
+    }
   }
   for (const n of NEWS) {
     if (n.status !== "confirmed")

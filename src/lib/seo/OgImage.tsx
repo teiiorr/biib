@@ -44,7 +44,7 @@ export function ogAlt(topic: string, title: string): string {
 
 export function OgImage({ title, topic, design = "atlas" }: OgImageProps) {
   const c = design === "birlashma" ? BIRLASHMA : ATLAS;
-  const titleFont = design === "birlashma" ? "Nunito" : "Playfair";
+  const titleFont = design === "birlashma" ? "Nunito" : "Akt";
   const size = title.length > 48 ? 56 : title.length > 28 ? 68 : 84;
   return (
     <div
@@ -79,9 +79,9 @@ export function OgImage({ title, topic, design = "atlas" }: OgImageProps) {
             width: 820,
             fontFamily: titleFont,
             fontSize: size,
-            fontWeight: 500,
-            lineHeight: 1.05,
-            letterSpacing: -1,
+            fontWeight: 700,
+            lineHeight: 1.04,
+            letterSpacing: -0.02 * size,
           }}
         >
           {title}

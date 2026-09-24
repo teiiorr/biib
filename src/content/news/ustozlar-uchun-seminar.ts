@@ -1,11 +1,10 @@
 import type { NewsArticle } from "./../types";
 
-/** Qoralama: sana va muqova tashkilot tasdigʻidan keyin ochiladi. */
+/** Qoralama: sana tashkilot tasdigʻidan keyin ochiladi; muqova egasi bergan surat. */
 export const ustozlarUchunSeminar: NewsArticle = {
   slug: "ustozlar-uchun-seminar",
   status: "draft",
   date: "2026-05-20",
-  project: null,
   topic: {
     uz: "Taʼlim",
     oz: "Таълим",
@@ -29,27 +28,27 @@ export const ustozlarUchunSeminar: NewsArticle = {
   },
   body: {
     uz: [
-      "Seminarga toʻrt yoʻnalishdagi studiyalardan ustozlar yigʻildi. Asosiy mavzu: bir guruhda turli tayyorgarlikdagi bolalar bilan ishlash.",
+      "Seminarga vokal, teatr, tasviriy sanʼat va animatsiya studiyalaridan ustozlar yigʻildi. Asosiy mavzu: bir guruhda turli tayyorgarlikdagi bolalar bilan ishlash.",
       "Amaliy qismda ustozlar bir-birining mashgʻulotini kuzatdi va yozma tahlil qildi.",
       "Seminar materiallari studiyalarga tarqatildi va keyingi mavsumda dasturga kiritiladi.",
     ],
     oz: [
-      "Семинарга тўрт йўналишдаги студиялардан устозлар йиғилди. Асосий мавзу: бир гуруҳда турли тайёргарликдаги болалар билан ишлаш.",
+      "Семинарга вокал, театр, тасвирий санъат ва анимация студияларидан устозлар йиғилди. Асосий мавзу: бир гуруҳда турли тайёргарликдаги болалар билан ишлаш.",
       "Амалий қисмда устозлар бир-бирининг машғулотини кузатди ва ёзма таҳлил қилди.",
       "Семинар материаллари студияларга тарқатилди ва кейинги мавсумда дастурга киритилади.",
     ],
     ozbekca: [
-      "Seminarga tört yönalişdagi studiyalardan ustozlar yiğildi. Asosiy mavzu: bir guruhda turli tayyorgarlikdagi bolalar bilan işlaş.",
+      "Seminarga vokal, teatr, tasviriy sanʼat va animatsiya studiyalaridan ustozlar yiğildi. Asosiy mavzu: bir guruhda turli tayyorgarlikdagi bolalar bilan işlaş.",
       "Amaliy qismda ustozlar bir-birining maşğulotini kuzatdi va yozma tahlil qildi.",
       "Seminar materiallari studiyalarga tarqatildi va keyingi mavsumda dasturga kiritiladi.",
     ],
     ru: [
-      "На семинар собрались наставники студий всех четырёх направлений. Главная тема — работа с детьми разной подготовки в одной группе.",
+      "На семинар собрались наставники вокальных, театральных, художественных и анимационных студий. Главная тема: работа с детьми разной подготовки в одной группе.",
       "В практической части наставники приходили на занятия друг к другу и писали разбор.",
       "Материалы семинара разослали по студиям, в следующем сезоне они войдут в программу.",
     ],
     en: [
-      "Mentors from studios in all four directions came to the seminar. The main subject was working with children of different levels in one group.",
+      "Mentors from the singing, theatre, art and animation studios came to the seminar. The main subject was working with children of different levels in one group.",
       "In the practical part the mentors watched each other’s classes and wrote up what they saw.",
       "The seminar material was sent out to the studios and goes into the programme next season.",
     ],
@@ -63,7 +62,7 @@ export const ustozlarUchunSeminar: NewsArticle = {
       ru: "Стулья, расставленные кругом, и схемы на доске",
       en: "Chairs arranged in a circle and diagrams on a board",
     },
-    status: "pending",
+    status: "draft",
   },
   story: {
     primary: "art-2",

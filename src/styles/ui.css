@@ -379,4 +379,66 @@
       hanging-punctuation: first last;
     }
   }
+  /* ---------- Media: halqa video, film va muqova oʻrni ---------- */
+  .media-video {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .media-video video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* Film kesilmaydi: nisbat mos kelmasa sahifa zaminida hoshiya, qora emas. */
+  .media-film video {
+    object-fit: contain;
+    background: var(--bg);
+  }
+  /* Oyna boshqaruvi media ustida (matnli tint chegarasi bilan): 44 px, pastki oʻng burchakdan 16 px. */
+  .media-video-control {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    width: var(--hit-min);
+    height: var(--hit-min);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: transform 200ms var(--ease-ui);
+  }
+  .media-film-cover {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+  /* 48 px kapsula: belgi 20, yorliq 16, belgi tomonida 4 px kam (Art. IX.1). */
+  .media-film-play {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: var(--control-m);
+    padding-inline: 20px 24px;
+    cursor: pointer;
+    transition: transform 200ms var(--ease-ui);
+  }
+  .media-video-control:active,
+  .media-film-play:active {
+    transform: scale(0.97);
+  }
+  /* Uchburchak belgi oʻz uchi tomon 1 px siljiydi (Art. III.3). */
+  .icon-play {
+    translate: 1px 0;
+  }
+  /* Surat kutilayotgan muqova: hikoya rangida yengil zamin va kichik belgi. */
+  .news-cover-placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: color-mix(in oklab, var(--cover-tint, var(--ink)) 10%, var(--surface-2));
+    color: var(--accent-art);
+  }
 }

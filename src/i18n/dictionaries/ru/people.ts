@@ -23,6 +23,6 @@ export const people: typeof source = {
     pending: "Имя и фото руководителя ожидают подтверждения объединения",
   },
   portraitAlt: "Портрет: {name}",
-  placeholderAlt: "Пустое место для портрета в форме арки",
+  placeholderAlt: "Пустая рамка портрета: фото ожидает подтверждения объединения",
   dialogLabel: "Подробнее: {name}",
 };

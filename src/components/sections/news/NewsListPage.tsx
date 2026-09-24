@@ -5,7 +5,6 @@ import { DesignArt } from "@/components/layout/DesignArt";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { TransitionLink } from "@/components/motion/TransitionLink";
-import { OrnamentCover } from "@/components/ornament/OrnamentCover";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import { getNews, t } from "@/content";
@@ -14,6 +13,8 @@ import { formatDate } from "@/i18n/format";
 import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
 import { sharedName } from "@/lib/motion/transitions";
+
+import { NewsCover } from "./NewsCover";
 
 interface PageProps {
   readonly locale: Locale;
@@ -59,9 +60,12 @@ export function NewsListPage({ locale, dict }: PageProps) {
                   aria-hidden="true"
                 >
                   <ViewTransition name={sharedName("news-cover", lead.slug)}>
-                    <div className="news-cover">
-                      <OrnamentCover story={lead.story} ratio="3:2" seed={lead.slug} />
-                    </div>
+                    <NewsCover
+                      article={lead}
+                      ratio="3:2"
+                      locale={locale}
+                      sizes="(min-width: 1440px) 875px, (min-width: 1024px) 66vw, 100vw"
+                    />
                   </ViewTransition>
                 </TransitionLink>
                 <p className="t-micro text-ink-3 tnum news-meta">
@@ -91,13 +95,16 @@ export function NewsListPage({ locale, dict }: PageProps) {
                     aria-hidden="true"
                   >
                     <ViewTransition name={sharedName("news-cover", item.slug)}>
-                      <div className="news-cover">
-                        <OrnamentCover
-                          story={item.story}
-                          ratio={i % 3 === 0 ? "16:9" : "4:5"}
-                          seed={item.slug}
-                        />
-                      </div>
+                      <NewsCover
+                        article={item}
+                        ratio={i % 3 === 0 ? "16:9" : "4:5"}
+                        locale={locale}
+                        sizes={
+                          i % 3 === 0
+                            ? "(min-width: 1440px) 875px, (min-width: 1024px) 66vw, (min-width: 600px) 50vw, 100vw"
+                            : "(min-width: 1440px) 416px, (min-width: 1024px) 33vw, (min-width: 600px) 50vw, 100vw"
+                        }
+                      />
                     </ViewTransition>
                   </TransitionLink>
                   <p className="t-micro text-ink-3 tnum news-meta">

@@ -3,7 +3,6 @@ import { ViewTransition } from "react";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { TransitionLink } from "@/components/motion/TransitionLink";
-import { OrnamentCover } from "@/components/ornament/OrnamentCover";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Divider } from "@/components/ui/Divider";
 import { Heading } from "@/components/ui/Heading";
@@ -21,6 +20,7 @@ import { JsonLd } from "@/lib/seo/JsonLdScript";
 import { breadcrumbJsonLd, newsArticleJsonLd } from "@/lib/seo/jsonld";
 import { absoluteUrl } from "@/lib/site";
 
+import { NewsCover } from "./NewsCover";
 import { ReadingProgress } from "./ReadingProgress";
 import { ShareButtons } from "./ShareButtons";
 
@@ -84,14 +84,14 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
             data-grid-item=""
           >
             <ViewTransition name={sharedName("news-cover", slug)}>
-              <div className="news-cover">
-                <OrnamentCover
-                  story={article.story}
-                  ratio="16:9"
-                  seed={slug}
-                  label={t(article.cover.alt, locale)}
-                />
-              </div>
+              <NewsCover
+                article={article}
+                ratio="16:9"
+                locale={locale}
+                sizes="(min-width: 1440px) 1090px, (min-width: 1024px) 83vw, 100vw"
+                meaningful
+                priority
+              />
             </ViewTransition>
           </div>
           <div

@@ -16,15 +16,21 @@ export const about: typeof source = {
   values: {
     heading: "Directions",
     items: [
-      { title: "Singing and voice", text: "The UPOP TREND auditions and preparation classes." },
+      {
+        title: "Singing and voice",
+        text: "The UPOP TREND national auditions and preparation classes.",
+      },
       {
         title: "Theatre and stage speech",
-        text: "The Sahna bolalari studios: speech, movement, performance.",
+        text: "The theatre studios: speech, movement, a play at the end of the season.",
       },
-      { title: "Visual art", text: "The Rangli olam studios and travelling exhibitions." },
+      {
+        title: "Visual art",
+        text: "The art studios and travelling exhibitions of children’s work.",
+      },
       {
         title: "Animation and writing",
-        text: "Ertak ustaxonasi: from a story to an animated film.",
+        text: "The animation workshop: from a story written by a child to an animated film.",
       },
     ],
   },
@@ -39,8 +45,8 @@ export const about: typeof source = {
     pending: "The documents will appear here once the association provides them.",
   },
   next: {
-    heading: "Projects",
-    text: "Each of the four directions in detail.",
-    cta: "Go to projects",
+    heading: "UPOP TREND",
+    text: "The flagship project in detail: rounds, age range and registration.",
+    cta: "Go to the project",
   },
 };

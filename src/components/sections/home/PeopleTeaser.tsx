@@ -2,9 +2,9 @@ import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/motion/Reveal";
 import { KundalPanel } from "@/components/ornament/KundalPanel";
-import { RavoqFrame } from "@/components/ornament/RavoqFrame";
 import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
+import { PortraitFrame } from "@/components/ui/PortraitFrame";
 import { Text } from "@/components/ui/Text";
 import { getExperts, getLeadership, t } from "@/content";
 import type { Person } from "@/content/types";
@@ -22,7 +22,7 @@ function PersonCard({ person, locale }: { person: Person; locale: Locale }) {
   const field = person.field ? t(person.field, locale) : null;
   return (
     <li className="people-card paper-look" data-card="">
-      <RavoqFrame ratio="3:4" role={role} className="people-portrait" />
+      <PortraitFrame ratio="3:4" role={role} className="people-portrait" />
       {/* Ism boʻlmasa ramka ichidagi lavozim yetarli: takrorlanmaydi. */}
       {person.name ? (
         <p className="t-label people-name" data-card-title="">
@@ -38,7 +38,7 @@ function PersonCard({ person, locale }: { person: Person; locale: Locale }) {
   );
 }
 
-/** Rahbariyat va ekspertlar: kundal paneli ortidagi sarlavha, ravoq portretlar; telefonda scroll-snap qator. */
+/** Rahbariyat va ekspertlar: kundal paneli ortidagi sarlavha, portret ramkalari; telefonda scroll-snap qator. */
 export function PeopleTeaser({ locale, dict }: PeopleTeaserProps) {
   const leaders = getLeadership().slice(0, 2);
   const experts = getExperts().slice(0, 4);

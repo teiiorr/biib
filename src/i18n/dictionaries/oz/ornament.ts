@@ -4,7 +4,6 @@ import type { ornament as source } from "../uz/ornament";
 export const ornament: typeof source = {
   palakGap: "Палак тикувчилари битта чокни атайлаб қолдиради: бу кўз тегмасин деган қадимий одат.",
   palakGapLabel: "Нақшдаги атайлаб қолдирилган бўшлиқ",
-  ravoq: "Равоқ",
   girih: "Гириҳ нақши",
   islimiy: "Ислимий нақш",
   chust: "Чуст дўппи ҳошияси",

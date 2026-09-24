@@ -1,8 +1,9 @@
 /*
- * Inter va Playfair toʻplamlari (§13.1) manba TTF lardan (src/assets/fonts) fontTools bilan yasaladi:
- * oʻqlar saytda ishlatiladigan oraliqqa qisqartiriladi (Inter wght 400–600, opsz 14–32; Playfair wght
- * 400–600, opsz 24–144, wdth 100), Google unicode-range toʻplamlari boʻyicha boʻlinadi va woff2 ga
- * yoziladi. Natija: public/fonts/*.woff2 va src/styles/fonts.css. Qahramon toʻplami alohida (hero-fonts.mts).
+ * Inter va Akt toʻplamlari (§13.1) manba TTF lardan (src/assets/fonts) fontTools bilan yasaladi:
+ * oʻqlar saytda ishlatiladigan oraliqqa qisqartiriladi (Inter wght 400–600, opsz 14–32; Akt wght
+ * 500–700), Google unicode-range toʻplamlari boʻyicha boʻlinadi va woff2 ga yoziladi. Akt manbadan
+ * olinadi, chunki Google CDN dagi woff2 cv05 (serifli I) kabi belgilar variantlarini tashlab yuboradi.
+ * Natija: public/fonts/*.woff2 va src/styles/fonts.css. Qahramon toʻplami alohida (hero-fonts.mts).
  */
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
@@ -42,17 +43,17 @@ const FAMILIES: readonly Family[] = [
     fallback: { local: "Arial", ascent: "90.44%", descent: "22.52%", sizeAdjust: "107.12%" },
   },
   {
-    name: "Playfair",
-    file: "playfair",
-    source: "src/assets/fonts/Playfair[opsz,wdth,wght].ttf",
-    axes: { wght: "400:600", opsz: "24:144", wdth: "100" },
-    weight: "400 600",
-    fallback: {
-      local: "Times New Roman",
-      ascent: "83.38%",
-      descent: "29.61%",
-      sizeAdjust: "106.2%",
-    },
+    name: "Akt",
+    file: "akt",
+    source: "src/assets/fonts/Akt[wght].ttf",
+    axes: { wght: "500:700" },
+    weight: "500 700",
+    /*
+     * hhea 950/−250 (upm 1000). size-adjust a–z chastota namunasi boʻyicha (next/font usuli): OS/2
+     * xAvgCharWidth toʻgʻridan-toʻgʻri solishtirilmaydi, chunki Arial eski tortilgan, Akt esa barcha
+     * gliflar boʻyicha hisoblangan (nisbat 135% boʻlib, almashinuvda katta siljish berardi).
+     */
+    fallback: { local: "Arial", ascent: "91.63%", descent: "24.11%", sizeAdjust: "103.68%" },
   },
 ];
 
@@ -100,7 +101,7 @@ mkdirSync(path.dirname(spec), { recursive: true });
 writeFileSync(spec, JSON.stringify({ out: OUT, subsets: SUBSETS, families: FAMILIES }));
 execFileSync(python, ["-c", script, spec], { stdio: "inherit" });
 
-let css = `/* scripts/fonts.mts yaratgan: Inter va Playfair toʻplamlari, til boʻyicha unicode-range. Qoʻlda tahrir qilinmaydi. */\n`;
+let css = `/* scripts/fonts.mts yaratgan: Inter va Akt toʻplamlari, til boʻyicha unicode-range. Qoʻlda tahrir qilinmaydi. */\n`;
 for (const family of FAMILIES) {
   for (const [name, range] of Object.entries(SUBSETS)) {
     const file = `${family.file}-${name}.woff2`;

@@ -21,6 +21,6 @@ export const people = {
     pending: "Rahbarning ismi va surati tashkilot tasdigʻini kutmoqda",
   },
   portraitAlt: "{name} portreti",
-  placeholderAlt: "Ravoq shaklidagi boʻsh portret oʻrni",
+  placeholderAlt: "Boʻsh portret ramkasi: surat tashkilot tasdigʻini kutmoqda",
   dialogLabel: "{name} haqida",
 };

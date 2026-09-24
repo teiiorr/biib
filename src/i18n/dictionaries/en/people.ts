@@ -23,6 +23,6 @@ export const people: typeof source = {
     pending: "The name and photo of this leader await confirmation by the association",
   },
   portraitAlt: "Portrait of {name}",
-  placeholderAlt: "An empty portrait frame in the shape of an arch",
+  placeholderAlt: "An empty portrait frame: the photo awaits confirmation by the association",
   dialogLabel: "About {name}",
 };

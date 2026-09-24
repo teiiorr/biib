@@ -2,12 +2,12 @@ import { CLICHES } from "./anti-slop.mjs";
 import { pass, writeText } from "./util.mjs";
 
 const ITEMS_X = [
-  "Uchta bir xil «ikonka tepada» kartalar yoʻq; har roʻyxat turi oʻz maketiga ega (chor-bogʻ, tahririy toʻr, ravoq portretlar, logotip maydoni).",
+  "Uchta bir xil «ikonka tepada» kartalar yoʻq; har roʻyxat turi oʻz maketiga ega (UPOP boʻlimi, tahririy toʻr, portret ramkalari, logotip maydoni).",
   "1-2-3 raqamli qadam qatorlari yoʻq.",
   "Katta raqamli statistika plitkalari yoʻq.",
   "Rangli chap hoshiyali kartalar va karta ichida karta yoʻq.",
   "Har sarlavha tepasida eyebrow/kicker yorligʻi yoʻq.",
-  "Karta ichidagi media faqat 4:5, 3:2, 16:9, 1:1 va ravoq 3:4, 4:5 nisbatlarida.",
+  "Karta ichidagi media faqat 4:5, 3:2, 16:9, 1:1, 3:4 nisbatlarida, toʻrtburchak ramkada (12 px radius); uchli ark shakli yoʻq.",
   "Karta matni chapga tekis, bir qatordagi kartalarda bir xil bazaviy chiziq; chetdan 16 px (mobil) / 24 px (desktop) kam emas.",
 ];
 const ITEMS_XIV = [

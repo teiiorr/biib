@@ -19,19 +19,19 @@ export const about: typeof source = {
     items: [
       {
         title: "Qöşiq va vokal",
-        text: "UPOP TREND kastingi va tayyorgarlik maşğulotlari.",
+        text: "UPOP TREND milliy kastingi va unga tayyorgarlik maşğulotlari.",
       },
       {
         title: "Teatr va sahna nutqi",
-        text: "Sahna bolalari studiyalari: nutq, harakat, spektakl.",
+        text: "Teatr studiyalari: nutq, harakat, mavsum yakunida spektakl.",
       },
       {
         title: "Tasviriy sanʼat",
-        text: "Rangli olam studiyalari va köçma körgazmalar.",
+        text: "Rasm studiyalari va bolalar işlarining köçma körgazmalari.",
       },
       {
         title: "Animatsiya va adabiyot",
-        text: "Ertak ustaxonasi: hikoyadan multfilmgaça.",
+        text: "Animatsiya ustaxonasi: bola yozgan hikoyadan multfilmgaça.",
       },
     ],
   },
@@ -46,8 +46,8 @@ export const about: typeof source = {
     pending: "Hujjatlar taşkilot tomonidan taqdim etilgaç şu yerda çiqadi.",
   },
   next: {
-    heading: "Loyihalar",
-    text: "Tört yönalişning har biri haqida batafsil.",
-    cta: "Loyihalarga ötiş",
+    heading: "UPOP TREND",
+    text: "Boş loyiha haqida batafsil: bosqiçlar, yoş çegarasi va röyxatdan ötiş.",
+    cta: "Loyihaga ötiş",
   },
 };

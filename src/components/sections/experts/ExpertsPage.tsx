@@ -3,7 +3,7 @@ import { DesignArt } from "@/components/layout/DesignArt";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { KundalPanel } from "@/components/ornament/KundalPanel";
-import { RavoqFrame } from "@/components/ornament/RavoqFrame";
+import { PortraitFrame } from "@/components/ui/PortraitFrame";
 import { Text } from "@/components/ui/Text";
 import { getExperts, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -20,7 +20,7 @@ interface PageProps {
   readonly dict: Dictionary;
 }
 
-/** Ekspertlar kengashi: kundal paneli ortida sarlavha, ravoq portretlar 4/3/2 ustun; faqat haqiqiy odamlar. */
+/** Ekspertlar kengashi: kundal paneli ortida sarlavha, portretlar 4/3/2 ustun; faqat haqiqiy odamlar. */
 export function ExpertsPage({ locale, dict }: PageProps) {
   const experts = getExperts();
   const e = dict.people.experts;
@@ -57,7 +57,7 @@ export function ExpertsPage({ locale, dict }: PageProps) {
               const name = person.name ? t(person.name, locale) : null;
               return (
                 <li key={person.id} className="people-card paper-look" data-card="">
-                  <RavoqFrame ratio="3:4" role={field ?? role} className="people-portrait" />
+                  <PortraitFrame ratio="3:4" role={field ?? role} className="people-portrait" />
                   <div className="people-card-text">
                     <p className="t-label" data-card-title="">
                       {name ?? field ?? role}

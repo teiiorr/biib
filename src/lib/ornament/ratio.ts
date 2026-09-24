@@ -9,9 +9,6 @@ export const ASPECT_RATIOS = {
 
 export type AspectRatio = keyof typeof ASPECT_RATIOS;
 
-/** Ravoq faqat ikki nisbatda: ark hech qachon choʻzilmaydi. */
-export type RavoqRatio = "3:4" | "4:5";
-
 export function ratioParts(ratio: AspectRatio): readonly [number, number] {
   return ASPECT_RATIOS[ratio];
 }

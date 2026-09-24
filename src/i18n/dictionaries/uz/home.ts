@@ -1,10 +1,10 @@
 export const home = {
   hero: {
     mission:
-      "Bolalar va oʻsmirlar ijodi uchun sahna, studiya va koʻrgazma tashkil qilamiz: kastingdan multfilmgacha.",
-    ctaProjects: "Loyihalar",
+      "Bolalar va oʻsmirlar ijodi uchun sahna, studiya va koʻrgazma tashkil qilamiz. Bosh loyiha — UPOP TREND milliy kastingi.",
+    ctaProjects: "UPOP TREND",
     ctaAbout: "Biz haqimizda",
-    silkAlt: "Margʻilon atlasining abr naqshi",
+    videoAlt: "Birlashma belgisi qorongʻi sahnada, atrofida oltin va pushti ipak toʻlqinlari",
     scroll: "Pastga",
   },
   portal: {
@@ -12,22 +12,21 @@ export const home = {
       "Har bir bola oʻz {{ovozini}}, {{rangini}} va {{sahnasini}} topsin deb ishlaymiz. Viloyat studiyalaridan poytaxt konsertigacha bitta yoʻl.",
     label: "Darvoza",
   },
-  projects: {
-    heading: "Loyihalar",
-    lead: "Toʻrt yoʻnalish: qoʻshiq, teatr, tasviriy sanʼat va animatsiya.",
-    all: "Barcha loyihalar",
-    open: "Loyihani ochish",
-    external: "upop.uz saytiga oʻtish",
-    starLabel: "Chor-bogʻ kesishmasi",
+  upop: {
+    heading: "UPOP TREND",
+    lead: "Birlashmaning bosh loyihasi: 14–19 yoshli qoʻshiqchilar uchun milliy kasting, viloyat bosqichlaridan poytaxt konsertigacha.",
+    watch: "Videoni koʻrish",
+    register: "upop.uz saytida roʻyxatdan oʻtish",
+    open: "Loyiha haqida",
   },
   news: {
     heading: "Yangiliklar",
     all: "Barcha yangiliklar",
-    lead: "Kasting, koʻrgazma va studiyalar haqida soʻnggi xabarlar.",
+    lead: "Kasting, koʻrgazma, studiya va seminarlar haqida soʻnggi xabarlar.",
   },
   people: {
     heading: "Rahbariyat va ekspertlar",
-    lead: "Loyihalar rejasini rahbariyat tuzadi, dasturlar sifatini ekspertlar kengashi koʻradi.",
+    lead: "Ish rejasini rahbariyat tuzadi, dasturlar sifatini ekspertlar kengashi koʻradi.",
     leadership: "Rahbariyat",
     experts: "Ekspertlar kengashi",
     scrollHint: "Portretlar qatori, yon tomonga suring",
