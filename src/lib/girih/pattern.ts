@@ -53,7 +53,7 @@ function outlinePath(tile: Tile): string {
 }
 
 function round(n: number): string {
-  const r = Math.round(n * 100) / 100;
+  const r = Math.round(n * 10) / 10;
   return String(Object.is(r, -0) ? 0 : r);
 }
 

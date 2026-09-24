@@ -1,15 +1,15 @@
-import { ScrollTrigger } from "@/components/motion/gsap";
+import { getEngine } from "@/components/motion/engine";
 
 let pending = false;
 let fontsHooked = false;
 
-/** Bir kadrga birlashtirilgan yagona refresh: sikl yoʻq, ketma-ket chaqiruvlar bitta boʻladi. */
+/** Bir kadrga birlashtirilgan yagona refresh: dvigatel boʻlmasa yangilanadigan narsa ham yoʻq. */
 export function scheduleScrollRefresh(): void {
-  if (pending || typeof window === "undefined") return;
+  if (pending || typeof window === "undefined" || !getEngine()) return;
   pending = true;
   window.requestAnimationFrame(() => {
     pending = false;
-    ScrollTrigger.refresh();
+    getEngine()?.ScrollTrigger.refresh();
   });
 }
 

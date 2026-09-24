@@ -13,14 +13,21 @@ import type { ArtProps } from "../registry";
 
 const REDUCED = "(prefers-reduced-motion: reduce)";
 
+type Theme = "light" | "dark";
+
+function readTheme(): Theme {
+  return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+}
+
 /**
  * Darvoza foni: protsedura xon-atlas (WebGL2, OGL). Matn serverda chiziladi va LCP boʻladi;
- * kanvas birinchi kadrdan keyin xira paydo boʻladi. Koʻrinmasa yoki varaq yashirin boʻlsa toʻxtaydi.
+ * kanvas HTML dagi mayda asos ustida xira paydo boʻladi. Toʻliq poster faqat shader ishlamasa.
  */
 export default function AbrSilk({ className }: ArtProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const handleRef = useRef<SilkHandle | null>(null);
   const [ready, setReady] = useState(false);
+  const [poster, setPoster] = useState<Theme | null>(null);
   /* Ambient reyestr: viewportda bitta ipak sikli ishlaydi (§8 XII.3); ikkinchisi toʻxtaydi. */
   useAmbientGovernor(canvasRef, "ambient", {
     pause: () => handleRef.current?.setVisible(false),
@@ -33,23 +40,30 @@ export default function AbrSilk({ className }: ArtProps) {
     const html = document.documentElement;
     const reduced =
       window.matchMedia(REDUCED).matches || html.getAttribute("data-motion") === "off";
-    /* Kamaytirilgan harakat: poster qoladi, kanvas ishga tushmaydi. */
-    if (reduced) {
-      notifyHeroReady();
-      return;
-    }
+    const themeObserver = new MutationObserver(() => {
+      handleRef.current?.refreshColors();
+      setPoster((current) => (current ? readTheme() : current));
+    });
+    themeObserver.observe(html, {
+      attributes: true,
+      attributeFilter: ["data-theme", "data-design"],
+    });
+    /* Kamaytirilgan harakat: kanvas ishga tushmaydi, statik poster koʻrsatiladi. */
     let handle: SilkHandle | null = null;
-    try {
-      handle = startSilk(canvas, () => {
-        setReady(true);
-        notifyHeroReady();
-      });
-    } catch {
-      handle = null;
+    if (!reduced) {
+      try {
+        handle = startSilk(canvas, () => {
+          setReady(true);
+          notifyHeroReady();
+        });
+      } catch {
+        handle = null;
+      }
     }
     if (!handle) {
+      setPoster(readTheme());
       notifyHeroReady();
-      return;
+      return () => themeObserver.disconnect();
     }
     handleRef.current = handle;
     const io = new IntersectionObserver(
@@ -61,14 +75,8 @@ export default function AbrSilk({ className }: ArtProps) {
     io.observe(canvas);
     const onVisibility = (): void => handle?.setVisible(!document.hidden);
     document.addEventListener("visibilitychange", onVisibility);
-    const themeObserver = new MutationObserver(() => handle?.refreshColors());
-    themeObserver.observe(html, {
-      attributes: true,
-      attributeFilter: ["data-theme", "data-design"],
-    });
     const motionObserver = new MutationObserver(() => {
-      if (html.getAttribute("data-motion") === "off") handle?.setVisible(false);
-      else handle?.setVisible(true);
+      handle?.setVisible(html.getAttribute("data-motion") !== "off");
     });
     motionObserver.observe(html, { attributes: true, attributeFilter: ["data-motion"] });
     return () => {
@@ -87,7 +95,7 @@ export default function AbrSilk({ className }: ArtProps) {
       aria-hidden="true"
       data-ready={ready ? "true" : "false"}
     >
-      <AbrPoster alt="" className="abr-poster" />
+      {poster ? <AbrPoster theme={poster} /> : null}
       <canvas ref={canvasRef} className="abr-canvas" />
     </div>
   );

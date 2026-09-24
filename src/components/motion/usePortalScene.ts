@@ -1,16 +1,18 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
 import { useEffect, useRef, type RefObject } from "react";
 import { registerAmbient } from "@/lib/motion/ambient-governor";
 import { PIN_LENGTH, SCRUB } from "@/lib/motion/constants";
 import { motionAllowed } from "@/lib/motion/prefs";
-import { gsap, ScrollTrigger } from "./gsap";
+import { reached } from "@/lib/motion/viewport";
+import { useEngineEffect } from "./engine";
 import { useMotionPrefs } from "./motion-context";
 
 export interface PortalSceneOptions {
   /** Sahna timeline ini quradi; faqat transform/opacity/clip-path/filter. */
   readonly build: (tl: gsap.core.Timeline, scope: HTMLElement) => void;
+  /** Sahna statik (harakat taqiqi yoki dvigatel kech): yakuniy holat DOM ga qoʻlda yoziladi. */
+  readonly settle: (scope: HTMLElement) => void;
   /** Viewportga nisbatan uzunlik; chegara desktop 1.5, mobil 1 (oshirib boʻlmaydi). */
   readonly length?: number;
   readonly pin?: boolean;
@@ -43,20 +45,31 @@ export function usePortalScene(
   const length = Math.min(options.length ?? maxLength, maxLength);
   const pin = options.pin ?? true;
 
-  useGSAP(
-    () => {
-      const root = ref.current;
-      if (!root) return;
-      const tl = gsap.timeline({ paused: true });
-      optionsRef.current.build(tl, root);
+  const settleStatic = (root: HTMLElement): void => {
+    progress.current = 1;
+    root.style.setProperty("--scene-progress", "1");
+    optionsRef.current.settle(root);
+  };
 
-      if (!allowed) {
-        tl.progress(1);
-        progress.current = 1;
-        root.style.setProperty("--scene-progress", "1");
+  // Harakat taqiqi: dvigatel yuklanmaydi, yakuniy holat CSS va settle orqali.
+  useEffect(() => {
+    const root = ref.current;
+    if (!root || !prefs.ready || allowed) return;
+    settleStatic(root);
+  });
+
+  useEngineEffect(
+    ref,
+    ({ gsap, ScrollTrigger }, { late }) => {
+      const root = ref.current;
+      if (!root || !allowed) return;
+      // Sahnaga yetib kelingan boʻlsa kech pin sahifani sakratadi: statik holat qoladi.
+      if (late && reached(root)) {
+        settleStatic(root);
         return;
       }
-
+      const tl = gsap.timeline({ paused: true });
+      optionsRef.current.build(tl, root);
       ScrollTrigger.create({
         trigger: root,
         start: "top top",
@@ -73,7 +86,7 @@ export function usePortalScene(
         },
       });
     },
-    { scope: ref, dependencies: [allowed, length, pin], revertOnUpdate: true },
+    [allowed, length, pin],
   );
 
   useEffect(() => {

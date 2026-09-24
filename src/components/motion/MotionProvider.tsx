@@ -1,74 +1,56 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useSyncExternalStore, type ReactNode } from "react";
+
+import { whenIdle } from "@/lib/idle";
 import { setGlobalPause } from "@/lib/motion/ambient-governor";
-import { MEDIA } from "@/lib/motion/constants";
-import { INITIAL_PREFS, isMotionOff, type Breakpoint, type MotionPrefs } from "@/lib/motion/prefs";
-import { refreshAfterFonts, scheduleScrollRefresh } from "@/lib/motion/refresh";
-import { gsap, setupGsap } from "./gsap";
+import { motionAllowed } from "@/lib/motion/prefs";
+import {
+  getMotionPrefs,
+  getServerMotionPrefs,
+  subscribeMotionPrefs,
+} from "@/lib/motion/prefs-store";
+import { scheduleScrollRefresh } from "@/lib/motion/refresh";
+
+import { getEngine, requestEngine } from "./engine";
 import { MotionContext } from "./motion-context";
 
 interface MotionProviderProps {
   readonly children: ReactNode;
 }
 
-function readBreakpoint(c: Record<string, boolean>): Breakpoint {
-  if (c.expanded) return "expanded";
-  if (c.medium) return "medium";
-  return "compact";
-}
-
 /**
- * Ildizda bir marta: GSAP sozlanadi, matchMedia kontekstlari (600/1024, reduced-motion, touch)
- * yaratiladi, Harakat tugmasi kuzatiladi. Boshlangʻich holat SSR bilan bir xil, brauzer effektda oʻqiladi.
+ * Ildizda bir marta: sozlamalar (600/1024, reduced-motion, touch, Harakat tugmasi) kuzatiladi,
+ * harakat ruxsat etilsa dvigatel boʻsh vaqtda yuklanadi. Mazmun dvigatelsiz ham toʻliq koʻrinadi.
  */
 export function MotionProvider({ children }: MotionProviderProps) {
-  const [prefs, setPrefs] = useState<MotionPrefs>(INITIAL_PREFS);
+  const prefs = useSyncExternalStore(subscribeMotionPrefs, getMotionPrefs, getServerMotionPrefs);
 
   useEffect(() => {
-    setupGsap();
-    refreshAfterFonts();
-
-    const mm = gsap.matchMedia();
-    mm.add(
-      {
-        reduced: MEDIA.reduced,
-        medium: MEDIA.medium,
-        expanded: MEDIA.expanded,
-        touch: MEDIA.touch,
-      },
-      (ctx) => {
-        const c: Record<string, boolean> = ctx.conditions ?? {};
-        setPrefs((prev) => ({
-          ...prev,
-          reduced: Boolean(c.reduced),
-          isTouch: Boolean(c.touch),
-          breakpoint: readBreakpoint(c),
-          motionOff: isMotionOff(),
-          ready: true,
-        }));
-        // Nuqta almashganda pin va start/end qiymatlari qayta hisoblanadi (bir kadr, sikl emas).
+    if (!prefs.ready) return;
+    setGlobalPause("motion-off", prefs.motionOff);
+    const allowed = motionAllowed(prefs);
+    const smooth = allowed && !prefs.isTouch;
+    const present = getEngine();
+    if (present) {
+      present.setSmoothScroll(smooth);
+      scheduleScrollRefresh();
+      return;
+    }
+    if (!allowed) return;
+    let cancelled = false;
+    const cancelIdle = whenIdle(() => {
+      void requestEngine().then((engine) => {
+        if (cancelled) return;
+        engine.setSmoothScroll(smooth);
         scheduleScrollRefresh();
-      },
-    );
-
-    const syncMotionOff = () => {
-      const off = isMotionOff();
-      setPrefs((prev) => (prev.motionOff === off ? prev : { ...prev, motionOff: off }));
-      setGlobalPause("motion-off", off);
-    };
-    syncMotionOff();
-    const observer = new MutationObserver(syncMotionOff);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-motion"],
+      });
     });
-
     return () => {
-      observer.disconnect();
-      mm.revert();
+      cancelled = true;
+      cancelIdle();
     };
-  }, []);
+  }, [prefs]);
 
   return <MotionContext value={prefs}>{children}</MotionContext>;
 }

@@ -1624,3 +1624,11 @@
     }
   }
 }
+
+@layer components {
+  /* Birlashma: faol tab yorligʻi linza ustida 4.5:1 uchun toʻqroq azure. */
+  :root[data-design="birlashma"] .tab-item[aria-current="page"],
+  :root[data-design="birlashma"] .tab-item[data-active="true"] {
+    color: var(--tint-hover);
+  }
+}

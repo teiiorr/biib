@@ -1,6 +1,5 @@
 import { cn } from "@/lib/cn";
-import { MARKER_PATHS } from "./paths-marker";
-import { ICON_PATHS, type IconName } from "./paths";
+import type { IconName } from "./paths";
 
 export type IconSize = 16 | 20 | 24;
 
@@ -12,7 +11,7 @@ export interface IconProps {
   readonly className?: string;
 }
 
-/* Ikkala chizma bitta SVG ichida; faol dizayn data-design orqali birini yashiradi. */
+/* Ikkala chizma layoutdagi spritdan (IconSprite); faol dizayn data-design orqali birini yashiradi. */
 export function Icon({ name, size = 20, label, className }: IconProps) {
   const meaningful = typeof label === "string" && label.length > 0;
   return (
@@ -28,8 +27,8 @@ export function Icon({ name, size = 20, label, className }: IconProps) {
       data-icon={name}
       {...(meaningful ? { role: "img", "aria-label": label } : { "aria-hidden": true })}
     >
-      <path d={ICON_PATHS[name]} strokeWidth={1.75} className="birlashma:hidden" />
-      <path d={MARKER_PATHS[name]} strokeWidth={2} className="hidden birlashma:block" />
+      <use href={`#i-a-${name}`} strokeWidth={1.75} className="birlashma:hidden" />
+      <use href={`#i-b-${name}`} strokeWidth={2} className="hidden birlashma:block" />
     </svg>
   );
 }

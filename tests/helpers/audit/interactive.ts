@@ -11,6 +11,7 @@ interface Item {
   readonly el: Element;
   readonly box: Box;
   readonly inline: boolean;
+  readonly fixed: boolean;
   readonly name: string;
 }
 
@@ -91,6 +92,31 @@ export function auditInteractive(): Finding[] {
     return around > own + 1;
   };
 
+  /* ::before/::after mutlaq joylashgan bosish maydoni (inset -2px) nishon oʻlchamiga kiradi (§8 IX.5). */
+  const pseudoInset = (el: Element, which: "::before" | "::after"): Box | null => {
+    const ps = getComputedStyle(el, which);
+    if (ps.content === "none" || ps.content === "" || ps.position !== "absolute") return null;
+    const px = (v: string): number => {
+      const n = parseFloat(v);
+      return Number.isFinite(n) ? n : 0;
+    };
+    const top = px(ps.top);
+    const right = px(ps.right);
+    const bottom = px(ps.bottom);
+    const left = px(ps.left);
+    if (top > 0 || right > 0 || bottom > 0 || left > 0) return null;
+    return { left, top, right, bottom };
+  };
+  const isFixed = (el: Element): boolean => {
+    let node: Element | null = el;
+    while (node && node !== document.body) {
+      const pos = getComputedStyle(node).position;
+      if (pos === "fixed" || pos === "sticky") return true;
+      node = node.parentElement;
+    }
+    return false;
+  };
+
   const items: Item[] = [];
   for (const el of Array.from(document.body.querySelectorAll(SELECTOR))) {
     if (el.closest("svg") && el.tagName !== "svg") continue;
@@ -102,11 +128,22 @@ export function auditInteractive(): Finding[] {
     /* Ekrandan tashqari (sr-only) 1×1 elementlar oʻlchanmaydi: fokusda kattalashadi. */
     if (rect.width <= 1 || rect.height <= 1) continue;
     let box = toBox(rect);
+    for (const which of ["::before", "::after"] as const) {
+      const inset = pseudoInset(el, which);
+      if (inset) {
+        box = {
+          left: box.left + inset.left,
+          top: box.top + inset.top,
+          right: box.right - inset.right,
+          bottom: box.bottom - inset.bottom,
+        };
+      }
+    }
     // Belgilash katakchasi yorligʻi bilan birga bosiladi: nishon ikkalasining birlashmasi.
     if (el instanceof HTMLInputElement && el.labels) {
       for (const lab of Array.from(el.labels)) box = union(box, toBox(lab.getBoundingClientRect()));
     }
-    items.push({ el, box, inline: isInlineLink(el), name: label(el) });
+    items.push({ el, box, inline: isInlineLink(el), fixed: isFixed(el), name: label(el) });
   }
 
   for (const item of items) {
@@ -128,6 +165,8 @@ export function auditInteractive(): Finding[] {
     for (let j = i + 1; j < items.length; j += 1) {
       const b = items[j];
       if (!b || a.el.contains(b.el) || b.el.contains(a.el)) continue;
+      /* Qotirilgan panel (tab-bar) hujjat koordinatalarida kontent ustidan «oʻtadi»: bu kesishuv emas. */
+      if (a.fixed !== b.fixed) continue;
       const gapX = Math.max(a.box.left - b.box.right, b.box.left - a.box.right);
       const gapY = Math.max(a.box.top - b.box.bottom, b.box.top - a.box.bottom);
       if (gapX < -0.5 && gapY < -0.5) {

@@ -1,6 +1,7 @@
 import type { ComponentType, ReactNode } from "react";
 
 import type { ColorStory } from "@/content/types";
+import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
 import type { Design } from "@/lib/appearance/types";
 
@@ -24,8 +25,23 @@ export type ArtSlot =
   | "not-found"
   | "error";
 
+/** Badiiy modullar lugʻatni oʻzi yuklamaydi (beshta til chunkka kirib qolmasin): matn serverdan keladi. */
+export interface ArtCopy {
+  readonly coloring?: Dictionary["home"]["coloring"];
+  readonly galleryPending?: string;
+  readonly noteHero?: string;
+  readonly curtainLabel?: string;
+  readonly pencilProgress?: string;
+  readonly qalampirValue?: string;
+  readonly canvas?: Dictionary["errors"]["canvas"];
+  readonly paints?: readonly string[];
+  readonly postcardLabel?: string;
+  readonly masthead?: string;
+}
+
 export interface ArtProps {
   readonly locale: Locale;
+  readonly copy?: ArtCopy;
   readonly className?: string;
   readonly story?: ColorStory;
   readonly progress?: number;

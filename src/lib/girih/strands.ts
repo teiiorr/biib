@@ -70,7 +70,7 @@ export function assembleStrands(links: readonly Link[], gap: number): StrandSet 
   const interlaceGaps: InterlaceGap[] = [];
   for (const w of walks) {
     const pieces = splitAtUnderCrossings(w, gap, interlaceGaps);
-    for (const piece of pieces) if (piece.length > 1) strands.push(polylinePath(piece));
+    for (const piece of pieces) if (piece.length > 1) strands.push(polylinePath(piece, false, 1));
   }
   return { strands, interlaceGaps };
 }

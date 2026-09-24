@@ -15,6 +15,16 @@ export interface GirihProps {
   readonly className?: string;
 }
 
+const MAX_PATHS = 24;
+
+/** Yuzlab boʻlak oʻrniga ≤24 yoʻl: DOM va HTML yengil, chizish ritmi guruhlar boʻyicha qoladi. */
+function groupStrands(strands: readonly string[]): string[] {
+  const per = Math.max(1, Math.ceil(strands.length / MAX_PATHS));
+  const out: string[] = [];
+  for (let i = 0; i < strands.length; i += per) out.push(strands.slice(i, i + per).join(" "));
+  return out;
+}
+
 /**
  * Girih tasmalari (Kaplan/Hankin, Lu–Steinhardt plitkalari). Chiziq currentColor:
  * chaqiruvchi text-accent-art yoki text-accent-text beradi.
@@ -38,7 +48,7 @@ export function Girih({
       preserveAspectRatio="xMidYMid slice"
       {...(label ? { role: "img", "aria-label": label } : { "aria-hidden": true })}
     >
-      {pattern.strands.map((d, i) => (
+      {groupStrands(pattern.strands).map((d, i) => (
         <path key={i} className="orn-strand" d={d} />
       ))}
     </svg>

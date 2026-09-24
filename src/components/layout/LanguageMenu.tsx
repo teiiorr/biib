@@ -1,55 +1,34 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { useRef } from "react";
 
-import { GlassDropdownMenu, type GlassMenuItem } from "@/components/glass/GlassDropdownMenu";
-import { Icon } from "@/components/icons/Icon";
-import type { Dictionary } from "@/i18n/dictionaries";
-import { LOCALE_META, LOCALES, type Locale } from "@/i18n/locales";
-import { alternatesFor, pathFor, resolvePath } from "@/i18n/routes";
+import { useLazyOverlay } from "@/components/glass/useLazyOverlay";
 
-interface LanguageMenuProps {
-  readonly locale: Locale;
-  readonly dict: Dictionary["nav"];
-}
+import { LanguageTrigger, type LanguageMenuProps } from "./LanguageTrigger";
 
-/** Til almashtirgich: shu sahifa va slugni saqlaydi; har band oʻz tilini eʼlon qiladi. */
+const loadPanel = () => import("./LanguageMenuPanel");
+
+/** Til almashtirgich: tugma HTML da, menyu (Radix) boʻsh vaqtda yoki bosilganda yuklanadi. */
 export function LanguageMenu({ locale, dict }: LanguageMenuProps) {
-  const pathname = usePathname();
-  const resolved = resolvePath(pathname);
-  const alternates = resolved
-    ? alternatesFor(resolved.key, resolved.slug)
-    : Object.fromEntries(LOCALES.map((l) => [l, pathFor(l, "home")]));
-
-  const items: GlassMenuItem[] = LOCALES.map((l) => ({
-    id: l,
-    label: LOCALE_META[l].nativeName,
-    hint: LOCALE_META[l].shortName,
-    href: alternates[l] ?? pathFor(l, "home"),
-    current: l === locale,
-    lang: LOCALE_META[l].htmlLang,
-    hrefLang: LOCALE_META[l].htmlLang,
-  }));
-
+  const shellRef = useRef<HTMLButtonElement | null>(null);
+  const { Panel, warm, openWhenReady, wantOpen, restoreFocus } = useLazyOverlay(
+    loadPanel,
+    shellRef,
+  );
+  if (Panel) {
+    return <Panel locale={locale} dict={dict} initialOpen={wantOpen} focusTrigger={restoreFocus} />;
+  }
   return (
-    <GlassDropdownMenu
-      label={dict.chooseLanguage}
-      items={items}
-      testId="language-menu"
-      currentLabel={dict.currentLanguage}
-      trigger={
-        <button
-          type="button"
-          className="nav-item t-label"
-          aria-label={`${dict.language}: ${LOCALE_META[locale].nativeName}`}
-          data-testid="language-open"
-        >
-          <Icon name="language" size={20} />
-          <span className="text-trim" aria-hidden="true">
-            {LOCALE_META[locale].shortName}
-          </span>
-        </button>
-      }
+    <LanguageTrigger
+      ref={shellRef}
+      locale={locale}
+      dict={dict}
+      aria-haspopup="menu"
+      aria-expanded={false}
+      onPointerEnter={warm}
+      onPointerDown={warm}
+      onFocus={warm}
+      onClick={openWhenReady}
     />
   );
 }

@@ -10,7 +10,7 @@ import {
   type ButtonVariant,
 } from "./button-variants";
 import { ButtonSpinner } from "./ButtonSpinner";
-import { Tooltip } from "./Tooltip";
+import { DisabledTooltip } from "./DisabledTooltip";
 
 interface ButtonOwnProps {
   readonly variant?: ButtonVariant;
@@ -98,7 +98,7 @@ export function Button(props: ButtonProps) {
   );
 
   if (disabled && disabledReason) {
-    return <Tooltip content={disabledReason}>{element}</Tooltip>;
+    return <DisabledTooltip content={disabledReason}>{element}</DisabledTooltip>;
   }
   return element;
 }

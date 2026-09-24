@@ -502,3 +502,9 @@
     display: none;
   }
 }
+
+/* Qatlamdan tashqarida: t-display-xl (utilities qatlami) shrift oilasini beradi, bu qoida undan ustun.
+   Til boʻyicha mayda preload toʻplami (Playfair Hero): birinchi kadrda haqiqiy shrift, almashinuv yoʻq. */
+.home-hero-title {
+  font-family: "Playfair Hero", var(--font-display);
+}

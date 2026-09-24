@@ -3,6 +3,7 @@ import { DesignArt } from "@/components/layout/DesignArt";
 import { Section } from "@/components/layout/Section";
 import { GanchLayers } from "@/components/ornament/GanchLayers";
 import { GirihLattice } from "@/components/ornament/GirihLattice";
+import { AbrBase } from "@/designs/atlas/AbrBase";
 import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { Text } from "@/components/ui/Text";
@@ -23,7 +24,20 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
   return (
     <Section padded={false} labelledBy="hero-title" className="home-hero" as="section">
       <div className="home-hero-art">
-        <DesignArt slot="home-hero" locale={locale} className="home-hero-slot" />
+        {/* Ipakning mayda ranglari HTML ichida: birinchi kadrda fon bor, LCP esa sarlavha matni. */}
+        <AbrBase className="birlashma:hidden" />
+        {/* Birlashmada boʻyash sahifasi interaktiv: uya aria-hidden emas; ipak oʻzini yashiradi. */}
+        <DesignArt
+          slot="home-hero"
+          locale={locale}
+          meaningful
+          className="home-hero-slot"
+          copy={{
+            coloring: dict.home.coloring,
+            galleryPending: dict.home.gallery.pending,
+            noteHero: dict.birlashma.note.hero,
+          }}
+        />
       </div>
       <div className="home-hero-ganch birlashma:hidden" aria-hidden="true">
         <GanchLayers seed="darvoza" parallax />

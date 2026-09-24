@@ -7,19 +7,25 @@ import { DesignArt } from "@/components/layout/DesignArt";
 import { usePortalScene } from "@/components/motion/usePortalScene";
 import { Ravoq } from "@/components/ornament/Ravoq";
 import { ZardoziText } from "@/components/ornament/ZardoziText";
-import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
+
+export interface PortalCopy {
+  readonly label: string;
+  readonly statement: string;
+  readonly note: string;
+}
 
 interface PortalSectionProps {
   readonly locale: Locale;
-  readonly dict: Dictionary;
+  /* Faqat shu boʻlim matni: butun lugʻat RSC yukiga kirmaydi. */
+  readonly copy: PortalCopy;
 }
 
 /**
  * Portal sahnasi: butun ekranli ipak oʻngdagi ravoq oynasiga yigʻiladi, chapda missiya koʻtariladi.
  * Pin ≤150% (kompyuter) / ≤100% (telefon), scrub 0.8, oddiy skroll doim ishlaydi.
  */
-export function PortalSection({ locale, dict }: PortalSectionProps) {
+export function PortalSection({ locale, copy }: PortalSectionProps) {
   const ref = useRef<HTMLElement | null>(null);
   usePortalScene(ref, {
     length: 1.4,
@@ -44,6 +50,10 @@ export function PortalSection({ locale, dict }: PortalSectionProps) {
         0.9,
       );
     },
+    settle: (scope) => {
+      for (const w of scope.querySelectorAll(".zardozi-word"))
+        w.setAttribute("data-reveal", "done");
+    },
   });
 
   return (
@@ -56,21 +66,16 @@ export function PortalSection({ locale, dict }: PortalSectionProps) {
       <Container className="home-portal-grid">
         <div className="home-portal-text" data-portal-text="">
           <p className="t-label text-accent-text" id="portal-title">
-            {dict.home.portal.label}
+            {copy.label}
           </p>
           <p className="t-h2 home-portal-statement">
-            <ZardoziText
-              text={dict.home.portal.statement}
-              lines={2}
-              draw="none"
-              className="portal-words"
-            />
+            <ZardoziText text={copy.statement} lines={2} draw="none" className="portal-words" />
           </p>
           <p
             className="t-note text-ink-3 home-portal-note birlashma:block hidden"
             aria-hidden="true"
           >
-            {dict.birlashma.note.mission}
+            {copy.note}
           </p>
         </div>
         <div

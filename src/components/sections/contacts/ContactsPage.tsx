@@ -183,7 +183,12 @@ export function ContactsPage({ locale, dict }: PageProps) {
       <Section labelledBy="contacts-form" className="relative">
         <Container grid>
           <div className="col-span-4 md:col-span-8 lg:col-span-7 lg:col-start-3" data-grid-item="">
-            <DesignArt slot="contacts-band" locale={locale} meaningful>
+            <DesignArt
+              slot="contacts-band"
+              locale={locale}
+              meaningful
+              copy={{ postcardLabel: d.form.postcardLabel }}
+            >
               <Heading level={2} size="h2" id="contacts-form">
                 {formEnabled ? d.form.heading : d.form.fallbackHeading}
               </Heading>

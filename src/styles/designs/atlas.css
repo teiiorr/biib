@@ -1,9 +1,9 @@
 /* ATLAS — Oʻzbek hunarmandchiligi. Kunduz «Atlas», tun «Rishton». Nomlar birlashma.css bilan bir xil. */
 
 :root[data-design="atlas"] {
-  --font-ui: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-playfair), "Noto Serif Display", Georgia, serif;
-  --font-note: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-ui: "Inter", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair", "Playfair Fallback", "Noto Serif Display", Georgia, serif;
+  --font-note: "Inter", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
 
   --fs-display-xl: clamp(3rem, 1.3333rem + 7.4074vw, 8rem);
   --lh-display-xl: 0.98;

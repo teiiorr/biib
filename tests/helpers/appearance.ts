@@ -49,6 +49,9 @@ export async function primeAppearance(page: Page, stored: StoredAppearance): Pro
   await page.addInitScript(
     ([key, json]) => {
       try {
+        // Init skript har hujjatda yuradi; qayta yuklashda saqlangan tanlov oʻchmasligi kerak.
+        if (sessionStorage.getItem("biib:primed") === json) return;
+        sessionStorage.setItem("biib:primed", json);
         localStorage.setItem(key, json);
       } catch {
         return;

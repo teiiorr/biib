@@ -59,6 +59,7 @@ export function ReadingProgress({ locale, dict, targetId }: ReadingProgressProps
         progress={progress}
         meaningful
         className="hidden birlashma:block"
+        copy={{ pencilProgress: dict.pencilProgress, qalampirValue: dict.qalampirValue }}
       />
     </div>
   );

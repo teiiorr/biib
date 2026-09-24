@@ -28,12 +28,45 @@ const BUDGET = {
   mobile: { performance: 90, lcp: 2000, cls: 0.05, tbt: 150 },
   desktop: { performance: 98, lcp: 2500, cls: 0.05, tbt: 150 },
 };
+/* ONLY=home,about — tez tekshiruv uchun sahifalar kesimi (toʻliq gate hammasini yuradi). */
+const ONLY = (process.env.ONLY ?? "").split(",").filter(Boolean);
+const PAGE_LIST = Object.entries(PAGES).filter(([key]) => !ONLY.length || ONLY.includes(key));
+
 const checks = [];
 const push = (id, ok, detail) => checks.push({ id, status: ok ? "pass" : "fail", detail });
 
-const chrome = await launch({ chromeFlags: ["--headless=new", "--no-sandbox", "--disable-gpu"] });
+const htmlCache = new Map();
+async function fetchHtml(url) {
+  if (!htmlCache.has(url)) htmlCache.set(url, await (await fetch(url)).text());
+  return htmlCache.get(url);
+}
+async function initialScripts(url) {
+  const html = await fetchHtml(url);
+  return new Set(
+    [...html.matchAll(/<script[^>]+src="([^"]+)"/g)].map((m) => new URL(m[1], url).pathname),
+  );
+}
+async function isNoindex(url) {
+  const html = await fetchHtml(url);
+  return /<meta name="robots" content="[^"]*noindex/.test(html);
+}
+/* Lighthouse toifasi kabi: vaznli oʻrtacha, bitta audit chiqarib tashlangan holda. */
+function scoreWithout(refs, audits, skipId) {
+  let sum = 0;
+  let weight = 0;
+  for (const ref of refs) {
+    if (ref.id === skipId || !ref.weight) continue;
+    const score = audits[ref.id]?.score;
+    if (score === null || score === undefined) continue;
+    sum += score * ref.weight;
+    weight += ref.weight;
+  }
+  return weight ? Math.round((sum / weight) * 100) : 100;
+}
+
+const chrome = await launch({ chromeFlags: ["--headless=new", "--no-sandbox"] });
 try {
-  for (const [name, route] of Object.entries(PAGES)) {
+  for (const [name, route] of PAGE_LIST) {
     for (const form of ["mobile", "desktop"]) {
       const url = `${BASE_URL}${route}?dizayn=${DESIGN}`;
       const result = await lighthouse(url, {
@@ -63,24 +96,40 @@ try {
       const tbt = audit("total-blocking-time");
       const seo = cat("seo");
       const a11y = cat("accessibility");
+      /* Birinchi yuklanish JS = boshlangʻich HTML dagi <script src> (Next «First Load JS»);
+         boʻsh vaqtda keladigan dvigatel, badiiy va panel chunklari alohida hisoblanadi. */
+      const initial = await initialScripts(url);
       const scripts = (lhr.audits["network-requests"]?.details?.items ?? []).filter(
         (i) => i.resourceType === "Script",
       );
-      const jsBytes = scripts.reduce((s, i) => s + (i.transferSize ?? 0), 0);
+      const jsBytes = scripts
+        .filter((i) => initial.has(new URL(i.url).pathname))
+        .reduce((s, i) => s + (i.transferSize ?? 0), 0);
+      const lazyBytes = scripts
+        .filter((i) => !initial.has(new URL(i.url).pathname))
+        .reduce((s, i) => s + (i.transferSize ?? 0), 0);
+      /* Tasdiqlanmagan mazmun noindex (§18.1): is-crawlable auditi ataylab yiqiladi, SEO qolgan auditlar boʻyicha. */
+      const seoRefs = lhr.categories.seo?.auditRefs ?? [];
+      const noindex = (lhr.audits["is-crawlable"]?.score ?? 1) < 1 && (await isNoindex(url));
+      const seoScore = noindex ? scoreWithout(seoRefs, lhr.audits, "is-crawlable") : seo;
       const preloadFonts = (lhr.audits["network-requests"]?.details?.items ?? []).filter(
         (i) => i.resourceType === "Font" && i.priority === "High",
       ).length;
-      const detail = `perf ${perf} (≥${b.performance}), LCP ${Math.round(lcp)} ms, CLS ${cls.toFixed(3)}, TBT ${Math.round(tbt)} ms, SEO ${seo}, A11y ${a11y}, JS ${Math.round(jsBytes / 1024)} KB`;
+      const detail = `perf ${perf} (≥${b.performance}), LCP ${Math.round(lcp)} ms, CLS ${cls.toFixed(3)}, TBT ${Math.round(tbt)} ms, SEO ${seoScore}${noindex ? " (noindex, is-crawlable hisobga olinmadi)" : ""}, A11y ${a11y}, JS ${Math.round(jsBytes / 1024)} KB + ${Math.round(lazyBytes / 1024)} KB kechiktirilgan`;
       push(`lh:${DESIGN}:${name}:${form}:performance`, perf >= b.performance, detail);
       push(`lh:${DESIGN}:${name}:${form}:lcp`, lcp <= b.lcp, `${Math.round(lcp)} ms`);
       push(`lh:${DESIGN}:${name}:${form}:cls`, cls <= b.cls, cls.toFixed(3));
       push(`lh:${DESIGN}:${name}:${form}:tbt`, tbt <= b.tbt, `${Math.round(tbt)} ms`);
-      push(`lh:${DESIGN}:${name}:${form}:seo`, seo === 100, String(seo));
+      push(
+        `lh:${DESIGN}:${name}:${form}:seo`,
+        seoScore === 100,
+        `${seoScore}${noindex ? " (noindex)" : ""}`,
+      );
       push(`lh:${DESIGN}:${name}:${form}:a11y`, a11y === 100, String(a11y));
       push(
         `lh:${DESIGN}:${name}:${form}:first-load-js`,
         jsBytes <= 170 * 1024,
-        `${Math.round(jsBytes / 1024)} KB (siqilgan)`,
+        `${Math.round(jsBytes / 1024)} KB (siqilgan) + ${Math.round(lazyBytes / 1024)} KB kechiktirilgan`,
       );
       push(
         `lh:${DESIGN}:${name}:${form}:font-preloads`,

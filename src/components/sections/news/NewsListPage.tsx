@@ -29,7 +29,14 @@ export function NewsListPage({ locale, dict }: PageProps) {
       <PageHero
         title={n.title}
         lead={n.lead}
-        art={<DesignArt slot="news-header" locale={locale} className="news-header-art" />}
+        art={
+          <DesignArt
+            slot="news-header"
+            locale={locale}
+            className="news-header-art"
+            copy={{ masthead: dict.news.masthead }}
+          />
+        }
         breadcrumbs={[
           { href: pathFor(locale, "home"), label: dict.nav.home },
           { href: pathFor(locale, "news"), label: dict.nav.news, current: true },
@@ -48,6 +55,8 @@ export function NewsListPage({ locale, dict }: PageProps) {
                 <TransitionLink
                   href={pathFor(locale, "newsItem", lead.slug)}
                   className="news-cover-link"
+                  tabIndex={-1}
+                  aria-hidden="true"
                 >
                   <ViewTransition name={sharedName("news-cover", lead.slug)}>
                     <div className="news-cover">
@@ -78,6 +87,8 @@ export function NewsListPage({ locale, dict }: PageProps) {
                   <TransitionLink
                     href={pathFor(locale, "newsItem", item.slug)}
                     className="news-cover-link"
+                    tabIndex={-1}
+                    aria-hidden="true"
                   >
                     <ViewTransition name={sharedName("news-cover", item.slug)}>
                       <div className="news-cover">

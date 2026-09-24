@@ -57,7 +57,8 @@ export function coverComposition(ratio: AspectRatio, seed: string | number): Cov
 }
 
 function steppedBand(x: number, w: number, h: number, rng: ReturnType<typeof createRng>): string {
-  const step = between(rng, 6, 14);
+  /* 12–24 px pogʻona: abr chetlari koʻrinishda bir xil, yoʻl uzunligi ikki barobar qisqa. */
+  const step = between(rng, 12, 24);
   const drift = between(rng, 2, 5);
   const left: string[] = [];
   const right: string[] = [];

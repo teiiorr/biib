@@ -1,11 +1,12 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
 import { useRef, type ReactNode } from "react";
-import { DURATION } from "@/lib/motion/constants";
+import { DURATION, EASE } from "@/lib/motion/constants";
+import { doiraStaggerFn } from "@/lib/motion/doira";
 import { motionAllowed } from "@/lib/motion/prefs";
+import { belowViewport } from "@/lib/motion/viewport";
 import { willChangeDuring } from "@/lib/motion/will-change";
-import { doiraStaggerFn, EASE, gsap } from "./gsap";
+import { useEngineEffect } from "./engine";
 import { useMotionPrefs } from "./motion-context";
 
 type RevealTag =
@@ -35,9 +36,11 @@ export interface RevealProps {
   /** Audit va test belgilari (data-*), oʻramga oʻtkaziladi. */
   readonly attrs?: Readonly<Record<`data-${string}`, string>>;
   readonly label?: string;
+  /** Aylantiriladigan mintaqa klaviaturadan ham yetishi uchun (axe scrollable-region-focusable). */
+  readonly tabIndex?: 0;
 }
 
-/** reveal-rise: opacity 0→1, y 24→0, 900 ms. Matn DOM da; harakat taqiqlanganda darhol koʻrinadi. */
+/** reveal-rise: opacity 0→1, y 24→0, 900 ms. Matn DOM da; dvigatelsiz va harakat taqiqida darhol koʻrinadi. */
 export function Reveal({
   as = "div",
   children,
@@ -48,15 +51,19 @@ export function Reveal({
   delay = 0,
   attrs,
   label,
+  tabIndex,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const prefs = useMotionPrefs();
   const allowed = prefs.ready && motionAllowed(prefs);
 
-  useGSAP(
-    () => {
+  useEngineEffect(
+    ref,
+    ({ gsap }, { late }) => {
       const root = ref.current;
       if (!root || !allowed) return;
+      // Kech kelgan dvigatel: ekranda turgan blok yashirilmaydi.
+      if (late && !belowViewport(root)) return;
       const targets: Element[] = stagger ? Array.from(root.children) : [root];
       if (targets.length === 0) return;
       const tween = gsap.from(targets, {
@@ -71,13 +78,13 @@ export function Reveal({
       });
       willChangeDuring(tween, targets);
     },
-    { scope: ref, dependencies: [allowed, stagger, start, delay], revertOnUpdate: true },
+    [allowed, stagger, start, delay],
   );
 
   // Teg birligi uchun bitta intrinsik tur: barcha ruxsat etilgan teglar HTMLElement beradi.
   const Tag = as as "div";
   return (
-    <Tag ref={ref} className={className} id={id} aria-label={label} {...attrs}>
+    <Tag ref={ref} className={className} id={id} aria-label={label} tabIndex={tabIndex} {...attrs}>
       {children}
     </Tag>
   );

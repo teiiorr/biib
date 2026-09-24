@@ -1,23 +1,21 @@
 "use client";
 
-import { getDictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
 
 import type { ArtProps } from "../registry";
 
 /** Oʻqish jarayoni qalam chizigʻi sifatida: progress 0–1, role=progressbar. */
-export default function PencilProgress({ locale, progress = 0, className }: ArtProps) {
-  const dict = getDictionary(locale).ornament;
+export default function PencilProgress({ copy, progress = 0, className }: ArtProps) {
   const percent = Math.round(Math.max(0, Math.min(1, progress)) * 100);
   return (
     <div
       className={className ? `pencil-progress ${className}` : "pencil-progress"}
       role="progressbar"
-      aria-label={dict.pencilProgress}
+      aria-label={copy?.pencilProgress}
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={percent}
-      aria-valuetext={fill(dict.qalampirValue, { percent })}
+      aria-valuetext={fill(copy?.qalampirValue ?? "{{percent}}%", { percent })}
     >
       <svg
         viewBox="0 0 100 6"

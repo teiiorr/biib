@@ -52,9 +52,10 @@ export function islimiyPath(options: IslimiyOptions): Islimiy {
     x: spineX + mirror * amplitude * Math.sin(phase + t * Math.PI * 2 * waves),
     y: t * length,
   });
-  const samples = Math.max(12, Math.round(length / 10));
+  /* 16 px qadam: egri koʻrinishda silliq, yoʻl uzunligi qisqa. */
+  const samples = Math.max(12, Math.round(length / 16));
   const spine = Array.from({ length: samples + 1 }, (_, i) => spineAt(i / samples));
-  const stems: IslimiyStem[] = [{ d: polylinePath(spine), at: 0, span: 1 }];
+  const stems: IslimiyStem[] = [{ d: polylinePath(spine, false, 1), at: 0, span: 1 }];
   const buds: IslimiyBud[] = [];
 
   let y = between(rng, 36, 72);
@@ -102,7 +103,7 @@ function branch(
       y: center.y + r * Math.sin(angleAt(theta)),
     });
   }
-  stems.push({ d: polylinePath(points), at, span: 0.12 });
+  stems.push({ d: polylinePath(points, false, 1), at, span: 0.12 });
 
   const tip = points[points.length - 1];
   const beforeTip = points[points.length - 2];

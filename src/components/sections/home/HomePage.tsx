@@ -22,7 +22,14 @@ export function HomePage({ locale, dict }: HomePageProps) {
   return (
     <>
       <HeroSection locale={locale} dict={dict} />
-      <PortalSection locale={locale} dict={dict} />
+      <PortalSection
+        locale={locale}
+        copy={{
+          label: dict.home.portal.label,
+          statement: dict.home.portal.statement,
+          note: dict.birlashma.note.mission,
+        }}
+      />
       <ProjectsQuadrant locale={locale} dict={dict} />
       <NewsTeaser locale={locale} dict={dict} />
       <GallerySection locale={locale} dict={dict} />

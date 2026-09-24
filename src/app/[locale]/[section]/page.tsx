@@ -10,7 +10,7 @@ import { PartnersPage } from "@/components/sections/partners/PartnersPage";
 import { PrivacyPage } from "@/components/sections/privacy/PrivacyPage";
 import { ProjectsPage } from "@/components/sections/projects/ProjectsPage";
 import { getDictionary, type Dictionary } from "@/i18n/dictionaries";
-import { LOCALES, type Locale } from "@/i18n/locales";
+import { isLocale, LOCALES, type Locale } from "@/i18n/locales";
 import { SECTION_KEYS, resolveSection, sectionSegment, type SectionKey } from "@/i18n/routes";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { statusForPage } from "@/lib/seo/status";
@@ -44,6 +44,7 @@ const PAGES: Record<SectionKey | "news", SectionPage> = {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, section } = await params;
+  if (!isLocale(locale)) return {};
   const key = resolveSection(locale, section);
   if (!key) return {};
   return buildMetadata({ locale, key, dict: getDictionary(locale), status: statusForPage(key) });
@@ -51,6 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function Page({ params }: PageProps) {
   const { locale, section } = await params;
+  if (!isLocale(locale)) notFound();
   const key = resolveSection(locale, section);
   if (!key) notFound();
   const Component = PAGES[key];

@@ -194,6 +194,7 @@
     left: 4px;
     width: 0;
     transform-origin: left center;
+    transition: transform var(--dur-panel) var(--ease-spring);
     border-radius: var(--surface-radius);
     background: color-mix(in oklab, var(--material-base) 90%, var(--material-ink) 10%);
     box-shadow:

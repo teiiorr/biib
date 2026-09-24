@@ -1,9 +1,8 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
 import { useRef, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { setupGsap } from "@/components/motion/gsap";
+import { useEngineEffect } from "@/components/motion/engine";
 import { useMotionAllowed } from "./use-motion-allowed";
 
 export interface GanchParallaxProps {
@@ -18,10 +17,10 @@ export function GanchParallax({ children, className }: GanchParallaxProps) {
   const scope = useRef<HTMLDivElement>(null);
   const allowed = useMotionAllowed();
 
-  useGSAP(
-    () => {
+  useEngineEffect(
+    scope,
+    ({ gsap }) => {
       if (!allowed || !scope.current) return;
-      const gsap = setupGsap();
       // Trigger — qahramon oʻlchamidagi .ganch qatlami (oʻram display: contents).
       const box = scope.current.firstElementChild ?? scope.current;
       const layers = Array.from(scope.current.querySelectorAll<HTMLElement>(".ganch-layer"));
@@ -58,7 +57,7 @@ export function GanchParallax({ children, className }: GanchParallaxProps) {
         return () => window.removeEventListener("pointermove", onMove);
       });
     },
-    { scope, dependencies: [allowed], revertOnUpdate: true },
+    [allowed],
   );
 
   return (

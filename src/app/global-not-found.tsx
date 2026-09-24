@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { preload } from "react-dom";
 
 import { PalakFallback } from "@/components/layout/PalakFallback";
 import { getDictionary } from "@/i18n/dictionaries";
 import { LOCALE_META, LOCALES } from "@/i18n/locales";
 import { APPEARANCE_BOOT_SCRIPT } from "@/lib/appearance/boot";
-import { fontsFor } from "@/lib/fonts";
+import { FONT_CLASS, fontPreloads } from "@/lib/fonts";
 import { pathFor } from "@/i18n/routes";
 import { siteUrl } from "@/lib/site";
 
@@ -19,12 +20,13 @@ export const metadata = {
 /** Nomaʼlum til yoki xaritadan tashqari yoʻl: 404 oʻzbek lotinida, beshta til bosh sahifasiga havola. */
 export default function GlobalNotFound() {
   const dict = getDictionary("uz");
-  const fonts = fontsFor("uz");
+  for (const href of fontPreloads("uz").filter((h) => !h.includes("hero-"))) {
+    preload(href, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
+  }
   return (
     <html
       lang="uz-Latn"
-      className={fonts.className}
-      style={fonts.style}
+      className={FONT_CLASS}
       data-design="atlas"
       data-theme="light"
       suppressHydrationWarning

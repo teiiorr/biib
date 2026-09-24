@@ -8,12 +8,13 @@
     --wood-3: #4a2e17;
     --wood-rim: #e8cf7a;
     /* Ganch: kunduzi oq gips, soya lojuvardga boʻyalgan; burchak oʻlchami ekranga qarab. */
-    --ganch-fill: color-mix(in oklab, var(--surface) 66%, transparent);
-    --ganch-shadow: rgba(14, 23, 51, 0.28);
-    --ganch-rim: rgba(255, 255, 255, 0.9);
-    --ganch-line: rgba(255, 255, 255, 0.7);
-    --ganch-opacity: 0.9;
-    --ganch-size: clamp(150px, 26vw, 400px);
+    /* Sayoz oʻyma: ipak ustida oq dogʻ emas, yarim shaffof gips va aniq ichki soya. */
+    --ganch-fill: color-mix(in oklab, var(--surface) 38%, transparent);
+    --ganch-shadow: rgba(14, 23, 51, 0.34);
+    --ganch-rim: rgba(255, 255, 255, 0.8);
+    --ganch-line: rgba(255, 255, 255, 0.55);
+    --ganch-opacity: 0.75;
+    --ganch-size: clamp(140px, 22vw, 320px);
     /* Kundal: lojuvard zamin, ustidagi matn uchun sut-oq (6.3:1), tunda --ink (5.8:1). */
     --kundal-ground: var(--art-5);
     --kundal-ink: var(--surface);

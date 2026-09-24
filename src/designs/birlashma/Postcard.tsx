@@ -1,5 +1,3 @@
-import { getDictionary } from "@/i18n/dictionaries";
-
 import { Doodle } from "./Doodles";
 import type { ArtProps } from "../registry";
 
@@ -7,11 +5,10 @@ import type { ArtProps } from "../registry";
  * Otkritka orqasi: oʻrtadagi ajratgich, manzil chiziqlari, marka va pochta muhri; skotch burchakda.
  * Kontent (sarlavha, matn, tugmalar) chap yarmida, otkritka koʻrinishi paper.css da.
  */
-export default function Postcard({ locale, className }: ArtProps) {
-  const dict = getDictionary(locale).contacts.form;
+export default function Postcard({ copy, className }: ArtProps) {
   return (
     <span className={className ? `postcard-art ${className}` : "postcard-art"} aria-hidden="true">
-      <span className="sr-only">{dict.postcardLabel}</span>
+      <span className="sr-only">{copy?.postcardLabel}</span>
       <span className="postcard-divider" />
       <svg className="postcard-lines" viewBox="0 0 300 120" preserveAspectRatio="none">
         <path

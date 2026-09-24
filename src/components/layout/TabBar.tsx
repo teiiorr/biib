@@ -16,7 +16,9 @@ import { MenuSheet } from "./MenuSheet";
 
 interface TabBarProps {
   readonly locale: Locale;
-  readonly dict: Dictionary;
+  /* Butun lugʻat emas, faqat kerakli boʻlimlar: RSC yukiga ortiqcha matn kirmaydi. */
+  readonly nav: Dictionary["nav"];
+  readonly hints: Dictionary["common"]["hints"];
 }
 
 const TABS: ReadonlyArray<{ key: PageKey; icon: IconName }> = [
@@ -30,7 +32,7 @@ const TABS: ReadonlyArray<{ key: PageKey; icon: IconName }> = [
  * Suzuvchi tab-bar: pastga aylantirganda joriy belgili kichik kapsulaga yigʻiladi,
  * yuqoriga aylantirganda yoki bosilganda yoyiladi. Linza tanlangan band ostida suriladi.
  */
-export function TabBar({ locale, dict }: TabBarProps) {
+export function TabBar({ locale, nav, hints }: TabBarProps) {
   const pathname = usePathname();
   const resolved = resolvePath(pathname);
   const currentKey: PageKey = resolved?.key === "newsItem" ? "news" : (resolved?.key ?? "home");
@@ -77,7 +79,7 @@ export function TabBar({ locale, dict }: TabBarProps) {
         text
         adaptiveTone
         className="tab-bar"
-        aria-label={dict.nav.tabBarLabel}
+        aria-label={nav.tabBarLabel}
       >
         <span className="tab-lens" data-lens="" aria-hidden="true" />
         {TABS.map((tab) => {
@@ -91,11 +93,13 @@ export function TabBar({ locale, dict }: TabBarProps) {
               aria-current={active ? "page" : undefined}
             >
               <Icon name={tab.icon} size={24} />
-              <span className="tab-label">{dict.nav[tab.key as "home"]}</span>
+              <span className="tab-label" data-clamp="">
+                {nav[tab.key as "home"]}
+              </span>
             </Link>
           );
         })}
-        <MenuSheet locale={locale} dict={dict.nav} hints={dict.common.hints} current={currentKey} />
+        <MenuSheet locale={locale} dict={nav} hints={hints} current={currentKey} />
       </Surface>
       <Surface
         as="button"
@@ -104,13 +108,13 @@ export function TabBar({ locale, dict }: TabBarProps) {
         text
         type="button"
         className="tab-mini"
-        aria-label={dict.nav.tabBarLabel}
+        aria-label={nav.tabBarLabel}
         aria-hidden={!minimized}
         tabIndex={minimized ? 0 : -1}
         onClick={() => setMinimized(false)}
       >
         <Icon name={current?.icon ?? "home"} size={20} />
-        <span className="t-label text-trim">{dict.nav[(current?.key ?? "home") as "home"]}</span>
+        <span className="t-label text-trim">{nav[(current?.key ?? "home") as "home"]}</span>
       </Surface>
     </div>
   );

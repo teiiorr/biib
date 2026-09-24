@@ -1,9 +1,11 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
 import { useRef, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { doiraStaggerFn, EASE, setupGsap } from "@/components/motion/gsap";
+import { useEngineEffect } from "@/components/motion/engine";
+import { EASE } from "@/lib/motion/constants";
+import { doiraStaggerFn } from "@/lib/motion/doira";
+import { belowViewport } from "@/lib/motion/viewport";
 import { useMotionAllowed } from "./use-motion-allowed";
 
 export interface XivaTimelineSceneProps {
@@ -19,10 +21,10 @@ export function XivaTimelineScene({ children, className }: XivaTimelineSceneProp
   const scope = useRef<HTMLDivElement>(null);
   const allowed = useMotionAllowed();
 
-  useGSAP(
-    () => {
+  useEngineEffect(
+    scope,
+    ({ gsap }, { late }) => {
       if (!allowed || !scope.current) return;
-      const gsap = setupGsap();
       const stage = scope.current.querySelector(".xiva-stage");
       const items = scope.current.querySelectorAll(".xiva-item");
       if (!stage || items.length === 0) return;
@@ -42,6 +44,7 @@ export function XivaTimelineScene({ children, className }: XivaTimelineSceneProp
       });
       media.add("(max-width: 1023px)", () => {
         items.forEach((item, index) => {
+          if (late && !belowViewport(item, 0.88)) return;
           gsap.fromTo(
             item,
             { y: 24, opacity: 0 },
@@ -57,7 +60,7 @@ export function XivaTimelineScene({ children, className }: XivaTimelineSceneProp
         });
       });
     },
-    { scope, dependencies: [allowed], revertOnUpdate: true },
+    [allowed],
   );
 
   return (

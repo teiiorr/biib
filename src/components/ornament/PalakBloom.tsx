@@ -1,9 +1,10 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
 import { useRef, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { EASE, setupGsap } from "@/components/motion/gsap";
+import { useEngineEffect } from "@/components/motion/engine";
+import { EASE } from "@/lib/motion/constants";
+import { belowViewport } from "@/lib/motion/viewport";
 import { useMotionAllowed } from "./use-motion-allowed";
 
 export interface PalakBloomProps {
@@ -19,14 +20,15 @@ export function PalakBloom({ children, className }: PalakBloomProps) {
   const scope = useRef<HTMLDivElement>(null);
   const allowed = useMotionAllowed();
 
-  useGSAP(
-    () => {
+  useEngineEffect(
+    scope,
+    ({ gsap }, { late }) => {
       if (!allowed || !scope.current) return;
-      const gsap = setupGsap();
       const svg = scope.current.querySelector("svg");
       const loops = scope.current.querySelectorAll(".palak-loop");
       const ring = scope.current.querySelector(".palak-ring");
       if (!svg) return;
+      if (late && !belowViewport(svg)) return;
       const timeline = gsap.timeline({
         scrollTrigger: { trigger: svg, start: "top 85%", once: true },
       });
@@ -46,7 +48,7 @@ export function PalakBloom({ children, className }: PalakBloomProps) {
       }
       if (ring) timeline.fromTo(ring, { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.8);
     },
-    { scope, dependencies: [allowed], revertOnUpdate: true },
+    [allowed],
   );
 
   return (

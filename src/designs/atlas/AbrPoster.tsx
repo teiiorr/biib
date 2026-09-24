@@ -1,32 +1,20 @@
 import Image from "next/image";
 
 interface AbrPosterProps {
-  readonly alt: string;
+  readonly theme: "light" | "dark";
   readonly className?: string;
 }
 
-/** Statik poster: WebGL yoʻq, kamaytirilgan harakat va shader yuklanguncha. */
-export function AbrPoster({ alt, className }: AbrPosterProps) {
+/** Toʻliq statik poster (AVIF tayyor, qayta ishlanmaydi): faqat shader ishlay olmaganda yuklanadi. */
+export function AbrPoster({ theme, className }: AbrPosterProps) {
   return (
-    <span className={className}>
-      <Image
-        src="/hero/abr-poster-day.avif"
-        alt={alt}
-        fill
-        sizes="100vw"
-        priority={false}
-        loading="eager"
-        className="object-cover dark:hidden"
-      />
-      <Image
-        src="/hero/abr-poster-night.avif"
-        alt=""
-        fill
-        sizes="100vw"
-        priority={false}
-        loading="eager"
-        className="hidden object-cover dark:block"
-      />
-    </span>
+    <Image
+      src={theme === "dark" ? "/hero/abr-poster-night.avif" : "/hero/abr-poster-day.avif"}
+      alt=""
+      fill
+      sizes="100vw"
+      unoptimized
+      className={className ? `abr-poster ${className}` : "abr-poster"}
+    />
   );
 }

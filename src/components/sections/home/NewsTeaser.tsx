@@ -53,6 +53,8 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
             <TransitionLink
               href={pathFor(locale, "newsItem", lead.slug)}
               className="news-cover-link"
+              tabIndex={-1}
+              aria-hidden="true"
             >
               <ViewTransition name={sharedName("news-cover", lead.slug)}>
                 <div className="news-cover" data-ratio="3:2">
@@ -78,6 +80,8 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
                 <TransitionLink
                   href={pathFor(locale, "newsItem", item.slug)}
                   className="news-cover-link news-thumb"
+                  tabIndex={-1}
+                  aria-hidden="true"
                 >
                   <ViewTransition name={sharedName("news-cover", item.slug)}>
                     <div className="news-cover" data-ratio="1:1">

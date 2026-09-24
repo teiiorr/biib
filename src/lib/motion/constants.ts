@@ -43,3 +43,11 @@ export const SCRUB = 0.8;
 /** Parallaks qatlamlarining sukut boʻyicha yurish masofasi, px. */
 
 /** Faqat kompozitorga qulay xususiyatlar animatsiya qilinadi. */
+
+/** GSAP nomlari; spring-glass dvigatel yaratilganda CustomEase sifatida roʻyxatga olinadi. */
+export const EASE = {
+  out: "power3.out",
+  inOut: "power2.inOut",
+  ui: "power2.out",
+  spring: "spring-glass",
+} as const;

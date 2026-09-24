@@ -89,12 +89,13 @@
     left: 50%;
     bottom: calc(12px + var(--safe-bottom));
     transform: translateX(-50%);
-    width: min(calc(100vw - 32px), 560px);
+    width: min(calc(100vw - 2 * var(--margin)), 560px);
     z-index: var(--z-tabbar);
   }
+  /* minmax(0, 1fr): uzun yorliq boshqa bandlarni siqmaydi; yorliq oʻzi qisqartiriladi (data-clamp). */
   .tab-bar {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 8px;
     height: 64px;
     padding: 4px;
@@ -135,6 +136,8 @@
       inset 0 0 0 1px color-mix(in oklab, var(--material-rim) 60%, transparent),
       var(--shadow-raised);
     transform-origin: left center;
+    /* Linza FLIP: joy left/width bilan bir marta, harakat faqat transformda, prujina egri chizigʻi. */
+    transition: transform var(--dur-panel) var(--ease-spring);
   }
   .tab-mini {
     position: absolute;
@@ -162,6 +165,9 @@
   }
   .tab-label {
     white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: var(--fs-micro);
     line-height: var(--lh-micro);
     font-weight: var(--fw-micro);
@@ -399,7 +405,7 @@
   }
   .privacy-toc-list {
     display: grid;
-    gap: 4px;
+    gap: 8px;
     margin: 0;
     padding: 0;
     list-style: none;

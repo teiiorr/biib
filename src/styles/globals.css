@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./fonts.css" layer(base);
 @import "./designs/atlas.css";
 @import "./designs/birlashma.css";
 @import "./materials.css";

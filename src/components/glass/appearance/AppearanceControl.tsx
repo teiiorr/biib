@@ -1,73 +1,43 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 import { Button } from "@/components/ui/Button";
-import { prefetchDesign } from "@/designs/registry";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { useAppearance } from "@/lib/appearance/context";
-import { useIsDesktop } from "@/lib/appearance/media";
 
-import { GlassPopover } from "../GlassPopover";
-import { GlassSheet } from "../GlassSheet";
-import { AppearancePanel } from "./AppearancePanel";
+import { useLazyOverlay } from "../useLazyOverlay";
 
 export interface AppearanceControlProps {
   readonly dict: Dictionary["appearance"];
 }
 
-/** Sarlavhadagi tugma: kompyuterda popover, telefonda pastki varaq. Ikkalasi ham oyna. */
+const loadOverlay = () => import("./AppearanceOverlay");
+
+/** Sarlavhadagi tugma HTML da; panel (Radix, sozlagichlar) boʻsh vaqtda yoki bosilganda yuklanadi. */
 export function AppearanceControl({ dict }: AppearanceControlProps) {
-  const [open, setOpen] = useState(false);
-  const triggerRef = useRef<HTMLElement | null>(null);
-  const desktop = useIsDesktop();
-  const { appearance } = useAppearance();
-
-  useEffect(() => {
-    if (open) prefetchDesign(appearance.design === "atlas" ? "birlashma" : "atlas");
-  }, [open, appearance.design]);
-
-  const trigger = (
+  const shellRef = useRef<HTMLElement | null>(null);
+  const { Panel, warm, openWhenReady, wantOpen, restoreFocus } = useLazyOverlay(
+    loadOverlay,
+    shellRef,
+  );
+  if (Panel) return <Panel dict={dict} initialOpen={wantOpen} focusTrigger={restoreFocus} />;
+  return (
     <Button
       ref={(node) => {
-        triggerRef.current = node;
+        shellRef.current = node;
       }}
       variant="glass"
       size="48"
       icon="sliders"
       iconOnly
       aria-label={dict.open}
-      aria-expanded={open}
+      aria-expanded={false}
+      aria-haspopup="dialog"
       data-testid="appearance-open"
-      onClick={() => setOpen((v) => !v)}
+      onPointerEnter={warm}
+      onPointerDown={warm}
+      onFocus={warm}
+      onClick={openWhenReady}
     />
-  );
-
-  if (desktop) {
-    return (
-      <GlassPopover
-        open={open}
-        onOpenChange={setOpen}
-        trigger={trigger}
-        morphFrom={triggerRef}
-        label={dict.panel}
-        padding={16}
-      >
-        <p className="t-h4 text-material-ink appearance-title">{dict.panel}</p>
-        <AppearancePanel dict={dict} />
-      </GlassPopover>
-    );
-  }
-  return (
-    <GlassSheet
-      open={open}
-      onOpenChange={setOpen}
-      trigger={trigger}
-      morphFrom={triggerRef}
-      title={dict.panel}
-      closeLabel={dict.close}
-    >
-      <AppearancePanel dict={dict} />
-    </GlassSheet>
   );
 }

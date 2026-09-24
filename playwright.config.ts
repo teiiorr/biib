@@ -36,13 +36,18 @@ export default defineConfig({
     colorScheme: "light",
   },
   projects: [
+    /* channel: "chromium" — yangi headless rejim, GPU (Metal) bilan: kadr oʻlchovi haqiqiy, SwiftShader emas. */
     {
       name: "chromium-mobile",
-      use: { ...devices["Pixel 7"], browserName: "chromium" },
+      use: { ...devices["Pixel 7"], browserName: "chromium", channel: "chromium" },
     },
     {
       name: "chromium-desktop",
-      use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } },
+      use: {
+        ...devices["Desktop Chrome"],
+        channel: "chromium",
+        viewport: { width: 1440, height: 900 },
+      },
     },
     {
       name: "webkit-mobile",

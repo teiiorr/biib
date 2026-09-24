@@ -1,10 +1,8 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
-import { useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
-import { EASE, setupGsap } from "@/components/motion/gsap";
 import { cn } from "@/lib/cn";
 
 import { Surface } from "./Surface";
@@ -29,8 +27,9 @@ export interface SegmentedControlProps<T extends string> {
 }
 
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
+const useIsoLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
-/** Linza: tanlangan element ostida prujina bilan suriladi, yorliqni biroz kattalashtiradi. */
+/** Linza: tanlangan element ostida prujina bilan suriladi (CSS FLIP, faqat transform). */
 export function SegmentedControl<T extends string>({
   value,
   options,
@@ -42,31 +41,27 @@ export function SegmentedControl<T extends string>({
   const lensRef = useRef<HTMLSpanElement | null>(null);
   const previous = useRef<{ x: number; width: number } | null>(null);
 
-  useGSAP(
-    () => {
-      const root = rootRef.current;
-      const lens = lensRef.current;
-      if (!root || !lens) return;
-      const active = root.querySelector<HTMLElement>('[data-state="on"]');
-      if (!active) return;
-      const x = active.offsetLeft;
-      const width = active.offsetWidth;
-      lens.style.width = `${width}px`;
-      const gsap = setupGsap();
-      const from = previous.current;
-      previous.current = { x, width };
-      if (!from || window.matchMedia(REDUCED_MOTION).matches) {
-        gsap.set(lens, { x, scaleX: 1 });
-        return;
-      }
-      gsap.fromTo(
-        lens,
-        { x: from.x, scaleX: from.width / width },
-        { x, scaleX: 1, duration: 0.42, ease: EASE.spring, overwrite: true },
-      );
-    },
-    { dependencies: [value, options.length] },
-  );
+  useIsoLayoutEffect(() => {
+    const root = rootRef.current;
+    const lens = lensRef.current;
+    if (!root || !lens) return;
+    const active = root.querySelector<HTMLElement>('[data-state="on"]');
+    if (!active) return;
+    const x = active.offsetLeft;
+    const width = active.offsetWidth;
+    const from = previous.current;
+    previous.current = { x, width };
+    lens.style.width = `${width}px`;
+    if (!from || width === 0 || window.matchMedia(REDUCED_MOTION).matches) {
+      lens.style.transform = `translateX(${x}px)`;
+      return;
+    }
+    lens.style.transition = "none";
+    lens.style.transform = `translateX(${from.x}px) scaleX(${from.width / width})`;
+    void lens.offsetWidth;
+    lens.style.transition = "";
+    lens.style.transform = `translateX(${x}px)`;
+  }, [value, options.length]);
 
   return (
     <Surface

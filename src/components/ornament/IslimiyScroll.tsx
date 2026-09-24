@@ -1,9 +1,8 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
 import { useRef, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { setupGsap } from "@/components/motion/gsap";
+import { useEngineEffect } from "@/components/motion/engine";
 import { useMotionAllowed } from "./use-motion-allowed";
 
 export interface IslimiyScrollProps {
@@ -19,10 +18,10 @@ export function IslimiyScroll({ children, className }: IslimiyScrollProps) {
   const scope = useRef<HTMLDivElement>(null);
   const allowed = useMotionAllowed();
 
-  useGSAP(
-    () => {
+  useEngineEffect(
+    scope,
+    ({ gsap }) => {
       if (!allowed || !scope.current) return;
-      const gsap = setupGsap();
       const timeline = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
@@ -42,7 +41,7 @@ export function IslimiyScroll({ children, className }: IslimiyScrollProps) {
         timeline.from(bud, { scale: 0, duration: 0.08 }, at);
       });
     },
-    { scope, dependencies: [allowed], revertOnUpdate: true },
+    [allowed],
   );
 
   return (

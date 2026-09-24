@@ -24,10 +24,15 @@ export function ContactBand({ locale, dict }: ContactBandProps) {
   return (
     <Section labelledBy="home-contact" tone="light" className="contact-band">
       <div className="contact-band-girih birlashma:hidden" aria-hidden="true">
-        <Girih symmetry={8} width={1200} height={192} cell={96} draw="enter" />
+        <Girih symmetry={8} width={1200} height={192} cell={128} draw="enter" />
       </div>
       <Container className="contact-band-grid paper-look">
-        <DesignArt slot="contacts-band" locale={locale} className="contact-band-art" />
+        <DesignArt
+          slot="contacts-band"
+          locale={locale}
+          className="contact-band-art"
+          copy={{ postcardLabel: dict.contacts.form.postcardLabel }}
+        />
         <div className="contact-band-palak birlashma:hidden">
           <Palak
             size={220}

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { ComponentType } from "react";
 
 import { loadDesignArt, type ArtProps, type ArtSlot } from "@/designs/registry";
+import { whenIdle } from "@/lib/idle";
 import { useAppearance } from "@/lib/appearance/context";
 import type { Design } from "@/lib/appearance/types";
 import { cn } from "@/lib/cn";
@@ -20,7 +21,10 @@ interface Loaded {
   readonly Component: ComponentType<ArtProps> | null;
 }
 
-/** Faol dizaynning uyasi gidratsiyadan keyin yuklanadi; uyasi yoʻq dizayn hech narsa chizmaydi. */
+/**
+ * Faol dizaynning uyasi sahifa yuklanib boʻsh vaqt kelganda olinadi (shrift va CSS bilan
+ * raqobatlashmaydi); uyasi yoʻq dizayn hech narsa chizmaydi.
+ */
 export function DesignArt({
   slot,
   meaningful = false,
@@ -34,17 +38,20 @@ export function DesignArt({
 
   useEffect(() => {
     let cancelled = false;
-    loadDesignArt(design).then(async (map) => {
-      const loader = map[slot];
-      if (!loader) {
-        if (!cancelled) setLoaded({ design, Component: null });
-        return;
-      }
-      const mod = await loader();
-      if (!cancelled) setLoaded({ design, Component: mod.default });
-    });
+    const cancelIdle = whenIdle(() => {
+      void loadDesignArt(design).then(async (map) => {
+        const loader = map[slot];
+        if (!loader) {
+          if (!cancelled) setLoaded({ design, Component: null });
+          return;
+        }
+        const mod = await loader();
+        if (!cancelled) setLoaded({ design, Component: mod.default });
+      });
+    }, 1200);
     return () => {
       cancelled = true;
+      cancelIdle();
     };
   }, [design, slot]);
 
@@ -54,7 +61,7 @@ export function DesignArt({
       className={cn("design-art", className)}
       data-art-slot={slot}
       data-art-design={design}
-      aria-hidden={meaningful ? undefined : true}
+      aria-hidden={meaningful || art.children ? undefined : true}
     >
       {Component ? <Component {...art} /> : (fallback ?? art.children)}
     </div>

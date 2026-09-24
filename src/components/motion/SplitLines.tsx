@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
-import { DURATION } from "@/lib/motion/constants";
+import { useRef, type ReactNode } from "react";
+import { DURATION, EASE } from "@/lib/motion/constants";
+import { doiraStaggerFn } from "@/lib/motion/doira";
 import { motionAllowed } from "@/lib/motion/prefs";
-import { doiraStaggerFn, EASE, gsap, SplitText } from "./gsap";
+import { belowViewport } from "@/lib/motion/viewport";
+import { useEngineEffect } from "./engine";
 import { useMotionPrefs } from "./motion-context";
 
 /** h1 ataylab yoʻq: LCP sarlavha hech qachon boʻlinmaydi. */
@@ -32,40 +34,43 @@ export function SplitLines({
   const prefs = useMotionPrefs();
   const allowed = prefs.ready && motionAllowed(prefs);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || !allowed) return;
-    let cancelled = false;
-    let split: SplitText | null = null;
-    const ctx = gsap.context(() => {}, el);
+  useEngineEffect(
+    ref,
+    ({ gsap, SplitText }, { late, context }) => {
+      const el = ref.current;
+      if (!el || !allowed) return;
+      if (late && !belowViewport(el)) return;
+      let cancelled = false;
+      let split: SplitText | null = null;
 
-    void document.fonts.ready.then(() => {
-      if (cancelled) return;
-      ctx.add(() => {
-        split = SplitText.create(el, {
-          type: "lines",
-          mask: "lines",
-          autoSplit: true,
-          aria: "auto",
-          linesClass: "split-line",
-          onSplit: (self) =>
-            gsap.from(self.lines, {
-              yPercent: 100,
-              duration: DURATION.lines,
-              ease: EASE.out,
-              stagger: doiraStaggerFn(),
-              scrollTrigger: { trigger: el, start, once: true },
-            }),
+      void document.fonts.ready.then(() => {
+        if (cancelled) return;
+        context.add(() => {
+          split = SplitText.create(el, {
+            type: "lines",
+            mask: "lines",
+            autoSplit: true,
+            aria: "auto",
+            linesClass: "split-line",
+            onSplit: (self) =>
+              gsap.from(self.lines, {
+                yPercent: 100,
+                duration: DURATION.lines,
+                ease: EASE.out,
+                stagger: doiraStaggerFn(),
+                scrollTrigger: { trigger: el, start, once: true },
+              }),
+          });
         });
       });
-    });
 
-    return () => {
-      cancelled = true;
-      ctx.revert();
-      split?.revert();
-    };
-  }, [allowed, start]);
+      return () => {
+        cancelled = true;
+        split?.revert();
+      };
+    },
+    [allowed, start],
+  );
 
   // Teg birligi uchun bitta intrinsik tur: barcha ruxsat etilgan teglar HTMLElement beradi.
   const Tag = as as "div";

@@ -5,7 +5,7 @@ import type { RefObject } from "react";
 
 import { useAppearance } from "@/lib/appearance/context";
 
-import { generateRefractionMap } from "./refraction-map";
+import { refractionMap } from "./refraction-cache";
 
 export interface Refraction {
   readonly id: string;
@@ -86,12 +86,19 @@ export function useRefraction(
       const key = `${width}:${height}:${Math.round(radius)}`;
       if (key === lastKey) return;
       lastKey = key;
-      setHref(generateRefractionMap(width, height, radius));
+      void refractionMap(width, height, Math.round(radius)).then((href) => {
+        // Oʻlcham yana oʻzgargan boʻlsa eski xarita qoʻyilmaydi.
+        if (!cancelled && lastKey === key) setHref(href);
+      });
     };
+    let cancelled = false;
     update();
     const observer = new ResizeObserver(update);
     observer.observe(element);
-    return () => observer.disconnect();
+    return () => {
+      cancelled = true;
+      observer.disconnect();
+    };
   }, [ref, active]);
 
   if (!href) return null;

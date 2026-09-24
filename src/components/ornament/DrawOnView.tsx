@@ -1,9 +1,11 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
 import { useRef, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { doiraStaggerFn, EASE, setupGsap } from "@/components/motion/gsap";
+import { useEngineEffect } from "@/components/motion/engine";
+import { EASE } from "@/lib/motion/constants";
+import { doiraStaggerFn } from "@/lib/motion/doira";
+import { belowViewport } from "@/lib/motion/viewport";
 import { useMotionAllowed } from "./use-motion-allowed";
 
 export type DrawMode = "enter" | "scrub";
@@ -34,10 +36,10 @@ export function DrawOnView({
   const scope = useRef<HTMLDivElement>(null);
   const allowed = useMotionAllowed();
 
-  useGSAP(
-    () => {
+  useEngineEffect(
+    scope,
+    ({ gsap }, { late }) => {
       if (!allowed || !scope.current) return;
-      const gsap = setupGsap();
       // Oʻram display: contents, oʻlchami yoʻq: trigger va gullash nishoni birinchi bola.
       const box = scope.current.firstElementChild ?? scope.current;
       const targets = scope.current.querySelectorAll(DRAWABLE);
@@ -61,6 +63,8 @@ export function DrawOnView({
         );
         return;
       }
+      // Kech kelgan dvigatel: ekrandagi naqsh chizilgan holda qoladi.
+      if (late && !belowViewport(box)) return;
       const timeline = gsap.timeline({
         scrollTrigger: { trigger: box, start: "top 85%", once: true },
       });
@@ -79,7 +83,7 @@ export function DrawOnView({
         );
       }
     },
-    { scope, dependencies: [allowed, mode, duration, bloom], revertOnUpdate: true },
+    [allowed, mode, duration, bloom],
   );
 
   return (

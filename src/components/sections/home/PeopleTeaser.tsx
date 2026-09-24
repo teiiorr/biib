@@ -83,6 +83,7 @@ export function PeopleTeaser({ locale, dict }: PeopleTeaserProps) {
               stagger
               attrs={{ "data-card-group": "" }}
               label={h.leadership}
+              tabIndex={0}
             >
               {leaders.map((p) => (
                 <PersonCard key={p.id} person={p} locale={locale} />
@@ -110,6 +111,7 @@ export function PeopleTeaser({ locale, dict }: PeopleTeaserProps) {
               stagger
               attrs={{ "data-card-group": "" }}
               label={h.experts}
+              tabIndex={0}
             >
               {experts.map((p) => (
                 <PersonCard key={p.id} person={p} locale={locale} />

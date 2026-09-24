@@ -113,7 +113,12 @@ export function ProjectsPage({ locale, dict }: PageProps) {
                 className="col-span-4 md:col-span-8 lg:col-span-5 project-media-col"
                 data-grid-item=""
               >
-                <DesignArt slot="project-media" locale={locale} story={project.story}>
+                <DesignArt
+                  slot="project-media"
+                  locale={locale}
+                  story={project.story}
+                  copy={{ curtainLabel: dict.projects.curtainLabel }}
+                >
                   <Ravoq ratio="4:5" className="project-ravoq">
                     {project.media &&
                     project.media.status !== "pending" &&
@@ -166,8 +171,8 @@ export function ProjectsPage({ locale, dict }: PageProps) {
                     <p key={para.slice(0, 24)}>{para}</p>
                   ))}
                 </Prose>
+                <h3 className="sr-only">{p.facts.heading}</h3>
                 <dl className="project-facts" data-audit="gap">
-                  <div className="sr-only">{p.facts.heading}</div>
                   {facts.map(([label, value]) => (
                     <div key={label} className="project-fact">
                       <dt className="t-micro text-ink-3">{label}</dt>

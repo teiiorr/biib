@@ -2,20 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { getDictionary } from "@/i18n/dictionaries";
 import { playSound } from "@/lib/sound";
 
 import type { ArtProps } from "../registry";
 
 const PAINTS = ["--art-2", "--art-6", "--art-3", "--art-1", "--art-5", "--art-4"] as const;
+/* Matn serverdan keladi (ArtCopy); kelmasa maydon ishlayveradi, yorliqlar boʻsh qolmaydi. */
+const EMPTY_CANVAS = { title: "", hint: "", clear: "", save: "", color: "", label: "" };
 
 /**
  * Chizish 404: barmoq yoki sichqoncha bilan pastel chizigʻi, tozalash, PNG saqlash.
  * Hech narsa yuklanmaydi va yigʻilmaydi (bolalar uchun sukut boʻyicha maxfiylik).
  */
-export default function DrawCanvas({ locale, className }: ArtProps) {
-  const dict = getDictionary(locale).errors.canvas;
-  const dictColors = getDictionary(locale).home.coloring.paints;
+export default function DrawCanvas({ copy, className }: ArtProps) {
+  const dict = copy?.canvas ?? EMPTY_CANVAS;
+  const dictColors = copy?.paints ?? [];
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [paint, setPaint] = useState(0);
   const drawing = useRef(false);

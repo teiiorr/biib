@@ -1,10 +1,10 @@
 import type { CSSProperties } from "react";
 import { cn } from "@/lib/cn";
 import type { ArtSlot, ColorStory } from "@/content/types";
-import { girihStar } from "@/lib/girih";
 import { coverComposition } from "@/lib/ornament/cover";
 import { anorPath } from "@/lib/ornament/leaves";
 import { ratioCss, type AspectRatio } from "@/lib/ornament/ratio";
+import { STAR_SYMBOL_ID } from "./OrnamentSprite";
 
 export interface OrnamentCoverProps {
   readonly story: ColorStory;
@@ -35,7 +35,6 @@ export function OrnamentCover({ story, ratio, seed, label, className }: Ornament
   const composition = coverComposition(ratio, seed ?? `${story.primary}-${story.secondary}`);
   const { width, height, bands, motif } = composition;
   const style = { "--cover-ratio": ratioCss(ratio) } as CSSProperties;
-  const star = motif.kind === "star" ? girihStar(10, motif.size) : null;
   return (
     <svg
       className={cn("orn orn-cover", className)}
@@ -52,15 +51,15 @@ export function OrnamentCover({ story, ratio, seed, label, className }: Ornament
           opacity={band.opacity}
         />
       ))}
-      {star ? (
-        <g
+      {motif.kind === "star" ? (
+        <use
+          href={`#${STAR_SYMBOL_ID}`}
           className="text-bg"
-          transform={`translate(${(motif.x - motif.size / 2).toFixed(1)} ${(motif.y - motif.size / 2).toFixed(1)})`}
-        >
-          {star.strands.map((d, i) => (
-            <path key={i} className="orn-strand" d={d} />
-          ))}
-        </g>
+          x={(motif.x - motif.size / 2).toFixed(1)}
+          y={(motif.y - motif.size / 2).toFixed(1)}
+          width={motif.size.toFixed(1)}
+          height={motif.size.toFixed(1)}
+        />
       ) : (
         <g
           className="text-bg"

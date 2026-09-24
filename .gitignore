@@ -11,3 +11,6 @@ test-results
 playwright-report
 .lighthouse
 .DS_Store
+
+# Vizual etalonlar mahalliy (platformaga bogʻliq)
+tests/__screenshots__/

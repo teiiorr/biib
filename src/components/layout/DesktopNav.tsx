@@ -2,15 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRef } from "react";
 
-import { GlassDropdownMenu, type GlassMenuItem } from "@/components/glass/GlassDropdownMenu";
 import { Surface } from "@/components/glass/Surface";
-import { Icon } from "@/components/icons/Icon";
+import { useLazyOverlay } from "@/components/glass/useLazyOverlay";
 import { ZardoziMark } from "@/components/ornament/ZardoziMark";
 import { ZardoziUnderline } from "@/components/ornament/ZardoziUnderline";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
 import { pathFor, resolvePath, type PageKey } from "@/i18n/routes";
+
+import { AboutTrigger, type AboutMenuItem } from "./AboutTrigger";
 
 interface DesktopNavProps {
   readonly locale: Locale;
@@ -19,18 +21,24 @@ interface DesktopNavProps {
 
 const ABOUT_GROUP: readonly PageKey[] = ["about", "leadership", "experts", "partners"];
 const PRIMARY: readonly PageKey[] = ["projects", "news", "contacts"];
+const loadAboutMenu = () => import("./AboutMenuPanel");
 
 /** Kompyuter navigatsiyasi: bitta oyna kapsulasi, ichida bir guruh boshqaruv (oyna ustiga oyna yoʻq). */
 export function DesktopNav({ locale, dict }: DesktopNavProps) {
   const pathname = usePathname();
   const current = resolvePath(pathname)?.key ?? "home";
   const aboutActive = ABOUT_GROUP.includes(current);
-  const aboutItems: GlassMenuItem[] = ABOUT_GROUP.map((key) => ({
-    id: key,
+  const aboutItems: AboutMenuItem[] = ABOUT_GROUP.map((key) => ({
+    key,
     label: dict[key as "about"],
     href: pathFor(locale, key),
     current: current === key,
   }));
+  const shellRef = useRef<HTMLButtonElement | null>(null);
+  const { Panel, warm, openWhenReady, wantOpen, restoreFocus } = useLazyOverlay(
+    loadAboutMenu,
+    shellRef,
+  );
 
   return (
     <Surface
@@ -42,25 +50,26 @@ export function DesktopNav({ locale, dict }: DesktopNavProps) {
       className="header-capsule"
       aria-label={dict.primaryLabel}
     >
-      <GlassDropdownMenu
-        label={dict.aboutGroupHint}
-        items={aboutItems}
-        align="start"
-        currentLabel={dict.currentLanguage}
-        trigger={
-          <button
-            type="button"
-            className="nav-item zardozi-host t-label"
-            data-active={aboutActive ? "true" : undefined}
-            aria-haspopup="menu"
-          >
-            <span className="text-trim">{dict.aboutGroup}</span>
-            <Icon name="chevron-down" size={16} />
-            <ZardoziUnderline draw="hover" className="nav-underline" />
-            {aboutActive ? <ZardoziMark className="nav-mark" /> : null}
-          </button>
-        }
-      />
+      {Panel ? (
+        <Panel
+          dict={dict}
+          items={aboutItems}
+          active={aboutActive}
+          initialOpen={wantOpen}
+          focusTrigger={restoreFocus}
+        />
+      ) : (
+        <AboutTrigger
+          ref={shellRef}
+          dict={dict}
+          active={aboutActive}
+          aria-expanded={false}
+          onPointerEnter={warm}
+          onPointerDown={warm}
+          onFocus={warm}
+          onClick={openWhenReady}
+        />
+      )}
       {PRIMARY.map((key) => {
         const active = current === key || (key === "news" && current === "newsItem");
         return (

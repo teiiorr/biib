@@ -31,6 +31,8 @@ export interface GlassDropdownMenuProps {
   readonly testId?: string;
   readonly className?: string;
   readonly currentLabel?: string;
+  /** Kech yuklangan panel: tugma allaqachon bosilgan boʻlsa ochiq holda chiziladi. */
+  readonly initialOpen?: boolean;
 }
 
 /** Oyna ustidagi tushuvchi menyu: trigger paneli ichiga morf boʻladi. */
@@ -42,8 +44,9 @@ export function GlassDropdownMenu({
   testId,
   className,
   currentLabel,
+  initialOpen = false,
 }: GlassDropdownMenuProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(initialOpen);
   const triggerRef = useRef<HTMLElement | null>(null);
   const panelRef = useRef<HTMLElement | null>(null);
   useMorph(open, triggerRef, panelRef);

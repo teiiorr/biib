@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { doiraDelay } from "@/components/motion/gsap";
+import { doiraDelay } from "@/lib/motion/doira";
 
 export interface ZardoziRevealProps {
   readonly children: ReactNode;

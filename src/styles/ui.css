@@ -207,6 +207,8 @@
   }
   /* Atlas: bir xil DOM, oddiy toʻrtburchak belgi; qirqilgan shakl faqat Birlashmada. */
   [data-design="birlashma"] .ui-sticker {
+    /* Boʻyoq fonida siyoh matn (Bruna uslubi): quyosh ustida 8.7:1, boʻyoq matn rangi yetmasdi. */
+    --sticker-ink: var(--ink);
     rotate: var(--sticker-rotate);
     filter: drop-shadow(0 1px 0 var(--material-shadow))
       drop-shadow(0 4px 8px var(--material-shadow));

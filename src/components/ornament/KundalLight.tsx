@@ -1,9 +1,8 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
 import { useRef, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { setupGsap } from "@/components/motion/gsap";
+import { useEngineEffect } from "@/components/motion/engine";
 import { useMotionAllowed } from "./use-motion-allowed";
 
 export interface KundalLightProps {
@@ -22,10 +21,10 @@ export function KundalLight({ children, className }: KundalLightProps) {
   const scope = useRef<HTMLDivElement>(null);
   const allowed = useMotionAllowed();
 
-  useGSAP(
-    () => {
+  useEngineEffect(
+    scope,
+    ({ gsap }) => {
       if (!allowed || !scope.current) return;
-      const gsap = setupGsap();
       const light = scope.current.querySelector(".kundal-light");
       const panel = scope.current.parentElement;
       if (!light || !panel) return;
@@ -53,7 +52,7 @@ export function KundalLight({ children, className }: KundalLightProps) {
         );
       });
     },
-    { scope, dependencies: [allowed], revertOnUpdate: true },
+    [allowed],
   );
 
   return (
