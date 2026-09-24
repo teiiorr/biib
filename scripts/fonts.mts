@@ -10,7 +10,8 @@ import path from "node:path";
 
 const OUT = path.resolve("public/fonts");
 mkdirSync(OUT, { recursive: true });
-const python = existsSync(".claude/venv/bin/python") ? ".claude/venv/bin/python" : "python3";
+/* fontTools va brotli oʻrnatilgan Python: PYTHON muhit oʻzgaruvchisi, sukutda python3. */
+const python = process.env.PYTHON ?? "python3";
 
 /* Google Fonts CSS API bilan bir xil diapazonlar: brauzer faqat sahifadagi yozuv uchun kerak faylni oladi. */
 const SUBSETS: Record<string, string> = {

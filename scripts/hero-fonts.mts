@@ -1,10 +1,10 @@
 /*
  * Qahramon sarlavhasi uchun mayda Playfair toʻplami (til boʻyicha): faqat tashkilot nomidagi harflar,
  * wdth 100 va wght 500 qotirilgan, opsz oʻzgaruvchan qoladi. Preload bilan birinchi kadrda haqiqiy
- * shrift chiqadi, zaxira shrift almashinuvi va siljish boʻlmaydi. fontTools: .claude/venv yoki tizim python.
+ * shrift chiqadi, zaxira shrift almashinuvi va siljish boʻlmaydi. fontTools va brotli kerak (PYTHON muhit oʻzgaruvchisi).
  */
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { getDictionary } from "../src/i18n/dictionaries";
@@ -13,7 +13,8 @@ import { LOCALES } from "../src/i18n/locales";
 const SOURCE = path.resolve("src/assets/fonts/Playfair[opsz,wdth,wght].ttf");
 const OUT = path.resolve("public/fonts");
 mkdirSync(OUT, { recursive: true });
-const python = existsSync(".claude/venv/bin/python") ? ".claude/venv/bin/python" : "python3";
+/* fontTools va brotli oʻrnatilgan Python: PYTHON muhit oʻzgaruvchisi, sukutda python3. */
+const python = process.env.PYTHON ?? "python3";
 
 const texts: Record<string, string> = {};
 for (const locale of LOCALES) texts[locale] = getDictionary(locale).common.brand.name;

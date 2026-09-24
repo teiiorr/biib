@@ -12,11 +12,17 @@ const EMPTY: ErrorsCopy = {
   paints: [],
 };
 
+/* useSyncExternalStore snapshot i barqaror boʻlishi shart: bir xil JSON uchun bir xil obyekt (aks holda cheksiz render). */
+let cache: { raw: string; value: ErrorsCopy } | null = null;
+
 export function readErrorsCopy(): ErrorsCopy {
   if (typeof document === "undefined") return EMPTY;
+  const raw = document.getElementById("biib-errors")?.textContent ?? "";
+  if (!raw) return EMPTY;
+  if (cache && cache.raw === raw) return cache.value;
   try {
-    const raw = document.getElementById("biib-errors")?.textContent;
-    return raw ? { ...EMPTY, ...(JSON.parse(raw) as Partial<ErrorsCopy>) } : EMPTY;
+    cache = { raw, value: { ...EMPTY, ...(JSON.parse(raw) as Partial<ErrorsCopy>) } };
+    return cache.value;
   } catch {
     return EMPTY;
   }

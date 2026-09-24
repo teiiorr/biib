@@ -8,3 +8,5 @@ docs/qa
 .verify
 src/i18n/dictionaries/oz
 src/i18n/dictionaries/ozbekca
+# scripts/fonts.mts yaratadi
+src/styles/fonts.css
