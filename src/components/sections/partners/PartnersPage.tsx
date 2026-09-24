@@ -1,9 +1,9 @@
 import Image from "next/image";
 
 import { Container } from "@/components/layout/Container";
-import { DesignArt } from "@/components/layout/DesignArt";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
+import { KundalPanel } from "@/components/ornament/KundalPanel";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import { getPartners, t } from "@/content";
@@ -29,7 +29,15 @@ export function PartnersPage({ locale, dict }: PageProps) {
       <PageHero
         title={p.title}
         lead={p.lead}
-        art={<DesignArt slot="people-heading" locale={locale} className="absolute inset-0" />}
+        tone="dark"
+        className="official-hero"
+        art={
+          <div className="official-kundal birlashma:hidden" aria-hidden="true">
+            <KundalPanel seed="hamkorlar" light>
+              <span />
+            </KundalPanel>
+          </div>
+        }
         breadcrumbs={[
           { href: pathFor(locale, "home"), label: dict.nav.home },
           { href: pathFor(locale, "partners"), label: dict.nav.partners, current: true },

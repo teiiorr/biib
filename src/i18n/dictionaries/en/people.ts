@@ -12,7 +12,7 @@ export const people: typeof source = {
   },
   leadership: {
     title: "Leadership",
-    lead: "The leadership of the association and how to arrange a visit.",
+    lead: "The leadership of the association and its reception hours.",
     position: "Position",
     reception: "Reception days",
     receptionPending: "Reception days await confirmation",

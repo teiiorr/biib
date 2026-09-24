@@ -24,5 +24,5 @@ export const people: typeof source = {
   },
   portraitAlt: "Портрет: {name}",
   placeholderAlt: "Пустое место для портрета в форме арки",
-  dialogLabel: "О человеке: {name}",
+  dialogLabel: "Подробнее: {name}",
 };

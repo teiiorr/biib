@@ -24,7 +24,7 @@ export function GanchParallax({ children, className }: GanchParallaxProps) {
       const gsap = setupGsap();
       // Trigger — qahramon oʻlchamidagi .ganch qatlami (oʻram display: contents).
       const box = scope.current.firstElementChild ?? scope.current;
-      const layers = Array.from(scope.current.querySelectorAll<SVGSVGElement>(".ganch-layer"));
+      const layers = Array.from(scope.current.querySelectorAll<HTMLElement>(".ganch-layer"));
       layers.forEach((layer) => {
         const depth = Number(layer.dataset.depth ?? 0);
         gsap.to(layer, {

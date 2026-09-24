@@ -34,6 +34,7 @@ export function ExpertsPage({ locale, dict }: PageProps) {
         title={e.title}
         lead={e.lead}
         tone="dark"
+        className="official-hero"
         art={
           <div className="official-kundal birlashma:hidden" aria-hidden="true">
             <KundalPanel seed="ekspertlar" light>

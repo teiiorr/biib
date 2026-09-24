@@ -2,9 +2,9 @@ import type { contacts as source } from "../uz/contacts";
 
 export const contacts: typeof source = {
   title: "Контакты",
-  lead: "Для вопросов, предложений и сотрудничества. В рабочие дни отвечаем в течение дня.",
+  lead: "Пишите с вопросами, предложениями и идеями сотрудничества. В рабочие дни отвечаем в тот же день.",
   details: {
-    heading: "Реквизиты",
+    heading: "Контактные данные",
     address: "Адрес",
     phone: "Телефон",
     email: "Почта",
@@ -26,7 +26,7 @@ export const contacts: typeof source = {
     name: "Ваше имя",
     contact: "Телефон или почта",
     message: "Сообщение",
-    consent: "Согласен на обработку данных согласно {privacy}",
+    consent: "Даю согласие на обработку моих данных согласно {privacy}",
     consentLink: "политике конфиденциальности",
     submit: "Отправить",
     sending: "Отправляем",

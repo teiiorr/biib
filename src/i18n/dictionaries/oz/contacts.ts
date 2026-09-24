@@ -41,7 +41,7 @@ export const contacts: typeof source = {
     fallbackHeading: "Телеграм орқали ёзинг",
     fallbackText: "Шакл ҳозирча уланмаган, хабарни тўғридан-тўғри Телеграмда юборишингиз мумкин.",
     fallbackCta: "Телеграмда ёзиш",
-    postcardLabel: "Откритка",
+    postcardLabel: "Открытка",
   },
   socials: {
     heading: "Ижтимоий тармоқлар",

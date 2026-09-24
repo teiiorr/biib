@@ -13,12 +13,15 @@ const SRC = path.join(ROOT, "src/i18n/dictionaries/uz");
 type Leaf = string | number | boolean | null;
 type Tree = { [key: string]: Tree | Leaf | readonly (Tree | Leaf)[] };
 
-function walk(value: unknown, fn: (s: string) => string): unknown {
-  if (typeof value === "string") return fn(value);
-  if (Array.isArray(value)) return value.map((v) => walk(v, fn));
+/* Texnik kalitlar (id, slug, href, src) oʻgirilmaydi: langar va havolalar buzilmasin. */
+const TECHNICAL_KEYS = new Set(["id", "slug", "href", "src", "key", "url", "anchor"]);
+
+function walk(value: unknown, fn: (s: string) => string, key = ""): unknown {
+  if (typeof value === "string") return TECHNICAL_KEYS.has(key) ? value : fn(value);
+  if (Array.isArray(value)) return value.map((v) => walk(v, fn, key));
   if (value && typeof value === "object") {
     const out: Record<string, unknown> = {};
-    for (const [k, v] of Object.entries(value as Tree)) out[k] = walk(v, fn);
+    for (const [k, v] of Object.entries(value as Tree)) out[k] = walk(v, fn, k);
     return out;
   }
   return value;

@@ -7,15 +7,17 @@
     --wood-2: #6b4423;
     --wood-3: #4a2e17;
     --wood-rim: #e8cf7a;
-    /* Ganch: kunduzi oq gips, soya lojuvardga boʻyalgan. */
-    --ganch-fill: var(--surface);
-    --ganch-shadow: rgba(14, 23, 51, 0.22);
-    --ganch-rim: rgba(255, 255, 255, 0.85);
+    /* Ganch: kunduzi oq gips, soya lojuvardga boʻyalgan; burchak oʻlchami ekranga qarab. */
+    --ganch-fill: color-mix(in oklab, var(--surface) 66%, transparent);
+    --ganch-shadow: rgba(14, 23, 51, 0.28);
+    --ganch-rim: rgba(255, 255, 255, 0.9);
+    --ganch-line: rgba(255, 255, 255, 0.7);
     --ganch-opacity: 0.9;
+    --ganch-size: clamp(150px, 26vw, 400px);
     /* Kundal: lojuvard zamin, ustidagi matn uchun sut-oq (6.3:1), tunda --ink (5.8:1). */
     --kundal-ground: var(--art-5);
     --kundal-ink: var(--surface);
-    --kundal-relief-opacity: 0.32;
+    --kundal-relief-opacity: 0.7;
     --zardozi-height: 7px;
   }
   :root[data-theme="dark"] {
@@ -24,12 +26,13 @@
     --wood-3: #2e1c0d;
     --wood-rim: #f0d488;
     /* Tunda ganch lojuvard relyefga aylanadi, chetida ingichka yorugʻ qirra. */
-    --ganch-fill: var(--art-5);
-    --ganch-shadow: rgba(2, 5, 20, 0.6);
-    --ganch-rim: rgba(240, 212, 136, 0.5);
-    --ganch-opacity: 0.55;
+    --ganch-fill: color-mix(in oklab, var(--art-5) 46%, transparent);
+    --ganch-shadow: rgba(2, 5, 20, 0.65);
+    --ganch-rim: rgba(240, 212, 136, 0.55);
+    --ganch-line: rgba(240, 212, 136, 0.42);
+    --ganch-opacity: 0.8;
     --kundal-ink: var(--ink);
-    --kundal-relief-opacity: 0.28;
+    --kundal-relief-opacity: 0.6;
   }
 
   .orn {
@@ -275,7 +278,7 @@
     transition: clip-path var(--dur-ui) var(--ease-ui);
   }
 
-  /* Ganch: uch qatlam, ichki soyalar SVG filtrida. */
+  /* Ganch: uch qatlam, faqat burchaklarda; ichki soyalar SVG filtrida. */
   .ganch {
     position: absolute;
     inset: 0;
@@ -285,12 +288,40 @@
   .ganch-layer {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
     opacity: var(--ganch-opacity);
+  }
+  .ganch-corner {
+    position: absolute;
+    width: var(--ganch-size);
+    height: var(--ganch-size);
+    overflow: visible;
+  }
+  .ganch-corner[data-corner="tl"] {
+    top: 0;
+    left: 0;
+  }
+  .ganch-corner[data-corner="tr"] {
+    top: 0;
+    right: 0;
+  }
+  .ganch-corner[data-corner="bl"] {
+    bottom: 0;
+    left: 0;
+  }
+  .ganch-corner[data-corner="br"] {
+    bottom: 0;
+    right: 0;
   }
   .ganch-relief {
     fill: var(--ganch-fill);
+  }
+  .ganch-line {
+    fill: none;
+    stroke: var(--ganch-line);
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
   }
 
   /* Kundal: lojuvard zamin, oltin relyef, yumshoq yurar yorugʻlik. Matn rangi doim tekshirilgan. */
@@ -439,15 +470,16 @@
   }
   .kundal-relief {
     fill: currentColor;
+    fill-opacity: 0.5;
     stroke: currentColor;
-    stroke-width: 3;
+    stroke-width: 1;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
   .kundal-relief-line {
     fill: none;
     stroke: currentColor;
-    stroke-width: 3;
+    stroke-width: 2.5;
     stroke-linecap: round;
     stroke-linejoin: round;
   }

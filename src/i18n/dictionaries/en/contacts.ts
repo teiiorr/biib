@@ -2,7 +2,7 @@ import type { contacts as source } from "../uz/contacts";
 
 export const contacts: typeof source = {
   title: "Contacts",
-  lead: "For questions, suggestions and partnership. On working days we answer within the day.",
+  lead: "For questions, suggestions and partnership. On working days we reply the same day.",
   details: {
     heading: "Details",
     address: "Address",

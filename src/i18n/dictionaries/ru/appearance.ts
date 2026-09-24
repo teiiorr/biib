@@ -20,7 +20,7 @@ export const appearance: typeof source = {
   sound: "Звук",
   soundHint: "Тихий звук дойры при смене темы и раздела",
   motion: "Анимация",
-  motionHint: "Декоративное движение; текст и переходы страниц остаются",
+  motionHint: "Декоративная анимация; текст и переходы между страницами остаются",
   design: "Дизайн",
   designAtlas: "Атлас",
   designAtlasHint: "Национальные узоры и стекло",

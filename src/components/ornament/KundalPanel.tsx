@@ -19,8 +19,8 @@ const H = 400;
 /**
  * Kundal: lojuvard (--art-5) zaminda boʻrtma oltin islimiy. Balandlik xaritasi — relyefning
  * xiralashtirilgan alfa kanali; feSpecularLighting nuqtali yorugʻlik bilan yaltiratadi.
- * Matn rangi .kundal-panel da tekshirilgan (--kundal-ink), relyef shaffofligi ≤ 0.32:
- * katta matn ustida 3:1 saqlanadi.
+ * Matn rangi .kundal-panel da tekshirilgan (--kundal-ink); relyef ingichka chiziq va yarim
+ * shaffof kurtak, shuning uchun zamin lojuvardligicha qoladi va matn ustida 4.5:1 saqlanadi.
  */
 export function KundalPanel({
   children,
@@ -30,10 +30,17 @@ export function KundalPanel({
 }: KundalPanelProps) {
   const id = useId();
   const filterId = safeId("kundal", id);
-  const runs = [
-    islimiyPath({ length: W, seed: `${seed}-a`, side: "left", width: H }),
-    islimiyPath({ length: W, seed: `${seed}-b`, side: "right", width: H }),
-  ];
+  /* Uch parallel tasma: ingichka poyalar va kichik kurtaklar; katta dogʻ emas, oʻyma chiziq. */
+  const RUN_W = 128;
+  const runs = [4, 136, 268].map((top, i) => ({
+    top,
+    art: islimiyPath({
+      length: W,
+      seed: `${seed}-${i}`,
+      side: i % 2 === 0 ? "left" : "right",
+      width: RUN_W,
+    }),
+  }));
   const art = (
     <svg
       className="kundal-art"
@@ -51,13 +58,13 @@ export function KundalPanel({
           height="120%"
           colorInterpolationFilters="sRGB"
         >
-          <feGaussianBlur in="SourceAlpha" stdDeviation="2.5" result="height" />
+          <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="height" />
           <feSpecularLighting
             className="kundal-spec"
             in="height"
-            surfaceScale="6"
-            specularConstant="0.9"
-            specularExponent="24"
+            surfaceScale="3"
+            specularConstant="0.55"
+            specularExponent="18"
             result="spec"
           >
             <fePointLight className="kundal-light" x={W * 0.3} y={-80} z={280} />
@@ -76,16 +83,16 @@ export function KundalPanel({
       </defs>
       <g filter={`url(#${filterId})`}>
         {runs.map((run, r) => (
-          <g key={r} transform={`translate(0 ${H}) rotate(-90)`}>
-            {run.stems.map((s, i) => (
+          <g key={r} transform={`translate(0 ${run.top + RUN_W}) rotate(-90)`}>
+            {run.art.stems.map((s, i) => (
               <path key={i} className="kundal-relief-line" d={s.d} />
             ))}
-            {run.buds.map((b, i) => (
+            {run.art.buds.map((b, i) => (
               <path
                 key={`b-${i}`}
                 className="kundal-relief"
                 d={budPath(b.kind)}
-                transform={`translate(${b.x.toFixed(1)} ${b.y.toFixed(1)}) rotate(${b.angle.toFixed(1)}) scale(${b.scale.toFixed(1)})`}
+                transform={`translate(${b.x.toFixed(1)} ${b.y.toFixed(1)}) rotate(${b.angle.toFixed(1)}) scale(${(b.scale * 0.9).toFixed(1)})`}
               />
             ))}
           </g>

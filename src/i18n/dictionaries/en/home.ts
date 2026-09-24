@@ -18,7 +18,7 @@ export const home: typeof source = {
     heading: "Projects",
     lead: "Four directions: singing, theatre, visual art and animation.",
     all: "All projects",
-    open: "Open the project",
+    open: "Open project",
     external: "Go to upop.uz",
     starLabel: "The chor-bogh crossing",
   },

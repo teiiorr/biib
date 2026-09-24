@@ -1,13 +1,18 @@
 @layer components {
   /* Loyihalar */
+  /* Mahalliy oyna navigatsiyasi faqat kompyuterda yopishadi; telefonda tab-bar bilan raqobatlashmaydi. */
   .projects-localnav {
-    position: sticky;
-    top: calc(var(--header-h) + 24px + var(--safe-top));
-    z-index: var(--z-sticky);
     display: flex;
     justify-content: center;
     padding-bottom: 24px;
     pointer-events: none;
+  }
+  @media (min-width: 1024px) {
+    .projects-localnav {
+      position: sticky;
+      top: calc(var(--header-h) + 24px + var(--safe-top));
+      z-index: var(--z-sticky);
+    }
   }
   .projects-localnav-bar {
     display: inline-flex;
@@ -275,12 +280,33 @@
 }
 
 @layer components {
-  /* Rasmiy sahifalar: kundal paneli sarlavha ortida */
+  /* Rasmiy sahifalar: kundal lentasi sahifa tepasidan (oyna sarlavhasi ostidan) sarlavhagacha. */
   .official-kundal {
     position: absolute;
     inset: 0;
     z-index: 0;
     overflow: hidden;
+  }
+  .official-kundal > .kundal-panel {
+    position: absolute;
+    inset: 0;
+    border-radius: 0;
+  }
+  :root[data-design="atlas"] .official-hero {
+    margin-top: calc(-1 * (var(--header-h) + 12px + var(--safe-top)));
+    padding-top: calc(var(--header-h) + 12px + var(--safe-top) + 48px);
+  }
+  @media (min-width: 1024px) {
+    :root[data-design="atlas"] .official-hero {
+      padding-top: calc(var(--header-h) + 12px + var(--safe-top) + 64px);
+    }
+  }
+  /* Panel ustidagi matn: siyoh tokenlari panel siyohiga almashadi (lojuvardda ≥ 4.8:1). */
+  :root[data-design="atlas"] .official-kundal ~ .page-hero {
+    --ink: var(--kundal-ink);
+    --ink-2: color-mix(in oklab, var(--kundal-ink) 88%, var(--kundal-ground));
+    --ink-3: color-mix(in oklab, var(--kundal-ink) 82%, var(--kundal-ground));
+    --tint: var(--kundal-ink);
   }
   .people-grid {
     display: grid;

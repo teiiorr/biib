@@ -2,7 +2,7 @@ import type { projects as source } from "../uz/projects";
 
 export const projects: typeof source = {
   title: "Projects",
-  lead: "Four directions, each with its own age range, schedule and mentor. No reference is needed to take part.",
+  lead: "Four directions, each with its own age range, schedule and mentor. You do not need a recommendation to take part.",
   index: "List of projects",
   localNav: "Project navigation",
   facts: {

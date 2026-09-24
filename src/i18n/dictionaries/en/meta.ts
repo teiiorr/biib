@@ -6,7 +6,7 @@ export const meta: typeof source = {
   home: {
     title: "Bolalar Ijodkorligi Ijodiy Birlashmasi",
     description:
-      "An association supporting the creativity of children and young people in Uzbekistan: the UPOP TREND auditions, theatre and art studios, an animation workshop.",
+      "An association for the creativity of children and young people in Uzbekistan: the UPOP TREND auditions, theatre and art studios, an animation workshop.",
   },
   about: {
     title: "About",

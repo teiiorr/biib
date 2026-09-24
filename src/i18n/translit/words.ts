@@ -1,6 +1,6 @@
-/** Havola, pochta va {oʻrinbosar} qismlari transliteratsiya qilinmaydi. */
+/** Havola, pochta va {oʻrinbosar} qismlari transliteratsiya qilinmaydi; {{soʻz}} belgilari ichidagi soʻz oʻgiriladi. */
 const PROTECTED =
-  /(Designed & Developed by teiior|https?:\/\/\S+|[\w.+-]+@[\w-]+\.[\w.]+|\b[a-z0-9-]+\.(?:uz|com|org|net|ru|io)\b|\{[^}]+\}|<[^>]+>|\/[\w/-]+)/g;
+  /(Designed & Developed by teiior|https?:\/\/\S+|[\w.+-]+@[\w-]+\.[\w.]+|\b[a-z0-9-]+\.(?:uz|com|org|net|ru|io)\b|\{(?!\{)[^}]+\}|<[^>]+>|\/[\w/-]+)/g;
 const WORD = /[A-Za-zÀ-ÿʻʼ][A-Za-zÀ-ÿʻʼ-]*/g;
 
 export function matchCase(source: string, target: string): string {

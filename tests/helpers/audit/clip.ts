@@ -65,41 +65,48 @@ export function auditClip(): Finding[] {
     // Ekrandan tashqari yordamchi matn (sr-only) 1×1 px: oʻlchanmaydi.
     if (rect.width <= 1 || rect.height <= 1) continue;
 
-    const trim = cs.getPropertyValue("text-box-trim").trim();
-    const ratio = parseFloat(cs.lineHeight) / parseFloat(cs.fontSize);
-    /* Zich qatorli sarlavhalar (≤1.2): glif chegarasi qator qutisidan chiqadi, ota quti hisob. */
-    const againstParent =
-      (trim !== "" && trim !== "none") || (Number.isFinite(ratio) && ratio < 1.2);
-    if (againstParent) {
-      // Qirqilgan sarlavha: oʻz qutisi emas, ota quti hisob. Qatorning toʻliq balandligi sigʻishi kerak.
-      const parent = el.parentElement;
-      if (!parent) continue;
-      const box = parent.getBoundingClientRect();
-      const over = Math.max(0, el.scrollHeight - el.clientHeight) / 2;
-      const clippedX = el.scrollWidth > parent.clientWidth + 1 || rect.right > box.right + 1;
-      const clippedY = rect.top - over < box.top - 1 || rect.bottom + over > box.bottom + 1;
+    /*
+     * Balandlik: glif chegarasi qator qutisidan chiqishi (zich sarlavha, iqtibos) qirqish emas.
+     * Haqiqiy qirqish — overflow yashiradigan eng yaqin ajdod qutisidan matnning chiqishi.
+     */
+    const clipper = (start: HTMLElement): HTMLElement | null => {
+      let node: HTMLElement | null = start;
+      while (node && node !== document.body) {
+        const st = getComputedStyle(node);
+        if (
+          /hidden|clip|auto|scroll/.test(st.overflowY) ||
+          /hidden|clip|auto|scroll/.test(st.overflowX)
+        )
+          return node;
+        node = node.parentElement;
+      }
+      return null;
+    };
+    if (el.scrollWidth > el.clientWidth + 1 && !/hidden|clip/.test(cs.overflowX)) {
+      // Kenglik: soʻz oʻz qutisidan chiqib ketgan (uzun soʻz, nowrap) — bu doim xato.
+      const inkRight = el.getBoundingClientRect().left + el.scrollWidth;
+      if (inkRight > window.innerWidth + 1) {
+        findings.push({
+          check: "clip",
+          target: label(el),
+          detail: `scrollWidth ${el.scrollWidth} > clientWidth ${el.clientWidth}, ekrandan chiqadi`,
+        });
+      }
+    }
+    const host = clipper(el);
+    if (host) {
+      const box = host.getBoundingClientRect();
+      const overY = Math.max(0, el.scrollHeight - el.clientHeight);
+      const overX = Math.max(0, el.scrollWidth - el.clientWidth);
+      const clippedY = rect.bottom + overY > box.bottom + 1 || rect.top < box.top - 1;
+      const clippedX = rect.right + overX > box.right + 1 || rect.left < box.left - 1;
       if (clippedX || clippedY) {
         findings.push({
           check: "clip",
           target: label(el),
-          detail: `qirqilgan matn ota qutidan chiqadi (${clippedX ? "x" : ""}${clippedY ? "y" : ""})`,
+          detail: `matn ${label(host)} ichida qirqiladi (${clippedX ? "x" : ""}${clippedY ? "y" : ""})`,
         });
       }
-      continue;
-    }
-    if (el.scrollWidth > el.clientWidth + 1) {
-      findings.push({
-        check: "clip",
-        target: label(el),
-        detail: `scrollWidth ${el.scrollWidth} > clientWidth ${el.clientWidth}`,
-      });
-    }
-    if (el.scrollHeight > el.clientHeight + 1) {
-      findings.push({
-        check: "clip",
-        target: label(el),
-        detail: `scrollHeight ${el.scrollHeight} > clientHeight ${el.clientHeight}`,
-      });
     }
   }
   return findings;

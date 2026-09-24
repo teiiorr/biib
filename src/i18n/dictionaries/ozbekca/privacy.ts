@@ -46,7 +46,7 @@ export const privacy: typeof source = {
       ],
     },
     {
-      id: "çildren",
+      id: "children",
       heading: "Bolalar işlari va suratlari",
       paragraphs: [
         "Bolaning rasmi yoki surati saytga faqat ota-onaning yozma roziligi va bolaning öz xohişi bilan qöyiladi. Ism faqat birinçi ism, yoş va viloyat körsatiladi; maktab va aniq manzil heç qaçon.",

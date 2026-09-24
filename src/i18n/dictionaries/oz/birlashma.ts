@@ -18,7 +18,7 @@ export const birlashma: typeof source = {
   filmstrip: "Кинолента",
   poster: "Концерт афишаси",
   ticket: "Чипта",
-  easel: "Молберт",
+  easel: "Мольберт",
   curtain: "Парда",
   confettiLabel: "Қоғоз конфетти",
   horizon: "Қалам билан чизилган уфқ чизиғи",

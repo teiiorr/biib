@@ -41,7 +41,7 @@ export const common: typeof source = {
     external: "откроется на внешнем сайте",
     newTab: "откроется в новой вкладке",
     currentPage: "текущая страница",
-    decorative: "Украшение",
+    decorative: "Декоративный элемент",
     loading: "Загрузка",
     scrollDown: "Вниз",
     breadcrumbs: "Вы здесь",

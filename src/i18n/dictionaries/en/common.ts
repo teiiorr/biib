@@ -42,7 +42,7 @@ export const common: typeof source = {
     external: "opens on an external site",
     newTab: "opens in a new tab",
     currentPage: "current page",
-    decorative: "Decoration",
+    decorative: "Decorative element",
     loading: "Loading",
     scrollDown: "Scroll down",
     breadcrumbs: "You are here",

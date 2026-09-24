@@ -61,7 +61,7 @@ export const privacy: typeof source = {
     },
     {
       id: "contact",
-      heading: "Связь",
+      heading: "Как связаться",
       paragraphs: ["По вопросам конфиденциальности пишите на почту со страницы контактов."],
     },
   ],

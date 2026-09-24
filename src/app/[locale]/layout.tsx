@@ -19,7 +19,9 @@ import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/jsonld";
 
 import "@/styles/globals.css";
 
-export const dynamicParams = false;
+/* Fallback ochiq: aks holda ichki nomaʼlum yoʻllar ham global 404 ga tushadi (NoFallbackError).
+   Nomaʼlum til pastdagi notFound() bilan global 404 ga boradi. */
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));

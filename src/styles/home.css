@@ -16,6 +16,7 @@
   }
 
   /* Darvoza */
+  /* Sarlavha ostiga kiradi: main ning yuqori boʻshligʻi shu yerda qaytariladi, 100svh toʻliq ipak. */
   .home-hero {
     position: relative;
     min-height: 100svh;
@@ -23,6 +24,7 @@
     align-items: end;
     overflow: hidden;
     isolation: isolate;
+    margin-top: calc(-1 * (var(--header-h) + 12px + var(--safe-top)));
   }
   .home-hero-art {
     position: absolute;
@@ -38,23 +40,32 @@
     inset: 0;
     pointer-events: none;
   }
+  /* Panjara ipak ichida: kunduzi siyoh, tunda oltin; sokin, lekin koʻrinadi. */
   .home-hero-lattice {
     position: absolute;
     inset: 0;
-    opacity: 0.16;
+    opacity: 0.3;
     pointer-events: none;
-    color: var(--accent-art);
+    color: var(--ink);
+    -webkit-mask-image: linear-gradient(180deg, black 0%, black 55%, transparent 100%);
+    mask-image: linear-gradient(180deg, black 0%, black 55%, transparent 100%);
   }
-  /* Matn ostidagi yumshoq ostlik: ipak ustida 4.5:1 kontrast (§8 IV.8). */
+  :root[data-theme="dark"] .home-hero-lattice {
+    color: var(--accent-hi);
+    opacity: 0.6;
+  }
+  /* Matn ostidagi yumshoq ostlik: sarlavhadan yuqorida boshlanadi, ipakning yuqori uchdan biri toza qoladi;
+     matn qatorlarida bg ≥ 88 %, shunda siyoh 4.5:1 dan yuqori (§8 IV.8). */
   .home-hero-content::before {
     content: "";
     position: absolute;
-    inset: 0 -100vw -100% -100vw;
+    inset: -40% -100vw -100% -100vw;
     background: linear-gradient(
       180deg,
       transparent 0%,
-      color-mix(in oklab, var(--bg) 78%, transparent) 38%,
-      color-mix(in oklab, var(--bg) 92%, transparent) 100%
+      color-mix(in oklab, var(--bg) 34%, transparent) 24%,
+      color-mix(in oklab, var(--bg) 78%, transparent) 44%,
+      color-mix(in oklab, var(--bg) 90%, transparent) 100%
     );
     pointer-events: none;
   }
@@ -65,6 +76,10 @@
     gap: 24px;
     padding-top: calc(var(--header-h) + 48px + var(--safe-top));
     padding-bottom: calc(var(--tabbar-h) + 48px + var(--safe-bottom));
+  }
+  /* Ostlik joylashgan psevdoelement; matn undan keyin chizilishi uchun bolalar ham joylashgan. */
+  .home-hero-content > * {
+    position: relative;
   }
   @media (min-width: 1024px) {
     .home-hero-content {
@@ -130,19 +145,34 @@
     white-space: nowrap;
     font-style: normal;
   }
+  /* Zardoʻzi ostchiziq matn koʻtarilib boʻlgach chapdan oʻngga «tikiladi»; soʻzlar doira ritmida. */
   .portal-words .zardozi-underline {
     position: absolute;
     left: 0;
     right: 0;
     bottom: -0.12em;
-    opacity: 0;
-    transition: opacity var(--dur-reveal) var(--ease-out);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--dur-reveal) var(--ease-out);
+  }
+  .portal-words .zardozi-word:nth-of-type(2) .zardozi-underline {
+    transition-delay: 90ms;
+  }
+  .portal-words .zardozi-word:nth-of-type(3) .zardozi-underline {
+    transition-delay: 180ms;
   }
   .portal-words .zardozi-word[data-reveal="done"] .zardozi-underline {
-    opacity: 1;
+    transform: scaleX(1);
   }
   :root[data-motion="off"] .portal-words .zardozi-underline {
-    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .portal-words .zardozi-underline {
+      transform: none;
+      transition: none;
+    }
   }
 
   /* Chor-bogʻ */
@@ -186,8 +216,32 @@
     margin-bottom: 4px;
     color: var(--accent-art);
   }
-  .chorbogh-cell:hover .chorbogh-media {
-    filter: saturate(1.15);
+  .chorbogh-media .orn-cover {
+    transition:
+      filter var(--dur-panel) var(--ease-ui),
+      transform var(--dur-panel) steps(4, end);
+  }
+  /* Hover: rang hikoyasi kuchayadi, abr tasmalari bir zina siljib «roʻyxatga tushadi». */
+  @media (hover: hover) {
+    .chorbogh-cell:hover .chorbogh-media .orn-cover {
+      filter: saturate(1.2);
+      transform: translateY(-1.5%) scale(1.03);
+    }
+  }
+  .chorbogh-cell:focus-within .chorbogh-media .orn-cover {
+    filter: saturate(1.2);
+  }
+  /* Telefonda kataklar orasida girih yulduzi ajratgich; kesishma yulduzi 600 px dan. */
+  .chorbogh-divider {
+    display: flex;
+    justify-content: center;
+    color: var(--accent-art);
+    padding-block: 8px;
+  }
+  @media (min-width: 600px) {
+    .chorbogh-divider {
+      display: none;
+    }
   }
   .chorbogh-title {
     display: -webkit-box;
@@ -200,11 +254,14 @@
     display: flex;
     align-items: center;
   }
+  /* Ikkala havola turi bir xil qutida: CTA pastki chizigʻi qatorda tekis (§8 III.8). */
+  .chorbogh-cta .ui-button[data-variant="link"] {
+    min-height: 44px;
+  }
   .chorbogh-link {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    min-height: 40px;
     color: var(--tint);
   }
 
@@ -279,6 +336,22 @@
     border-radius: var(--radius-card);
     overflow: hidden;
   }
+  /* Panel ichi boʻsh: balandlik oʻramdan olinadi, aks holda relyef koʻrinmaydi. */
+  .people-kundal > .kundal-panel {
+    position: absolute;
+    inset: 0;
+  }
+  @media (min-width: 1024px) {
+    .people-kundal {
+      inset: 0 -24px;
+    }
+    .people-head-text {
+      padding: 0 24px;
+    }
+    .people-head {
+      padding: 32px 0;
+    }
+  }
   .people-head-text {
     position: relative;
     display: grid;
@@ -288,7 +361,10 @@
   .people-lead {
     color: var(--ink-2);
   }
-  :root[data-design="atlas"] .people-head-text {
+  /* Kundal ustida sarlavha ham, kirish ham panel siyohida (lojuvardda 6.3:1). */
+  :root[data-design="atlas"] .people-head-text,
+  :root[data-design="atlas"] .people-head-text .people-lead,
+  :root[data-design="atlas"] .people-head-text h2 {
     color: var(--kundal-ink, var(--ink));
   }
   .people-groups {
@@ -357,19 +433,36 @@
   .contact-band {
     position: relative;
   }
+  /* Girih lenta boʻlim tepasida, toʻliq kenglikda; pastga qarab eriydi, matn ostiga kirmaydi. */
   .contact-band-girih {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
+    height: 96px;
+    overflow: hidden;
     color: var(--accent-art);
     opacity: 0.8;
+    -webkit-mask-image: linear-gradient(180deg, black 0%, black 40%, transparent 100%);
+    mask-image: linear-gradient(180deg, black 0%, black 40%, transparent 100%);
+  }
+  .contact-band-girih svg {
+    width: 100%;
+    height: 100%;
   }
   .contact-band-grid {
     position: relative;
     display: grid;
     gap: 32px;
-    padding-block: 32px;
+    padding-block: 48px 32px;
+  }
+  @media (min-width: 1024px) {
+    .contact-band-girih {
+      height: 160px;
+    }
+    .contact-band-grid {
+      padding-block: 64px 32px;
+    }
   }
   @media (min-width: 1024px) {
     .contact-band-grid {

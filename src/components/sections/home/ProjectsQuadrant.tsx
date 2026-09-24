@@ -39,10 +39,21 @@ export function ProjectsQuadrant({ locale, dict }: ProjectsQuadrantProps) {
         <Reveal as="div" className="chorbogh" stagger attrs={{ "data-card-group": "" }}>
           {projects.map((project, i) => {
             const name = t(project.name, locale);
+            const divider =
+              i > 0 ? (
+                <span
+                  key={`${project.key}-divider`}
+                  className="chorbogh-divider birlashma:hidden"
+                  aria-hidden="true"
+                >
+                  <GirihStar symmetry={10} size={40} ring={false} />
+                </span>
+              ) : null;
             const href = project.external
               ? project.external.href
               : `${pathFor(locale, "projects")}#${project.key}`;
-            return (
+            return [
+              divider,
               <article
                 key={project.key}
                 className="chorbogh-cell paper-look"
@@ -85,8 +96,8 @@ export function ProjectsQuadrant({ locale, dict }: ProjectsQuadrantProps) {
                     </TransitionLink>
                   )}
                 </div>
-              </article>
-            );
+              </article>,
+            ];
           })}
           {/* Yulduz kataklardan keyin: DOM tartibi bilan ustida, z-index siz. */}
           <span className="chorbogh-star birlashma:hidden" aria-hidden="true">

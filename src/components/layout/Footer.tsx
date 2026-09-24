@@ -35,9 +35,10 @@ export function Footer({ locale, dict }: FooterProps) {
           <DesignArt slot="footer-crown" locale={locale} />
           <span className="footer-crown-line" aria-hidden="true" />
         </div>
+        {/* Islimiy futerning yuqori qirrasi boʻylab oʻsadi: poya burilib, tojdan yuqorida yotadi. */}
         <div className="footer-islimiy birlashma:hidden" aria-hidden="true">
           <IslimiyScroll>
-            <Islimiy length={720} width={120} seed="futer" side="left" scroll />
+            <Islimiy length={640} width={48} seed="futer" side="left" scroll />
           </IslimiyScroll>
         </div>
         <div className="footer-groups">
@@ -57,7 +58,7 @@ export function Footer({ locale, dict }: FooterProps) {
                   key={project.key}
                   href={project.external.href}
                   hint={dict.common.hints.external}
-                  className="footer-link t-small"
+                  className="footer-link t-small text-ink-2 no-underline hover:text-tint"
                 >
                   {t(project.name, locale)}
                 </ExternalLink>

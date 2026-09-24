@@ -6,7 +6,7 @@ export const meta: typeof source = {
   home: {
     title: "Bolalar Ijodkorligi Ijodiy Birlashmasi",
     description:
-      "Объединение, которое поддерживает творчество детей и подростков в Узбекистане: кастинг UPOP TREND, театральные и художественные студии, мастерская анимации.",
+      "Объединение поддерживает творчество детей и подростков в Узбекистане: кастинг UPOP TREND, театральные и художественные студии, мастерская анимации.",
   },
   about: {
     title: "О нас",
@@ -16,7 +16,7 @@ export const meta: typeof source = {
   projects: {
     title: "Проекты",
     description:
-      "UPOP TREND, Sahna bolalari, Ertak ustaxonasi и Rangli olam: возраст участников, расписание и условия участия.",
+      "UPOP TREND, Сахна болалари, Эртак устахонаси и Рангли олам: возраст участников, расписание и условия участия.",
   },
   news: {
     title: "Новости",
@@ -37,7 +37,7 @@ export const meta: typeof source = {
   },
   contacts: {
     title: "Контакты",
-    description: "Адрес, телефон, почта, Telegram и часы работы. Форма для сообщения.",
+    description: "Адрес, телефон, почта, Telegram и часы работы. Форма обратной связи.",
   },
   privacy: {
     title: "Политика конфиденциальности",

@@ -32,6 +32,7 @@ export function LeadershipPage({ locale, dict }: PageProps) {
         title={l.title}
         lead={l.lead}
         tone="dark"
+        className="official-hero"
         art={
           <div className="official-kundal birlashma:hidden" aria-hidden="true">
             <KundalPanel seed="rahbariyat" light>

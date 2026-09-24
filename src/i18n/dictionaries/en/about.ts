@@ -19,7 +19,7 @@ export const about: typeof source = {
       { title: "Singing and voice", text: "The UPOP TREND auditions and preparation classes." },
       {
         title: "Theatre and stage speech",
-        text: "The Sahna bolalari studios: speech, movement, a play.",
+        text: "The Sahna bolalari studios: speech, movement, performance.",
       },
       { title: "Visual art", text: "The Rangli olam studios and travelling exhibitions." },
       {

@@ -26,6 +26,7 @@ export function Poster({ story, children, className }: ObjectProps) {
         style={{ background: `var(--${story?.primary ?? "art-1"})` }}
         aria-hidden="true"
       />
+      <span className="poster-band poster-band-second" aria-hidden="true" />
       <div className="paper-object-media">{children}</div>
       <span
         className="poster-ticket"

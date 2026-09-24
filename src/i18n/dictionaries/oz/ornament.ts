@@ -11,7 +11,7 @@ export const ornament: typeof source = {
   qalampir: "Ўқиш жараёни",
   qalampirValue: "Мақоланинг {percent}% ўқилди",
   ganch: "Ганч ўймакорлиги",
-  kundal: "Кундал нақшли панел",
+  kundal: "Кундал нақшли панель",
   xiva: "Хива устуни",
   abr: "Марғилон атласи",
   pencilProgress: "Ўқиш жараёни, қалам чизиғи",

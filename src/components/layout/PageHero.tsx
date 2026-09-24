@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import { cn } from "@/lib/cn";
+
 import { Breadcrumbs, type BreadcrumbItem } from "@/components/ui/Breadcrumbs";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
@@ -16,6 +18,8 @@ interface PageHeroProps {
   readonly art?: ReactNode;
   readonly tone?: "light" | "dark";
   readonly titleId?: string;
+  /** Masalan rasmiy sahifalarda «official-hero»: kundal lentasi sarlavha ostigacha choʻziladi. */
+  readonly className?: string;
   readonly children?: ReactNode;
 }
 
@@ -28,10 +32,11 @@ export function PageHero({
   art,
   tone = "light",
   titleId = "page-title",
+  className,
   children,
 }: PageHeroProps) {
   return (
-    <Section tone={tone} labelledBy={titleId} className="relative">
+    <Section tone={tone} labelledBy={titleId} className={cn("relative", className)}>
       {art}
       <Container className="page-hero relative">
         {breadcrumbs && breadcrumbsLabel ? (
