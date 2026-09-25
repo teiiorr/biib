@@ -13,7 +13,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
 import { fireConfetti } from "@/designs/birlashma/confetti";
 import { sendContact } from "@/lib/contact/action";
-import { MIN_MESSAGE, type ContactState } from "@/lib/contact/schema";
+import { MIN_MESSAGE, type ContactState } from "@/lib/contact/shared";
 
 interface ContactFormProps {
   readonly dict: Dictionary["contacts"]["form"];

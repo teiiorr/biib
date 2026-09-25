@@ -1,7 +1,6 @@
 import { z } from "zod";
 
-export const MIN_MESSAGE = 20;
-export const MIN_FILL_MS = 3000;
+import { MIN_MESSAGE } from "./shared";
 
 const phone = /^\+?[\d\s()-]{7,20}$/;
 const email = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -18,12 +17,3 @@ export const contactSchema = z.object({
   website: z.string().max(0),
   startedAt: z.coerce.number().int().positive(),
 });
-
-export type ContactField = "name" | "contact" | "message" | "consent";
-
-export interface ContactState {
-  readonly status: "idle" | "success" | "error" | "invalid" | "tooFast";
-  readonly errors?: Partial<
-    Record<ContactField, "required" | "invalidContact" | "tooShort" | "consentRequired">
-  >;
-}

@@ -1,6 +1,7 @@
 "use server";
 
-import { contactSchema, MIN_FILL_MS, type ContactState } from "./schema";
+import { contactSchema } from "./schema";
+import { MIN_FILL_MS, type ContactState } from "./shared";
 
 /** Xabar Telegram Bot API ga ketadi; token va chat id faqat serverda. */
 export async function sendContact(_prev: ContactState, formData: FormData): Promise<ContactState> {
