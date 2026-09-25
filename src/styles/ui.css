@@ -27,7 +27,10 @@
     padding-inline: var(--btn-px);
     border-radius: var(--radius-control);
     -webkit-tap-highlight-color: transparent;
-    transition: transform 200ms var(--ease-ui);
+    /* Bosish scale xususiyatida, magnit translate da: ikkalasi transform bilan toʻqnashmaydi (D-M4). */
+    transition:
+      scale 200ms var(--ease-ui),
+      translate 500ms var(--ease-out);
   }
   .ui-button[data-size="40"] {
     --btn-h: var(--control-s);
@@ -70,7 +73,18 @@
     translate: -50% -50%;
   }
   .ui-button:active:not([aria-disabled="true"]) {
-    transform: scale(0.97);
+    scale: 0.97;
+  }
+  /* magnetic (3.12): tugma koʻrsatkichga ≤ 6 px tortiladi, yorliq va belgi 40 % ergashadi. Qiymatlar
+     lib/motion/magnetic.ts dan; sensorli ekran, kamaytirilgan harakat va Harakat = off da hech narsa. */
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    :root:not([data-motion="off"]) .ui-button[data-magnetic] {
+      translate: var(--mag-x, 0px) var(--mag-y, 0px);
+    }
+    :root:not([data-motion="off"]) .ui-button[data-magnetic] > * {
+      translate: calc(var(--mag-x, 0px) * 0.4) calc(var(--mag-y, 0px) * 0.4);
+      transition: translate 500ms var(--ease-out);
+    }
   }
   .ui-button[data-variant="link"] {
     height: auto;
@@ -79,6 +93,50 @@
   }
   .ui-button[data-variant="link"]::after {
     content: none;
+  }
+  /* underline-draw (3.11), matn havolasi: tinch holatda yarim rangli chiziq, hover/fokusda toʻliq chiziq
+     chapdan chiziladi va chiqishda oʻngga qarab qisqaradi (oʻqish yoʻnalishi). Chiziq tayanch chizigʻiga
+     text-box orqali bogʻlanadi; qoʻllamaydigan brauzerda faqat rang toʻladi. */
+  .ui-button[data-variant="link"] {
+    text-decoration-color: color-mix(in oklab, currentColor 40%, transparent);
+    transition:
+      scale 200ms var(--ease-ui),
+      text-decoration-color var(--dur-ui) var(--ease-ui);
+  }
+  .ui-button[data-variant="link"]:focus-visible {
+    text-decoration-color: currentColor;
+  }
+  @media (hover: hover) {
+    .ui-button[data-variant="link"]:hover {
+      text-decoration-color: currentColor;
+    }
+  }
+  @supports (text-box: trim-both cap alphabetic) {
+    .ui-button[data-variant="link"]::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 -5px;
+      width: auto;
+      height: 1px;
+      translate: none;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: right center;
+      transition: transform var(--dur-ui) var(--ease-ui);
+    }
+    .ui-button[data-variant="link"]:focus-visible::after {
+      transform: scaleX(1);
+      transform-origin: left center;
+    }
+    @media (hover: hover) {
+      .ui-button[data-variant="link"]:hover {
+        text-decoration-color: color-mix(in oklab, currentColor 40%, transparent);
+      }
+      .ui-button[data-variant="link"]:hover::after {
+        transform: scaleX(1);
+        transform-origin: left center;
+      }
+    }
   }
 
   /* Zardoʻzi ostchiziq: ikki oltin ip va har 6 px da koʻndalang chok, faqat sichqoncha bor qurilmada. */
@@ -101,13 +159,28 @@
       0 0,
       0 4px;
     background-repeat: no-repeat;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform var(--dur-ui) var(--ease-ui);
+    /* underline-draw (3.11): chok naqshi choʻzilmaydi — chiziq kesish maydoni bilan chapdan tikiladi.
+       Chiqishda 150 ms da soʻnadi, soʻng koʻrinmas holda boshiga qaytadi (keyingi hover yana chapdan). */
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+    transition:
+      opacity 150ms var(--ease-ui),
+      clip-path 0s linear 150ms;
+  }
+  .ui-button[data-variant="ghost"]:focus-visible::before {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+    transition:
+      clip-path var(--dur-panel) var(--ease-out),
+      opacity 0s;
   }
   @media (hover: hover) {
     .ui-button[data-variant="ghost"]:hover:not([aria-disabled="true"])::before {
-      transform: scaleX(1);
+      clip-path: inset(0 0 0 0);
+      opacity: 1;
+      transition:
+        clip-path var(--dur-panel) var(--ease-out),
+        opacity 0s;
     }
   }
 
@@ -129,10 +202,14 @@
   /* Birlashma: bosilgan qogʻoz. Bosishda 2 px choʻkadi, qoʻyib yuborilganda ease-pop. */
   [data-design="birlashma"] .ui-button[data-variant="primary"] {
     box-shadow: var(--shadow-paper-edge);
-    transition: transform 200ms var(--ease-pop);
+    transition:
+      scale 200ms var(--ease-ui),
+      translate 300ms var(--ease-pop);
   }
+  /* Choʻkish translate da: magnit siljishi (--mag-*) ustiga 2 px qoʻshiladi, bir-birini bekor qilmaydi. */
   [data-design="birlashma"] .ui-button[data-variant="primary"]:active:not([aria-disabled="true"]) {
-    transform: translateY(2px);
+    scale: 1;
+    translate: var(--mag-x, 0px) calc(var(--mag-y, 0px) + 2px);
     box-shadow: var(--shadow-paper-edge-pressed);
     transition-timing-function: var(--ease-ui);
   }
@@ -406,7 +483,7 @@
     display: grid;
     place-items: center;
     cursor: pointer;
-    transition: transform 200ms var(--ease-ui);
+    transition: scale 200ms var(--ease-ui);
   }
   .media-film-cover {
     position: absolute;
@@ -422,11 +499,11 @@
     height: var(--control-m);
     padding-inline: 20px 24px;
     cursor: pointer;
-    transition: transform 200ms var(--ease-ui);
+    transition: scale 200ms var(--ease-ui);
   }
   .media-video-control:active,
   .media-film-play:active {
-    transform: scale(0.97);
+    scale: 0.97;
   }
   /* Uchburchak belgi oʻz uchi tomon 1 px siljiydi (Art. III.3). */
   .icon-play {

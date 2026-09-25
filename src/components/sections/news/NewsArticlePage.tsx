@@ -2,6 +2,7 @@ import { ViewTransition } from "react";
 
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
+import { Reveal } from "@/components/motion/Reveal";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { buttonVariants } from "@/components/ui/button-variants";
@@ -31,7 +32,10 @@ interface NewsArticlePageProps {
   readonly slug: NewsSlug;
 }
 
-/** Maqola: nonushoq, h1, sana va oʻqish vaqti, umumiy muqova, 65ch matn, iqtibos, ulashish, qalampir, oldingi/keyingi. */
+/**
+ * Maqola: nonushoq, h1, sana va oʻqish vaqti, umumiy muqova, 65ch matn, iqtibos, ulashish, qalampir,
+ * oldingi/keyingi. Muqova roʻyxatdan umumiy element boʻlib keladi (ikkinchi kirish yoʻq), faqat parallaks.
+ */
 export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
   const article = getArticle(slug);
   const { previous, next } = getArticleNeighbours(slug);
@@ -92,6 +96,7 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
                 sizes="(min-width: 1440px) 1090px, (min-width: 1024px) 83vw, 100vw"
                 meaningful
                 priority
+                motion={{ mode: "none", parallax: true }}
               />
             </ViewTransition>
           </div>
@@ -103,15 +108,19 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
             <Text as="p" size="body-l" tone="ink-2" measure className="article-lead">
               {t(article.lead, locale)}
             </Text>
+            {/* Har xatboshi oʻzi koʻtariladi (16 px): oʻqish ritmi buzilmaydi, ekrandagilar joyida. */}
             <Prose size="body-l">
-              {body.map((para, i) => (
-                <p key={para.slice(0, 24)}>
+              {body.map((para) => (
+                <Reveal as="p" key={para.slice(0, 24)} distance={16}>
                   {para}
-                  {quote && i === 0 ? null : null}
-                </p>
+                </Reveal>
               ))}
             </Prose>
-            {quote ? <PullQuote>{quote}</PullQuote> : null}
+            {quote ? (
+              <Reveal>
+                <PullQuote>{quote}</PullQuote>
+              </Reveal>
+            ) : null}
             <Divider />
             <ShareButtons url={absoluteUrl(path)} title={title} dict={dict.common.actions} />
           </div>

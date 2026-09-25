@@ -6,7 +6,8 @@ import { DesignArt } from "@/components/layout/DesignArt";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { ClickToPlayVideo } from "@/components/media/ClickToPlayVideo";
-import { Heading } from "@/components/ui/Heading";
+import { Reveal } from "@/components/motion/Reveal";
+import { SplitLines } from "@/components/motion/SplitLines";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { MediaFrame } from "@/components/ui/MediaFrame";
 import { Prose } from "@/components/ui/Prose";
@@ -39,6 +40,8 @@ function factValue(
 /**
  * UPOP TREND sahifasi: sarlavha va logotip, toʻliq kenglikdagi sahna halqasi, matn va faktlar,
  * bosilganda yuklanadigan film, roʻyxatdan oʻtish lentasi (upop.uz). Birlashmada halqa parda ortida.
+ * Harakat: halqa yumshoq ochiladi va parallaksda yuradi (boʻlimning bosh mediasi), sarlavhalar
+ * soʻzma-soʻz, matn va faktlar doira ritmida; film ramkasi yumshoq ochiladi.
  */
 export function ProjectsPage({ locale, dict }: PageProps) {
   const project = getFlagship();
@@ -90,7 +93,7 @@ export function ProjectsPage({ locale, dict }: PageProps) {
             copy={{ curtainLabel: p.curtainLabel }}
             className="upop-stage-art"
           >
-            <MediaFrame ratio="16:9" hairline>
+            <MediaFrame ratio="16:9" hairline motion={{ mode: "smooth", parallax: true }}>
               <InViewVideo
                 sources={loop.desktop}
                 mobileSources={loop.mobile}
@@ -106,39 +109,49 @@ export function ProjectsPage({ locale, dict }: PageProps) {
 
       <Section labelledBy="upop-about-title">
         <Container grid className="upop-about">
-          <Heading level={2} size="h2" id="upop-about-title" className="upop-about-title">
+          <SplitLines
+            as="h2"
+            className="t-h2 text-balance text-ink upop-about-title"
+            id="upop-about-title"
+          >
             {p.facts.heading}
-          </Heading>
-          <div className="upop-about-body" data-grid-item="">
+          </SplitLines>
+          <Reveal className="upop-about-body" attrs={{ "data-grid-item": "" }}>
             <Prose size="body-l">
               {t(project.body, locale).map((para) => (
                 <p key={para.slice(0, 24)}>{para}</p>
               ))}
             </Prose>
-          </div>
-          <dl className="upop-facts" data-grid-item="">
+          </Reveal>
+          <Reveal
+            as="dl"
+            className="upop-facts"
+            stagger
+            distance={16}
+            attrs={{ "data-grid-item": "" }}
+          >
             {facts.map(([label, value]) => (
               <div key={label} className="upop-fact">
                 <dt className="t-micro text-ink-3">{label}</dt>
                 <dd className="t-body tnum">{value}</dd>
               </div>
             ))}
-          </dl>
+          </Reveal>
         </Container>
       </Section>
 
       <Section labelledBy="upop-film-title">
         <Container grid className="upop-film">
           <div className="upop-film-text" data-grid-item="">
-            <Heading level={2} size="h2" id="upop-film-title">
+            <SplitLines as="h2" className="t-h2 text-balance text-ink" id="upop-film-title">
               {p.filmHeading}
-            </Heading>
+            </SplitLines>
             <Text as="p" size="body-l" tone="ink-2">
               {p.filmLead}
             </Text>
           </div>
           <div className="upop-film-media" data-grid-item="">
-            <MediaFrame ratio="16:9">
+            <MediaFrame ratio="16:9" motion={{ mode: "smooth" }}>
               <ClickToPlayVideo
                 src={film.src}
                 poster={film.poster}
@@ -159,9 +172,9 @@ export function ProjectsPage({ locale, dict }: PageProps) {
       >
         <Container grid className="upop-register-grid">
           <div className="upop-register-text" data-grid-item="">
-            <Heading level={2} size="h2" id="upop-register-title">
+            <SplitLines as="h2" className="t-h2 text-balance text-ink" id="upop-register-title">
               {p.registrationHeading}
-            </Heading>
+            </SplitLines>
             <Text as="p" size="body-l" tone="ink-2" measure>
               {p.upopNote}
             </Text>

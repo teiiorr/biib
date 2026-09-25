@@ -194,10 +194,10 @@
     display: grid;
     place-items: center;
     cursor: pointer;
-    transition: transform 200ms var(--ease-ui);
+    transition: scale 200ms var(--ease-ui);
   }
   .hero-loop-control:active {
-    transform: scale(0.97);
+    scale: 0.97;
   }
   /* Telefonda ikki harakat bir qatorda sigʻishi uchun 48 px (Art. IX.1 juftligi: yorliq 16). */
   @media (max-width: 599px) {

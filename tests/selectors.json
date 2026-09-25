@@ -16,7 +16,8 @@
     "contactForm": "contact-form",
     "footerCrown": "footer-crown",
     "portalScene": "portal-scene",
-    "heroScene": "hero-scene"
+    "heroScene": "hero-scene",
+    "upopScene": "upop-scene"
   },
   "attr": {
     "cardGroup": "[data-card-group]",

@@ -24,7 +24,8 @@ interface PageProps {
 /**
  * Yangiliklar: bosh xabar butun kenglikda (kompyuterda muqova 1–7, matn 8–12), qolgan toʻrttasi bir
  * qatorda (planshetda 2 × 2). Muqovalar bir nisbatda, sarlavhalar bir chiziqda boshlanadi; teshik
- * qolmaydi. Beshta xabarga filtr va sahifalash kerak emas.
+ * qolmaydi. Beshta xabarga filtr va sahifalash kerak emas. Harakat: bosh muqova yumshoq ochiladi va
+ * parallaksda yuradi, qolgan muqovalar abr pogʻonalarida doira ritmida ochiladi (matn joyida).
  */
 export function NewsListPage({ locale, dict }: PageProps) {
   const [lead, ...rest] = getNews();
@@ -69,6 +70,7 @@ export function NewsListPage({ locale, dict }: PageProps) {
                       ratio="3:2"
                       locale={locale}
                       sizes="(min-width: 1440px) 752px, (min-width: 1024px) 55vw, 100vw"
+                      motion={{ mode: "smooth", parallax: true }}
                     />
                   </ViewTransition>
                 </TransitionLink>
@@ -88,7 +90,7 @@ export function NewsListPage({ locale, dict }: PageProps) {
                   </Text>
                 </div>
               </article>
-              {rest.map((item) => (
+              {rest.map((item, index) => (
                 <article key={item.slug} className="news-grid-item paper-look" data-card="">
                   <TransitionLink
                     href={pathFor(locale, "newsItem", item.slug)}
@@ -102,6 +104,7 @@ export function NewsListPage({ locale, dict }: PageProps) {
                         ratio="3:2"
                         locale={locale}
                         sizes="(min-width: 1440px) 304px, (min-width: 1024px) 22vw, (min-width: 600px) 45vw, 100vw"
+                        motion={{ mode: "abr", index }}
                       />
                     </ViewTransition>
                   </TransitionLink>

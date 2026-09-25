@@ -28,7 +28,7 @@ export function ChustBand({ draw = false, className }: ChustBandProps) {
     </svg>
   );
   return draw ? (
-    <DrawOnView mode="enter" duration={1.2}>
+    <DrawOnView order="left-right" duration={0.5} fills=".chust-accent">
       {svg}
     </DrawOnView>
   ) : (

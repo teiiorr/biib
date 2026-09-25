@@ -2,6 +2,8 @@ import { Container } from "@/components/layout/Container";
 import { DesignArt } from "@/components/layout/DesignArt";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
+import { Reveal } from "@/components/motion/Reveal";
+import { SplitLines } from "@/components/motion/SplitLines";
 import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { Prose } from "@/components/ui/Prose";
@@ -22,7 +24,8 @@ interface PageProps {
 /**
  * Biz haqimizda (15.3): sarlavha, ikki ustunli matn va bitta iqtibos, yoʻnalishlar roʻyxati — ikkalasida
  * sarlavha 1–4 ustunda (kompyuterda yopishqoq), matn 6–12; tarix chizigʻi sirt lentasida; oxirida
- * UPOP TREND lentasi. Bezak qatlamlari yoʻq: xarakter tipografiya va ritmdan.
+ * UPOP TREND lentasi. Bezak qatlamlari yoʻq: xarakter tipografiya va ritmdan. Harakat: sarlavhalar
+ * soʻzma-soʻz, matn va qadriyatlar doira ritmida koʻtariladi, tarix nuqtalari ketma-ket.
  */
 export function AboutPage({ locale, dict }: PageProps) {
   const a = dict.about;
@@ -47,11 +50,11 @@ export function AboutPage({ locale, dict }: PageProps) {
       <Section labelledBy="about-mission">
         <Container grid className="about-split">
           <div className="about-split-head" data-grid-item="">
-            <Heading level={2} size="h2" id="about-mission">
+            <SplitLines as="h2" className="t-h2 text-balance text-ink" id="about-mission">
               {a.mission.heading}
-            </Heading>
+            </SplitLines>
           </div>
-          <div className="about-split-body about-mission" data-grid-item="">
+          <Reveal className="about-split-body about-mission" attrs={{ "data-grid-item": "" }}>
             <Prose size="body-l">
               {a.mission.paragraphs.slice(0, 2).map((para) => (
                 <p key={para.slice(0, 24)}>{para}</p>
@@ -63,17 +66,22 @@ export function AboutPage({ locale, dict }: PageProps) {
                 <p key={para.slice(0, 24)}>{para}</p>
               ))}
             </Prose>
-          </div>
+          </Reveal>
         </Container>
       </Section>
       <Section labelledBy="about-values" tone="light">
         <Container grid className="about-split">
           <div className="about-split-head" data-grid-item="">
-            <Heading level={2} size="h2" id="about-values">
+            <SplitLines as="h2" className="t-h2 text-balance text-ink" id="about-values">
               {a.values.heading}
-            </Heading>
+            </SplitLines>
           </div>
-          <ul className="about-split-body about-values" data-grid-item="" data-audit="gap">
+          <Reveal
+            as="ul"
+            className="about-split-body about-values"
+            stagger
+            attrs={{ "data-grid-item": "", "data-audit": "gap" }}
+          >
             {a.values.items.map((item) => (
               <li key={item.title} className="about-value">
                 <Heading level={3} size="h4">
@@ -84,7 +92,7 @@ export function AboutPage({ locale, dict }: PageProps) {
                 </Text>
               </li>
             ))}
-          </ul>
+          </Reveal>
         </Container>
       </Section>
       <Section
@@ -96,9 +104,9 @@ export function AboutPage({ locale, dict }: PageProps) {
       >
         <Container>
           <div className="section-head">
-            <Heading level={2} size="h2" id="about-history">
+            <SplitLines as="h2" className="t-h2 text-balance text-ink" id="about-history">
               {a.history.heading}
-            </Heading>
+            </SplitLines>
             <Text as="p" size="body-l" tone="ink-2" measure>
               {a.history.lead}
             </Text>

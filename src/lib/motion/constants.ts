@@ -44,18 +44,23 @@ export const SCENE_LENGTH = {
   hero: { expanded: 1, compact: 0.7 },
 } as const;
 
-/** Ambient sikllar 6–16 s; hech narsa 4 s dan tez takrorlanmaydi. */
-
-/** Doira usuli birligi, s (90 ms). */
-
-/** Parallaks qatlamlarining sukut boʻyicha yurish masofasi, px. */
-
-/** Faqat kompozitorga qulay xususiyatlar animatsiya qilinadi. */
-
-/** GSAP nomlari; spring-glass dvigatel yaratilganda CustomEase sifatida roʻyxatga olinadi. */
+/**
+ * GSAP nomlari CSS tokenlari bilan bir xil egri chiziq: out, in-out, ui va spring-glass dvigatel
+ * yaratilganda CustomEase sifatida roʻyxatga olinadi (gsap.ts), CSS oʻtishi va tween farq qilmaydi.
+ */
 export const EASE = {
-  out: "power3.out",
-  inOut: "power2.inOut",
-  ui: "power2.out",
+  out: "out",
+  inOut: "in-out",
+  ui: "ui",
   spring: "spring-glass",
+  none: "none",
 } as const;
+
+/** Magnit tugmalar (faqat aniq koʻrsatkich): koʻpi bilan 6 px, belgili tugmada 4 px; yorliq 40 % ergashadi. */
+export const MAGNET = { max: 6, icon: 4, strength: 0.35, inner: 0.4 } as const;
+
+/** Parallaks chuqurligi media balandligiga nisbatan: kompyuterda 8 %, tor ekranda 5 %. */
+export const PARALLAX = { expanded: 0.08, compact: 0.05 } as const;
+
+/** Dvigatel gidratsiyadan keyin koʻpi bilan shuncha kutadi (ms), foydalanuvchi niyati undan oldin. */
+export const ENGINE_IDLE_TIMEOUT = 800;

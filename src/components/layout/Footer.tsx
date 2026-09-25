@@ -11,6 +11,7 @@ import { pathFor, type PageKey } from "@/i18n/routes";
 
 import { Container } from "./Container";
 import { DesignArt } from "./DesignArt";
+import { FooterArrive } from "./FooterArrive";
 import { FooterLangs } from "./FooterLangs";
 
 interface FooterProps {
@@ -20,7 +21,7 @@ interface FooterProps {
 
 const ORG_LINKS: readonly PageKey[] = ["about", "leadership", "experts", "partners"];
 
-/** Futer: Chust doʻppi hoshiyasi tepada, toʻrt guruh, pastki qator (15.10). */
+/** Futer: Chust doʻppi hoshiyasi tepada, toʻrt guruh, pastki qator (15.10); kirishi FooterArrive da. */
 export function Footer({ locale, dict }: FooterProps) {
   const contacts = getContacts();
   const flagship = getFlagship();
@@ -28,6 +29,7 @@ export function Footer({ locale, dict }: FooterProps) {
 
   return (
     <footer className="site-footer" aria-label={dict.footer.label}>
+      <FooterArrive />
       <Container>
         <div className="footer-crown" data-testid="footer-crown">
           <DesignArt slot="footer-crown" locale={locale} />

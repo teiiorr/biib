@@ -1,3 +1,4 @@
+import { scheduleScrollRefresh } from "@/lib/motion/refresh";
 import { playSound } from "@/lib/sound/play";
 
 import { getAppearanceSnapshot, setAppearance } from "./store";
@@ -53,6 +54,8 @@ function runTransition(type: TransitionType, update: () => void | Promise<void>)
   const finish = (): void => {
     html.classList.remove(className, "vt-reduced");
     html.removeAttribute("data-design-to");
+    // Boshqa dizaynda bloklar balandligi oʻzgaradi: sahnalar yangi joylashuvni bir marta oʻlchaydi.
+    if (type === "design-switch") scheduleScrollRefresh();
   };
 
   if (typeof document.startViewTransition !== "function") {

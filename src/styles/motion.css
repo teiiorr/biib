@@ -62,4 +62,76 @@
       opacity: 1;
     }
   }
+
+  /* split-lines v2: niqob glif chetlarini (Ў, Ö, ʻ) kesmasin — quti oʻlchami oʻzgarmaydi. */
+  .split-word-mask {
+    padding: 0.12em 0.04em;
+    margin: -0.12em -0.04em;
+  }
+  .split-line-mask {
+    padding-block: 0.12em;
+    margin-block: -0.12em;
+  }
+
+  /* hover-media (3.20): karta ustida surat ramka ichida 1.03 gacha kattalashadi, sarlavha pushti.
+     Karta koʻtarilmaydi, soya oʻzgarmaydi. Faqat aniq koʻrsatkich; fokus hover ni takrorlaydi. */
+  .news-cover .media-frame-media > * {
+    transition: scale 400ms var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    :root:not([data-motion="off"]) [data-card]:hover .news-cover .media-frame-media > * {
+      scale: 1.03;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :root:not([data-motion="off"]) [data-card]:focus-within .news-cover .media-frame-media > * {
+      scale: 1.03;
+    }
+  }
+  [data-card]:focus-within .news-title a {
+    color: var(--tint);
+  }
+  @media (hover: hover) {
+    [data-card]:hover .news-title a {
+      color: var(--tint);
+    }
+  }
+  .news-title a {
+    transition: color var(--dur-ui) var(--ease-ui);
+  }
+}
+
+/* upop-scene (motion-plan 3.8): sahna faqat qurilganda (data-scene="on": ≥ 1024, harakat yoqilgan,
+   kontent bir ekranga sigʻadi). Boʻlim ikki ekran, ichidagi sahna yopishqoq bir ekran (pin emas, D-M7);
+   kontent sarlavha ostida markazda. Qatlamdan tashqarida: .section-band utilitasidan ustun. */
+.upop-feature[data-scene="on"] {
+  height: 200svh;
+  padding-block: 0;
+}
+.upop-feature[data-scene="on"] .upop-feature-stage {
+  position: sticky;
+  top: 0;
+  display: grid;
+  align-content: center;
+  height: 100svh;
+  padding-top: calc(var(--header-h) + 12px + var(--safe-top));
+  padding-bottom: 24px;
+  overflow: clip;
+}
+/* Logotip qoʻngunga qadar kadr ustida turadi (DOM da undan oldin). */
+.upop-feature[data-scene="on"] .upop-feature-wordmark {
+  position: relative;
+  z-index: 1;
+}
+.upop-feature-media {
+  position: relative;
+}
+/* Sahna boshida kadr ustidagi lojuvard xiralik (logotip oʻqilsin); sahnasiz holatda koʻrinmas. */
+.upop-feature-dim {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-card);
+  background: var(--bg);
+  opacity: 0;
+  pointer-events: none;
 }

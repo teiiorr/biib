@@ -2,9 +2,11 @@
 
 import { useRef, type ReactNode } from "react";
 import { DURATION, EASE } from "@/lib/motion/constants";
-import { doiraStaggerFn } from "@/lib/motion/doira";
+import { doiraStaggerFn, doiraUnit } from "@/lib/motion/doira";
 import { motionAllowed } from "@/lib/motion/prefs";
+import { enqueueSliced, viewportPriority } from "@/lib/motion/scheduler";
 import { belowViewport } from "@/lib/motion/viewport";
+import { watchPending, type PendingWatch } from "@/lib/motion/watchdog";
 import { useEngineEffect } from "./engine";
 import { useMotionPrefs } from "./motion-context";
 
@@ -17,11 +19,14 @@ export interface SplitLinesProps {
   readonly className?: string;
   readonly id?: string;
   readonly start?: string;
+  /** words: qisqa sarlavha (≤ 8 soʻz) soʻzma-soʻz; lines: paragraf va iqtibos qatorma-qator. */
+  readonly mode?: "lines" | "words";
 }
 
 /**
- * split-lines: qatorlar niqob ostidan y 100%→0, 1000 ms, doira ritmi.
- * Matn serverda oddiy holda keladi (SEO), shriftlar kelgach boʻlinadi, unmount da qaytariladi.
+ * split-lines v2: soʻzlar yoki qatorlar niqob ostidan koʻtariladi (1000 ms, doira ritmi, guruh
+ * 1.2 s ichida). Matn serverda oddiy holda (SEO); shriftlar kelgach boʻlish navbat orqali kadrlarga
+ * taqsimlanadi, kirish tugagach asl DOM qaytariladi (niqob diakritikani kesib qolmaydi).
  */
 export function SplitLines({
   as = "h2",
@@ -29,47 +34,81 @@ export function SplitLines({
   className,
   id,
   start = "top 85%",
+  mode = as === "h2" || as === "h3" || as === "h4" ? "words" : "lines",
 }: SplitLinesProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const done = useRef(false);
   const prefs = useMotionPrefs();
   const allowed = prefs.ready && motionAllowed(prefs);
 
   useEngineEffect(
     ref,
-    ({ gsap, SplitText }, { late, context }) => {
+    ({ gsap, SplitText }, { context }) => {
       const el = ref.current;
-      if (!el || !allowed) return;
-      if (late && !belowViewport(el)) return;
+      if (!el || !allowed || done.current) return;
+      if (!belowViewport(el, 1)) {
+        done.current = true;
+        return;
+      }
+      const words = mode === "words";
       let cancelled = false;
+      let cancelJob: (() => void) | null = null;
       let split: SplitText | null = null;
+      let watch: PendingWatch | null = null;
 
-      void document.fonts.ready.then(() => {
-        if (cancelled) return;
+      const build = (): void => {
+        // Shriftlar kutilganda foydalanuvchi pastga tushgan boʻlishi mumkin: koʻringan matn yashirilmaydi.
+        if (cancelled || !belowViewport(el, 1)) {
+          done.current = true;
+          return;
+        }
         context.add(() => {
           split = SplitText.create(el, {
-            type: "lines",
-            mask: "lines",
+            type: words ? "words,lines" : "lines",
+            mask: words ? "words" : "lines",
             autoSplit: true,
             aria: "auto",
             linesClass: "split-line",
-            onSplit: (self) =>
-              gsap.from(self.lines, {
-                yPercent: 100,
+            wordsClass: "split-word",
+            onSplit: (self) => {
+              const parts = words ? self.words : self.lines;
+              watch?.dispose();
+              let tween: gsap.core.Tween | null = null;
+              watch = watchPending(el, [el], () => {
+                tween?.scrollTrigger?.kill(false, true);
+                tween?.play();
+              });
+              const pending = watch;
+              tween = gsap.from(parts, {
+                yPercent: 120,
                 duration: DURATION.lines,
                 ease: EASE.out,
-                stagger: doiraStaggerFn(),
-                scrollTrigger: { trigger: el, start, once: true },
-              }),
+                stagger: doiraStaggerFn(doiraUnit(parts.length, 1.2, words ? 0.045 : 0.09)),
+                scrollTrigger: { trigger: el, start, once: true, onEnter: pending.started },
+                onComplete: () => {
+                  done.current = true;
+                  window.requestAnimationFrame(() => split?.revert());
+                },
+              });
+              return tween;
+            },
           });
         });
+      };
+
+      void document.fonts.ready.then(() => {
+        if (cancelled) return;
+        cancelJob = enqueueSliced(build, viewportPriority(el));
       });
 
       return () => {
         cancelled = true;
+        cancelJob?.();
+        watch?.dispose();
         split?.revert();
       };
     },
-    [allowed, start],
+    [allowed, start, mode],
   );
 
   // Teg birligi uchun bitta intrinsik tur: barcha ruxsat etilgan teglar HTMLElement beradi.

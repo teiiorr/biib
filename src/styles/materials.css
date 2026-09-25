@@ -453,7 +453,7 @@
     height: 32px;
     border-radius: var(--radius-control);
     color: var(--material-ink);
-    transition: transform 200ms var(--ease-ui);
+    transition: scale 200ms var(--ease-ui);
   }
   .glass-close::after {
     content: "";
@@ -461,7 +461,7 @@
     inset: -6px;
   }
   .glass-close:active {
-    transform: scale(0.97);
+    scale: 0.97;
   }
   .glass-menu {
     min-width: 220px;

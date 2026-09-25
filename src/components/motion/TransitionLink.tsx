@@ -7,6 +7,7 @@ import { DURATION } from "@/lib/motion/constants";
 import {
   hrefToPath,
   inferDirection,
+  markNavEntry,
   NAV_FADE_CLASS,
   supportsViewTransitions,
   type NavDirection,
@@ -64,6 +65,7 @@ export function TransitionLink({
 
     const type = transitionType ?? direction ?? inferDirection(pathname, hrefToPath(href));
     if (!supportsViewTransitions()) beginFallbackFade();
+    markNavEntry();
 
     const options = rest.scroll === undefined ? undefined : { scroll: rest.scroll };
     startTransition(() => {

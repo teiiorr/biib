@@ -3,6 +3,7 @@ import { ViewTransition } from "react";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/motion/Reveal";
+import { SplitLines } from "@/components/motion/SplitLines";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
@@ -24,6 +25,7 @@ interface NewsTeaserProps {
 /**
  * Yangiliklar: bitta bosh xabar (3:2) va yonida qolgan toʻrttasi ustma-ust (1:1 kichik muqova).
  * Yon ustun bosh xabar balandligiga choʻziladi: ikkala ustun bir chiziqda tugaydi. Telefonda ketma-ket.
+ * Harakat: bosh muqova yumshoq ochiladi va parallaksda yuradi, yon qatorlar doira ritmida koʻtariladi.
  */
 export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
   const [lead, ...rest] = getNews();
@@ -35,9 +37,9 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
       <Container>
         <div className="section-head section-head-row">
           <div>
-            <Heading level={2} size="h2" id="home-news">
+            <SplitLines as="h2" className="t-h2 text-balance text-ink" id="home-news">
               {h.heading}
-            </Heading>
+            </SplitLines>
             <Text as="p" size="body-l" tone="ink-2" measure>
               {h.lead}
             </Text>
@@ -52,7 +54,7 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
             {h.all}
           </LinkButton>
         </div>
-        <Reveal as="div" className="news-teaser" stagger attrs={{ "data-card-group": "" }}>
+        <div className="news-teaser" data-card-group="">
           <article className="news-lead paper-look" data-card="">
             <TransitionLink
               href={pathFor(locale, "newsItem", lead.slug)}
@@ -66,6 +68,7 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
                   ratio="3:2"
                   locale={locale}
                   sizes="(min-width: 1440px) 765px, (min-width: 1024px) 58vw, 100vw"
+                  motion={{ mode: "smooth", parallax: true }}
                 />
               </ViewTransition>
             </TransitionLink>
@@ -81,7 +84,7 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
               {t(lead.lead, locale)}
             </Text>
           </article>
-          <div className="news-side">
+          <Reveal as="div" className="news-side" stagger>
             {side.map((item) => (
               <article key={item.slug} className="news-row paper-look" data-card="">
                 <TransitionLink
@@ -113,8 +116,8 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
                 </div>
               </article>
             ))}
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
       </Container>
     </Section>
   );

@@ -4,6 +4,7 @@ import { Container } from "@/components/layout/Container";
 import { DesignArt } from "@/components/layout/DesignArt";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
+import { Reveal } from "@/components/motion/Reveal";
 import { CopyButton } from "@/components/ui/CopyButton";
 import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
@@ -92,7 +93,13 @@ export function ContactsPage({ locale, dict }: PageProps) {
             <Heading level={2} size="h3" id="contacts-details">
               {d.details.heading}
             </Heading>
-            <dl className="contact-details" data-audit="gap">
+            <Reveal
+              as="dl"
+              className="contact-details"
+              stagger
+              distance={16}
+              attrs={{ "data-audit": "gap" }}
+            >
               {rows.map((row) => (
                 <div key={row.key} className="contact-row">
                   <dt className="t-label text-ink-2 contact-row-label">
@@ -129,7 +136,7 @@ export function ContactsPage({ locale, dict }: PageProps) {
                   </dd>
                 </div>
               ))}
-            </dl>
+            </Reveal>
           </div>
           <div className="col-span-4 md:col-span-8 lg:col-span-6 contact-aside" data-grid-item="">
             <div className="contact-aside-block">

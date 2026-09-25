@@ -1,8 +1,19 @@
 /* BIRLASHMA — «Ijod ustaxonasi». Kunduz «Albom», tun «Doska». Nomlar atlas.css bilan bir xil. */
 
+/* Nunito ning ʻ va ʼ glifi yarim kegl keng («o ʻ z»): shu ikki belgi uchun oʻz kavs glifi (scripts/tutuq-font.mts). */
+@font-face {
+  font-family: "Nunito Tutuq";
+  font-style: normal;
+  font-weight: 200 1000;
+  font-display: swap;
+  src: url("/fonts/tutuq-nunito.woff2") format("woff2");
+  unicode-range: U+02BB-02BC;
+}
+
 :root[data-design="birlashma"] {
-  --font-ui: var(--font-nunito), ui-rounded, ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-nunito), ui-rounded, ui-sans-serif, system-ui, sans-serif;
+  --font-ui: "Nunito Tutuq", var(--font-nunito), ui-rounded, ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    "Nunito Tutuq", var(--font-nunito), ui-rounded, ui-sans-serif, system-ui, sans-serif;
   --font-note: var(--font-playpen), "Comic Neue", cursive;
 
   --fs-display-xl: clamp(2.75rem, 1.3333rem + 6.2963vw, 7rem);

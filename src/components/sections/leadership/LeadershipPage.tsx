@@ -42,7 +42,7 @@ export function LeadershipPage({ locale, dict }: PageProps) {
       />
       <Section>
         <Container grid className="leaders">
-          {leaders.map((person) => {
+          {leaders.map((person, index) => {
             const role = t(person.role, locale);
             const name = person.name ? t(person.name, locale) : null;
             return (
@@ -52,7 +52,11 @@ export function LeadershipPage({ locale, dict }: PageProps) {
                 data-card=""
                 aria-labelledby={`${person.id}-name`}
               >
-                <PortraitFrame ratio="4:5" className="leader-portrait" />
+                <PortraitFrame
+                  ratio="4:5"
+                  className="leader-portrait"
+                  motion={{ mode: "smooth", index }}
+                />
                 <div className="leader-text">
                   <Heading level={2} size="h3" id={`${person.id}-name`} data-card-title="">
                     {name ?? role}

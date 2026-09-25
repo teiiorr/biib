@@ -44,13 +44,17 @@ export function ExpertsPage({ locale, dict }: PageProps) {
       <Section>
         <Container>
           <ul className="people-grid" data-card-group="" aria-label={e.title}>
-            {experts.map((person) => {
+            {experts.map((person, index) => {
               const role = t(person.role, locale);
               const field = person.field ? t(person.field, locale) : null;
               const name = person.name ? t(person.name, locale) : null;
               return (
                 <li key={person.id} className="people-card paper-look" data-card="">
-                  <PortraitFrame ratio="4:5" className="people-portrait" />
+                  <PortraitFrame
+                    ratio="4:5"
+                    className="people-portrait"
+                    motion={{ mode: "smooth", index }}
+                  />
                   <div className="people-card-text">
                     <p className="t-label" data-card-title="">
                       {name ?? field ?? role}

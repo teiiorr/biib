@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 
+import { MediaReveal, type MediaRevealProps } from "@/components/motion/MediaReveal";
 import { GirihStar } from "@/components/ornament/GirihStar";
 import { cn } from "@/lib/cn";
 import { ratioCss, type AspectRatio } from "@/lib/ornament/ratio";
@@ -10,6 +11,8 @@ export interface MediaFrameProps {
   readonly hairline?: boolean;
   /** Chap yuqori burchakda 16 px sakkiz karrali girih yulduzi (soʻzana burchak belgisi). */
   readonly corner?: boolean;
+  /** Kirish va parallaks (motion-plan 3.6, 3.7): berilmasa ramka harakatsiz. */
+  readonly motion?: MediaRevealProps;
   readonly className?: string;
   readonly style?: CSSProperties;
   readonly children?: ReactNode;
@@ -23,6 +26,7 @@ export function MediaFrame({
   ratio = "3:2",
   hairline = false,
   corner = false,
+  motion,
   className,
   style,
   children,
@@ -35,6 +39,7 @@ export function MediaFrame({
       {corner ? (
         <GirihStar symmetry={8} size={16} ring={false} className="media-frame-corner" />
       ) : null}
+      {motion ? <MediaReveal {...motion} /> : null}
     </div>
   );
 }

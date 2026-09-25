@@ -1,7 +1,7 @@
 import { Icon } from "@/components/icons/Icon";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
-import { Reveal } from "@/components/motion/Reveal";
+import { SplitLines } from "@/components/motion/SplitLines";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { Heading } from "@/components/ui/Heading";
 import { PortraitFrame } from "@/components/ui/PortraitFrame";
@@ -17,13 +17,13 @@ interface PeopleTeaserProps {
   readonly dict: Dictionary;
 }
 
-function PersonCard({ person, locale }: { person: Person; locale: Locale }) {
+function PersonCard({ person, locale, index }: { person: Person; locale: Locale; index: number }) {
   const role = t(person.role, locale);
   const field = person.field ? t(person.field, locale) : null;
   const name = person.name ? t(person.name, locale) : null;
   return (
     <li className="people-card paper-look" data-card="">
-      <PortraitFrame ratio="4:5" className="people-portrait" />
+      <PortraitFrame ratio="4:5" className="people-portrait" motion={{ mode: "smooth", index }} />
       <div className="people-card-text">
         {/* Ism kelmaguncha imzo: rahbarda lavozim, ekspertda soha — bir marta, ramka ichida emas. */}
         <p className="t-label people-name" data-card-title="">
@@ -54,24 +54,18 @@ function PeopleGroup({ heading, href, people, locale, className }: PeopleGroupPr
           <Icon name="arrow-right" size={20} className="people-group-arrow" />
         </TransitionLink>
       </Heading>
-      <Reveal
-        as="ul"
-        className="people-row"
-        stagger
-        attrs={{ "data-card-group": "" }}
-        label={heading}
-      >
-        {people.map((p) => (
-          <PersonCard key={p.id} person={p} locale={locale} />
+      <ul className="people-row" data-card-group="" aria-label={heading}>
+        {people.map((p, index) => (
+          <PersonCard key={p.id} person={p} locale={locale} index={index} />
         ))}
-      </Reveal>
+      </ul>
     </div>
   );
 }
 
 /**
  * Rahbariyat va ekspertlar: sarlavha tinch lojuvard lentada (bezaksiz, bitta oltin chiziq), ostida
- * ikki guruh. Kompyuterda 2 + 4 portret 12 ustunni, planshetda 2 + 2 sakkiz ustunni toʻliq egallaydi;
+ * ikki guruh; portretlar doira ritmida yumshoq ochiladi. Kompyuterda 2 + 4 portret 12 ustunni, planshetda 2 + 2 sakkiz ustunni toʻliq egallaydi;
  * telefonda har guruh bitta toʻla qator (2 + 2), qolganlari sahifada.
  */
 export function PeopleTeaser({ locale, dict }: PeopleTeaserProps) {
@@ -82,9 +76,9 @@ export function PeopleTeaser({ locale, dict }: PeopleTeaserProps) {
     <Section labelledBy="home-people" rhythm="none" className="people-section">
       <div className="navy-band people-band section-band" data-tone="dark">
         <Container className="people-head">
-          <Heading level={2} size="h2" id="home-people">
+          <SplitLines as="h2" className="t-h2 text-balance text-ink" id="home-people">
             {h.heading}
-          </Heading>
+          </SplitLines>
           <Text as="p" size="body-l" tone="ink-2" measure>
             {h.lead}
           </Text>

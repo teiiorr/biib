@@ -2,9 +2,7 @@
 
 import { useLayoutEffect, useRef } from "react";
 
-/* Oldingi montaj qachon tark etilgan: mijoz navigatsiyasi shu bilan sovuq yuklashdan ajratiladi. */
-let leftAt: number | null = null;
-const NAVIGATION_MIN_MS = 100;
+import { isNavEntry } from "@/lib/motion/transitions";
 
 /**
  * hero-enter yordamchisi: mijoz navigatsiyasida kirish oʻtkazib yuboriladi (sahifa oʻtishi yagona
@@ -16,9 +14,7 @@ export function HeroEnter() {
   useLayoutEffect(() => {
     const hero = ref.current?.closest<HTMLElement>("[data-hero]");
     if (!hero) return;
-    if (leftAt !== null && performance.now() - leftAt > NAVIGATION_MIN_MS) {
-      hero.setAttribute("data-enter", "skip");
-    }
+    if (isNavEntry()) hero.setAttribute("data-enter", "skip");
     let cancelled = false;
     const release = (): void => {
       if (!cancelled) hero.setAttribute("data-done", "");
@@ -30,7 +26,6 @@ export function HeroEnter() {
     else void Promise.all(running.map((a) => a.finished)).then(release, release);
     return () => {
       cancelled = true;
-      leftAt = performance.now();
       hero.removeAttribute("data-done");
       hero.removeAttribute("data-enter");
     };

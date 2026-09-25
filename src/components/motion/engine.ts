@@ -29,11 +29,13 @@ function serverSnapshot(): null {
 /** Dvigatel (GSAP, plaginlar, Lenis) bir marta yuklanadi; takroriy chaqiruv oʻsha vaʼdani qaytaradi. */
 export function requestEngine(): Promise<MotionEngine> {
   if (engine) return Promise.resolve(engine);
-  loading ??= import("./engine-core").then((mod) => {
-    engine = mod.createEngine();
-    listeners.forEach((listener) => listener());
-    return engine;
-  });
+  loading ??= import("./engine-core")
+    .then((mod) => mod.createEngine())
+    .then((created) => {
+      engine = created;
+      listeners.forEach((listener) => listener());
+      return created;
+    });
   return loading;
 }
 
@@ -47,6 +49,11 @@ export function useEngine(): MotionEngine | null {
 
 /* React effekt shartnomasi: hech narsa yoki tozalash funksiyasi. */
 type Cleanup = ReturnType<EffectCallback>;
+
+export interface EngineEffectOptions {
+  /** Skrablangan sahna (qahramon, UPOP, parallaks): kech dvigatelda oddiy kirishlardan oldin quriladi. */
+  readonly scene?: boolean;
+}
 
 export interface EngineEffectInfo {
   /** Dvigatel komponent chizilgandan keyin keldi: ekranda turgan narsa yashirilib qayta koʻrsatilmaydi. */
@@ -65,7 +72,9 @@ export function useEngineEffect(
   scope: RefObject<Element | null>,
   effect: (engine: MotionEngine, info: EngineEffectInfo) => Cleanup,
   deps: readonly unknown[],
+  options?: EngineEffectOptions,
 ): void {
+  const scene = options?.scene === true;
   const current = useEngine();
   const lateRef = useRef<boolean | null>(null);
   useIsoLayoutEffect(() => {
@@ -83,12 +92,14 @@ export function useEngineEffect(
         cleanup = effect(current, { late, context });
       });
     };
-    // Kech kelgan dvigatel: sahnalar kadrlarga boʻlib quriladi (uzun vazifa yoʻq), koʻrinishdagilar oldin.
-    const cancel = late ? enqueueSliced(start, viewportPriority(scope.current)) : (start(), null);
+    // Kech kelgan dvigatel: sahnalar kadrlarga boʻlib quriladi (uzun vazifa yoʻq), koʻrinishdagilar oldin,
+    // skroll sahnalari foydalanuvchi ularga yetguncha tayyor boʻlishi uchun yarim pogʻona oldinroq.
+    const priority = viewportPriority(scope.current) - (scene ? 0.5 : 0);
+    const cancel = late ? enqueueSliced(start, priority) : (start(), null);
     return () => {
       cancel?.();
       if (typeof cleanup === "function") cleanup();
       context.revert();
     };
-  }, [current, scope, ...deps]);
+  }, [current, scope, scene, ...deps]);
 }

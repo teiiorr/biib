@@ -147,27 +147,43 @@
     fill: none;
     opacity: 0.8;
   }
+  /* Chizilish kesish maydoni bilan (clip-path): ip va choklar choʻzilmaydi, chapdan tikiladi. */
   .zardozi-underline {
     position: absolute;
     left: 0;
     right: 0;
     bottom: -0.2em;
     height: var(--zardozi-height);
-    transform-origin: left center;
     pointer-events: none;
-    transition: transform var(--dur-reveal) var(--ease-reveal);
+    transition: clip-path var(--dur-reveal) var(--ease-reveal);
   }
-  .zardozi-underline[data-draw="hover"],
   .zardozi-underline[data-draw="view"][data-drawn="false"] {
-    transform: scaleX(0);
+    clip-path: inset(-2px 100% -2px 0);
+  }
+  /* underline-draw (3.11): hover/fokusda 420 ms chapdan chiziladi; chiqishda 150 ms soʻnadi va
+     koʻrinmas holda boshiga qaytadi — keyingi hover yana chapdan. Faol band SSR dan chizilgan. */
+  .zardozi-underline[data-draw="hover"] {
+    clip-path: inset(-2px 100% -2px 0);
+    opacity: 0;
+    transition:
+      opacity 150ms var(--ease-ui),
+      clip-path 0s linear 150ms;
   }
   .zardozi-host:focus-visible .zardozi-underline[data-draw="hover"],
   .zardozi-host[aria-current] .zardozi-underline[data-draw="hover"] {
-    transform: scaleX(1);
+    clip-path: inset(-2px 0 -2px 0);
+    opacity: 1;
+    transition:
+      clip-path var(--dur-panel) var(--ease-out),
+      opacity 0s;
   }
   @media (hover: hover) {
     .zardozi-host:hover .zardozi-underline[data-draw="hover"] {
-      transform: scaleX(1);
+      clip-path: inset(-2px 0 -2px 0);
+      opacity: 1;
+      transition:
+        clip-path var(--dur-panel) var(--ease-out),
+        opacity 0s;
     }
   }
   .zardozi-word {
@@ -219,11 +235,11 @@
       transition: none;
     }
     .zardozi-underline[data-draw="view"][data-drawn="false"] {
-      transform: none;
+      clip-path: none;
     }
   }
   :root[data-motion="off"] .zardozi-underline[data-draw="view"][data-drawn="false"] {
-    transform: none;
+    clip-path: none;
   }
 
   /* Palak halqalari. */

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
+import { Reveal } from "@/components/motion/Reveal";
 import { Heading } from "@/components/ui/Heading";
 import { Prose } from "@/components/ui/Prose";
 import { Text } from "@/components/ui/Text";
@@ -73,11 +74,13 @@ export function PrivacyPage({ locale, dict }: PageProps) {
           </nav>
           <div className="col-span-4 md:col-span-8 lg:col-span-9 lg:col-start-4" data-grid-item="">
             {p.sections.map((s) => (
-              <section
+              <Reveal
+                as="section"
                 key={s.id}
                 id={s.id}
                 className="privacy-section"
-                aria-labelledby={`${s.id}-h`}
+                labelledBy={`${s.id}-h`}
+                distance={16}
               >
                 <Heading level={2} size="h3" id={`${s.id}-h`}>
                   {s.heading}
@@ -94,7 +97,7 @@ export function PrivacyPage({ locale, dict }: PageProps) {
                     </p>
                   ) : null}
                 </Prose>
-              </section>
+              </Reveal>
             ))}
           </div>
         </Container>

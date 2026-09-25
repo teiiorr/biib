@@ -3,6 +3,7 @@ import type { ComponentPropsWithoutRef, ReactNode, Ref } from "react";
 import { Icon } from "@/components/icons/Icon";
 import type { IconName } from "@/components/icons/paths";
 import { cn } from "@/lib/cn";
+import { MAGNET } from "@/lib/motion/constants";
 import {
   BUTTON_ICON_SIZE,
   buttonVariants,
@@ -59,6 +60,14 @@ export function Button(props: ButtonProps) {
   const iconSize = BUTTON_ICON_SIZE[size];
   const Component = asChild ? Slot : "button";
   const iconSlot = iconOnly ? "only" : icon || loading ? iconPosition : undefined;
+  // Magnit (≥ 48 px asosiy va oyna tugmalari, oyna belgili tugmasi 4 px): MotionProvider dagi umumiy tinglovchi.
+  const magnetic = inactive
+    ? undefined
+    : variant === "glass" && iconOnly
+      ? String(MAGNET.icon)
+      : (variant === "primary" || variant === "glass") && size !== "40"
+        ? ""
+        : undefined;
   const graphic = loading ? (
     <ButtonSpinner size={iconSize} />
   ) : icon ? (
@@ -74,6 +83,7 @@ export function Button(props: ButtonProps) {
       data-size={size}
       data-icon={iconSlot}
       data-text={variant === "glass" ? "true" : undefined}
+      data-magnetic={magnetic}
       aria-disabled={inactive ? "true" : undefined}
       aria-busy={loading ? "true" : undefined}
       /* Tooltip sababi bor boʻlsa tugma fokuslanadi, shuning uchun disabled atributi qoʻyilmaydi. */

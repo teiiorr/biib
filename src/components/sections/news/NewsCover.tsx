@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 
+import type { MediaRevealProps } from "@/components/motion/MediaReveal";
 import { GirihStar } from "@/components/ornament/GirihStar";
 import { MediaFrame } from "@/components/ui/MediaFrame";
 import { t } from "@/content";
@@ -18,6 +19,8 @@ export interface NewsCoverProps {
   /** Maʼnoli surat (maqola boshi): alt matni oʻqiladi; aks holda bezak, sarlavha havolasi yetarli. */
   readonly meaningful?: boolean;
   readonly priority?: boolean;
+  /** Muqova kirishi va parallaks; maqola boshida umumiy element kirish oʻrnida (faqat parallaks). */
+  readonly motion?: MediaRevealProps;
   readonly className?: string;
 }
 
@@ -32,6 +35,7 @@ export function NewsCover({
   sizes,
   meaningful = false,
   priority = false,
+  motion,
   className,
 }: NewsCoverProps) {
   const { cover, story } = article;
@@ -39,7 +43,12 @@ export function NewsCover({
   const src = cover.status === "pending" ? null : cover.src;
   const style = { "--cover-tint": `var(--${story.primary})` } as CSSProperties;
   return (
-    <MediaFrame ratio={ratio} className={cn("news-cover", className)} style={style}>
+    <MediaFrame
+      ratio={ratio}
+      className={cn("news-cover", className)}
+      style={style}
+      {...(motion ? { motion } : {})}
+    >
       {src ? (
         <Image
           src={src}
