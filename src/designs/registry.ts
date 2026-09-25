@@ -11,7 +11,6 @@ export type ArtSlot =
   | "project-media"
   | "news-header"
   | "news-progress"
-  | "people-heading"
   | "contacts-band"
   | "footer-crown"
   | "not-found"

@@ -4,15 +4,27 @@
   .section-head {
     display: grid;
     gap: 12px;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
   }
+  @media (min-width: 600px) {
+    .section-head {
+      margin-bottom: 32px;
+    }
+  }
+  /* Sarlavha bloki va havola oxirgi qatorlarining tayanch chizigʻi bir: havola matni tugma
+     balandligida «suzmaydi». */
   .section-head-row {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-end;
+    align-items: last baseline;
     justify-content: space-between;
-    gap: 16px 24px;
+    gap: 8px 24px;
     margin-bottom: 24px;
+  }
+  /* «Hammasini koʻrish» matni kontent chetiga tekislanadi: ghost tugmaning ichki boʻshligʻi optik qaytariladi
+     (bir qatorda oʻng chetga, pastga oʻtganda chap chetga). */
+  .section-head-row > .ui-button[data-variant="ghost"] {
+    margin-inline: calc(-1 * var(--btn-px)) calc(4px - var(--btn-px));
   }
 
   /* Darvoza: egasining videosi, belgi kadr markazida; nom, missiya va harakatlar pastda chapda, toʻrda. */
@@ -193,6 +205,26 @@
       --btn-h: var(--control-m);
       --btn-px: 24px;
     }
+    /* Ikki harakat qatorni teng boʻlib toʻldiradi: oʻng chetda 20 px «ortiqcha» boʻshliq qolmaydi. */
+    .home-hero-actions {
+      flex: 1 1 100%;
+    }
+    .home-hero-actions > .ui-button {
+      flex: 1 1 0;
+    }
+    /* Halqa boshqaruvi alohida qatorga tushmasin: missiyaning birinchi qatori yonida, oʻng chetda.
+       Joy missiyadan oldindan olinadi (tugma kelganda matn siljimaydi), matn ustiga tushmaydi. */
+    :root[data-design="atlas"] .home-hero-row {
+      position: relative;
+    }
+    :root[data-design="atlas"] .home-hero-mission {
+      padding-inline-end: calc(var(--hit-min) + 12px);
+    }
+    .home-hero-control {
+      position: absolute;
+      top: -8px;
+      right: 0;
+    }
   }
   @media (min-width: 1024px) {
     .home-hero-content {
@@ -266,14 +298,16 @@
 
   /* UPOP TREND: bosh loyiha boʻlimi */
   /* Lojuvard maydon: kunduzgi Atlasda boʻlim tungi Rishton toʻplamiga oʻtadi (juftliklar §12.2 da
-     tekshirilgan); shu sinf loyiha sahifasidagi roʻyxat lentasida ham. Birlashma doskani paper.css beradi. */
-  .upop-field {
+     tekshirilgan); UPOP maydoni va rasmiy sarlavha lentasi (navy-band). Birlashma doskani paper.css beradi.
+     Siyoh tokenining oʻzi almashadi: Heading dagi text-ink ham, nonushoq ham lenta ustida toʻgʻri rangda. */
+  .upop-field,
+  .navy-band {
     position: relative;
     isolation: isolate;
     color: var(--ink);
     background: var(--bg);
   }
-  :root[data-design="atlas"][data-theme="light"] .upop-field {
+  :root[data-design="atlas"][data-theme="light"] :is(.upop-field, .navy-band) {
     --bg: #0a1026;
     --surface: #111a38;
     --surface-2: #17214a;
@@ -304,18 +338,37 @@
     --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
   /* Tunda sahifa oʻzi lojuvard: maydon bir pogʻona yorugʻroq sirt bilan ajraladi. */
-  :root[data-design="atlas"][data-theme="dark"] .upop-field {
+  :root[data-design="atlas"][data-theme="dark"] :is(.upop-field, .navy-band) {
     --bg: #111a38;
     --surface: #17214a;
   }
+  /* Sarlavha lentasi tekis: relyef ham, gradient ham yoʻq; pastki qirrada bitta 1 px oltin chiziq. */
+  :root[data-design="atlas"] .navy-band::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 1px;
+    background: var(--accent-art);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  :root[data-design="birlashma"][data-theme="dark"] .navy-band {
+    background: var(--surface);
+  }
   /* Baxmal tovlanishi: chap yuqorida 8 % pushti, oʻng pastda 6 % oltin — rang hikoyasi, halo emas. */
   :root[data-design="atlas"] .upop-field {
-    background: linear-gradient(
+    --upop-velvet: linear-gradient(
       160deg,
       color-mix(in oklab, var(--bg) 92%, var(--art-1)) 0%,
       var(--bg) 45%,
       color-mix(in oklab, var(--bg) 94%, var(--art-2)) 100%
     );
+    background: var(--upop-velvet);
+  }
+  /* Bosh sahifada maydon missiya ostidan davom etadi: yuqori qirra missiya tugagan lojuvarddan boshlanadi,
+     ikki boʻlim orasida chok koʻrinmaydi. */
+  :root[data-design="atlas"] .home-hero-scene + .upop-field {
+    background: linear-gradient(180deg, var(--hero-scrim) 0, transparent 240px), var(--upop-velvet);
   }
 
   .upop-feature-grid {
@@ -338,6 +391,7 @@
   }
   .upop-feature-text {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 24px;
   }
   .upop-feature-copy {
@@ -363,6 +417,12 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 12px;
+  }
+  /* Telefonda ikki harakat bir qatorga sigʻmaydi: ikkalasi toʻliq kenglikda (aloqa lentasi bilan bir xil). */
+  @media (max-width: 599px) {
+    .upop-feature-actions > .ui-button {
+      flex: 1 1 100%;
+    }
   }
   @media (min-width: 600px) {
     .upop-feature-grid {
@@ -417,9 +477,11 @@
       gap: 48px;
     }
   }
+  /* Qatorlar yuqoridan: yon ustun balandroq boʻlsa ham sarlavha va matn bir-biridan uzoqlashmaydi. */
   .news-lead {
     display: grid;
     gap: 12px;
+    align-content: start;
   }
   .news-cover {
     width: 100%;
@@ -446,6 +508,17 @@
     gap: 24px;
     align-content: start;
   }
+  @media (min-width: 600px) and (max-width: 1023px) {
+    .news-side {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  /* Kompyuter: yon ustun bosh xabar bilan bir balandlikda, qatorlar orasi teng taqsimlanadi. */
+  @media (min-width: 1024px) {
+    .news-side {
+      align-content: space-between;
+    }
+  }
   .news-row {
     display: grid;
     grid-template-columns: 96px minmax(0, 1fr);
@@ -463,86 +536,84 @@
   }
 
   /* Odamlar */
-  .people-section {
-    background: var(--surface);
-  }
+  /* Sarlavha toʻliq kenglikdagi tinch lojuvard lentada (navy-band); guruhlar zaminda, yarim qadam pastda. */
   .people-head {
-    position: relative;
-    margin-bottom: 32px;
-    padding: 24px 0;
-  }
-  .people-kundal {
-    position: absolute;
-    inset: 0 -16px;
-    border-radius: var(--radius-card);
-    overflow: hidden;
-  }
-  /* Panel ichi boʻsh: balandlik oʻramdan olinadi, aks holda relyef koʻrinmaydi. */
-  .people-kundal > .kundal-panel {
-    position: absolute;
-    inset: 0;
-  }
-  @media (min-width: 1024px) {
-    .people-kundal {
-      inset: 0 -24px;
-    }
-    .people-head-text {
-      padding: 0 24px;
-    }
-    .people-head {
-      padding: 32px 0;
-    }
-  }
-  .people-head-text {
-    position: relative;
     display: grid;
     gap: 12px;
-    padding: 0 16px;
   }
-  .people-lead {
-    color: var(--ink-2);
-  }
-  /* Kundal ustida sarlavha ham, kirish ham panel siyohida (lojuvardda 6.3:1). */
-  :root[data-design="atlas"] .people-head-text,
-  :root[data-design="atlas"] .people-head-text .people-lead,
-  :root[data-design="atlas"] .people-head-text h2 {
-    color: var(--kundal-ink, var(--ink));
+  .people-body {
+    padding-block: calc(var(--section-gap) / 2);
   }
   .people-groups {
-    display: grid;
-    gap: 48px;
+    row-gap: 48px;
   }
+  .people-group,
+  .people-groups-note {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+  .people-group-head {
+    margin-bottom: 12px;
+  }
+  .people-group-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: var(--hit-min);
+    color: var(--ink);
+    transition: color var(--dur-ui) var(--ease-ui);
+  }
+  .people-group-arrow {
+    color: var(--tint);
+    transition: transform var(--dur-ui) var(--ease-ui);
+  }
+  @media (hover: hover) {
+    .people-group-link:hover {
+      color: var(--tint);
+    }
+    .people-group-link:hover .people-group-arrow {
+      transform: translateX(4px);
+    }
+  }
+  /* Har guruh bitta toʻla qator: telefonda 2 ustun (4 dan 2 tadan), planshetda guruhlar yonma-yon
+     (4 + 4 ustun), kompyuterda rahbariyat 1–4, ekspertlar 5–12. Boʻsh ustun ham, yarim karta ham qolmaydi;
+     sigʻmagan ekspertlar teaser da yashiriladi — hammasi guruh sarlavhasidagi havolada. */
   .people-row {
-    display: flex;
-    gap: 16px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: var(--gutter);
     margin: 0;
-    padding: 0 0 12px;
+    padding: 0;
     list-style: none;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--margin);
-    -webkit-overflow-scrolling: touch;
   }
   .people-card {
-    flex: 0 0 68%;
-    scroll-snap-align: start;
     display: grid;
-    gap: 8px;
+    gap: 12px;
+    align-content: start;
   }
-  @media (min-width: 600px) {
-    .people-card {
-      flex-basis: 40%;
+  @media (max-width: 1023px) {
+    .people-row > .people-card:nth-child(n + 3) {
+      display: none;
+    }
+  }
+  @media (min-width: 600px) and (max-width: 1023px) {
+    .people-group-leaders {
+      grid-column: 1 / 5;
+    }
+    .people-group-experts {
+      grid-column: 5 / 9;
     }
   }
   @media (min-width: 1024px) {
-    .people-row {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 24px;
-      overflow: visible;
+    .people-groups {
+      row-gap: 32px;
     }
-    .people-card {
-      flex-basis: auto;
+    .people-group-leaders {
+      grid-column: 1 / 5;
+    }
+    .people-group-experts {
+      grid-column: 5 / 13;
     }
   }
   .people-portrait {
@@ -571,59 +642,53 @@
   }
 
   /* Aloqa lentasi */
-  .contact-band {
-    position: relative;
-  }
-  /* Girih lenta boʻlim tepasida, toʻliq kenglikda; pastga qarab eriydi, matn ostiga kirmaydi. */
-  .contact-band-girih {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 96px;
-    overflow: hidden;
-    color: var(--accent-art);
-    opacity: 0.8;
-    -webkit-mask-image: linear-gradient(180deg, black 0%, black 40%, transparent 100%);
-    mask-image: linear-gradient(180deg, black 0%, black 40%, transparent 100%);
-  }
-  .contact-band-girih svg {
-    width: 100%;
-    height: 100%;
-  }
-  .contact-band-grid {
-    position: relative;
+  /* Atlas: sokin karta (sirt, 1 px chiziq, 12 px radius). Kompyuterda sarlavha va harakatlar 1–7,
+     manzil va telefon 8–12; telefonda ketma-ket. Palak kichik, sarlavha yonida. */
+  .contact-band-text {
     display: grid;
-    gap: 32px;
-    padding-block: 48px 32px;
+    gap: 24px;
   }
-  @media (min-width: 1024px) {
-    .contact-band-girih {
-      height: 160px;
-    }
-    .contact-band-grid {
-      padding-block: 64px 32px;
-    }
+  :root[data-design="atlas"] .contact-band-text {
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    background: var(--surface);
   }
-  @media (min-width: 1024px) {
-    .contact-band-grid {
-      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-      align-items: center;
-      gap: 64px;
+  /* Telefon: palak sarlavha yonida, kirish matni ostida toʻliq kenglikda (tor ustunga siqilmaydi). */
+  .contact-band-head {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 12px 16px;
+  }
+  .contact-band-title {
+    display: contents;
+  }
+  .contact-band-title > p {
+    grid-column: 1 / -1;
+  }
+  @media (min-width: 600px) {
+    .contact-band-head {
+      align-items: start;
+      column-gap: 24px;
+    }
+    .contact-band-title {
+      display: grid;
+      gap: 12px;
+      min-width: 0;
+    }
+    .contact-band-title > p {
+      grid-column: auto;
     }
   }
   .contact-band-palak {
-    justify-self: center;
+    flex: none;
     color: var(--accent-art);
-  }
-  .contact-band-text {
-    display: grid;
-    gap: 16px;
   }
   .contact-band-list {
     display: grid;
     gap: 16px;
-    margin: 8px 0 0;
+    margin: 0;
   }
   @media (min-width: 600px) {
     .contact-band-list {
@@ -637,7 +702,36 @@
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    padding-top: 8px;
+  }
+  /* Telefonda ikki tugma bir qatorga sigʻmaydi: ikkalasi toʻliq kenglikda, bosh barmoq zonasida teng. */
+  @media (max-width: 599px) {
+    .contact-band-actions > .ui-button {
+      flex: 1 1 100%;
+    }
+  }
+  @media (min-width: 1024px) {
+    :root[data-design="atlas"] .contact-band-text {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-template-areas:
+        "head head head head head head head . list list list list"
+        "actions actions actions actions actions actions actions . list list list list";
+      column-gap: var(--gutter);
+      row-gap: 32px;
+      padding: 48px;
+    }
+    :root[data-design="atlas"] .contact-band-head {
+      grid-area: head;
+    }
+    :root[data-design="atlas"] .contact-band-list {
+      grid-area: list;
+      grid-template-columns: minmax(0, 1fr);
+      align-self: end;
+    }
+    /* Tugmalar sarlavha matni bilan bir chiziqdan: palak (80) va oraliq (24) qadar ichkarida. */
+    :root[data-design="atlas"] .contact-band-actions {
+      grid-area: actions;
+      padding-inline-start: 104px;
+    }
   }
   .contact-band-art {
     display: none;
@@ -657,4 +751,18 @@
   font-size: clamp(2.25rem, 1.6rem + 2.2vw, 4rem);
   line-height: var(--lh-h1);
   letter-spacing: var(--ls-h1);
+}
+
+/* 320–389 px: «upop.uz saytida roʻyxatdan oʻtish» bir qatorga sigʻmaydi — tugma toʻliq kenglikda, yorliq
+   ikki qatorga oʻtadi (shrift kichraymaydi, ustun kengaymaydi). Qatlamdan tashqarida: whitespace-nowrap
+   utilitasidan ustun turishi kerak. */
+@media (max-width: 389px) {
+  .upop-feature-actions > .ui-button[data-variant="primary"] {
+    flex: 1 1 100%;
+    height: auto;
+    min-height: var(--btn-h);
+    padding-block: 12px;
+    white-space: normal;
+    text-align: center;
+  }
 }

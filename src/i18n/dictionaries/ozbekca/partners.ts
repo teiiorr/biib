@@ -13,4 +13,5 @@ export const partners: typeof source = {
   pending: "Hamkorlar röyxati taşkilot tasdiğini kutmoqda",
   logoAlt: "{name} logotipi",
   visit: "{name} saytiga ötiş",
+  invite: "Hamkorlik taklifi uçun yozing",
 };

@@ -17,7 +17,7 @@ interface GallerySectionProps {
 
 /**
  * Bolalar galereyasi (25.4.1): faqat rozilik yozuvi bor ishlar; imzo — ism, yosh, viloyat, nom.
- * Ish yoʻq boʻlsa halol izoh: sahifa ikki dizaynda bir xil DOM.
+ * Ish yoʻq boʻlsa boʻlim umuman chizilmaydi (HomePage); kutilayotgani content-pending.md da.
  */
 export function GallerySection({ locale, dict }: GallerySectionProps) {
   const artworks = getArtworks();
@@ -33,45 +33,39 @@ export function GallerySection({ locale, dict }: GallerySectionProps) {
             {g.lead}
           </Text>
         </Reveal>
-        {artworks.length === 0 ? (
-          <Text as="p" tone="ink-3" measure>
-            {g.pending}
-          </Text>
-        ) : (
-          <Reveal
-            as="ul"
-            className="gallery-wall"
-            stagger
-            attrs={{ "data-card-group": "" }}
-            label={g.heading}
-          >
-            {artworks.map((art, i) => (
-              <li
-                key={art.id}
-                className="gallery-item paper-look"
-                data-card=""
-                style={{ "--paper-rotate": `${i % 2 ? 1.5 : -1.5}deg` } as React.CSSProperties}
-              >
-                <figure>
-                  <Image
-                    src={art.src}
-                    alt={t(art.title, locale)}
-                    width={art.width}
-                    height={art.height}
-                    sizes="(min-width: 1024px) 25vw, 50vw"
-                  />
-                  <figcaption className="t-small text-ink-2" data-card-title="">
-                    {fill(g.caption, {
-                      name: art.firstName,
-                      age: art.age,
-                      region: t(art.region, locale),
-                    })}
-                  </figcaption>
-                </figure>
-              </li>
-            ))}
-          </Reveal>
-        )}
+        <Reveal
+          as="ul"
+          className="gallery-wall"
+          stagger
+          attrs={{ "data-card-group": "" }}
+          label={g.heading}
+        >
+          {artworks.map((art, i) => (
+            <li
+              key={art.id}
+              className="gallery-item paper-look"
+              data-card=""
+              style={{ "--paper-rotate": `${i % 2 ? 1.5 : -1.5}deg` } as React.CSSProperties}
+            >
+              <figure>
+                <Image
+                  src={art.src}
+                  alt={t(art.title, locale)}
+                  width={art.width}
+                  height={art.height}
+                  sizes="(min-width: 1024px) 25vw, 50vw"
+                />
+                <figcaption className="t-small text-ink-2" data-card-title="">
+                  {fill(g.caption, {
+                    name: art.firstName,
+                    age: art.age,
+                    region: t(art.region, locale),
+                  })}
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </Reveal>
       </Container>
     </Section>
   );

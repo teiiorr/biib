@@ -80,7 +80,7 @@ export function ProjectsPage({ locale, dict }: PageProps) {
         </div>
       </PageHero>
 
-      <Section as="div" padded={false} className="upop-stage">
+      <Section as="div" rhythm="none" className="upop-stage">
         <Container>
           <DesignArt
             slot="project-media"
@@ -153,7 +153,7 @@ export function ProjectsPage({ locale, dict }: PageProps) {
 
       <Section
         tone="dark"
-        padded={false}
+        rhythm="band"
         labelledBy="upop-register-title"
         className="upop-register upop-field"
       >

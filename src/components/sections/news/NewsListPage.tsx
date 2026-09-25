@@ -21,7 +21,11 @@ interface PageProps {
   readonly dict: Dictionary;
 }
 
-/** Yangiliklar: bosh xabar katta, qolgani asimmetrik toʻrda; beshta xabarga filtr va sahifalash kerak emas. */
+/**
+ * Yangiliklar: bosh xabar butun kenglikda (kompyuterda muqova 1–7, matn 8–12), qolgan toʻrttasi bir
+ * qatorda (planshetda 2 × 2). Muqovalar bir nisbatda, sarlavhalar bir chiziqda boshlanadi; teshik
+ * qolmaydi. Beshta xabarga filtr va sahifalash kerak emas.
+ */
 export function NewsListPage({ locale, dict }: PageProps) {
   const [lead, ...rest] = getNews();
   const n = dict.news;
@@ -44,7 +48,7 @@ export function NewsListPage({ locale, dict }: PageProps) {
         ]}
         breadcrumbsLabel={dict.common.hints.breadcrumbs}
       />
-      <Section padded={false} className="pb-24">
+      <Section>
         <Container>
           {!lead ? (
             <Text as="p" tone="ink-3">
@@ -64,30 +68,28 @@ export function NewsListPage({ locale, dict }: PageProps) {
                       article={lead}
                       ratio="3:2"
                       locale={locale}
-                      sizes="(min-width: 1440px) 875px, (min-width: 1024px) 66vw, 100vw"
+                      sizes="(min-width: 1440px) 752px, (min-width: 1024px) 55vw, 100vw"
                     />
                   </ViewTransition>
                 </TransitionLink>
-                <p className="t-micro text-ink-3 tnum news-meta">
-                  {lead.status === "confirmed"
-                    ? formatDate(locale, lead.date)
-                    : t(lead.topic, locale)}
-                </p>
-                <Heading level={2} size="h2" className="news-title" data-card-title="">
-                  <TransitionLink href={pathFor(locale, "newsItem", lead.slug)}>
-                    {t(lead.title, locale)}
-                  </TransitionLink>
-                </Heading>
-                <Text as="p" size="body-l" tone="ink-2" measure>
-                  {t(lead.lead, locale)}
-                </Text>
+                <div className="news-grid-lead-text">
+                  <p className="t-micro text-ink-3 tnum news-meta">
+                    {lead.status === "confirmed"
+                      ? formatDate(locale, lead.date)
+                      : t(lead.topic, locale)}
+                  </p>
+                  <Heading level={2} size="h2" className="news-title" data-card-title="">
+                    <TransitionLink href={pathFor(locale, "newsItem", lead.slug)}>
+                      {t(lead.title, locale)}
+                    </TransitionLink>
+                  </Heading>
+                  <Text as="p" size="body-l" tone="ink-2" measure>
+                    {t(lead.lead, locale)}
+                  </Text>
+                </div>
               </article>
-              {rest.map((item, i) => (
-                <article
-                  key={item.slug}
-                  className={`news-grid-item paper-look ${i % 3 === 0 ? "news-grid-wide" : ""}`}
-                  data-card=""
-                >
+              {rest.map((item) => (
+                <article key={item.slug} className="news-grid-item paper-look" data-card="">
                   <TransitionLink
                     href={pathFor(locale, "newsItem", item.slug)}
                     className="news-cover-link"
@@ -97,13 +99,9 @@ export function NewsListPage({ locale, dict }: PageProps) {
                     <ViewTransition name={sharedName("news-cover", item.slug)}>
                       <NewsCover
                         article={item}
-                        ratio={i % 3 === 0 ? "16:9" : "4:5"}
+                        ratio="3:2"
                         locale={locale}
-                        sizes={
-                          i % 3 === 0
-                            ? "(min-width: 1440px) 875px, (min-width: 1024px) 66vw, (min-width: 600px) 50vw, 100vw"
-                            : "(min-width: 1440px) 416px, (min-width: 1024px) 33vw, (min-width: 600px) 50vw, 100vw"
-                        }
+                        sizes="(min-width: 1440px) 304px, (min-width: 1024px) 22vw, (min-width: 600px) 45vw, 100vw"
                       />
                     </ViewTransition>
                   </TransitionLink>

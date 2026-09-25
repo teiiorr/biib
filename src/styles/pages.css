@@ -75,6 +75,10 @@
   .upop-film {
     row-gap: 24px;
   }
+  /* Halqa sarlavhaning davomi: yuqorida yarim qadam (sarlavhadan), pastda ham — keyingi boʻlim bilan toʻliq qadam. */
+  .upop-stage {
+    padding-bottom: calc(var(--section-gap) / 2);
+  }
   .upop-film-text,
   .upop-film-media {
     grid-column: 1 / -1;
@@ -94,10 +98,8 @@
     }
   }
 
-  /* Roʻyxatdan oʻtish lentasi: lojuvard maydon (home.css .upop-field), ichki boʻshliq 48/64. */
-  .upop-register {
-    padding-block: 48px;
-  }
+  /* Roʻyxatdan oʻtish lentasi: lojuvard maydon (home.css .upop-field), ichki boʻshliq --band-pad.
+     Shu tartib «Biz haqimizda» oxiridagi UPOP lentasida ham. */
   .upop-register-grid {
     row-gap: 24px;
     align-items: center;
@@ -111,9 +113,6 @@
     gap: 12px;
   }
   @media (min-width: 1024px) {
-    .upop-register {
-      padding-block: 64px;
-    }
     .upop-register-text {
       grid-column: 1 / 8;
     }
@@ -124,44 +123,48 @@
   }
 
   /* Biz haqimizda */
-  .about-ganch {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.9;
+  /* Sarlavha 1–4, matn 6–12. Kompyuterda sarlavha yopishqoq: matn yonidagi boʻsh ustun oʻqish davomida
+     sarlavhani ushlab turadi, bir chetda yolgʻiz qolmaydi. */
+  .about-split {
+    row-gap: 24px;
   }
-  .about-divider {
-    color: var(--accent-art);
-    opacity: 0.7;
+  .about-split-head,
+  .about-split-body {
+    grid-column: 1 / -1;
+  }
+  @media (min-width: 1024px) {
+    .about-split-head {
+      grid-column: 1 / 5;
+      position: sticky;
+      top: calc(var(--header-h) + 32px + var(--safe-top));
+      align-self: start;
+    }
+    .about-split-body {
+      grid-column: 6 / 13;
+    }
   }
   .about-mission {
     display: grid;
     gap: 24px;
   }
+  /* Yoʻnalishlar: ingichka chiziqli roʻyxat (UPOP dalillari bilan bir til), belgisiz. */
   .about-values {
     display: grid;
-    gap: 24px;
     margin: 0;
     padding: 0;
     list-style: none;
   }
   .about-value {
     display: grid;
-    grid-template-columns: 24px minmax(0, 1fr);
-    gap: 12px;
-    align-items: start;
-  }
-  .about-value > div {
-    display: grid;
     gap: 4px;
+    padding-block: 16px;
+    border-top: 1px solid var(--line);
   }
-  .about-bullet {
-    width: 24px;
-    height: 24px;
-    margin-top: 2px;
+  .about-value:first-child {
+    padding-top: 0;
+    border-top: 0;
   }
-  .about-history {
+  :root[data-design="atlas"] .about-history {
     background: var(--surface);
   }
   .about-timeline-wrap {
@@ -170,10 +173,75 @@
   .about-timeline-art {
     display: none;
   }
-  .about-next {
+  .about-docs-note {
+    padding-top: 32px;
+  }
+
+  /* Tarix chizigʻi. Umumiy: roʻyxat va toʻr; Atlas: 1 px oltin chiziq va nuqtalar (Birlashma paper.css). */
+  .history-timeline {
     display: grid;
-    gap: 16px;
-    padding-block: 32px;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .history-item {
+    display: grid;
+    gap: 8px;
+    align-content: start;
+  }
+  .history-year {
+    color: var(--accent-text);
+  }
+  :root[data-design="atlas"] .history-timeline {
+    position: relative;
+    gap: 32px;
+    padding-inline-start: 24px;
+  }
+  :root[data-design="atlas"] .history-timeline::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 4px;
+    width: 1px;
+    background: var(--accent-art);
+    opacity: 0.6;
+  }
+  :root[data-design="atlas"] .history-item {
+    position: relative;
+  }
+  :root[data-design="atlas"] .history-item::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: -24px;
+    width: 9px;
+    height: 9px;
+    border: 1px solid var(--accent-art);
+    border-radius: 50%;
+    background: var(--surface);
+  }
+  /* Kompyuterda bosqichlar soni qancha boʻlsa, shuncha teng ustun: toʻrtinchi ustun boʻsh qolmaydi. */
+  @media (min-width: 1024px) {
+    .history-timeline {
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
+      column-gap: var(--gutter);
+    }
+    :root[data-design="atlas"] .history-timeline {
+      padding-inline-start: 0;
+      padding-top: 32px;
+    }
+    :root[data-design="atlas"] .history-timeline::before {
+      inset: 4px 0 auto;
+      width: auto;
+      height: 1px;
+    }
+    :root[data-design="atlas"] .history-item::before {
+      top: -32px;
+      left: 0;
+    }
   }
 }
 
@@ -188,10 +256,18 @@
     display: grid;
     gap: 32px;
   }
+  .news-grid-lead,
+  .news-grid-item,
+  .news-grid-lead-text {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+  }
+  /* Muqovalar bir nisbat va bir kenglikda, sana bir qator: sarlavhalar qatorda bir chiziqda boshlanadi. */
   @media (min-width: 600px) {
     .news-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 32px 24px;
+      gap: 48px var(--gutter);
     }
     .news-grid-lead {
       grid-column: 1 / -1;
@@ -199,21 +275,19 @@
   }
   @media (min-width: 1024px) {
     .news-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 48px 32px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
     .news-grid-lead {
-      grid-column: 1 / span 2;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gutter);
+      align-items: center;
     }
-    .news-grid-wide {
-      grid-column: span 2;
+    .news-grid-lead > .news-cover-link {
+      grid-column: 1 / 8;
     }
-  }
-  .news-grid-lead,
-  .news-grid-item {
-    display: grid;
-    gap: 12px;
-    align-content: start;
+    .news-grid-lead-text {
+      grid-column: 8 / 13;
+    }
   }
 
   /* Maqola */
@@ -258,11 +332,24 @@
     gap: 12px;
     padding-top: 16px;
   }
+  /* Telefonda ikki tugma bir qatorga sigʻmaydi: chapga osilib qolmasin, ikkalasi toʻliq kenglikda. */
+  @media (max-width: 599px) {
+    .share-buttons > * {
+      flex: 1 1 100%;
+    }
+  }
+  /* Maqola oxiri maqolaning davomi: yuqorida yarim qadam (maqola boʻlimidan), pastda yarim qadam futergacha. */
+  .article-end {
+    padding-bottom: calc(var(--section-gap) / 2);
+  }
   .article-nav {
     display: grid;
     gap: 16px;
-    padding-top: 32px;
+    padding-top: 24px;
     border-top: 1px solid var(--line);
+  }
+  .article-back {
+    padding-top: 24px;
   }
   @media (min-width: 600px) {
     .article-nav {
@@ -279,45 +366,22 @@
   .article-nav-link:hover .t-label {
     color: var(--tint);
   }
-  .article-nav-next {
-    text-align: right;
-    justify-items: end;
+  /* Telefonda ikkala havola chapdan: bir ustunda oʻngga tekislangan qator yolgʻiz koʻrinadi. */
+  @media (min-width: 600px) {
+    .article-nav-next {
+      text-align: right;
+      justify-items: end;
+    }
   }
 }
 
 @layer components {
-  /* Rasmiy sahifalar: kundal lentasi sahifa tepasidan (oyna sarlavhasi ostidan) sarlavhagacha. */
-  .official-kundal {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-  }
-  .official-kundal > .kundal-panel {
-    position: absolute;
-    inset: 0;
-    border-radius: 0;
-  }
-  :root[data-design="atlas"] .official-hero {
-    margin-top: calc(-1 * (var(--header-h) + 12px + var(--safe-top)));
-    padding-top: calc(var(--header-h) + 12px + var(--safe-top) + 48px);
-  }
-  @media (min-width: 1024px) {
-    :root[data-design="atlas"] .official-hero {
-      padding-top: calc(var(--header-h) + 12px + var(--safe-top) + 64px);
-    }
-  }
-  /* Panel ustidagi matn: siyoh tokenlari panel siyohiga almashadi (lojuvardda ≥ 4.8:1). */
-  :root[data-design="atlas"] .official-kundal ~ .page-hero {
-    --ink: var(--kundal-ink);
-    --ink-2: color-mix(in oklab, var(--kundal-ink) 88%, var(--kundal-ground));
-    --ink-3: color-mix(in oklab, var(--kundal-ink) 82%, var(--kundal-ground));
-    --tint: var(--kundal-ink);
-  }
+  /* Rasmiy sahifalar: sarlavha tinch lojuvard lentada (home.css .navy-band), bezaksiz. */
+  /* Ekspertlar: oltita aʼzo 6 / 3 / 2 ustunda toʻliq qatorlar; portret 4:5, kompyuterda ≈ 190 px. */
   .people-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px 16px;
+    gap: 32px var(--gutter);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -325,12 +389,11 @@
   @media (min-width: 600px) {
     .people-grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 32px 24px;
     }
   }
   @media (min-width: 1024px) {
     .people-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(6, minmax(0, 1fr));
     }
   }
   .people-card-text {
@@ -342,39 +405,97 @@
     min-height: 44px;
     color: var(--tint);
   }
-  .leaders {
+  .people-note {
+    padding-top: 32px;
+  }
+
+  /* Tasdiq kutilayotgan roʻyxat: bitta sokin karta — kichik belgi, halol izoh va keyingi qadam.
+     Balandligi ≥ 240 px: qisqa sahifada futer boʻshliq ustida suzib qolmaydi. */
+  .empty-state {
     display: grid;
-    gap: 48px;
+    justify-items: start;
+    align-content: center;
+    gap: 16px;
+    min-height: 240px;
+    padding: 32px 24px;
+    border-radius: var(--radius-card);
+  }
+  :root[data-design="atlas"] .empty-state {
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+  .empty-state-mark {
+    color: var(--accent-art);
+  }
+  @media (min-width: 1024px) {
+    .empty-state {
+      padding: 48px;
+    }
+  }
+
+  /* Rahbariyat: har rahbar toʻrning subgridi. Telefon: portret 1 ustun, matn 3; planshet: 2 + 6;
+     kompyuter: ikki rahbar yonma-yon, har biri 6 ustun (portret 2, matn 4). Boʻsh ustun qolmaydi. */
+  .leaders {
+    row-gap: 32px;
   }
   .leader {
+    grid-column: 1 / -1;
     display: grid;
-    gap: 24px;
+    grid-template-columns: subgrid;
+    align-items: start;
+  }
+  .leader-portrait {
+    grid-column: span 1;
+  }
+  .leader-text {
+    grid-column: span 3;
+    display: grid;
+    gap: 12px;
+  }
+  .leaders-note {
+    grid-column: 1 / -1;
   }
   @media (min-width: 600px) {
-    .leader {
-      grid-template-columns: minmax(0, 3fr) minmax(0, 5fr);
-      gap: 32px;
-      align-items: start;
+    .leader-portrait {
+      grid-column: span 2;
+    }
+    .leader-text {
+      grid-column: span 6;
     }
   }
   @media (min-width: 1024px) {
-    .leader {
-      grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
-      gap: 48px;
+    .leaders {
+      row-gap: 48px;
     }
-  }
-  .leader-portrait {
-    width: 100%;
-    color: var(--accent-art);
-  }
-  .leader-text {
-    display: grid;
-    gap: 16px;
+    .leader {
+      grid-column: span 6;
+    }
+    .leader-text {
+      grid-column: span 4;
+    }
   }
   .leader-facts {
     display: grid;
-    gap: 12px;
+    gap: 16px;
     padding-top: 16px;
     border-top: 1px solid var(--line);
+  }
+  .leader-fact {
+    display: grid;
+    gap: 4px;
+  }
+}
+
+@layer utilities {
+  /* Lenta oyna sarlavhasi ostidan boshlanadi. Sarlavha balandligi ::before da, shunda boʻlimning oʻz
+     boʻshligʻi shkalada qoladi va nonushoq oddiy sahifalar bilan bir balandlikda turadi. */
+  :root .page-hero-band {
+    margin-top: calc(-1 * (var(--header-h) + 12px + var(--safe-top)));
+    padding-top: var(--hero-pad-top);
+  }
+  :root .page-hero-band::before {
+    content: "";
+    display: block;
+    height: calc(var(--header-h) + 12px + var(--safe-top));
   }
 }

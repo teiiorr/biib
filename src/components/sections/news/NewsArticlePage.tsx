@@ -57,13 +57,13 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
             : []),
         ]}
       />
-      <Section as="article" labelledBy="article-title" className="article">
+      <Section as="article" rhythm="hero" labelledBy="article-title" className="article">
         <Container grid>
           <header
             className="col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3 article-head"
             data-grid-item=""
           >
-            <Breadcrumbs items={crumbs} label={dict.common.hints.breadcrumbs} />
+            <Breadcrumbs items={crumbs} label={dict.common.hints.breadcrumbs} collapseCurrent />
             <Heading level={1} size="h1" id="article-title">
               {title}
             </Heading>
@@ -123,43 +123,47 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
           </aside>
         </Container>
       </Section>
-      <Section padded={false} className="pb-24" as="div">
-        <Container>
-          <nav className="article-nav" aria-label={n.title}>
-            {previous ? (
+      <Section as="div" rhythm="none" className="article-end">
+        <Container grid>
+          {/* Oldingi/keyingi maqola matni bilan bir ustunlarda (3–9): chiziqlar bir chetda tugaydi. */}
+          <div className="col-span-4 md:col-span-8 lg:col-span-7 lg:col-start-3" data-grid-item="">
+            <nav className="article-nav" aria-label={n.title}>
+              {/* Halqa: ikkala katak doim toʻla (content/index.ts). */}
+              {previous ? (
+                <TransitionLink
+                  href={pathFor(locale, "newsItem", previous.slug)}
+                  direction={NAV_BACK}
+                  className="article-nav-link"
+                >
+                  <span className="t-micro text-ink-3">{n.previous}</span>
+                  <span className="t-label">{t(previous.title, locale)}</span>
+                </TransitionLink>
+              ) : (
+                <span />
+              )}
+              {next ? (
+                <TransitionLink
+                  href={pathFor(locale, "newsItem", next.slug)}
+                  className="article-nav-link article-nav-next"
+                >
+                  <span className="t-micro text-ink-3">{n.next}</span>
+                  <span className="t-label">{t(next.title, locale)}</span>
+                </TransitionLink>
+              ) : (
+                <span />
+              )}
+            </nav>
+            <div className="article-back">
               <TransitionLink
-                href={pathFor(locale, "newsItem", previous.slug)}
+                href={pathFor(locale, "news")}
                 direction={NAV_BACK}
-                className="article-nav-link"
+                className={buttonVariants({ variant: "link", size: "40" })}
+                data-variant="link"
+                data-size="40"
               >
-                <span className="t-micro text-ink-3">{n.previous}</span>
-                <span className="t-label">{t(previous.title, locale)}</span>
+                <span className="text-trim">{n.backToList}</span>
               </TransitionLink>
-            ) : (
-              <span />
-            )}
-            {next ? (
-              <TransitionLink
-                href={pathFor(locale, "newsItem", next.slug)}
-                className="article-nav-link article-nav-next"
-              >
-                <span className="t-micro text-ink-3">{n.next}</span>
-                <span className="t-label">{t(next.title, locale)}</span>
-              </TransitionLink>
-            ) : (
-              <span />
-            )}
-          </nav>
-          <div className="pt-8">
-            <TransitionLink
-              href={pathFor(locale, "news")}
-              direction={NAV_BACK}
-              className={buttonVariants({ variant: "link", size: "40" })}
-              data-variant="link"
-              data-size="40"
-            >
-              <span className="text-trim">{n.backToList}</span>
-            </TransitionLink>
+            </div>
           </div>
         </Container>
       </Section>

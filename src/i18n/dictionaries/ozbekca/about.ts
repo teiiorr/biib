@@ -38,11 +38,8 @@ export const about: typeof source = {
   history: {
     heading: "Tarix",
     lead: "Muhim bosqiçlar. Sanalar taşkilot tasdiğini kutmoqda.",
-    pending: "Tarix sanalari taşkilotdan tasdiq kutmoqda",
-    columnAlt: "Xiva Juma masjidi uslubidagi öyma yoğoç ustun",
   },
   documents: {
-    heading: "Taʼsis hujjatlari",
     pending: "Hujjatlar taşkilot tomonidan taqdim etilgaç şu yerda çiqadi.",
   },
   next: {

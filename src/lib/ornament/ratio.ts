@@ -9,10 +9,6 @@ export const ASPECT_RATIOS = {
 
 export type AspectRatio = keyof typeof ASPECT_RATIOS;
 
-export function ratioParts(ratio: AspectRatio): readonly [number, number] {
-  return ASPECT_RATIOS[ratio];
-}
-
 /** CSS aspect-ratio qiymati: "4 / 5". */
 export function ratioCss(ratio: AspectRatio): string {
   const [w, h] = ASPECT_RATIOS[ratio];

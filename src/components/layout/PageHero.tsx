@@ -14,11 +14,11 @@ interface PageHeroProps {
   readonly lead?: string;
   readonly breadcrumbs?: readonly BreadcrumbItem[];
   readonly breadcrumbsLabel?: string;
-  /** Rasmiy sahifalar: kundal paneli va boshqa bezak shu yerga keladi. */
+  /** Sarlavha yonidagi dizaynga xos bezak (masalan Birlashma gazeta nomi). */
   readonly art?: ReactNode;
-  readonly tone?: "light" | "dark";
+  /** Rasmiy sahifalar: sarlavha tinch lojuvard lentada (Birlashmada doska), bezaksiz. */
+  readonly band?: boolean;
   readonly titleId?: string;
-  /** Masalan rasmiy sahifalarda «official-hero»: kundal lentasi sarlavha ostigacha choʻziladi. */
   readonly className?: string;
   readonly children?: ReactNode;
 }
@@ -30,18 +30,24 @@ export function PageHero({
   breadcrumbs,
   breadcrumbsLabel,
   art,
-  tone = "light",
+  band = false,
   titleId = "page-title",
   className,
   children,
 }: PageHeroProps) {
   return (
-    <Section tone={tone} labelledBy={titleId} className={cn("relative", className)}>
-      {art}
+    <Section
+      tone={band ? "dark" : "light"}
+      rhythm={band ? "band" : "hero"}
+      labelledBy={titleId}
+      className={cn("relative", band && "navy-band page-hero-band", className)}
+    >
       <Container className="page-hero relative">
         {breadcrumbs && breadcrumbsLabel ? (
           <Breadcrumbs items={breadcrumbs} label={breadcrumbsLabel} />
         ) : null}
+        {/* Bezak toʻr ichida: sahifa chetiga (x = 0) yopishib qolmaydi. */}
+        {art}
         <Heading level={1} size="h1" id={titleId}>
           {title}
         </Heading>

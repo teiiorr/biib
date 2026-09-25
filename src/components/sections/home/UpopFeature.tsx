@@ -4,9 +4,9 @@ import { ViewTransition } from "react";
 import { Container } from "@/components/layout/Container";
 import { DesignArt } from "@/components/layout/DesignArt";
 import { Section } from "@/components/layout/Section";
+import { SplitLines } from "@/components/motion/SplitLines";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { Button } from "@/components/ui/Button";
-import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { MediaFrame } from "@/components/ui/MediaFrame";
 import { Text } from "@/components/ui/Text";
@@ -19,7 +19,7 @@ import { sharedName } from "@/lib/motion/transitions";
 
 import { InViewVideo } from "../projects/InViewVideo";
 
-interface ProjectsQuadrantProps {
+interface UpopFeatureProps {
   readonly locale: Locale;
   readonly dict: Dictionary;
 }
@@ -27,16 +27,17 @@ interface ProjectsQuadrantProps {
 /**
  * UPOP TREND: bosh loyiha boʻlimi. Lojuvard maydonda logotip (1–5 ustun), sahna halqasi 16:9
  * (6–12), ostida sarlavha, kirish, uchta dalil va ikki harakat. Telefonda: logotip, video, matn.
- * Harakat bu yerda yoʻq: data-upop-* belgilari harakat paketi uchun. Birlashmada halqa afishada.
+ * Maydon lenta: ichki boʻshliq --band-pad, missiya lojuvardidan choksiz davom etadi. Sarlavha
+ * split-lines bilan (katalog: ekrandan pastdagi h2). Birlashmada halqa afishada.
  */
-export function ProjectsQuadrant({ locale, dict }: ProjectsQuadrantProps) {
+export function UpopFeature({ locale, dict }: UpopFeatureProps) {
   const project = getFlagship();
   const u = dict.home.upop;
   const { loop, wordmark } = project.media;
   const age = fill(dict.projects.ageSticker, { from: project.age.from, to: project.age.to });
 
   return (
-    <Section labelledBy="home-upop" tone="dark" className="upop-feature upop-field">
+    <Section labelledBy="home-upop" tone="dark" rhythm="band" className="upop-feature upop-field">
       <Container grid className="upop-feature-grid">
         <div className="upop-feature-wordmark" data-grid-item="" data-upop-wordmark="">
           <ViewTransition name={sharedName("project-media", project.key)}>
@@ -72,9 +73,9 @@ export function ProjectsQuadrant({ locale, dict }: ProjectsQuadrantProps) {
         </div>
         <div className="upop-feature-text" data-grid-item="" data-upop-text="">
           <div className="upop-feature-copy">
-            <Heading level={2} size="h2" id="home-upop">
+            <SplitLines as="h2" className="t-h2 text-balance text-ink" id="home-upop">
               {u.heading}
-            </Heading>
+            </SplitLines>
             <Text as="p" size="body-l" tone="ink-2" measure>
               {u.lead}
             </Text>

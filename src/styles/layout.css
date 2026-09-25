@@ -173,33 +173,33 @@
     font-weight: var(--fw-micro);
     letter-spacing: var(--ls-micro);
   }
-  /* Sahifa oxiri tab-bar ostida qolmasin. */
+  /* Sahifa oxiri tab-bar ostida qolmasin. Balandlik: ekran minus futer (body ustun), 100svh emas. */
   .page-main {
+    flex: 1 0 auto;
     padding-top: calc(var(--header-h) + 12px + var(--safe-top));
-    min-height: 100svh;
   }
   .page-main[data-hero="full"] {
     padding-top: 0;
   }
 
   /* Futer */
-  /* Telefonda suzuvchi tab-bar hujjat oxirini yopmasin: futer ostida joy qoldiriladi. */
+  /* Tepada boʻlim qadamining yarmi: oldingi boʻlim yarmi bilan birga matndan tojgacha aynan --section-gap.
+     Telefonda suzuvchi tab-bar hujjat oxirini yopmasin: futer ostida joy qoldiriladi. */
   .site-footer {
     position: relative;
-    padding-top: 64px;
-    padding-bottom: calc(var(--tabbar-h) + 32px + var(--safe-bottom));
+    padding-top: calc(var(--section-gap) / 2);
+    padding-bottom: calc(var(--tabbar-h) + 24px + var(--safe-bottom));
     overflow: hidden;
   }
   @media (min-width: 1024px) {
     .site-footer {
-      padding-top: 96px;
       padding-bottom: calc(24px + var(--safe-bottom));
     }
   }
   .footer-crown {
     position: relative;
     min-height: 32px;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     color: var(--accent-art);
   }
   .footer-chust {
@@ -213,79 +213,94 @@
     background: var(--accent-art);
     opacity: 0.6;
   }
-  /* Islimiy yuqori qirra boʻylab: tik poya 90° burilib, ildizi oʻngda, uchi chapga oʻsadi. */
-  .footer-islimiy {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: min(640px, 100%);
-    height: 64px;
-    overflow: hidden;
-    color: var(--accent-art);
-    opacity: 0.7;
-    pointer-events: none;
-  }
-  .footer-islimiy svg {
-    position: absolute;
-    top: 12px;
-    right: 0;
-    transform-origin: top right;
-    transform: rotate(90deg) translateX(100%);
-  }
+  /* 44 px qatorlar oraligʻisiz: nishon oʻlchami saqlanadi, roʻyxat siyrak koʻrinmaydi. */
   .footer-groups {
     display: grid;
-    gap: 32px;
+    gap: 24px;
   }
-  @media (min-width: 600px) {
+  @media (min-width: 390px) {
     .footer-groups {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--gutter);
     }
   }
   @media (min-width: 1024px) {
     .footer-groups {
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 24px;
     }
   }
   .footer-group {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    align-items: flex-start;
   }
-  .footer-link {
+  .footer-group-label {
+    padding-bottom: 4px;
+  }
+  .footer-link,
+  .footer-note {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
+  }
+  .footer-link {
     color: var(--ink-2);
     transition: color var(--dur-ui) var(--ease-ui);
   }
   .footer-link:hover {
     color: var(--tint);
   }
+  /* Telefon: nom, tillar, pastda maxfiylik va muallif — sigʻsa bir qatorda, sigʻmasa (ru
+     «Конфиденциальность») muallif keyingi qatorga oʻtadi, ustma-ust tushmaydi. Kompyuterda bitta qator. */
   .footer-bottom {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 16px 24px;
-    margin-top: 48px;
-    padding-top: 24px;
+    column-gap: 16px;
+    margin-top: 32px;
+    padding-top: 16px;
     border-top: 1px solid var(--line);
     color: var(--ink-3);
+  }
+  .footer-copy {
+    flex-basis: 100%;
+    padding-block: 12px;
   }
   .footer-credit {
     color: var(--ink-3);
   }
+  @media (max-width: 1023px) {
+    .footer-bottom .footer-langs {
+      flex-basis: 100%;
+      order: 1;
+    }
+    .footer-bottom .footer-privacy {
+      order: 2;
+    }
+    .footer-credit {
+      order: 3;
+    }
+  }
+  @media (min-width: 1024px) {
+    .footer-bottom {
+      gap: 0 24px;
+    }
+    .footer-copy {
+      flex-basis: auto;
+      padding-block: 0;
+    }
+  }
   .footer-langs {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    margin-inline: -6px;
   }
   .footer-langs a {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
-    padding-inline: 8px;
+    padding-inline: 6px;
     color: var(--ink-2);
   }
   .footer-langs a[aria-current="true"] {
@@ -296,6 +311,17 @@
   .page-hero {
     display: grid;
     gap: 16px;
+  }
+  /* Grid bandi uzun soʻzdan kengaymasin: «Политика конфиденциальности» 390 px da oʻng chetni yeydi. */
+  .page-hero > * {
+    min-width: 0;
+  }
+  /* Telefonda uzun kirill soʻz boʻgʻin boʻyicha boʻlinadi (lang bor); shrift shkaladan kichraymaydi. */
+  @media (max-width: 599px) {
+    .page-hero h1 {
+      hyphens: auto;
+      overflow-wrap: break-word;
+    }
   }
   .page-hero-lead {
     max-width: var(--measure);
@@ -356,28 +382,36 @@
       display: none;
     }
   }
+  /* 404 va xato: boshqa sahifalar bilan bir ritm — oyna sarlavhasidan qisqa, pastda yarim qadam. */
   .error-view {
     display: grid;
     gap: 24px;
     justify-items: start;
-    padding-block: 96px 48px;
+    padding-top: calc(var(--hero-pad-top) + 24px);
+    padding-bottom: calc(var(--section-gap) / 2);
   }
+  /* Palak kichik belgi: sarlavhadan katta emas, boʻsh doira boʻlib sahifani egallamaydi. */
+  /* Chizmaning ichki boʻshligʻi (≈ 7 %) qaytariladi: nuqtalar halqasi matn chetidan boshlanadi. */
   .error-art {
-    width: min(280px, 60vw);
+    width: 144px;
+    margin-inline-start: -10px;
     color: var(--accent-art);
   }
 
   /* Aloqa */
+  /* Qatorlar ixcham: yorliq va qiymat, 12 px ichki boʻshliq; 44 px faqat nusxa tugmasi bor qatorda. */
   .contact-details {
     display: grid;
-    gap: 16px;
-    margin: 24px 0 0;
+    margin: 16px 0 0;
   }
   .contact-row {
     display: grid;
     gap: 4px;
-    padding-bottom: 16px;
+    padding-block: 12px;
     border-bottom: 1px solid var(--line);
+  }
+  .contact-row:first-child {
+    border-top: 1px solid var(--line);
   }
   .contact-row-label {
     display: flex;
@@ -390,12 +424,53 @@
     justify-content: space-between;
     gap: 8px;
     margin: 0;
+  }
+  .contact-row-value:has(button) {
     min-height: 44px;
+  }
+  /* 320 px da uzun havola (t.me/…) nusxa tugmasi bilan sigʻmaydi: havola boʻlinadi, qator kengaymaydi. */
+  .contact-row-value > a {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  /* Telefonda ustunlar ustma-ust: orasi blok qadami (sarlavha oldingi roʻyxatga yopishmaydi). */
+  .contact-grid {
+    row-gap: 48px;
+  }
+  /* Nusxa tugmasi matni qator chetiga tekislanadi: ghost ichki boʻshligʻi optik qaytariladi. */
+  .contact-row-value > .ui-button[data-variant="ghost"] {
+    margin-inline-end: calc(-1 * min(var(--btn-px), var(--margin)));
+  }
+  /* Oʻng ustun: xarita, tarmoqlar va yozish bloki — chap roʻyxat bilan bir balandlikda tugaydi. */
+  .contact-aside {
+    display: grid;
+    gap: 32px;
+    align-content: start;
+  }
+  .contact-aside-block {
+    display: grid;
+    gap: 16px;
+  }
+  .contact-write {
+    position: relative;
+    display: grid;
+    gap: 16px;
+  }
+  :root[data-design="atlas"] .contact-write {
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+  }
+  @media (min-width: 1024px) {
+    :root[data-design="atlas"] .contact-write {
+      padding: 32px;
+    }
   }
   .contact-form {
     display: grid;
     gap: 16px;
-    padding-top: 24px;
+    padding-top: 8px;
   }
   .contact-trap {
     position: absolute;
@@ -417,19 +492,26 @@
     background: var(--surface);
     box-shadow: var(--shadow-raised);
   }
+  /* Matn sarlavha chetidan boshlanadi, belgilar kartaning ichki boʻshligʻiga osiladi (Art. III.5). */
   .privacy-kid-list {
     display: grid;
     gap: 12px;
     margin: 0;
-    padding-left: 24px;
+    padding: 0;
+    list-style: disc outside;
   }
+  .privacy-kid-list > li::marker {
+    color: var(--accent-text);
+  }
+  /* Mundarija faqat kompyuterda va yopishqoq (15.9): telefonda matndan oldin bir ekran havola boʻlmaydi. */
   .privacy-toc {
-    display: grid;
+    display: none;
     gap: 12px;
     align-self: start;
   }
   @media (min-width: 1024px) {
     .privacy-toc {
+      display: grid;
       position: sticky;
       top: calc(var(--header-h) + 24px + var(--safe-top));
     }
@@ -458,6 +540,10 @@
   }
   .privacy-section + .privacy-section {
     border-top: 1px solid var(--line);
+  }
+  /* Birinchi boʻlim sarlavhasi mundarija yorligʻi bilan bir chiziqda boshlanadi. */
+  .privacy-section:first-child {
+    padding-top: 0;
   }
 
   /* Hamkorlar */

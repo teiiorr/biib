@@ -51,9 +51,12 @@ export function getArticleNeighbours(slug: NewsSlug): {
   next: NewsArticle | null;
 } {
   const index = NEWS.findIndex((n) => n.slug === slug);
+  const count = NEWS.length;
+  // Halqa: birinchining oldingisi oxirgisi — maqola navigatsiyasida yarim qator boʻsh qolmaydi.
+  if (index < 0 || count < 2) return { previous: null, next: null };
   return {
-    previous: index > 0 ? (NEWS[index - 1] ?? null) : null,
-    next: index >= 0 && index < NEWS.length - 1 ? (NEWS[index + 1] ?? null) : null,
+    previous: NEWS[(index - 1 + count) % count] ?? null,
+    next: NEWS[(index + 1) % count] ?? null,
   };
 }
 

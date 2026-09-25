@@ -1,9 +1,9 @@
+import { Icon } from "@/components/icons/Icon";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/motion/Reveal";
-import { KundalPanel } from "@/components/ornament/KundalPanel";
+import { TransitionLink } from "@/components/motion/TransitionLink";
 import { Heading } from "@/components/ui/Heading";
-import { LinkButton } from "@/components/ui/LinkButton";
 import { PortraitFrame } from "@/components/ui/PortraitFrame";
 import { Text } from "@/components/ui/Text";
 import { getExperts, getLeadership, t } from "@/content";
@@ -20,107 +20,95 @@ interface PeopleTeaserProps {
 function PersonCard({ person, locale }: { person: Person; locale: Locale }) {
   const role = t(person.role, locale);
   const field = person.field ? t(person.field, locale) : null;
+  const name = person.name ? t(person.name, locale) : null;
   return (
     <li className="people-card paper-look" data-card="">
-      <PortraitFrame ratio="3:4" role={role} className="people-portrait" />
-      {/* Ism boʻlmasa ramka ichidagi lavozim yetarli: takrorlanmaydi. */}
-      {person.name ? (
+      <PortraitFrame ratio="4:5" className="people-portrait" />
+      <div className="people-card-text">
+        {/* Ism kelmaguncha imzo: rahbarda lavozim, ekspertda soha — bir marta, ramka ichida emas. */}
         <p className="t-label people-name" data-card-title="">
-          {t(person.name, locale)}
+          {name ?? field ?? role}
         </p>
-      ) : null}
-      {field ? (
-        <p className="t-small text-ink-3" data-card-title={person.name ? undefined : ""}>
-          {field}
-        </p>
-      ) : null}
+        {name ? <p className="t-small text-ink-3">{field ?? role}</p> : null}
+      </div>
     </li>
   );
 }
 
-/** Rahbariyat va ekspertlar: kundal paneli ortidagi sarlavha, portret ramkalari; telefonda scroll-snap qator. */
+interface PeopleGroupProps {
+  readonly heading: string;
+  readonly href: string;
+  readonly people: readonly Person[];
+  readonly locale: Locale;
+  readonly className: string;
+}
+
+/* Guruh sarlavhasining oʻzi sahifaga havola: ikki guruh yonma-yon turganda «hammasini koʻrish»
+   strelkasi qoʻshni guruh sarlavhasiga qarab qolmaydi. */
+function PeopleGroup({ heading, href, people, locale, className }: PeopleGroupProps) {
+  return (
+    <div className={`people-group ${className}`}>
+      <Heading level={3} size="h4" className="people-group-head">
+        <TransitionLink href={href} className="people-group-link">
+          {heading}
+          <Icon name="arrow-right" size={20} className="people-group-arrow" />
+        </TransitionLink>
+      </Heading>
+      <Reveal
+        as="ul"
+        className="people-row"
+        stagger
+        attrs={{ "data-card-group": "" }}
+        label={heading}
+      >
+        {people.map((p) => (
+          <PersonCard key={p.id} person={p} locale={locale} />
+        ))}
+      </Reveal>
+    </div>
+  );
+}
+
+/**
+ * Rahbariyat va ekspertlar: sarlavha tinch lojuvard lentada (bezaksiz, bitta oltin chiziq), ostida
+ * ikki guruh. Kompyuterda 2 + 4 portret 12 ustunni, planshetda 2 + 2 sakkiz ustunni toʻliq egallaydi;
+ * telefonda har guruh bitta toʻla qator (2 + 2), qolganlari sahifada.
+ */
 export function PeopleTeaser({ locale, dict }: PeopleTeaserProps) {
   const leaders = getLeadership().slice(0, 2);
   const experts = getExperts().slice(0, 4);
   const h = dict.home.people;
   return (
-    <Section labelledBy="home-people" tone="dark" className="people-section">
-      <Container>
-        <div className="people-head">
-          <div className="people-kundal birlashma:hidden" aria-hidden="true">
-            <KundalPanel seed="odamlar" light>
-              <span />
-            </KundalPanel>
-          </div>
-          <div className="people-head-text">
-            <Heading level={2} size="h2" id="home-people">
-              {h.heading}
-            </Heading>
-            <Text as="p" size="body-l" className="people-lead" measure>
-              {h.lead}
-            </Text>
-          </div>
-        </div>
-        <div className="people-groups">
-          <div>
-            <div className="section-head-row">
-              <Heading level={3} size="h4">
-                {h.leadership}
-              </Heading>
-              <LinkButton
-                href={pathFor(locale, "leadership")}
-                variant="ghost"
-                size="40"
-                icon="arrow-right"
-                iconPosition="end"
-              >
-                {dict.common.actions.viewAll}
-              </LinkButton>
-            </div>
-            <Reveal
-              as="ul"
-              className="people-row"
-              stagger
-              attrs={{ "data-card-group": "" }}
-              label={h.leadership}
-              tabIndex={0}
-            >
-              {leaders.map((p) => (
-                <PersonCard key={p.id} person={p} locale={locale} />
-              ))}
-            </Reveal>
-          </div>
-          <div>
-            <div className="section-head-row">
-              <Heading level={3} size="h4">
-                {h.experts}
-              </Heading>
-              <LinkButton
-                href={pathFor(locale, "experts")}
-                variant="ghost"
-                size="40"
-                icon="arrow-right"
-                iconPosition="end"
-              >
-                {dict.common.actions.viewAll}
-              </LinkButton>
-            </div>
-            <Reveal
-              as="ul"
-              className="people-row"
-              stagger
-              attrs={{ "data-card-group": "" }}
-              label={h.experts}
-              tabIndex={0}
-            >
-              {experts.map((p) => (
-                <PersonCard key={p.id} person={p} locale={locale} />
-              ))}
-            </Reveal>
-          </div>
-        </div>
-        <p className="t-small text-ink-3 pt-6">{dict.people.experts.pending}</p>
-      </Container>
+    <Section labelledBy="home-people" rhythm="none" className="people-section">
+      <div className="navy-band people-band section-band" data-tone="dark">
+        <Container className="people-head">
+          <Heading level={2} size="h2" id="home-people">
+            {h.heading}
+          </Heading>
+          <Text as="p" size="body-l" tone="ink-2" measure>
+            {h.lead}
+          </Text>
+        </Container>
+      </div>
+      <div className="people-body" data-tone="light">
+        <Container grid className="people-groups">
+          <PeopleGroup
+            heading={h.leadership}
+            href={pathFor(locale, "leadership")}
+            people={leaders}
+            locale={locale}
+            className="people-group-leaders"
+          />
+          <PeopleGroup
+            heading={h.experts}
+            href={pathFor(locale, "experts")}
+            people={experts}
+            locale={locale}
+            className="people-group-experts"
+          />
+          <p className="t-small text-ink-3 people-groups-note">{dict.people.experts.pending}</p>
+        </Container>
+      </div>
     </Section>
   );
 }

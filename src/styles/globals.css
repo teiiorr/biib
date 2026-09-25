@@ -122,7 +122,12 @@
   --columns: 4;
   --margin: 16px;
   --gutter: 16px;
+  /* Boʻlimlar ORASIDAGI masofa (48/64/96): har boʻlim ikki tomonga yarmini beradi, qoʻshni ikkitasi toʻliq qadam. */
   --section-gap: 48px;
+  /* Rangli lenta (lojuvard, doska, sirt) ichki boʻshligʻi: chekkasidan matngacha. */
+  --band-pad: 48px;
+  /* Sahifa boshi: oyna sarlavhasidan keyin nonushoqqacha. */
+  --hero-pad-top: 24px;
   --block-gap: 16px;
   --header-h: 56px;
   --tabbar-h: 64px;
@@ -143,6 +148,8 @@
     --margin: 32px;
     --gutter: 24px;
     --section-gap: 64px;
+    --band-pad: 64px;
+    --hero-pad-top: 32px;
     --block-gap: 24px;
   }
 }
@@ -191,7 +198,10 @@
     -webkit-text-size-adjust: 100%;
     overflow-x: clip;
   }
+  /* Ustun: qisqa sahifada futer ekran pastiga tushadi, boʻshliq futerdan tashqarida qolmaydi. */
   body {
+    display: flex;
+    flex-direction: column;
     min-height: 100svh;
     margin: 0;
     background: var(--bg);
@@ -369,8 +379,17 @@
   grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
   column-gap: var(--gutter);
 }
+/* Qoʻshni ikki oddiy boʻlim orasida matndan matngacha aynan --section-gap qoladi (ikki baravar emas). */
 @utility section-pad {
-  padding-block: var(--section-gap);
+  padding-block: calc(var(--section-gap) / 2);
+}
+@utility section-band {
+  padding-block: var(--band-pad);
+}
+/* Nonushoq oyna sarlavhasiga yaqin turadi; pastda keyingi boʻlim bilan bir xil yarim qadam. */
+@utility section-hero {
+  padding-top: var(--hero-pad-top);
+  padding-bottom: calc(var(--section-gap) / 2);
 }
 @utility section-gap {
   gap: var(--section-gap);

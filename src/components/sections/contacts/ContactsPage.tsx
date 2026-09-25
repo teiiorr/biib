@@ -29,7 +29,10 @@ interface DetailRow {
   readonly href?: string;
 }
 
-/** Aloqa: rekvizitlar nusxa tugmasi bilan, xarita havolalari, shakl yoki Telegram zaxirasi. */
+/**
+ * Aloqa: chapda rekvizitlar (nusxa tugmasi bilan), oʻngda xarita, tarmoqlar va yozish bloki (shakl
+ * yoki Telegram zaxirasi) — ikki ustun bir balandlikda tugaydi, alohida boʻlim ochilmaydi.
+ */
 export function ContactsPage({ locale, dict }: PageProps) {
   const c = getContacts();
   const d = dict.contacts;
@@ -84,9 +87,9 @@ export function ContactsPage({ locale, dict }: PageProps) {
         breadcrumbsLabel={dict.common.hints.breadcrumbs}
       />
       <Section labelledBy="contacts-details">
-        <Container grid>
+        <Container grid className="contact-grid">
           <div className="col-span-4 md:col-span-8 lg:col-span-6" data-grid-item="">
-            <Heading level={2} size="h2" id="contacts-details">
+            <Heading level={2} size="h3" id="contacts-details">
               {d.details.heading}
             </Heading>
             <dl className="contact-details" data-audit="gap">
@@ -128,74 +131,74 @@ export function ContactsPage({ locale, dict }: PageProps) {
               ))}
             </dl>
           </div>
-          <div className="col-span-4 md:col-span-8 lg:col-span-6" data-grid-item="">
-            <Heading level={2} size="h2">
-              {d.map.heading}
-            </Heading>
-            {map ? (
-              <div className="flex flex-wrap gap-3 pt-4">
-                <LinkButton
-                  href={`https://yandex.uz/maps/?pt=${map.lng},${map.lat}&z=16`}
-                  variant="glass"
-                  external
-                  externalHint={dict.common.hints.external}
-                >
-                  {d.map.yandex}
-                </LinkButton>
-                <LinkButton
-                  href={`https://www.google.com/maps?q=${map.lat},${map.lng}`}
-                  variant="glass"
-                  external
-                  externalHint={dict.common.hints.external}
-                >
-                  {d.map.google}
-                </LinkButton>
-              </div>
-            ) : (
-              <Text as="p" tone="ink-3" className="pt-4">
-                {d.map.pending}
-              </Text>
-            )}
-            <Heading level={2} size="h3" className="pt-8">
-              {d.socials.heading}
-            </Heading>
-            <ul className="flex flex-wrap gap-3 pt-4">
-              {c.socials
-                .filter((s) => s.status === "confirmed")
-                .map((s) => (
-                  <li key={s.id}>
-                    <LinkButton
-                      href={s.href}
-                      variant="glass"
-                      size="40"
-                      icon={s.id as IconName}
-                      external
-                      externalHint={dict.common.hints.external}
-                    >
-                      {s.label}
-                    </LinkButton>
-                  </li>
-                ))}
-            </ul>
-          </div>
-        </Container>
-      </Section>
-      <Section labelledBy="contacts-form" className="relative">
-        <Container grid>
-          <div className="col-span-4 md:col-span-8 lg:col-span-7 lg:col-start-3" data-grid-item="">
-            <DesignArt
-              slot="contacts-band"
-              locale={locale}
-              meaningful
-              copy={{ postcardLabel: d.form.postcardLabel }}
-            >
-              <Heading level={2} size="h2" id="contacts-form">
+          <div className="col-span-4 md:col-span-8 lg:col-span-6 contact-aside" data-grid-item="">
+            <div className="contact-aside-block">
+              <Heading level={2} size="h3">
+                {d.map.heading}
+              </Heading>
+              {map ? (
+                <div className="flex flex-wrap gap-3">
+                  <LinkButton
+                    href={`https://yandex.uz/maps/?pt=${map.lng},${map.lat}&z=16`}
+                    variant="glass"
+                    external
+                    externalHint={dict.common.hints.external}
+                  >
+                    {d.map.yandex}
+                  </LinkButton>
+                  <LinkButton
+                    href={`https://www.google.com/maps?q=${map.lat},${map.lng}`}
+                    variant="glass"
+                    external
+                    externalHint={dict.common.hints.external}
+                  >
+                    {d.map.google}
+                  </LinkButton>
+                </div>
+              ) : (
+                <Text as="p" tone="ink-3">
+                  {d.map.pending}
+                </Text>
+              )}
+            </div>
+            <div className="contact-aside-block">
+              <Heading level={2} size="h3">
+                {d.socials.heading}
+              </Heading>
+              <ul className="flex flex-wrap gap-3">
+                {c.socials
+                  .filter((s) => s.status === "confirmed")
+                  .map((s) => (
+                    <li key={s.id}>
+                      <LinkButton
+                        href={s.href}
+                        variant="glass"
+                        size="40"
+                        icon={s.id as IconName}
+                        external
+                        externalHint={dict.common.hints.external}
+                      >
+                        {s.label}
+                      </LinkButton>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+            {/* Birlashmada otkritka (marka va skotch) bezak sifatida orqada; matn doim DOM da. */}
+            <div className="contact-write paper-look">
+              <DesignArt
+                slot="contacts-band"
+                locale={locale}
+                className="contact-band-art"
+                copy={{ postcardLabel: d.form.postcardLabel }}
+              />
+              <Heading level={2} size="h3" id="contacts-form">
                 {formEnabled ? d.form.heading : d.form.fallbackHeading}
               </Heading>
               {formEnabled ? (
                 <ContactForm dict={d.form} privacyHref={pathFor(locale, "privacy")} />
               ) : (
-                <div className="grid gap-4 pt-4">
+                <>
                   <Text as="p" tone="ink-2" measure>
                     {d.form.fallbackText}
                   </Text>
@@ -204,7 +207,7 @@ export function ContactsPage({ locale, dict }: PageProps) {
                       <LinkButton
                         href={c.telegram.value}
                         variant="primary"
-                        size="56"
+                        size="48"
                         icon="telegram"
                         external
                         externalHint={dict.common.hints.external}
@@ -213,9 +216,9 @@ export function ContactsPage({ locale, dict }: PageProps) {
                       </LinkButton>
                     </div>
                   ) : null}
-                </div>
+                </>
               )}
-            </DesignArt>
+            </div>
           </div>
         </Container>
       </Section>

@@ -1,4 +1,4 @@
-import { getConfirmedPartners } from "@/content";
+import { getArtworks, getConfirmedPartners } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
 
@@ -10,16 +10,20 @@ import { MissionSection } from "./MissionSection";
 import { NewsTeaser } from "./NewsTeaser";
 import { PartnersField } from "./PartnersField";
 import { PeopleTeaser } from "./PeopleTeaser";
-import { ProjectsQuadrant } from "./ProjectsQuadrant";
+import { UpopFeature } from "./UpopFeature";
 
 interface HomePageProps {
   readonly locale: Locale;
   readonly dict: Dictionary;
 }
 
-/** Bosh sahifa: Darvoza (video sahnasi) → missiya → UPOP TREND → yangiliklar → galereya → odamlar → hamkorlar (≥6 boʻlsa) → aloqa. */
+/**
+ * Bosh sahifa: Darvoza (video sahnasi) → missiya → UPOP TREND → yangiliklar → galereya (rozilik bilan
+ * ishlar boʻlsa) → odamlar → hamkorlar (≥ 6 boʻlsa) → aloqa. Boʻsh boʻlim chizilmaydi.
+ */
 export function HomePage({ locale, dict }: HomePageProps) {
   const partners = getConfirmedPartners();
+  const hasArtworks = getArtworks().length > 0;
   return (
     <>
       {/* Missiya sahnaning ikkinchi yarmi: yopishqoq kadr ustidan koʻtariladi, boʻsh xira ekran qolmaydi. */}
@@ -33,9 +37,9 @@ export function HomePage({ locale, dict }: HomePageProps) {
           }}
         />
       </HeroScene>
-      <ProjectsQuadrant locale={locale} dict={dict} />
+      <UpopFeature locale={locale} dict={dict} />
       <NewsTeaser locale={locale} dict={dict} />
-      <GallerySection locale={locale} dict={dict} />
+      {hasArtworks ? <GallerySection locale={locale} dict={dict} /> : null}
       <PeopleTeaser locale={locale} dict={dict} />
       {partners.length >= 6 ? (
         <PartnersField locale={locale} dict={dict} partners={partners} />

@@ -9,7 +9,6 @@ import { Header } from "@/components/layout/Header";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { TabBar } from "@/components/layout/TabBar";
 import { IconSprite } from "@/components/icons/IconSprite";
-import { OrnamentSprite } from "@/components/ornament/OrnamentSprite";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import { PageTransition } from "@/components/motion/PageTransition";
 import { getContacts } from "@/content";
@@ -62,7 +61,6 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       </head>
       <body>
         <IconSprite />
-        <OrnamentSprite />
         <AppearanceProvider>
           <MotionProvider>
             <SkipLink label={dict.common.skipToContent} />

@@ -37,11 +37,8 @@ export const about: typeof source = {
   history: {
     heading: "History",
     lead: "The main milestones. Dates await confirmation by the association.",
-    pending: "History dates await confirmation by the association",
-    columnAlt: "A carved wooden column in the style of the Juma mosque of Khiva",
   },
   documents: {
-    heading: "Founding documents",
     pending: "The documents will appear here once the association provides them.",
   },
   next: {

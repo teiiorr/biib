@@ -91,12 +91,6 @@
       inset 0 -2px 0 rgba(0, 0, 0, 0.16),
       var(--shadow-raised);
   }
-  .torn-edge {
-    display: block;
-    width: 100%;
-    height: 12px;
-  }
-
   /* ---------- Umumiy kartalar qogʻoz boʻladi ---------- */
   :root[data-design="birlashma"] .paper-look {
     position: relative;
@@ -228,9 +222,7 @@
   }
   :root[data-design="birlashma"] .zardozi-word[data-reveal="done"]::before,
   :root[data-design="birlashma"] .zardozi-word:has(.zardozi-underline[data-drawn="true"])::before,
-  :root[data-design="birlashma"]
-    :not(.portal-words)
-    > .zardozi-word:has([data-draw="none"])::before,
+  :root[data-design="birlashma"] .zardozi-word:has([data-draw="none"])::before,
   :root[data-design="birlashma"][data-motion="off"] .zardozi-word::before {
     transform: scaleX(1);
   }
@@ -240,33 +232,6 @@
       transform: scaleX(1);
     }
   }
-  .marker-underline {
-    position: relative;
-    display: inline-block;
-    white-space: nowrap;
-  }
-  .marker-stroke {
-    position: absolute;
-    left: -2%;
-    right: -2%;
-    bottom: -0.08em;
-    width: 104%;
-    height: 0.28em;
-    opacity: 0.75;
-    z-index: -1;
-  }
-  .marker-stroke path {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 0;
-  }
-  [data-reveal="pending"] .marker-stroke path {
-    stroke-dashoffset: 1;
-  }
-  [data-reveal="done"] .marker-stroke path {
-    transition: stroke-dashoffset 700ms var(--ease-out);
-    stroke-dashoffset: 0;
-  }
-
   /* ---------- Boʻyash sahifasi ---------- */
   .coloring {
     display: grid;
@@ -605,6 +570,14 @@
   :root[data-design="birlashma"] .news-lead {
     --print-rotate: -1.2deg;
   }
+  /* Qogʻoz hoshiyasi (24 px) har yon qirqimga qoʻshiladi: kichik muqova 120 px va ichki boʻshliq 16 px
+     bilan toʻrt qirqim bosh xabardan past boʻladi va ustun uning balandligiga choʻziladi (ikkalasi bir chiziqda). */
+  @media (min-width: 1024px) {
+    :root[data-design="birlashma"] .news-row {
+      grid-template-columns: 120px minmax(0, 1fr);
+      padding: 16px;
+    }
+  }
   :root[data-design="birlashma"] .news-row:nth-child(odd) {
     --print-rotate: 1.5deg;
   }
@@ -796,7 +769,7 @@
   /* Doska ustidagi qogʻozlar oq qoladi: karta ichida Albom toʻplami qaytadi. */
   :root[data-design="birlashma"][data-theme="light"]
     [data-tone="dark"]
-    :is(.paper-look, .paper-sheet, .ui-sticker) {
+    :is(.paper-look, .paper-sheet, .ui-sticker, .history-item) {
     --bg: #fff9ee;
     --surface: #fffdf8;
     --surface-2: #ffffff;
@@ -856,20 +829,8 @@
   :root[data-design="birlashma"] .about-history {
     background: var(--surface);
   }
-  :root[data-design="birlashma"] .people-head {
-    padding: 0;
-  }
-  :root[data-design="birlashma"] .people-head-text {
-    padding: 0;
-  }
-  :root[data-design="birlashma"] .people-lead {
-    color: var(--ink-2);
-  }
 
   /* ---------- Aloqa otkritkasi ---------- */
-  :root[data-design="birlashma"] .contact-band-girih {
-    display: none;
-  }
   :root[data-design="birlashma"] .contact-band-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 0;
@@ -889,6 +850,26 @@
   .postcard-art {
     position: absolute;
     inset: 0;
+  }
+  /* Aloqa sahifasidagi tor blokda faqat marka va skotch: chiziqlar matn ustiga tushmaydi. */
+  :root[data-design="birlashma"]
+    .contact-write
+    :is(.postcard-divider, .postcard-lines, .postcard-postmark) {
+    display: none;
+  }
+  :root[data-design="birlashma"] .contact-write {
+    padding-inline-end: 88px;
+  }
+  /* Telefonda marka joyi faqat sarlavha qatorida olinadi: tugma toʻliq kenglikni oladi, 320 px da
+     «Написать в Telegram» ustunni kengaytirmaydi. Sarlavha balandligi marka bilan teng. */
+  @media (max-width: 599px) {
+    :root[data-design="birlashma"] .contact-write {
+      padding-inline-end: 16px;
+    }
+    :root[data-design="birlashma"] .contact-write > h2 {
+      min-height: 56px;
+      padding-inline-end: 72px;
+    }
   }
   .postcard-divider,
   .postcard-lines,
@@ -1210,30 +1191,32 @@
       );
     }
   }
-  /* Islimiy kurtak oʻrniga marker nuqta. */
-  :root[data-design="birlashma"] .about-bullet {
+  /* Yoʻnalishlar: har bandning boshida boʻyoq tomchisi (Atlasdagi ingichka chiziq oʻrniga). */
+  :root[data-design="birlashma"] .about-value {
     position: relative;
+    padding-inline-start: 28px;
+    border-top: 0;
   }
-  :root[data-design="birlashma"] .about-bullet svg {
-    display: none;
-  }
-  :root[data-design="birlashma"] .about-bullet::before {
+  :root[data-design="birlashma"] .about-value::before {
     content: "";
     position: absolute;
-    left: 5px;
-    top: 5px;
+    left: 0;
+    top: calc(1em + 2px);
     width: 14px;
     height: 14px;
     border-radius: 50% 45% 50% 40%;
     background: var(--art-2);
   }
-  :root[data-design="birlashma"] .about-value:nth-child(2) .about-bullet::before {
+  :root[data-design="birlashma"] .about-value:first-child::before {
+    top: 6px;
+  }
+  :root[data-design="birlashma"] .about-value:nth-child(2)::before {
     background: var(--art-1);
   }
-  :root[data-design="birlashma"] .about-value:nth-child(3) .about-bullet::before {
+  :root[data-design="birlashma"] .about-value:nth-child(3)::before {
     background: var(--art-3);
   }
-  :root[data-design="birlashma"] .about-value:nth-child(4) .about-bullet::before {
+  :root[data-design="birlashma"] .about-value:nth-child(4)::before {
     background: var(--art-4);
   }
 
@@ -1273,23 +1256,12 @@
   .clothesline-nail-right {
     right: 0;
   }
-  /* Xiva ustunlari oʻrniga ipga osilgan qogʻozlar (bir xil DOM); yopishqoq sahna oʻchadi. */
-  :root[data-design="birlashma"] .xiva-stage {
-    height: auto;
-  }
-  :root[data-design="birlashma"] .xiva-scene {
-    position: static;
-    min-height: 0;
-    display: block;
-  }
-  :root[data-design="birlashma"] .xiva-timeline {
+  /* Tarix: ipga osilgan qogʻozlar (Atlasdagi oltin chiziq bilan bir DOM). */
+  :root[data-design="birlashma"] .history-timeline {
     gap: 40px;
     padding-top: 8px;
   }
-  :root[data-design="birlashma"] .xiva-column {
-    display: none;
-  }
-  :root[data-design="birlashma"] .xiva-item {
+  :root[data-design="birlashma"] .history-item {
     position: relative;
     isolation: isolate;
     grid-template-columns: minmax(0, 1fr);
@@ -1299,7 +1271,7 @@
     color: var(--ink);
     transform: rotate(var(--paper-rotate, 0deg));
   }
-  :root[data-design="birlashma"] .xiva-item::before {
+  :root[data-design="birlashma"] .history-item::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -1313,7 +1285,7 @@
     filter: drop-shadow(0 1px 0 var(--material-shadow))
       drop-shadow(0 6px 12px var(--material-shadow));
   }
-  :root[data-design="birlashma"] .xiva-item::after {
+  :root[data-design="birlashma"] .history-item::after {
     content: "";
     position: absolute;
     top: -14px;
@@ -1326,21 +1298,21 @@
       inset 0 0 0 1px rgba(0, 0, 0, 0.12),
       var(--shadow-contact);
   }
-  :root[data-design="birlashma"] .xiva-item:nth-child(odd) {
+  :root[data-design="birlashma"] .history-item:nth-child(odd) {
     --paper-rotate: -1.2deg;
   }
-  :root[data-design="birlashma"] .xiva-item:nth-child(even) {
+  :root[data-design="birlashma"] .history-item:nth-child(even) {
     --paper-rotate: 1.4deg;
   }
-  :root[data-design="birlashma"] .xiva-item:nth-child(even)::after {
+  :root[data-design="birlashma"] .history-item:nth-child(even)::after {
     left: auto;
     right: 24px;
   }
-  :root[data-design="birlashma"] .xiva-year {
+  :root[data-design="birlashma"] .history-year {
     color: var(--accent-text);
   }
   @media (min-width: 1024px) {
-    :root[data-design="birlashma"] .xiva-timeline {
+    :root[data-design="birlashma"] .history-timeline {
       grid-auto-flow: column;
       grid-auto-columns: minmax(0, 1fr);
       gap: 24px;
@@ -1409,8 +1381,9 @@
 
 @layer utilities {
   /* container-site utility qatlamda: shu qoidalar ham oʻsha qatlamda, aks holda yutqazadi. */
+  /* Otkritka telefonda ham chetlardan ichkarida: qiyshayganda viewport chetidan chiqmaydi. */
   :root[data-design="birlashma"] .contact-band-grid {
-    max-width: 960px;
+    max-width: min(960px, calc(100% - 2 * var(--margin)));
     padding: 32px 24px;
   }
   :root[data-design="birlashma"] .container-site:has(> .about-mission) {

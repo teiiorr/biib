@@ -12,4 +12,5 @@ export const partners: typeof source = {
   pending: "Список партнёров ожидает подтверждения объединения",
   logoAlt: "Логотип: {name}",
   visit: "Перейти на сайт {name}",
+  invite: "Предложить сотрудничество",
 };

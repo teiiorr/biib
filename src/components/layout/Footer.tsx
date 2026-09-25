@@ -2,8 +2,6 @@ import Link from "next/link";
 
 import { Icon } from "@/components/icons/Icon";
 import type { IconName } from "@/components/icons/paths";
-import { Islimiy } from "@/components/ornament/Islimiy";
-import { IslimiyScroll } from "@/components/ornament/IslimiyScroll";
 import { ExternalLink } from "@/components/ui/ExternalLink";
 import { getContacts, getFlagship } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -35,15 +33,9 @@ export function Footer({ locale, dict }: FooterProps) {
           <DesignArt slot="footer-crown" locale={locale} />
           <span className="footer-crown-line" aria-hidden="true" />
         </div>
-        {/* Islimiy futerning yuqori qirrasi boʻylab oʻsadi: poya burilib, tojdan yuqorida yotadi. */}
-        <div className="footer-islimiy birlashma:hidden" aria-hidden="true">
-          <IslimiyScroll>
-            <Islimiy length={640} width={48} seed="futer" side="left" scroll />
-          </IslimiyScroll>
-        </div>
         <div className="footer-groups">
           <div className="footer-group">
-            <p className="t-label text-ink">{dict.footer.organization}</p>
+            <p className="t-label text-ink footer-group-label">{dict.footer.organization}</p>
             {ORG_LINKS.map((key) => (
               <Link key={key} href={pathFor(locale, key)} className="footer-link t-small">
                 {dict.nav[key as "about"]}
@@ -51,7 +43,7 @@ export function Footer({ locale, dict }: FooterProps) {
             ))}
           </div>
           <div className="footer-group">
-            <p className="t-label text-ink">{dict.footer.projects}</p>
+            <p className="t-label text-ink footer-group-label">{dict.footer.projects}</p>
             <Link href={pathFor(locale, "projects")} className="footer-link t-small">
               {dict.nav.projects}
             </Link>
@@ -64,7 +56,7 @@ export function Footer({ locale, dict }: FooterProps) {
             </ExternalLink>
           </div>
           <div className="footer-group">
-            <p className="t-label text-ink">{dict.footer.contacts}</p>
+            <p className="t-label text-ink footer-group-label">{dict.footer.contacts}</p>
             <Link href={pathFor(locale, "contacts")} className="footer-link t-small">
               {dict.nav.contacts}
             </Link>
@@ -78,10 +70,10 @@ export function Footer({ locale, dict }: FooterProps) {
                 Telegram
               </a>
             ) : null}
-            <p className="t-small text-ink-3">{dict.contacts.details.pending}</p>
+            <p className="t-small text-ink-3 footer-note">{dict.contacts.details.pending}</p>
           </div>
           <div className="footer-group">
-            <p className="t-label text-ink">{dict.footer.follow}</p>
+            <p className="t-label text-ink footer-group-label">{dict.footer.follow}</p>
             {contacts.socials
               .filter((s) => s.status === "confirmed")
               .map((s) => (
@@ -99,8 +91,8 @@ export function Footer({ locale, dict }: FooterProps) {
           </div>
         </div>
         <div className="footer-bottom t-small">
-          <p>{fill(dict.footer.copyright, { year })}</p>
-          <Link href={pathFor(locale, "privacy")} className="footer-link">
+          <p className="footer-copy">{fill(dict.footer.copyright, { year })}</p>
+          <Link href={pathFor(locale, "privacy")} className="footer-link footer-privacy">
             {dict.footer.privacy}
           </Link>
           <FooterLangs locale={locale} label={dict.nav.chooseLanguage} />

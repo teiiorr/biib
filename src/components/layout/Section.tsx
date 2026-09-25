@@ -4,23 +4,39 @@ import { cn } from "@/lib/cn";
 
 export type SectionTone = "light" | "dark";
 
+/**
+ * section — qoʻshni boʻlimlar orasida 48/64/96 (har tomonda yarmi); band — rangli lenta ichi;
+ * hero — sahifa boshi (oyna sarlavhasi ostidan qisqa); none — boʻshliqni boʻlimning oʻzi beradi.
+ */
+export type SectionRhythm = "section" | "band" | "hero" | "none";
+
+const RHYTHM_CLASS: Record<SectionRhythm, string | null> = {
+  section: "section-pad",
+  band: "section-band",
+  hero: "section-hero",
+  none: null,
+};
+
 interface SectionProps {
   readonly id?: string;
   /** Oyna shu qiymatni oʻqib ohangini moslaydi (10.1.3). */
   readonly tone?: SectionTone;
+  /** Atlasda ohang boshqacha boʻlsa (masalan Birlashmada doska, Atlasda sut-oq sirt). */
+  readonly toneAtlas?: SectionTone;
   readonly as?: "section" | "div" | "article" | "aside";
-  readonly padded?: boolean;
+  readonly rhythm?: SectionRhythm;
   readonly labelledBy?: string;
   readonly className?: string;
   readonly children: ReactNode;
 }
 
-/** Boʻlim ritmi: 48/64/96 px; ichida 16/24/32. */
+/** Boʻlim ritmi: boʻlimlar orasida 48/64/96 px; ichida 16/24/32. */
 export function Section({
   id,
   tone,
+  toneAtlas,
   as: Tag = "section",
-  padded = true,
+  rhythm = "section",
   labelledBy,
   className,
   children,
@@ -29,9 +45,10 @@ export function Section({
     <Tag
       id={id}
       data-tone={tone}
+      data-tone-atlas={toneAtlas}
       data-audit=""
       aria-labelledby={labelledBy}
-      className={cn(padded && "section-pad", className)}
+      className={cn(RHYTHM_CLASS[rhythm], className)}
     >
       {children}
     </Tag>

@@ -4,16 +4,7 @@ import type { ornament as source } from "../uz/ornament";
 export const ornament: typeof source = {
   palakGap: "Палак тикувчилари битта чокни атайлаб қолдиради: бу кўз тегмасин деган қадимий одат.",
   palakGapLabel: "Нақшдаги атайлаб қолдирилган бўшлиқ",
-  girih: "Гириҳ нақши",
-  islimiy: "Ислимий нақш",
-  chust: "Чуст дўппи ҳошияси",
   qalampir: "Ўқиш жараёни",
   qalampirValue: "Мақоланинг {percent}% ўқилди",
-  ganch: "Ганч ўймакорлиги",
-  kundal: "Кундал нақшли панель",
-  xiva: "Хива устуни",
-  abr: "Марғилон атласи",
   pencilProgress: "Ўқиш жараёни, қалам чизиғи",
-  tape: "Ёпишқоқ лента",
-  doodle: "Қўлда чизилган безак",
 };

@@ -35,11 +35,8 @@ export const about = {
   history: {
     heading: "Tarix",
     lead: "Muhim bosqichlar. Sanalar tashkilot tasdigʻini kutmoqda.",
-    pending: "Tarix sanalari tashkilotdan tasdiq kutmoqda",
-    columnAlt: "Xiva Juma masjidi uslubidagi oʻyma yogʻoch ustun",
   },
   documents: {
-    heading: "Taʼsis hujjatlari",
     pending: "Hujjatlar tashkilot tomonidan taqdim etilgach shu yerda chiqadi.",
   },
   next: {

@@ -21,10 +21,13 @@ interface NewsTeaserProps {
   readonly dict: Dictionary;
 }
 
-/** Yangiliklar: bitta bosh xabar (3:2) va yonida ikkita ustma-ust; telefonda bosh, keyin 1:1 qatorlar. */
+/**
+ * Yangiliklar: bitta bosh xabar (3:2) va yonida qolgan toʻrttasi ustma-ust (1:1 kichik muqova).
+ * Yon ustun bosh xabar balandligiga choʻziladi: ikkala ustun bir chiziqda tugaydi. Telefonda ketma-ket.
+ */
 export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
   const [lead, ...rest] = getNews();
-  const side = rest.slice(0, 2);
+  const side = rest.slice(0, 4);
   if (!lead) return null;
   const h = dict.home.news;
   return (

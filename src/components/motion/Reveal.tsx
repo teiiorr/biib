@@ -36,8 +36,6 @@ export interface RevealProps {
   /** Audit va test belgilari (data-*), oʻramga oʻtkaziladi. */
   readonly attrs?: Readonly<Record<`data-${string}`, string>>;
   readonly label?: string;
-  /** Aylantiriladigan mintaqa klaviaturadan ham yetishi uchun (axe scrollable-region-focusable). */
-  readonly tabIndex?: 0;
 }
 
 /** reveal-rise: opacity 0→1, y 24→0, 900 ms. Matn DOM da; dvigatelsiz va harakat taqiqida darhol koʻrinadi. */
@@ -51,7 +49,6 @@ export function Reveal({
   delay = 0,
   attrs,
   label,
-  tabIndex,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const prefs = useMotionPrefs();
@@ -84,7 +81,7 @@ export function Reveal({
   // Teg birligi uchun bitta intrinsik tur: barcha ruxsat etilgan teglar HTMLElement beradi.
   const Tag = as as "div";
   return (
-    <Tag ref={ref} className={className} id={id} aria-label={label} tabIndex={tabIndex} {...attrs}>
+    <Tag ref={ref} className={className} id={id} aria-label={label} {...attrs}>
       {children}
     </Tag>
   );

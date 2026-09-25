@@ -2,38 +2,7 @@
   /* Naqsh dvigateli (§11): oʻn ikki imzo uchun tokenlar va sinflar. Ranglar semantik tokenlardan. */
 
   :root {
-    /* Gʻijduvon jigarrang oilasi: Xiva ustuni yogʻochi. */
-    --wood-1: #8b5a2b;
-    --wood-2: #6b4423;
-    --wood-3: #4a2e17;
-    --wood-rim: #e8cf7a;
-    /* Ganch: kunduzi oq gips, soya lojuvardga boʻyalgan; burchak oʻlchami ekranga qarab. */
-    /* Sayoz oʻyma: ipak ustida oq dogʻ emas, yarim shaffof gips va aniq ichki soya. */
-    --ganch-fill: color-mix(in oklab, var(--surface) 38%, transparent);
-    --ganch-shadow: rgba(14, 23, 51, 0.34);
-    --ganch-rim: rgba(255, 255, 255, 0.8);
-    --ganch-line: rgba(255, 255, 255, 0.55);
-    --ganch-opacity: 0.75;
-    --ganch-size: clamp(140px, 22vw, 320px);
-    /* Kundal: lojuvard zamin, ustidagi matn uchun sut-oq (6.3:1), tunda --ink (5.8:1). */
-    --kundal-ground: var(--art-5);
-    --kundal-ink: var(--surface);
-    --kundal-relief-opacity: 0.7;
     --zardozi-height: 7px;
-  }
-  :root[data-theme="dark"] {
-    --wood-1: #7a4f27;
-    --wood-2: #5a3a1c;
-    --wood-3: #2e1c0d;
-    --wood-rim: #f0d488;
-    /* Tunda ganch lojuvard relyefga aylanadi, chetida ingichka yorugʻ qirra. */
-    --ganch-fill: color-mix(in oklab, var(--art-5) 46%, transparent);
-    --ganch-shadow: rgba(2, 5, 20, 0.65);
-    --ganch-rim: rgba(240, 212, 136, 0.55);
-    --ganch-line: rgba(240, 212, 136, 0.42);
-    --ganch-opacity: 0.8;
-    --kundal-ink: var(--ink);
-    --kundal-relief-opacity: 0.6;
   }
 
   .orn {
@@ -47,15 +16,6 @@
     stroke-linecap: round;
     stroke-linejoin: round;
     vector-effect: non-scaling-stroke;
-  }
-
-  /* Girih */
-  .girih-divider {
-    display: block;
-    width: 100%;
-    height: 40px;
-    -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
-    mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
   }
 
   /* Media ramkasi: nisbat qulflangan toʻrtburchak, 12 px radius; media --frame-pad ichida (Atlas 0). */
@@ -96,52 +56,18 @@
     color: var(--accent-art);
     pointer-events: none;
   }
-  /* Surat kutilayotgan portret: tinch zamin, kichik belgi, faqat lavozim. Yuz oʻylab topilmaydi. */
+  /* Surat kutilayotgan portret: sahifa zaminidan bir pogʻona iliq tus va markazda kichik belgi.
+     Kulrang quti emas: tus siyohdan 5 %, chegara yoʻq, yuz oʻylab topilmaydi. */
   .portrait-frame-placeholder {
     position: absolute;
     inset: 0;
     display: grid;
     place-items: center;
-    align-content: center;
-    gap: 12px;
-    padding: 24px;
-    background: color-mix(in oklab, var(--ink) 4%, var(--surface-2));
-    color: var(--ink-3);
-    text-align: center;
+    background: color-mix(in oklab, var(--ink) 5%, var(--surface));
   }
   .portrait-frame-mark {
     color: var(--accent-art);
-  }
-
-  /* Islimiy */
-  .islimiy {
-    display: block;
-    pointer-events: none;
-  }
-  .islimiy-bud {
-    fill: var(--bg);
-    stroke: currentColor;
-    stroke-linejoin: round;
-  }
-  .islimiy-margin {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 96px;
-    pointer-events: none;
-  }
-  .islimiy-margin[data-side="left"] {
-    left: 0;
-  }
-  .islimiy-margin[data-side="right"] {
-    right: 0;
-  }
-  .islimiy-bullet {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    vertical-align: -0.15em;
-    margin-inline-end: 8px;
+    opacity: 0.8;
   }
 
   /* Palak oy: boʻshliq — 44 px nishonli tugma, izoh hover/fokusda. */
@@ -285,140 +211,6 @@
     transition: clip-path var(--dur-ui) var(--ease-ui);
   }
 
-  /* Ganch: uch qatlam, faqat burchaklarda; ichki soyalar SVG filtrida. */
-  .ganch {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  .ganch-layer {
-    position: absolute;
-    inset: 0;
-    opacity: var(--ganch-opacity);
-  }
-  .ganch-corner {
-    position: absolute;
-    width: var(--ganch-size);
-    height: var(--ganch-size);
-    overflow: visible;
-  }
-  .ganch-corner[data-corner="tl"] {
-    top: 0;
-    left: 0;
-  }
-  .ganch-corner[data-corner="tr"] {
-    top: 0;
-    right: 0;
-  }
-  .ganch-corner[data-corner="bl"] {
-    bottom: 0;
-    left: 0;
-  }
-  .ganch-corner[data-corner="br"] {
-    bottom: 0;
-    right: 0;
-  }
-  .ganch-relief {
-    fill: var(--ganch-fill);
-  }
-  .ganch-line {
-    fill: none;
-    stroke: var(--ganch-line);
-    stroke-width: 1;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    vector-effect: non-scaling-stroke;
-  }
-
-  /* Kundal: lojuvard zamin, oltin relyef, yumshoq yurar yorugʻlik. Matn rangi doim tekshirilgan. */
-  .kundal-panel {
-    position: relative;
-    overflow: hidden;
-    border-radius: var(--radius-card);
-    background: var(--kundal-ground);
-    color: var(--kundal-ink);
-    isolation: isolate;
-  }
-  .kundal-art {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    color: var(--accent-art);
-    opacity: var(--kundal-relief-opacity);
-  }
-  .kundal-content {
-    position: relative;
-  }
-
-  /* Xiva ustuni va tarix chizigʻi */
-  .xiva-column {
-    display: block;
-    width: 80px;
-    height: auto;
-  }
-  .xiva-body {
-    fill: var(--wood-1);
-  }
-  .xiva-carving {
-    fill: none;
-    stroke: var(--wood-3);
-    stroke-width: 1;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-  }
-  .xiva-rim {
-    fill: none;
-    stroke: var(--wood-rim);
-    stroke-width: 1;
-    opacity: 0.7;
-  }
-  .xiva-timeline {
-    display: grid;
-    gap: 32px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .xiva-item {
-    display: grid;
-    grid-template-columns: 80px minmax(0, 1fr);
-    gap: 16px;
-    align-items: end;
-  }
-  .xiva-item[data-status="pending"] .xiva-body {
-    fill: var(--wood-2);
-    opacity: 0.7;
-  }
-  .xiva-year {
-    font-variant-numeric: tabular-nums;
-    color: var(--accent-text);
-  }
-  @media (min-width: 1024px) {
-    .xiva-stage {
-      height: 150vh;
-    }
-    .xiva-scene {
-      position: sticky;
-      top: var(--header-h);
-      min-height: calc(100svh - var(--header-h));
-      display: flex;
-      align-items: center;
-    }
-    .xiva-timeline {
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(0, 1fr);
-      align-items: end;
-    }
-    .xiva-item {
-      grid-template-columns: none;
-      grid-template-rows: auto auto;
-      justify-items: start;
-    }
-  }
-
   /* Kamaytirilgan harakat va Harakat oʻchiq: hamma naqsh toʻliq chizilgan, statik. */
   @media (prefers-reduced-motion: reduce) {
     .zardozi-underline,
@@ -434,16 +226,7 @@
     transform: none;
   }
 
-  /* Yordamchi: koʻrinmas defs konteyneri, kurtak konturi, palak halqalari, ganch va kundal filtr ranglari. */
-  .orn-defs {
-    position: absolute;
-    width: 0;
-    height: 0;
-    overflow: hidden;
-  }
-  .islimiy-bud {
-    vector-effect: non-scaling-stroke;
-  }
+  /* Palak halqalari. */
   .palak-ring {
     fill: none;
     stroke: currentColor;
@@ -454,31 +237,5 @@
     fill: none;
     stroke: currentColor;
     stroke-width: 1;
-  }
-  .ganch-relief {
-    stroke: var(--ganch-rim);
-    stroke-width: 1;
-    vector-effect: non-scaling-stroke;
-  }
-  .ganch-flood {
-    flood-color: var(--ganch-shadow);
-  }
-  .kundal-spec {
-    lighting-color: var(--accent-hi);
-  }
-  .kundal-relief {
-    fill: currentColor;
-    fill-opacity: 0.5;
-    stroke: currentColor;
-    stroke-width: 1;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  .kundal-relief-line {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
   }
 }

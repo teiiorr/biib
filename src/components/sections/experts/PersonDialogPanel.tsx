@@ -42,12 +42,10 @@ export default function PersonDialogPanel({
   );
   const body = (
     <div className="grid gap-3">
-      <PortraitFrame ratio="3:4" role={role} className="mx-auto w-40" />
-      {field ? (
-        <Text as="p" size="small" tone="ink-3">
-          {field}
-        </Text>
-      ) : null}
+      <PortraitFrame ratio="4:5" className="mx-auto w-40" />
+      <Text as="p" size="small" tone="ink-3">
+        {field ? `${field} · ${role}` : role}
+      </Text>
       <Text as="p">{bio}</Text>
     </div>
   );

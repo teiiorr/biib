@@ -18,7 +18,7 @@ interface PageProps {
 
 const UPDATED = "2026-09-24";
 
-/** Maxfiylik: bolalar uchun qisqa xulosa, kompyuterda yopishqoq mundarija, boʻlimlar. */
+/** Maxfiylik: bolalar uchun qisqa xulosa, kompyuterda yopishqoq mundarija (1–3), matn 4–12, boʻlimlar. */
 export function PrivacyPage({ locale, dict }: PageProps) {
   const p = dict.privacy;
   return (
@@ -53,7 +53,7 @@ export function PrivacyPage({ locale, dict }: PageProps) {
           </div>
         </Container>
       </Section>
-      <Section padded={false} className="pb-12 lg:pb-24">
+      <Section>
         <Container grid>
           <nav
             className="col-span-4 md:col-span-8 lg:col-span-3 privacy-toc"
@@ -71,7 +71,7 @@ export function PrivacyPage({ locale, dict }: PageProps) {
               ))}
             </ol>
           </nav>
-          <div className="col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-5" data-grid-item="">
+          <div className="col-span-4 md:col-span-8 lg:col-span-9 lg:col-start-4" data-grid-item="">
             {p.sections.map((s) => (
               <section
                 key={s.id}

@@ -1,8 +1,6 @@
 import { Container } from "@/components/layout/Container";
-import { DesignArt } from "@/components/layout/DesignArt";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
-import { KundalPanel } from "@/components/ornament/KundalPanel";
 import { PortraitFrame } from "@/components/ui/PortraitFrame";
 import { Text } from "@/components/ui/Text";
 import { getExperts, t } from "@/content";
@@ -20,7 +18,10 @@ interface PageProps {
   readonly dict: Dictionary;
 }
 
-/** Ekspertlar kengashi: kundal paneli ortida sarlavha, portretlar 4/3/2 ustun; faqat haqiqiy odamlar. */
+/**
+ * Ekspertlar kengashi: sarlavha tinch lojuvard lentada, portretlar 6/3/2 ustun (oltita aʼzo har
+ * kenglikda toʻliq qatorlar beradi); faqat haqiqiy odamlar, ism kelmaguncha soha imzosi.
+ */
 export function ExpertsPage({ locale, dict }: PageProps) {
   const experts = getExperts();
   const e = dict.people.experts;
@@ -33,15 +34,7 @@ export function ExpertsPage({ locale, dict }: PageProps) {
       <PageHero
         title={e.title}
         lead={e.lead}
-        tone="dark"
-        className="official-hero"
-        art={
-          <div className="official-kundal birlashma:hidden" aria-hidden="true">
-            <KundalPanel seed="ekspertlar" light>
-              <span />
-            </KundalPanel>
-          </div>
-        }
+        band
         breadcrumbs={[
           { href: pathFor(locale, "home"), label: dict.nav.home },
           { href: pathFor(locale, "experts"), label: dict.nav.experts, current: true },
@@ -57,7 +50,7 @@ export function ExpertsPage({ locale, dict }: PageProps) {
               const name = person.name ? t(person.name, locale) : null;
               return (
                 <li key={person.id} className="people-card paper-look" data-card="">
-                  <PortraitFrame ratio="3:4" role={field ?? role} className="people-portrait" />
+                  <PortraitFrame ratio="4:5" className="people-portrait" />
                   <div className="people-card-text">
                     <p className="t-label" data-card-title="">
                       {name ?? field ?? role}
@@ -88,10 +81,9 @@ export function ExpertsPage({ locale, dict }: PageProps) {
               );
             })}
           </ul>
-          <Text as="p" size="small" tone="ink-3" className="pt-8">
+          <Text as="p" size="small" tone="ink-3" className="people-note">
             {e.pending}
           </Text>
-          <DesignArt slot="people-heading" locale={locale} className="hidden" />
         </Container>
       </Section>
     </>

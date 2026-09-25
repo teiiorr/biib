@@ -3,8 +3,9 @@ import Image from "next/image";
 import { Container } from "@/components/layout/Container";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
-import { KundalPanel } from "@/components/ornament/KundalPanel";
+import { GirihStar } from "@/components/ornament/GirihStar";
 import { Heading } from "@/components/ui/Heading";
+import { LinkButton } from "@/components/ui/LinkButton";
 import { Text } from "@/components/ui/Text";
 import { getPartners, t } from "@/content";
 import type { PartnerGroup } from "@/content/types";
@@ -20,7 +21,7 @@ interface PageProps {
 
 const GROUPS: readonly PartnerGroup[] = ["state", "international", "creative", "sponsors"];
 
-/** Hamkorlar: faqat haqiqiy tashkilotlar; roʻyxat boʻsh boʻlsa halol pending izohi. */
+/** Hamkorlar: faqat haqiqiy tashkilotlar; roʻyxat boʻsh boʻlsa loyihalangan boʻsh holat va Aloqa havolasi. */
 export function PartnersPage({ locale, dict }: PageProps) {
   const partners = getPartners().filter((p) => p.status !== "pending" && p.name);
   const p = dict.partners;
@@ -29,15 +30,7 @@ export function PartnersPage({ locale, dict }: PageProps) {
       <PageHero
         title={p.title}
         lead={p.lead}
-        tone="dark"
-        className="official-hero"
-        art={
-          <div className="official-kundal birlashma:hidden" aria-hidden="true">
-            <KundalPanel seed="hamkorlar" light>
-              <span />
-            </KundalPanel>
-          </div>
-        }
+        band
         breadcrumbs={[
           { href: pathFor(locale, "home"), label: dict.nav.home },
           { href: pathFor(locale, "partners"), label: dict.nav.partners, current: true },
@@ -47,9 +40,21 @@ export function PartnersPage({ locale, dict }: PageProps) {
       <Section>
         <Container>
           {partners.length === 0 ? (
-            <Text as="p" tone="ink-3" measure>
-              {p.pending}
-            </Text>
+            <div className="empty-state paper-look">
+              <GirihStar symmetry={8} size={24} ring={false} className="empty-state-mark" />
+              <Text as="p" size="body-l" tone="ink-2" measure>
+                {p.pending}
+              </Text>
+              <LinkButton
+                href={pathFor(locale, "contacts")}
+                variant="link"
+                size="40"
+                icon="arrow-right"
+                iconPosition="end"
+              >
+                {p.invite}
+              </LinkButton>
+            </div>
           ) : (
             GROUPS.map((group) => {
               const items = partners.filter((x) => x.group === group);
