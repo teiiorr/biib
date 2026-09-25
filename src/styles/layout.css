@@ -311,6 +311,13 @@
     width: 40px;
     height: 40px;
   }
+  /* Qorongʻi boʻlim ustida (qahramon kadri, missiya, UPOP maydoni) nomi sut-oq: navy ustida navy koʻrinmaydi. */
+  :root[data-design="atlas"] .brand-mark[data-tone="dark"] {
+    color: var(--hero-ink);
+  }
+  :root[data-design="birlashma"][data-theme="light"] .brand-mark[data-tone="dark"] {
+    color: var(--bg);
+  }
   /* Qahramon sahnasi (Atlas): dvigatel kelguncha belgi skrollga bogʻliq CSS bilan yashirin turadi va
      0.72–0.80 da paydo boʻladi; GSAP sahnani qurgach (html[data-hero-scene]) shu qoida oʻchadi. */
   @supports (animation-timeline: scroll()) {

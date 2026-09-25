@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useRef } from "react";
 
+import { useSurfaceTone } from "@/components/glass/useSurfaceTone";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
@@ -11,10 +15,16 @@ interface BrandMarkProps {
   readonly className?: string;
 }
 
-/** Brend belgisi badiiy qatlamda turadi, oyna ichida emas (15.1). */
+/**
+ * Brend belgisi badiiy qatlamda turadi, oyna ichida emas (15.1). Ostidagi boʻlim ohangini oʻqiydi:
+ * qorongʻi kadr va lojuvard boʻlimlar ustida nomi sut-oq, aks holda siyoh.
+ */
 export function BrandMark({ locale, dict, className }: BrandMarkProps) {
+  const ref = useRef<HTMLAnchorElement | null>(null);
+  useSurfaceTone(ref, true);
   return (
     <Link
+      ref={ref}
       href={pathFor(locale, "home")}
       className={className ? `brand-mark ${className}` : "brand-mark"}
     >

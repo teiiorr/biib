@@ -16,15 +16,22 @@ interface MissionSectionProps {
 }
 
 /**
- * Missiya: qahramon sahnasidan keyin xira kadr ustiga keladi; jumla reveal-rise bilan koʻtariladi,
+ * Missiya: Atlasda qahramon sahnasining ikkinchi yarmi — yopishqoq, xiralashayotgan kadr ustidan
+ * koʻtariladi (lojuvard ostlik bilan); Birlashmada albom varagʻi. Jumla reveal-rise bilan koʻtariladi,
  * belgilangan soʻzlar ostida zardoʻzi koʻrinishga kirganda doira ritmida tikiladi.
  */
 export function MissionSection({ copy }: MissionSectionProps) {
   return (
-    <section className="section-pad home-mission" data-audit="" aria-label={copy.label}>
+    <section
+      className="section-pad home-mission"
+      data-audit=""
+      data-tone="light"
+      data-tone-atlas="dark"
+      aria-label={copy.label}
+    >
       <Container>
         <Reveal className="home-mission-text">
-          <p className="t-h2 home-mission-statement">
+          <p className="t-display-l home-mission-statement">
             <ZardoziText text={copy.statement} lines={2} draw="view" className="mission-words" />
           </p>
           <p

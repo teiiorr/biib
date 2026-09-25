@@ -22,16 +22,17 @@ export function HomePage({ locale, dict }: HomePageProps) {
   const partners = getConfirmedPartners();
   return (
     <>
+      {/* Missiya sahnaning ikkinchi yarmi: yopishqoq kadr ustidan koʻtariladi, boʻsh xira ekran qolmaydi. */}
       <HeroScene>
         <HeroSection locale={locale} dict={dict} />
+        <MissionSection
+          copy={{
+            label: dict.home.portal.label,
+            statement: dict.home.portal.statement,
+            note: dict.birlashma.note.mission,
+          }}
+        />
       </HeroScene>
-      <MissionSection
-        copy={{
-          label: dict.home.portal.label,
-          statement: dict.home.portal.statement,
-          note: dict.birlashma.note.mission,
-        }}
-      />
       <ProjectsQuadrant locale={locale} dict={dict} />
       <NewsTeaser locale={locale} dict={dict} />
       <GallerySection locale={locale} dict={dict} />

@@ -37,7 +37,6 @@
   /* Oʻram sarlavha ostiga kiradi (main ning yuqori boʻshligʻi shu yerda qaytariladi); balandligi skroll yoʻli. */
   .home-hero-scene {
     position: relative;
-    min-height: calc(100svh * (1 + var(--hero-scene-length)));
     margin-top: calc(-1 * (var(--header-h) + 12px + var(--safe-top)));
   }
   /* Qahramon yopishqoq. Kadrdagi belgining pastki chekkasi cover hisobidan; JS aniq qiymat bersa u ustun. */
@@ -102,18 +101,19 @@
   /* Parda: kadrdagi doira oʻrnida kadr rangidagi yumshoq disk; belgi koʻchganda ikkinchi doira qolmaydi. */
   .hero-loop-veil {
     position: absolute;
-    left: calc(var(--logo-x, 50%) - var(--logo-size, 0px) * 0.58);
-    top: calc(var(--logo-y, 50%) - var(--logo-size, 0px) * 0.58);
-    width: calc(var(--logo-size, 0px) * 1.16);
-    height: calc(var(--logo-size, 0px) * 1.16);
+    left: calc(var(--logo-x, 50%) - var(--logo-size, 0px) * 0.7);
+    top: calc(var(--logo-y, 50%) - var(--logo-size, 0px) * 0.7);
+    width: calc(var(--logo-size, 0px) * 1.4);
+    height: calc(var(--logo-size, 0px) * 1.4);
     border-radius: 50%;
-    background: radial-gradient(circle, var(--hero-veil) 60%, transparent 72%);
+    /* Toʻliq qoplama doiradan 15 % keng, cheti yumshoq: kadrdagi oq chekka ingichka halqa boʻlib qolmaydi. */
+    background: radial-gradient(closest-side, var(--hero-veil) 82%, transparent 100%);
     opacity: 0;
     pointer-events: none;
   }
-  /* Xiralashtirish: sahifa rangida, sahna davomida 0 → 0.72; missiya shu xira kadrdan keyin keladi. */
+  /* Xiralashtirish lojuvardda (sut-oq tuman emas): kadr qorongʻilashadi, missiya uning ustidan koʻtariladi. */
   .home-hero-dim {
-    background: var(--bg);
+    background: var(--hero-scrim);
     opacity: 0;
     pointer-events: none;
   }
@@ -220,10 +220,28 @@
     pointer-events: none;
   }
 
-  /* Missiya: xira kadrdan keyin sahifa rangida keladi, belgilangan soʻzlar ostida zardoʻzi. */
+  /* Missiya: belgilangan soʻzlar ostida zardoʻzi. */
   .home-mission {
     position: relative;
     background: var(--bg);
+  }
+  /* Atlas: yopishqoq kadr ustidan koʻtariladi. Ostlik 96 px da 72 %, pastda toʻliq lojuvard (UPOP maydoniga
+     choksiz oʻtadi); sahna boʻlmasa ham (harakat oʻchiq) matn eng yorqin alanga ustida ≥ 5:1. */
+  :root[data-design="atlas"] .home-hero-scene .home-mission {
+    --ink: var(--hero-ink);
+    --ink-3: color-mix(in oklab, var(--hero-ink) 72%, transparent);
+    z-index: 1;
+    display: grid;
+    align-content: center;
+    min-height: calc(100svh * var(--hero-scene-length));
+    color: var(--ink);
+    background: linear-gradient(
+      180deg,
+      transparent 0,
+      color-mix(in oklab, var(--hero-scrim) 72%, transparent) 96px,
+      color-mix(in oklab, var(--hero-scrim) 88%, transparent) 50%,
+      var(--hero-scrim) 100%
+    );
   }
   .home-mission-text {
     display: grid;
@@ -231,8 +249,15 @@
   }
   /* ch oʻz shriftida (44 px): ≈ 3–4 qator; konteyner shriftidagi 28ch ingichka ustun berardi. */
   .home-mission-statement {
-    max-width: 22ch;
+    max-width: 20ch;
     text-wrap: balance;
+  }
+  /* Katta jumlada zardoʻzi ostchiziq keyingi qatorga tegmasin: qator oraligʻi ochiq, chiziq harfga yaqin. */
+  :root[data-design="atlas"] .home-mission-statement {
+    line-height: 1.14;
+  }
+  :root[data-design="atlas"] .home-mission-statement .zardozi-underline {
+    bottom: -0.1em;
   }
   /* Zardoʻzi matn koʻtarilib boʻlgach tikiladi: koʻrinish + doira kechikishi ustiga 360 ms. */
   .mission-words .zardozi-underline {
