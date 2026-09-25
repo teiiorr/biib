@@ -261,15 +261,12 @@
   }
 }
 
-/* Matn shkalasi: qiymatlar dizayn fayllaridan keladi.
-   cv05 — Akt da serifli I (Ijodkorligi/Ijodiy da I va l ajralsin); Nunito da bunday variant yoʻq, taʼsir qilmaydi. */
 @utility t-display-xl {
   font-family: var(--font-display);
   font-size: var(--fs-display-xl);
   line-height: var(--lh-display-xl);
   letter-spacing: var(--ls-display-xl);
   font-weight: var(--fw-display-xl);
-  font-feature-settings: "cv05";
 }
 @utility t-display-l {
   font-family: var(--font-display);
@@ -277,7 +274,6 @@
   line-height: var(--lh-display-l);
   letter-spacing: var(--ls-display-l);
   font-weight: var(--fw-display-l);
-  font-feature-settings: "cv05";
 }
 @utility t-h1 {
   font-family: var(--font-display);
@@ -285,7 +281,6 @@
   line-height: var(--lh-h1);
   letter-spacing: var(--ls-h1);
   font-weight: var(--fw-h1);
-  font-feature-settings: "cv05";
 }
 @utility t-h2 {
   font-family: var(--font-display);
@@ -293,7 +288,6 @@
   line-height: var(--lh-h2);
   letter-spacing: var(--ls-h2);
   font-weight: var(--fw-h2);
-  font-feature-settings: "cv05";
 }
 @utility t-h3 {
   font-family: var(--font-ui);

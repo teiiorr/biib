@@ -28,6 +28,9 @@ const SIZE_CLASS: Record<HeadingSize, string> = {
 
 const DEFAULT_SIZE: Record<HeadingLevel, HeadingSize> = { 1: "h1", 2: "h2", 3: "h3", 4: "h4" };
 
+/* Katta sarlavhalar Atlasda oltin quyilishi bilan (motion.css): egasining talabi. */
+const GOLD_SIZES: ReadonlySet<HeadingSize> = new Set(["display-xl", "display-l", "h1", "h2"]);
+
 export function Heading({
   level,
   size,
@@ -38,12 +41,14 @@ export function Heading({
   children,
 }: HeadingProps) {
   const Tag = `h${level}` as const;
+  const resolved = size ?? DEFAULT_SIZE[level];
   return (
     <Tag
       id={id}
       className={cx(
-        SIZE_CLASS[size ?? DEFAULT_SIZE[level]],
+        SIZE_CLASS[resolved],
         "text-balance text-ink",
+        GOLD_SIZES.has(resolved) && "gold-pour",
         trim && "text-trim",
         align === "center" && "text-center",
         className,

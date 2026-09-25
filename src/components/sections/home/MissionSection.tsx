@@ -31,7 +31,7 @@ export function MissionSection({ copy }: MissionSectionProps) {
     >
       <Container>
         <Reveal className="home-mission-text">
-          <p className="t-display-l home-mission-statement">
+          <p className="t-display-l home-mission-statement gold-pour">
             <ZardoziText text={copy.statement} lines={2} draw="view" className="mission-words" />
           </p>
           <p

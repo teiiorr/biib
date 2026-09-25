@@ -143,7 +143,7 @@ export function ContactsPage({ locale, dict }: PageProps) {
                 {d.map.heading}
               </Heading>
               {map ? (
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap justify-end gap-3">
                   <LinkButton
                     href={`https://yandex.uz/maps/?pt=${map.lng},${map.lat}&z=16`}
                     variant="glass"

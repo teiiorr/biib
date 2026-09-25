@@ -23,7 +23,7 @@ export function ErrorView({ title, text, art, actions }: ErrorViewProps) {
       <Text as="p" size="body-l" tone="ink-2" measure>
         {text}
       </Text>
-      <div className="flex flex-wrap gap-3">{actions}</div>
+      <div className="flex flex-wrap justify-end gap-3">{actions}</div>
     </Container>
   );
 }

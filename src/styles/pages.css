@@ -118,7 +118,7 @@
     }
     .upop-register-actions {
       grid-column: 9 / 13;
-      justify-self: start;
+      justify-self: end;
     }
   }
 

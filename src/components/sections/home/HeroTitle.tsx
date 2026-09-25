@@ -14,7 +14,7 @@ export function HeroTitle({ name }: HeroTitleProps) {
   return (
     <h1
       id="hero-title"
-      className="t-display-xl text-balance text-ink home-hero-title"
+      className="t-display-xl text-balance text-ink home-hero-title gold-pour"
       aria-label={name}
     >
       {words.map((word, index) => (

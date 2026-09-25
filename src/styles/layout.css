@@ -535,6 +535,8 @@
     overflow: hidden;
   }
   .contact-submit {
+    display: flex;
+    justify-content: flex-end;
     padding-top: 8px;
   }
 

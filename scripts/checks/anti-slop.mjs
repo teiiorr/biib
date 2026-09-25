@@ -2,6 +2,17 @@ import { fileURLToPath } from "node:url";
 import { fail, grepLines, listSourceFiles, pass, readText } from "./util.mjs";
 
 const TEXT_EXT = [".ts", ".tsx", ".mts", ".css", ".mjs", ".json", ".md", ".svg"];
+/* .gold-pour qoidasi ichidagi qator: yuqoridagi eng yaqin selektor .gold-pour ni oʻz ichiga olishi kerak. */
+function goldPourBlock(text, hit) {
+  const before = text
+    .split("\n")
+    .slice(0, hit.line - 1)
+    .join("\n");
+  const open = before.lastIndexOf("{");
+  const selectorStart = before.lastIndexOf("}", open) + 1;
+  return before.slice(selectorStart, open).includes(".gold-pour");
+}
+
 const GLASS_ALLOWED = [/^src\/components\/glass\//, /^src\/styles\/materials\.css$/];
 const PALETTES =
   "indigo|violet|purple|slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|fuchsia|pink|rose";
@@ -73,7 +84,13 @@ function importantAllowed(text, hit) {
 }
 
 const RULES = [
-  { id: "gradient-text", re: /bg-clip-text|background-clip:\s*text/ },
+  {
+    id: "gradient-text",
+    re: /bg-clip-text|background-clip:\s*text/,
+    /* Yagona istisno: egasi soʻragan «oltin quyilishi» (docs/qa/decisions.md DO3) — faqat motion.css
+       dagi .gold-pour bloki; boshqa har qanday gradient matn taqiqligicha qoladi. */
+    allow: (file, hit, text) => file === "src/styles/motion.css" && goldPourBlock(text, hit),
+  },
   {
     id: "backdrop-filter",
     re: /backdrop-filter/,

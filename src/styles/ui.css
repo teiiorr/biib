@@ -533,4 +533,52 @@
     background: color-mix(in oklab, var(--cover-tint, var(--ink)) 10%, var(--surface-2));
     color: var(--accent-art);
   }
+
+  /* ---------- Tugma shakli (egasining talabi: kapsula emas) ----------
+     Aniq toʻrtburchak (--radius-control 12 px), ichida 3 px chekinishda 1 px nozik chiziq (zardoʻzi
+     ramkasi bilan bir til), bosilganda yoki ustiga kelganda pastdan oltin quyiladi. Faqat Atlas:
+     Birlashma oʻz bosma qogʻoz tugmasini saqlaydi. */
+  :root[data-design="atlas"] .ui-button[data-variant="primary"],
+  :root[data-design="atlas"] .ui-button[data-variant="glass"]:not([data-icon="only"]) {
+    position: relative;
+    isolation: isolate;
+    background-image: linear-gradient(0deg, var(--pour-gold-mid), var(--pour-gold-hi));
+    background-size: 100% 0%;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition:
+      background-size 420ms var(--ease-out),
+      color 240ms var(--ease-ui),
+      scale 200ms var(--ease-ui),
+      translate 500ms var(--ease-out);
+  }
+  :root[data-design="atlas"] .ui-button[data-variant="primary"]::before,
+  :root[data-design="atlas"] .ui-button[data-variant="glass"]:not([data-icon="only"])::before {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border: 1px solid color-mix(in oklab, currentColor 34%, transparent);
+    border-radius: calc(var(--radius-control) - 3px);
+    pointer-events: none;
+  }
+  @media (hover: hover) {
+    :root[data-design="atlas"] .ui-button[data-variant="primary"]:hover:not([aria-disabled="true"]),
+    :root[data-design="atlas"]
+      .ui-button[data-variant="glass"]:not([data-icon="only"]):hover:not([aria-disabled="true"]) {
+      background-size: 100% 100%;
+      color: var(--hero-scrim);
+    }
+  }
+  :root[data-design="atlas"] .ui-button[data-variant="primary"]:focus-visible,
+  :root[data-design="atlas"]
+    .ui-button[data-variant="glass"]:not([data-icon="only"]):focus-visible {
+    background-size: 100% 100%;
+    color: var(--hero-scrim);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :root[data-design="atlas"] .ui-button[data-variant="primary"],
+    :root[data-design="atlas"] .ui-button[data-variant="glass"] {
+      transition: color 150ms var(--ease-ui);
+    }
+  }
 }

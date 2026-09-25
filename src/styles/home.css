@@ -159,9 +159,9 @@
     position: relative;
   }
   /* Bosh harfning yon boʻshligʻi: chap chetga optik tekislash (§8 III.6), har shrift oʻz oʻlchovi bilan
-     (fontTools, xMin/upm): Akt 700 da B/Б = 67/1000 em, Nunito 900 da B/Б = 64/1000 em. */
+     (fontTools, xMin/upm): Manrope 800 da B/Б = 70/1000 em, Nunito 900 da B/Б = 64/1000 em. */
   :root[data-design="atlas"] .home-hero-title {
-    margin-inline-start: -0.067em;
+    margin-inline-start: -0.07em;
   }
   :root[data-design="birlashma"] .home-hero-title {
     margin-inline-start: -0.064em;
@@ -178,11 +178,14 @@
     flex: 1 1 36ch;
     max-width: 52ch;
   }
+  /* Harakatlar har doim oʻng chetda (egasining talabi): matn chapda, tugmalar oʻngda — bir tartib. */
   .home-hero-actions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: flex-end;
     gap: 12px;
+    margin-inline-start: auto;
   }
   /* Halqa boshqaruvi uyasi: video kelguncha boʻsh, joy olmaydi. */
   .home-hero-control {
@@ -244,6 +247,15 @@
     --material-ink: var(--hero-ink);
     --material-base: var(--hero-scrim);
     --material-rim: color-mix(in oklab, var(--hero-ink) 55%, var(--hero-scrim));
+  }
+  /* Belgi rasmining <picture> oʻrami oqimdan tashqarida: aks holda setkada qator olib, ostlikni
+     qahramon pastidan 74 px qisqartirardi (pastda alanga tasmasi ochilib qolardi). */
+  .home-hero > picture {
+    /* .picture display: contents beradi: <source> lar setka katagiga aylanib, ikki qator ochardi. */
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
   }
   /* Sahna belgisi: kadrdagi doira ustida, JS oʻlchamlari bilan; sahnadan tashqarida koʻrinmas. */
   .home-hero-logo {
@@ -420,6 +432,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: flex-end;
     gap: 12px;
   }
   /* Telefonda ikki harakat bir qatorga sigʻmaydi: ikkalasi toʻliq kenglikda (aloqa lentasi bilan bir xil). */
@@ -461,11 +474,12 @@
     }
     .upop-feature-list {
       grid-column: 8 / 13;
-      grid-row: 1 / 3;
+      grid-row: 1;
       align-self: start;
     }
+    /* Harakatlar dalillar ostida, oʻng chetga tekis. */
     .upop-feature-actions {
-      grid-column: 1 / 8;
+      grid-column: 8 / 13;
       grid-row: 2;
     }
   }
@@ -730,6 +744,7 @@
   .contact-band-actions {
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-end;
     gap: 12px;
   }
   /* Telefonda ikki tugma bir qatorga sigʻmaydi: ikkalasi toʻliq kenglikda, bosh barmoq zonasida teng. */
@@ -743,7 +758,7 @@
       grid-template-columns: repeat(12, minmax(0, 1fr));
       grid-template-areas:
         "head head head head head head head . list list list list"
-        "actions actions actions actions actions actions actions . list list list list";
+        ". . . . . . . . actions actions actions actions";
       column-gap: var(--gutter);
       row-gap: 32px;
       padding: 48px;
@@ -756,10 +771,9 @@
       grid-template-columns: minmax(0, 1fr);
       align-self: end;
     }
-    /* Tugmalar sarlavha matni bilan bir chiziqdan: palak (80) va oraliq (24) qadar ichkarida. */
+    /* Tugmalar oʻng ustunda, maʼlumotlar ostida, oʻng chetga tekis. */
     :root[data-design="atlas"] .contact-band-actions {
       grid-area: actions;
-      padding-inline-start: 104px;
     }
   }
   .contact-band-art {
@@ -768,11 +782,11 @@
 }
 
 /* Qatlamdan tashqarida: t-display-xl (utilities qatlami) shrift oilasini beradi, bu qoida undan ustun.
-   Til boʻyicha mayda preload toʻplami (Akt Hero): birinchi kadrda haqiqiy shrift, almashinuv yoʻq.
-   cv05 (serifli I) t-display-xl dan keladi, bu yerda takrorlanmaydi. Toʻplam faqat Atlas shrifti:
+   Til boʻyicha mayda preload toʻplami (Manrope Hero): birinchi kadrda haqiqiy shrift, almashinuv yoʻq.
+   Toʻplam faqat Atlas shrifti:
    Birlashmada nom Nunito da qoladi (§25.6), aks holda qahramonda begona shrift chiqadi. */
 :root[data-design="atlas"] .home-hero-title {
-  font-family: "Akt Hero", var(--font-display);
+  font-family: "Manrope Hero", var(--font-display);
 }
 
 /* Atlasda nom kadr ostida: ≥1024 da bir qator, telefonda ikki qator (36 px). display-xl kadrdagi belgi bilan

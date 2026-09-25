@@ -44,7 +44,7 @@ export function ogAlt(topic: string, title: string): string {
 
 export function OgImage({ title, topic, design = "atlas" }: OgImageProps) {
   const c = design === "birlashma" ? BIRLASHMA : ATLAS;
-  const titleFont = design === "birlashma" ? "Nunito" : "Akt";
+  const titleFont = design === "birlashma" ? "Nunito" : "Manrope";
   const size = title.length > 48 ? 56 : title.length > 28 ? 68 : 84;
   return (
     <div
@@ -57,7 +57,7 @@ export function OgImage({ title, topic, design = "atlas" }: OgImageProps) {
         padding: 64,
         background: c.bg,
         color: c.ink,
-        fontFamily: "Inter",
+        fontFamily: "Manrope",
         position: "relative",
       }}
     >
