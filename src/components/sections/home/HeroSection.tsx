@@ -1,32 +1,67 @@
+import Image from "next/image";
+import { preload } from "react-dom";
+
 import { Container } from "@/components/layout/Container";
 import { DesignArt } from "@/components/layout/DesignArt";
-import { Section } from "@/components/layout/Section";
-import { GanchLayers } from "@/components/ornament/GanchLayers";
-import { GirihLattice } from "@/components/ornament/GirihLattice";
-import { AbrBase } from "@/designs/atlas/AbrBase";
-import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { Text } from "@/components/ui/Text";
+import { HERO_LOGO_OVERLAY, HERO_MEDIA, HERO_PORTRAIT_MEDIA } from "@/content/brand";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
+
+import { HeroEnter } from "./HeroEnter";
+import { HeroTitle } from "./HeroTitle";
 
 interface HeroSectionProps {
   readonly locale: Locale;
   readonly dict: Dictionary;
 }
 
+/* Tik boʻlmagan hamma ekran 16:9 posterni oladi; preload media <source> bilan bir xil boʻlishi shart. */
+const LANDSCAPE_MEDIA = `not (${HERO_PORTRAIT_MEDIA})`;
+
 /**
- * Darvoza: 100svh, abr ipak fon (Atlas) yoki ustaxona stoli (Birlashma), matn birinchi kadrda (LCP).
- * Nom pastki uchdan birida, chapda toʻrda; bitta jumla va ikkita harakat.
+ * Darvoza: egasining videosi (belgi kadr markazida), nom bir qatorda kadr ostida, missiya va ikki
+ * harakat pastda chapda, toʻrda. Poster serverda va LCP; video Atlas badiiy uyasidan boʻsh vaqtda keladi.
+ * Kadr ikkala mavzuda ham qorongʻi: ohang doim «dark», matn --hero-ink, ostida lojuvard ostlik.
  */
 export function HeroSection({ locale, dict }: HeroSectionProps) {
+  const { landscape, portrait } = HERO_MEDIA;
+  preload(portrait.poster, { as: "image", fetchPriority: "high", media: HERO_PORTRAIT_MEDIA });
+  preload(landscape.poster, { as: "image", fetchPriority: "high", media: LANDSCAPE_MEDIA });
+
   return (
-    <Section padded={false} labelledBy="hero-title" className="home-hero" as="section">
+    <section
+      className="home-hero"
+      data-hero=""
+      data-audit=""
+      data-testid="portal-scene"
+      aria-labelledby="hero-title"
+    >
+      <HeroEnter />
       <div className="home-hero-art">
-        {/* Ipakning mayda ranglari HTML ichida: birinchi kadrda fon bor, LCP esa sarlavha matni. */}
-        <AbrBase className="birlashma:hidden" />
-        {/* Birlashmada boʻyash sahifasi interaktiv: uya aria-hidden emas; ipak oʻzini yashiradi. */}
+        {/* Ohang faqat shu qatlamda: Birlashmada yashirin, sarlavha oynasi qogʻozni oʻqiydi. */}
+        <div
+          className="home-hero-media birlashma:hidden"
+          data-hero-media=""
+          data-tone="dark"
+          aria-hidden="true"
+        >
+          <picture className="home-hero-picture">
+            <source media={HERO_PORTRAIT_MEDIA} srcSet={portrait.poster} type="image/avif" />
+            <img
+              src={landscape.poster}
+              width={landscape.width}
+              height={landscape.height}
+              alt=""
+              fetchPriority="high"
+              decoding="async"
+              className="home-hero-poster"
+            />
+          </picture>
+        </div>
+        {/* Birlashmada boʻyash sahifasi interaktiv: uya aria-hidden emas. */}
         <DesignArt
           slot="home-hero"
           locale={locale}
@@ -36,31 +71,45 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
             coloring: dict.home.coloring,
             galleryPending: dict.home.gallery.pending,
             noteHero: dict.birlashma.note.hero,
+            videoAlt: dict.home.hero.videoAlt,
+            pauseLabel: dict.common.actions.pause,
+            playLabel: dict.common.actions.play,
           }}
         />
       </div>
-      <div className="home-hero-ganch birlashma:hidden" aria-hidden="true">
-        <GanchLayers seed="darvoza" parallax />
+      <div className="home-hero-dim birlashma:hidden" data-hero-dim="" aria-hidden="true" />
+      <div className="home-hero-content" data-hero-content="">
+        <Container className="home-hero-grid">
+          <HeroTitle name={dict.common.brand.name} />
+          <div className="home-hero-row">
+            <Text as="p" size="body-l" tone="ink-2" className="home-hero-mission">
+              {dict.home.hero.mission}
+            </Text>
+            <div className="home-hero-actions">
+              <LinkButton href={pathFor(locale, "projects")} variant="primary" size="56">
+                {dict.home.hero.ctaProjects}
+              </LinkButton>
+              <LinkButton href={pathFor(locale, "about")} variant="glass" size="56">
+                {dict.home.hero.ctaAbout}
+              </LinkButton>
+              {/* Halqa boshqaruvi shu uyaga portal bilan keladi: harakatlar qatorida, hech narsa ustida emas. */}
+              <span className="home-hero-control" data-hero-control="" />
+            </div>
+          </div>
+        </Container>
       </div>
-      <div className="home-hero-lattice birlashma:hidden" aria-hidden="true">
-        <GirihLattice symmetry={10} cell={112} />
-      </div>
-      <Container className="home-hero-content">
-        <Heading level={1} size="display-xl" id="hero-title" className="home-hero-title">
-          {dict.common.brand.name}
-        </Heading>
-        <Text as="p" size="body-l" tone="ink-2" measure className="home-hero-mission">
-          {dict.home.hero.mission}
-        </Text>
-        <div className="home-hero-actions">
-          <LinkButton href={pathFor(locale, "projects")} variant="primary" size="56">
-            {dict.home.hero.ctaProjects}
-          </LinkButton>
-          <LinkButton href={pathFor(locale, "about")} variant="glass" size="56">
-            {dict.home.hero.ctaAbout}
-          </LinkButton>
-        </div>
-      </Container>
-    </Section>
+      {/* Sahna belgisi: kadrdagi oq doira bilan bir xil chizma, skrollda sarlavha belgisiga qoʻnadi. */}
+      <Image
+        src={HERO_LOGO_OVERLAY.src}
+        width={HERO_LOGO_OVERLAY.size}
+        height={HERO_LOGO_OVERLAY.size}
+        alt=""
+        unoptimized
+        fetchPriority="low"
+        className="home-hero-logo birlashma:hidden"
+        data-hero-logo=""
+        aria-hidden="true"
+      />
+    </section>
   );
 }

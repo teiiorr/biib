@@ -4,6 +4,7 @@ import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { Divider } from "@/components/ui/Divider";
 import { Heading } from "@/components/ui/Heading";
 import { Prose } from "@/components/ui/Prose";
@@ -153,7 +154,7 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
             <TransitionLink
               href={pathFor(locale, "news")}
               direction={NAV_BACK}
-              className="ui-button t-label chorbogh-link"
+              className={buttonVariants({ variant: "link", size: "40" })}
               data-variant="link"
               data-size="40"
             >

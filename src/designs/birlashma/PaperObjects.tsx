@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 
+import { Sticker } from "@/components/ui/Sticker";
 import type { ColorStory } from "@/content/types";
 import { cn } from "@/lib/cn";
 
-import { Doodle } from "./Doodles";
 import { PaperSheet } from "./PaperSheet";
 
 interface ObjectProps {
@@ -12,8 +12,13 @@ interface ObjectProps {
   readonly className?: string;
 }
 
-/** Konsert afishasi va chipta: UPOP TREND. */
-export function Poster({ story, children, className }: ObjectProps) {
+interface PosterProps extends ObjectProps {
+  /** Yosh oraligʻi («14–19 yosh»): chipta stikeri afishaning pastki burchagida. */
+  readonly age?: string;
+}
+
+/** Konsert afishasi: yuqorida rang tasmasi, ichida sahna halqasi, pastki burchakda chipta stikeri. */
+export function Poster({ story, age, children, className }: PosterProps) {
   return (
     <PaperSheet
       seed="poster"
@@ -28,73 +33,28 @@ export function Poster({ story, children, className }: ObjectProps) {
       />
       <span className="poster-band poster-band-second" aria-hidden="true" />
       <div className="paper-object-media">{children}</div>
-      <span
-        className="poster-ticket"
-        style={{ background: `var(--${story?.secondary ?? "art-2"})` }}
-        aria-hidden="true"
-      >
-        <span className="poster-ticket-holes" />
-      </span>
+      {age ? (
+        <span className="poster-ticket">
+          <Sticker shape="ticket" paint={story?.secondary ?? "art-2"} rotate={2}>
+            {age}
+          </Sticker>
+        </span>
+      ) : null}
     </PaperSheet>
   );
 }
 
-/** Parda ortidagi sahna: Sahna bolalari. */
-export function CurtainFrame({ story, children, className }: ObjectProps) {
+/** Parda ortidagi sahna: yon ustunlar parda rangida, ichida skroll bilan ochiladigan parda. */
+export function CurtainFrame({ children, className }: ObjectProps) {
   return (
     <PaperSheet
       seed="curtain-frame"
       fixing="magnet"
       className={cn("paper-object paper-curtain", className)}
     >
-      <span
-        className="curtain-frame-side"
-        style={{ background: `var(--${story?.primary ?? "art-5"})` }}
-        aria-hidden="true"
-      />
+      <span className="curtain-frame-side" aria-hidden="true" />
       <div className="paper-object-media">{children}</div>
-      <span
-        className="curtain-frame-side curtain-frame-right"
-        style={{ background: `var(--${story?.primary ?? "art-5"})` }}
-        aria-hidden="true"
-      />
+      <span className="curtain-frame-side curtain-frame-right" aria-hidden="true" />
     </PaperSheet>
-  );
-}
-
-/** Kinolenta va flipbook: Ertak ustaxonasi. */
-export function FilmStrip({ children, className }: ObjectProps) {
-  return (
-    <PaperSheet
-      seed="filmstrip"
-      fixing="pin"
-      rotate={1.5}
-      className={cn("paper-object paper-film", className)}
-    >
-      <span className="film-holes" aria-hidden="true" />
-      <div className="paper-object-media">{children}</div>
-      <span className="film-holes" aria-hidden="true" />
-    </PaperSheet>
-  );
-}
-
-/** Molbertdagi surat: Rangli olam. */
-export function Easel({ story, children, className }: ObjectProps) {
-  return (
-    <div className={cn("paper-object paper-easel", className)}>
-      <PaperSheet seed="easel" fixing="none" rotate={-0.8} className="easel-canvas">
-        <div className="paper-object-media">{children}</div>
-      </PaperSheet>
-      <svg viewBox="0 0 200 60" className="easel-legs" aria-hidden="true">
-        <path
-          d="M30 2l-22 56M170 2l22 56M100 8v50M14 40h172"
-          fill="none"
-          stroke="var(--ink-3)"
-          strokeWidth="4"
-          strokeLinecap="round"
-        />
-      </svg>
-      <Doodle name="star" size={24} tone={story?.secondary ?? "art-6"} className="easel-doodle" />
-    </div>
   );
 }

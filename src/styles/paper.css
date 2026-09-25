@@ -392,6 +392,19 @@
     align-items: start;
     padding-top: 8px;
   }
+  /* Birlashma belgisi skotch bilan yopishtirilgan stiker: boʻyash sahifasi yonida, 96 px. */
+  .hero-mark-sticker {
+    display: grid;
+    place-items: center;
+    width: 120px;
+    padding: 12px;
+    justify-self: start;
+    grid-column: 1 / -1;
+  }
+  .hero-mark-sticker img {
+    width: 96px;
+    height: 96px;
+  }
   .pinned-placeholder {
     display: grid;
     gap: 8px;
@@ -422,7 +435,10 @@
       gap: 24px;
       padding-top: 32px;
     }
-    .pinned-stack .pinned-placeholder:nth-child(2) {
+    .hero-mark-sticker {
+      grid-column: auto;
+    }
+    .pinned-stack .pinned-placeholder:last-child {
       margin-left: 12px;
     }
     .hero-note {
@@ -430,8 +446,9 @@
     }
   }
 
-  /* Umumiy qahramon DOM: Birlashmada nom chapda toʻrda, ustaxona stoli yonida. */
+  /* Umumiy qahramon DOM: Birlashmada nom chapda toʻrda, ustaxona stoli yonida; video qatlamlari yashirin. */
   :root[data-design="birlashma"] .home-hero {
+    position: relative;
     display: grid;
     align-items: center;
     isolation: isolate;
@@ -440,8 +457,11 @@
   :root[data-design="birlashma"] .home-hero-content::before {
     content: none;
   }
+  /* Qogʻozda belgi kadrda emas: matn sarlavha ostidan boshlanadi, kadr hisobi kerak emas. */
   :root[data-design="birlashma"] .home-hero-content {
     grid-row: 1;
+    align-content: start;
+    padding-top: calc(var(--header-h) + 48px + var(--safe-top));
     padding-bottom: 32px;
   }
   :root[data-design="birlashma"] .home-hero-art {
@@ -479,9 +499,9 @@
     }
   }
 
-  /* ---------- Missiya sahifasi (portal boʻlimi) ---------- */
-  /* Albomning chiziqli varagʻi: gorizontal chiziqlar va qizil hoshiya; ravoq oynasi yoʻq. */
-  :root[data-design="birlashma"] .home-portal {
+  /* ---------- Missiya boʻlimi ---------- */
+  /* Albomning chiziqli varagʻi: gorizontal chiziqlar va qizil hoshiya. */
+  :root[data-design="birlashma"] .home-mission {
     background-image:
       linear-gradient(
         90deg,
@@ -495,203 +515,58 @@
       100% 32px;
     background-repeat: no-repeat, repeat;
   }
-  :root[data-theme="dark"][data-design="birlashma"] .home-portal {
+  :root[data-theme="dark"][data-design="birlashma"] .home-mission {
     background-image: none;
   }
-  :root[data-design="birlashma"] .home-portal-text {
-    max-width: 34ch;
+  :root[data-design="birlashma"] .home-mission-text {
     gap: 24px;
   }
-  :root[data-design="birlashma"] .home-portal-statement {
+  /* ch oʻz shriftida (display-l): 3–4 qator. */
+  :root[data-design="birlashma"] .home-mission-statement {
     font-size: var(--fs-display-l);
     line-height: var(--lh-display-l);
     letter-spacing: var(--ls-display-l);
     font-weight: var(--fw-display-l);
+    max-width: 18ch;
   }
-  :root[data-design="birlashma"] .home-portal-note {
+  :root[data-design="birlashma"] .home-mission-note {
     transform: rotate(-2deg);
     justify-self: start;
     max-width: 18ch;
   }
 
-  /* ---------- Chor-bogʻ: toʻrt xil qogʻoz obyekti ---------- */
-  :root[data-design="birlashma"] .chorbogh {
-    gap: 40px 24px;
+  /* ---------- UPOP TREND boʻlimi: doskaga yopishtirilgan afisha ---------- */
+  /* Afisha oʻrni oldindan band: qogʻoz moduli kech kelganda sahifa siljimaydi (CLS). */
+  :root[data-design="birlashma"] .upop-feature-media {
+    padding: 28px 16px 48px;
   }
-  @media (min-width: 1024px) {
-    :root[data-design="birlashma"] .chorbogh {
-      gap: 48px 48px;
-    }
+  :root[data-design="birlashma"] .upop-feature-media .paper-poster {
+    margin: -28px -16px -48px;
   }
-  :root[data-design="birlashma"] .chorbogh-cell {
-    gap: 12px;
-    grid-template-rows: auto auto auto 1fr auto;
-    transform: rotate(var(--paper-rotate, 0deg));
+  /* Parda oʻrni ham shunday: yon ustunlar 32 px, tepa-past 12 px. */
+  :root[data-design="birlashma"] .upop-stage-art {
+    padding: 12px 32px;
   }
-  :root[data-design="birlashma"] .chorbogh-cell:nth-child(1) {
-    --paper-rotate: -0.8deg;
+  :root[data-design="birlashma"] .upop-stage-art .paper-curtain {
+    margin: -12px -32px;
   }
-  :root[data-design="birlashma"] .chorbogh-cell:nth-child(2) {
-    --paper-rotate: 0.6deg;
+  /* Afisha va parda ichida bosma hoshiya yoʻq: qogʻoz oʻzi ramka (ikki hoshiya boʻlmasin). */
+  :root[data-design="birlashma"] :is(.paper-poster, .paper-curtain) .media-frame {
+    --frame-pad: 0px;
+    box-shadow: none;
   }
-  :root[data-design="birlashma"] .chorbogh-cell:nth-child(3) {
-    --paper-rotate: 0.5deg;
+  /* Doskadagi dalillar boʻr chizigʻi bilan ajraladi; chiziq rangi doska toʻplamidan. */
+  :root[data-design="birlashma"] .upop-feature-list li {
+    border-top-style: dashed;
   }
-  :root[data-design="birlashma"] .chorbogh-cell:nth-child(4) {
-    --paper-rotate: -0.6deg;
+  :root[data-design="birlashma"] .upop-feature-list li:last-child {
+    border-bottom-style: dashed;
   }
-  /* Atlas motivlari (girih yulduzi, anor) Birlashmada koʻrinmaydi; tasmalar rangli qogʻoz boʻlaklari. */
-  :root[data-design="birlashma"] .orn-cover > g {
-    display: none;
+  :root[data-design="birlashma"] .upop-fact {
+    border-top-style: dashed;
   }
-  :root[data-design="birlashma"] .chorbogh-media {
-    color: var(--ink-3);
-  }
-  :root[data-design="birlashma"] .chorbogh-cell:hover .chorbogh-media {
-    filter: none;
-  }
-  :root[data-design="birlashma"] .chorbogh-media::before,
-  :root[data-design="birlashma"] .chorbogh-media::after {
-    content: "";
-    position: absolute;
-    pointer-events: none;
-  }
-  /* UPOP TREND: afisha — yuqorida rang tasmasi, pastda chipta. */
-  :root[data-design="birlashma"] .chorbogh-cell[data-story="art-1"] .chorbogh-media::before {
-    inset: 0 0 auto 0;
-    height: 14px;
-    background: var(--art-1);
-    -webkit-mask-image: radial-gradient(circle at 10px 14px, transparent 8px, black 9px);
-    mask-image: radial-gradient(circle at 10px 14px, transparent 8px, black 9px);
-    -webkit-mask-size: 20px 100%;
-    mask-size: 20px 100%;
-  }
-  :root[data-design="birlashma"] .chorbogh-cell[data-story="art-1"] .chorbogh-media::after {
-    right: 12px;
-    bottom: 12px;
-    width: 88px;
-    height: 34px;
-    background: var(--art-2);
-    transform: rotate(-6deg);
-    box-shadow: var(--shadow-raised);
-    clip-path: polygon(
-      0 0,
-      100% 0,
-      100% 38%,
-      calc(100% - 6px) 44%,
-      calc(100% - 7px) 50%,
-      calc(100% - 6px) 56%,
-      100% 62%,
-      100% 100%,
-      0 100%,
-      0 62%,
-      6px 56%,
-      7px 50%,
-      6px 44%,
-      0 38%
-    );
-    background-image: repeating-linear-gradient(
-      90deg,
-      transparent 0 26px,
-      var(--surface-2) 26px 28px,
-      transparent 28px 100%
-    );
-    background-size: 100% 100%;
-  }
-  /* Sahna bolalari: parda — ikki yon baxmal va tishli pardaboshi. */
-  :root[data-design="birlashma"] .chorbogh-cell[data-story="art-5"] .chorbogh-media::before {
-    inset: 0;
-    background:
-      linear-gradient(90deg, var(--art-5) 0 12%, transparent 12% 88%, var(--art-5) 88%),
-      repeating-linear-gradient(90deg, transparent 0 14px, rgba(0, 0, 0, 0.1) 14px 18px);
-    background-blend-mode: normal, multiply;
-    -webkit-mask-image: linear-gradient(90deg, black 0 14%, transparent 14% 86%, black 86%);
-    mask-image: linear-gradient(90deg, black 0 14%, transparent 14% 86%, black 86%);
-  }
-  :root[data-design="birlashma"] .chorbogh-cell[data-story="art-5"] .chorbogh-media::after {
-    inset: 0 0 auto 0;
-    height: 22px;
-    background: var(--art-5);
-    -webkit-mask-image: radial-gradient(circle at 14px 0, transparent 12px, black 13px);
-    mask-image: radial-gradient(circle at 14px 0, transparent 12px, black 13px);
-    -webkit-mask-size: 28px 100%;
-    mask-size: 28px 100%;
-  }
-  /* Ertak ustaxonasi: kinolenta — yuqori va pastki teshiklar. */
-  :root[data-design="birlashma"] .chorbogh-cell[data-story="art-3"] .chorbogh-media::before,
-  :root[data-design="birlashma"] .chorbogh-cell[data-story="art-3"] .chorbogh-media::after {
-    left: 0;
-    right: 0;
-    height: 18px;
-    background:
-      radial-gradient(circle at center, var(--bg) 4px, transparent 4.5px) 0 0 / 22px 18px repeat-x,
-      var(--ink);
-    opacity: 0.85;
-  }
-  :root[data-design="birlashma"] .chorbogh-cell[data-story="art-3"] .chorbogh-media::before {
-    top: 0;
-  }
-  :root[data-design="birlashma"] .chorbogh-cell[data-story="art-3"] .chorbogh-media::after {
-    bottom: 0;
-  }
-  /* Rangli olam: molbertdagi surat — qalin qogʻoz ramka va yuqoridagi qisqich. */
-  :root[data-design="birlashma"] .chorbogh-cell[data-story="art-6"] .chorbogh-media::before {
-    inset: 0;
-    box-shadow: inset 0 0 0 10px var(--surface-2);
-    outline: 1px solid var(--line);
-    outline-offset: -10px;
-  }
-  :root[data-design="birlashma"] .chorbogh-cell[data-story="art-6"] .chorbogh-media::after {
-    top: -6px;
-    left: 50%;
-    width: 36px;
-    height: 16px;
-    transform: translateX(-50%);
-    border-radius: 3px;
-    background: var(--art-4);
-    box-shadow: var(--shadow-raised);
-  }
-  /* Yosh stikeri: qirqilgan chipta, kapsula emas; 4 px qogʻoz hoshiyasi ichki soya bilan. */
-  :root[data-design="birlashma"] .chorbogh-age {
-    justify-self: start;
-    display: inline-block;
-    padding: 8px 18px;
-    margin-top: 4px;
-    font-size: var(--fs-small);
-    line-height: var(--lh-label);
-    font-weight: var(--fw-label);
-    color: var(--art-2-text);
-    background: color-mix(in oklab, var(--art-2) 38%, var(--surface-2));
-    box-shadow: inset 0 0 0 4px var(--surface-2);
-    transform: rotate(-2deg);
-    clip-path: polygon(
-      0 0,
-      100% 0,
-      100% 36%,
-      calc(100% - 6px) 43%,
-      calc(100% - 7px) 50%,
-      calc(100% - 6px) 57%,
-      100% 64%,
-      100% 100%,
-      0 100%,
-      0 64%,
-      6px 57%,
-      7px 50%,
-      6px 43%,
-      0 36%
-    );
-  }
-  :root[data-design="birlashma"] .chorbogh-cell[data-story="art-5"] .chorbogh-age {
-    color: var(--art-4-text);
-    background: color-mix(in oklab, var(--art-4) 34%, var(--surface-2));
-  }
-  :root[data-design="birlashma"] .chorbogh-cell[data-story="art-3"] .chorbogh-age {
-    color: var(--art-3-text);
-    background: color-mix(in oklab, var(--art-3) 34%, var(--surface-2));
-  }
-  :root[data-design="birlashma"] .chorbogh-cell[data-story="art-6"] .chorbogh-age {
-    color: var(--art-6-text);
-    background: color-mix(in oklab, var(--art-6) 30%, var(--surface-2));
+  :root[data-design="birlashma"] .upop-fact:last-child {
+    border-bottom-style: dashed;
   }
 
   /* Media ramkasi qogʻoz bosma: 8 px oq hoshiya, toʻgʻri burchaklar, oltin chiziq va yulduz yoʻq. */
@@ -1241,7 +1116,7 @@
     transform: translateX(88%);
   }
 
-  /* ---------- Qogʻoz obyektlari (loyihalar sahifasi) ---------- */
+  /* ---------- Qogʻoz obyektlari: afisha (bosh sahifa) va parda (UPOP sahifasi) ---------- */
   .paper-object {
     position: relative;
   }
@@ -1251,7 +1126,7 @@
     border-radius: var(--radius-m);
   }
   .paper-poster {
-    padding: 28px 16px 40px;
+    padding: 28px 16px 48px;
   }
   .poster-band {
     position: absolute;
@@ -1272,35 +1147,11 @@
     -webkit-mask-image: none;
     mask-image: none;
   }
+  /* Chipta stikeri afishaning pastki oʻng burchagida, qirradan 8 px chiqib turadi. */
   .poster-ticket {
     position: absolute;
-    right: -16px;
-    bottom: 8px;
-    width: 96px;
-    height: 36px;
-    transform: rotate(6deg);
-    box-shadow: var(--shadow-raised);
-    clip-path: polygon(
-      0 0,
-      100% 0,
-      100% 38%,
-      calc(100% - 6px) 44%,
-      calc(100% - 7px) 50%,
-      calc(100% - 6px) 56%,
-      100% 62%,
-      100% 100%,
-      0 100%,
-      0 62%,
-      6px 56%,
-      7px 50%,
-      6px 44%,
-      0 38%
-    );
-  }
-  .poster-ticket-holes {
-    position: absolute;
-    inset: 0 auto 0 30px;
-    border-left: 2px dashed var(--surface-2);
+    right: -8px;
+    bottom: 12px;
   }
   .paper-curtain {
     padding: 12px 32px;
@@ -1312,50 +1163,12 @@
     left: 0;
     width: 24px;
     border-radius: 0 12px 12px 0;
+    background: var(--art-5);
   }
   .curtain-frame-right {
     left: auto;
     right: 0;
     border-radius: 12px 0 0 12px;
-  }
-  .paper-film {
-    padding: 12px;
-  }
-  .film-holes {
-    display: block;
-    height: 12px;
-    margin-block: 4px;
-    background: radial-gradient(circle, var(--ink) 3px, transparent 3.5px) 0 0 / 20px 12px repeat-x;
-    opacity: 0.6;
-  }
-  .paper-easel {
-    position: relative;
-    padding-bottom: 64px;
-  }
-  .easel-canvas {
-    padding: 12px;
-  }
-  .easel-legs {
-    position: absolute;
-    bottom: 0;
-    left: 10%;
-    width: 80%;
-    height: 64px;
-    z-index: -1;
-  }
-  .easel-doodle {
-    position: absolute;
-    top: -12px;
-    right: -6px;
-  }
-  .project-media {
-    padding: 12px;
-  }
-  :root[data-design="birlashma"] .project-media-col {
-    isolation: isolate;
-  }
-  :root[data-design="birlashma"] .projects-index-link {
-    border-bottom: 0;
   }
 
   /* ---------- Biz haqimizda: albom varagʻi va kir ipi ---------- */

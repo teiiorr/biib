@@ -158,6 +158,11 @@
   --shadow-overlay: 0 16px 48px rgba(14, 23, 51, 0.14);
   --shadow-contact: 0 1px 0 rgba(14, 23, 51, 0.06);
   --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  /* Qahramon (bosh sahifa): matn, ostlik va kadr pardasi; Atlasda kadr ikkala mavzuda qorongʻi. */
+  --hero-ink: #f7f3ea;
+  --hero-scrim: #0a1026;
+  --hero-veil: #01111a;
 }
 
 :root[data-design="atlas"][data-theme="dark"] {
@@ -206,4 +211,9 @@
   --shadow-overlay: 0 12px 40px rgba(2, 5, 20, 0.55);
   --shadow-contact: 0 1px 0 rgba(2, 5, 20, 0.5);
   --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  /* Qahramon (bosh sahifa): matn, ostlik va kadr pardasi; Atlasda kadr ikkala mavzuda qorongʻi. */
+  --hero-ink: #f7f3ea;
+  --hero-scrim: #0a1026;
+  --hero-veil: #01111a;
 }

@@ -4,11 +4,12 @@ import type { Locale } from "@/i18n/locales";
 
 import { ContactBand } from "./ContactBand";
 import { GallerySection } from "./GallerySection";
+import { HeroScene } from "./HeroScene";
 import { HeroSection } from "./HeroSection";
+import { MissionSection } from "./MissionSection";
 import { NewsTeaser } from "./NewsTeaser";
 import { PartnersField } from "./PartnersField";
 import { PeopleTeaser } from "./PeopleTeaser";
-import { PortalSection } from "./PortalSection";
 import { ProjectsQuadrant } from "./ProjectsQuadrant";
 
 interface HomePageProps {
@@ -16,14 +17,15 @@ interface HomePageProps {
   readonly dict: Dictionary;
 }
 
-/** Bosh sahifa: Darvoza → portal → chor-bogʻ → yangiliklar → galereya → odamlar → hamkorlar (≥6 boʻlsa) → aloqa. */
+/** Bosh sahifa: Darvoza (video sahnasi) → missiya → UPOP TREND → yangiliklar → galereya → odamlar → hamkorlar (≥6 boʻlsa) → aloqa. */
 export function HomePage({ locale, dict }: HomePageProps) {
   const partners = getConfirmedPartners();
   return (
     <>
-      <HeroSection locale={locale} dict={dict} />
-      <PortalSection
-        locale={locale}
+      <HeroScene>
+        <HeroSection locale={locale} dict={dict} />
+      </HeroScene>
+      <MissionSection
         copy={{
           label: dict.home.portal.label,
           statement: dict.home.portal.statement,

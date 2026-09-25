@@ -28,7 +28,7 @@ test.describe("G8 vizual etalonlar", () => {
               `${design}-${theme}-${type}-${viewportLabel(viewport)}.png`,
               {
                 fullPage: true,
-                mask: [page.locator(".abr-canvas"), page.locator("video")],
+                mask: [page.locator("video")],
               },
             );
           }

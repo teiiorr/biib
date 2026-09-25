@@ -25,10 +25,13 @@ export interface ClickToPlayVideoProps {
   readonly duration?: number;
   /** Video nomi (aria-label). */
   readonly title: string;
-  /** Tugma matni: «Filmni koʻrish». */
+  /** Tugma matni: «Videoni ijro etish». */
   readonly playLabel: string;
-  /** Ovozli film uchun subtitr majburiy (WCAG 1.2.2). */
-  readonly captions: CaptionTrack;
+  /**
+   * Ovozli film uchun subtitr (WCAG 1.2.2). Berilmasa video ovozsiz boshlanadi (brauzer
+   * boshqaruvi ovozni yoqadi), matnli muqobil — blok tavsifi.
+   */
+  readonly captions?: CaptionTrack;
   readonly className?: string;
 }
 
@@ -67,28 +70,35 @@ export function ClickToPlayVideo({
     void video.play().catch(() => undefined);
   };
 
+  const videoProps = {
+    ref,
+    poster,
+    width,
+    height,
+    playsInline: true,
+    preload: "none",
+    controls: started,
+    "aria-label": title,
+  } as const;
+
   return (
     <div
       className={cn("media-video media-film", className)}
       data-state={started ? "playing" : "idle"}
     >
-      <video
-        ref={ref}
-        poster={poster}
-        width={width}
-        height={height}
-        playsInline
-        preload="none"
-        controls={started}
-        aria-label={title}
-      >
-        <track
-          kind="captions"
-          src={captions.src}
-          srcLang={captions.srcLang}
-          label={captions.label}
-        />
-      </video>
+      {captions ? (
+        <video {...videoProps}>
+          <track
+            kind="captions"
+            src={captions.src}
+            srcLang={captions.srcLang}
+            label={captions.label}
+          />
+        </video>
+      ) : (
+        /* Subtitr kelguncha ovozsiz boshlanadi: muted literal boʻlishi kerak (media-has-caption). */
+        <video {...videoProps} muted />
+      )}
       {started ? null : (
         <div className="media-film-cover">
           <Surface

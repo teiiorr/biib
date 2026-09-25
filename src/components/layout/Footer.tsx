@@ -5,7 +5,7 @@ import type { IconName } from "@/components/icons/paths";
 import { Islimiy } from "@/components/ornament/Islimiy";
 import { IslimiyScroll } from "@/components/ornament/IslimiyScroll";
 import { ExternalLink } from "@/components/ui/ExternalLink";
-import { getContacts, getProjects, t } from "@/content";
+import { getContacts, getFlagship } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
 import type { Locale } from "@/i18n/locales";
@@ -25,7 +25,7 @@ const ORG_LINKS: readonly PageKey[] = ["about", "leadership", "experts", "partne
 /** Futer: Chust doʻppi hoshiyasi tepada, toʻrt guruh, pastki qator (15.10). */
 export function Footer({ locale, dict }: FooterProps) {
   const contacts = getContacts();
-  const projects = getProjects();
+  const flagship = getFlagship();
   const year = 2026;
 
   return (
@@ -52,26 +52,16 @@ export function Footer({ locale, dict }: FooterProps) {
           </div>
           <div className="footer-group">
             <p className="t-label text-ink">{dict.footer.projects}</p>
-            {projects.map((project) =>
-              project.external ? (
-                <ExternalLink
-                  key={project.key}
-                  href={project.external.href}
-                  hint={dict.common.hints.external}
-                  className="footer-link t-small text-ink-2 no-underline hover:text-tint"
-                >
-                  {t(project.name, locale)}
-                </ExternalLink>
-              ) : (
-                <Link
-                  key={project.key}
-                  href={`${pathFor(locale, "projects")}#${project.key}`}
-                  className="footer-link t-small"
-                >
-                  {t(project.name, locale)}
-                </Link>
-              ),
-            )}
+            <Link href={pathFor(locale, "projects")} className="footer-link t-small">
+              {dict.nav.projects}
+            </Link>
+            <ExternalLink
+              href={flagship.external.href}
+              hint={dict.common.hints.external}
+              className="footer-link t-small text-ink-2 no-underline hover:text-tint"
+            >
+              {dict.nav.upop}
+            </ExternalLink>
           </div>
           <div className="footer-group">
             <p className="t-label text-ink">{dict.footer.contacts}</p>

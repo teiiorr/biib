@@ -142,21 +142,32 @@ try {
   await chrome.kill();
 }
 
-/* Shader chunk: yigʻilgan fayllar ichida uSeed uniformi bor chunk ≤ 25 KB gzip. */
+/* Qahramon video chunki (HeroVideo, data-chunk="hero-video") ≤ 10 KB gzip: faqat Atlasda, boʻsh vaqtda. */
 const chunkDir = path.resolve(".next/static/chunks");
 if (existsSync(chunkDir)) {
   const walk = (dir) =>
     readdirSync(dir).flatMap((f) =>
       statSync(path.join(dir, f)).isDirectory() ? walk(path.join(dir, f)) : [path.join(dir, f)],
     );
-  const shader = walk(chunkDir).filter(
-    (f) => f.endsWith(".js") && readFileSync(f, "utf8").includes("uSeed"),
+  const heroChunks = walk(chunkDir).filter(
+    (f) => f.endsWith(".js") && readFileSync(f, "utf8").includes("hero-video"),
   );
-  for (const f of shader) {
+  for (const f of heroChunks) {
     const gz = gzipSync(readFileSync(f)).length;
-    push(`shader-chunk:${path.basename(f)}`, gz <= 25 * 1024, `${Math.round(gz / 1024)} KB gzip`);
+    push(
+      `hero-video-chunk:${path.basename(f)}`,
+      gz <= 10 * 1024,
+      `${Math.round(gz / 1024)} KB gzip`,
+    );
   }
-  if (!shader.length) push("shader-chunk", DESIGN !== "atlas", "shader chunk topilmadi");
+  if (!heroChunks.length)
+    push("hero-video-chunk", DESIGN !== "atlas", "hero-video chunk topilmadi");
+}
+/* Posterlar (LCP rasmi) ≤ 120 KB AVIF (§17). */
+for (const poster of ["hero-d-poster.avif", "hero-m-poster.avif"]) {
+  const file = path.resolve("public/media", poster);
+  const size = existsSync(file) ? statSync(file).size : Infinity;
+  push(`hero-poster:${poster}`, size <= 120 * 1024, `${Math.round(size / 1024)} KB`);
 }
 
 const status = checks.some((c) => c.status === "fail") ? "fail" : "pass";

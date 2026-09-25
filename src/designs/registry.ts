@@ -7,30 +7,30 @@ import type { Design } from "@/lib/appearance/types";
 
 export type ArtSlot =
   | "home-hero"
-  | "home-portal"
-  | "home-projects"
-  | "home-news"
-  | "home-people"
-  | "home-contact"
-  | "about-hero"
   | "about-timeline"
-  | "projects-header"
   | "project-media"
   | "news-header"
   | "news-progress"
   | "people-heading"
-  | "partners-field"
   | "contacts-band"
   | "footer-crown"
   | "not-found"
   | "error";
+
+/** Bir uyada bir necha qogʻoz obyekti boʻlsa (loyiha mediasi: afisha yoki parda), tanlov shu yerdan. */
+export type ArtVariant = "poster" | "curtain";
 
 /** Badiiy modullar lugʻatni oʻzi yuklamaydi (beshta til chunkka kirib qolmasin): matn serverdan keladi. */
 export interface ArtCopy {
   readonly coloring?: Dictionary["home"]["coloring"];
   readonly galleryPending?: string;
   readonly noteHero?: string;
+  /** Qahramon videosi: tavsif va 44 px boshqaruv yorliqlari. */
+  readonly videoAlt?: string;
+  readonly pauseLabel?: string;
+  readonly playLabel?: string;
   readonly curtainLabel?: string;
+  readonly ageSticker?: string;
   readonly pencilProgress?: string;
   readonly qalampirValue?: string;
   readonly canvas?: Dictionary["errors"]["canvas"];
@@ -44,6 +44,7 @@ export interface ArtProps {
   readonly copy?: ArtCopy;
   readonly className?: string;
   readonly story?: ColorStory;
+  readonly variant?: ArtVariant;
   readonly progress?: number;
   readonly children?: ReactNode;
 }

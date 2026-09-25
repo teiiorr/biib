@@ -11,6 +11,7 @@
 @import "./layout.css";
 @import "./abr.css";
 @import "./home.css";
+@import "./motion.css";
 @import "./pages.css";
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));

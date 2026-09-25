@@ -311,6 +311,30 @@
     width: 40px;
     height: 40px;
   }
+  /* Qahramon sahnasi (Atlas): dvigatel kelguncha belgi skrollga bogʻliq CSS bilan yashirin turadi va
+     0.72–0.80 da paydo boʻladi; GSAP sahnani qurgach (html[data-hero-scene]) shu qoida oʻchadi. */
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) and (min-width: 360px) and (min-height: 521px) {
+      :root[data-design="atlas"]:not([data-motion="off"]):not([data-hero-scene])
+        body:has(.home-hero-scene)
+        .site-header
+        [data-brand-mark] {
+        animation: brand-dock linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0px calc(100svh * var(--hero-scene-length));
+      }
+    }
+  }
+  @keyframes brand-dock {
+    0%,
+    72% {
+      opacity: 0;
+    }
+    80%,
+    100% {
+      opacity: 1;
+    }
+  }
   .brand-name {
     display: flex;
     flex-direction: column;

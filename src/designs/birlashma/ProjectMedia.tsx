@@ -1,33 +1,36 @@
 import Curtain from "./Curtain";
-import { CurtainFrame, Easel, FilmStrip, Poster } from "./PaperObjects";
+import { CurtainFrame, Poster } from "./PaperObjects";
 import type { ArtProps } from "../registry";
 
 /**
- * Loyiha mediasi uchun qogʻoz obyekti (25.8): UPOP TREND — afisha va chipta, Sahna bolalari — parda,
- * Ertak ustaxonasi — kinolenta, Rangli olam — molbert. Tanlov rang hikoyasidan.
+ * UPOP TREND mediasi uchun qogʻoz obyekti (25.8): bosh sahifada afisha va chipta stikeri,
+ * loyiha sahifasida skroll bilan ochiladigan parda. Tanlov `variant` orqali, rang hikoyasidan emas.
  */
-export default function ProjectMedia({ children, className, story, locale }: ArtProps) {
+export default function ProjectMedia({
+  variant = "poster",
+  children,
+  className,
+  story,
+  locale,
+  copy,
+}: ArtProps) {
   const extra = className ? { className } : {};
-  switch (story?.primary) {
-    case "art-1":
-      return (
-        <Poster story={story} {...extra}>
+  if (variant === "curtain") {
+    return (
+      <CurtainFrame {...extra}>
+        <Curtain locale={locale} {...(copy ? { copy } : {})}>
           {children}
-        </Poster>
-      );
-    case "art-5":
-      return (
-        <CurtainFrame story={story} {...extra}>
-          <Curtain locale={locale}>{children}</Curtain>
-        </CurtainFrame>
-      );
-    case "art-3":
-      return <FilmStrip {...extra}>{children}</FilmStrip>;
-    default:
-      return (
-        <Easel {...(story ? { story } : {})} {...extra}>
-          {children}
-        </Easel>
-      );
+        </Curtain>
+      </CurtainFrame>
+    );
   }
+  return (
+    <Poster
+      {...(story ? { story } : {})}
+      {...(copy?.ageSticker ? { age: copy.ageSticker } : {})}
+      {...extra}
+    >
+      {children}
+    </Poster>
+  );
 }

@@ -1,5 +1,5 @@
 @layer components {
-  /* Bosh sahifa: Darvoza, portal, chor-bogʻ, yangiliklar, odamlar, aloqa lentasi. */
+  /* Bosh sahifa: Darvoza, portal, UPOP TREND, yangiliklar, odamlar, aloqa lentasi. */
 
   .section-head {
     display: grid;
@@ -15,254 +15,370 @@
     margin-bottom: 24px;
   }
 
-  /* Darvoza */
-  /* Sarlavha ostiga kiradi: main ning yuqori boʻshligʻi shu yerda qaytariladi, 100svh toʻliq ipak. */
-  .home-hero {
+  /* Darvoza: egasining videosi, belgi kadr markazida; nom, missiya va harakatlar pastda chapda, toʻrda. */
+  /* Sahna uzunligi viewportga nisbatan: kompyuter 1, telefon 0.7; harakat yoʻq, past/tor ekran va Birlashmada 0. */
+  :root {
+    --hero-scene-length: 0.7;
+  }
+  @media (min-width: 1024px) {
+    :root {
+      --hero-scene-length: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce), (max-height: 520px), (max-width: 359px) {
+    :root {
+      --hero-scene-length: 0;
+    }
+  }
+  :root[data-motion="off"],
+  :root[data-design="birlashma"] {
+    --hero-scene-length: 0;
+  }
+  /* Oʻram sarlavha ostiga kiradi (main ning yuqori boʻshligʻi shu yerda qaytariladi); balandligi skroll yoʻli. */
+  .home-hero-scene {
     position: relative;
-    min-height: 100svh;
-    display: grid;
-    align-items: end;
-    overflow: hidden;
-    isolation: isolate;
+    min-height: calc(100svh * (1 + var(--hero-scene-length)));
     margin-top: calc(-1 * (var(--header-h) + 12px + var(--safe-top)));
   }
-  .home-hero-art {
-    position: absolute;
-    inset: 0;
+  /* Qahramon yopishqoq. Kadrdagi belgining pastki chekkasi cover hisobidan; JS aniq qiymat bersa u ustun. */
+  .home-hero {
+    --hero-media-w: 1280;
+    --hero-media-h: 720;
+    --hero-logo-bottom: 0.6028;
+    --cover-scale: max(100vw / var(--hero-media-w), 100svh / var(--hero-media-h));
+    --cover-h: calc(var(--hero-media-h) * var(--cover-scale));
+    --logo-bottom: var(
+      --logo-bottom-js,
+      calc((100svh - var(--cover-h)) / 2 + var(--hero-logo-bottom) * var(--cover-h))
+    );
+    --ink: var(--hero-ink);
+    --ink-2: color-mix(in oklab, var(--hero-ink) 88%, transparent);
+    position: sticky;
+    top: 0;
+    display: grid;
+    min-height: 100svh;
+    overflow: hidden;
+    isolation: isolate;
   }
+  @media (max-width: 1023px) and (orientation: portrait) {
+    .home-hero {
+      --hero-media-w: 720;
+      --hero-media-h: 1280;
+      --hero-logo-bottom: 0.4811;
+    }
+  }
+  .home-hero-art,
+  .home-hero-media,
   .home-hero-slot,
-  .home-hero-slot > .abr-silk {
+  .home-hero-dim,
+  .hero-loop {
     position: absolute;
     inset: 0;
   }
-  .home-hero-ganch {
+  /* Kadr belgiga qarab kattalashadi (sahna): poster va video bir xil nuqtadan. */
+  .home-hero-media,
+  .hero-loop {
+    transform-origin: 50% 42%;
+  }
+  .home-hero-picture,
+  .home-hero-poster,
+  .hero-loop-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .home-hero-poster,
+  .hero-loop-video {
+    object-fit: cover;
+  }
+  /* Video poster ustida: poster 0-kadr, almashinuv sezilmaydi, belgi shunchaki jonlanadi. */
+  .hero-loop-video {
+    opacity: 0;
+    transition: opacity 900ms var(--ease-out);
+  }
+  .hero-loop[data-ready="true"] .hero-loop-video {
+    opacity: 1;
+  }
+  /* Parda: kadrdagi doira oʻrnida kadr rangidagi yumshoq disk; belgi koʻchganda ikkinchi doira qolmaydi. */
+  .hero-loop-veil {
     position: absolute;
-    inset: 0;
+    left: calc(var(--logo-x, 50%) - var(--logo-size, 0px) * 0.58);
+    top: calc(var(--logo-y, 50%) - var(--logo-size, 0px) * 0.58);
+    width: calc(var(--logo-size, 0px) * 1.16);
+    height: calc(var(--logo-size, 0px) * 1.16);
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--hero-veil) 60%, transparent 72%);
+    opacity: 0;
     pointer-events: none;
   }
-  /* Panjara ipak ichida: kunduzi siyoh, tunda oltin; sokin, lekin koʻrinadi. */
-  .home-hero-lattice {
-    position: absolute;
-    inset: 0;
-    opacity: 0.3;
+  /* Xiralashtirish: sahifa rangida, sahna davomida 0 → 0.72; missiya shu xira kadrdan keyin keladi. */
+  .home-hero-dim {
+    background: var(--bg);
+    opacity: 0;
     pointer-events: none;
-    color: var(--ink);
-    -webkit-mask-image: linear-gradient(180deg, black 0%, black 55%, transparent 100%);
-    mask-image: linear-gradient(180deg, black 0%, black 55%, transparent 100%);
   }
-  :root[data-theme="dark"] .home-hero-lattice {
-    color: var(--accent-hi);
-    opacity: 0.6;
+  /* Matn belgidan pastda boshlanadi; sigʻmasa qahramon oʻsadi va sahna oʻchadi (useHeroScene). */
+  .home-hero-content {
+    position: relative;
+    display: grid;
+    align-content: end;
+    padding-top: max(
+      calc(var(--header-h) + 48px + var(--safe-top)),
+      calc(var(--logo-bottom) + 32px)
+    );
+    padding-bottom: calc(var(--tabbar-h) + 24px + var(--safe-bottom));
   }
-  /* Matn ostidagi yumshoq ostlik: sarlavhadan yuqorida boshlanadi, ipakning yuqori uchdan biri toza qoladi;
-     matn qatorlarida bg ≥ 88 %, shunda siyoh 4.5:1 dan yuqori (§8 IV.8). */
+  /* Ostlik belgi ostidan boshlanadi (belgi toza qoladi), 28 px da 64 %, 140 px da 82 %, pastda 90 %;
+     matn +32 px dan: sut-oq matn ikkala poster va butun viewport matritsasida ≥ 5.5:1 (D45). */
   .home-hero-content::before {
     content: "";
     position: absolute;
-    inset: -40% -100vw -100% -100vw;
+    inset: 0;
+    pointer-events: none;
     background: linear-gradient(
       180deg,
-      transparent 0%,
-      color-mix(in oklab, var(--bg) 34%, transparent) 24%,
-      color-mix(in oklab, var(--bg) 78%, transparent) 44%,
-      color-mix(in oklab, var(--bg) 90%, transparent) 100%
+      transparent var(--logo-bottom),
+      color-mix(in oklab, var(--hero-scrim) 64%, transparent) calc(var(--logo-bottom) + 28px),
+      color-mix(in oklab, var(--hero-scrim) 82%, transparent) calc(var(--logo-bottom) + 140px),
+      color-mix(in oklab, var(--hero-scrim) 90%, transparent) 100%
     );
-    pointer-events: none;
   }
-  .home-hero-content {
+  .home-hero-grid {
     position: relative;
-    isolation: isolate;
-    display: grid;
-    gap: 24px;
-    padding-top: calc(var(--header-h) + 48px + var(--safe-top));
-    padding-bottom: calc(var(--tabbar-h) + 48px + var(--safe-bottom));
-  }
-  /* Ostlik joylashgan psevdoelement; matn undan keyin chizilishi uchun bolalar ham joylashgan. */
-  .home-hero-content > * {
-    position: relative;
-  }
-  @media (min-width: 1024px) {
-    .home-hero-content {
-      padding-bottom: 96px;
-    }
   }
   .home-hero-title {
-    max-width: 12ch;
     /* Bosh harfning yon boʻshligʻi: chap chetga optik tekislash (§8 III.6). Akt 700 da B/Б lsb = 67/1000 em. */
     margin-inline-start: -0.067em;
+  }
+  /* Nom ostida bitta qator: missiya chapda (≤ 52ch), harakatlar oʻng yonida; tor ekranda pastga oʻtadi. */
+  .home-hero-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px 32px;
+    margin-top: 16px;
+  }
+  .home-hero-mission {
+    flex: 1 1 36ch;
+    max-width: 52ch;
   }
   .home-hero-actions {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 12px;
   }
-  /* Kunduzgi ipak ustida matn: sut-oq ostlik yoʻq, ipak oʻzi och; tunda ipak toʻq. */
-
-  /* Portal */
-  .home-portal {
-    position: relative;
-    min-height: 100svh;
-    display: grid;
-    align-items: center;
-    padding-block: var(--section-gap);
-    overflow: hidden;
+  /* Halqa boshqaruvi uyasi: video kelguncha boʻsh, joy olmaydi. */
+  .home-hero-control {
+    display: inline-flex;
   }
-  .home-portal-grid {
-    display: grid;
-    gap: 32px;
-    align-items: center;
-  }
-  @media (min-width: 1024px) {
-    .home-portal-grid {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-      gap: 64px;
-    }
-  }
-  .home-portal-text {
-    display: grid;
-    gap: 16px;
-    max-width: 28ch;
-  }
-  .home-portal-statement {
-    text-wrap: balance;
-  }
-  .home-portal-window {
-    justify-self: center;
-    width: min(100%, 420px);
-    transform-origin: center;
-    will-change: transform;
-  }
-  .home-portal-silk,
-  .home-portal-silk > .abr-silk {
-    position: absolute;
-    inset: 0;
-  }
-  .home-portal-ravoq .ravoq-media {
-    background: var(--art-5);
-  }
-  .portal-words .zardozi-word {
-    position: relative;
-    white-space: nowrap;
-    font-style: normal;
-  }
-  /* Zardoʻzi ostchiziq matn koʻtarilib boʻlgach chapdan oʻngga «tikiladi»; soʻzlar doira ritmida. */
-  .portal-words .zardozi-underline {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -0.12em;
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform var(--dur-reveal) var(--ease-out);
-  }
-  .portal-words .zardozi-word:nth-of-type(2) .zardozi-underline {
-    transition-delay: 90ms;
-  }
-  .portal-words .zardozi-word:nth-of-type(3) .zardozi-underline {
-    transition-delay: 180ms;
-  }
-  .portal-words .zardozi-word[data-reveal="done"] .zardozi-underline {
-    transform: scaleX(1);
-  }
-  :root[data-motion="off"] .portal-words .zardozi-underline {
-    transform: none;
-    transition: none;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .portal-words .zardozi-underline {
-      transform: none;
-      transition: none;
-    }
-  }
-
-  /* Chor-bogʻ */
-  .chorbogh {
-    position: relative;
-    display: grid;
-    gap: 32px;
-  }
-  @media (min-width: 600px) {
-    .chorbogh {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 32px 48px;
-    }
-  }
-  @media (min-width: 1024px) {
-    .chorbogh {
-      gap: 48px 64px;
-    }
-  }
-  .chorbogh-star {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    color: var(--accent-art);
-    pointer-events: none;
+  .home-hero-control:empty {
     display: none;
   }
-  @media (min-width: 600px) {
-    .chorbogh-star {
-      display: block;
+  /* 44 px oyna tugmasi harakatlar qatorida (matnli tint chegarasi bilan), hech narsa ustida turmaydi. */
+  .hero-loop-control {
+    width: var(--hit-min);
+    height: var(--hit-min);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: transform 200ms var(--ease-ui);
+  }
+  .hero-loop-control:active {
+    transform: scale(0.97);
+  }
+  /* Telefonda ikki harakat bir qatorda sigʻishi uchun 48 px (Art. IX.1 juftligi: yorliq 16). */
+  @media (max-width: 599px) {
+    .home-hero-actions .ui-button[data-size="56"] {
+      --btn-h: var(--control-m);
+      --btn-px: 24px;
     }
   }
-  .chorbogh-cell {
+  @media (min-width: 1024px) {
+    .home-hero-content {
+      padding-bottom: 64px;
+    }
+    .home-hero-row {
+      gap: 24px 48px;
+      margin-top: 24px;
+    }
+  }
+  /* Oyna tugmasi va boshqaruv qorongʻi kadr ustida ikkala mavzuda ham tun materialida (10.1.3). */
+  :root[data-design="atlas"] .home-hero-content {
+    --material-ink: var(--hero-ink);
+    --material-base: var(--hero-scrim);
+    --material-rim: color-mix(in oklab, var(--hero-ink) 55%, var(--hero-scrim));
+  }
+  /* Sahna belgisi: kadrdagi doira ustida, JS oʻlchamlari bilan; sahnadan tashqarida koʻrinmas. */
+  .home-hero-logo {
+    position: absolute;
+    left: calc(var(--logo-x, 50%) - var(--logo-size, 0px) / 2);
+    top: calc(var(--logo-y, 50%) - var(--logo-size, 0px) / 2);
+    width: var(--logo-size, 0px);
+    height: var(--logo-size, 0px);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Missiya: xira kadrdan keyin sahifa rangida keladi, belgilangan soʻzlar ostida zardoʻzi. */
+  .home-mission {
+    position: relative;
+    background: var(--bg);
+  }
+  .home-mission-text {
+    display: grid;
+    gap: 16px;
+  }
+  /* ch oʻz shriftida (44 px): ≈ 3–4 qator; konteyner shriftidagi 28ch ingichka ustun berardi. */
+  .home-mission-statement {
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+  /* Zardoʻzi matn koʻtarilib boʻlgach tikiladi: koʻrinish + doira kechikishi ustiga 360 ms. */
+  .mission-words .zardozi-underline {
+    transition-delay: 360ms;
+  }
+
+  /* UPOP TREND: bosh loyiha boʻlimi */
+  /* Lojuvard maydon: kunduzgi Atlasda boʻlim tungi Rishton toʻplamiga oʻtadi (juftliklar §12.2 da
+     tekshirilgan); shu sinf loyiha sahifasidagi roʻyxat lentasida ham. Birlashma doskani paper.css beradi. */
+  .upop-field {
+    position: relative;
+    isolation: isolate;
+    color: var(--ink);
+    background: var(--bg);
+  }
+  :root[data-design="atlas"][data-theme="light"] .upop-field {
+    --bg: #0a1026;
+    --surface: #111a38;
+    --surface-2: #17214a;
+    --ink: #f7f3ea;
+    --ink-2: #a9b1cc;
+    --ink-3: #8c95b4;
+    --line: #2a3560;
+    --line-strong: #6a76a2;
+    --tint: #e8699f;
+    --tint-hover: #f48ab5;
+    --on-tint: #0a1026;
+    --focus: #e8699f;
+    --accent-text: #e3c46e;
+    --accent-art: #d9b75a;
+    --accent-hi: #f0d488;
+    --accent-lo: #a88a3a;
+    --art-1: #f07aae;
+    --art-1-text: #e8699f;
+    --art-2: #d9b75a;
+    --art-2-text: #e3c46e;
+    --material-base: #111a38;
+    --material-ink: #f7f3ea;
+    --material-rim: #8c95b4;
+    --material-shadow: rgba(2, 5, 20, 0.5);
+    --shadow-raised: 0 1px 2px rgba(2, 5, 20, 0.4);
+    --shadow-floating: 0 6px 20px rgba(2, 5, 20, 0.45);
+    --shadow-contact: 0 1px 0 rgba(2, 5, 20, 0.5);
+    --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+  /* Tunda sahifa oʻzi lojuvard: maydon bir pogʻona yorugʻroq sirt bilan ajraladi. */
+  :root[data-design="atlas"][data-theme="dark"] .upop-field {
+    --bg: #111a38;
+    --surface: #17214a;
+  }
+  /* Baxmal tovlanishi: chap yuqorida 8 % pushti, oʻng pastda 6 % oltin — rang hikoyasi, halo emas. */
+  :root[data-design="atlas"] .upop-field {
+    background: linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--bg) 92%, var(--art-1)) 0%,
+      var(--bg) 45%,
+      color-mix(in oklab, var(--bg) 94%, var(--art-2)) 100%
+    );
+  }
+
+  .upop-feature-grid {
+    row-gap: 32px;
+    align-items: center;
+  }
+  .upop-feature-wordmark,
+  .upop-feature-media,
+  .upop-feature-text {
+    grid-column: 1 / -1;
+  }
+  /* Telefonda logotip toʻrt ustundan uchtasini oladi: video ustida ogʻirlik qilmaydi. */
+  .upop-feature-wordmark {
+    grid-column: 1 / 4;
+  }
+  .upop-wordmark {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .upop-feature-text {
+    display: grid;
+    gap: 24px;
+  }
+  .upop-feature-copy {
     display: grid;
     gap: 12px;
-    grid-template-rows: auto auto auto 1fr auto;
   }
-  .chorbogh-media {
-    width: 100%;
-    margin-bottom: 4px;
-    color: var(--accent-art);
+  /* Uch dalil: ingichka chiziqli roʻyxat, plitka yoki belgisiz. */
+  .upop-feature-list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
-  .chorbogh-media .orn-cover {
-    transition:
-      filter var(--dur-panel) var(--ease-ui),
-      transform var(--dur-panel) steps(4, end);
+  .upop-feature-list li {
+    padding-block: 12px;
+    border-top: 1px solid var(--line);
   }
-  /* Hover: rang hikoyasi kuchayadi, abr tasmalari bir zina siljib «roʻyxatga tushadi». */
-  @media (hover: hover) {
-    .chorbogh-cell:hover .chorbogh-media .orn-cover {
-      filter: saturate(1.2);
-      transform: translateY(-1.5%) scale(1.03);
-    }
+  .upop-feature-list li:last-child {
+    border-bottom: 1px solid var(--line);
   }
-  .chorbogh-cell:focus-within .chorbogh-media .orn-cover {
-    filter: saturate(1.2);
-  }
-  /* Telefonda kataklar orasida girih yulduzi ajratgich; kesishma yulduzi 600 px dan. */
-  .chorbogh-divider {
+  .upop-feature-actions {
     display: flex;
-    justify-content: center;
-    color: var(--accent-art);
-    padding-block: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
   }
   @media (min-width: 600px) {
-    .chorbogh-divider {
-      display: none;
+    .upop-feature-grid {
+      row-gap: 48px;
+    }
+    .upop-feature-wordmark {
+      grid-column: 1 / 4;
+    }
+    .upop-feature-media {
+      grid-column: 4 / 9;
     }
   }
-  .chorbogh-title {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .chorbogh-cta {
-    margin-top: auto;
-    display: flex;
-    align-items: center;
-  }
-  /* Ikkala havola turi bir xil qutida: CTA pastki chizigʻi qatorda tekis (§8 III.8). */
-  .chorbogh-cta .ui-button[data-variant="link"] {
-    min-height: 44px;
-  }
-  .chorbogh-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--tint);
+  @media (min-width: 1024px) {
+    .upop-feature-grid {
+      row-gap: 64px;
+    }
+    .upop-feature-wordmark {
+      grid-column: 1 / 6;
+    }
+    .upop-feature-media {
+      grid-column: 6 / 13;
+    }
+    /* Matn qatori toʻrni davom ettiradi: sarlavha va harakatlar 1–7, dalillar 8–12. */
+    .upop-feature-text {
+      grid-template-columns: subgrid;
+      grid-template-rows: auto auto;
+      row-gap: 32px;
+    }
+    .upop-feature-copy {
+      grid-column: 1 / 8;
+      grid-row: 1;
+    }
+    .upop-feature-list {
+      grid-column: 8 / 13;
+      grid-row: 1 / 3;
+      align-self: start;
+    }
+    .upop-feature-actions {
+      grid-column: 1 / 8;
+      grid-row: 2;
+    }
   }
 
   /* Yangiliklar */
@@ -508,4 +624,12 @@
    cv05 (serifli I) t-display-xl dan keladi, bu yerda takrorlanmaydi. */
 .home-hero-title {
   font-family: "Akt Hero", var(--font-display);
+}
+
+/* Atlasda nom kadr ostida: ≥1024 da bir qator, telefonda ikki qator (36 px). display-xl kadrdagi belgi bilan
+   raqobatlashar va past ekranlarda belgi ustiga chiqardi (D44). Birlashma display-xl da qoladi. */
+:root[data-design="atlas"] .home-hero-title {
+  font-size: clamp(2.25rem, 1.6rem + 2.2vw, 4rem);
+  line-height: var(--lh-h1);
+  letter-spacing: var(--ls-h1);
 }

@@ -1,120 +1,126 @@
 @layer components {
-  /* Loyihalar */
-  /* Mahalliy oyna navigatsiyasi faqat kompyuterda yopishadi; telefonda tab-bar bilan raqobatlashmaydi. */
-  .projects-localnav {
-    display: flex;
-    justify-content: center;
-    padding-bottom: 24px;
-    pointer-events: none;
+  /* UPOP TREND sahifasi */
+  /* Sahifa boshi 12 ustunga boʻlinadi: matn chapda, logotip oʻngda (telefonda pastda, 4 dan 3 ustun). */
+  .upop-hero .page-hero {
+    grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+    column-gap: var(--gutter);
   }
-  @media (min-width: 1024px) {
-    .projects-localnav {
-      position: sticky;
-      top: calc(var(--header-h) + 24px + var(--safe-top));
-      z-index: var(--z-sticky);
-    }
+  .upop-hero .page-hero > * {
+    grid-column: 1 / -1;
   }
-  .projects-localnav-bar {
-    display: inline-flex;
-    gap: 4px;
-    pointer-events: auto;
-  }
-  .projects-index {
-    position: relative;
-    display: grid;
-    gap: 16px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  .upop-hero .page-hero > .upop-hero-art {
+    grid-column: 1 / 4;
   }
   @media (min-width: 600px) {
-    .projects-index {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px 48px;
+    .upop-hero .page-hero {
+      grid-template-rows: auto auto 1fr;
+    }
+    .upop-hero .page-hero > * {
+      grid-column: 1 / 6;
+    }
+    .upop-hero .page-hero > .upop-hero-art {
+      grid-column: 6 / 9;
+      grid-row: 1 / 4;
+      align-self: start;
     }
   }
-  .projects-index-link {
+  @media (min-width: 1024px) {
+    .upop-hero .page-hero > * {
+      grid-column: 1 / 8;
+    }
+    .upop-hero .page-hero > .upop-hero-art {
+      grid-column: 10 / 13;
+    }
+  }
+
+  /* Matn va faktlar: sarlavha butun kenglikda, matn 1–7, faktlar 9–12 (ingichka chiziqli roʻyxat). */
+  .upop-about {
+    row-gap: 24px;
+  }
+  .upop-about-title,
+  .upop-about-body,
+  .upop-facts {
+    grid-column: 1 / -1;
+  }
+  .upop-facts {
+    display: grid;
+    margin: 0;
+  }
+  .upop-fact {
     display: grid;
     gap: 4px;
-    min-height: 44px;
-    padding: 16px 0;
+    padding-block: 12px;
+    border-top: 1px solid var(--line);
+  }
+  .upop-fact:last-child {
     border-bottom: 1px solid var(--line);
-    color: var(--ink);
   }
-  .projects-index-link:hover {
-    color: var(--tint);
+  .upop-fact dd {
+    margin: 0;
   }
-  .project-section {
-    scroll-margin-top: calc(var(--header-h) + 88px);
+  @media (min-width: 1024px) {
+    .upop-about {
+      row-gap: 32px;
+    }
+    .upop-about-body {
+      grid-column: 1 / 8;
+    }
+    .upop-facts {
+      grid-column: 9 / 13;
+      align-self: start;
+    }
   }
-  .project-section[data-tone="dark"] {
-    background: var(--surface);
+
+  /* Film: sarlavha va tavsif 1–4 (oʻrtada), film 5–12. */
+  .upop-film {
+    row-gap: 24px;
   }
-  .project-grid {
-    row-gap: 32px;
+  .upop-film-text,
+  .upop-film-media {
+    grid-column: 1 / -1;
   }
-  .project-ravoq {
-    width: 100%;
-    color: var(--accent-art);
-  }
-  .project-text {
+  .upop-film-text {
     display: grid;
-    gap: 24px;
+    gap: 12px;
     align-content: start;
   }
-  .project-head {
+  @media (min-width: 1024px) {
+    .upop-film-text {
+      grid-column: 1 / 5;
+      align-self: center;
+    }
+    .upop-film-media {
+      grid-column: 5 / 13;
+    }
+  }
+
+  /* Roʻyxatdan oʻtish lentasi: lojuvard maydon (home.css .upop-field), ichki boʻshliq 48/64. */
+  .upop-register {
+    padding-block: 48px;
+  }
+  .upop-register-grid {
+    row-gap: 24px;
+    align-items: center;
+  }
+  .upop-register-text,
+  .upop-register-actions {
+    grid-column: 1 / -1;
+  }
+  .upop-register-text {
     display: grid;
     gap: 12px;
   }
-  .project-sticker {
-    justify-self: start;
-  }
-  .project-facts {
-    display: grid;
-    gap: 16px;
-    margin: 0;
-    padding-top: 8px;
-    border-top: 1px solid var(--line);
-  }
-  @media (min-width: 600px) {
-    .project-facts {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px 24px;
+  @media (min-width: 1024px) {
+    .upop-register {
+      padding-block: 64px;
     }
-  }
-  .project-fact {
-    display: grid;
-    gap: 4px;
-    padding-top: 16px;
-  }
-  .project-fact dd {
-    margin: 0;
-  }
-  .project-cta {
-    display: grid;
-    gap: 16px;
-    justify-items: start;
-  }
-  .inview-video {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  .inview-video video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .inview-video-control {
-    position: absolute;
-    right: 16px;
-    bottom: 16px;
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-control);
-    display: grid;
-    place-items: center;
-    color: var(--material-ink);
+    .upop-register-text {
+      grid-column: 1 / 8;
+    }
+    .upop-register-actions {
+      grid-column: 9 / 13;
+      justify-self: start;
+    }
   }
 
   /* Biz haqimizda */

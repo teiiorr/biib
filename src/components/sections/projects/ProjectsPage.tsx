@@ -1,24 +1,25 @@
+import Image from "next/image";
+import { ViewTransition } from "react";
+
 import { Container } from "@/components/layout/Container";
 import { DesignArt } from "@/components/layout/DesignArt";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
-import { GirihStar } from "@/components/ornament/GirihStar";
-import { OrnamentCover } from "@/components/ornament/OrnamentCover";
-import { Ravoq } from "@/components/ornament/Ravoq";
+import { ClickToPlayVideo } from "@/components/media/ClickToPlayVideo";
 import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
+import { MediaFrame } from "@/components/ui/MediaFrame";
 import { Prose } from "@/components/ui/Prose";
-import { Sticker } from "@/components/ui/Sticker";
 import { Text } from "@/components/ui/Text";
-import { getProjects, t } from "@/content";
+import { getFlagship, t } from "@/content";
 import type { Project } from "@/content/types";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
 import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
+import { sharedName } from "@/lib/motion/transitions";
 
 import { InViewVideo } from "./InViewVideo";
-import { ProjectsLocalNav } from "./ProjectsLocalNav";
 
 interface PageProps {
   readonly locale: Locale;
@@ -35,11 +36,22 @@ function factValue(
   return fact.value ? t(fact.value, locale) : pending;
 }
 
-/** Loyihalar: chor-bogʻ indeksi, keyin har loyiha oʻz rang hikoyasida toʻliq boʻlim (15.4). */
+/**
+ * UPOP TREND sahifasi: sarlavha va logotip, toʻliq kenglikdagi sahna halqasi, matn va faktlar,
+ * bosilganda yuklanadigan film, roʻyxatdan oʻtish lentasi (upop.uz). Birlashmada halqa parda ortida.
+ */
 export function ProjectsPage({ locale, dict }: PageProps) {
-  const projects = getProjects();
+  const project = getFlagship();
   const p = dict.projects;
-  const navItems = projects.map((project) => ({ id: project.key, label: t(project.name, locale) }));
+  const { loop, film, wordmark } = project.media;
+  const facts: ReadonlyArray<readonly [string, string]> = [
+    [p.facts.age, fill(dict.common.age.range, { from: project.age.from, to: project.age.to })],
+    [p.facts.format, factValue(project, "format", locale, p.facts.pending)],
+    [p.facts.place, factValue(project, "place", locale, p.facts.pending)],
+    [p.facts.schedule, factValue(project, "schedule", locale, p.facts.pending)],
+    [p.facts.cost, project.cost.free === true ? p.facts.free : p.facts.pending],
+    [p.facts.teacher, factValue(project, "teacher", locale, p.facts.pending)],
+  ];
 
   return (
     <>
@@ -51,156 +63,122 @@ export function ProjectsPage({ locale, dict }: PageProps) {
           { href: pathFor(locale, "projects"), label: dict.nav.projects, current: true },
         ]}
         breadcrumbsLabel={dict.common.hints.breadcrumbs}
-      />
-      <ProjectsLocalNav items={navItems} label={p.localNav} />
-      <Section padded={false} className="pb-12" labelledBy="projects-index">
+        className="upop-hero"
+      >
+        <div className="upop-hero-art" data-upop-wordmark="">
+          <ViewTransition name={sharedName("project-media", project.key)}>
+            <Image
+              src={wordmark.src}
+              alt={t(wordmark.alt, locale)}
+              width={wordmark.width}
+              height={wordmark.height}
+              sizes="(min-width: 1024px) 25vw, 80vw"
+              priority
+              className="upop-wordmark"
+            />
+          </ViewTransition>
+        </div>
+      </PageHero>
+
+      <Section as="div" padded={false} className="upop-stage">
         <Container>
-          <h2 className="sr-only" id="projects-index">
-            {p.index}
-          </h2>
-          <ol className="projects-index" data-card-group="">
-            {projects.map((project) => (
-              <li key={project.key} data-card="">
-                <a
-                  href={`#${project.key}`}
-                  className="projects-index-link paper-look"
-                  data-story={project.story.primary}
-                >
-                  <span className="t-h4" data-card-title="">
-                    {t(project.name, locale)}
-                  </span>
-                  <span className="t-small text-ink-2">{t(project.tagline, locale)}</span>
-                </a>
-              </li>
-            ))}
-            <li className="chorbogh-star birlashma:hidden" aria-hidden="true">
-              <GirihStar symmetry={10} size={72} ring />
-            </li>
-          </ol>
+          <DesignArt
+            slot="project-media"
+            variant="curtain"
+            locale={locale}
+            story={project.story}
+            copy={{ curtainLabel: p.curtainLabel }}
+            className="upop-stage-art"
+          >
+            <MediaFrame ratio="16:9" hairline>
+              <InViewVideo
+                sources={loop.desktop}
+                mobileSources={loop.mobile}
+                poster={loop.poster}
+                alt={t(loop.alt, locale)}
+                pauseLabel={dict.common.actions.pause}
+                playLabel={dict.common.actions.play}
+              />
+            </MediaFrame>
+          </DesignArt>
         </Container>
       </Section>
-      {projects.map((project, index) => {
-        const name = t(project.name, locale);
-        const facts: ReadonlyArray<readonly [string, string]> = [
-          [
-            p.facts.age,
-            fill(dict.common.age.range, { from: project.age.from, to: project.age.to }),
-          ],
-          [p.facts.format, factValue(project, "format", locale, p.facts.pending)],
-          [p.facts.place, factValue(project, "place", locale, p.facts.pending)],
-          [p.facts.schedule, factValue(project, "schedule", locale, p.facts.pending)],
-          [
-            p.facts.cost,
-            project.cost.free === true
-              ? p.facts.free
-              : project.cost.free === false
-                ? p.facts.pending
-                : p.facts.pending,
-          ],
-          [p.facts.teacher, factValue(project, "teacher", locale, p.facts.pending)],
-        ];
-        return (
-          <Section
-            key={project.key}
-            id={project.key}
-            labelledBy={`${project.key}-title`}
-            tone={index % 2 ? "dark" : "light"}
-            className="project-section"
-            as="article"
-          >
-            <Container grid className="project-grid">
-              <div
-                className="col-span-4 md:col-span-8 lg:col-span-5 project-media-col"
-                data-grid-item=""
-              >
-                <DesignArt
-                  slot="project-media"
-                  locale={locale}
-                  story={project.story}
-                  copy={{ curtainLabel: dict.projects.curtainLabel }}
-                >
-                  <Ravoq ratio="4:5" className="project-ravoq">
-                    {project.media &&
-                    project.media.status !== "pending" &&
-                    project.media.kind === "video" &&
-                    project.media.poster ? (
-                      <InViewVideo
-                        src={project.media.src}
-                        poster={project.media.poster}
-                        alt={t(project.media.alt, locale)}
-                        pauseLabel={dict.common.actions.pause}
-                        playLabel={dict.common.actions.play}
-                      />
-                    ) : (
-                      <OrnamentCover
-                        story={project.story}
-                        ratio="4:5"
-                        seed={`${project.key}-page`}
-                      />
-                    )}
-                  </Ravoq>
-                </DesignArt>
-                {!project.media || project.media.status === "pending" ? (
-                  <Text as="p" size="small" tone="ink-3" className="pt-2">
-                    {p.mediaPending}
-                  </Text>
-                ) : null}
+
+      <Section labelledBy="upop-about-title">
+        <Container grid className="upop-about">
+          <Heading level={2} size="h2" id="upop-about-title" className="upop-about-title">
+            {p.facts.heading}
+          </Heading>
+          <div className="upop-about-body" data-grid-item="">
+            <Prose size="body-l">
+              {t(project.body, locale).map((para) => (
+                <p key={para.slice(0, 24)}>{para}</p>
+              ))}
+            </Prose>
+          </div>
+          <dl className="upop-facts" data-grid-item="">
+            {facts.map(([label, value]) => (
+              <div key={label} className="upop-fact">
+                <dt className="t-micro text-ink-3">{label}</dt>
+                <dd className="t-body tnum">{value}</dd>
               </div>
-              <div
-                className="col-span-4 md:col-span-8 lg:col-span-6 lg:col-start-7 project-text"
-                data-grid-item=""
-              >
-                <div className="project-head">
-                  <Sticker
-                    shape="star"
-                    paint={project.story.secondary}
-                    rotate={index % 2 ? -2 : 2}
-                    className="project-sticker"
-                  >
-                    {fill(p.ageSticker, { from: project.age.from, to: project.age.to })}
-                  </Sticker>
-                  <Heading level={2} size="h2" id={`${project.key}-title`}>
-                    {name}
-                  </Heading>
-                  <Text as="p" size="body-l" tone="ink-2">
-                    {t(project.tagline, locale)}
-                  </Text>
-                </div>
-                <Prose>
-                  {t(project.body, locale).map((para) => (
-                    <p key={para.slice(0, 24)}>{para}</p>
-                  ))}
-                </Prose>
-                <h3 className="sr-only">{p.facts.heading}</h3>
-                <dl className="project-facts" data-audit="gap">
-                  {facts.map(([label, value]) => (
-                    <div key={label} className="project-fact">
-                      <dt className="t-micro text-ink-3">{label}</dt>
-                      <dd className="t-body tnum">{value}</dd>
-                    </div>
-                  ))}
-                </dl>
-                {project.external ? (
-                  <div className="project-cta">
-                    <Text as="p" size="small" tone="ink-2" measure>
-                      {p.upopNote}
-                    </Text>
-                    <LinkButton
-                      href={project.external.href}
-                      variant="primary"
-                      size="56"
-                      external
-                      externalHint={dict.common.hints.external}
-                    >
-                      {p.openExternal}
-                    </LinkButton>
-                  </div>
-                ) : null}
-              </div>
-            </Container>
-          </Section>
-        );
-      })}
+            ))}
+          </dl>
+        </Container>
+      </Section>
+
+      <Section labelledBy="upop-film-title">
+        <Container grid className="upop-film">
+          <div className="upop-film-text" data-grid-item="">
+            <Heading level={2} size="h2" id="upop-film-title">
+              {p.filmHeading}
+            </Heading>
+            <Text as="p" size="body-l" tone="ink-2">
+              {p.filmLead}
+            </Text>
+          </div>
+          <div className="upop-film-media" data-grid-item="">
+            <MediaFrame ratio="16:9">
+              <ClickToPlayVideo
+                src={film.src}
+                poster={film.poster}
+                duration={film.duration}
+                title={t(film.alt, locale)}
+                playLabel={p.playFilm}
+              />
+            </MediaFrame>
+          </div>
+        </Container>
+      </Section>
+
+      <Section
+        tone="dark"
+        padded={false}
+        labelledBy="upop-register-title"
+        className="upop-register upop-field"
+      >
+        <Container grid className="upop-register-grid">
+          <div className="upop-register-text" data-grid-item="">
+            <Heading level={2} size="h2" id="upop-register-title">
+              {p.registrationHeading}
+            </Heading>
+            <Text as="p" size="body-l" tone="ink-2" measure>
+              {p.upopNote}
+            </Text>
+          </div>
+          <div className="upop-register-actions" data-grid-item="">
+            <LinkButton
+              href={project.external.href}
+              variant="primary"
+              size="56"
+              external
+              externalHint={dict.common.hints.external}
+            >
+              {p.openExternal}
+            </LinkButton>
+          </div>
+        </Container>
+      </Section>
     </>
   );
 }

@@ -15,7 +15,8 @@
     "languageMenu": "language-menu",
     "contactForm": "contact-form",
     "footerCrown": "footer-crown",
-    "portalScene": "portal-scene"
+    "portalScene": "portal-scene",
+    "heroScene": "hero-scene"
   },
   "attr": {
     "cardGroup": "[data-card-group]",

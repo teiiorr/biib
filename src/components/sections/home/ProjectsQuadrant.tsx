@@ -1,109 +1,106 @@
+import Image from "next/image";
+import { ViewTransition } from "react";
+
 import { Container } from "@/components/layout/Container";
+import { DesignArt } from "@/components/layout/DesignArt";
 import { Section } from "@/components/layout/Section";
-import { Reveal } from "@/components/motion/Reveal";
-import { SplitLines } from "@/components/motion/SplitLines";
 import { TransitionLink } from "@/components/motion/TransitionLink";
-import { GirihStar } from "@/components/ornament/GirihStar";
-import { OrnamentCover } from "@/components/ornament/OrnamentCover";
-import { Ravoq } from "@/components/ornament/Ravoq";
-import { Icon } from "@/components/icons/Icon";
+import { Button } from "@/components/ui/Button";
 import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
+import { MediaFrame } from "@/components/ui/MediaFrame";
 import { Text } from "@/components/ui/Text";
-import { getProjects, t } from "@/content";
+import { getFlagship, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
 import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
+import { sharedName } from "@/lib/motion/transitions";
+
+import { InViewVideo } from "../projects/InViewVideo";
 
 interface ProjectsQuadrantProps {
   readonly locale: Locale;
   readonly dict: Dictionary;
 }
 
-/** Chor-bogʻ: 2×2 kvadrant, kesishmada girih yulduzi; har kvadrant ravoq media 4:5, nom, jumla, havola. */
+/**
+ * UPOP TREND: bosh loyiha boʻlimi. Lojuvard maydonda logotip (1–5 ustun), sahna halqasi 16:9
+ * (6–12), ostida sarlavha, kirish, uchta dalil va ikki harakat. Telefonda: logotip, video, matn.
+ * Harakat bu yerda yoʻq: data-upop-* belgilari harakat paketi uchun. Birlashmada halqa afishada.
+ */
 export function ProjectsQuadrant({ locale, dict }: ProjectsQuadrantProps) {
-  const projects = getProjects();
-  const h = dict.home.projects;
+  const project = getFlagship();
+  const u = dict.home.upop;
+  const { loop, wordmark } = project.media;
+  const age = fill(dict.projects.ageSticker, { from: project.age.from, to: project.age.to });
+
   return (
-    <Section labelledBy="home-projects" tone="light">
-      <Container>
-        <Reveal className="section-head">
-          <SplitLines as="h2" className="t-h2" id="home-projects">
-            {h.heading}
-          </SplitLines>
-          <Text as="p" size="body-l" tone="ink-2" measure>
-            {h.lead}
-          </Text>
-        </Reveal>
-        <Reveal as="div" className="chorbogh" stagger attrs={{ "data-card-group": "" }}>
-          {projects.map((project, i) => {
-            const name = t(project.name, locale);
-            const divider =
-              i > 0 ? (
-                <span
-                  key={`${project.key}-divider`}
-                  className="chorbogh-divider birlashma:hidden"
-                  aria-hidden="true"
-                >
-                  <GirihStar symmetry={10} size={40} ring={false} />
-                </span>
-              ) : null;
-            const href = project.external
-              ? project.external.href
-              : `${pathFor(locale, "projects")}#${project.key}`;
-            return [
-              divider,
-              <article
-                key={project.key}
-                className="chorbogh-cell paper-look"
-                data-card=""
-                data-story={project.story.primary}
-                style={{ "--paper-seed": i } as React.CSSProperties}
-              >
-                <Ravoq ratio="4:5" className="chorbogh-media">
-                  <OrnamentCover story={project.story} ratio="4:5" seed={project.key} />
-                </Ravoq>
-                <span className="t-micro text-ink-3 tnum chorbogh-age">
-                  {fill(dict.common.age.range, { from: project.age.from, to: project.age.to })}
-                </span>
-                <Heading level={3} size="h3" className="chorbogh-title" data-card-title="">
-                  {name}
-                </Heading>
-                <Text as="p" tone="ink-2" className="chorbogh-text">
-                  {t(project.tagline, locale)}
-                </Text>
-                <div className="chorbogh-cta" data-card-cta="">
-                  {project.external ? (
-                    <LinkButton
-                      href={href}
-                      variant="link"
-                      size="40"
-                      external
-                      externalHint={dict.common.hints.external}
-                    >
-                      {h.external}
-                    </LinkButton>
-                  ) : (
-                    <TransitionLink
-                      href={href}
-                      className="ui-button t-label chorbogh-link"
-                      data-variant="link"
-                      data-size="40"
-                    >
-                      <span className="text-trim">{h.open}</span>
-                      <Icon name="chevron-right" size={16} />
-                    </TransitionLink>
-                  )}
-                </div>
-              </article>,
-            ];
-          })}
-          {/* Yulduz kataklardan keyin: DOM tartibi bilan ustida, z-index siz. */}
-          <span className="chorbogh-star birlashma:hidden" aria-hidden="true">
-            <GirihStar symmetry={10} size={96} ring />
-          </span>
-        </Reveal>
+    <Section labelledBy="home-upop" tone="dark" className="upop-feature upop-field">
+      <Container grid className="upop-feature-grid">
+        <div className="upop-feature-wordmark" data-grid-item="" data-upop-wordmark="">
+          <ViewTransition name={sharedName("project-media", project.key)}>
+            <Image
+              src={wordmark.src}
+              alt={t(wordmark.alt, locale)}
+              width={wordmark.width}
+              height={wordmark.height}
+              sizes="(min-width: 1024px) 40vw, 80vw"
+              className="upop-wordmark"
+            />
+          </ViewTransition>
+        </div>
+        <div className="upop-feature-media" data-grid-item="" data-upop-media="">
+          <DesignArt
+            slot="project-media"
+            variant="poster"
+            locale={locale}
+            story={project.story}
+            copy={{ ageSticker: age }}
+          >
+            <MediaFrame ratio="16:9" hairline>
+              <InViewVideo
+                sources={loop.desktop}
+                mobileSources={loop.mobile}
+                poster={loop.poster}
+                alt={t(loop.alt, locale)}
+                pauseLabel={dict.common.actions.pause}
+                playLabel={dict.common.actions.play}
+              />
+            </MediaFrame>
+          </DesignArt>
+        </div>
+        <div className="upop-feature-text" data-grid-item="" data-upop-text="">
+          <div className="upop-feature-copy">
+            <Heading level={2} size="h2" id="home-upop">
+              {u.heading}
+            </Heading>
+            <Text as="p" size="body-l" tone="ink-2" measure>
+              {u.lead}
+            </Text>
+          </div>
+          <ul className="upop-feature-list t-body text-ink">
+            {t(project.highlights, locale).map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <div className="upop-feature-actions">
+            <LinkButton
+              href={project.external.href}
+              variant="primary"
+              size="56"
+              external
+              externalHint={dict.common.hints.external}
+            >
+              {u.register}
+            </LinkButton>
+            <Button asChild variant="ghost" size="56" icon="chevron-right" iconPosition="end">
+              <TransitionLink href={pathFor(locale, "projects")}>
+                <span className="text-trim">{u.open}</span>
+              </TransitionLink>
+            </Button>
+          </div>
+        </div>
       </Container>
     </Section>
   );
