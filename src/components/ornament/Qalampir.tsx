@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { qalampirPath } from "@/lib/ornament/chust";
 
 export interface QalampirProps {
@@ -26,7 +26,7 @@ export function Qalampir({ progress, label, valueText, className }: QalampirProp
       aria-valuemax={100}
       aria-valuenow={Math.round(p * 100)}
       aria-valuetext={valueText}
-      className={cn("qalampir", className)}
+      className={cx("qalampir", className)}
     >
       {[0, 1, 2, 3].map((i) => {
         const fill = clamp(p * 4 - i);

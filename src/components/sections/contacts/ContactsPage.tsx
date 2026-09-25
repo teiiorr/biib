@@ -5,7 +5,6 @@ import { DesignArt } from "@/components/layout/DesignArt";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/motion/Reveal";
-import { CopyButton } from "@/components/ui/CopyButton";
 import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { Text } from "@/components/ui/Text";
@@ -15,7 +14,7 @@ import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
 import { contactFormEnabled } from "@/lib/contact/config";
 
-import { ContactForm } from "./ContactForm";
+import { ContactFormLeaf, CopyButtonLeaf } from "../lazy-leaves";
 
 interface PageProps {
   readonly locale: Locale;
@@ -122,7 +121,7 @@ export function ContactsPage({ locale, dict }: PageProps) {
                         ) : (
                           <span className="t-body tnum">{row.value}</span>
                         )}
-                        <CopyButton
+                        <CopyButtonLeaf
                           value={row.value}
                           label={d.details.copy}
                           copiedLabel={d.details.copied}
@@ -203,7 +202,7 @@ export function ContactsPage({ locale, dict }: PageProps) {
                 {formEnabled ? d.form.heading : d.form.fallbackHeading}
               </Heading>
               {formEnabled ? (
-                <ContactForm dict={d.form} privacyHref={pathFor(locale, "privacy")} />
+                <ContactFormLeaf dict={d.form} privacyHref={pathFor(locale, "privacy")} />
               ) : (
                 <>
                   <Text as="p" tone="ink-2" measure>

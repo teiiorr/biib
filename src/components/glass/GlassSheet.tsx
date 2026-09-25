@@ -4,7 +4,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { useRef } from "react";
 import type { ReactNode, RefObject } from "react";
 
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 import { CloseGlyph } from "./CloseGlyph";
 import { Surface, type SurfacePadding } from "./Surface";
@@ -55,12 +55,12 @@ export function GlassSheet({
             padding={padding}
             text
             deckle
-            className={cn("surface-morph glass-sheet z-modal safe-bottom", className)}
+            className={cx("surface-morph glass-sheet z-modal safe-bottom", className)}
             data-testid={testId}
           >
             <span className="glass-sheet-grip" aria-hidden="true" />
             <div className="glass-dialog-head">
-              <Dialog.Title className={cn("t-h3 text-material-ink", hideTitle && "sr-only")}>
+              <Dialog.Title className={cx("t-h3 text-material-ink", hideTitle && "sr-only")}>
                 {title}
               </Dialog.Title>
               <Dialog.Close className="glass-close" aria-label={closeLabel}>

@@ -69,6 +69,20 @@
     color: var(--accent-art);
     opacity: 0.8;
   }
+  /* Tasdiq kutilayotgan odam: 64 × 64 belgi, portret ramkasi bilan bir xil tus va radius. */
+  .monogram-tile {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-card);
+    background: color-mix(in oklab, var(--ink) 5%, var(--surface));
+  }
+  .monogram-mark {
+    color: var(--accent-art);
+    opacity: 0.8;
+  }
 
   /* Palak oy: boʻshliq — 44 px nishonli tugma, izoh hover/fokusda. */
   .palak {
@@ -199,11 +213,17 @@
   }
 
   /* Chust doʻppi hoshiyasi va qalampir */
+  /* Kataklar qatori: har biri kamida 64 px, qator toʻla (flex-grow), sigʻmagani ikkinchi qatorga oʻtib
+     kesiladi. Choʻzilish ≤ 12 % (320 px da), qalampir shakli sezilarli buzilmaydi. */
   .chust-band {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-height: 64px;
+    display: flex;
+    flex-wrap: wrap;
+    height: 24px;
+    overflow: hidden;
+  }
+  .chust-cell {
+    flex: 1 0 64px;
+    height: 24px;
   }
   .qalampir {
     display: inline-flex;

@@ -48,6 +48,8 @@ export const common: typeof source = {
     breadcrumbs: "You are here",
   },
   status: {
+    /* Qisqa qiymat: yorliq yonida («Qabul kunlari» → «Tasdiq kutilmoqda»), yorliqni takrorlamaydi. */
+    awaiting: "Awaiting confirmation",
     draft: "Draft: the text awaits confirmation by the association",
     pending: "Details await confirmation by the association",
     updated: "Updated",

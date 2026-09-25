@@ -139,6 +139,9 @@ function buildScene(
   if (dim) tl.fromTo(dim, { opacity: 0.45 }, { opacity: 0, duration: 0.5 }, 0);
   // 44 px boshqaruv kadr bilan birga kattalashmasin: qoʻngandan keyin paydo boʻladi.
   if (control) tl.fromTo(control, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.05 }, 0.45);
+  // Oltin chiziq ham: butun sahnaga choʻzilgan kadrda u ekran boʻylab adashgan chiziqdek koʻrinardi.
+  const hairline = media.querySelector<HTMLElement>(".media-frame-line");
+  if (hairline) tl.fromTo(hairline, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.05 }, 0.45);
   if (copy) {
     tl.fromTo(
       copy,

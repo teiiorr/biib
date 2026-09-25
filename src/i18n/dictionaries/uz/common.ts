@@ -45,6 +45,8 @@ export const common = {
     breadcrumbs: "Siz shu yerdasiz",
   },
   status: {
+    /* Qisqa qiymat: yorliq yonida («Qabul kunlari» → «Tasdiq kutilmoqda»), yorliqni takrorlamaydi. */
+    awaiting: "Tasdiq kutilmoqda",
     draft: "Qoralama: matn tashkilot tasdigʻini kutmoqda",
     pending: "Maʼlumot tashkilotdan tasdiq kutmoqda",
     updated: "Yangilangan",

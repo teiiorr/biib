@@ -10,7 +10,7 @@ import { VideoSourceList } from "@/components/media/VideoSourceList";
 import { useHeroScene } from "@/components/motion/useHeroScene";
 import { HERO_LOGO_BOX, HERO_MEDIA, HERO_PORTRAIT_MEDIA } from "@/content/brand";
 import { useMediaQuery } from "@/lib/appearance/media";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { coverRect, logoRect } from "@/lib/motion/cover";
 import { notifyHeroReady } from "@/lib/motion/refresh";
 
@@ -92,7 +92,7 @@ export default function HeroVideo({ copy }: ArtProps) {
       onClick={toggle}
       aria-label={(paused ? copy?.playLabel : copy?.pauseLabel) ?? ""}
     >
-      <Icon name={paused ? "play" : "pause"} size={20} className={cn(paused && "icon-play")} />
+      <Icon name={paused ? "play" : "pause"} size={20} className={cx(paused && "icon-play")} />
     </Surface>
   ) : null;
 

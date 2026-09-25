@@ -36,6 +36,11 @@ export default tseslint.config(
     },
   },
   {
+    /* Picture tayyor AVIF/WebP ni <picture> bilan beradi; manifestda yoʻq manba uchun oddiy <img> ataylab. */
+    files: ["src/components/ui/Picture.tsx"],
+    rules: { "@next/next/no-img-element": "off" },
+  },
+  {
     files: ["scripts/**/*.{mjs,ts}", "tests/**/*.ts", "playwright.config.ts"],
     rules: { "@typescript-eslint/no-non-null-assertion": "off" },
   },

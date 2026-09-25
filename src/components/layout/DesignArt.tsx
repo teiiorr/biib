@@ -7,7 +7,7 @@ import { loadDesignArt, type ArtProps, type ArtSlot } from "@/designs/registry";
 import { whenIdle } from "@/lib/idle";
 import { useAppearance } from "@/lib/appearance/context";
 import type { Design } from "@/lib/appearance/types";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 export interface DesignArtProps extends ArtProps {
   readonly slot: ArtSlot;
@@ -58,7 +58,7 @@ export function DesignArt({
   const Component = loaded?.design === design ? loaded.Component : null;
   return (
     <div
-      className={cn("design-art", className)}
+      className={cx("design-art", className)}
       data-art-slot={slot}
       data-art-design={design}
       aria-hidden={meaningful || art.children ? undefined : true}

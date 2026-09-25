@@ -20,7 +20,7 @@ export const metadata = {
 /** Nomaʼlum til yoki xaritadan tashqari yoʻl: 404 oʻzbek lotinida, beshta til bosh sahifasiga havola. */
 export default function GlobalNotFound() {
   const dict = getDictionary("uz");
-  for (const href of fontPreloads("uz").filter((h) => !h.includes("hero-"))) {
+  for (const href of fontPreloads("uz")) {
     preload(href, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
   }
   return (

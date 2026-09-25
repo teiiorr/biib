@@ -13,6 +13,7 @@ import type { Locale } from "@/i18n/locales";
 import { pathFor, resolvePath, type PageKey } from "@/i18n/routes";
 
 import { MenuSheet } from "./MenuSheet";
+import { isMenuPage } from "./MenuTrigger";
 
 interface TabBarProps {
   readonly locale: Locale;
@@ -21,25 +22,36 @@ interface TabBarProps {
   readonly hints: Dictionary["common"]["hints"];
 }
 
-const TABS: ReadonlyArray<{ key: PageKey; icon: IconName }> = [
+type TabKey = "home" | "projects" | "news" | "contacts";
+
+const TABS: ReadonlyArray<{ key: TabKey; icon: IconName }> = [
   { key: "home", icon: "home" },
   { key: "projects", icon: "projects" },
   { key: "news", icon: "news" },
   { key: "contacts", icon: "contact" },
 ];
 
+/** Tab yorligʻi qisqa («Bosh», «UPOP»): 320 px da ham toʻliq sigʻadi; toʻliq nom aria-label da. */
+function tabLabel(nav: Dictionary["nav"], key: TabKey): string {
+  if (key === "home") return nav.tabShort.home;
+  if (key === "projects") return nav.tabShort.projects;
+  return nav[key];
+}
+
 /**
  * Suzuvchi tab-bar: pastga aylantirganda joriy belgili kichik kapsulaga yigʻiladi,
  * yuqoriga aylantirganda yoki bosilganda yoyiladi. Linza tanlangan band ostida suriladi.
+ * Menyu varagʻidagi sahifalarda «Menyu» faol, xaritada yoʻq yoʻlda (404) hech biri.
  */
 export function TabBar({ locale, nav, hints }: TabBarProps) {
   const pathname = usePathname();
   const resolved = resolvePath(pathname);
-  const currentKey: PageKey = resolved?.key === "newsItem" ? "news" : (resolved?.key ?? "home");
-  const activeIndex = Math.max(
-    0,
-    TABS.findIndex((t) => t.key === currentKey),
-  );
+  const currentKey: PageKey | null =
+    resolved?.key === "newsItem" ? "news" : (resolved?.key ?? null);
+  const tabIndex = TABS.findIndex((t) => t.key === currentKey);
+  const menuActive = isMenuPage(currentKey);
+  /* Linza bandlari: toʻrt sahifa va menyu tugmasi (indeks 4). */
+  const activeIndex = tabIndex >= 0 ? tabIndex : menuActive ? TABS.length : -1;
   const barRef = useRef<HTMLElement | null>(null);
   const [minimized, setMinimized] = useState(false);
   useLens(barRef, activeIndex);
@@ -63,7 +75,9 @@ export function TabBar({ locale, nav, hints }: TabBarProps) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const current = TABS[activeIndex] ?? TABS[0];
+  const current = tabIndex >= 0 ? TABS[tabIndex] : undefined;
+  const miniIcon: IconName = current?.icon ?? "menu";
+  const miniLabel = current ? tabLabel(nav, current.key) : menuActive ? nav.menu : nav.tabBarLabel;
 
   return (
     <div
@@ -84,6 +98,8 @@ export function TabBar({ locale, nav, hints }: TabBarProps) {
         <span className="tab-lens" data-lens="" aria-hidden="true" />
         {TABS.map((tab) => {
           const active = tab.key === currentKey;
+          const label = tabLabel(nav, tab.key);
+          const full = nav[tab.key];
           return (
             <Link
               key={tab.key}
@@ -91,11 +107,10 @@ export function TabBar({ locale, nav, hints }: TabBarProps) {
               className="tab-item"
               data-lens-item=""
               aria-current={active ? "page" : undefined}
+              aria-label={full === label ? undefined : full}
             >
               <Icon name={tab.icon} size={24} />
-              <span className="tab-label" data-clamp="">
-                {nav[tab.key as "home"]}
-              </span>
+              <span className="tab-label">{label}</span>
             </Link>
           );
         })}
@@ -108,13 +123,13 @@ export function TabBar({ locale, nav, hints }: TabBarProps) {
         text
         type="button"
         className="tab-mini"
-        aria-label={nav.tabBarLabel}
+        aria-label={`${nav.tabBarLabel}: ${miniLabel}`}
         aria-hidden={!minimized}
         tabIndex={minimized ? 0 : -1}
         onClick={() => setMinimized(false)}
       >
-        <Icon name={current?.icon ?? "home"} size={20} />
-        <span className="t-label text-trim">{nav[(current?.key ?? "home") as "home"]}</span>
+        <Icon name={miniIcon} size={20} />
+        <span className="t-label text-trim">{miniLabel}</span>
       </Surface>
     </div>
   );

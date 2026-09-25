@@ -369,6 +369,79 @@
     border-radius: 6px;
   }
 
+  /* Skroll cheti (§10.1.4): sarlavha ostidan oʻtgan mazmun qattiq chiziq oʻrniga toʻrt qatlamli
+     progressiv xiralik va ohangga mos tus bilan soʻnadi. Xiralik tepada kuchli, pastga qarab yoʻqoladi.
+     Ohang sarlavha sirtlaridan olinadi (useSurfaceTone): qorongʻi boʻlim ustida lojuvard tus. */
+  .scroll-edge {
+    --edge-tint: var(--bg);
+    --edge-strength: 86%;
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: calc(var(--header-h) + 36px + var(--safe-top));
+    pointer-events: none;
+    z-index: -1;
+  }
+  .site-header > .scroll-edge {
+    pointer-events: none;
+  }
+  .site-header:has(.surface[data-tone="dark"]) .scroll-edge {
+    --edge-tint: var(--hero-scrim);
+    --edge-strength: 72%;
+  }
+  .scroll-edge-layer {
+    position: absolute;
+    inset: 0;
+  }
+  .scroll-edge-layer[data-layer="0"] {
+    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(1px);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 50%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 0%, black 50%, transparent 100%);
+  }
+  .scroll-edge-layer[data-layer="1"] {
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 37.5%, transparent 75%);
+    mask-image: linear-gradient(to bottom, black 0%, black 37.5%, transparent 75%);
+  }
+  .scroll-edge-layer[data-layer="2"] {
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 50%);
+    mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 50%);
+  }
+  .scroll-edge-layer[data-layer="3"] {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 12.5%, transparent 37.5%);
+    mask-image: linear-gradient(to bottom, black 0%, black 12.5%, transparent 37.5%);
+  }
+  .scroll-edge::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--edge-tint) var(--edge-strength), transparent) 0%,
+      color-mix(in oklab, var(--edge-tint) calc(var(--edge-strength) * 0.6), transparent) 45%,
+      transparent 100%
+    );
+  }
+  /* Telefonda (iOS Safari narxi, §14.5) ikki qatlam: 2 va 8 px, qolgan pogʻonalar tus bilan yopiladi. */
+  @media (max-width: 1023px) {
+    .scroll-edge-layer:is([data-layer="0"], [data-layer="2"]) {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .scroll-edge-layer {
+      display: none;
+    }
+    .scroll-edge {
+      --edge-strength: 96%;
+    }
+  }
+
   /* Shaffoflikni kamaytirish, kontrastni oshirish va backdrop-filter yoʻq brauzerlar: qattiq sirt. */
   @supports not (backdrop-filter: blur(1px)) {
     .material {

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 export type HeadingLevel = 1 | 2 | 3 | 4;
 export type HeadingSize = "display-xl" | "display-l" | "h1" | "h2" | "h3" | "h4";
@@ -41,7 +41,7 @@ export function Heading({
   return (
     <Tag
       id={id}
-      className={cn(
+      className={cx(
         SIZE_CLASS[size ?? DEFAULT_SIZE[level]],
         "text-balance text-ink",
         trim && "text-trim",

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { FormMessage } from "./FormMessage";
 import { VisuallyHidden } from "./VisuallyHidden";
 
@@ -37,7 +37,7 @@ export function Field({
   const errorId = `${id}-error`;
   const describedBy = [hint ? hintId : null, error ? errorId : null].filter(Boolean).join(" ");
   return (
-    <div className={cn("flex flex-col gap-2", className)}>
+    <div className={cx("flex flex-col gap-2", className)}>
       <label htmlFor={id} className="t-label text-ink">
         {label}
         {required ? (

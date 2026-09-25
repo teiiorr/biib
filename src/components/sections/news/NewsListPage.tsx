@@ -70,6 +70,7 @@ export function NewsListPage({ locale, dict }: PageProps) {
                       ratio="3:2"
                       locale={locale}
                       sizes="(min-width: 1440px) 752px, (min-width: 1024px) 55vw, 100vw"
+                      priority
                       motion={{ mode: "smooth", parallax: true }}
                     />
                   </ViewTransition>

@@ -2,7 +2,7 @@
 
 import { useId } from "react";
 
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 export interface GlassSwitchProps {
   readonly checked: boolean;
@@ -25,7 +25,7 @@ export function GlassSwitch({
   const id = useId();
   const hintId = hint ? `${id}-hint` : undefined;
   return (
-    <div className={cn("glass-switch-row", className)}>
+    <div className={cx("glass-switch-row", className)}>
       <span className="glass-switch-text">
         <span id={id} className="t-label text-material-ink">
           {label}

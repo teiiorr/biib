@@ -2,7 +2,7 @@
 
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import type { ReactElement, ReactNode } from "react";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 export interface TooltipProps {
   readonly content: ReactNode;
@@ -23,7 +23,7 @@ export function Tooltip({ content, children, side = "top", className }: TooltipP
             sideOffset={8}
             collisionPadding={16}
             data-text="true"
-            className={cn(
+            className={cx(
               "ui-tooltip material z-toast max-w-xs rounded-m px-3 py-2 t-small",
               className,
             )}

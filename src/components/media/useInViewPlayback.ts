@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState, type RefObject } from "react";
 
 import { REDUCED_MOTION_QUERY } from "@/lib/appearance/media";
+import { whenIdle } from "@/lib/idle";
 import { registerAmbient, type AmbientKind } from "@/lib/motion/ambient-governor";
 import { isMotionOff } from "@/lib/motion/prefs";
 
@@ -61,12 +62,15 @@ export function useInViewPlayback(
       attributes: true,
       attributeFilter: ["data-motion"],
     });
-    queueMicrotask(() => {
+    /* Halqa (≈ 0,9 MB) birinchi yuklanish bilan raqobatlashmaydi: manba sahifa yuklanib, brauzer
+       boʻshagandan keyin qoʻyiladi; LCP posteri va skriptlar undan oldin keladi. */
+    const cancelIdle = whenIdle(() => {
       apply();
       // Trafik tejash rejimida halqa oʻzi boshlanmaydi; tugma bilan yoqiladi.
       if (saveData()) setPaused(true);
-    });
+    }, 2000);
     return () => {
+      cancelIdle();
       mql.removeEventListener("change", apply);
       observer.disconnect();
     };

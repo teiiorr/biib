@@ -10,6 +10,8 @@ export const nav: typeof source = {
   partners: "Partners",
   contacts: "Contacts",
   privacy: "Privacy policy",
+  /* Tab-bar uchun qisqa yorliq: 320 px da beshta band bir qatorga sigʻadi (toʻliq nom aria-label da). */
+  tabShort: { home: "Home", projects: "UPOP" },
   menu: "Menu",
   openMenu: "Open menu",
   closeMenu: "Close menu",

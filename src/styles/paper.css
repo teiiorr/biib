@@ -11,14 +11,18 @@
     --doodle-star-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><path d='M24 5.2l5.3 11.6 12.4 1.3-9.4 8.4 2.9 12.3L24 32.6l-11.1 6.1 2.7-12.4-9.2-8.6 12.5-1.1z' fill='none' stroke='black' stroke-width='2.2' stroke-linejoin='round'/></svg>");
     --paper-tape: color-mix(in oklab, var(--accent-art) 38%, var(--surface-2) 62%);
   }
+  /* Parda baxmali: kunduz albomida siyoh-lojuvard, doskada toʻq gʻisht-marjon. Chrome rangi emas,
+     sahna mato rangi: ekrandagi eng toʻyingan rang bolalar ishi (video) boʻlib qoladi (§25.2 V). */
   :root[data-design="birlashma"][data-theme="light"] {
     --paper-grain: url("/textures/paper-fiber.avif");
     --paper-grain-opacity: 0.16;
+    --curtain-velvet: #1b2340;
   }
   :root[data-design="birlashma"][data-theme="dark"] {
     --paper-grain: url("/textures/chalk-board.avif");
     --paper-grain-opacity: 0.55;
     --paper-tape: color-mix(in oklab, var(--accent-art) 30%, var(--surface-2) 70%);
+    --curtain-velvet: #7a2b22;
   }
   /* Sahifa asosi: skanerlangan qogʻoz (kunduz) yoki doska (tun) juda past shaffoflikda. */
   :root[data-design="birlashma"] body::before {
@@ -508,12 +512,12 @@
   :root[data-design="birlashma"] .upop-feature-media .paper-poster {
     margin: -28px -16px -48px;
   }
-  /* Parda oʻrni ham shunday: yon ustunlar 32 px, tepa-past 12 px. */
+  /* Parda oʻrni ham shunday: qogʻoz hoshiyasi hamma tomonda 12 px. */
   :root[data-design="birlashma"] .upop-stage-art {
-    padding: 12px 32px;
+    padding: 12px;
   }
   :root[data-design="birlashma"] .upop-stage-art .paper-curtain {
-    margin: -12px -32px;
+    margin: -12px;
   }
   /* Afisha va parda ichida bosma hoshiya yoʻq: qogʻoz oʻzi ramka (ikki hoshiya boʻlmasin). */
   :root[data-design="birlashma"] :is(.paper-poster, .paper-curtain) .media-frame {
@@ -549,6 +553,25 @@
   :root[data-design="birlashma"] .portrait-frame-mark,
   :root[data-design="birlashma"] .news-cover-mark {
     display: none;
+  }
+  /* Belgi plitasi qogʻoz boʻlagi: oq zamin, kontakt soyasi, girih oʻrniga marker yulduzi. */
+  :root[data-design="birlashma"] .monogram-tile {
+    border-radius: var(--radius-s);
+    background: var(--surface-2);
+    box-shadow: var(--shadow-contact);
+  }
+  :root[data-design="birlashma"] .monogram-mark {
+    display: none;
+  }
+  :root[data-design="birlashma"] .monogram-tile::before {
+    content: "";
+    width: 28px;
+    height: 28px;
+    background: var(--art-2);
+    -webkit-mask-image: var(--doodle-star-mask);
+    mask-image: var(--doodle-star-mask);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
   }
   /* Surat kutilayotgan portret: girih belgisi oʻrniga kichik marker yulduzi. */
   :root[data-design="birlashma"] .portrait-frame-placeholder::before {
@@ -650,12 +673,6 @@
     width: 200px;
     height: 12px;
     color: var(--ink);
-  }
-  .masthead-doodle {
-    position: absolute;
-    right: 0;
-    top: 8px;
-    transform: rotate(-20deg);
   }
   :root[data-design="birlashma"] .article-cover .news-cover {
     --print-rotate: 0deg;
@@ -1060,14 +1077,23 @@
   .curtain-stage {
     position: relative;
   }
+  /* Qogʻozdan qirqilgan baxmal: skanerlangan qogʻoz tolasi va burmalar soyasi (40 %), tekis rang emas. */
   .curtain-panel {
     position: absolute;
     top: 0;
     bottom: 0;
     width: 56%;
     background:
-      repeating-linear-gradient(90deg, transparent 0 22px, rgba(0, 0, 0, 0.08) 22px 30px),
-      var(--art-5);
+      repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.16) 0 3px,
+        transparent 3px 12px,
+        rgba(0, 0, 0, 0.4) 12px 18px,
+        transparent 18px 28px
+      ),
+      var(--paper-grain) center / 240px 240px,
+      var(--curtain-velvet);
+    background-blend-mode: normal, overlay, normal;
     will-change: transform;
   }
   .curtain-left {
@@ -1084,7 +1110,7 @@
     left: 0;
     right: 0;
     height: 28px;
-    background: var(--art-5);
+    background: var(--curtain-velvet);
     -webkit-mask-image: radial-gradient(circle at 20px 0, transparent 18px, black 19px);
     mask-image: radial-gradient(circle at 20px 0, transparent 18px, black 19px);
     -webkit-mask-size: 40px 100%;
@@ -1134,22 +1160,9 @@
     right: -8px;
     bottom: 12px;
   }
+  /* Parda ramka ichida: yon qanotlar kadr chegarasidan chiqmaydi, qogʻoz hoshiyasi hamma tomonda 12 px. */
   .paper-curtain {
-    padding: 12px 32px;
-  }
-  .curtain-frame-side {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 24px;
-    border-radius: 0 12px 12px 0;
-    background: var(--art-5);
-  }
-  .curtain-frame-right {
-    left: auto;
-    right: 0;
-    border-radius: 12px 0 0 12px;
+    padding: 12px;
   }
 
   /* ---------- Biz haqimizda: albom varagʻi va kir ipi ---------- */
@@ -1391,6 +1404,10 @@
   }
   @media (min-width: 1024px) {
     :root[data-design="birlashma"] .home-hero-content {
+      padding-inline: 0;
+    }
+    /* Qahramon oʻzi chetdan margin oladi: ichki konteyner ikkinchi marta surmasin, nom toʻr chetida. */
+    :root[data-design="birlashma"] .home-hero-grid {
       padding-inline: 0;
     }
     :root[data-design="birlashma"] .contact-band-grid {

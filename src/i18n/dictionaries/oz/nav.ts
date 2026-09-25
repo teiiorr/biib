@@ -11,6 +11,10 @@ export const nav: typeof source = {
   partners: "Ҳамкорлар",
   contacts: "Алоқа",
   privacy: "Махфийлик сиёсати",
+  tabShort: {
+    home: "Бош",
+    projects: "UPOP",
+  },
   menu: "Меню",
   openMenu: "Менюни очиш",
   closeMenu: "Менюни ёпиш",

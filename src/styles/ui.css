@@ -457,6 +457,21 @@
     }
   }
   /* ---------- Media: halqa video, film va muqova oʻrni ---------- */
+  /* Picture: <picture> oʻrami qutisiz, joylashuvni ichidagi <img> belgilaydi (next/image dagi kabi). */
+  picture.picture {
+    display: contents;
+  }
+  .picture-fill {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .picture-blur {
+    background-size: cover;
+    background-position: center;
+  }
   .media-video {
     position: relative;
     width: 100%;

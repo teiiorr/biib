@@ -1,7 +1,9 @@
-import { Doodle } from "./Doodles";
 import type { ArtProps } from "../registry";
 
-/** Devoriy gazeta sarlavhasi: qoʻl yozuvi (Playpen Sans), ikki qavat chiziq va bitta doodle. */
+/**
+ * Devoriy gazeta sarlavhasi: qoʻl yozuvi (Playpen Sans) va ikki qavat chiziq. Strelka doodle olib
+ * tashlandi: u hech narsaga ishora qilmay burchakda suzib qolardi.
+ */
 export default function Masthead({ copy, className }: ArtProps) {
   return (
     <div className={className ? `masthead ${className}` : "masthead"} aria-hidden="true">
@@ -15,7 +17,6 @@ export default function Masthead({ copy, className }: ArtProps) {
           strokeLinecap="round"
         />
       </svg>
-      <Doodle name="arrow" size={32} tone="art-4" className="masthead-doodle" />
     </div>
   );
 }

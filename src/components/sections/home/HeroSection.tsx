@@ -1,14 +1,15 @@
-import Image from "next/image";
 import { preload } from "react-dom";
 
 import { Container } from "@/components/layout/Container";
 import { DesignArt } from "@/components/layout/DesignArt";
 import { LinkButton } from "@/components/ui/LinkButton";
+import { Picture } from "@/components/ui/Picture";
 import { Text } from "@/components/ui/Text";
 import { HERO_LOGO_OVERLAY, HERO_MEDIA, HERO_PORTRAIT_MEDIA } from "@/content/brand";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
+import { heroFontPreload } from "@/lib/fonts";
 
 import { HeroEnter } from "./HeroEnter";
 import { HeroTitle } from "./HeroTitle";
@@ -28,6 +29,7 @@ const LANDSCAPE_MEDIA = `not (${HERO_PORTRAIT_MEDIA})`;
  */
 export function HeroSection({ locale, dict }: HeroSectionProps) {
   const { landscape, portrait } = HERO_MEDIA;
+  preload(heroFontPreload(locale), { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
   preload(portrait.poster, { as: "image", fetchPriority: "high", media: HERO_PORTRAIT_MEDIA });
   preload(landscape.poster, { as: "image", fetchPriority: "high", media: LANDSCAPE_MEDIA });
 
@@ -99,16 +101,14 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
         </Container>
       </div>
       {/* Sahna belgisi: kadrdagi oq doira bilan bir xil chizma, skrollda sarlavha belgisiga qoʻnadi. */}
-      <Image
+      <Picture
         src={HERO_LOGO_OVERLAY.src}
         width={HERO_LOGO_OVERLAY.size}
         height={HERO_LOGO_OVERLAY.size}
         alt=""
-        unoptimized
-        fetchPriority="low"
         className="home-hero-logo birlashma:hidden"
-        data-hero-logo=""
-        aria-hidden="true"
+        attrs={{ "data-hero-logo": "" }}
+        ariaHidden
       />
     </section>
   );

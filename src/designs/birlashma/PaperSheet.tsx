@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 import { paperEdgeDataUri, type EdgeKind } from "./lib/paper-edge";
 import { hashString } from "./lib/seed";
@@ -34,7 +34,7 @@ export function PaperSheet({
     "--paper-rotate": `${angle}deg`,
   } as CSSProperties;
   return (
-    <Tag className={cn("paper-sheet", className)} style={style} data-fixing={fixing}>
+    <Tag className={cx("paper-sheet", className)} style={style} data-fixing={fixing}>
       {children}
       {/* Mahkamlagich bolalardan keyin: z-index siz ustida turadi. */}
       {fixing !== "none" ? (

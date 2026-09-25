@@ -1,9 +1,8 @@
-import Image from "next/image";
-
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/motion/Reveal";
 import { Heading } from "@/components/ui/Heading";
+import { Picture } from "@/components/ui/Picture";
 import { Text } from "@/components/ui/Text";
 import { getArtworks, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -48,7 +47,7 @@ export function GallerySection({ locale, dict }: GallerySectionProps) {
               style={{ "--paper-rotate": `${i % 2 ? 1.5 : -1.5}deg` } as React.CSSProperties}
             >
               <figure>
-                <Image
+                <Picture
                   src={art.src}
                   alt={t(art.title, locale)}
                   width={art.width}

@@ -158,9 +158,13 @@
   .home-hero-grid {
     position: relative;
   }
-  .home-hero-title {
-    /* Bosh harfning yon boʻshligʻi: chap chetga optik tekislash (§8 III.6). Akt 700 da B/Б lsb = 67/1000 em. */
+  /* Bosh harfning yon boʻshligʻi: chap chetga optik tekislash (§8 III.6), har shrift oʻz oʻlchovi bilan
+     (fontTools, xMin/upm): Akt 700 da B/Б = 67/1000 em, Nunito 900 da B/Б = 64/1000 em. */
+  :root[data-design="atlas"] .home-hero-title {
     margin-inline-start: -0.067em;
+  }
+  :root[data-design="birlashma"] .home-hero-title {
+    margin-inline-start: -0.064em;
   }
   /* Nom ostida bitta qator: missiya chapda (≤ 52ch), harakatlar oʻng yonida; tor ekranda pastga oʻtadi. */
   .home-hero-row {
@@ -536,24 +540,24 @@
   }
 
   /* Odamlar */
-  /* Sarlavha toʻliq kenglikdagi tinch lojuvard lentada (navy-band); guruhlar zaminda, yarim qadam pastda. */
-  .people-head {
-    display: grid;
-    gap: 12px;
-  }
-  .people-body {
-    padding-block: calc(var(--section-gap) / 2);
+  /* Sarlavha va mazmun bitta sirtda (Atlas: sahifadan bir pogʻona yorugʻ sirt lentasi — yangiliklar bilan
+     ritm; Birlashma: paper.css). Sarlavha ustida, ikki guruh ostida yonma-yon (planshet 4 + 4, kompyuter 6 + 6). */
+  :root[data-design="atlas"] .people-section {
+    background: var(--surface);
   }
   .people-groups {
-    row-gap: 48px;
+    row-gap: 32px;
   }
-  .people-group,
-  .people-groups-note {
+  .people-head,
+  .people-group {
     grid-column: 1 / -1;
     min-width: 0;
   }
+  .people-head.section-head {
+    margin-bottom: 0;
+  }
   .people-group-head {
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
   .people-group-link {
     display: inline-flex;
@@ -575,9 +579,24 @@
       transform: translateX(4px);
     }
   }
-  /* Har guruh bitta toʻla qator: telefonda 2 ustun (4 dan 2 tadan), planshetda guruhlar yonma-yon
-     (4 + 4 ustun), kompyuterda rahbariyat 1–4, ekspertlar 5–12. Boʻsh ustun ham, yarim karta ham qolmaydi;
-     sigʻmagan ekspertlar teaser da yashiriladi — hammasi guruh sarlavhasidagi havolada. */
+  /* Lavozim roʻyxati: qator 1 px ajratuvchi bilan, lavozim chapda, holat oʻngda (telefonda ostida). */
+  .people-roles {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+  .people-role {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px 16px;
+    padding-block: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  /* Tasdiqlangan guruh: portretlar bitta toʻla qator. */
   .people-row {
     display: grid;
     grid-auto-flow: column;
@@ -592,11 +611,6 @@
     gap: 12px;
     align-content: start;
   }
-  @media (max-width: 1023px) {
-    .people-row > .people-card:nth-child(n + 3) {
-      display: none;
-    }
-  }
   @media (min-width: 600px) and (max-width: 1023px) {
     .people-group-leaders {
       grid-column: 1 / 5;
@@ -607,13 +621,13 @@
   }
   @media (min-width: 1024px) {
     .people-groups {
-      row-gap: 32px;
+      align-items: start;
     }
     .people-group-leaders {
-      grid-column: 1 / 5;
+      grid-column: 1 / 7;
     }
     .people-group-experts {
-      grid-column: 5 / 13;
+      grid-column: 7 / 13;
     }
   }
   .people-portrait {
@@ -653,6 +667,21 @@
     border: 1px solid var(--line);
     border-radius: var(--radius-card);
     background: var(--surface);
+  }
+  /* Rishton kechasi: sirtlar ritmi (yangiliklar zaminda, odamlar sirtda) va feruza sir — yangiliklar
+     boʻlimi yuqori qirrasida 1 px chiziq va yengil sir tusi, aloqa kartasi qirrasi feruza. Matn tokenlari
+     oʻzgarmaydi, tus faqat fon va chiziqda (halo yoʻq). */
+  :root[data-design="atlas"][data-theme="dark"] .news-section {
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--art-4) 7%, var(--bg)) 0,
+      var(--bg) 320px
+    );
+    box-shadow: inset 0 1px 0 color-mix(in oklab, var(--art-4) 55%, transparent);
+  }
+  :root[data-design="atlas"][data-theme="dark"] .contact-band-text {
+    border-color: color-mix(in oklab, var(--art-4) 45%, var(--line));
+    box-shadow: var(--inner-highlight);
   }
   /* Telefon: palak sarlavha yonida, kirish matni ostida toʻliq kenglikda (tor ustunga siqilmaydi). */
   .contact-band-head {
@@ -740,8 +769,9 @@
 
 /* Qatlamdan tashqarida: t-display-xl (utilities qatlami) shrift oilasini beradi, bu qoida undan ustun.
    Til boʻyicha mayda preload toʻplami (Akt Hero): birinchi kadrda haqiqiy shrift, almashinuv yoʻq.
-   cv05 (serifli I) t-display-xl dan keladi, bu yerda takrorlanmaydi. */
-.home-hero-title {
+   cv05 (serifli I) t-display-xl dan keladi, bu yerda takrorlanmaydi. Toʻplam faqat Atlas shrifti:
+   Birlashmada nom Nunito da qoladi (§25.6), aks holda qahramonda begona shrift chiqadi. */
+:root[data-design="atlas"] .home-hero-title {
   font-family: "Akt Hero", var(--font-display);
 }
 
@@ -764,5 +794,15 @@
     padding-block: 12px;
     white-space: normal;
     text-align: center;
+  }
+}
+
+/* Qatlamdan tashqarida (section-pad utilitasidan ustun): kompyuterda missiya jumlasi sahna blokining
+   pastida — yuqoridagi joy xiralashgan kadr ustida, sahna uzunligi oʻzgarmaydi; UPOP maydonigacha
+   64 px, ikki boʻlim orasida boʻsh lojuvard qolmaydi. */
+@media (min-width: 1024px) {
+  :root[data-design="atlas"] .home-hero-scene .home-mission {
+    align-content: end;
+    padding-bottom: 64px;
   }
 }

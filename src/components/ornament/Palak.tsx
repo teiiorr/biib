@@ -1,5 +1,5 @@
 import { useId, type CSSProperties } from "react";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { safeId } from "@/lib/ornament/ids";
 import { palakGeometry } from "@/lib/ornament/palak";
 import { PalakBloom } from "./PalakBloom";
@@ -53,7 +53,7 @@ export function Palak({
     </svg>
   );
   return (
-    <div className={cn("palak", className)} style={{ width: size, height: size }}>
+    <div className={cx("palak", className)} style={{ width: size, height: size }}>
       {bloom ? <PalakBloom>{svg}</PalakBloom> : svg}
       <button
         type="button"

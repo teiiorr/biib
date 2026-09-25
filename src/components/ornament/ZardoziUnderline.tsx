@@ -1,4 +1,4 @@
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { Zardozi } from "./Zardozi";
 
 export type ZardoziDraw = "hover" | "view" | "none";
@@ -14,7 +14,7 @@ export interface ZardoziUnderlineProps {
 export function ZardoziUnderline({ draw = "none", lines = 2, className }: ZardoziUnderlineProps) {
   return (
     <span
-      className={cn("zardozi-underline", className)}
+      className={cx("zardozi-underline", className)}
       data-draw={draw}
       {...(draw === "view" ? { "data-drawn": "false" } : {})}
       aria-hidden="true"

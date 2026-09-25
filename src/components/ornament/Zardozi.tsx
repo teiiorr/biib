@@ -1,5 +1,5 @@
 import { useId } from "react";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { safeId } from "@/lib/ornament/ids";
 import { zardoziGeometry } from "@/lib/ornament/zardozi";
 
@@ -15,7 +15,7 @@ export function Zardozi({ lines = 2, className }: ZardoziProps) {
   const g = zardoziGeometry(lines);
   return (
     <svg
-      className={cn("orn zardozi", className)}
+      className={cx("orn zardozi", className)}
       height={g.height}
       aria-hidden="true"
       focusable="false"

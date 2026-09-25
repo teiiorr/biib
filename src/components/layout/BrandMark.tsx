@@ -1,8 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 
 import { useSurfaceTone } from "@/components/glass/useSurfaceTone";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -11,15 +10,18 @@ import { pathFor } from "@/i18n/routes";
 
 interface BrandMarkProps {
   readonly locale: Locale;
-  readonly dict: Dictionary["common"];
+  /* Butun common lugʻati emas: RSC yukiga faqat nom satrlari kiradi. */
+  readonly brand: Pick<Dictionary["common"]["brand"], "line1" | "line2" | "name">;
   readonly className?: string;
+  /** Serverda chizilgan belgi rasmi (Picture): rasm kodi mijoz chunkiga kirmaydi. */
+  readonly children: ReactNode;
 }
 
 /**
  * Brend belgisi badiiy qatlamda turadi, oyna ichida emas (15.1). Ostidagi boʻlim ohangini oʻqiydi:
  * qorongʻi kadr va lojuvard boʻlimlar ustida nomi sut-oq, aks holda siyoh.
  */
-export function BrandMark({ locale, dict, className }: BrandMarkProps) {
+export function BrandMark({ locale, brand, className, children }: BrandMarkProps) {
   const ref = useRef<HTMLAnchorElement | null>(null);
   useSurfaceTone(ref, true);
   return (
@@ -28,20 +30,12 @@ export function BrandMark({ locale, dict, className }: BrandMarkProps) {
       href={pathFor(locale, "home")}
       className={className ? `brand-mark ${className}` : "brand-mark"}
     >
-      {/* data-brand-mark: qahramon sahnasi belgini shu rasmga qoʻndiradi (useHeroScene). */}
-      <Image
-        src="/brand/mark.png"
-        alt={dict.brand.markAlt}
-        width={40}
-        height={40}
-        priority
-        data-brand-mark=""
-      />
+      {children}
       <span className="brand-name" aria-hidden="true">
-        <span>{dict.brand.line1}</span>
-        <span>{dict.brand.line2}</span>
+        <span>{brand.line1}</span>
+        <span>{brand.line2}</span>
       </span>
-      <span className="sr-only">{dict.brand.name}</span>
+      <span className="sr-only">{brand.name}</span>
     </Link>
   );
 }

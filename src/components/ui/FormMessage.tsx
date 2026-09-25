@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 export type FormMessageTone = "info" | "success" | "error";
 
@@ -22,7 +22,7 @@ export function FormMessage({ tone = "info", id, className, children }: FormMess
     <p
       id={id}
       role={tone === "error" ? "alert" : "status"}
-      className={cn("t-small", TONE_CLASS[tone], !children && "hidden", className)}
+      className={cx("t-small", TONE_CLASS[tone], !children && "hidden", className)}
     >
       {children}
     </p>

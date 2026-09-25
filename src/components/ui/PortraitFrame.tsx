@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import type { MediaRevealProps } from "@/components/motion/MediaReveal";
 import { GirihStar } from "@/components/ornament/GirihStar";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import type { AspectRatio } from "@/lib/ornament/ratio";
 
 import { MediaFrame } from "./MediaFrame";
@@ -26,7 +26,7 @@ export function PortraitFrame({ ratio = "4:5", children, motion, className }: Po
     <MediaFrame
       ratio={ratio}
       hairline={!pending}
-      className={cn("portrait-frame", className)}
+      className={cx("portrait-frame", className)}
       {...(motion ? { motion } : {})}
     >
       {pending ? (

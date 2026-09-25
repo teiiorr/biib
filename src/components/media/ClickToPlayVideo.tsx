@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 
 import { Surface } from "@/components/glass/Surface";
 import { Icon } from "@/components/icons/Icon";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 import { useInViewPlayback } from "./useInViewPlayback";
 
@@ -83,7 +83,7 @@ export function ClickToPlayVideo({
 
   return (
     <div
-      className={cn("media-video media-film", className)}
+      className={cx("media-video media-film", className)}
       data-state={started ? "playing" : "idle"}
     >
       {captions ? (

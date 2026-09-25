@@ -24,23 +24,30 @@ const playpen = Playpen_Sans({
 export const FONT_CLASS = [nunito, playpen].map((f) => f.variable).join(" ");
 
 /**
- * Lotin tillari: Inter latin (ʻ ʼ shu toʻplamda) + qahramon toʻplami; 2026 imlosi Ö Ğ Ş Ç uchun latin-ext ham.
- * Kirill tillari: Inter cyrillic (+ Қ Ғ Ҳ uchun cyrillic-ext) + raqam va brend uchun latin + qahramon toʻplami.
+ * Har sahifa: Inter (matn) va Akt (sarlavhalar) shu tilning asosiy toʻplami. Akt preloadsiz almashinuvda
+ * uzun sarlavha va iqtibos qatorlari qayta oqib, CLS beradi (biz-haqimizda kompyuterda 0.081 edi).
+ * Lotin tillari: Inter latin (ʻ ʼ shu toʻplamda) + Akt latin; 2026 imlosi Ş Ğ uchun Inter latin-ext ham.
+ * Kirill: Inter cyrillic + (oz: Қ Ғ Ҳ uchun cyrillic-ext; ru: raqam va brend uchun latin) + Akt cyrillic.
+ * Qahramon toʻplami faqat bosh sahifada (heroFontPreload): jami ≤ 4 (§17).
  */
 export function fontPreloads(locale: Locale): readonly string[] {
   const meta = LOCALE_META[locale];
-  const hero = `/fonts/hero-${locale}.woff2`;
   if (meta.script === "cyrillic") {
     return [
       "/fonts/inter-cyrillic.woff2",
       locale === "oz" ? "/fonts/inter-cyrillic-ext.woff2" : "/fonts/inter-latin.woff2",
-      hero,
+      "/fonts/akt-cyrillic.woff2",
     ];
   }
   if (meta.orthography === "2026") {
-    return ["/fonts/inter-latin.woff2", "/fonts/inter-latin-ext.woff2", hero];
+    return ["/fonts/inter-latin.woff2", "/fonts/inter-latin-ext.woff2", "/fonts/akt-latin.woff2"];
   }
-  return ["/fonts/inter-latin.woff2", hero];
+  return ["/fonts/inter-latin.woff2", "/fonts/akt-latin.woff2"];
+}
+
+/** Bosh sahifa qahramoni nomining til toʻplami (≈ 1,6 KB): boshqa sahifalarda kerak emas. */
+export function heroFontPreload(locale: Locale): string {
+  return `/fonts/hero-${locale}.woff2`;
 }
 
 /** Qahramon sarlavhasining til toʻplami: block — preload bilan keladi, zaxira shrift miltillamaydi. */

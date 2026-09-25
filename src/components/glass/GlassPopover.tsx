@@ -4,7 +4,7 @@ import * as Popover from "@radix-ui/react-popover";
 import { useRef } from "react";
 import type { ReactNode, RefObject } from "react";
 
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 import { Surface, type SurfacePadding } from "./Surface";
 import { useMorph } from "./useMorph";
@@ -64,7 +64,7 @@ export function GlassPopover({
             padding={padding}
             text
             tape={tape}
-            className={cn("surface-morph glass-popover z-overlay", className)}
+            className={cx("surface-morph glass-popover z-overlay", className)}
           >
             {children}
           </Surface>

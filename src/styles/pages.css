@@ -128,6 +128,11 @@
   .about-split {
     row-gap: 24px;
   }
+  .about-media-figure {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+  }
   .about-split-head,
   .about-split-body {
     grid-column: 1 / -1;
@@ -400,6 +405,37 @@
     display: grid;
     gap: 4px;
   }
+  /* Tasdiq kutilayotgan kengash: 64 px belgi va soha qatori; 1 / 2 / 3 ustun, oltita qator toʻla. */
+  .person-rows {
+    display: grid;
+    column-gap: var(--gutter);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (min-width: 600px) {
+    .person-rows {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1024px) {
+    .person-rows {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .person-row {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 16px;
+    padding-block: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .person-row-text {
+    display: grid;
+    gap: 4px;
+  }
   .people-open {
     justify-self: start;
     min-height: 44px;
@@ -472,6 +508,22 @@
     }
     .leader-text {
       grid-column: span 4;
+    }
+  }
+  /* Surati tasdiqlanmagan rahbar: 64 px belgi matn yonida, portret ustuni oʻrnida boʻsh joy qolmaydi. */
+  .leader:has(> .leader-monogram) {
+    grid-template-columns: 64px minmax(0, 1fr);
+    column-gap: 16px;
+  }
+  .leader .leader-monogram {
+    grid-column: auto;
+  }
+  .leader:has(> .leader-monogram) > .leader-text {
+    grid-column: auto;
+  }
+  @media (min-width: 600px) {
+    .leader:has(> .leader-monogram) {
+      column-gap: 24px;
     }
   }
   .leader-facts {

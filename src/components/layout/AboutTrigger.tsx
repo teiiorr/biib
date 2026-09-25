@@ -1,10 +1,8 @@
 "use client";
 
-import type { ButtonHTMLAttributes, Ref } from "react";
+import type { ButtonHTMLAttributes, ReactNode, Ref } from "react";
 
 import { Icon } from "@/components/icons/Icon";
-import { ZardoziMark } from "@/components/ornament/ZardoziMark";
-import { ZardoziUnderline } from "@/components/ornament/ZardoziUnderline";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { PageKey } from "@/i18n/routes";
 
@@ -15,20 +13,28 @@ export interface AboutMenuItem {
   readonly current: boolean;
 }
 
+/** Zardoʻzi chizmalari serverda chiziladi va shu yerga tayyor element boʻlib keladi: geometriya kodi mijozga kirmaydi. */
+export interface NavMarks {
+  readonly underline: ReactNode;
+  readonly mark: ReactNode;
+}
+
 export interface AboutMenuProps {
   readonly dict: Dictionary["nav"];
   readonly items: readonly AboutMenuItem[];
   readonly active: boolean;
+  readonly marks: NavMarks;
 }
 
 interface AboutTriggerProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
   readonly dict: Dictionary["nav"];
   readonly active: boolean;
+  readonly marks: NavMarks;
   readonly ref?: Ref<HTMLButtonElement>;
 }
 
 /** Guruh tugmasi: zardoʻzi ostchiziq va faol belgi; menyu kelguncha ham shu koʻrinish. */
-export function AboutTrigger({ dict, active, ref, ...rest }: AboutTriggerProps) {
+export function AboutTrigger({ dict, active, marks, ref, ...rest }: AboutTriggerProps) {
   return (
     <button
       ref={ref}
@@ -40,8 +46,8 @@ export function AboutTrigger({ dict, active, ref, ...rest }: AboutTriggerProps) 
     >
       <span className="text-trim">{dict.aboutGroup}</span>
       <Icon name="chevron-down" size={16} />
-      <ZardoziUnderline draw="hover" className="nav-underline" />
-      {active ? <ZardoziMark className="nav-mark" /> : null}
+      {marks.underline}
+      {active ? marks.mark : null}
     </button>
   );
 }

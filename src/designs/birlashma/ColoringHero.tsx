@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Picture } from "@/components/ui/Picture";
 
 import { ColoringPage } from "./ColoringPage";
 import { Doodle } from "./Doodles";
@@ -23,7 +23,7 @@ export default function ColoringHero({ copy, className }: ArtProps) {
       </PaperSheet>
       <div className="pinned-stack">
         <PaperSheet seed="mark-sticker" fixing="tape" rotate={1.4} className="hero-mark-sticker">
-          <Image src="/brand/mark.png" alt="" width={96} height={96} />
+          <Picture src="/brand/mark.png" alt="" width={96} height={96} />
         </PaperSheet>
         <PaperSheet seed="pinned-1" fixing="magnet" rotate={1.6} className="pinned-placeholder">
           <Doodle name="heart" size={32} tone="art-1" />

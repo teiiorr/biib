@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import type { ArtSlot } from "@/content/types";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { StickerClip, type StickerShape } from "./StickerClip";
 
 export interface StickerProps {
@@ -65,7 +65,7 @@ export function Sticker({
   return (
     <span
       ref={ref}
-      className={cn("ui-sticker", className)}
+      className={cx("ui-sticker", className)}
       data-shape={shape}
       data-reveal={reveal ?? undefined}
       style={style}

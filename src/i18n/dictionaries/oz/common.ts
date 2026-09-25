@@ -48,6 +48,7 @@ export const common: typeof source = {
     breadcrumbs: "Сиз шу ердасиз",
   },
   status: {
+    awaiting: "Тасдиқ кутилмоқда",
     draft: "Қоралама: матн ташкилот тасдиғини кутмоқда",
     pending: "Маълумот ташкилотдан тасдиқ кутмоқда",
     updated: "Янгиланган",

@@ -11,6 +11,10 @@ export const about = {
     quote: "Bola ijod qilganda unga sahna emas, ishonch kerak. Sahna keyin topiladi.",
     quoteSource: "Birlashma nizomidan",
   },
+  media: {
+    caption: "UPOP TREND loyihasining vizual obrazi",
+    alt: "Milliy atlas va adras liboslaridagi toʻrt qiz rubob, doira va mikrofon bilan; orqada soʻzana naqshlari",
+  },
   values: {
     heading: "Yoʻnalishlar",
     items: [

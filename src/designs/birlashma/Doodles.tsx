@@ -1,4 +1,4 @@
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 export type DoodleName = "star" | "spiral" | "arrow" | "cloud" | "note" | "heart" | "sun";
 
@@ -33,7 +33,7 @@ export function Doodle({ name, size = 48, className, tone = "ink", boil = false 
       viewBox="0 0 48 48"
       width={size}
       height={size}
-      className={cn("doodle", `doodle-${tone}`, boil && "doodle-boil", className)}
+      className={cx("doodle", `doodle-${tone}`, boil && "doodle-boil", className)}
       aria-hidden="true"
       focusable="false"
     >

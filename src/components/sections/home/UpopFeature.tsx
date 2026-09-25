@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ViewTransition } from "react";
 
 import { Container } from "@/components/layout/Container";
@@ -9,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { MediaFrame } from "@/components/ui/MediaFrame";
+import { Picture } from "@/components/ui/Picture";
 import { Text } from "@/components/ui/Text";
 import { getFlagship, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -17,7 +17,7 @@ import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
 import { sharedName } from "@/lib/motion/transitions";
 
-import { InViewVideo } from "../projects/InViewVideo";
+import { InViewVideoLeaf } from "../lazy-leaves";
 import { UpopMotion } from "./UpopMotion";
 
 interface UpopFeatureProps {
@@ -45,12 +45,12 @@ export function UpopFeature({ locale, dict }: UpopFeatureProps) {
         <Container grid className="upop-feature-grid">
           <div className="upop-feature-wordmark" data-grid-item="" data-upop-wordmark="">
             <ViewTransition name={sharedName("project-media", project.key)}>
-              <Image
+              <Picture
                 src={wordmark.src}
                 alt={t(wordmark.alt, locale)}
                 width={wordmark.width}
                 height={wordmark.height}
-                sizes="(min-width: 1024px) 40vw, 80vw"
+                sizes="(min-width: 1024px) 34vw, 80vw"
                 className="upop-wordmark"
               />
             </ViewTransition>
@@ -64,7 +64,7 @@ export function UpopFeature({ locale, dict }: UpopFeatureProps) {
               copy={{ ageSticker: age }}
             >
               <MediaFrame ratio="16:9" hairline>
-                <InViewVideo
+                <InViewVideoLeaf
                   sources={loop.desktop}
                   mobileSources={loop.mobile}
                   poster={loop.poster}

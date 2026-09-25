@@ -2,7 +2,7 @@ import type { CSSProperties, ReactNode } from "react";
 
 import { MediaReveal, type MediaRevealProps } from "@/components/motion/MediaReveal";
 import { GirihStar } from "@/components/ornament/GirihStar";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { ratioCss, type AspectRatio } from "@/lib/ornament/ratio";
 
 export interface MediaFrameProps {
@@ -33,7 +33,7 @@ export function MediaFrame({
 }: MediaFrameProps) {
   const vars = { "--frame-ratio": ratioCss(ratio), ...style } as CSSProperties;
   return (
-    <div className={cn("media-frame", className)} style={vars} data-ratio={ratio}>
+    <div className={cx("media-frame", className)} style={vars} data-ratio={ratio}>
       <div className="media-frame-media">{children}</div>
       {hairline ? <span className="media-frame-line" aria-hidden="true" /> : null}
       {corner ? (

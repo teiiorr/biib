@@ -14,6 +14,10 @@ export const about: typeof source = {
     quote: "Bola ijod qilganda unga sahna emas, işonç kerak. Sahna keyin topiladi.",
     quoteSource: "Birlaşma nizomidan",
   },
+  media: {
+    caption: "UPOP TREND loyihasining vizual obrazi",
+    alt: "Milliy atlas va adras liboslaridagi tört qiz rubob, doira va mikrofon bilan; orqada sözana naqşlari",
+  },
   values: {
     heading: "Yönalişlar",
     items: [

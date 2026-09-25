@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 export type TextSize = "body-l" | "body" | "small" | "micro";
 export type TextTone = "ink" | "ink-2" | "ink-3" | "inherit";
@@ -45,7 +45,7 @@ export function Text({
   return (
     <Tag
       id={id}
-      className={cn(
+      className={cx(
         SIZE_CLASS[size],
         TONE_CLASS[tone],
         measure && "measure",

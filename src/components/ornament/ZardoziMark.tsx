@@ -1,4 +1,4 @@
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 export interface ZardoziMarkProps {
   readonly className?: string;
@@ -8,7 +8,7 @@ export interface ZardoziMarkProps {
 export function ZardoziMark({ className }: ZardoziMarkProps) {
   return (
     <svg
-      className={cn("orn zardozi-mark text-accent-text", className)}
+      className={cx("orn zardozi-mark text-accent-text", className)}
       viewBox="0 0 20 5"
       aria-hidden="true"
       focusable="false"

@@ -8,7 +8,7 @@ import { useFocusTrigger } from "@/components/glass/useLazyOverlay";
 import { Icon } from "@/components/icons/Icon";
 import { pathFor, type PageKey } from "@/i18n/routes";
 
-import { MenuTrigger, type MenuSheetProps } from "./MenuTrigger";
+import { MenuTrigger, isMenuPage, type MenuSheetProps } from "./MenuTrigger";
 
 export interface MenuSheetPanelProps extends MenuSheetProps {
   readonly initialOpen: boolean;
@@ -43,6 +43,7 @@ export default function MenuSheetPanel({
           ref={triggerRef}
           label={dict.menu}
           openLabel={dict.openMenu}
+          active={isMenuPage(current)}
           aria-expanded={open}
         />
       }

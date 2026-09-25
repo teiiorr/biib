@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { HomePage } from "@/components/sections/home/HomePage";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale } from "@/i18n/locales";
-import { buildMetadata } from "@/lib/seo/metadata";
+import { buildMetadata, notFoundMetadata } from "@/lib/seo/metadata";
 import { statusForPage } from "@/lib/seo/status";
 
 interface PageProps {
@@ -14,7 +14,7 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   // Sahifa va layout parallel chiziladi: nomaʼlum til bu yerda ham toʻxtatiladi, aks holda 500.
-  if (!isLocale(locale)) return {};
+  if (!isLocale(locale)) return notFoundMetadata();
   return buildMetadata({
     locale,
     key: "home",

@@ -3,7 +3,7 @@
 import * as Slider from "@radix-ui/react-slider";
 import { useState } from "react";
 
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 import { MarkerMagnifier } from "./MarkerMagnifier";
 
@@ -39,7 +39,7 @@ export function GlassSlider({
 
   return (
     <Slider.Root
-      className={cn("glass-slider", className)}
+      className={cx("glass-slider", className)}
       value={[value]}
       min={min}
       max={max}

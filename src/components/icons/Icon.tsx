@@ -1,4 +1,4 @@
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import type { IconName } from "./paths";
 
 export type IconSize = 16 | 20 | 24;
@@ -23,7 +23,7 @@ export function Icon({ name, size = 20, label, className }: IconProps) {
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={cn("shrink-0", className)}
+      className={cx("shrink-0", className)}
       data-icon={name}
       {...(meaningful ? { role: "img", "aria-label": label } : { "aria-hidden": true })}
     >

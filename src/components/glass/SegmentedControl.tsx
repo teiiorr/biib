@@ -3,7 +3,7 @@
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import { useEffect, useLayoutEffect, useRef } from "react";
 
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 import { Surface } from "./Surface";
 
@@ -69,7 +69,7 @@ export function SegmentedControl<T extends string>({
       as="div"
       radius="control"
       padding={4}
-      className={cn("segmented", className)}
+      className={cx("segmented", className)}
     >
       <span ref={lensRef} className="segmented-lens" aria-hidden="true" />
       <ToggleGroup.Root

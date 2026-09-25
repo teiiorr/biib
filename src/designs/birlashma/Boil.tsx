@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 interface BoilProps {
   readonly children: ReactNode;
@@ -13,7 +13,7 @@ interface BoilProps {
  */
 export function Boil({ children, className }: BoilProps) {
   return (
-    <span className={cn("boil", className)}>
+    <span className={cx("boil", className)}>
       <svg width="0" height="0" aria-hidden="true" focusable="false" className="boil-defs">
         <filter id="boil-1" x="-4%" y="-4%" width="108%" height="108%">
           <feTurbulence

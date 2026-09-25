@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { useEngineEffect } from "@/components/motion/engine";
 import { EASE } from "@/lib/motion/constants";
 import { belowViewport } from "@/lib/motion/viewport";
@@ -52,7 +52,7 @@ export function PalakBloom({ children, className }: PalakBloomProps) {
   );
 
   return (
-    <div ref={scope} className={cn("contents", className)}>
+    <div ref={scope} className={cx("contents", className)}>
       {children}
     </div>
   );

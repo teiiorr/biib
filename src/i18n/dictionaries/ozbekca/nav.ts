@@ -11,6 +11,10 @@ export const nav: typeof source = {
   partners: "Hamkorlar",
   contacts: "Aloqa",
   privacy: "Maxfiylik siyosati",
+  tabShort: {
+    home: "Boş",
+    projects: "UPOP",
+  },
   menu: "Menyu",
   openMenu: "Menyuni oçiş",
   closeMenu: "Menyuni yopiş",

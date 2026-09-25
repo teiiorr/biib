@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import type { ReactNode } from "react";
 
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 import { Surface } from "./Surface";
 import { useMorph } from "./useMorph";
@@ -70,7 +70,7 @@ export function GlassDropdownMenu({
             radius="panel"
             padding={8}
             text
-            className={cn("surface-morph glass-menu z-overlay", className)}
+            className={cx("surface-morph glass-menu z-overlay", className)}
             data-testid={testId}
           >
             {items.map((item) => {
@@ -88,7 +88,7 @@ export function GlassDropdownMenu({
                   ) : null}
                 </>
               );
-              const itemClass = cn("glass-menu-item", item.current && "is-current");
+              const itemClass = cx("glass-menu-item", item.current && "is-current");
               return (
                 <DropdownMenu.Item
                   key={item.id}

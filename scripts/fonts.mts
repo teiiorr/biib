@@ -75,7 +75,7 @@ for fam in spec["families"]:
     for name, ranges in spec["subsets"].items():
         # Avval toʻplam, keyin oʻq qisqartirish: teskari tartibda fontTools gvar da KeyError beradi.
         font = TTFont(fam["source"])
-        options = subset.Options(flavor="woff2", layout_features=["*"], name_IDs=[1, 2, 4, 6], notdef_outline=True, retain_gids=False)
+        options = subset.Options(flavor="woff2", layout_features=spec["features"], name_IDs=[1, 2, 4, 6], notdef_outline=True, retain_gids=False)
         subsetter = subset.Subsetter(options)
         codepoints = set()
         for part in ranges.replace(" ", "").split(","):
@@ -96,9 +96,35 @@ for fam in spec["families"]:
         print(f"{fam['file']}-{name}.woff2\\t{os.path.getsize(target)//1024} KB")
 `;
 
+/*
+ * Faqat sayt ishlatadigan OpenType xususiyatlari: matn shakllanishi (kern, liga, calt, belgilar),
+ * raqamlar (tnum va boshqalar) va Akt dagi cv05. Inter ning oʻnlab ss/cv muqobil gliflari
+ * tushib qoladi: inter-latin 74 → ≈ 50 KB, birinchi ekran yuklamasi shuncha yengil.
+ */
+const FEATURES = [
+  "kern",
+  "liga",
+  "clig",
+  "calt",
+  "ccmp",
+  "locl",
+  "mark",
+  "mkmk",
+  "rlig",
+  "rvrn",
+  "tnum",
+  "lnum",
+  "pnum",
+  "case",
+  "cv05",
+];
+
 const spec = path.resolve(".verify/fonts-spec.json");
 mkdirSync(path.dirname(spec), { recursive: true });
-writeFileSync(spec, JSON.stringify({ out: OUT, subsets: SUBSETS, families: FAMILIES }));
+writeFileSync(
+  spec,
+  JSON.stringify({ out: OUT, subsets: SUBSETS, families: FAMILIES, features: FEATURES }),
+);
 execFileSync(python, ["-c", script, spec], { stdio: "inherit" });
 
 let css = `/* scripts/fonts.mts yaratgan: Inter va Akt toʻplamlari, til boʻyicha unicode-range. Qoʻlda tahrir qilinmaydi. */\n`;

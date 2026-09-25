@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { doiraDelay } from "@/lib/motion/doira";
 
 export interface ZardoziRevealProps {
@@ -43,7 +43,7 @@ export function ZardoziReveal({ children, className }: ZardoziRevealProps) {
   }, []);
 
   return (
-    <span ref={ref} className={cn("contents", className)}>
+    <span ref={ref} className={cx("contents", className)}>
       {children}
     </span>
   );

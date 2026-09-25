@@ -4,7 +4,7 @@ import { useRef, type ReactNode } from "react";
 
 import { useEngineEffect } from "@/components/motion/engine";
 import { useMotionAllowed } from "@/components/ornament/use-motion-allowed";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 import { paperEdgePath } from "./lib/paper-edge";
 import { hashString } from "./lib/seed";
@@ -67,7 +67,7 @@ export function PaperDepth({ seed, children, className }: PaperDepthProps) {
   );
 
   return (
-    <div ref={ref} className={cn("paper-depth", className)}>
+    <div ref={ref} className={cx("paper-depth", className)}>
       <div className="paper-depth-layers" aria-hidden="true">
         {layers.map((layer, i) => (
           <svg

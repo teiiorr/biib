@@ -1,9 +1,8 @@
-import Image from "next/image";
-
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
+import { Picture } from "@/components/ui/Picture";
 import { t } from "@/content";
 import type { Partner } from "@/content/types";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -48,7 +47,7 @@ export function PartnersField({ locale, dict, partners }: PartnersFieldProps) {
                   aria-label={fill(dict.partners.visit, { name })}
                 >
                   {partner.logo ? (
-                    <Image
+                    <Picture
                       src={partner.logo}
                       alt={fill(dict.partners.logoAlt, { name })}
                       width={240}

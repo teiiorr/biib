@@ -13,6 +13,10 @@ export const about: typeof source = {
     quote: "When a child creates, what they need is not a stage but trust. The stage comes later.",
     quoteSource: "From the charter of the association",
   },
+  media: {
+    caption: "UPOP TREND key visual",
+    alt: "Four girls in national atlas and adras dress with a rubab, a doira and a microphone; suzani patterns behind them",
+  },
   values: {
     heading: "Directions",
     items: [

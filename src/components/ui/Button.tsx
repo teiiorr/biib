@@ -2,7 +2,7 @@ import { Slot, Slottable } from "@radix-ui/react-slot";
 import type { ComponentPropsWithoutRef, ReactNode, Ref } from "react";
 import { Icon } from "@/components/icons/Icon";
 import type { IconName } from "@/components/icons/paths";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { MAGNET } from "@/lib/motion/constants";
 import {
   BUTTON_ICON_SIZE,
@@ -78,7 +78,7 @@ export function Button(props: ButtonProps) {
     <Component
       {...rest}
       {...(asChild ? {} : { type: type ?? "button" })}
-      className={cn(buttonVariants({ variant, size }), className)}
+      className={cx(buttonVariants({ variant, size }), className)}
       data-variant={variant}
       data-size={size}
       data-icon={iconSlot}
@@ -93,7 +93,8 @@ export function Button(props: ButtonProps) {
       {iconSlot === "only"
         ? graphic
         : [
-            iconPosition === "start" ? <span key="start">{graphic}</span> : null,
+            /* Belgisiz tugmada boʻsh span qolmasin: flex gap yorliqni 4 px chetga surardi. */
+            graphic && iconPosition === "start" ? <span key="start">{graphic}</span> : null,
             /* Slot faqat toʻgʻridan-toʻgʻri bolalar orasidan Slottable ni topadi: Fragment emas, massiv. */
             asChild ? (
               <Slottable key="label">{children}</Slottable>
@@ -102,7 +103,7 @@ export function Button(props: ButtonProps) {
                 {children}
               </span>
             ),
-            iconPosition === "end" ? <span key="end">{graphic}</span> : null,
+            graphic && iconPosition === "end" ? <span key="end">{graphic}</span> : null,
           ]}
     </Component>
   );

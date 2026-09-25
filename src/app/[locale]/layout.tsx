@@ -1,3 +1,4 @@
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { preload } from "react-dom";
 import { notFound } from "next/navigation";
@@ -17,12 +18,27 @@ import { isLocale, LOCALE_META, LOCALES } from "@/i18n/locales";
 import { FONT_CLASS, fontPreloads, heroFontFace } from "@/lib/fonts";
 import { JsonLd } from "@/lib/seo/JsonLdScript";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/jsonld";
+import { siteUrl } from "@/lib/site";
 
 import "@/styles/globals.css";
 
 /* Fallback ochiq: aks holda ichki nomaʼlum yoʻllar ham global 404 ga tushadi (NoFallbackError).
    Nomaʼlum til pastdagi notFound() bilan global 404 ga boradi. */
 export const dynamicParams = true;
+
+/* Segment darajasidagi opengraph-image fayllari sahifa metadatasidan oldin yigʻiladi: asos shu yerda
+   boʻlmasa ular localhost ga bogʻlanardi (yigʻishda va har 404 da ogohlantirish). */
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl()),
+};
+
+/* viewport-fit=cover: tab-bar va sarlavha safe-area bilan ishlaydi. Qoʻlda <meta> qoʻyilsa Next oʻzinikini
+   ham chiqarardi va sahifada ikkita viewport boʻlardi. */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -56,7 +72,6 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       <head>
         {/* Mavzu va dizayn sahifa chizilishidan oldin qoʻyiladi, aks holda miltillash koʻrinadi. */}
         <script dangerouslySetInnerHTML={{ __html: APPEARANCE_BOOT_SCRIPT }} />
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <style dangerouslySetInnerHTML={{ __html: heroFontFace(locale) }} />
       </head>
       <body>

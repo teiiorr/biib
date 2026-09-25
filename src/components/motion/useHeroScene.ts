@@ -86,13 +86,25 @@ export function useHeroScene(
 
       /* CSS skroll-animatsiyasi (dvigatelsiz zaxira) oʻchadi: belgining koʻrinishini endi GSAP boshqaradi. */
       html.dataset.heroScene = "js";
+      /* Telefon paneli: belgi qahramonda ekan oyna faqat oʻng guruhni oʻraydi (layout.css .top-bar). */
+      const topBar = document.querySelector<HTMLElement>("[data-top-bar]");
+      const topGroup = topBar?.querySelector<HTMLElement>("[data-top-bar-group]");
+      if (topBar && topGroup) {
+        topBar.style.setProperty("--top-bar-group-w", `${Math.ceil(topGroup.offsetWidth + 16)}px`);
+      }
+      const setAway = (away: boolean): void => {
+        if (away) html.dataset.brandAway = "";
+        else delete html.dataset.brandAway;
+      };
       const settle = (): void => {
         progress.current = 1;
         hero.style.setProperty("--scene-progress", "1");
+        setAway(false);
         if (mark) gsap.set(mark, { autoAlpha: 1 });
       };
       const release = (): void => {
         delete html.dataset.heroScene;
+        setAway(false);
         hero.style.removeProperty("--scene-progress");
         for (const el of layers) el.style.removeProperty("will-change");
       };
@@ -152,6 +164,7 @@ export function useHeroScene(
       }
       if (mark) tl.fromTo(mark, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.08 }, 0.72);
 
+      setAway(true);
       let enabled = true;
       let governorOff = false;
       let geometryOff = false;
@@ -171,6 +184,7 @@ export function useHeroScene(
         onUpdate: (self) => {
           progress.current = self.progress;
           hero.style.setProperty("--scene-progress", self.progress.toFixed(3));
+          setAway(self.progress < 0.76);
         },
         onRefresh: () => {
           geometryOff = !runnable();

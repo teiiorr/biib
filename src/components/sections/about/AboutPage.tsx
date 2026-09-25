@@ -6,6 +6,8 @@ import { Reveal } from "@/components/motion/Reveal";
 import { SplitLines } from "@/components/motion/SplitLines";
 import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
+import { MediaFrame } from "@/components/ui/MediaFrame";
+import { Picture } from "@/components/ui/Picture";
 import { Prose } from "@/components/ui/Prose";
 import { PullQuote } from "@/components/ui/PullQuote";
 import { Text } from "@/components/ui/Text";
@@ -22,9 +24,9 @@ interface PageProps {
 }
 
 /**
- * Biz haqimizda (15.3): sarlavha, ikki ustunli matn va bitta iqtibos, yoʻnalishlar roʻyxati — ikkalasida
- * sarlavha 1–4 ustunda (kompyuterda yopishqoq), matn 6–12; tarix chizigʻi sirt lentasida; oxirida
- * UPOP TREND lentasi. Bezak qatlamlari yoʻq: xarakter tipografiya va ritmdan. Harakat: sarlavhalar
+ * Biz haqimizda (15.3): sarlavha, ikki ustunli matn va bitta iqtibos, keng UPOP TREND kadri, yoʻnalishlar
+ * roʻyxati — matnli boʻlimlarda sarlavha 1–4 ustunda (kompyuterda yopishqoq), matn 6–12; tarix chizigʻi
+ * sirt lentasida; oxirida UPOP TREND lentasi. Bezak qatlamlari yoʻq. Harakat: sarlavhalar
  * soʻzma-soʻz, matn va qadriyatlar doira ritmida koʻtariladi, tarix nuqtalari ketma-ket.
  */
 export function AboutPage({ locale, dict }: PageProps) {
@@ -67,6 +69,22 @@ export function AboutPage({ locale, dict }: PageProps) {
               ))}
             </Prose>
           </Reveal>
+        </Container>
+      </Section>
+      {/* Egasining UPOP TREND tasviri: matnli sahifaga bitta keng kadr — maqsaddan yoʻnalishlarga oʻtish. */}
+      <Section as="div" rhythm="section" className="about-media">
+        <Container>
+          <figure className="about-media-figure">
+            <MediaFrame ratio="16:9" hairline motion={{ mode: "smooth", parallax: true }}>
+              <Picture
+                src="/brand/upop-scene.jpg"
+                alt={a.media.alt}
+                fill
+                sizes="(min-width: 1440px) 1312px, (min-width: 1024px) calc(100vw - 96px), calc(100vw - 32px)"
+              />
+            </MediaFrame>
+            <figcaption className="t-small text-ink-3">{a.media.caption}</figcaption>
+          </figure>
         </Container>
       </Section>
       <Section labelledBy="about-values" tone="light">

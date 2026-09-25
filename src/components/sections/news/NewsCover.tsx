@@ -1,9 +1,9 @@
-import Image from "next/image";
 import type { CSSProperties } from "react";
 
 import type { MediaRevealProps } from "@/components/motion/MediaReveal";
 import { GirihStar } from "@/components/ornament/GirihStar";
 import { MediaFrame } from "@/components/ui/MediaFrame";
+import { Picture } from "@/components/ui/Picture";
 import { t } from "@/content";
 import type { NewsArticle } from "@/content/types";
 import type { Locale } from "@/i18n/locales";
@@ -14,7 +14,7 @@ export interface NewsCoverProps {
   readonly article: Pick<NewsArticle, "cover" | "story">;
   readonly ratio: AspectRatio;
   readonly locale: Locale;
-  /** next/image uchun: ramka viewportning qancha qismini egallaydi. */
+  /** Ramka viewportning qancha qismini egallaydi (srcset tanlovi uchun). */
   readonly sizes: string;
   /** Maʼnoli surat (maqola boshi): alt matni oʻqiladi; aks holda bezak, sarlavha havolasi yetarli. */
   readonly meaningful?: boolean;
@@ -25,7 +25,7 @@ export interface NewsCoverProps {
 }
 
 /**
- * Yangilik muqovasi: surat bor va tasdiq kutmayotgan boʻlsa next/image, aks holda sokin oʻrin
+ * Yangilik muqovasi: surat bor va tasdiq kutmayotgan boʻlsa tayyor rasm (Picture), aks holda sokin oʻrin
  * (hikoya rangida yengil zamin va kichik belgi). Naqshli tasmalar yoʻq.
  */
 export function NewsCover({
@@ -50,14 +50,7 @@ export function NewsCover({
       {...(motion ? { motion } : {})}
     >
       {src ? (
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes={sizes}
-          priority={priority}
-          style={{ objectFit: "cover" }}
-        />
+        <Picture src={src} alt={alt} fill sizes={sizes} priority={priority} />
       ) : (
         <div
           className="news-cover-placeholder"

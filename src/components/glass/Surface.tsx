@@ -1,12 +1,12 @@
 "use client";
 
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import type { CSSProperties, HTMLAttributes, ReactNode, Ref } from "react";
 
 import { useAppearance } from "@/lib/appearance/context";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
+import { whenIdle } from "@/lib/idle";
 
-import { RefractionFilter } from "./RefractionFilter";
 import {
   RADIUS_EXPRESSION,
   SurfaceContext,
@@ -15,8 +15,6 @@ import {
   type SurfaceFrame,
   type SurfaceRadius,
 } from "./surface-context";
-import { useRefraction } from "./useRefraction";
-import { useSheen } from "./useSheen";
 import { useSurfaceTone } from "./useSurfaceTone";
 
 export type SurfaceMaterial = "auto" | "oyna" | "kalka";
@@ -100,9 +98,25 @@ export function Surface({
     [ref],
   );
 
-  useSheen(localRef, isOyna);
+  /* Ohang birinchi kadrdan kerak (qorongʻi qahramon ustida yorliq oq). Yaltiroq nuqta va sinish esa
+     bezak: alohida chunk, sahifa yuklanib boʻshaganda ulanadi (birinchi yuklanish JS ida emas). */
   useSurfaceTone(localRef, adaptiveTone);
-  const refract = useRefraction(localRef, isOyna && refraction);
+  useEffect(() => {
+    const element = localRef.current;
+    if (!element || !isOyna) return;
+    let dispose: (() => void) | null = null;
+    let cancelled = false;
+    const cancelIdle = whenIdle(() => {
+      void import("./surface-effects").then(({ mountSurfaceEffects }) => {
+        if (!cancelled) dispose = mountSurfaceEffects(element, { refraction });
+      });
+    }, 1500);
+    return () => {
+      cancelled = true;
+      cancelIdle();
+      dispose?.();
+    };
+  }, [isOyna, refraction]);
 
   const frame = useMemo<SurfaceFrame>(
     () => ({ radius: parent ? innerRadius(parent) : RADIUS_EXPRESSION[radius], padding }),
@@ -118,7 +132,6 @@ export function Surface({
     vars["--light-x"] = `${light.x}%`;
     vars["--light-y"] = `${light.y}%`;
   }
-  if (refract) vars["--surface-refract"] = `url(#${refract.id})`;
 
   const Tag = as;
   const isSheetLike = radius !== "control";
@@ -129,17 +142,13 @@ export function Surface({
       <Tag
         {...rest}
         ref={setRef}
-        className={cn("surface material", className)}
+        className={cx("surface material", className)}
         style={{ ...(vars as CSSProperties), ...style }}
         data-material={material}
         data-variant={variant}
         data-text={text ? "true" : undefined}
         data-radius={radius}
-        data-refract={refract ? "on" : undefined}
       >
-        {refract ? (
-          <RefractionFilter id={refract.id} href={refract.href} scale={refract.scale} />
-        ) : null}
         {showPaper ? (
           <span
             className="surface-paper"

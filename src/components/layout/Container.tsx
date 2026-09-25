@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 interface ContainerProps {
   readonly as?: "div" | "section" | "header" | "footer" | "nav";
@@ -19,7 +19,7 @@ export function Container({
   children,
 }: ContainerProps) {
   return (
-    <Tag id={id} className={cn("container-site", grid && "grid-site", className)}>
+    <Tag id={id} className={cx("container-site", grid && "grid-site", className)}>
       {children}
     </Tag>
   );

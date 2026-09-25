@@ -1,6 +1,6 @@
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { Icon } from "@/components/icons/Icon";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 export interface CheckboxProps extends Omit<
   ComponentPropsWithoutRef<"input">,
@@ -18,7 +18,7 @@ export function Checkbox({ id, label, description, className, ...rest }: Checkbo
   return (
     <label
       htmlFor={id}
-      className={cn("flex min-h-12 cursor-pointer items-start gap-3 py-3", className)}
+      className={cx("flex min-h-12 cursor-pointer items-start gap-3 py-3", className)}
     >
       <span className="relative size-6 shrink-0">
         <input

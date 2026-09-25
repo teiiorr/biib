@@ -1,4 +1,4 @@
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { girihStar, type GirihSymmetry } from "@/lib/girih";
 
 export interface GirihStarProps {
@@ -21,7 +21,7 @@ export function GirihStar({
   const star = girihStar(symmetry, size, { ring });
   return (
     <svg
-      className={cn("orn", className)}
+      className={cx("orn", className)}
       viewBox={`0 0 ${size} ${size}`}
       width={size}
       height={size}

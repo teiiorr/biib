@@ -6,10 +6,15 @@ import { useMotionPrefs } from "./motion-context";
 
 const useIsoLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
+/* Linza yorliqdan har tomonga 4 px keng (bandlar orasidagi 8 px ga kiradi), kamida 56 px. */
+const LENS_PAD = 4;
+const LENS_MIN = 56;
+
 /**
  * lens: konteyner ichidagi [data-lens] element faol [data-lens-item] ustiga prujina bilan siljiydi.
  * Joy left/width bilan yoziladi, harakat CSS oʻtishida faqat transformda (FLIP): eski joydan
  * yangisiga translate + scaleX, prujina egri chizigʻi --ease-spring. Oʻlcham oʻzgarsa qayta oʻlchanadi.
+ * activeIndex < 0: faol band yoʻq (masalan 404), linza yashiriladi.
  */
 export function useLens(ref: RefObject<HTMLElement | null>, activeIndex: number): void {
   const prefs = useMotionPrefs();
@@ -21,15 +26,28 @@ export function useLens(ref: RefObject<HTMLElement | null>, activeIndex: number)
     if (!root) return;
     const place = (withMotion: boolean): void => {
       const lens = root.querySelector<HTMLElement>("[data-lens]");
+      if (!lens) return;
       const items = root.querySelectorAll<HTMLElement>("[data-lens-item]");
-      const target = items[activeIndex];
-      if (!lens || !target) return;
+      const target = activeIndex >= 0 ? items[activeIndex] : undefined;
+      if (!target) {
+        lens.style.opacity = "0";
+        settled.current = false;
+        return;
+      }
+      lens.style.opacity = "";
       const before = lens.getBoundingClientRect();
       const rootRect = root.getBoundingClientRect();
       const rect = target.getBoundingClientRect();
       if (rect.width === 0) return;
-      lens.style.left = `${rect.left - rootRect.left + root.scrollLeft}px`;
-      lens.style.width = `${rect.width}px`;
+      const inset = 2;
+      const width = Math.min(
+        rootRect.width - inset * 2,
+        Math.max(LENS_MIN, rect.width + LENS_PAD * 2),
+      );
+      const center = rect.left - rootRect.left + rect.width / 2;
+      const left = Math.min(Math.max(inset, center - width / 2), rootRect.width - inset - width);
+      lens.style.left = `${left + root.scrollLeft}px`;
+      lens.style.width = `${width}px`;
       // Birinchi joylashuv, oʻlcham oʻzgarishi va harakat taqiqi: animatsiyasiz.
       if (!withMotion || !settled.current || before.width === 0) {
         settled.current = true;

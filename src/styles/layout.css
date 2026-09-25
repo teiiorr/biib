@@ -52,13 +52,14 @@
   .nav-item:hover {
     background: color-mix(in oklab, var(--material-ink) 7%, transparent);
   }
+  /* Faol belgi: yorliq ostida markazda, oʻz 20 × 5 oʻlchamida (SVG choʻzilmaydi, choklar teng qoladi). */
   .nav-mark {
     position: absolute;
-    left: 16px;
-    right: 16px;
+    left: 50%;
     bottom: 7px;
+    width: 20px;
     height: 5px;
-    width: auto;
+    translate: -50% 0;
   }
   .nav-underline {
     position: absolute;
@@ -83,6 +84,22 @@
     justify-content: space-between;
     gap: 8px;
     padding-inline: 8px 8px;
+    /* Kesish soyani ham oʻz ichiga oladi (−32 px); belgi qahramonda boʻlganda chap qism yashiriladi. */
+    clip-path: inset(-32px -32px -32px -32px round 0px 0px 0px 0px);
+    transition: clip-path var(--dur-panel) var(--ease-spring);
+  }
+  /* Belgi hali qahramon kadrida (bosh sahifa sahnasi): uzun boʻsh kapsula oʻrniga oyna faqat oʻng
+     guruhni oʻraydi; belgi sarlavhaga qoʻnganda kapsula chapga ochiladi (useHeroScene, data-brand-away). */
+  :root[data-brand-away] .top-bar {
+    clip-path: inset(
+      0px -32px 0px calc(100% - var(--top-bar-group-w, 148px)) round var(--surface-radius) 0px 0px
+        var(--surface-radius)
+    );
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .top-bar {
+      transition: none;
+    }
   }
   .tab-bar-wrap {
     position: fixed;
@@ -92,10 +109,17 @@
     width: min(calc(100vw - 2 * var(--margin)), 560px);
     z-index: var(--z-tabbar);
   }
-  /* minmax(0, 1fr): uzun yorliq boshqa bandlarni siqmaydi; yorliq oʻzi qisqartiriladi (data-clamp). */
+  /* 390 px dan tor ekranda suzuvchi panel chetdan 8 px: beshta yorliq (ru «Контакты») kesilmay sigʻadi. */
+  @media (max-width: 389px) {
+    .tab-bar-wrap {
+      width: calc(100vw - 16px);
+    }
+  }
+  /* Bandlar teng, lekin yorliqdan tor emas: uzun yorliq («Yangiliklar») oʻz kengligini oladi, qolganlari
+     boʻsh joyni teng boʻladi. Yorliqlar qisqa (tabShort), shu sabab hech qachon kesilmaydi. */
   .tab-bar {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(max-content, 1fr));
     gap: 8px;
     height: 64px;
     padding: 4px;
@@ -115,6 +139,7 @@
     align-items: center;
     justify-content: center;
     gap: 4px;
+    min-width: var(--hit-min);
     min-height: 56px;
     border-radius: var(--surface-radius);
     color: var(--material-ink);
@@ -131,13 +156,15 @@
     left: 4px;
     width: 0;
     border-radius: var(--surface-radius);
+    transition:
+      transform var(--dur-panel) var(--ease-spring),
+      opacity var(--dur-ui) var(--ease-ui);
     background: color-mix(in oklab, var(--material-base) 92%, var(--material-ink) 8%);
     box-shadow:
       inset 0 0 0 1px color-mix(in oklab, var(--material-rim) 60%, transparent),
       var(--shadow-raised);
     transform-origin: left center;
     /* Linza FLIP: joy left/width bilan bir marta, harakat faqat transformda, prujina egri chizigʻi. */
-    transition: transform var(--dur-panel) var(--ease-spring);
   }
   .tab-mini {
     position: absolute;
@@ -163,11 +190,12 @@
     transform: translateX(-50%) scale(1);
     pointer-events: auto;
   }
+  /* Yigʻilgan kapsula matn va tugmalar ustida suzadi: oyna zichroq, yorliq har fonda oʻqiladi. */
+  .tab-mini.material[data-text="true"] {
+    --m-tint: max(var(--g-tint-text), 0.8);
+  }
   .tab-label {
     white-space: nowrap;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
     font-size: var(--fs-micro);
     line-height: var(--lh-micro);
     font-weight: var(--fw-micro);
@@ -196,22 +224,22 @@
       padding-bottom: calc(24px + var(--safe-bottom));
     }
   }
+  /* Toj sokin: ingichka chiziqlar ajratuvchi rangida (60 %), oltin yoki toʻldirish yoʻq — futer
+     ustida bezak emas, chegara. Ravoqlar asos chizigʻiga tayanadi. */
   .footer-crown {
     position: relative;
-    min-height: 32px;
+    min-height: 24px;
     margin-bottom: 24px;
-    color: var(--accent-art);
+    color: color-mix(in oklab, var(--line-strong) 60%, transparent);
   }
   .footer-chust {
-    display: block;
     width: 100%;
   }
   .footer-crown-line {
     position: absolute;
     inset: auto 0 0 0;
     height: 1px;
-    background: var(--accent-art);
-    opacity: 0.6;
+    background: currentColor;
   }
   /* 44 px qatorlar oraligʻisiz: nishon oʻlchami saqlanadi, roʻyxat siyrak koʻrinmaydi. */
   .footer-groups {
@@ -358,6 +386,30 @@
       }
     }
   }
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) and (min-width: 360px) and (min-height: 521px) {
+      :root[data-design="atlas"]:not([data-motion="off"]):not([data-hero-scene])
+        body:has(.home-hero-scene)
+        .top-bar {
+        animation: top-bar-dock linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0px calc(100svh * var(--hero-scene-length));
+      }
+    }
+  }
+  @keyframes top-bar-dock {
+    0%,
+    72% {
+      clip-path: inset(
+        0px -32px 0px calc(100% - var(--top-bar-group-w, 148px)) round var(--surface-radius) 0px 0px
+          var(--surface-radius)
+      );
+    }
+    80%,
+    100% {
+      clip-path: inset(-32px -32px -32px -32px round 0px 0px 0px 0px);
+    }
+  }
   @keyframes brand-dock {
     0%,
     72% {
@@ -389,6 +441,9 @@
     justify-items: start;
     padding-top: calc(var(--hero-pad-top) + 24px);
     padding-bottom: calc(var(--section-gap) / 2);
+  }
+  .error-view-pending {
+    min-height: 480px;
   }
   /* Palak kichik belgi: sarlavhadan katta emas, boʻsh doira boʻlib sahifani egallamaydi. */
   /* Chizmaning ichki boʻshligʻi (≈ 7 %) qaytariladi: nuqtalar halqasi matn chetidan boshlanadi. */
@@ -492,12 +547,12 @@
     background: var(--surface);
     box-shadow: var(--shadow-raised);
   }
-  /* Matn sarlavha chetidan boshlanadi, belgilar kartaning ichki boʻshligʻiga osiladi (Art. III.5). */
+  /* Belgilar sarlavha chetida, matn 16 px ichkarida: belgi karta chetidan 24 px, qisilib qolmaydi. */
   .privacy-kid-list {
     display: grid;
     gap: 12px;
     margin: 0;
-    padding: 0;
+    padding: 0 0 0 16px;
     list-style: disc outside;
   }
   .privacy-kid-list > li::marker {

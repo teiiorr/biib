@@ -1,11 +1,10 @@
-import Image from "next/image";
-
 import { Container } from "@/components/layout/Container";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { GirihStar } from "@/components/ornament/GirihStar";
 import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
+import { Picture } from "@/components/ui/Picture";
 import { Text } from "@/components/ui/Text";
 import { getPartners, t } from "@/content";
 import type { PartnerGroup } from "@/content/types";
@@ -70,7 +69,7 @@ export function PartnersPage({ locale, dict }: PageProps) {
                       const tile = (
                         <span className="partner-tile" data-card="">
                           {partner.logo ? (
-                            <Image
+                            <Picture
                               src={partner.logo}
                               alt={fill(p.logoAlt, { name })}
                               width={240}

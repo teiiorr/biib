@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef } from "react";
+import { clsx } from "clsx";
+import { useEffect, useRef, useState } from "react";
 
 import { Surface } from "@/components/glass/Surface";
 import { Icon } from "@/components/icons/Icon";
@@ -8,7 +9,6 @@ import { useInViewPlayback } from "@/components/media/useInViewPlayback";
 import { VideoSourceList } from "@/components/media/VideoSourceList";
 import type { VideoSources } from "@/content/types";
 import { useMediaQuery } from "@/lib/appearance/media";
-import { cn } from "@/lib/cn";
 
 const COMPACT_QUERY = "(max-width: 599px)";
 
@@ -19,6 +19,8 @@ interface InViewVideoProps {
   readonly sources?: VideoSources;
   readonly mobileSources?: VideoSources;
   readonly poster: string;
+  /** Poster LCP (birinchi ekranda): HTML da turadi. Aks holda ekranga yaqinlashganda qoʻyiladi. */
+  readonly priority?: boolean;
   readonly alt: string;
   readonly pauseLabel: string;
   readonly playLabel: string;
@@ -35,6 +37,7 @@ export function InViewVideo({
   sources,
   mobileSources,
   poster,
+  priority = false,
   alt,
   pauseLabel,
   playLabel,
@@ -42,16 +45,34 @@ export function InViewVideo({
 }: InViewVideoProps) {
   const ref = useRef<HTMLVideoElement | null>(null);
   const { allowed, paused, toggle } = useInViewPlayback(ref);
+  /* Brauzer <video poster> ni sahifa ochilishi bilan soʻraydi (≈ 90 KB): pastdagi video posteri
+     birinchi ekranning LCP yuklamasiga qoʻshilmasin, u ekranga bir ekran qolganda qoʻyiladi. */
+  const [posterOn, setPosterOn] = useState(priority);
+  useEffect(() => {
+    const video = ref.current;
+    if (posterOn || !video) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setPosterOn(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "100% 0px" },
+    );
+    io.observe(video);
+    return () => io.disconnect();
+  }, [posterOn]);
   const compact = useMediaQuery(COMPACT_QUERY);
   const set = compact && mobileSources ? mobileSources : sources;
   const state = allowed ? (paused ? "paused" : "playing") : "still";
 
   return (
-    <div className={cn("media-video", className)} data-state={state}>
+    <div className={clsx("media-video", className)} data-state={state}>
       <video
         ref={ref}
         src={allowed && !set ? src : undefined}
-        poster={poster}
+        poster={posterOn ? poster : undefined}
         muted
         playsInline
         loop
@@ -73,7 +94,11 @@ export function InViewVideo({
           aria-pressed={paused}
           aria-label={paused ? playLabel : pauseLabel}
         >
-          <Icon name={paused ? "play" : "pause"} size={20} className={cn(paused && "icon-play")} />
+          <Icon
+            name={paused ? "play" : "pause"}
+            size={20}
+            className={clsx(paused && "icon-play")}
+          />
         </Surface>
       ) : null}
     </div>

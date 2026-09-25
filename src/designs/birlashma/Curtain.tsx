@@ -27,8 +27,9 @@ export default function Curtain({ copy, children, className }: ArtProps) {
       const right = root.querySelector<HTMLElement>("[data-curtain='right']");
       if (!left || !right) return;
       root.removeAttribute("data-open");
+      /* Kadr koʻrinishga kirishi bilan ochila boshlaydi, 60 % i koʻringanda toʻliq ochiq. */
       const tl = gsap.timeline({
-        scrollTrigger: { trigger: root, start: "top 80%", end: "top 20%", scrub: 0.8 },
+        scrollTrigger: { trigger: root, start: "top bottom", end: "60% bottom", scrub: 0.8 },
       });
       tl.to(left, { xPercent: -88, ease: "none" }, 0).to(right, { xPercent: 88, ease: "none" }, 0);
       return () => {

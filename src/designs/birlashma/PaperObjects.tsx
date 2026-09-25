@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import { Sticker } from "@/components/ui/Sticker";
 import type { ColorStory } from "@/content/types";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 import { PaperSheet } from "./PaperSheet";
 
@@ -24,7 +24,7 @@ export function Poster({ story, age, children, className }: PosterProps) {
       seed="poster"
       fixing="tape"
       rotate={-1.2}
-      className={cn("paper-object paper-poster", className)}
+      className={cx("paper-object paper-poster", className)}
     >
       <span
         className="poster-band"
@@ -44,17 +44,15 @@ export function Poster({ story, age, children, className }: PosterProps) {
   );
 }
 
-/** Parda ortidagi sahna: yon ustunlar parda rangida, ichida skroll bilan ochiladigan parda. */
+/** Parda ortidagi sahna: qogʻoz varagʻi ichida, skroll bilan ochiladigan parda kadr chegarasida. */
 export function CurtainFrame({ children, className }: ObjectProps) {
   return (
     <PaperSheet
       seed="curtain-frame"
       fixing="magnet"
-      className={cn("paper-object paper-curtain", className)}
+      className={cx("paper-object paper-curtain", className)}
     >
-      <span className="curtain-frame-side" aria-hidden="true" />
       <div className="paper-object-media">{children}</div>
-      <span className="curtain-frame-side curtain-frame-right" aria-hidden="true" />
     </PaperSheet>
   );
 }

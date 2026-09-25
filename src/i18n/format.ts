@@ -9,7 +9,10 @@ export function formatDate(locale: Locale, iso: string): string {
   const intl = LOCALE_META[locale].intl;
   if (intl === "uz-Latn" || intl === "uz-Cyrl") {
     const day = date.getUTCDate();
-    const month = new Intl.DateTimeFormat(intl, { month: "long", timeZone: "UTC" }).format(date);
+    // ICU mustaqil shaklda lotin oy nomini bosh harf bilan beradi («Sentabr»), imlo esa kichik harf talab qiladi.
+    const month = new Intl.DateTimeFormat(intl, { month: "long", timeZone: "UTC" })
+      .format(date)
+      .toLocaleLowerCase(intl);
     const year = date.getUTCFullYear();
     const text =
       intl === "uz-Latn"

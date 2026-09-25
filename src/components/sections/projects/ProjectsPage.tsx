@@ -1,15 +1,15 @@
-import Image from "next/image";
 import { ViewTransition } from "react";
+import { preload } from "react-dom";
 
 import { Container } from "@/components/layout/Container";
 import { DesignArt } from "@/components/layout/DesignArt";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
-import { ClickToPlayVideo } from "@/components/media/ClickToPlayVideo";
 import { Reveal } from "@/components/motion/Reveal";
 import { SplitLines } from "@/components/motion/SplitLines";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { MediaFrame } from "@/components/ui/MediaFrame";
+import { Picture } from "@/components/ui/Picture";
 import { Prose } from "@/components/ui/Prose";
 import { Text } from "@/components/ui/Text";
 import { getFlagship, t } from "@/content";
@@ -20,7 +20,7 @@ import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
 import { sharedName } from "@/lib/motion/transitions";
 
-import { InViewVideo } from "./InViewVideo";
+import { ClickToPlayVideoLeaf, InViewVideoLeaf } from "../lazy-leaves";
 
 interface PageProps {
   readonly locale: Locale;
@@ -47,6 +47,8 @@ export function ProjectsPage({ locale, dict }: PageProps) {
   const project = getFlagship();
   const p = dict.projects;
   const { loop, film, wordmark } = project.media;
+  /* Halqa kadri ikkala oʻlchamda LCP: poster HTML bilan birga yuqori ustuvorlikda soʻraladi. */
+  preload(loop.poster, { as: "image", fetchPriority: "high" });
   const facts: ReadonlyArray<readonly [string, string]> = [
     [p.facts.age, fill(dict.common.age.range, { from: project.age.from, to: project.age.to })],
     [p.facts.format, factValue(project, "format", locale, p.facts.pending)],
@@ -70,13 +72,12 @@ export function ProjectsPage({ locale, dict }: PageProps) {
       >
         <div className="upop-hero-art" data-upop-wordmark="">
           <ViewTransition name={sharedName("project-media", project.key)}>
-            <Image
+            <Picture
               src={wordmark.src}
               alt={t(wordmark.alt, locale)}
               width={wordmark.width}
               height={wordmark.height}
-              sizes="(min-width: 1024px) 25vw, 80vw"
-              priority
+              sizes="(min-width: 1024px) 25vw, 60vw"
               className="upop-wordmark"
             />
           </ViewTransition>
@@ -94,10 +95,11 @@ export function ProjectsPage({ locale, dict }: PageProps) {
             className="upop-stage-art"
           >
             <MediaFrame ratio="16:9" hairline motion={{ mode: "smooth", parallax: true }}>
-              <InViewVideo
+              <InViewVideoLeaf
                 sources={loop.desktop}
                 mobileSources={loop.mobile}
                 poster={loop.poster}
+                priority
                 alt={t(loop.alt, locale)}
                 pauseLabel={dict.common.actions.pause}
                 playLabel={dict.common.actions.play}
@@ -152,7 +154,7 @@ export function ProjectsPage({ locale, dict }: PageProps) {
           </div>
           <div className="upop-film-media" data-grid-item="">
             <MediaFrame ratio="16:9" motion={{ mode: "smooth" }}>
-              <ClickToPlayVideo
+              <ClickToPlayVideoLeaf
                 src={film.src}
                 poster={film.poster}
                 duration={film.duration}

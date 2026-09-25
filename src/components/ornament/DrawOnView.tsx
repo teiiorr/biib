@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 import { useEngineEffect } from "@/components/motion/engine";
 import { EASE } from "@/lib/motion/constants";
 import { doiraStaggerFn, doiraUnit } from "@/lib/motion/doira";
@@ -73,7 +73,7 @@ export function DrawOnView({
   );
 
   return (
-    <div ref={scope} className={cn("contents", className)}>
+    <div ref={scope} className={cx("contents", className)}>
       {children}
     </div>
   );

@@ -17,6 +17,7 @@ export default function AboutMenuPanel({
   dict,
   items,
   active,
+  marks,
   initialOpen,
   focusTrigger,
 }: AboutMenuPanelProps) {
@@ -35,7 +36,7 @@ export default function AboutMenuPanel({
       align="start"
       currentLabel={dict.currentLanguage}
       initialOpen={initialOpen}
-      trigger={<AboutTrigger ref={triggerRef} dict={dict} active={active} />}
+      trigger={<AboutTrigger ref={triggerRef} dict={dict} active={active} marks={marks} />}
     />
   );
 }

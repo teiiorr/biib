@@ -4,7 +4,7 @@ import { useRef } from "react";
 
 import { useLazyOverlay } from "@/components/glass/useLazyOverlay";
 
-import { MenuTrigger, type MenuSheetProps } from "./MenuTrigger";
+import { MenuTrigger, isMenuPage, type MenuSheetProps } from "./MenuTrigger";
 
 const loadPanel = () => import("./MenuSheetPanel");
 
@@ -21,6 +21,7 @@ export function MenuSheet(props: MenuSheetProps) {
       ref={shellRef}
       label={props.dict.menu}
       openLabel={props.dict.openMenu}
+      active={isMenuPage(props.current)}
       aria-expanded={false}
       onPointerEnter={warm}
       onPointerDown={warm}

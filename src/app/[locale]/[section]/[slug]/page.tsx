@@ -6,7 +6,7 @@ import { getArticle, t } from "@/content";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, LOCALES, type Locale } from "@/i18n/locales";
 import { NEWS_SLUGS, isNewsSlug, resolveSection, sectionSegment } from "@/i18n/routes";
-import { buildMetadata } from "@/lib/seo/metadata";
+import { buildMetadata, notFoundMetadata } from "@/lib/seo/metadata";
 
 /* Nomaʼlum segment lokal 404 ni koʻrsatishi uchun (G2): 70 sahifa statik, qolgani notFound(). */
 export const dynamicParams = true;
@@ -24,8 +24,10 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, section, slug } = await params;
-  if (!isLocale(locale)) return {};
-  if (resolveSection(locale, section) !== "news" || !isNewsSlug(slug)) return {};
+  if (!isLocale(locale)) return notFoundMetadata();
+  if (resolveSection(locale, section) !== "news" || !isNewsSlug(slug)) {
+    return notFoundMetadata();
+  }
   const article = getArticle(slug);
   return buildMetadata({
     locale,

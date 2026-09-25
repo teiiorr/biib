@@ -2,6 +2,8 @@ import { Container } from "@/components/layout/Container";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { Heading } from "@/components/ui/Heading";
+import { MonogramTile } from "@/components/ui/MonogramTile";
+import { Picture } from "@/components/ui/Picture";
 import { PortraitFrame } from "@/components/ui/PortraitFrame";
 import { Table } from "@/components/ui/Table";
 import { Text } from "@/components/ui/Text";
@@ -20,6 +22,7 @@ interface PageProps {
 /**
  * Rahbariyat: eng qatʼiy sahifa. Kompyuterda ikki rahbar yonma-yon (har biri 6 ustun: portret 2,
  * matn 4), planshetda bittadan, telefonda kichik portret matn yonida; qabul jadvali, rasmiy pochta.
+ * Surat tasdiqlanmagan rahbarda portret oʻrnida 64 px belgi, matn unga yaqin turadi.
  */
 export function LeadershipPage({ locale, dict }: PageProps) {
   const leaders = getLeadership();
@@ -52,11 +55,25 @@ export function LeadershipPage({ locale, dict }: PageProps) {
                 data-card=""
                 aria-labelledby={`${person.id}-name`}
               >
-                <PortraitFrame
-                  ratio="4:5"
-                  className="leader-portrait"
-                  motion={{ mode: "smooth", index }}
-                />
+                {person.status === "confirmed" && person.photo ? (
+                  <PortraitFrame
+                    ratio="4:5"
+                    className="leader-portrait"
+                    motion={{ mode: "smooth", index }}
+                  >
+                    <Picture
+                      src={person.photo}
+                      alt={name ?? role}
+                      fill
+                      sizes="(min-width: 1024px) 200px, (min-width: 600px) 22vw, 25vw"
+                    />
+                  </PortraitFrame>
+                ) : (
+                  /* Surat kelguncha 64 px belgi: 4:5 boʻsh ramka sahifani boʻsh koʻrsatardi. */
+                  <div className="leader-portrait leader-monogram">
+                    <MonogramTile />
+                  </div>
+                )}
                 <div className="leader-text">
                   <Heading level={2} size="h3" id={`${person.id}-name`} data-card-title="">
                     {name ?? role}
@@ -85,7 +102,7 @@ export function LeadershipPage({ locale, dict }: PageProps) {
                         />
                       ) : (
                         <Text as="p" size="small" tone="ink-3">
-                          {l.receptionPending}
+                          {dict.common.status.awaiting}
                         </Text>
                       )}
                     </div>
@@ -97,7 +114,7 @@ export function LeadershipPage({ locale, dict }: PageProps) {
                         </a>
                       ) : (
                         <Text as="p" size="small" tone="ink-3">
-                          {l.emailPending}
+                          {dict.common.status.awaiting}
                         </Text>
                       )}
                     </div>

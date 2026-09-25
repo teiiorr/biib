@@ -4,7 +4,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { useRef } from "react";
 import type { ReactNode, RefObject } from "react";
 
-import { cn } from "@/lib/cn";
+import { cx } from "@/lib/cx";
 
 import { CloseGlyph } from "./CloseGlyph";
 import { Surface, type SurfacePadding } from "./Surface";
@@ -52,7 +52,7 @@ export function GlassDialog({
             padding={padding}
             text
             tape
-            className={cn("surface-morph glass-dialog z-modal", className)}
+            className={cx("surface-morph glass-dialog z-modal", className)}
           >
             <div className="glass-dialog-head">
               <Dialog.Title className="t-h3 text-material-ink">{title}</Dialog.Title>

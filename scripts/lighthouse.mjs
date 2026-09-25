@@ -3,6 +3,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { gzipSync } from "node:zlib";
 import path from "node:path";
 import lighthouse from "lighthouse";
+import { throttling } from "lighthouse/core/config/constants.js";
 import { launch } from "chrome-launcher";
 
 const BASE_URL = process.env.BASE_URL ?? "http://localhost:3100";
@@ -78,6 +79,9 @@ try {
           form === "mobile"
             ? { mobile: true, width: 412, height: 915, deviceScaleFactor: 2.6, disabled: false }
             : { mobile: false, width: 1440, height: 900, deviceScaleFactor: 1, disabled: false },
+        /* formFactor tarmoq va CPU sekinlashuvini oʻzgartirmaydi: kompyuterga Lighthouse ning rasmiy
+           desktop sozlamasi berilmasa, u telefon 4G va 4× CPU bilan oʻlchanadi. */
+        throttling: form === "mobile" ? throttling.mobileSlow4G : throttling.desktopDense4G,
         throttlingMethod: "simulate",
         onlyCategories: ["performance", "accessibility", "seo", "best-practices"],
       });
