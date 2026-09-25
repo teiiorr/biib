@@ -29,8 +29,7 @@ function findFonts(dirs) {
     for (const entry of readdirSync(dir)) {
       const full = path.join(dir, entry);
       if (statSync(full).isDirectory()) visit(full, depth + 1);
-      // tutuq-* fayllari ataylab ikki belgili (ʻ ʼ tuzatish); oila qamrovi asosiy fayllardan tekshiriladi.
-      else if (FONT_EXT.has(path.extname(entry)) && !entry.startsWith("tutuq-")) files.push(full);
+      else if (FONT_EXT.has(path.extname(entry))) files.push(full);
     }
   };
   for (const dir of dirs) visit(dir, 0);

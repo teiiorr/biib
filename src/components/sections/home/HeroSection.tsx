@@ -24,7 +24,7 @@ const LANDSCAPE_MEDIA = `not (${HERO_PORTRAIT_MEDIA})`;
 
 /**
  * Darvoza: egasining videosi (belgi kadr markazida), nom bir qatorda kadr ostida, missiya va ikki
- * harakat pastda chapda, toʻrda. Poster serverda va LCP; video Atlas badiiy uyasidan boʻsh vaqtda keladi.
+ * harakat pastda chapda, toʻrda. Poster serverda va LCP; video badiiy uyadan boʻsh vaqtda keladi.
  * Kadr ikkala mavzuda ham qorongʻi: ohang doim «dark», matn --hero-ink, ostida lojuvard ostlik.
  */
 export function HeroSection({ locale, dict }: HeroSectionProps) {
@@ -43,13 +43,8 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
     >
       <HeroEnter />
       <div className="home-hero-art">
-        {/* Ohang faqat shu qatlamda: Birlashmada yashirin, sarlavha oynasi qogʻozni oʻqiydi. */}
-        <div
-          className="home-hero-media birlashma:hidden"
-          data-hero-media=""
-          data-tone="dark"
-          aria-hidden="true"
-        >
+        {/* Ohang faqat shu qatlamda: kadr ikkala mavzuda qorongʻi, sarlavha oynasi shuni oʻqiydi. */}
+        <div className="home-hero-media" data-hero-media="" data-tone="dark" aria-hidden="true">
           <picture className="home-hero-picture">
             <source media={HERO_PORTRAIT_MEDIA} srcSet={portrait.poster} type="image/avif" />
             <img
@@ -63,23 +58,19 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
             />
           </picture>
         </div>
-        {/* Birlashmada boʻyash sahifasi interaktiv: uya aria-hidden emas. */}
+        {/* Video tavsifi (aria-label) oʻqilishi uchun uya aria-hidden emas. */}
         <DesignArt
           slot="home-hero"
-          locale={locale}
           meaningful
           className="home-hero-slot"
           copy={{
-            coloring: dict.home.coloring,
-            galleryPending: dict.home.gallery.pending,
-            noteHero: dict.birlashma.note.hero,
             videoAlt: dict.home.hero.videoAlt,
             pauseLabel: dict.common.actions.pause,
             playLabel: dict.common.actions.play,
           }}
         />
       </div>
-      <div className="home-hero-dim birlashma:hidden" data-hero-dim="" aria-hidden="true" />
+      <div className="home-hero-dim" data-hero-dim="" aria-hidden="true" />
       <div className="home-hero-content" data-hero-content="">
         <Container className="home-hero-grid">
           <HeroTitle name={dict.common.brand.name} />
@@ -106,7 +97,7 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
         width={HERO_LOGO_OVERLAY.size}
         height={HERO_LOGO_OVERLAY.size}
         alt=""
-        className="home-hero-logo birlashma:hidden"
+        className="home-hero-logo"
         attrs={{ "data-hero-logo": "" }}
         ariaHidden
       />

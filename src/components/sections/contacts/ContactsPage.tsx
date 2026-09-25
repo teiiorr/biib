@@ -1,7 +1,6 @@
 import { Icon } from "@/components/icons/Icon";
 import type { IconName } from "@/components/icons/paths";
 import { Container } from "@/components/layout/Container";
-import { DesignArt } from "@/components/layout/DesignArt";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/motion/Reveal";
@@ -190,14 +189,7 @@ export function ContactsPage({ locale, dict }: PageProps) {
                   ))}
               </ul>
             </div>
-            {/* Birlashmada otkritka (marka va skotch) bezak sifatida orqada; matn doim DOM da. */}
-            <div className="contact-write paper-look">
-              <DesignArt
-                slot="contacts-band"
-                locale={locale}
-                className="contact-band-art"
-                copy={{ postcardLabel: d.form.postcardLabel }}
-              />
+            <div className="contact-write">
               <Heading level={2} size="h3" id="contacts-form">
                 {formEnabled ? d.form.heading : d.form.fallbackHeading}
               </Heading>

@@ -2,7 +2,6 @@ import { ViewTransition } from "react";
 import { preload } from "react-dom";
 
 import { Container } from "@/components/layout/Container";
-import { DesignArt } from "@/components/layout/DesignArt";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/motion/Reveal";
@@ -39,9 +38,9 @@ function factValue(
 
 /**
  * UPOP TREND sahifasi: sarlavha va logotip, toʻliq kenglikdagi sahna halqasi, matn va faktlar,
- * bosilganda yuklanadigan film, roʻyxatdan oʻtish lentasi (upop.uz). Birlashmada halqa parda ortida.
- * Harakat: halqa yumshoq ochiladi va parallaksda yuradi (boʻlimning bosh mediasi), sarlavhalar
- * soʻzma-soʻz, matn va faktlar doira ritmida; film ramkasi yumshoq ochiladi.
+ * bosilganda yuklanadigan film, roʻyxatdan oʻtish lentasi (upop.uz). Harakat: halqa yumshoq ochiladi
+ * va parallaksda yuradi (boʻlimning bosh mediasi), sarlavhalar soʻzma-soʻz, matn va faktlar doira
+ * ritmida; film ramkasi yumshoq ochiladi.
  */
 export function ProjectsPage({ locale, dict }: PageProps) {
   const project = getFlagship();
@@ -86,26 +85,17 @@ export function ProjectsPage({ locale, dict }: PageProps) {
 
       <Section as="div" rhythm="none" className="upop-stage">
         <Container>
-          <DesignArt
-            slot="project-media"
-            variant="curtain"
-            locale={locale}
-            story={project.story}
-            copy={{ curtainLabel: p.curtainLabel }}
-            className="upop-stage-art"
-          >
-            <MediaFrame ratio="16:9" hairline motion={{ mode: "smooth", parallax: true }}>
-              <InViewVideoLeaf
-                sources={loop.desktop}
-                mobileSources={loop.mobile}
-                poster={loop.poster}
-                priority
-                alt={t(loop.alt, locale)}
-                pauseLabel={dict.common.actions.pause}
-                playLabel={dict.common.actions.play}
-              />
-            </MediaFrame>
-          </DesignArt>
+          <MediaFrame ratio="16:9" hairline motion={{ mode: "smooth", parallax: true }}>
+            <InViewVideoLeaf
+              sources={loop.desktop}
+              mobileSources={loop.mobile}
+              poster={loop.poster}
+              priority
+              alt={t(loop.alt, locale)}
+              pauseLabel={dict.common.actions.pause}
+              playLabel={dict.common.actions.play}
+            />
+          </MediaFrame>
         </Container>
       </Section>
 

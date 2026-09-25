@@ -45,15 +45,5 @@ export const home = {
     heading: "Bolalar galereyasi",
     lead: "Studiyalarda chizilgan ishlar. Ism, yosh va viloyat ota-onaning roziligi bilan koʻrsatiladi.",
     caption: "{name}, {age} yosh, {region}",
-    pending: "Ishlar ota-onalar roziligi bilan yigʻilmoqda",
-  },
-  coloring: {
-    heading: "Boʻyash sahifasi",
-    hint: "Rangni tanlang va rasmning boʻlagiga bosing. Klaviaturada: strelkalar, Enter.",
-    palette: "Boʻyoqlar",
-    region: "{index}-boʻlak",
-    clear: "Tozalash",
-    canvasLabel: "Boʻyash uchun chiziqli rasm",
-    paints: ["Quyosh", "Marjon", "Maysa", "Pushti", "Uzum", "Havorang"],
   },
 };

@@ -33,7 +33,6 @@ export function HomePage({ locale, dict }: HomePageProps) {
           copy={{
             label: dict.home.portal.label,
             statement: dict.home.portal.statement,
-            note: dict.birlashma.note.mission,
           }}
         />
       </HeroScene>

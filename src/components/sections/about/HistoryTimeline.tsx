@@ -16,9 +16,9 @@ interface HistoryTimelineProps {
 }
 
 /**
- * Tarix chizigʻi: Atlasda ingichka oltin chiziq va nuqtalar (kompyuterda gorizontal, toʻrt bosqich toʻrt
- * ustunda; telefonda vertikal), Birlashmada ipga osilgan qogʻozlar. Yopishqoq sahna yoʻq: boʻsh yoʻl
- * qolmaydi. Sana kelmagan bosqichda yil qatori chizilmaydi — izoh boʻlim kirishida bir marta.
+ * Tarix chizigʻi: ingichka oltin chiziq va nuqtalar (kompyuterda gorizontal, toʻrt bosqich toʻrt
+ * ustunda; telefonda vertikal). Yopishqoq sahna yoʻq: boʻsh yoʻl qolmaydi. Sana kelmagan bosqichda
+ * yil qatori chizilmaydi — izoh boʻlim kirishida bir marta.
  */
 export function HistoryTimeline({ items, label }: HistoryTimelineProps) {
   return (

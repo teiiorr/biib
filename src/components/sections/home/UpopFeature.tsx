@@ -1,7 +1,6 @@
 import { ViewTransition } from "react";
 
 import { Container } from "@/components/layout/Container";
-import { DesignArt } from "@/components/layout/DesignArt";
 import { Section } from "@/components/layout/Section";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { Button } from "@/components/ui/Button";
@@ -12,7 +11,6 @@ import { Picture } from "@/components/ui/Picture";
 import { Text } from "@/components/ui/Text";
 import { getFlagship, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { fill } from "@/i18n/format";
 import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
 import { sharedName } from "@/lib/motion/transitions";
@@ -28,15 +26,13 @@ interface UpopFeatureProps {
 /**
  * UPOP TREND: bosh loyiha boʻlimi. Lojuvard maydonda logotip (1–5 ustun), sahna halqasi 16:9
  * (6–12), ostida sarlavha, kirish, uchta dalil va ikki harakat. Telefonda: logotip, video, matn.
- * Maydon lenta: ichki boʻshliq --band-pad, missiya lojuvardidan choksiz davom etadi. Birlashmada
- * halqa afishada. Harakat (upop-scene) UpopMotion da: kompyuterda kadr butun sahnadan oʻz katagiga
+ * Maydon lenta: ichki boʻshliq --band-pad, missiya lojuvardidan choksiz davom etadi. Harakat (upop-scene) UpopMotion da: kompyuterda kadr butun sahnadan oʻz katagiga
  * qoʻnadi, telefonda ketma-ket ochiladi; DOM yakuniy holat.
  */
 export function UpopFeature({ locale, dict }: UpopFeatureProps) {
   const project = getFlagship();
   const u = dict.home.upop;
   const { loop, wordmark } = project.media;
-  const age = fill(dict.projects.ageSticker, { from: project.age.from, to: project.age.to });
 
   return (
     <Section labelledBy="home-upop" tone="dark" rhythm="band" className="upop-feature upop-field">
@@ -56,24 +52,16 @@ export function UpopFeature({ locale, dict }: UpopFeatureProps) {
             </ViewTransition>
           </div>
           <div className="upop-feature-media" data-grid-item="" data-upop-media="">
-            <DesignArt
-              slot="project-media"
-              variant="poster"
-              locale={locale}
-              story={project.story}
-              copy={{ ageSticker: age }}
-            >
-              <MediaFrame ratio="16:9" hairline>
-                <InViewVideoLeaf
-                  sources={loop.desktop}
-                  mobileSources={loop.mobile}
-                  poster={loop.poster}
-                  alt={t(loop.alt, locale)}
-                  pauseLabel={dict.common.actions.pause}
-                  playLabel={dict.common.actions.play}
-                />
-              </MediaFrame>
-            </DesignArt>
+            <MediaFrame ratio="16:9" hairline>
+              <InViewVideoLeaf
+                sources={loop.desktop}
+                mobileSources={loop.mobile}
+                poster={loop.poster}
+                alt={t(loop.alt, locale)}
+                pauseLabel={dict.common.actions.pause}
+                playLabel={dict.common.actions.play}
+              />
+            </MediaFrame>
             <span className="upop-feature-dim" data-upop-dim="" aria-hidden="true" />
           </div>
           <div className="upop-feature-text" data-grid-item="" data-upop-text="">

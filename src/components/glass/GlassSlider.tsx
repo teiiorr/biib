@@ -5,8 +5,6 @@ import { useState } from "react";
 
 import { cx } from "@/lib/cx";
 
-import { MarkerMagnifier } from "./MarkerMagnifier";
-
 export interface GlassSliderProps {
   readonly value: number;
   readonly onValueChange: (value: number) => void;
@@ -71,7 +69,6 @@ export function GlassSlider({
         <span className="glass-slider-cap" aria-hidden="true" />
         <span className="glass-slider-lens" aria-hidden="true">
           <span className="glass-slider-lens-track" />
-          <MarkerMagnifier />
         </span>
       </Slider.Thumb>
     </Slider.Root>

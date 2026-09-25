@@ -7,7 +7,6 @@ import { throttling } from "lighthouse/core/config/constants.js";
 import { launch } from "chrome-launcher";
 
 const BASE_URL = process.env.BASE_URL ?? "http://localhost:3100";
-const DESIGN = process.env.DESIGN === "birlashma" ? "birlashma" : "atlas";
 const OUT = path.resolve(".lighthouse");
 const RESULTS = path.resolve(".verify/results");
 mkdirSync(OUT, { recursive: true });
@@ -69,7 +68,7 @@ const chrome = await launch({ chromeFlags: ["--headless=new", "--no-sandbox"] })
 try {
   for (const [name, route] of PAGE_LIST) {
     for (const form of ["mobile", "desktop"]) {
-      const url = `${BASE_URL}${route}?dizayn=${DESIGN}`;
+      const url = `${BASE_URL}${route}`;
       const result = await lighthouse(url, {
         port: chrome.port,
         output: "html",
@@ -86,11 +85,11 @@ try {
         onlyCategories: ["performance", "accessibility", "seo", "best-practices"],
       });
       if (!result) {
-        push(`lh:${DESIGN}:${name}:${form}`, false, "Lighthouse natija bermadi");
+        push(`lh:${name}:${form}`, false, "Lighthouse natija bermadi");
         continue;
       }
       const lhr = result.lhr;
-      writeFileSync(path.join(OUT, `${DESIGN}-${name}-${form}.html`), String(result.report));
+      writeFileSync(path.join(OUT, `${name}-${form}.html`), String(result.report));
       const cat = (k) => Math.round((lhr.categories[k]?.score ?? 0) * 100);
       const audit = (k) => lhr.audits[k]?.numericValue ?? Infinity;
       const b = BUDGET[form];
@@ -120,33 +119,25 @@ try {
         (i) => i.resourceType === "Font" && i.priority === "High",
       ).length;
       const detail = `perf ${perf} (≥${b.performance}), LCP ${Math.round(lcp)} ms, CLS ${cls.toFixed(3)}, TBT ${Math.round(tbt)} ms, SEO ${seoScore}${noindex ? " (noindex, is-crawlable hisobga olinmadi)" : ""}, A11y ${a11y}, JS ${Math.round(jsBytes / 1024)} KB + ${Math.round(lazyBytes / 1024)} KB kechiktirilgan`;
-      push(`lh:${DESIGN}:${name}:${form}:performance`, perf >= b.performance, detail);
-      push(`lh:${DESIGN}:${name}:${form}:lcp`, lcp <= b.lcp, `${Math.round(lcp)} ms`);
-      push(`lh:${DESIGN}:${name}:${form}:cls`, cls <= b.cls, cls.toFixed(3));
-      push(`lh:${DESIGN}:${name}:${form}:tbt`, tbt <= b.tbt, `${Math.round(tbt)} ms`);
+      push(`lh:${name}:${form}:performance`, perf >= b.performance, detail);
+      push(`lh:${name}:${form}:lcp`, lcp <= b.lcp, `${Math.round(lcp)} ms`);
+      push(`lh:${name}:${form}:cls`, cls <= b.cls, cls.toFixed(3));
+      push(`lh:${name}:${form}:tbt`, tbt <= b.tbt, `${Math.round(tbt)} ms`);
+      push(`lh:${name}:${form}:seo`, seoScore === 100, `${seoScore}${noindex ? " (noindex)" : ""}`);
+      push(`lh:${name}:${form}:a11y`, a11y === 100, String(a11y));
       push(
-        `lh:${DESIGN}:${name}:${form}:seo`,
-        seoScore === 100,
-        `${seoScore}${noindex ? " (noindex)" : ""}`,
-      );
-      push(`lh:${DESIGN}:${name}:${form}:a11y`, a11y === 100, String(a11y));
-      push(
-        `lh:${DESIGN}:${name}:${form}:first-load-js`,
+        `lh:${name}:${form}:first-load-js`,
         jsBytes <= 170 * 1024,
         `${Math.round(jsBytes / 1024)} KB (siqilgan) + ${Math.round(lazyBytes / 1024)} KB kechiktirilgan`,
       );
-      push(
-        `lh:${DESIGN}:${name}:${form}:font-preloads`,
-        preloadFonts <= 4,
-        `${preloadFonts} shrift`,
-      );
+      push(`lh:${name}:${form}:font-preloads`, preloadFonts <= 4, `${preloadFonts} shrift`);
     }
   }
 } finally {
   await chrome.kill();
 }
 
-/* Qahramon video chunki (HeroVideo, data-chunk="hero-video") ≤ 10 KB gzip: faqat Atlasda, boʻsh vaqtda. */
+/* Qahramon video chunki (HeroVideo, data-chunk="hero-video") ≤ 10 KB gzip: boʻsh vaqtda yuklanadi. */
 const chunkDir = path.resolve(".next/static/chunks");
 if (existsSync(chunkDir)) {
   const walk = (dir) =>
@@ -164,8 +155,7 @@ if (existsSync(chunkDir)) {
       `${Math.round(gz / 1024)} KB gzip`,
     );
   }
-  if (!heroChunks.length)
-    push("hero-video-chunk", DESIGN !== "atlas", "hero-video chunk topilmadi");
+  if (!heroChunks.length) push("hero-video-chunk", false, "hero-video chunk topilmadi");
 }
 /* Posterlar (LCP rasmi) ≤ 120 KB AVIF (§17). */
 for (const poster of ["hero-d-poster.avif", "hero-m-poster.avif"]) {
@@ -179,7 +169,5 @@ writeFileSync(
   path.join(RESULTS, "G7-lighthouse.json"),
   JSON.stringify({ gate: "G7", status, generatedAt: new Date().toISOString(), checks }, null, 2),
 );
-console.log(
-  `lighthouse ${DESIGN}: ${status} (${checks.filter((c) => c.status === "fail").length} xato)`,
-);
+console.log(`lighthouse: ${status} (${checks.filter((c) => c.status === "fail").length} xato)`);
 process.exit(status === "pass" ? 0 : 1);

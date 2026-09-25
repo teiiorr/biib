@@ -40,7 +40,6 @@ export const contacts: typeof source = {
     fallbackHeading: "Write on Telegram",
     fallbackText: "The form is not connected yet; you can send the message directly on Telegram.",
     fallbackCta: "Write on Telegram",
-    postcardLabel: "Postcard",
   },
   socials: {
     heading: "Social media",

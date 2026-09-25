@@ -4,7 +4,7 @@ import { ROOT } from "./checks/util.mjs";
 
 const USAGE = `node scripts/verify.mjs --quick | --full | --prod | --tree-hash
   --quick      G0 statik, G3 til, G11 gigiyena (state.json yozilmaydi)
-  --full       yigʻish, 3100 portda ishga tushirish, G0–G11 va G13 ikkala dizayn uchun
+  --full       yigʻish, 3100 portda ishga tushirish, G0–G11 (yagona dizayn: Atlas)
   --prod       G12: ishlab chiqarish manzili boʻyicha tekshiruv
   --tree-hash  daraxt xeshi (faqat xesh chiqadi)`;
 

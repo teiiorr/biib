@@ -3,19 +3,16 @@
 import { useEffect, useRef, useState } from "react";
 
 import { Qalampir } from "@/components/ornament/Qalampir";
-import { DesignArt } from "@/components/layout/DesignArt";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
-import type { Locale } from "@/i18n/locales";
 
 interface ReadingProgressProps {
-  readonly locale: Locale;
   readonly dict: Dictionary["ornament"];
   readonly targetId: string;
 }
 
-/** Oʻqish jarayoni: Atlas — toʻrt qalampir birin-ketin toʻladi; Birlashma — qalam chizigʻi. */
-export function ReadingProgress({ locale, dict, targetId }: ReadingProgressProps) {
+/** Oʻqish jarayoni: toʻrt qalampir birin-ketin toʻladi (11.7). */
+export function ReadingProgress({ dict, targetId }: ReadingProgressProps) {
   const [progress, setProgress] = useState(0);
   const frame = useRef(0);
   useEffect(() => {
@@ -46,20 +43,10 @@ export function ReadingProgress({ locale, dict, targetId }: ReadingProgressProps
   const percent = Math.round(progress * 100);
   return (
     <div className="reading-progress">
-      <div className="birlashma:hidden">
-        <Qalampir
-          progress={progress}
-          label={dict.qalampir}
-          valueText={fill(dict.qalampirValue, { percent })}
-        />
-      </div>
-      <DesignArt
-        slot="news-progress"
-        locale={locale}
+      <Qalampir
         progress={progress}
-        meaningful
-        className="hidden birlashma:block"
-        copy={{ pencilProgress: dict.pencilProgress, qalampirValue: dict.qalampirValue }}
+        label={dict.qalampir}
+        valueText={fill(dict.qalampirValue, { percent })}
       />
     </div>
   );

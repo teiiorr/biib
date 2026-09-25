@@ -7,8 +7,6 @@ export interface MissionCopy {
   readonly label: string;
   /** "{{soʻz}}" belgili jumla: koʻpi bilan uchta zardoʻzi. */
   readonly statement: string;
-  /** Birlashma: hoshiyadagi qoʻlyozma eslatma. */
-  readonly note: string;
 }
 
 interface MissionSectionProps {
@@ -16,29 +14,22 @@ interface MissionSectionProps {
 }
 
 /**
- * Missiya: Atlasda qahramon sahnasining ikkinchi yarmi — yopishqoq, xiralashayotgan kadr ustidan
- * koʻtariladi (lojuvard ostlik bilan); Birlashmada albom varagʻi. Jumla reveal-rise bilan koʻtariladi,
- * belgilangan soʻzlar ostida zardoʻzi koʻrinishga kirganda doira ritmida tikiladi.
+ * Missiya: qahramon sahnasining ikkinchi yarmi — yopishqoq, xiralashayotgan kadr ustidan koʻtariladi
+ * (lojuvard ostlik bilan). Jumla reveal-rise bilan koʻtariladi, belgilangan soʻzlar ostida zardoʻzi
+ * koʻrinishga kirganda doira ritmida tikiladi.
  */
 export function MissionSection({ copy }: MissionSectionProps) {
   return (
     <section
       className="section-pad home-mission"
       data-audit=""
-      data-tone="light"
-      data-tone-atlas="dark"
+      data-tone="dark"
       aria-label={copy.label}
     >
       <Container>
         <Reveal className="home-mission-text">
           <p className="t-display-l home-mission-statement gold-pour">
             <ZardoziText text={copy.statement} lines={2} draw="view" className="mission-words" />
-          </p>
-          <p
-            className="t-note text-ink-3 home-mission-note birlashma:block hidden"
-            aria-hidden="true"
-          >
-            {copy.note}
           </p>
         </Reveal>
       </Container>

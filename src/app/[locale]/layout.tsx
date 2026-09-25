@@ -15,7 +15,7 @@ import { PageTransition } from "@/components/motion/PageTransition";
 import { getContacts } from "@/content";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, LOCALE_META, LOCALES } from "@/i18n/locales";
-import { FONT_CLASS, fontPreloads, heroFontFace } from "@/lib/fonts";
+import { fontPreloads, heroFontFace } from "@/lib/fonts";
 import { JsonLd } from "@/lib/seo/JsonLdScript";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/jsonld";
 import { siteUrl } from "@/lib/site";
@@ -63,14 +63,12 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
     <html
       lang={meta.htmlLang}
       data-orthography={meta.orthography === "2026" ? "2026" : undefined}
-      data-design="atlas"
       data-theme="light"
       data-motion="on"
-      className={FONT_CLASS}
       suppressHydrationWarning
     >
       <head>
-        {/* Mavzu va dizayn sahifa chizilishidan oldin qoʻyiladi, aks holda miltillash koʻrinadi. */}
+        {/* Mavzu sahifa chizilishidan oldin qoʻyiladi, aks holda miltillash koʻrinadi. */}
         <script dangerouslySetInnerHTML={{ __html: APPEARANCE_BOOT_SCRIPT }} />
         <style dangerouslySetInnerHTML={{ __html: heroFontFace(locale) }} />
       </head>
@@ -92,10 +90,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
           id="biib-errors"
           type="application/json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({ ...dict.errors, paints: dict.home.coloring.paints }).replace(
-              /</g,
-              "\\u003c",
-            ),
+            __html: JSON.stringify(dict.errors).replace(/</g, "\\u003c"),
           }}
         />
         <JsonLd

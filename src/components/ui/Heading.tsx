@@ -28,7 +28,7 @@ const SIZE_CLASS: Record<HeadingSize, string> = {
 
 const DEFAULT_SIZE: Record<HeadingLevel, HeadingSize> = { 1: "h1", 2: "h2", 3: "h3", 4: "h4" };
 
-/* Katta sarlavhalar Atlasda oltin quyilishi bilan (motion.css): egasining talabi. */
+/* Katta sarlavhalar oltin quyilishi bilan (motion.css): egasining talabi. */
 const GOLD_SIZES: ReadonlySet<HeadingSize> = new Set(["display-xl", "display-l", "h1", "h2"]);
 
 export function Heading({

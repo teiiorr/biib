@@ -27,11 +27,7 @@ export function useSurfaceTone(ref: RefObject<HTMLElement | null>, enabled = tru
           bestArea = area;
         }
       }
-      // Bitta DOM, ikki dizayn: boʻlim dizaynga xos ohang bersa (data-tone-atlas) u ustun.
-      const design = document.documentElement.getAttribute("data-design");
-      const tone =
-        (design ? best?.getAttribute(`data-tone-${design}`) : null) ??
-        best?.getAttribute("data-tone");
+      const tone = best?.getAttribute("data-tone");
       if (tone === "light" || tone === "dark") element.setAttribute("data-tone", tone);
       else element.removeAttribute("data-tone");
     };
@@ -69,11 +65,6 @@ export function useSurfaceTone(ref: RefObject<HTMLElement | null>, enabled = tru
     };
 
     build();
-    const designWatch = new MutationObserver(apply);
-    designWatch.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-design"],
-    });
     const resize = new ResizeObserver(scheduleBuild);
     resize.observe(element);
     /* Boʻlimlar marshrut almashganda keyin paydo boʻladi: roʻyxat oʻzgargandagina qayta yigʻiladi. */
@@ -94,7 +85,6 @@ export function useSurfaceTone(ref: RefObject<HTMLElement | null>, enabled = tru
     mutations.observe(document.body, { childList: true, subtree: true });
 
     return () => {
-      designWatch.disconnect();
       cancelAnimationFrame(rebuildFrame);
       observer?.disconnect();
       resize.disconnect();

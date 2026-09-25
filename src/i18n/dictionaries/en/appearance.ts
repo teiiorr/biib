@@ -21,12 +21,6 @@ export const appearance: typeof source = {
   soundHint: "A soft doira note when the theme or section changes",
   motion: "Motion",
   motionHint: "Decorative motion; text and page transitions stay",
-  design: "Design",
-  designAtlas: "Atlas",
-  designAtlasHint: "National ornament and glass",
-  designBirlashma: "Birlashma",
-  designBirlashmaHint: "In the spirit of children's creativity",
   valueText: "{value}%",
   reducedTransparency: "Your system reduces transparency, so the sliders are off",
-  previewAlt: "Miniature of the {design} design",
 };

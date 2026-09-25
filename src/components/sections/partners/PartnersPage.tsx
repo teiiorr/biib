@@ -39,7 +39,7 @@ export function PartnersPage({ locale, dict }: PageProps) {
       <Section>
         <Container>
           {partners.length === 0 ? (
-            <div className="empty-state paper-look">
+            <div className="empty-state">
               <GirihStar symmetry={8} size={24} ring={false} className="empty-state-mark" />
               <Text as="p" size="body-l" tone="ink-2" measure>
                 {p.pending}

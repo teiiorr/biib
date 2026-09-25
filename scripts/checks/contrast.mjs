@@ -1,5 +1,5 @@
 import { fileURLToPath } from "node:url";
-import { DESIGN_FILES, parseTokenScopes } from "./tokens.mjs";
+import { THEMES, TOKEN_FILE, parseTokenScopes } from "./tokens.mjs";
 import { fail, pass, warn } from "./util.mjs";
 
 const TEXT_MIN = 4.5;
@@ -68,64 +68,62 @@ function pair(id, fg, bg, min, note) {
 
 export function checkContrast() {
   const checks = [];
-  for (const [design, file] of Object.entries(DESIGN_FILES)) {
-    const scopes = parseTokenScopes(file);
-    for (const theme of ["light", "dark"]) {
-      const tokens = scopes[theme] ?? {};
-      const color = (name) => (tokens[name] ? parseColor(tokens[name]) : null);
-      const prefix = `contrast:${design}:${theme}`;
-      for (const ground of GROUNDS) {
-        for (const token of TEXT_TOKENS)
-          checks.push(pair(`${prefix}:${token}/${ground}`, color(token), color(ground), TEXT_MIN));
-        for (const token of BOUNDARY_TOKENS)
-          checks.push(
-            pair(`${prefix}:${token}/${ground}`, color(token), color(ground), BOUNDARY_MIN),
-          );
-      }
-      checks.push(pair(`${prefix}:on-tint/tint`, color("on-tint"), color("tint"), TEXT_MIN));
-      checks.push(
-        pair(`${prefix}:on-tint/tint-hover`, color("on-tint"), color("tint-hover"), TEXT_MIN),
-      );
+  const scopes = parseTokenScopes(TOKEN_FILE);
+  for (const theme of THEMES) {
+    const tokens = scopes[theme] ?? {};
+    const color = (name) => (tokens[name] ? parseColor(tokens[name]) : null);
+    const prefix = `contrast:${theme}`;
+    for (const ground of GROUNDS) {
+      for (const token of TEXT_TOKENS)
+        checks.push(pair(`${prefix}:${token}/${ground}`, color(token), color(ground), TEXT_MIN));
+      for (const token of BOUNDARY_TOKENS)
+        checks.push(
+          pair(`${prefix}:${token}/${ground}`, color(token), color(ground), BOUNDARY_MIN),
+        );
+    }
+    checks.push(pair(`${prefix}:on-tint/tint`, color("on-tint"), color("tint"), TEXT_MIN));
+    checks.push(
+      pair(`${prefix}:on-tint/tint-hover`, color("on-tint"), color("tint-hover"), TEXT_MIN),
+    );
 
-      const base = color("material-base");
-      const ink = color("material-ink");
-      /* §10.1.3: oyna orqadagi kontentga qarab ohangini almashtiradi, shu sabab ikkinchi ohang ham sinaladi. */
-      const other = scopes[theme === "light" ? "dark" : "light"] ?? {};
-      const otherBase = other["material-base"] ? parseColor(other["material-base"]) : null;
-      const otherInk = other["material-ink"] ? parseColor(other["material-ink"]) : null;
-      for (const [t, d] of CORNERS) {
-        for (const backdrop of BACKDROPS[theme]) {
-          const id = `${prefix}:material:t${t * 100}/d${d * 100}/${backdrop}`;
-          if (!base || !ink) {
-            checks.push(warn(id, "material tokenlari hex emas"));
-            continue;
-          }
-          const alpha = tintText(t, d);
-          const ground = composite(base, parseColor(backdrop), alpha);
-          const own = contrastRatio(ink, ground);
-          if (own >= TEXT_MIN) {
-            checks.push(pass(id, `${own.toFixed(2)} (alfa ${alpha.toFixed(2)})`));
-            continue;
-          }
-          const adaptive =
-            otherBase && otherInk
-              ? contrastRatio(otherInk, composite(otherBase, parseColor(backdrop), alpha))
-              : 0;
-          if (adaptive >= TEXT_MIN)
-            checks.push(
-              warn(
-                id,
-                `oʻz ohangi ${own.toFixed(2)} < ${TEXT_MIN}; data-tone almashsa ${adaptive.toFixed(2)} (alfa ${alpha.toFixed(2)})`,
-              ),
-            );
-          else
-            checks.push(
-              fail(
-                id,
-                `${own.toFixed(2)} < ${TEXT_MIN}, ikkinchi ohang ham ${adaptive.toFixed(2)} (alfa ${alpha.toFixed(2)})`,
-              ),
-            );
+    const base = color("material-base");
+    const ink = color("material-ink");
+    /* §10.1.3: oyna orqadagi kontentga qarab ohangini almashtiradi, shu sabab ikkinchi ohang ham sinaladi. */
+    const other = scopes[theme === "light" ? "dark" : "light"] ?? {};
+    const otherBase = other["material-base"] ? parseColor(other["material-base"]) : null;
+    const otherInk = other["material-ink"] ? parseColor(other["material-ink"]) : null;
+    for (const [t, d] of CORNERS) {
+      for (const backdrop of BACKDROPS[theme]) {
+        const id = `${prefix}:material:t${t * 100}/d${d * 100}/${backdrop}`;
+        if (!base || !ink) {
+          checks.push(warn(id, "material tokenlari hex emas"));
+          continue;
         }
+        const alpha = tintText(t, d);
+        const ground = composite(base, parseColor(backdrop), alpha);
+        const own = contrastRatio(ink, ground);
+        if (own >= TEXT_MIN) {
+          checks.push(pass(id, `${own.toFixed(2)} (alfa ${alpha.toFixed(2)})`));
+          continue;
+        }
+        const adaptive =
+          otherBase && otherInk
+            ? contrastRatio(otherInk, composite(otherBase, parseColor(backdrop), alpha))
+            : 0;
+        if (adaptive >= TEXT_MIN)
+          checks.push(
+            warn(
+              id,
+              `oʻz ohangi ${own.toFixed(2)} < ${TEXT_MIN}; data-tone almashsa ${adaptive.toFixed(2)} (alfa ${alpha.toFixed(2)})`,
+            ),
+          );
+        else
+          checks.push(
+            fail(
+              id,
+              `${own.toFixed(2)} < ${TEXT_MIN}, ikkinchi ohang ham ${adaptive.toFixed(2)} (alfa ${alpha.toFixed(2)})`,
+            ),
+          );
       }
     }
   }

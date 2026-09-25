@@ -1,5 +1,4 @@
 import { Container } from "@/components/layout/Container";
-import { DesignArt } from "@/components/layout/DesignArt";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/motion/Reveal";
@@ -113,13 +112,7 @@ export function AboutPage({ locale, dict }: PageProps) {
           </Reveal>
         </Container>
       </Section>
-      <Section
-        labelledBy="about-history"
-        tone="dark"
-        toneAtlas="light"
-        rhythm="band"
-        className="about-history"
-      >
+      <Section labelledBy="about-history" tone="light" rhythm="band" className="about-history">
         <Container>
           <div className="section-head">
             <SplitLines as="h2" className="t-h2 text-balance text-ink" id="about-history">
@@ -130,7 +123,6 @@ export function AboutPage({ locale, dict }: PageProps) {
             </Text>
           </div>
           <div className="about-timeline-wrap">
-            <DesignArt slot="about-timeline" locale={locale} className="about-timeline-art" />
             <HistoryTimeline items={milestones} label={a.history.heading} />
           </div>
           {/* Taʼsis hujjatlari kelguncha alohida boʻlim ochilmaydi: bitta izoh tarix ostida. */}
@@ -139,14 +131,8 @@ export function AboutPage({ locale, dict }: PageProps) {
           </Text>
         </Container>
       </Section>
-      {/* Atlasda lojuvard UPOP lentasi; Birlashmada qogʻoz — tarix doskasi bilan qoʻshilib ketmaydi. */}
-      <Section
-        labelledBy="about-next"
-        tone="light"
-        toneAtlas="dark"
-        rhythm="band"
-        className="about-next upop-field"
-      >
+      {/* Lojuvard UPOP lentasi: sut-oq tarix sirtidan keyin sahifani yopadi. */}
+      <Section labelledBy="about-next" tone="dark" rhythm="band" className="about-next upop-field">
         <Container grid className="upop-register-grid">
           <div className="upop-register-text" data-grid-item="">
             <Heading level={2} size="h2" id="about-next">

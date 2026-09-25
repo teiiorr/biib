@@ -57,7 +57,7 @@ export function NewsCover({
           data-status={cover.status}
           {...(alt ? { role: "img", "aria-label": alt } : { "aria-hidden": true })}
         >
-          <GirihStar symmetry={8} size={20} ring={false} className="news-cover-mark" />
+          <GirihStar symmetry={8} size={20} ring={false} />
         </div>
       )}
     </MediaFrame>

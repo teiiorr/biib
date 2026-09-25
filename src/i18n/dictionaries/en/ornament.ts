@@ -6,5 +6,4 @@ export const ornament: typeof source = {
   palakGapLabel: "A gap left in the pattern on purpose",
   qalampir: "Reading progress",
   qalampirValue: "{percent}% of the article read",
-  pencilProgress: "Reading progress, pencil line",
 };

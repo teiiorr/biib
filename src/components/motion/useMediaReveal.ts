@@ -12,7 +12,7 @@ import { useMotionPrefs } from "./motion-context";
 export interface MediaRevealOptions {
   /** false: kirish yoʻq (masalan umumiy element bilan kelgan maqola muqovasi). */
   readonly enabled?: boolean;
-  /** abr: chapdan oʻngga olti pogʻonada (ikat registri, Birlashmada «ikkitadan»); smooth: yumshoq. */
+  /** abr: chapdan oʻngga olti pogʻonada (ikat registri); smooth: yumshoq. */
   readonly mode?: "abr" | "smooth";
   readonly delay?: number;
   /** Kirish tugagandagi masshtab: parallaks bor boʻlsa uning asosi (1 + chuqurlik). */

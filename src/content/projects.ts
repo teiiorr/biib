@@ -155,9 +155,5 @@ export const PROJECTS: readonly Project[] = [
         },
       },
     },
-    story: {
-      primary: "art-1",
-      secondary: "art-2",
-    },
   },
 ];

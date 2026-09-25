@@ -46,22 +46,5 @@ export const home: typeof source = {
     heading: "Bolalar galereyasi",
     lead: "Studiyalarda çizilgan işlar. Ism, yoş va viloyat ota-onaning roziligi bilan körsatiladi.",
     caption: "{name}, {age} yoş, {region}",
-    pending: "Işlar ota-onalar roziligi bilan yiğilmoqda",
-  },
-  coloring: {
-    heading: "Böyaş sahifasi",
-    hint: "Rangni tanlang va rasmning bölagiga bosing. Klaviaturada: strelkalar, Enter.",
-    palette: "Böyoqlar",
-    region: "{index}-bölak",
-    clear: "Tozalaş",
-    canvasLabel: "Böyaş uçun çiziqli rasm",
-    paints: [
-      "Quyoş",
-      "Marjon",
-      "Maysa",
-      "Puşti",
-      "Uzum",
-      "Havorang",
-    ],
   },
 };

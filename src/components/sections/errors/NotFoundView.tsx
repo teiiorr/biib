@@ -3,7 +3,6 @@
 import { useParams } from "next/navigation";
 import { useSyncExternalStore } from "react";
 
-import { DesignArt } from "@/components/layout/DesignArt";
 import { ErrorView } from "@/components/layout/ErrorView";
 import { PalakFallback } from "@/components/layout/PalakFallback";
 import { LinkButton } from "@/components/ui/LinkButton";
@@ -13,7 +12,7 @@ import { pathFor } from "@/i18n/routes";
 
 const subscribeNever = (): (() => void) => () => undefined;
 
-/** 404: Atlas — palak medalyoni (boʻshligʻi bilan), Birlashma — chizish varagʻi (DesignArt not-found). */
+/** 404: palak medalyoni (ataylab qoldirilgan boʻshligʻi bilan), sarlavha va ikki havola. */
 export function NotFoundView() {
   const params = useParams<{ locale?: string }>();
   const locale = isLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
@@ -23,15 +22,7 @@ export function NotFoundView() {
     <ErrorView
       title={copy.notFound.title}
       text={copy.notFound.text}
-      art={
-        <DesignArt
-          slot="not-found"
-          locale={locale}
-          meaningful
-          fallback={<PalakFallback />}
-          copy={{ canvas: copy.canvas, paints: copy.paints }}
-        />
-      }
+      art={<PalakFallback />}
       actions={
         <>
           <LinkButton href={pathFor(locale, "home")} variant="primary">

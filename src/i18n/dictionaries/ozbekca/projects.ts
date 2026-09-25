@@ -22,7 +22,4 @@ export const projects: typeof source = {
   upopNote: "Röyxatdan ötiş faqat upop.uz saytida. Bu sayt kastingni ötkazmaydi, faqat u haqida xabar beradi.",
   openExternal: "upop.uz saytiga ötiş",
   mediaPending: "Video taşkilotdan kelgaç şu yerda çiqadi",
-  ageSticker: "{from}–{to} yoş",
-  newSticker: "Yangi",
-  curtainLabel: "Sahna pardasi",
 };

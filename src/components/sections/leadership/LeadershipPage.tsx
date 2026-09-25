@@ -51,7 +51,7 @@ export function LeadershipPage({ locale, dict }: PageProps) {
             return (
               <article
                 key={person.id}
-                className="leader paper-look"
+                className="leader"
                 data-card=""
                 aria-labelledby={`${person.id}-name`}
               >

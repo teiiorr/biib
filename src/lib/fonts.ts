@@ -1,28 +1,10 @@
-import { Nunito, Playpen_Sans } from "next/font/google";
-
 import { LOCALE_META, type Locale } from "@/i18n/locales";
 
 /**
  * Manrope UZ oʻz-oʻzidan xizmat qilinadi (public/fonts, scripts/fonts.mts): next/font til boʻyicha
  * preload qila olmaydi. Toʻplamlar unicode-range bilan boʻlingan, preload faqat shu tilga kerak
- * fayllar uchun, sahifada ≤ 4 (§17). Birlashma shriftlari next/font orqali, preloadsiz.
- */
-const nunito = Nunito({
-  subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
-  variable: "--font-nunito",
-  display: "swap",
-  preload: false,
-});
-const playpen = Playpen_Sans({
-  subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
-  variable: "--font-playpen",
-  display: "swap",
-  preload: false,
-});
-
-export const FONT_CLASS = [nunito, playpen].map((f) => f.variable).join(" ");
-
-/**
+ * fayllar uchun.
+ *
  * Har sahifa: Manrope ning shu tildagi asosiy toʻplami (matn va sarlavha bitta oila).
  * Lotin: latin (ʻ ʼ shu toʻplamda); 2026 imlosi Ş Ğ uchun latin-ext ham.
  * Kirill: cyrillic + (oz: Қ Ғ Ҳ uchun cyrillic-ext; ru: raqam va brend uchun latin).

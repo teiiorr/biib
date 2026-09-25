@@ -39,13 +39,8 @@ export function GallerySection({ locale, dict }: GallerySectionProps) {
           attrs={{ "data-card-group": "" }}
           label={g.heading}
         >
-          {artworks.map((art, i) => (
-            <li
-              key={art.id}
-              className="gallery-item paper-look"
-              data-card=""
-              style={{ "--paper-rotate": `${i % 2 ? 1.5 : -1.5}deg` } as React.CSSProperties}
-            >
+          {artworks.map((art) => (
+            <li key={art.id} className="gallery-item" data-card="">
               <figure>
                 <Picture
                   src={art.src}

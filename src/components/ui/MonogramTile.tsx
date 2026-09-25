@@ -1,8 +1,8 @@
 import { GirihStar } from "@/components/ornament/GirihStar";
 
 /**
- * Tasdiq kutilayotgan odam uchun 64 × 64 belgi: sokin zamin va kichik sakkiz qirrali girih yulduzi
- * (Birlashmada marker yulduzi). Yuz oʻylab topilmaydi, boʻsh 3:4 ramka ham qolmaydi.
+ * Tasdiq kutilayotgan odam uchun 64 × 64 belgi: sokin zamin va kichik sakkiz qirrali girih yulduzi.
+ * Yuz oʻylab topilmaydi, boʻsh 3:4 ramka ham qolmaydi.
  */
 export function MonogramTile() {
   return (

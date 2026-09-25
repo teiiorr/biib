@@ -20,7 +20,7 @@ export const privacy: typeof source = {
       heading: "What is collected",
       paragraphs: [
         "The name, phone or email and message text sent through the contact form. Nothing else: the site has no accounts, comments, cookies or analytics.",
-        "Appearance settings (theme, design, transparency) are kept only in your browser, in localStorage, and are never sent to us.",
+        "Appearance settings (theme, transparency, density) are kept only in your browser, in localStorage, and are never sent to us.",
       ],
     },
     {

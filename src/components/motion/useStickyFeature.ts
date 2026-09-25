@@ -97,9 +97,7 @@ function buildScene(
 ): (() => void) | null {
   const { root, stage, grid, wordmark, media, copy, items, actions, dim, control } = parts;
   if (late && reached(root)) return null;
-  /* Birlashmada kadr qogʻoz afisha ichida (oʻz kompozitsiyasi, kech yuklanadi): sahna faqat Atlasda.
-     Oʻlchamsiz kadr (afisha hali kelmagan) cheksiz «cover» masshtabi berib, sahifa boshini qoplardi. */
-  if (document.documentElement.dataset.design !== "atlas") return null;
+  /* Oʻlchamsiz kadr cheksiz «cover» masshtabi berib, sahifa boshini qoplardi. */
   if (media.offsetWidth === 0 || media.offsetHeight === 0 || wordmark.offsetHeight === 0)
     return null;
   // Sigʻishi sahna holatini yoqmasdan oʻlchanadi: toʻr balandligi sahnaga bogʻliq emas.

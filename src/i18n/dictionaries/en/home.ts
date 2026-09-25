@@ -47,15 +47,5 @@ export const home: typeof source = {
     heading: "Children’s gallery",
     lead: "Work made in the studios. First name, age and region are shown with parental consent.",
     caption: "{name}, age {age}, {region}",
-    pending: "Work is being collected with parental consent",
-  },
-  coloring: {
-    heading: "Colouring page",
-    hint: "Pick a paint and tap a part of the drawing. Keyboard: arrow keys and Enter.",
-    palette: "Paints",
-    region: "Part {index}",
-    clear: "Clear",
-    canvasLabel: "Line drawing to colour in",
-    paints: ["Sun", "Coral", "Grass", "Pink", "Grape", "Azure"],
   },
 };

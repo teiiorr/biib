@@ -3,15 +3,8 @@ export const NAV_FORWARD = "nav-forward";
 export const NAV_BACK = "nav-back";
 export const LOCALE_SWITCH = "locale-switch";
 export const THEME_SWITCH = "theme-switch";
-export const DESIGN_SWITCH = "design-switch";
 
-export const TRANSITION_TYPES = [
-  NAV_FORWARD,
-  NAV_BACK,
-  LOCALE_SWITCH,
-  THEME_SWITCH,
-  DESIGN_SWITCH,
-] as const;
+export const TRANSITION_TYPES = [NAV_FORWARD, NAV_BACK, LOCALE_SWITCH, THEME_SWITCH] as const;
 export type TransitionType = (typeof TRANSITION_TYPES)[number];
 export type NavDirection = typeof NAV_FORWARD | typeof NAV_BACK;
 

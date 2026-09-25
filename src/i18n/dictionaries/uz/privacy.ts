@@ -18,7 +18,7 @@ export const privacy = {
       heading: "Nima yigʻiladi",
       paragraphs: [
         "Aloqa shakli orqali yuborilgan ism, telefon yoki pochta va xabar matni. Boshqa hech narsa: saytda hisob, izoh, cookie va analitika yoʻq.",
-        "Koʻrinish sozlamalari (mavzu, dizayn, shaffoflik) faqat sizning brauzeringizda, localStorage ichida saqlanadi va bizga yuborilmaydi.",
+        "Koʻrinish sozlamalari (mavzu, shaffoflik, zichlik) faqat sizning brauzeringizda, localStorage ichida saqlanadi va bizga yuborilmaydi.",
       ],
     },
     {

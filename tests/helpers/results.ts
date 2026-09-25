@@ -2,7 +2,7 @@ import { mkdirSync } from "node:fs";
 import path from "node:path";
 import type { TestInfo } from "@playwright/test";
 
-export type Gate = "G2" | "G4" | "G5" | "G6" | "G7" | "G8" | "G13";
+export type Gate = "G2" | "G4" | "G5" | "G6" | "G7" | "G8";
 export type CheckStatus = "pass" | "fail" | "skip";
 
 export interface GateCheck {

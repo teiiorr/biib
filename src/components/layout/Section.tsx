@@ -21,8 +21,6 @@ interface SectionProps {
   readonly id?: string;
   /** Oyna shu qiymatni oʻqib ohangini moslaydi (10.1.3). */
   readonly tone?: SectionTone;
-  /** Atlasda ohang boshqacha boʻlsa (masalan Birlashmada doska, Atlasda sut-oq sirt). */
-  readonly toneAtlas?: SectionTone;
   readonly as?: "section" | "div" | "article" | "aside";
   readonly rhythm?: SectionRhythm;
   readonly labelledBy?: string;
@@ -34,7 +32,6 @@ interface SectionProps {
 export function Section({
   id,
   tone,
-  toneAtlas,
   as: Tag = "section",
   rhythm = "section",
   labelledBy,
@@ -45,7 +42,6 @@ export function Section({
     <Tag
       id={id}
       data-tone={tone}
-      data-tone-atlas={toneAtlas}
       data-audit=""
       aria-labelledby={labelledBy}
       className={cn(RHYTHM_CLASS[rhythm], className)}

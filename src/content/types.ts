@@ -79,7 +79,6 @@ export interface Project {
   readonly highlights: Localized<readonly string[]>;
   readonly external: { readonly href: string; readonly label: string };
   readonly media: ProjectMedia;
-  readonly story: ColorStory;
 }
 
 export interface NewsArticle {

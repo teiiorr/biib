@@ -20,7 +20,4 @@ export const projects = {
     "Roʻyxatdan oʻtish faqat upop.uz saytida. Bu sayt kastingni oʻtkazmaydi, faqat u haqida xabar beradi.",
   openExternal: "upop.uz saytiga oʻtish",
   mediaPending: "Video tashkilotdan kelgach shu yerda chiqadi",
-  ageSticker: "{from}–{to} yosh",
-  newSticker: "Yangi",
-  curtainLabel: "Sahna pardasi",
 };

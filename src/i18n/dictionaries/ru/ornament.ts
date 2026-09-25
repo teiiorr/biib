@@ -6,5 +6,4 @@ export const ornament: typeof source = {
   palakGapLabel: "Намеренно оставленный пропуск в узоре",
   qalampir: "Ход чтения",
   qalampirValue: "Прочитано {percent}% статьи",
-  pencilProgress: "Ход чтения, карандашная линия",
 };

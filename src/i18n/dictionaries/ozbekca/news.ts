@@ -14,6 +14,4 @@ export const news: typeof source = {
   draftNote: "Bu matn qoralama: sana va tafsilotlar taşkilot tasdiğidan keyin çiqadi.",
   topic: "Mavzu",
   empty: "Hozirça yangilik yöq.",
-  masthead: "Devoriy gazeta",
-  clippingAlt: "Gazetadan qirqib olingan maqola",
 };

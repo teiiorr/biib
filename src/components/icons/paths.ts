@@ -31,16 +31,11 @@ export const ICON_NAMES = [
   "sliders",
   "sound",
   "motion",
-  "palette",
-  "eraser",
-  "save",
   "home",
   "projects",
   "news",
   "contact",
   "about",
-  "pencil",
-  "star",
 ] as const;
 
 export type IconName = (typeof ICON_NAMES)[number];
@@ -89,10 +84,6 @@ export const ICON_PATHS: Record<IconName, string> = {
     "M4 6 H6 M10 6 H20 M9.5 6 A1.5 1.5 0 1 0 6.5 6 A1.5 1.5 0 1 0 9.5 6 Z M4 12 H14 M18 12 H20 M17.5 12 A1.5 1.5 0 1 0 14.5 12 A1.5 1.5 0 1 0 17.5 12 Z M4 18 H8 M12 18 H20 M11.5 18 A1.5 1.5 0 1 0 8.5 18 A1.5 1.5 0 1 0 11.5 18 Z",
   sound: "M4 9.5 H7.5 L12.5 5.5 V18.5 L7.5 14.5 H4 Z M16 9 Q18 12 16 15 M18.5 6.5 Q22 12 18.5 17.5",
   motion: "M3 15 Q7 5 12 12 Q17 19 21 9 M17.5 8.5 L21 9 L20.5 12.5",
-  palette:
-    "M12 3 A9 9 0 1 0 12 21 Q14.5 21 13.5 18.5 Q13 16.5 15.5 16.5 H17 Q21 16.5 21 12 Q21 3 12 3 Z M8 11.5 L8.2 11.5 M11 7.5 L11.2 7.5 M15.5 8 L15.7 8",
-  eraser: "M14.5 3.5 L20.5 9.5 L11 19 H6.5 L3.5 16 Z M8.5 9.5 L14.5 15.5 M11 19 H20",
-  save: "M5 3 H16 L21 8 V19 Q21 21 19 21 H5 Q3 21 3 19 V5 Q3 3 5 3 Z M7 3 V9 H15 V3 M7 21 V14 H17 V21",
   home: "M3 11 L12 3.5 L21 11 M5 9.5 V20 Q5 21 6 21 H18 Q19 21 19 20 V9.5 M10 21 V14 H14 V21",
   /* Sahna: peshtoq va ikki parda. */
   projects: "M3 4 H21 M4 4 V20 M20 4 V20 M4 4 Q10 7 7.5 20 M20 4 Q14 7 16.5 20 M4 20 H21",
@@ -100,7 +91,4 @@ export const ICON_PATHS: Record<IconName, string> = {
   contact: "M3 9 L12 3.5 L21 9 V19 Q21 20 20 20 H4 Q3 20 3 19 Z M3 9 L12 15 L21 9",
   about:
     "M12 6.5 Q9 4.5 3.5 5 V18 Q9 17.5 12 19.5 Q15 17.5 20.5 18 V5 Q15 4.5 12 6.5 Z M12 6.5 V19.5",
-  pencil:
-    "M4 20 L4.8 16.2 L15.5 5.5 Q16.5 4.5 17.5 5.5 L18.5 6.5 Q19.5 7.5 18.5 8.5 L7.8 19.2 Z M13.5 7.5 L16.5 10.5",
-  star: "M12 3 L14.29 9.44 L21.13 9.63 L15.71 13.81 L17.64 20.37 L12 16.5 L6.36 20.37 L8.29 13.81 L2.87 9.63 L9.71 9.44 Z",
 };

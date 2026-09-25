@@ -4,5 +4,4 @@ export const ornament = {
   palakGapLabel: "Naqshdagi ataylab qoldirilgan boʻshliq",
   qalampir: "Oʻqish jarayoni",
   qalampirValue: "Maqolaning {percent}% oʻqildi",
-  pencilProgress: "Oʻqish jarayoni, qalam chizigʻi",
 };

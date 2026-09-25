@@ -5,7 +5,7 @@ import { PalakFallback } from "@/components/layout/PalakFallback";
 import { getDictionary } from "@/i18n/dictionaries";
 import { LOCALE_META, LOCALES } from "@/i18n/locales";
 import { APPEARANCE_BOOT_SCRIPT } from "@/lib/appearance/boot";
-import { FONT_CLASS, fontPreloads } from "@/lib/fonts";
+import { fontPreloads } from "@/lib/fonts";
 import { pathFor } from "@/i18n/routes";
 import { siteUrl } from "@/lib/site";
 
@@ -24,13 +24,7 @@ export default function GlobalNotFound() {
     preload(href, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
   }
   return (
-    <html
-      lang="uz-Latn"
-      className={FONT_CLASS}
-      data-design="atlas"
-      data-theme="light"
-      suppressHydrationWarning
-    >
+    <html lang="uz-Latn" data-theme="light" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: APPEARANCE_BOOT_SCRIPT }} />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />

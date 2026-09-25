@@ -11,6 +11,4 @@ export const news = {
   draftNote: "Bu matn qoralama: sana va tafsilotlar tashkilot tasdigʻidan keyin chiqadi.",
   topic: "Mavzu",
   empty: "Hozircha yangilik yoʻq.",
-  masthead: "Devoriy gazeta",
-  clippingAlt: "Gazetadan qirqib olingan maqola",
 };

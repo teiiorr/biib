@@ -15,15 +15,4 @@ export const errors = {
     title: "Sahifa topilmadi",
     text: "Bu manzilda sahifa yoʻq. Tilni tanlang:",
   },
-  canvas: {
-    title: "Bu sahifa yoʻq, lekin qogʻoz bor",
-    hint: "Barmoq yoki sichqoncha bilan chizing. Rasm faqat sizning qurilmangizda qoladi.",
-    clear: "Tozalash",
-    save: "Rasmni saqlash",
-    color: "Rang",
-    label: "Chizish maydoni",
-  },
-  crumpled: {
-    alt: "Gʻijimlangan qogʻoz varagʻi",
-  },
 };

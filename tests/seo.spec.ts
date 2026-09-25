@@ -1,10 +1,8 @@
 import { expect, test } from "@playwright/test";
 
-import { designsFromEnv, primeAppearance, settle } from "./helpers/appearance";
+import { primeAppearance, settle } from "./helpers/appearance";
 import { checkId, recordCheck } from "./helpers/results";
 import { allRoutes } from "./helpers/routes";
-
-const design = designsFromEnv()[0] ?? "atlas";
 
 /* G4 (brauzer qismi): bitta h1, canonical, sarlavha darajalari tartibi, JSON-LD parse boʻladi. */
 test.describe("G4 SEO", () => {
@@ -14,7 +12,7 @@ test.describe("G4 SEO", () => {
   );
   for (const route of allRoutes()) {
     test(`${route.path}`, async ({ page }, testInfo) => {
-      await primeAppearance(page, { design, theme: "light" });
+      await primeAppearance(page, { theme: "light" });
       await page.goto(route.path);
       await settle(page);
       const result = await page.evaluate(() => {
@@ -42,7 +40,6 @@ test.describe("G4 SEO", () => {
       const bad: string[] = [];
       if (result.h1 !== 1) bad.push(`h1 soni ${result.h1}`);
       if (!result.canonical.endsWith(route.path)) bad.push(`canonical ${result.canonical}`);
-      if (result.canonical.includes("dizayn=")) bad.push("canonical ichida ?dizayn");
       if (result.skip) bad.push("sarlavha darajasi sakraydi");
       if (result.jsonld.includes(false)) bad.push("JSON-LD buzuq");
       await recordCheck(testInfo, "G4", {

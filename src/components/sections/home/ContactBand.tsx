@@ -1,5 +1,4 @@
 import { Container } from "@/components/layout/Container";
-import { DesignArt } from "@/components/layout/DesignArt";
 import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/motion/Reveal";
 import { Palak } from "@/components/ornament/Palak";
@@ -17,24 +16,18 @@ interface ContactBandProps {
 }
 
 /**
- * Aloqa: Atlasda bitta sokin karta — sarlavha yonida kichik palak (ataylab qoldirilgan boʻshligʻi
- * bilan, 11.5), oʻngda manzil va telefon, pastda ikki harakat. Birlashmada otkritka.
+ * Aloqa: bitta sokin karta — sarlavha yonida kichik palak (ataylab qoldirilgan boʻshligʻi bilan,
+ * 11.5), oʻngda manzil va telefon, pastda ikki harakat.
  */
 export function ContactBand({ locale, dict }: ContactBandProps) {
   const c = getContacts();
   const h = dict.home.contact;
   return (
     <Section labelledBy="home-contact" tone="light" className="contact-band">
-      <Container className="contact-band-grid paper-look">
-        <DesignArt
-          slot="contacts-band"
-          locale={locale}
-          className="contact-band-art"
-          copy={{ postcardLabel: dict.contacts.form.postcardLabel }}
-        />
+      <Container>
         <Reveal className="contact-band-text">
           <div className="contact-band-head">
-            <div className="contact-band-palak birlashma:hidden">
+            <div className="contact-band-palak">
               <Palak
                 size={80}
                 seed="aloqa"

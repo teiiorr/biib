@@ -22,12 +22,6 @@ export const appearance: typeof source = {
   soundHint: "Мавзу ва саҳифа алмашганда енгил доира овози",
   motion: "Ҳаракат",
   motionHint: "Безак ҳаракатлари; матн ва саҳифа ўтишлари сақланади",
-  design: "Дизайн",
-  designAtlas: "Атлас",
-  designAtlasHint: "Миллий нақшлар ва ойна",
-  designBirlashma: "Бирлашма",
-  designBirlashmaHint: "Болалар ижоди руҳида",
   valueText: "{value}%",
   reducedTransparency: "Тизимда шаффофлик камайтирилган, шу сабаб созлагичлар ўчирилган",
-  previewAlt: "{design} дизайнининг кичик намунаси",
 };

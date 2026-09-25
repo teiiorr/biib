@@ -14,9 +14,8 @@ import {
   setAppearance,
   subscribeAppearance,
 } from "./store";
-import { setTheme, switchDesign, type ThemeOrigin } from "./transitions";
-import { DESIGN_QUERY, STORAGE_KEY, isDesign, type Appearance, type Design } from "./types";
-import type { ResolvedTheme, ThemeChoice } from "./types";
+import { setTheme, type ThemeOrigin } from "./transitions";
+import { STORAGE_KEY, type Appearance, type ResolvedTheme, type ThemeChoice } from "./types";
 
 export interface AppearanceValue {
   readonly appearance: Appearance;
@@ -26,7 +25,6 @@ export interface AppearanceValue {
   readonly reducedMotion: boolean;
   readonly set: (patch: Partial<Appearance>) => void;
   readonly setTheme: (next: ThemeChoice, origin?: ThemeOrigin) => void;
-  readonly switchDesign: (next: Design) => void;
   readonly reset: () => void;
 }
 
@@ -50,7 +48,6 @@ function useAppearanceValue(): AppearanceValue {
         setAppearance(patch);
       },
       setTheme,
-      switchDesign,
       reset: () => {
         resetAppearance();
       },
@@ -59,23 +56,10 @@ function useAppearanceValue(): AppearanceValue {
   );
 }
 
-/** ?dizayn= faqat bir marta qoʻllanadi, soʻng URL kanonik holga qaytariladi. */
-function consumeDesignQuery(): void {
-  const url = new URL(window.location.href);
-  const requested = url.searchParams.get(DESIGN_QUERY);
-  if (requested === null) return;
-  if (isDesign(requested) && getAppearanceSnapshot().appearance.design !== requested) {
-    setAppearance({ design: requested });
-  }
-  url.searchParams.delete(DESIGN_QUERY);
-  window.history.replaceState(window.history.state, "", url.toString());
-}
-
 export function AppearanceProvider({ children }: { readonly children: ReactNode }) {
   const value = useAppearanceValue();
 
   useEffect(() => {
-    consumeDesignQuery();
     const media = window.matchMedia(DARK_SCHEME_QUERY);
     media.addEventListener("change", refreshSystemTheme);
     const onStorage = (event: StorageEvent): void => {

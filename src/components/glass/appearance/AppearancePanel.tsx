@@ -1,61 +1,25 @@
 "use client";
 
-import * as RadioGroup from "@radix-ui/react-radio-group";
-
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
 import { useAppearance } from "@/lib/appearance/context";
-import type { Design, ThemeChoice } from "@/lib/appearance/types";
+import type { ThemeChoice } from "@/lib/appearance/types";
 
 import { GlassSlider } from "../GlassSlider";
 import { GlassSwitch } from "../GlassSwitch";
 import { SegmentedControl } from "../SegmentedControl";
-import { DesignPreview } from "./DesignPreview";
 
 export interface AppearancePanelProps {
   readonly dict: Dictionary["appearance"];
 }
 
-const DESIGNS: readonly Design[] = ["atlas", "birlashma"];
-
-/** Koʻrinish paneli: Dizayn, Mavzu, Shaffoflik, Zichlik, Harakat, Ovoz, Asliga qaytarish. */
+/** Koʻrinish paneli: Mavzu, Shaffoflik, Zichlik, Harakat, Ovoz, Asliga qaytarish. */
 export function AppearancePanel({ dict }: AppearancePanelProps) {
-  const { appearance, reducedTransparency, set, setTheme, switchDesign, reset } = useAppearance();
-  const designName = (d: Design) => (d === "atlas" ? dict.designAtlas : dict.designBirlashma);
-  const designHint = (d: Design) =>
-    d === "atlas" ? dict.designAtlasHint : dict.designBirlashmaHint;
+  const { appearance, reducedTransparency, set, setTheme, reset } = useAppearance();
   const valueText = (v: number) => fill(dict.valueText, { value: v });
 
   return (
     <div className="appearance-panel" data-testid="appearance-panel">
-      <fieldset className="appearance-group">
-        <legend className="t-label text-material-ink">{dict.design}</legend>
-        <RadioGroup.Root
-          className="design-cards"
-          value={appearance.design}
-          onValueChange={(v) => switchDesign(v as Design)}
-          aria-label={dict.design}
-        >
-          {DESIGNS.map((d) => (
-            <RadioGroup.Item
-              key={d}
-              value={d}
-              className="design-card"
-              data-testid={`design-${d}`}
-              aria-describedby={`design-hint-${d}`}
-            >
-              <DesignPreview design={d} alt={fill(dict.previewAlt, { design: designName(d) })} />
-              <span className="design-card-text">
-                <span className="t-label text-trim">{designName(d)}</span>
-                <span id={`design-hint-${d}`} className="t-micro design-card-hint">
-                  {designHint(d)}
-                </span>
-              </span>
-            </RadioGroup.Item>
-          ))}
-        </RadioGroup.Root>
-      </fieldset>
-
       <div className="appearance-group">
         <span className="t-label text-material-ink" id="appearance-theme-label">
           {dict.theme.label}

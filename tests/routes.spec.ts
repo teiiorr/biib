@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { designsFromEnv, primeAppearance, settle } from "./helpers/appearance";
+import { primeAppearance, settle } from "./helpers/appearance";
 import { MISSING_SEGMENT, UNKNOWN_LOCALE } from "./helpers/pages";
 import { checkId, recordCheck } from "./helpers/results";
 import {
@@ -12,10 +12,7 @@ import {
   pathFor,
 } from "./helpers/routes";
 
-const designs = designsFromEnv();
-const design = designs[0] ?? "atlas";
-
-/* G2: 70 manzil, toʻgʻri lang, lokal 404, global 404, yoʻnaltirish, til almashtirgich, ?dizayn. */
+/* G2: 70 manzil, toʻgʻri lang, lokal 404, global 404, yoʻnaltirish, til almashtirgich. */
 test.describe("G2 marshrutlar", () => {
   test("70 manzil 200 va toʻgʻri <html lang>", async ({ request }, testInfo) => {
     const routes = allRoutes();
@@ -81,7 +78,7 @@ test.describe("G2 marshrutlar", () => {
   });
 
   test("til almashtirgich sahifa va slugni saqlaydi", async ({ page }, testInfo) => {
-    await primeAppearance(page, { design, theme: "light" });
+    await primeAppearance(page, { theme: "light" });
     const slug = NEWS_SLUGS[0];
     await page.goto(pathFor("uz", "newsItem", slug));
     await settle(page);
@@ -103,15 +100,5 @@ test.describe("G2 marshrutlar", () => {
       detail: bad.join("; "),
     });
     expect(bad).toEqual([]);
-  });
-
-  test("?dizayn= dizaynni qoʻyadi va manzildan olib tashlaydi", async ({ page }, testInfo) => {
-    await page.goto(`${pathFor("uz", "home")}?dizayn=birlashma`);
-    await settle(page);
-    await expect
-      .poll(() => page.evaluate(() => document.documentElement.getAttribute("data-design")))
-      .toBe("birlashma");
-    await expect.poll(() => page.evaluate(() => location.search)).toBe("");
-    await recordCheck(testInfo, "G2", { id: checkId(testInfo, "dizayn-query"), status: "pass" });
   });
 });

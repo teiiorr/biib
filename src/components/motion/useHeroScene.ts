@@ -38,7 +38,7 @@ function visibleBrandMark(): HTMLElement | null {
   return null;
 }
 
-/** CSS dagi sahna uzunligi: 0 boʻlsa sahna yoʻq (kamaytirilgan harakat, past ekran, Birlashma). */
+/** CSS dagi sahna uzunligi: 0 boʻlsa sahna yoʻq (kamaytirilgan harakat, past ekran). */
 function cssSceneLength(wrapper: HTMLElement, fallback: number): number {
   const raw = parseFloat(getComputedStyle(wrapper).getPropertyValue("--hero-scene-length"));
   return Number.isFinite(raw) ? raw : fallback;

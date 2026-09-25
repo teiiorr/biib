@@ -20,7 +20,6 @@ export interface MediaFrameProps {
 
 /**
  * Toʻrtburchak media ramkasi: nisbat qulflangan, 12 px radius, ichidagi media kesiladi.
- * Ikkala dizaynda bitta DOM; Birlashma qogʻoz bosmani CSS bilan beradi (--frame-pad).
  */
 export function MediaFrame({
   ratio = "3:2",

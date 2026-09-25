@@ -6,5 +6,4 @@ export const ornament: typeof source = {
   palakGapLabel: "Нақшдаги атайлаб қолдирилган бўшлиқ",
   qalampir: "Ўқиш жараёни",
   qalampirValue: "Мақоланинг {percent}% ўқилди",
-  pencilProgress: "Ўқиш жараёни, қалам чизиғи",
 };

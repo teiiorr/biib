@@ -1,35 +1,11 @@
 import type { Page } from "@playwright/test";
-import {
-  DESIGNS,
-  normalizeAppearance,
-  STORAGE_KEY,
-  type Appearance,
-  type Design,
-} from "../../src/lib/appearance/types";
+import { STORAGE_KEY, type Appearance } from "../../src/lib/appearance/types";
 
 export type Theme = "light" | "dark";
 export const THEMES: readonly Theme[] = ["light", "dark"];
 export const BASE_URL = process.env.BASE_URL ?? "http://localhost:3100";
 
-export { DESIGNS };
-export type { Design };
-
-/** DESIGN=atlas | birlashma | both (vergul bilan roʻyxat ham boʻladi); sukut boʻyicha ikkalasi. */
-export function designsFromEnv(): readonly Design[] {
-  const raw = (process.env.DESIGN ?? "both").trim().toLowerCase();
-  if (raw === "" || raw === "both" || raw === "all") return DESIGNS;
-  const picked = raw
-    .split(/[,\s]+/)
-    .filter((value): value is Design => (DESIGNS as readonly string[]).includes(value));
-  return picked.length > 0 ? picked : DESIGNS;
-}
-
-export function otherDesign(design: Design): Design {
-  return design === "atlas" ? "birlashma" : "atlas";
-}
-
 export interface StoredAppearance {
-  readonly design: Design;
   readonly theme: Theme;
   readonly transparency?: number;
   readonly density?: number;
@@ -39,7 +15,6 @@ export interface StoredAppearance {
 /** Sahifa skriptlaridan oldin localStorage ga yoziladi: boot skript birinchi chizilishda oʻqiydi. */
 export async function primeAppearance(page: Page, stored: StoredAppearance): Promise<void> {
   const value: Appearance = {
-    design: stored.design,
     theme: stored.theme,
     transparency: stored.transparency ?? 50,
     density: stored.density ?? 50,
@@ -61,20 +36,9 @@ export async function primeAppearance(page: Page, stored: StoredAppearance): Pro
   );
 }
 
-export async function readStoredAppearance(page: Page): Promise<Appearance> {
-  const raw = await page.evaluate((key) => {
-    try {
-      return JSON.parse(localStorage.getItem(key) ?? "{}") as unknown;
-    } catch {
-      return {};
-    }
-  }, STORAGE_KEY);
-  return normalizeAppearance(raw);
-}
-
 /** Boot skript, shriftlar va tarmoq tinchigach davom etadi; video oqimi networkidle ni ushlab qolmasin. */
 export async function settle(page: Page): Promise<void> {
-  await page.waitForSelector("html[data-design]", { state: "attached" });
+  await page.waitForSelector("html[data-theme]", { state: "attached" });
   await page.waitForLoadState("domcontentloaded");
   await page.evaluate(() => document.fonts.ready.then(() => undefined));
   await page.waitForLoadState("networkidle", { timeout: 10_000 }).catch(() => undefined);
@@ -100,16 +64,12 @@ export async function revealAll(page: Page): Promise<void> {
   await page.waitForTimeout(400);
 }
 
-/** Sahifani qayta yuklamay dizayn va mavzuni almashtiradi (CSS tokenlari darhol qoʻllanadi). */
-export async function applyAppearance(page: Page, design: Design, theme: Theme): Promise<void> {
-  await page.evaluate(
-    ([d, t]) => {
-      const html = document.documentElement;
-      html.setAttribute("data-design", d);
-      html.setAttribute("data-theme", t);
-      html.style.colorScheme = t;
-    },
-    [design, theme] as const,
-  );
+/** Sahifani qayta yuklamay mavzuni almashtiradi (CSS tokenlari darhol qoʻllanadi). */
+export async function applyTheme(page: Page, theme: Theme): Promise<void> {
+  await page.evaluate((t) => {
+    const html = document.documentElement;
+    html.setAttribute("data-theme", t);
+    html.style.colorScheme = t;
+  }, theme);
   await page.waitForTimeout(150);
 }

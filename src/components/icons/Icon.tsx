@@ -11,7 +11,7 @@ export interface IconProps {
   readonly className?: string;
 }
 
-/* Ikkala chizma layoutdagi spritdan (IconSprite); faol dizayn data-design orqali birini yashiradi. */
+/* Chizma layoutdagi spritdan (IconSprite): yoʻl maʼlumotlari mijoz JS iga kirmaydi. */
 export function Icon({ name, size = 20, label, className }: IconProps) {
   const meaningful = typeof label === "string" && label.length > 0;
   return (
@@ -27,8 +27,7 @@ export function Icon({ name, size = 20, label, className }: IconProps) {
       data-icon={name}
       {...(meaningful ? { role: "img", "aria-label": label } : { "aria-hidden": true })}
     >
-      <use href={`#i-a-${name}`} strokeWidth={1.75} className="birlashma:hidden" />
-      <use href={`#i-b-${name}`} strokeWidth={2} className="hidden birlashma:block" />
+      <use href={`#i-${name}`} strokeWidth={1.75} />
     </svg>
   );
 }

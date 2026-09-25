@@ -1,6 +1,5 @@
 import { about } from "./about";
 import { appearance } from "./appearance";
-import { birlashma } from "./birlashma";
 import { common } from "./common";
 import { contacts } from "./contacts";
 import { errors } from "./errors";
@@ -31,5 +30,4 @@ export const ozbekca = {
   partners,
   contacts,
   privacy,
-  birlashma,
 };

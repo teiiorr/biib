@@ -25,7 +25,7 @@ export function ExternalLink({
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        "inline-flex items-center gap-1 text-tint underline decoration-1 underline-offset-4 birlashma:font-bold birlashma:no-underline",
+        "inline-flex items-center gap-1 text-tint underline decoration-1 underline-offset-4",
         className,
       )}
     >

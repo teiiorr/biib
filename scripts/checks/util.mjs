@@ -12,7 +12,6 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://biib-chi.v
   /\/$/,
   "",
 );
-export const DESIGNS = ["atlas", "birlashma"];
 export const LOCALES = ["uz", "oz", "ozbekca", "ru", "en"];
 
 let logPath = null;

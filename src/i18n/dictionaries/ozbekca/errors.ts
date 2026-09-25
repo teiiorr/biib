@@ -18,15 +18,4 @@ export const errors: typeof source = {
     title: "Sahifa topilmadi",
     text: "Bu manzilda sahifa yöq. Tilni tanlang:",
   },
-  canvas: {
-    title: "Bu sahifa yöq, lekin qoğoz bor",
-    hint: "Barmoq yoki siçqonça bilan çizing. Rasm faqat sizning qurilmangizda qoladi.",
-    clear: "Tozalaş",
-    save: "Rasmni saqlaş",
-    color: "Rang",
-    label: "Çiziş maydoni",
-  },
-  crumpled: {
-    alt: "Ğijimlangan qoğoz varaği",
-  },
 };

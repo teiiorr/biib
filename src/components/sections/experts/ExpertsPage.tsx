@@ -54,7 +54,7 @@ export function ExpertsPage({ locale, dict }: PageProps) {
                 const field = person.field ? t(person.field, locale) : null;
                 const name = person.name ? t(person.name, locale) : role;
                 return (
-                  <li key={person.id} className="people-card paper-look" data-card="">
+                  <li key={person.id} className="people-card" data-card="">
                     <PortraitFrame
                       ratio="4:5"
                       className="people-portrait"

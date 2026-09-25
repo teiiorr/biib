@@ -14,9 +14,7 @@ interface PageHeroProps {
   readonly lead?: string;
   readonly breadcrumbs?: readonly BreadcrumbItem[];
   readonly breadcrumbsLabel?: string;
-  /** Sarlavha yonidagi dizaynga xos bezak (masalan Birlashma gazeta nomi). */
-  readonly art?: ReactNode;
-  /** Rasmiy sahifalar: sarlavha tinch lojuvard lentada (Birlashmada doska), bezaksiz. */
+  /** Rasmiy sahifalar: sarlavha tinch lojuvard lentada, bezaksiz. */
   readonly band?: boolean;
   readonly titleId?: string;
   readonly className?: string;
@@ -29,7 +27,6 @@ export function PageHero({
   lead,
   breadcrumbs,
   breadcrumbsLabel,
-  art,
   band = false,
   titleId = "page-title",
   className,
@@ -46,8 +43,6 @@ export function PageHero({
         {breadcrumbs && breadcrumbsLabel ? (
           <Breadcrumbs items={breadcrumbs} label={breadcrumbsLabel} />
         ) : null}
-        {/* Bezak toʻr ichida: sahifa chetiga (x = 0) yopishib qolmaydi. */}
-        {art}
         <Heading level={1} size="h1" id={titleId}>
           {title}
         </Heading>

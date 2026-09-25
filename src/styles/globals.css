@@ -1,10 +1,8 @@
 @import "tailwindcss";
 @import "./fonts.css" layer(base);
 @import "./designs/atlas.css";
-@import "./designs/birlashma.css";
 @import "./materials.css";
 @import "./ornament.css";
-@import "./paper.css";
 @import "./transitions.css";
 @import "./appearance-transitions.css";
 @import "./ui.css";
@@ -14,8 +12,6 @@
 @import "./pages.css";
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
-@custom-variant atlas (&:where([data-design="atlas"], [data-design="atlas"] *));
-@custom-variant birlashma (&:where([data-design="birlashma"], [data-design="birlashma"] *));
 @custom-variant motion-off (&:where([data-motion="off"], [data-motion="off"] *));
 
 @theme {
@@ -72,7 +68,6 @@
 
   --font-ui: var(--font-ui);
   --font-display: var(--font-display);
-  --font-note: var(--font-note);
 
   --radius-s: var(--radius-s);
   --radius-m: var(--radius-m);
@@ -83,13 +78,11 @@
   --shadow-raised: var(--shadow-raised);
   --shadow-floating: var(--shadow-floating);
   --shadow-overlay: var(--shadow-overlay);
-  --shadow-contact: var(--shadow-contact);
 
   --ease-out: var(--ease-out);
   --ease-in-out: var(--ease-in-out);
   --ease-ui: var(--ease-ui);
   --ease-reveal: var(--ease-reveal);
-  --ease-pop: var(--ease-pop);
   --ease-spring: var(--spring-glass);
 }
 
@@ -123,7 +116,7 @@
   --gutter: 16px;
   /* Boʻlimlar ORASIDAGI masofa (48/64/96): har boʻlim ikki tomonga yarmini beradi, qoʻshni ikkitasi toʻliq qadam. */
   --section-gap: 48px;
-  /* Rangli lenta (lojuvard, doska, sirt) ichki boʻshligʻi: chekkasidan matngacha. */
+  /* Rangli lenta (lojuvard, sirt) ichki boʻshligʻi: chekkasidan matngacha. */
   --band-pad: 48px;
   /* Sahifa boshi: oyna sarlavhasidan keyin nonushoqqacha. */
   --hero-pad-top: 24px;
@@ -169,15 +162,6 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --dur-ui: 150ms;
-    --dur-panel: 150ms;
-    --dur-reveal: 150ms;
-    --dur-draw: 0ms;
-    --dur-transition: 150ms;
-  }
-}
 :root[data-motion="off"] {
   --dur-reveal: 150ms;
   --dur-draw: 0ms;
@@ -344,13 +328,6 @@
   line-height: var(--lh-micro);
   letter-spacing: var(--ls-micro);
   font-weight: var(--fw-micro);
-}
-@utility t-note {
-  font-family: var(--font-note);
-  font-size: var(--fs-note);
-  line-height: var(--lh-note);
-  letter-spacing: var(--ls-note);
-  font-weight: var(--fw-note);
 }
 /* Tugma, yorliq va bir qatorli sarlavhalar: matn cap-height va baseline boʻyicha tekislanadi. */
 @utility text-trim {

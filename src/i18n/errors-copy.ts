@@ -1,15 +1,12 @@
 import type { Dictionary } from "./dictionaries/types";
 
-export type ErrorsCopy = Dictionary["errors"] & { readonly paints: readonly string[] };
+export type ErrorsCopy = Dictionary["errors"];
 
 /* Layout sahifaga qoʻygan JSON (script#biib-errors): mijoz komponentlari beshta til lugʻatini olib yurmaydi. */
 const EMPTY: ErrorsCopy = {
   notFound: { title: "", text: "", home: "", news: "" },
   error: { title: "", text: "", retry: "", home: "" },
   global: { title: "", text: "" },
-  canvas: { title: "", hint: "", clear: "", save: "", color: "", label: "" },
-  crumpled: { alt: "" },
-  paints: [],
 };
 
 /* useSyncExternalStore snapshot i barqaror boʻlishi shart: bir xil JSON uchun bir xil obyekt (aks holda cheksiz render). */

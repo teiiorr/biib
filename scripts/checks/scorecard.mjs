@@ -2,7 +2,9 @@ import { existsSync, statSync } from "node:fs";
 import path from "node:path";
 import { ROOT, fail, pass, readText } from "./util.mjs";
 
-const SCORE_KEYS = ["atlas", "birlashma", "shared"];
+/* Atlas dizayni: C1–C12 (§21.6). */
+const SCORE_KEYS = ["atlas"];
+const CRITERIA = Array.from({ length: 12 }, (_, i) => `C${i + 1}`);
 const FINDING_KEYS = ["blocker", "major", "minor", "ideas"];
 
 function parseScalar(raw) {
@@ -76,6 +78,21 @@ export function runScorecard(ctx) {
   const missingGroups = SCORE_KEYS.filter((g) => !front[g] || typeof front[g] !== "object");
   if (missingGroups.length)
     checks.push(fail("scorecard:groups", `yoʻq: ${missingGroups.join(", ")}`));
+  /* SCORE_KEYS dan tashqaridagi baho guruhi hisobga olinmaydi, shu sabab u jimgina qolib ketmasin. */
+  const staleGroups = Object.entries(front).filter(
+    ([key, value]) =>
+      !SCORE_KEYS.includes(key) &&
+      value &&
+      typeof value === "object" &&
+      Object.keys(value).some((k) => /^C\d+$/.test(k)),
+  );
+  if (staleGroups.length)
+    checks.push(
+      fail(
+        "scorecard:stale-groups",
+        `ortiqcha baho guruhi: ${staleGroups.map(([key]) => key).join(", ")}`,
+      ),
+    );
   if (nonNumeric.length)
     checks.push(fail("scorecard:numeric", nonNumeric.map(([k, v]) => `${k}=${v}`).join(", ")));
   else checks.push(pass("scorecard:numeric", `${Object.keys(scores).length} baho`));
@@ -91,12 +108,16 @@ export function runScorecard(ctx) {
     if (typeof value === "number" && value < 10)
       checks.push(fail(`scorecard:${key}`, `${value} < 10`));
   }
-  const expectedTotal = 25;
-  if (Object.keys(scores).length !== expectedTotal)
+  const expected = SCORE_KEYS.flatMap((group) => CRITERIA.map((c) => `${group}.${c}`));
+  const missingScores = expected.filter((key) => !(key in scores));
+  const extraScores = Object.keys(scores).filter((key) => !expected.includes(key));
+  if (missingScores.length || extraScores.length)
     checks.push(
       fail(
         "scorecard:count",
-        `${Object.keys(scores).length} baho, ${expectedTotal} kerak (atlas C1–C12, birlashma C1–C12, shared C13)`,
+        `${Object.keys(scores).length} baho, ${expected.length} kerak (atlas C1–C12)` +
+          (missingScores.length ? `; yoʻq: ${missingScores.join(", ")}` : "") +
+          (extraScores.length ? `; ortiqcha: ${extraScores.join(", ")}` : ""),
       ),
     );
   for (const rel of evidence) {

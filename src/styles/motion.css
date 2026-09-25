@@ -155,7 +155,7 @@
 }
 
 /* ---------- Oltin quyilishi (egasining talabi) ----------
-   Katta sarlavhalar Atlasda oltin bilan toʻladi: oltin harflarga pastdan yuqoriga quyiladi. Tinch holatda
+   Katta sarlavhalar oltin bilan toʻladi: oltin harflarga pastdan yuqoriga quyiladi. Tinch holatda
    harf siyohning 22 % i, quyilish sarlavha koʻrinishga kirganda skroll bilan (view timeline), bosh sahifa
    nomida esa yuklanganda. Harakat oʻchiq yoki qoʻllanmasa — darhol toʻliq oltin. Oltin metall: gradient
    faqat shu material uchun (Art. V.6). Yorugʻ fonda toʻq oltin (≥ 3.5:1), qorongʻi fonda yorqin oltin. */
@@ -164,20 +164,20 @@
   inherits: true;
   initial-value: 100%;
 }
-:root[data-design="atlas"] {
+:root {
   --pour-gold-lo: #6b4f14;
   --pour-gold-mid: #8a6a22;
   --pour-gold-hi: #a07c25;
 }
-:root[data-design="atlas"][data-theme="dark"],
-:root[data-design="atlas"] :is([data-tone="dark"], .home-hero, .upop-field),
-:root[data-design="atlas"] .home-hero-scene .home-mission {
+:root[data-theme="dark"],
+:root :is([data-tone="dark"], .home-hero, .upop-field),
+:root .home-hero-scene .home-mission {
   --pour-gold-lo: #b8923a;
   --pour-gold-mid: #d9b75a;
   --pour-gold-hi: #f3dc93;
 }
-:root[data-design="atlas"] .gold-pour,
-:root[data-design="atlas"] .gold-pour :is(.split-line, .split-word, .hero-word-in, .zardozi-word) {
+:root .gold-pour,
+:root .gold-pour :is(.split-line, .split-word, .hero-word-in, .zardozi-word) {
   background-image:
     linear-gradient(
       0deg,
@@ -204,11 +204,11 @@
   color: transparent;
 }
 /* Ichki boʻlaklar oʻz foni bilan: ota fon ular ostida ikki marta chizilmasin. */
-:root[data-design="atlas"] .gold-pour:has(.split-line, .hero-word-in) {
+:root .gold-pour:has(.split-line, .hero-word-in) {
   background-image: none;
 }
 /* Zardoʻzi iplari matn rangida chiziladi: oltin sarlavhada ular aniq oltin. */
-:root[data-design="atlas"] .gold-pour .zardozi-underline {
+:root .gold-pour .zardozi-underline {
   color: var(--pour-gold-mid);
 }
 @keyframes gold-pour {
@@ -221,7 +221,7 @@
 }
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    :root[data-design="atlas"]:not([data-motion="off"]) .gold-pour:not(.home-hero-title) {
+    :root:not([data-motion="off"]) .gold-pour:not(.home-hero-title) {
       animation: gold-pour linear both;
       animation-timeline: view();
       animation-range: entry 10% cover 45%;
@@ -229,7 +229,7 @@
   }
   /* Bosh sahifa nomi: soʻzlar koʻtarilgach oltin quyiladi (hero-enter ritmida). Mijoz navigatsiyasida
      (data-enter="skip") kirish yoʻq: nom darhol toʻliq oltin. */
-  :root[data-design="atlas"]:not([data-motion="off"])
+  :root:not([data-motion="off"])
     .home-hero:not([data-enter="skip"])
     .home-hero-title
     .hero-word-in {
@@ -242,8 +242,8 @@
   }
 }
 @media (forced-colors: active) {
-  :root[data-design="atlas"] .gold-pour,
-  :root[data-design="atlas"] .gold-pour * {
+  :root .gold-pour,
+  :root .gold-pour * {
     background: none;
     -webkit-text-fill-color: currentColor;
     color: CanvasText;

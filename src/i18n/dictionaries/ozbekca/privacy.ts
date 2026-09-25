@@ -21,7 +21,7 @@ export const privacy: typeof source = {
       heading: "Nima yiğiladi",
       paragraphs: [
         "Aloqa şakli orqali yuborilgan ism, telefon yoki poçta va xabar matni. Boşqa heç narsa: saytda hisob, izoh, cookie va analitika yöq.",
-        "Köriniş sozlamalari (mavzu, dizayn, şaffoflik) faqat sizning brauzeringizda, localStorage içida saqlanadi va bizga yuborilmaydi.",
+        "Köriniş sozlamalari (mavzu, şaffoflik, ziçlik) faqat sizning brauzeringizda, localStorage içida saqlanadi va bizga yuborilmaydi.",
       ],
     },
     {

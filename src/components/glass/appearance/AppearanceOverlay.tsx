@@ -1,10 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import { Button } from "@/components/ui/Button";
-import { prefetchDesign } from "@/designs/registry";
-import { useAppearance } from "@/lib/appearance/context";
 import { useIsDesktop } from "@/lib/appearance/media";
 
 import { GlassPopover } from "../GlassPopover";
@@ -28,11 +26,6 @@ export default function AppearanceOverlay({
   const triggerRef = useRef<HTMLElement | null>(null);
   useFocusTrigger(triggerRef, focusTrigger && !initialOpen);
   const desktop = useIsDesktop();
-  const { appearance } = useAppearance();
-
-  useEffect(() => {
-    if (open) prefetchDesign(appearance.design === "atlas" ? "birlashma" : "atlas");
-  }, [open, appearance.design]);
 
   const trigger = (
     <Button

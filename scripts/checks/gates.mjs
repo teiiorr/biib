@@ -6,17 +6,15 @@ import { runBuild } from "./build.mjs";
 import { writeChecklist } from "./checklist.mjs";
 import { runHygiene } from "./hygiene.mjs";
 import { runLanguage } from "./language.mjs";
-import { runForDesigns, runScript, runSpec } from "./playwright.mjs";
+import { runScript, runSpec } from "./playwright.mjs";
 import { runProdSmoke } from "./prod.mjs";
 import { runScorecard } from "./scorecard.mjs";
 import { runSeo } from "./seo.mjs";
 import { assertPortsFree, startServer, stopServer } from "./server.mjs";
 import { buildState, writeState } from "./state.mjs";
 import { runStatic } from "./static.mjs";
-import { checkTokenParity } from "./tokens.mjs";
 import { computeTreeHash } from "./tree-hash.mjs";
 import {
-  DESIGNS,
   RESULTS_DIR,
   enableRunLog,
   fail,
@@ -41,9 +39,8 @@ const NAMES = {
   G10: "Koʻrik",
   G11: "Gigiyena",
   G12: "Ishlab chiqarish",
-  G13: "Dizayn almashuvi",
 };
-const SERVER_GATES = ["G2", "G4", "G5", "G6", "G7", "G8", "G9", "G13"];
+const SERVER_GATES = ["G2", "G4", "G5", "G6", "G7", "G8", "G9"];
 
 function createContext(mode) {
   const { waivers, errors } = loadWaivers();
@@ -127,7 +124,7 @@ export async function runProd() {
   return ok;
 }
 
-const spec = (gate, file) => () => runForDesigns(DESIGNS, (design) => runSpec(gate, file, design));
+const spec = (gate, file) => () => runSpec(gate, file);
 
 async function runServerGates(ctx) {
   await runGate(ctx, "G2", spec("G2", "tests/routes.spec.ts"));
@@ -137,21 +134,13 @@ async function runServerGates(ctx) {
   ]);
   await runGate(ctx, "G5", spec("G5", "tests/layout.spec.ts"));
   await runGate(ctx, "G6", spec("G6", "tests/a11y.spec.ts"));
-  await runGate(ctx, "G7", () =>
-    runForDesigns(DESIGNS, async (design) => [
-      ...(await runSpec("G7", "tests/perf.spec.ts", design)),
-      ...(await runScript("G7", "scripts/lighthouse.mjs", design, "G7-lighthouse")),
-    ]),
-  );
+  await runGate(ctx, "G7", async () => [
+    ...(await runSpec("G7", "tests/perf.spec.ts")),
+    ...(await runScript("G7", "scripts/lighthouse.mjs", "G7-lighthouse")),
+  ]);
   await runGate(ctx, "G8", spec("G8", "tests/visual.spec.ts"));
   await runGate(ctx, "G9", () => [...scanAntiSlop(), writeChecklist("full")]);
-  await runGate(ctx, "G13", async () => [
-    ...checkTokenParity(),
-    ...(await spec("G13", "tests/switch.spec.ts")()),
-  ]);
-  ctx.shots = await runForDesigns(DESIGNS, (design) =>
-    runScript("G10", "scripts/shots.mjs", design),
-  );
+  ctx.shots = await runScript("G10", "scripts/shots.mjs");
 }
 
 export async function runFull() {

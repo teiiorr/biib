@@ -19,12 +19,6 @@ export const appearance = {
   soundHint: "Mavzu va sahifa almashganda yengil doira ovozi",
   motion: "Harakat",
   motionHint: "Bezak harakatlari; matn va sahifa oʻtishlari saqlanadi",
-  design: "Dizayn",
-  designAtlas: "Atlas",
-  designAtlasHint: "Milliy naqshlar va oyna",
-  designBirlashma: "Birlashma",
-  designBirlashmaHint: "Bolalar ijodi ruhida",
   valueText: "{value}%",
   reducedTransparency: "Tizimda shaffoflik kamaytirilgan, shu sabab sozlagichlar oʻchirilgan",
-  previewAlt: "{design} dizaynining kichik namunasi",
 };

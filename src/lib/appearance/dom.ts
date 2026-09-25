@@ -1,7 +1,6 @@
 import {
   DEFAULT_APPEARANCE,
   STORAGE_KEY,
-  isDesign,
   isThemeChoice,
   normalizeAppearance,
   type Appearance,
@@ -49,12 +48,10 @@ export function readAppearanceFromDocument(): Appearance {
   if (typeof document === "undefined") return DEFAULT_APPEARANCE;
   const html = document.documentElement;
   const stored = readStorage();
-  const design = html.getAttribute("data-design");
   const theme = html.getAttribute("data-theme-choice");
   const motion = html.getAttribute("data-motion");
   const sound = html.getAttribute("data-sound");
   return {
-    design: isDesign(design) ? design : stored.design,
     theme: isThemeChoice(theme) ? theme : stored.theme,
     transparency: percentFromVariable(html.style.getPropertyValue("--g-t"), stored.transparency),
     density: percentFromVariable(html.style.getPropertyValue("--g-d"), stored.density),
@@ -66,7 +63,6 @@ export function readAppearanceFromDocument(): Appearance {
 export function applyAppearance(appearance: Appearance, resolved: ResolvedTheme): void {
   if (typeof document === "undefined") return;
   const html = document.documentElement;
-  html.setAttribute("data-design", appearance.design);
   html.setAttribute("data-theme", resolved);
   html.setAttribute("data-theme-choice", appearance.theme);
   html.setAttribute("data-motion", appearance.motion ? "on" : "off");

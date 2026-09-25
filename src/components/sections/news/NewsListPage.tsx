@@ -1,7 +1,6 @@
 import { ViewTransition } from "react";
 
 import { Container } from "@/components/layout/Container";
-import { DesignArt } from "@/components/layout/DesignArt";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { TransitionLink } from "@/components/motion/TransitionLink";
@@ -35,14 +34,6 @@ export function NewsListPage({ locale, dict }: PageProps) {
       <PageHero
         title={n.title}
         lead={n.lead}
-        art={
-          <DesignArt
-            slot="news-header"
-            locale={locale}
-            className="news-header-art"
-            copy={{ masthead: dict.news.masthead }}
-          />
-        }
         breadcrumbs={[
           { href: pathFor(locale, "home"), label: dict.nav.home },
           { href: pathFor(locale, "news"), label: dict.nav.news, current: true },
@@ -57,7 +48,7 @@ export function NewsListPage({ locale, dict }: PageProps) {
             </Text>
           ) : (
             <div className="news-grid" data-card-group="">
-              <article className="news-grid-lead paper-look" data-card="">
+              <article className="news-grid-lead" data-card="">
                 <TransitionLink
                   href={pathFor(locale, "newsItem", lead.slug)}
                   className="news-cover-link"
@@ -92,7 +83,7 @@ export function NewsListPage({ locale, dict }: PageProps) {
                 </div>
               </article>
               {rest.map((item, index) => (
-                <article key={item.slug} className="news-grid-item paper-look" data-card="">
+                <article key={item.slug} className="news-grid-item" data-card="">
                   <TransitionLink
                     href={pathFor(locale, "newsItem", item.slug)}
                     className="news-cover-link"

@@ -16,17 +16,15 @@ async function load(file: string): Promise<ArrayBuffer> {
 /**
  * Satori uchun kirillcha glifli TTF fayllar aniq beriladi (§17 SEO).
  * Oʻzgaruvchan shriftlarni Satori oʻqiy olmaydi: fontTools instancer bilan statik nusxalar
- * (Manrope UZ 700 va 400, Nunito 700) yonida saqlanadi; ʻ ʼ Қ Ғ Ҳ Manrope UZ da bor.
+ * (Manrope UZ 700 va 400) yonida saqlanadi; ʻ ʼ Қ Ғ Ҳ Manrope UZ da bor.
  */
 export async function loadOgFonts(): Promise<OgFont[]> {
-  const [manropeBold, manrope, nunito] = await Promise.all([
+  const [manropeBold, manrope] = await Promise.all([
     load("Manrope-700.ttf"),
     load("Manrope-400.ttf"),
-    load("Nunito-700.ttf"),
   ]);
   return [
     { name: "Manrope", data: manropeBold, weight: 700, style: "normal" },
     { name: "Manrope", data: manrope, weight: 400, style: "normal" },
-    { name: "Nunito", data: nunito, weight: 700, style: "normal" },
   ];
 }

@@ -22,7 +22,6 @@ export interface GlassPopoverProps {
   readonly align?: "start" | "center" | "end";
   readonly sideOffset?: number;
   readonly padding?: SurfacePadding;
-  readonly tape?: boolean;
   readonly className?: string;
   readonly children: ReactNode;
 }
@@ -38,7 +37,6 @@ export function GlassPopover({
   align = "end",
   sideOffset = 8,
   padding = 16,
-  tape = true,
   className,
   children,
 }: GlassPopoverProps) {
@@ -63,7 +61,6 @@ export function GlassPopover({
             radius="panel"
             padding={padding}
             text
-            tape={tape}
             className={cx("surface-morph glass-popover z-overlay", className)}
           >
             {children}

@@ -22,7 +22,4 @@ export const projects: typeof source = {
     "Регистрация только на сайте upop.uz. Этот сайт кастинг не проводит, а лишь рассказывает о нём.",
   openExternal: "Перейти на upop.uz",
   mediaPending: "Видео появится здесь, когда его передаст объединение",
-  ageSticker: "{from}–{to} лет",
-  newSticker: "Новое",
-  curtainLabel: "Театральный занавес",
 };

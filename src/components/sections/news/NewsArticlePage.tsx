@@ -128,7 +128,7 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
             className="col-span-4 md:col-span-8 lg:col-span-2 lg:col-start-11 article-aside"
             data-grid-item=""
           >
-            <ReadingProgress locale={locale} dict={dict.ornament} targetId="article-body" />
+            <ReadingProgress dict={dict.ornament} targetId="article-body" />
           </aside>
         </Container>
       </Section>

@@ -54,7 +54,6 @@ export function GlassSheet({
             radius="sheet"
             padding={padding}
             text
-            deckle
             className={cx("surface-morph glass-sheet z-modal safe-bottom", className)}
             data-testid={testId}
           >

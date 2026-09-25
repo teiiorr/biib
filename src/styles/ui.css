@@ -1,5 +1,5 @@
 @layer components {
-  /* UI primitivlari: boshqaruv oʻlchamlari, zardoʻzi ostchiziq, qogʻoz tugma, stikerlar, prose. */
+  /* UI primitivlari: boshqaruv oʻlchamlari, zardoʻzi ostchiziq, prose. */
 
   :root {
     --control-s: 40px;
@@ -9,13 +9,9 @@
     --icon-m: 20px;
     --icon-l: 24px;
     --hit-min: 44px;
-    --hit-kid: 64px;
     --input-h: 48px;
     /* Oʻchirilgan boshqaruv chegarasi 3:1 ni saqlaydi. */
     --ring-boundary: inset 0 0 0 1px var(--line-strong);
-    /* Birlashma: bosilgan qogʻoz tagligi, 2 px toʻqroq pastki qirra. */
-    --shadow-paper-edge: 0 2px 0 var(--tint-hover);
-    --shadow-paper-edge-pressed: 0 0 0 var(--tint-hover);
   }
 
   /* ---------- Tugma ---------- */
@@ -40,11 +36,6 @@
     --btn-h: var(--control-l);
     --btn-px: 28px;
   }
-  .ui-button[data-size="kid"] {
-    --btn-h: var(--control-l);
-    --btn-px: 28px;
-    --hit: var(--hit-kid);
-  }
   /* Belgi tomonida gorizontal boʻshliq 4 px kam. */
   .ui-button[data-icon="start"] {
     padding-inline-start: calc(var(--btn-px) - 4px);
@@ -57,13 +48,11 @@
     padding-inline: 0;
   }
   /* Konsentrik: 56 px oyna tugmasi kapsula emas, panel radiusidan kelib chiqadi. */
-  .ui-button[data-variant="glass"][data-size="56"],
-  .ui-button[data-variant="glass"][data-size="kid"] {
+  .ui-button[data-variant="glass"][data-size="56"] {
     border-radius: min(var(--radius-control), var(--radius-panel));
   }
   /* Koʻrinish 44 px dan kichik boʻlsa, sezish maydoni psevdoelement bilan toʻldiriladi. */
-  .ui-button[data-size="40"]::after,
-  .ui-button[data-size="kid"]::after {
+  .ui-button[data-size="40"]::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -199,21 +188,6 @@
     cursor: progress;
   }
 
-  /* Birlashma: bosilgan qogʻoz. Bosishda 2 px choʻkadi, qoʻyib yuborilganda ease-pop. */
-  [data-design="birlashma"] .ui-button[data-variant="primary"] {
-    box-shadow: var(--shadow-paper-edge);
-    transition:
-      scale 200ms var(--ease-ui),
-      translate 300ms var(--ease-pop);
-  }
-  /* Choʻkish translate da: magnit siljishi (--mag-*) ustiga 2 px qoʻshiladi, bir-birini bekor qilmaydi. */
-  [data-design="birlashma"] .ui-button[data-variant="primary"]:active:not([aria-disabled="true"]) {
-    scale: 1;
-    translate: var(--mag-x, 0px) calc(var(--mag-y, 0px) + 2px);
-    box-shadow: var(--shadow-paper-edge-pressed);
-    transition-timing-function: var(--ease-ui);
-  }
-
   .ui-spinner {
     animation: ui-spin 900ms linear infinite;
   }
@@ -251,112 +225,6 @@
   .ui-tag[data-tone="art-7"] {
     background: color-mix(in oklab, var(--art-7) 18%, transparent);
     color: var(--art-7-text);
-  }
-
-  /* ---------- Stiker ---------- */
-  .ui-sticker {
-    --sticker-rotate: 0deg;
-    --sticker-paint: var(--art-2);
-    --sticker-ink: var(--art-2-text);
-    position: relative;
-    display: inline-block;
-    vertical-align: middle;
-  }
-  .ui-sticker-paper {
-    position: relative;
-    display: grid;
-    place-items: center;
-    padding: 4px;
-    border-radius: var(--radius-s);
-    background: var(--surface-2);
-    color: var(--sticker-ink);
-    transition: transform var(--dur-ui) var(--ease-ui);
-  }
-  .ui-sticker-fill {
-    position: absolute;
-    inset: 0;
-    border-radius: var(--radius-s);
-    background: color-mix(in oklab, var(--sticker-paint) 22%, var(--surface-2));
-  }
-  .ui-sticker-label {
-    position: relative;
-    padding: 6px 10px;
-  }
-  /* Atlas: bir xil DOM, oddiy toʻrtburchak belgi; qirqilgan shakl faqat Birlashmada. */
-  [data-design="birlashma"] .ui-sticker {
-    /* Boʻyoq fonida siyoh matn (Bruna uslubi): quyosh ustida 8.7:1, boʻyoq matn rangi yetmasdi. */
-    --sticker-ink: var(--ink);
-    rotate: var(--sticker-rotate);
-    filter: drop-shadow(0 1px 0 var(--material-shadow))
-      drop-shadow(0 4px 8px var(--material-shadow));
-  }
-  [data-design="birlashma"] .ui-sticker-paper {
-    clip-path: var(--sticker-clip);
-    border-radius: 0;
-  }
-  [data-design="birlashma"] .ui-sticker-fill {
-    inset: 4px;
-    border-radius: 0;
-    clip-path: var(--sticker-clip);
-    background: color-mix(in oklab, var(--sticker-paint) 38%, var(--surface-2));
-  }
-  [data-design="birlashma"] .ui-sticker[data-shape="circle"] .ui-sticker-paper,
-  [data-design="birlashma"] .ui-sticker[data-shape="star"] .ui-sticker-paper {
-    aspect-ratio: 1;
-  }
-  [data-design="birlashma"] .ui-sticker[data-shape="circle"] .ui-sticker-label {
-    padding: 12px;
-  }
-  [data-design="birlashma"] .ui-sticker[data-shape="star"] .ui-sticker-label {
-    padding: 24px 14px 20px;
-  }
-  [data-design="birlashma"] .ui-sticker[data-shape="cloud"] .ui-sticker-label {
-    padding: 16px 20px 12px;
-  }
-  [data-design="birlashma"] .ui-sticker[data-shape="ticket"] .ui-sticker-label {
-    padding: 8px 18px;
-  }
-  /* Yopishish: 300 ms sakrash bilan; harakat oʻchiq boʻlsa darhol koʻrinadi. */
-  @media (prefers-reduced-motion: no-preference) {
-    :root:not([data-motion="off"])[data-design="birlashma"] .ui-sticker[data-reveal="pending"] {
-      opacity: 0;
-    }
-    :root:not([data-motion="off"])[data-design="birlashma"] .ui-sticker[data-reveal="done"] {
-      animation: ui-slap 300ms var(--ease-pop) both;
-    }
-  }
-  @keyframes ui-slap {
-    from {
-      opacity: 0;
-      transform: scale(1.12);
-      rotate: calc(var(--sticker-rotate) - 6deg);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-      rotate: var(--sticker-rotate);
-    }
-  }
-  /* Koʻchayotgan burchak: faqat sichqoncha bor qurilmada. */
-  .ui-sticker-corner {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 18px;
-    height: 18px;
-    clip-path: polygon(100% 0, 100% 100%, 0 100%);
-    background: var(--surface);
-    transform: scale(0);
-    transform-origin: bottom right;
-    transition: transform var(--dur-ui) var(--ease-pop);
-  }
-  @media (hover: hover) {
-    [data-design="birlashma"] .ui-sticker:hover .ui-sticker-paper {
-      transform: translateY(-2px) rotate(1deg);
-    }
-    [data-design="birlashma"] .ui-sticker:hover .ui-sticker-corner {
-      transform: scale(1);
-    }
   }
 
   /* ---------- Tooltip ---------- */
@@ -437,10 +305,6 @@
     text-decoration: underline;
     text-underline-offset: 0.18em;
     text-decoration-thickness: 1px;
-  }
-  [data-design="birlashma"] .ui-prose a {
-    text-decoration: none;
-    font-weight: 700;
   }
   .ui-prose strong {
     font-weight: var(--fw-display-strong);
@@ -536,10 +400,9 @@
 
   /* ---------- Tugma shakli (egasining talabi: kapsula emas) ----------
      Aniq toʻrtburchak (--radius-control 12 px), ichida 3 px chekinishda 1 px nozik chiziq (zardoʻzi
-     ramkasi bilan bir til), bosilganda yoki ustiga kelganda pastdan oltin quyiladi. Faqat Atlas:
-     Birlashma oʻz bosma qogʻoz tugmasini saqlaydi. */
-  :root[data-design="atlas"] .ui-button[data-variant="primary"],
-  :root[data-design="atlas"] .ui-button[data-variant="glass"]:not([data-icon="only"]) {
+     ramkasi bilan bir til), bosilganda yoki ustiga kelganda pastdan oltin quyiladi. */
+  :root .ui-button[data-variant="primary"],
+  :root .ui-button[data-variant="glass"]:not([data-icon="only"]) {
     position: relative;
     isolation: isolate;
     background-image: linear-gradient(0deg, var(--pour-gold-mid), var(--pour-gold-hi));
@@ -552,8 +415,8 @@
       scale 200ms var(--ease-ui),
       translate 500ms var(--ease-out);
   }
-  :root[data-design="atlas"] .ui-button[data-variant="primary"]::before,
-  :root[data-design="atlas"] .ui-button[data-variant="glass"]:not([data-icon="only"])::before {
+  :root .ui-button[data-variant="primary"]::before,
+  :root .ui-button[data-variant="glass"]:not([data-icon="only"])::before {
     content: "";
     position: absolute;
     inset: 3px;
@@ -562,22 +425,21 @@
     pointer-events: none;
   }
   @media (hover: hover) {
-    :root[data-design="atlas"] .ui-button[data-variant="primary"]:hover:not([aria-disabled="true"]),
-    :root[data-design="atlas"]
+    :root .ui-button[data-variant="primary"]:hover:not([aria-disabled="true"]),
+    :root
       .ui-button[data-variant="glass"]:not([data-icon="only"]):hover:not([aria-disabled="true"]) {
       background-size: 100% 100%;
       color: var(--hero-scrim);
     }
   }
-  :root[data-design="atlas"] .ui-button[data-variant="primary"]:focus-visible,
-  :root[data-design="atlas"]
-    .ui-button[data-variant="glass"]:not([data-icon="only"]):focus-visible {
+  :root .ui-button[data-variant="primary"]:focus-visible,
+  :root .ui-button[data-variant="glass"]:not([data-icon="only"]):focus-visible {
     background-size: 100% 100%;
     color: var(--hero-scrim);
   }
   @media (prefers-reduced-motion: reduce) {
-    :root[data-design="atlas"] .ui-button[data-variant="primary"],
-    :root[data-design="atlas"] .ui-button[data-variant="glass"] {
+    :root .ui-button[data-variant="primary"],
+    :root .ui-button[data-variant="glass"] {
       transition: color 150ms var(--ease-ui);
     }
   }

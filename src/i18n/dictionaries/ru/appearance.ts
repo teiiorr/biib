@@ -21,12 +21,6 @@ export const appearance: typeof source = {
   soundHint: "Тихий звук дойры при смене темы и раздела",
   motion: "Анимация",
   motionHint: "Декоративная анимация; текст и переходы между страницами остаются",
-  design: "Дизайн",
-  designAtlas: "Атлас",
-  designAtlasHint: "Национальные узоры и стекло",
-  designBirlashma: "Бирлашма",
-  designBirlashmaHint: "В духе детского творчества",
   valueText: "{value}%",
   reducedTransparency: "В системе уменьшена прозрачность, поэтому ползунки отключены",
-  previewAlt: "Миниатюра дизайна {design}",
 };

@@ -1,13 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import {
-  applyAppearance,
-  designsFromEnv,
-  primeAppearance,
-  revealAll,
-  settle,
-  THEMES,
-} from "./helpers/appearance";
+import { applyTheme, primeAppearance, revealAll, settle, THEMES } from "./helpers/appearance";
 import { auditAlignment } from "./helpers/audit/alignment";
 import { auditUnderBars } from "./helpers/audit/bars";
 import { auditCards } from "./helpers/audit/cards";
@@ -20,90 +13,85 @@ import { checkId, evidenceFile, recordCheck, relativeEvidence, summarize } from 
 import { allRoutes } from "./helpers/routes";
 import { viewportLabel, viewportsFor } from "./helpers/viewports";
 
-const designs = designsFromEnv();
 const routes = allRoutes();
 
 /*
- * G5: har manzil bir marta yuklanadi, dizayn × mavzu sahifa ichida almashtiriladi,
+ * G5: har manzil bir marta yuklanadi, mavzu sahifa ichida almashtiriladi,
  * oʻlcham matritsasi joyida qayta oʻlchanadi. Auditlar SVG naqsh daraxtlarini oʻtkazib yuboradi.
  */
 test.describe.configure({ mode: "parallel" });
 
 for (const route of routes) {
   test(`${route.path}`, async ({ page, browserName, isMobile }, testInfo) => {
-    const first = designs[0] ?? "atlas";
-    await primeAppearance(page, { design: first, theme: "light", motion: false });
+    await primeAppearance(page, { theme: "light", motion: false });
     await page.goto(route.path);
     await settle(page);
     await revealAll(page);
     const failures: string[] = [];
     const viewports = viewportsFor(browserName, isMobile ?? false);
-    for (const design of designs) {
-      for (const theme of THEMES) {
-        await applyAppearance(page, design, theme);
-        for (const viewport of viewports) {
-          await page.setViewportSize(viewport);
-          await page.waitForTimeout(80);
-          const overflow: Finding[] = await page.evaluate(() => {
-            const doc = document.documentElement;
-            return doc.scrollWidth > window.innerWidth + 1
-              ? [
-                  {
-                    check: "overflow" as const,
-                    target: "html",
-                    detail: `${doc.scrollWidth} > ${window.innerWidth}`,
-                  },
-                ]
-              : [];
-          });
-          const findings: Finding[] = [
-            ...overflow,
-            ...(await page.evaluate(auditClip)),
-            ...(await page.evaluate(auditInteractive)),
-            ...(await page.evaluate(auditUnderBars, {
-              bars: ['[data-testid="header"]'],
-              check: "under-header" as const,
-            })),
-            ...(await page.evaluate(auditUnderBars, {
-              bars: ['[data-testid="tab-bar"]'],
-              check: "under-tabbar" as const,
-            })),
-            ...(await page.evaluate(auditAlignment, {
-              gridItem: "[data-grid-item]",
-              container: ".container-site",
-              tolerance: 0.5,
-            })),
-            ...(await page.evaluate(auditSpacing, {
-              selector: "[data-audit]",
-              scale: [...SPACING_SCALE],
-              tolerance: 0.5,
-            })),
-            ...(await page.evaluate(auditCards, {
-              group: "[data-card-group]",
-              card: "[data-card]",
-              title: "[data-card-title]",
-              cta: "[data-card-cta]",
-              tolerance: 1,
-            })),
-            ...(await page.evaluate(auditIcons, {
-              selector: "[data-icon-optical]",
-              tolerance: 0.5,
-            })),
-          ];
-          if (findings.length) {
-            const file = evidenceFile(
-              testInfo,
-              "G5",
-              design,
-              theme,
-              `${route.locale}${route.path.replace(/\//g, "_")}-${viewportLabel(viewport)}.png`,
+    for (const theme of THEMES) {
+      await applyTheme(page, theme);
+      for (const viewport of viewports) {
+        await page.setViewportSize(viewport);
+        await page.waitForTimeout(80);
+        const overflow: Finding[] = await page.evaluate(() => {
+          const doc = document.documentElement;
+          return doc.scrollWidth > window.innerWidth + 1
+            ? [
+                {
+                  check: "overflow" as const,
+                  target: "html",
+                  detail: `${doc.scrollWidth} > ${window.innerWidth}`,
+                },
+              ]
+            : [];
+        });
+        const findings: Finding[] = [
+          ...overflow,
+          ...(await page.evaluate(auditClip)),
+          ...(await page.evaluate(auditInteractive)),
+          ...(await page.evaluate(auditUnderBars, {
+            bars: ['[data-testid="header"]'],
+            check: "under-header" as const,
+          })),
+          ...(await page.evaluate(auditUnderBars, {
+            bars: ['[data-testid="tab-bar"]'],
+            check: "under-tabbar" as const,
+          })),
+          ...(await page.evaluate(auditAlignment, {
+            gridItem: "[data-grid-item]",
+            container: ".container-site",
+            tolerance: 0.5,
+          })),
+          ...(await page.evaluate(auditSpacing, {
+            selector: "[data-audit]",
+            scale: [...SPACING_SCALE],
+            tolerance: 0.5,
+          })),
+          ...(await page.evaluate(auditCards, {
+            group: "[data-card-group]",
+            card: "[data-card]",
+            title: "[data-card-title]",
+            cta: "[data-card-cta]",
+            tolerance: 1,
+          })),
+          ...(await page.evaluate(auditIcons, {
+            selector: "[data-icon-optical]",
+            tolerance: 0.5,
+          })),
+        ];
+        if (findings.length) {
+          const file = evidenceFile(
+            testInfo,
+            "G5",
+            theme,
+            `${route.locale}${route.path.replace(/\//g, "_")}-${viewportLabel(viewport)}.png`,
+          );
+          await page.screenshot({ path: file, fullPage: false });
+          for (const f of findings) {
+            failures.push(
+              `${theme} ${viewportLabel(viewport)} ${f.check} ${f.target}: ${f.detail} [${relativeEvidence(testInfo, file)}]`,
             );
-            await page.screenshot({ path: file, fullPage: false });
-            for (const f of findings) {
-              failures.push(
-                `${design}/${theme} ${viewportLabel(viewport)} ${f.check} ${f.target}: ${f.detail} [${relativeEvidence(testInfo, file)}]`,
-              );
-            }
           }
         }
       }

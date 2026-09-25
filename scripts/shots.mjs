@@ -5,9 +5,6 @@ import { chromium } from "@playwright/test";
 import sharp from "sharp";
 
 const BASE_URL = process.env.BASE_URL ?? "http://localhost:3100";
-const DESIGNS = (process.env.DESIGN ?? "atlas")
-  .split(/[,\s]+/)
-  .filter((d) => d === "atlas" || d === "birlashma");
 const OUT = path.resolve("docs/qa/shots");
 const SECTIONS = {
   uz: {
@@ -108,13 +105,13 @@ async function contactSheet(files, target) {
     .toFile(target);
 }
 
-/* Bir (dizayn, mavzu, til, oʻlcham) uchun bitta kontekst va bitta varaq: sahifalar ketma-ket,
+/* Bir (mavzu, til, oʻlcham) uchun bitta kontekst va bitta varaq: sahifalar ketma-ket,
    kombinatsiyalar 4 tadan parallel. networkidle oʻrniga load + qisqa kutish. */
 const browser = await chromium.launch({ channel: "chromium" });
 const index = [];
 const filesByDir = new Map();
 
-async function shootCombo(design, theme, locale, vp) {
+async function shootCombo(theme, locale, vp) {
   const context = await browser.newContext({
     viewport: { width: vp.width, height: vp.height },
     deviceScaleFactor: 2,
@@ -122,7 +119,6 @@ async function shootCombo(design, theme, locale, vp) {
     hasTouch: vp.mobile,
   });
   await prime(context, {
-    design,
     theme,
     transparency: 50,
     density: 50,
@@ -131,7 +127,7 @@ async function shootCombo(design, theme, locale, vp) {
   });
   const tab = await context.newPage();
   for (const page of PAGES) {
-    const dir = path.join(OUT, design, theme, locale, page);
+    const dir = path.join(OUT, theme, locale, page);
     mkdirSync(dir, { recursive: true });
     const cropDir = path.join(dir, "crops");
     mkdirSync(cropDir, { recursive: true });
@@ -200,10 +196,8 @@ async function shootCombo(design, theme, locale, vp) {
 }
 
 const combos = [];
-for (const design of DESIGNS)
-  for (const theme of ["light", "dark"])
-    for (const locale of ["uz", "ru"])
-      for (const vp of VIEWPORTS) combos.push([design, theme, locale, vp]);
+for (const theme of ["light", "dark"])
+  for (const locale of ["uz", "ru"]) for (const vp of VIEWPORTS) combos.push([theme, locale, vp]);
 const POOL = 4;
 let cursor = 0;
 await Promise.all(

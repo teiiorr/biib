@@ -68,7 +68,6 @@ function gateFromFile(file: string): string {
   if (name.startsWith("a11y")) return "G6";
   if (name.startsWith("perf")) return "G7";
   if (name.startsWith("visual")) return "G8";
-  if (name.startsWith("switch")) return "G13";
   return "G0";
 }
 

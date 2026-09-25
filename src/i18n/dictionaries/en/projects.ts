@@ -22,7 +22,4 @@ export const projects: typeof source = {
     "Registration happens only on upop.uz. This site does not run the auditions; it only tells you about them.",
   openExternal: "Go to upop.uz",
   mediaPending: "The video will appear here once the association provides it",
-  ageSticker: "Ages {from}–{to}",
-  newSticker: "New",
-  curtainLabel: "Stage curtain",
 };

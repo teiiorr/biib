@@ -71,10 +71,6 @@
   .nav-item[data-active="true"] .nav-underline {
     display: none;
   }
-  :root[data-design="birlashma"] .nav-mark,
-  :root[data-design="birlashma"] .nav-underline {
-    color: var(--tint);
-  }
 
   /* Telefon: yupqa yuqori panel va suzuvchi tab-bar. */
   .top-bar {
@@ -366,17 +362,14 @@
     height: 40px;
   }
   /* Qorongʻi boʻlim ustida (qahramon kadri, missiya, UPOP maydoni) nomi sut-oq: navy ustida navy koʻrinmaydi. */
-  :root[data-design="atlas"] .brand-mark[data-tone="dark"] {
+  :root .brand-mark[data-tone="dark"] {
     color: var(--hero-ink);
   }
-  :root[data-design="birlashma"][data-theme="light"] .brand-mark[data-tone="dark"] {
-    color: var(--bg);
-  }
-  /* Qahramon sahnasi (Atlas): dvigatel kelguncha belgi skrollga bogʻliq CSS bilan yashirin turadi va
+  /* Qahramon sahnasi: dvigatel kelguncha belgi skrollga bogʻliq CSS bilan yashirin turadi va
      0.72–0.80 da paydo boʻladi; GSAP sahnani qurgach (html[data-hero-scene]) shu qoida oʻchadi. */
   @supports (animation-timeline: scroll()) {
     @media (prefers-reduced-motion: no-preference) and (min-width: 360px) and (min-height: 521px) {
-      :root[data-design="atlas"]:not([data-motion="off"]):not([data-hero-scene])
+      :root:not([data-motion="off"]):not([data-hero-scene])
         body:has(.home-hero-scene)
         .site-header
         [data-brand-mark] {
@@ -388,9 +381,7 @@
   }
   @supports (animation-timeline: scroll()) {
     @media (prefers-reduced-motion: no-preference) and (min-width: 360px) and (min-height: 521px) {
-      :root[data-design="atlas"]:not([data-motion="off"]):not([data-hero-scene])
-        body:has(.home-hero-scene)
-        .top-bar {
+      :root:not([data-motion="off"]):not([data-hero-scene]) body:has(.home-hero-scene) .top-bar {
         animation: top-bar-dock linear both;
         animation-timeline: scroll(root);
         animation-range: 0px calc(100svh * var(--hero-scene-length));
@@ -511,14 +502,14 @@
     display: grid;
     gap: 16px;
   }
-  :root[data-design="atlas"] .contact-write {
+  :root .contact-write {
     padding: 24px;
     border: 1px solid var(--line);
     border-radius: var(--radius-card);
     background: var(--surface);
   }
   @media (min-width: 1024px) {
-    :root[data-design="atlas"] .contact-write {
+    :root .contact-write {
       padding: 32px;
     }
   }

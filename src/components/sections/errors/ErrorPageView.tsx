@@ -3,7 +3,6 @@
 import { useParams } from "next/navigation";
 import { useSyncExternalStore } from "react";
 
-import { DesignArt } from "@/components/layout/DesignArt";
 import { ErrorView } from "@/components/layout/ErrorView";
 import { PalakFallback } from "@/components/layout/PalakFallback";
 import { Button } from "@/components/ui/Button";
@@ -26,7 +25,7 @@ export function ErrorPageView({ retry }: ErrorPageViewProps) {
     <ErrorView
       title={copy.error.title}
       text={copy.error.text}
-      art={<DesignArt slot="error" locale={locale} fallback={<PalakFallback />} />}
+      art={<PalakFallback />}
       actions={
         <>
           <Button variant="primary" onClick={retry}>

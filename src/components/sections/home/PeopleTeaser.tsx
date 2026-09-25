@@ -28,7 +28,7 @@ function PersonCard({ person, locale, index }: { person: Person; locale: Locale;
   const field = person.field ? t(person.field, locale) : null;
   const name = person.name ? t(person.name, locale) : null;
   return (
-    <li className="people-card paper-look" data-card="">
+    <li className="people-card" data-card="">
       <PortraitFrame ratio="4:5" className="people-portrait" motion={{ mode: "smooth", index }}>
         {person.photo ? (
           <Picture

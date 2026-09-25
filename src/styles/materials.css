@@ -1,5 +1,5 @@
 @layer components {
-  /* Boshqaruv qatlami materiallari: Oyna (Atlas) va Kalka (Birlashma).
+  /* Boshqaruv qatlami materiali: Oyna (Liquid Glass).
    backdrop-filter faqat shu faylda va src/components/glass/ ichida boʻlishi mumkin. */
 
   .material {
@@ -40,7 +40,7 @@
   }
 
   /* Yaltiroq nuqta: --sheen-x/--sheen-y kursor yoki skroll ortidan yuradi. */
-  .surface[data-material]::before {
+  .surface::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -53,10 +53,6 @@
     );
     opacity: 0.9;
     z-index: -1;
-  }
-  .surface[data-material="kalka"]::before,
-  :root[data-design="birlashma"] .surface[data-material="auto"]::before {
-    background: none;
   }
 
   /* Variantlar */
@@ -87,56 +83,6 @@
     --material-ink: #0e1733;
     --material-base: #fffcf6;
     --material-rim: #ffffff;
-  }
-
-  /* Kalka: qogʻoz tolasi, qirqilgan chet va skotch. */
-  .surface-paper {
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    z-index: -1;
-    background: color-mix(in oklab, var(--material-base) calc(var(--m-tint) * 60%), transparent);
-  }
-  .surface-paper[data-deckle="true"] {
-    inset: -3px;
-    border-radius: 0;
-    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><path d='M1.2 1.8 6 1.1 11 1.9 16 1 21 1.6 26 1.2 31 2 36 1.1 41 1.7 46 1 51 1.9 56 1.2 61 1.6 66 1 71 1.8 76 1.3 81 1.9 86 1.1 91 1.7 96 1.2 98.8 1.6 99 6 98.2 11 99 16 98.4 21 98.9 26 98.1 31 98.8 36 98.3 41 99 46 98.2 51 98.7 56 98.1 61 98.9 66 98.3 71 98.8 76 98.2 81 99 86 98.4 91 98.9 96 98.3 98.6 98.9 94 98.1 89 98.9 84 98.2 79 98.8 74 98.1 69 98.7 64 98.3 59 99 54 98.2 49 98.8 44 98.1 39 98.9 34 98.3 29 98.8 24 98.2 19 98.9 14 98.1 9 98.7 4 98.3 1.1 98.2 1.8 94 1.1 89 1.9 84 1.2 79 1.8 74 1.1 69 1.7 64 1.2 59 1.9 54 1.1 49 1.8 44 1.2 39 1.9 34 1.1 29 1.7 24 1.2 19 1.8 14 1.1 9 1.9 4Z' fill='black'/></svg>");
-    mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><path d='M1.2 1.8 6 1.1 11 1.9 16 1 21 1.6 26 1.2 31 2 36 1.1 41 1.7 46 1 51 1.9 56 1.2 61 1.6 66 1 71 1.8 76 1.3 81 1.9 86 1.1 91 1.7 96 1.2 98.8 1.6 99 6 98.2 11 99 16 98.4 21 98.9 26 98.1 31 98.8 36 98.3 41 99 46 98.2 51 98.7 56 98.1 61 98.9 66 98.3 71 98.8 76 98.2 81 99 86 98.4 91 98.9 96 98.3 98.6 98.9 94 98.1 89 98.9 84 98.2 79 98.8 74 98.1 69 98.7 64 98.3 59 99 54 98.2 49 98.8 44 98.1 39 98.9 34 98.3 29 98.8 24 98.2 19 98.9 14 98.1 9 98.7 4 98.3 1.1 98.2 1.8 94 1.1 89 1.9 84 1.2 79 1.8 74 1.1 69 1.7 64 1.2 59 1.9 54 1.1 49 1.8 44 1.2 39 1.9 34 1.1 29 1.7 24 1.2 19 1.8 14 1.1 9 1.9 4Z' fill='black'/></svg>");
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
-  }
-  .surface-fiber {
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    z-index: -1;
-    background-image: var(--material-fiber);
-    background-size: 160px 160px;
-    opacity: calc(0.12 + 0.5 * var(--g-d));
-    mix-blend-mode: multiply;
-  }
-  :root[data-theme="dark"] .surface-fiber {
-    mix-blend-mode: screen;
-    opacity: calc(0.05 + 0.25 * var(--g-d));
-  }
-  .surface-tape {
-    position: absolute;
-    top: -8px;
-    left: 24px;
-    width: 64px;
-    height: 18px;
-    transform: rotate(-3deg);
-    background: color-mix(in oklab, var(--accent-art) 35%, var(--surface-2) 65%);
-    opacity: 0.85;
-    pointer-events: none;
-    box-shadow: var(--shadow-contact);
-  }
-  :root[data-design="birlashma"] .material {
-    box-shadow:
-      inset 0 0 0 1px color-mix(in oklab, var(--line-strong) calc(var(--g-rim) * 60%), transparent),
-      var(--shadow-floating);
   }
 
   /* Morf: Flip transformni boshqaradi, CSS faqat kamaytirilgan harakatda ishlaydi. */
@@ -294,24 +240,6 @@
       color-mix(in oklab, var(--material-ink) 22%, transparent) 50%
     );
   }
-  .glass-slider-lens-marker {
-    display: none;
-    position: absolute;
-    inset: -6px;
-    color: var(--ink);
-  }
-  :root[data-design="birlashma"] .glass-slider-lens {
-    background: transparent;
-    box-shadow: none;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
-  :root[data-design="birlashma"] .glass-slider-lens-marker {
-    display: block;
-  }
-  :root[data-design="birlashma"] .glass-slider-thumb {
-    border-radius: 6px;
-  }
 
   /* Kalit */
   .glass-switch-row {
@@ -363,10 +291,6 @@
   }
   .glass-switch[aria-checked="true"] .glass-switch-knob {
     transform: translateX(20px);
-  }
-  :root[data-design="birlashma"] .glass-switch,
-  :root[data-design="birlashma"] .glass-switch-knob {
-    border-radius: 6px;
   }
 
   /* Skroll cheti (§10.1.4): sarlavha ostidan oʻtgan mazmun qattiq chiziq oʻrniga toʻrt qatlamli
@@ -591,39 +515,6 @@
     padding: 0;
     margin: 0;
     min-width: 0;
-  }
-  .design-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-  .design-card {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 8px;
-    border-radius: var(--surface-radius);
-    text-align: left;
-    color: var(--material-ink);
-    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--material-ink) 16%, transparent);
-    transition: box-shadow var(--dur-ui) var(--ease-ui);
-  }
-  .design-card[data-state="checked"] {
-    box-shadow: inset 0 0 0 2px var(--tint);
-  }
-  .design-preview {
-    width: 100%;
-    height: auto;
-    border-radius: 6px;
-    display: block;
-  }
-  .design-card-text {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .design-card-hint {
-    color: color-mix(in oklab, var(--material-ink) 70%, transparent);
   }
   .slider-ends {
     display: flex;

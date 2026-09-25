@@ -16,7 +16,8 @@ interface ErrorViewProps {
 export function ErrorView({ title, text, art, actions }: ErrorViewProps) {
   return (
     <Container className="error-view">
-      {art}
+      {/* Oʻram qoladi: SVG qator qutisida turadi, toʻr bandiga aylansa balandligi oʻzgarardi. */}
+      {art ? <div>{art}</div> : null}
       <Heading level={1} size="h1">
         {title}
       </Heading>

@@ -39,7 +39,6 @@ export const contacts = {
     fallbackText:
       "Shakl hozircha ulanmagan, xabarni toʻgʻridan-toʻgʻri Telegramda yuborishingiz mumkin.",
     fallbackCta: "Telegramda yozish",
-    postcardLabel: "Otkritka",
   },
   socials: {
     heading: "Ijtimoiy tarmoqlar",

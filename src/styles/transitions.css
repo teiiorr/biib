@@ -1,8 +1,8 @@
 /*
  * Sahifa oʻtishlari (§14.4, §11.2) va silliq skroll qobigʻi.
- * Qatlam tartibi kaskadni hal qiladi: reduced har doim typed/design dan ustun.
+ * Qatlam tartibi kaskadni hal qiladi: reduced har doim typed dan ustun.
  */
-@layer vt-base, vt-typed, vt-design, vt-reduced, vt-fallback;
+@layer vt-base, vt-typed, vt-reduced, vt-fallback;
 
 :root {
   /* Abr tasmalari registrga kirguncha bir oʻq boʻylab pogʻonali siljish. */
@@ -76,11 +76,6 @@ html.lenis body {
 @keyframes vt-fade-in { from { opacity: 0; } to { opacity: 1; } }
 /* prettier-ignore */
 @keyframes vt-fade-out { from { opacity: 1; } to { opacity: 0; } }
-/* Birlashma: qogʻoz varaq 6 kadrli flipbook kabi ochiladi (steps). */
-/* prettier-ignore */
-@keyframes flip-in { from { transform: perspective(1400px) rotateY(72deg); filter: brightness(0.86); } to { transform: perspective(1400px) rotateY(0deg); filter: brightness(1); } }
-/* prettier-ignore */
-@keyframes flip-in-back { from { transform: perspective(1400px) rotateY(-72deg); filter: brightness(0.86); } to { transform: perspective(1400px) rotateY(0deg); filter: brightness(1); } }
 
 @layer vt-base {
   /* Qobiq (header/futer) ildiz guruhida: qisqa oʻzaro soʻnish. */
@@ -130,33 +125,6 @@ html.lenis body {
   }
   :root:active-view-transition-type(locale-switch)::view-transition-image-pair(.vt-page) {
     isolation: auto;
-  }
-}
-
-@layer vt-design {
-  :root[data-design="birlashma"]::view-transition-old(.vt-page) {
-    animation: none;
-  }
-  :root[data-design="birlashma"]::view-transition-new(.vt-page) {
-    transform-origin: left center;
-    animation: flip-in var(--dur-transition) steps(6, end) both;
-  }
-  :root[data-design="birlashma"]:active-view-transition-type(nav-back)::view-transition-new(
-      .vt-page
-    ) {
-    transform-origin: right center;
-    animation-name: flip-in-back;
-  }
-  :root[data-design="birlashma"]:active-view-transition-type(locale-switch)::view-transition-old(
-      .vt-page
-    ) {
-    animation: vt-fade-out var(--dur-ui) var(--ease-ui) both;
-  }
-  :root[data-design="birlashma"]:active-view-transition-type(locale-switch)::view-transition-new(
-      .vt-page
-    ) {
-    transform-origin: center;
-    animation: vt-fade-in var(--dur-ui) var(--ease-ui) both;
   }
 }
 

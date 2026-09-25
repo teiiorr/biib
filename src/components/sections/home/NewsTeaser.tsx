@@ -55,7 +55,7 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
           </LinkButton>
         </div>
         <div className="news-teaser" data-card-group="">
-          <article className="news-lead paper-look" data-card="">
+          <article className="news-lead" data-card="">
             <TransitionLink
               href={pathFor(locale, "newsItem", lead.slug)}
               className="news-cover-link"
@@ -86,7 +86,7 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
           </article>
           <Reveal as="div" className="news-side" stagger>
             {side.map((item) => (
-              <article key={item.slug} className="news-row paper-look" data-card="">
+              <article key={item.slug} className="news-row" data-card="">
                 <TransitionLink
                   href={pathFor(locale, "newsItem", item.slug)}
                   className="news-cover-link news-thumb"

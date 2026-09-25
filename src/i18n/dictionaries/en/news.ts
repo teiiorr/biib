@@ -14,6 +14,4 @@ export const news: typeof source = {
     "This is a draft: the date and details will appear after the association confirms them.",
   topic: "Topic",
   empty: "No news yet.",
-  masthead: "Wall newspaper",
-  clippingAlt: "A clipping from a newspaper",
 };

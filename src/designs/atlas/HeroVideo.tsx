@@ -19,7 +19,7 @@ import type { ArtProps } from "../registry";
 /**
  * Darvoza halqasi: egasining videosi server posteri ustida sezilmay boshlanadi (poster = 0-kadr),
  * faqat koʻrinishda va ambient reyestr ruxsati bilan ijro etiladi; kamaytirilgan harakat, Harakat = off
- * va trafik tejashda manba qoʻyilmaydi. Skroll sahnasi ham shu yerda: chunk faqat Atlasda yuklanadi.
+ * va trafik tejashda manba qoʻyilmaydi. Skroll sahnasi ham shu yerda: chunk boʻsh vaqtda yuklanadi.
  */
 export default function HeroVideo({ copy }: ArtProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);

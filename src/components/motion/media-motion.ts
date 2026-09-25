@@ -6,10 +6,9 @@ import { willChangeDuring } from "@/lib/motion/will-change";
 import type { MotionEngine } from "./engine-core";
 
 /**
- * Media ramkasi ichida nima kesiladi va nima kattalashadi. Atlas: ramkaning oʻzi kesiladi (12 px
- * radius, soya yoʻq). Birlashma: qogʻoz bosma (oq hoshiya, soya, qiyalik) joyida qoladi — surat
- * qatlami ichida «ochiladi». Masshtab doim surat yoki videoning oʻzida: ustidagi 44 px boshqaruv
- * tugmasi kattalashmaydi va parallaksda ramka chetidan chiqib ketmaydi.
+ * Media ramkasi ichida nima kesiladi va nima kattalashadi: ramkaning oʻzi kesiladi (12 px radius,
+ * soya yoʻq). Masshtab doim surat yoki videoning oʻzida: ustidagi 44 px boshqaruv tugmasi
+ * kattalashmaydi va parallaksda ramka chetidan chiqib ketmaydi.
  */
 export interface MediaTargets {
   readonly clip: HTMLElement;
@@ -17,13 +16,10 @@ export interface MediaTargets {
 }
 
 export function mediaTargets(box: HTMLElement): MediaTargets | null {
-  // Ota qism (masalan Birlashma pardasi) media harakatini oʻzi boshqaradi.
-  if (box.closest("[data-media-owner]")) return null;
   const layer = box.querySelector<HTMLElement>(".media-frame-media");
   const media = layer?.querySelector("video, img") ?? layer?.firstElementChild;
   if (!layer || !(media instanceof HTMLElement)) return null;
-  const paper = document.documentElement.dataset.design === "birlashma";
-  return { clip: paper ? layer : box, scale: media };
+  return { clip: box, scale: media };
 }
 
 export interface RevealBuild {

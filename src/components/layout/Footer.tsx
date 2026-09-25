@@ -32,7 +32,7 @@ export function Footer({ locale, dict }: FooterProps) {
       <FooterArrive />
       <Container>
         <div className="footer-crown" data-testid="footer-crown">
-          <DesignArt slot="footer-crown" locale={locale} />
+          <DesignArt slot="footer-crown" />
           <span className="footer-crown-line" aria-hidden="true" />
         </div>
         <div className="footer-groups">

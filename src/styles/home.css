@@ -28,7 +28,7 @@
   }
 
   /* Darvoza: egasining videosi, belgi kadr markazida; nom, missiya va harakatlar pastda chapda, toʻrda. */
-  /* Sahna uzunligi viewportga nisbatan: kompyuter 1, telefon 0.7; harakat yoʻq, past/tor ekran va Birlashmada 0. */
+  /* Sahna uzunligi viewportga nisbatan: kompyuter 1, telefon 0.7; harakat yoʻq va past/tor ekranda 0. */
   :root {
     --hero-scene-length: 0.7;
   }
@@ -42,8 +42,7 @@
       --hero-scene-length: 0;
     }
   }
-  :root[data-motion="off"],
-  :root[data-design="birlashma"] {
+  :root[data-motion="off"] {
     --hero-scene-length: 0;
   }
   /* Oʻram sarlavha ostiga kiradi (main ning yuqori boʻshligʻi shu yerda qaytariladi); balandligi skroll yoʻli. */
@@ -159,12 +158,9 @@
     position: relative;
   }
   /* Bosh harfning yon boʻshligʻi: chap chetga optik tekislash (§8 III.6), har shrift oʻz oʻlchovi bilan
-     (fontTools, xMin/upm): Manrope 800 da B/Б = 70/1000 em, Nunito 900 da B/Б = 64/1000 em. */
-  :root[data-design="atlas"] .home-hero-title {
+     (fontTools, xMin/upm): Manrope 800 da B/Б = 70/1000 em. */
+  :root .home-hero-title {
     margin-inline-start: -0.07em;
-  }
-  :root[data-design="birlashma"] .home-hero-title {
-    margin-inline-start: -0.064em;
   }
   /* Nom ostida bitta qator: missiya chapda (≤ 52ch), harakatlar oʻng yonida; tor ekranda pastga oʻtadi. */
   .home-hero-row {
@@ -221,10 +217,10 @@
     }
     /* Halqa boshqaruvi alohida qatorga tushmasin: missiyaning birinchi qatori yonida, oʻng chetda.
        Joy missiyadan oldindan olinadi (tugma kelganda matn siljimaydi), matn ustiga tushmaydi. */
-    :root[data-design="atlas"] .home-hero-row {
+    :root .home-hero-row {
       position: relative;
     }
-    :root[data-design="atlas"] .home-hero-mission {
+    :root .home-hero-mission {
       padding-inline-end: calc(var(--hit-min) + 12px);
     }
     .home-hero-control {
@@ -243,7 +239,7 @@
     }
   }
   /* Oyna tugmasi va boshqaruv qorongʻi kadr ustida ikkala mavzuda ham tun materialida (10.1.3). */
-  :root[data-design="atlas"] .home-hero-content {
+  :root .home-hero-content {
     --material-ink: var(--hero-ink);
     --material-base: var(--hero-scrim);
     --material-rim: color-mix(in oklab, var(--hero-ink) 55%, var(--hero-scrim));
@@ -273,9 +269,9 @@
     position: relative;
     background: var(--bg);
   }
-  /* Atlas: yopishqoq kadr ustidan koʻtariladi. Ostlik 96 px da 72 %, pastda toʻliq lojuvard (UPOP maydoniga
+  /* Yopishqoq kadr ustidan koʻtariladi. Ostlik 96 px da 72 %, pastda toʻliq lojuvard (UPOP maydoniga
      choksiz oʻtadi); sahna boʻlmasa ham (harakat oʻchiq) matn eng yorqin alanga ustida ≥ 5:1. */
-  :root[data-design="atlas"] .home-hero-scene .home-mission {
+  :root .home-hero-scene .home-mission {
     --ink: var(--hero-ink);
     --ink-3: color-mix(in oklab, var(--hero-ink) 72%, transparent);
     z-index: 1;
@@ -301,10 +297,10 @@
     text-wrap: balance;
   }
   /* Katta jumlada zardoʻzi ostchiziq keyingi qatorga tegmasin: qator oraligʻi ochiq, chiziq harfga yaqin. */
-  :root[data-design="atlas"] .home-mission-statement {
+  :root .home-mission-statement {
     line-height: 1.14;
   }
-  :root[data-design="atlas"] .home-mission-statement .zardozi-underline {
+  :root .home-mission-statement .zardozi-underline {
     bottom: -0.1em;
   }
   /* Zardoʻzi matn koʻtarilib boʻlgach tikiladi: koʻrinish + doira kechikishi ustiga 360 ms. */
@@ -314,7 +310,7 @@
 
   /* UPOP TREND: bosh loyiha boʻlimi */
   /* Lojuvard maydon: kunduzgi Atlasda boʻlim tungi Rishton toʻplamiga oʻtadi (juftliklar §12.2 da
-     tekshirilgan); UPOP maydoni va rasmiy sarlavha lentasi (navy-band). Birlashma doskani paper.css beradi.
+     tekshirilgan); UPOP maydoni va rasmiy sarlavha lentasi (navy-band).
      Siyoh tokenining oʻzi almashadi: Heading dagi text-ink ham, nonushoq ham lenta ustida toʻgʻri rangda. */
   .upop-field,
   .navy-band {
@@ -323,7 +319,7 @@
     color: var(--ink);
     background: var(--bg);
   }
-  :root[data-design="atlas"][data-theme="light"] :is(.upop-field, .navy-band) {
+  :root[data-theme="light"] :is(.upop-field, .navy-band) {
     --bg: #0a1026;
     --surface: #111a38;
     --surface-2: #17214a;
@@ -350,16 +346,15 @@
     --material-shadow: rgba(2, 5, 20, 0.5);
     --shadow-raised: 0 1px 2px rgba(2, 5, 20, 0.4);
     --shadow-floating: 0 6px 20px rgba(2, 5, 20, 0.45);
-    --shadow-contact: 0 1px 0 rgba(2, 5, 20, 0.5);
     --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
   /* Tunda sahifa oʻzi lojuvard: maydon bir pogʻona yorugʻroq sirt bilan ajraladi. */
-  :root[data-design="atlas"][data-theme="dark"] :is(.upop-field, .navy-band) {
+  :root[data-theme="dark"] :is(.upop-field, .navy-band) {
     --bg: #111a38;
     --surface: #17214a;
   }
   /* Sarlavha lentasi tekis: relyef ham, gradient ham yoʻq; pastki qirrada bitta 1 px oltin chiziq. */
-  :root[data-design="atlas"] .navy-band::after {
+  :root .navy-band::after {
     content: "";
     position: absolute;
     inset: auto 0 0;
@@ -368,11 +363,8 @@
     opacity: 0.5;
     pointer-events: none;
   }
-  :root[data-design="birlashma"][data-theme="dark"] .navy-band {
-    background: var(--surface);
-  }
   /* Baxmal tovlanishi: chap yuqorida 8 % pushti, oʻng pastda 6 % oltin — rang hikoyasi, halo emas. */
-  :root[data-design="atlas"] .upop-field {
+  :root .upop-field {
     --upop-velvet: linear-gradient(
       160deg,
       color-mix(in oklab, var(--bg) 92%, var(--art-1)) 0%,
@@ -383,7 +375,7 @@
   }
   /* Bosh sahifada maydon missiya ostidan davom etadi: yuqori qirra missiya tugagan lojuvarddan boshlanadi,
      ikki boʻlim orasida chok koʻrinmaydi. */
-  :root[data-design="atlas"] .home-hero-scene + .upop-field {
+  :root .home-hero-scene + .upop-field {
     background: linear-gradient(180deg, var(--hero-scrim) 0, transparent 240px), var(--upop-velvet);
   }
 
@@ -554,9 +546,9 @@
   }
 
   /* Odamlar */
-  /* Sarlavha va mazmun bitta sirtda (Atlas: sahifadan bir pogʻona yorugʻ sirt lentasi — yangiliklar bilan
-     ritm; Birlashma: paper.css). Sarlavha ustida, ikki guruh ostida yonma-yon (planshet 4 + 4, kompyuter 6 + 6). */
-  :root[data-design="atlas"] .people-section {
+  /* Sarlavha va mazmun bitta sirtda (sahifadan bir pogʻona yorugʻ sirt lentasi — yangiliklar bilan ritm).
+     Sarlavha ustida, ikki guruh ostida yonma-yon (planshet 4 + 4, kompyuter 6 + 6). */
+  :root .people-section {
     background: var(--surface);
   }
   .people-groups {
@@ -670,13 +662,13 @@
   }
 
   /* Aloqa lentasi */
-  /* Atlas: sokin karta (sirt, 1 px chiziq, 12 px radius). Kompyuterda sarlavha va harakatlar 1–7,
+  /* Sokin karta (sirt, 1 px chiziq, 12 px radius). Kompyuterda sarlavha va harakatlar 1–7,
      manzil va telefon 8–12; telefonda ketma-ket. Palak kichik, sarlavha yonida. */
   .contact-band-text {
     display: grid;
     gap: 24px;
   }
-  :root[data-design="atlas"] .contact-band-text {
+  :root .contact-band-text {
     padding: 24px;
     border: 1px solid var(--line);
     border-radius: var(--radius-card);
@@ -685,7 +677,7 @@
   /* Rishton kechasi: sirtlar ritmi (yangiliklar zaminda, odamlar sirtda) va feruza sir — yangiliklar
      boʻlimi yuqori qirrasida 1 px chiziq va yengil sir tusi, aloqa kartasi qirrasi feruza. Matn tokenlari
      oʻzgarmaydi, tus faqat fon va chiziqda (halo yoʻq). */
-  :root[data-design="atlas"][data-theme="dark"] .news-section {
+  :root[data-theme="dark"] .news-section {
     background: linear-gradient(
       180deg,
       color-mix(in oklab, var(--art-4) 7%, var(--bg)) 0,
@@ -693,7 +685,7 @@
     );
     box-shadow: inset 0 1px 0 color-mix(in oklab, var(--art-4) 55%, transparent);
   }
-  :root[data-design="atlas"][data-theme="dark"] .contact-band-text {
+  :root[data-theme="dark"] .contact-band-text {
     border-color: color-mix(in oklab, var(--art-4) 45%, var(--line));
     box-shadow: var(--inner-highlight);
   }
@@ -754,7 +746,7 @@
     }
   }
   @media (min-width: 1024px) {
-    :root[data-design="atlas"] .contact-band-text {
+    :root .contact-band-text {
       grid-template-columns: repeat(12, minmax(0, 1fr));
       grid-template-areas:
         "head head head head head head head . list list list list"
@@ -763,35 +755,30 @@
       row-gap: 32px;
       padding: 48px;
     }
-    :root[data-design="atlas"] .contact-band-head {
+    :root .contact-band-head {
       grid-area: head;
     }
-    :root[data-design="atlas"] .contact-band-list {
+    :root .contact-band-list {
       grid-area: list;
       grid-template-columns: minmax(0, 1fr);
       align-self: end;
     }
     /* Tugmalar oʻng ustunda, maʼlumotlar ostida, oʻng chetga tekis. */
-    :root[data-design="atlas"] .contact-band-actions {
+    :root .contact-band-actions {
       grid-area: actions;
     }
-  }
-  .contact-band-art {
-    display: none;
   }
 }
 
 /* Qatlamdan tashqarida: t-display-xl (utilities qatlami) shrift oilasini beradi, bu qoida undan ustun.
-   Til boʻyicha mayda preload toʻplami (Manrope Hero): birinchi kadrda haqiqiy shrift, almashinuv yoʻq.
-   Toʻplam faqat Atlas shrifti:
-   Birlashmada nom Nunito da qoladi (§25.6), aks holda qahramonda begona shrift chiqadi. */
-:root[data-design="atlas"] .home-hero-title {
+   Til boʻyicha mayda preload toʻplami (Manrope Hero): birinchi kadrda haqiqiy shrift, almashinuv yoʻq. */
+:root .home-hero-title {
   font-family: "Manrope Hero", var(--font-display);
 }
 
-/* Atlasda nom kadr ostida: ≥1024 da bir qator, telefonda ikki qator (36 px). display-xl kadrdagi belgi bilan
-   raqobatlashar va past ekranlarda belgi ustiga chiqardi (D44). Birlashma display-xl da qoladi. */
-:root[data-design="atlas"] .home-hero-title {
+/* Nom kadr ostida: ≥1024 da bir qator, telefonda ikki qator (36 px). display-xl kadrdagi belgi bilan
+   raqobatlashar va past ekranlarda belgi ustiga chiqardi (D44). */
+:root .home-hero-title {
   font-size: clamp(2.25rem, 1.6rem + 2.2vw, 4rem);
   line-height: var(--lh-h1);
   letter-spacing: var(--ls-h1);
@@ -800,14 +787,14 @@
 /* Telefonda qahramon matni belgi ostidan tab-bargacha sigʻsin (360–390 px, beshala til): missiya oddiy
    matn oʻlchamida, kirillcha uzun nom 30 px da ikki qatorga tushadi (36 px da toʻrt qator edi). */
 @media (max-width: 599px) {
-  :root[data-design="atlas"] .home-hero-mission {
+  :root .home-hero-mission {
     font-size: var(--fs-body);
     line-height: 1.55;
   }
-  :root[data-design="atlas"] .home-hero-title:lang(uz-Cyrl) {
+  :root .home-hero-title:lang(uz-Cyrl) {
     font-size: 1.875rem;
   }
-  :root[data-design="atlas"] .home-hero-row {
+  :root .home-hero-row {
     margin-top: 12px;
     gap: 12px 24px;
   }
@@ -831,7 +818,7 @@
    pastida — yuqoridagi joy xiralashgan kadr ustida, sahna uzunligi oʻzgarmaydi; UPOP maydonigacha
    64 px, ikki boʻlim orasida boʻsh lojuvard qolmaydi. */
 @media (min-width: 1024px) {
-  :root[data-design="atlas"] .home-hero-scene .home-mission {
+  :root .home-hero-scene .home-mission {
     align-content: end;
     padding-bottom: 64px;
   }
