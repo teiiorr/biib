@@ -797,6 +797,22 @@
   letter-spacing: var(--ls-h1);
 }
 
+/* Telefonda qahramon matni belgi ostidan tab-bargacha sigʻsin (360–390 px, beshala til): missiya oddiy
+   matn oʻlchamida, kirillcha uzun nom 30 px da ikki qatorga tushadi (36 px da toʻrt qator edi). */
+@media (max-width: 599px) {
+  :root[data-design="atlas"] .home-hero-mission {
+    font-size: var(--fs-body);
+    line-height: 1.55;
+  }
+  :root[data-design="atlas"] .home-hero-title:lang(uz-Cyrl) {
+    font-size: 1.875rem;
+  }
+  :root[data-design="atlas"] .home-hero-row {
+    margin-top: 12px;
+    gap: 12px 24px;
+  }
+}
+
 /* 320–389 px: «upop.uz saytida roʻyxatdan oʻtish» bir qatorga sigʻmaydi — tugma toʻliq kenglikda, yorliq
    ikki qatorga oʻtadi (shrift kichraymaydi, ustun kengaymaydi). Qatlamdan tashqarida: whitespace-nowrap
    utilitasidan ustun turishi kerak. */
