@@ -3,8 +3,8 @@
 /* Xarita haqiqiy oʻlchamga yaqin chiziladi: past aniqlikda qirra tasmasi zinapoyaga aylanardi. */
 const MAX_EDGE = 640;
 const BEZEL_MIN = 10;
-const BEZEL_MAX = 40;
-const BEZEL_RATIO = 0.38;
+const BEZEL_MAX = 48;
+const BEZEL_RATIO = 0.42;
 
 export interface RefractionPixels {
   readonly width: number;

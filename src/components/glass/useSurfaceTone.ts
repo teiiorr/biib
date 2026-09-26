@@ -11,6 +11,8 @@ const CONTENT_TONE = ':is([data-tone="light"], [data-tone="dark"]):not(.surface)
 const readers = new Set<Element>();
 /* Radix joylashuvi va morf (≈ 420 ms) tugaguncha sirt izi har kadr tekshiriladi. */
 const SETTLE_FRAMES = 45;
+/* Qorongʻi ulush shu chegaralar orasida boʻlsa, sirt ikki fon ustida turibdi. */
+const MIXED_MIN = 0.12;
 
 function contentTones(element: HTMLElement): Element[] {
   const list: Element[] = [];
@@ -91,6 +93,26 @@ export function useSurfaceTone(ref: RefObject<HTMLElement | null>, enabled = tru
         }
       }
       setTone(bestArea > ground ? best?.getAttribute("data-tone") : null);
+
+      /* Sirt qorongʻi surat va sut zamin chegarasida: qaysi ohang tanlanmasin, yorliqlarning bir qismi
+         notoʻgʻri fonda qoladi. Bunday lahzada oyna qalinlashadi (materials.css), yorliq doim oʻqiladi. */
+      const toneOf = (node: Element): string | null => node.getAttribute("data-tone");
+      const inside = (outer: Element, node: Element): boolean =>
+        outer !== node && outer.contains(node);
+      let dark = 0;
+      for (const [node, area] of areas) {
+        /* Eng tashqi qorongʻi element hisoblanadi, uning ichidagi yorugʻ elementlar ayiriladi. */
+        if (toneOf(node) !== "dark") continue;
+        if ([...areas.keys()].some((outer) => toneOf(outer) === "dark" && inside(outer, node)))
+          continue;
+        let light = 0;
+        for (const [other, otherArea] of areas) {
+          if (toneOf(other) === "light" && inside(node, other)) light += otherArea;
+        }
+        dark += Math.max(0, area - light);
+      }
+      const share = dark / Math.max(1, own.width * own.height);
+      element.toggleAttribute("data-tone-mixed", share > MIXED_MIN && share < 1 - MIXED_MIN);
     };
 
     const measure = (): string => {
@@ -192,6 +214,7 @@ export function useSurfaceTone(ref: RefObject<HTMLElement | null>, enabled = tru
       window.removeEventListener("resize", scheduleBuild);
       mutations.disconnect();
       element.removeAttribute("data-tone");
+      element.removeAttribute("data-tone-mixed");
     };
   }, [ref, enabled]);
 }

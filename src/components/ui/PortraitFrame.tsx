@@ -30,7 +30,7 @@ export function PortraitFrame({ ratio = "4:5", children, motion, className }: Po
     >
       {pending ? (
         <div className="portrait-frame-placeholder" data-status="pending" aria-hidden="true">
-          <BrandLogo alt="" size={48} />
+          <BrandLogo alt="" size={96} />
         </div>
       ) : (
         children

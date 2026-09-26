@@ -60,7 +60,9 @@
 
   --radius-s: 6px;
   --radius-m: 8px;
-  --radius-card: 12px;
+  /* Egasining talabi: karta va media chetlari yumshoqroq (12 px qattiq koʻrinardi). */
+  --radius-card: 20px;
+  --radius-media: 24px;
   /* Kapsula emas (egasining talabi): barcha boshqaruvlar bitta aniq radiusda, panel u bilan konsentrik. */
   --radius-control: 12px;
   --radius-panel: 24px;
@@ -117,6 +119,13 @@
      Toʻldirish ikkala mavzuda bir xil yorqin, ustidagi navy yorliq 8:1 dan yuqori. */
   --gold-fill: #d4af37;
   --gold-fill-hi: #f7e08a;
+}
+
+/* Telefonda kadr tor: 24 px burchak uni yostiqqa aylantirardi. */
+@media (max-width: 599px) {
+  :root {
+    --radius-media: 20px;
+  }
 }
 
 :root[data-theme="light"] {

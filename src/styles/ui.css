@@ -309,18 +309,7 @@
   }
 
   /* Iqtibos kamtar (egasining talabi: katta matn yoʻq): body-l oʻlchamida (qalinligi faylning oxirida).
-     Osilgan tinish belgisi faqat keng ekranda — telefonda « chetga yaqinlashmasin. */
-  @media (min-width: 600px) {
-    .ui-pullquote-text {
-      text-indent: -0.42em;
-    }
-    @supports (hanging-punctuation: first) {
-      .ui-pullquote-text {
-        text-indent: 0;
-        hanging-punctuation: first last;
-      }
-    }
-  }
+     Osilgan « yoʻq: egasi uchun ustun chetlari — matn, iqtibos va surat — bitta tekis chiziq. */
   /* ---------- Media: halqa video, film va muqova oʻrni ---------- */
   /* Picture: <picture> oʻrami qutisiz, joylashuvni ichidagi <img> belgilaydi (next/image dagi kabi). */
   picture.picture {
@@ -480,12 +469,12 @@
   }
 
   /* ---------- Media ramkasi ----------
-     Nisbat qulflangan toʻrtburchak, 12 px radius; ichida bezak yoʻq. */
+     Nisbat qulflangan toʻrtburchak, yumshoq media radiusi; ichida bezak yoʻq. */
   .media-frame {
     position: relative;
     width: 100%;
     aspect-ratio: var(--frame-ratio);
-    border-radius: var(--radius-card);
+    border-radius: var(--radius-media);
     overflow: hidden;
     background: var(--surface-2);
     isolation: isolate;
@@ -504,14 +493,9 @@
   }
 
   /* ---------- Birlashma belgisi ----------
-     Belgi koʻk disk, shakllar shaffof kesilgan: tunda va qorongʻi boʻlim ustida filtr uni sof oq
-     diskka aylantiradi (kulrang emas: avval qora, soʻng teskari). */
+     Oltin qirrali lojuvard disk (BrandLogo): har ohangda bir xil, filtrsiz. */
   .brand-logo {
     flex: none;
-  }
-  :root[data-theme="dark"] .brand-logo,
-  :where([data-tone="dark"]) .brand-logo {
-    filter: brightness(0) invert(1);
   }
   @media (forced-colors: active) {
     .brand-logo {
@@ -519,9 +503,8 @@
     }
   }
 
-  /* Surat kutilayotgan portret va odam: sahifa zaminidan bir pogʻona iliq tus, markazda belgi. */
-  .portrait-frame-placeholder,
-  .person-placeholder {
+  /* Surat kutilayotgan portret: sahifa zaminidan bir pogʻona iliq tus, markazda belgi. */
+  .portrait-frame-placeholder {
     display: grid;
     place-items: center;
     background: color-mix(in oklab, var(--ink) 5%, var(--surface));
@@ -530,11 +513,10 @@
     position: absolute;
     inset: 0;
   }
-  .person-placeholder {
-    flex: none;
-    width: 64px;
-    height: 64px;
-    border-radius: var(--radius-card);
+  /* Katta portretda belgi ramkaga mos: tor kartada kichrayadi, kengida 96 px dan oshmaydi. */
+  .portrait-frame-placeholder > .brand-logo {
+    width: min(96px, 36%);
+    height: auto;
   }
 
   /* ---------- Oʻqish chizigʻi ----------

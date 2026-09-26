@@ -135,7 +135,7 @@
 .upop-feature-dim {
   position: absolute;
   inset: 0;
-  border-radius: var(--radius-card);
+  border-radius: var(--radius-media);
   background: var(--bg);
   opacity: 0;
   pointer-events: none;

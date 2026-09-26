@@ -497,7 +497,7 @@
       position: relative;
       display: block;
       min-height: 360px;
-      border-radius: var(--radius-card);
+      border-radius: var(--radius-media);
       overflow: hidden;
     }
     .news-lead > .news-cover-link {
@@ -543,7 +543,11 @@
   .news-cover {
     width: 100%;
     overflow: hidden;
-    border-radius: var(--radius-card);
+    border-radius: var(--radius-media);
+  }
+  /* Kichik kvadrat muqova: katta kadr radiusi uni doiraga yaqinlashtirardi. */
+  .news-thumb :is(.news-cover, .media-frame) {
+    border-radius: calc(var(--radius-media) - 8px);
   }
   .news-cover-link {
     display: block;

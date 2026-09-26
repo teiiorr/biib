@@ -11,7 +11,7 @@
     --m-blur: var(--g-blur);
     --m-bright: 1;
     --m-spec: color-mix(in oklab, #ffffff 80%, var(--material-rim));
-    --m-caustic: calc(var(--g-rim) * 40%);
+    --m-caustic: calc(var(--g-rim) * 55%);
     position: relative;
     isolation: isolate;
     color: var(--material-ink);
@@ -33,6 +33,15 @@
      (ohang notoʻgʻri kelgan lahzada ham: oq surat tungi oyna ostida). */
   .material[data-text="true"] {
     --m-tint: var(--g-tint-text);
+  }
+  /* Oyna qorongʻi surat va sut zamin chegarasida (useSurfaceTone, data-tone-mixed): bitta ohang ikkala
+     fonga mos kelmaydi, shu lahzada muz qalinlashadi — yorliq har qanday Shaffoflikda ≥ 4.5:1. */
+  :root[data-theme="light"]
+    .material[data-text="true"][data-tone-mixed]:not([data-variant="tinted"]):not(
+      [data-radius="panel"],
+      [data-radius="sheet"]
+    ) {
+    --m-tint: max(var(--g-tint-text), 0.72);
   }
   .material[data-text="true"]:not([data-variant="tinted"]) {
     text-shadow:
@@ -429,39 +438,6 @@
       color-mix(in oklab, var(--edge-tint) calc(var(--edge-strength) * 0.5), transparent) 50%,
       transparent 100%
     );
-  }
-  /* Kompyuterda belgi va nom oynada emas, sanʼat qatlamida: ular ostidagina tus qalin, shunda
-     ostidan oʻtayotgan matn nom bilan aralashmaydi. Kapsula va til guruhi ortida kontent ochiq.
-     Tus nomning oʻz ohangidan: sut-oq nom ostida lojuvard, navy nom ostida sut-oq. */
-  .site-header:has(.header-row .brand-mark[data-tone="dark"]) .scroll-edge {
-    --brand-tint: var(--hero-scrim);
-  }
-  @media (min-width: 1024px) {
-    .scroll-edge::before {
-      --brand-edge: max(var(--margin), (100vw - var(--content-max)) / 2);
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: calc(var(--header-h) + 36px + var(--safe-top));
-      background: linear-gradient(
-        to bottom,
-        color-mix(in oklab, var(--brand-tint, var(--bg)) 82%, transparent) 0%,
-        color-mix(in oklab, var(--brand-tint, var(--bg)) 60%, transparent) 55%,
-        transparent 100%
-      );
-      -webkit-mask-image: linear-gradient(
-        to right,
-        black 0,
-        black calc(var(--brand-edge) + 260px),
-        transparent calc(var(--brand-edge) + 380px)
-      );
-      mask-image: linear-gradient(
-        to right,
-        black 0,
-        black calc(var(--brand-edge) + 260px),
-        transparent calc(var(--brand-edge) + 380px)
-      );
-    }
   }
   @media (prefers-reduced-transparency: reduce) {
     .scroll-edge-layer {

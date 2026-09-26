@@ -273,6 +273,10 @@
     color: var(--ink);
     transition: border-color var(--dur-ui) var(--ease-ui);
   }
+  /* Kichik muqova karta ichida konsentrik: karta radiusidan ichki chet ayiriladi. */
+  .article-nav-link :is(.news-cover, .media-frame) {
+    border-radius: calc(var(--radius-card) - 12px);
+  }
   .article-nav-text {
     display: grid;
     gap: 4px;
@@ -324,18 +328,14 @@
 
 @layer components {
   /* Rasmiy sahifalar: sarlavha tinch lojuvard lentada (home.css .navy-band), bezaksiz. */
-  /* Ekspertlar, rahbariyat, aloqa va hamkorlar kartalari bitta sokin sirt: 1 px chiziq, 12 px radius,
+  /* Aloqa va hamkorlar kartalari bitta sokin sirt: 1 px chiziq, 12 px radius,
      ichki chet telefonda 16, kattaroq ekranda 24 px (Art. X.4). */
-  .person-card,
-  .leader,
   .contact-fact,
   .privacy-kid {
     border: 1px solid var(--line);
     border-radius: var(--radius-card);
     background: var(--surface);
   }
-  .person-card,
-  .leader,
   .contact-fact {
     padding: 16px;
   }
@@ -348,135 +348,88 @@
     align-content: center;
   }
   @media (min-width: 600px) {
-    .person-card,
-    .leader,
     .contact-fact {
       padding: 24px;
     }
   }
 
-  /* Ekspertlar: tasdiqlangan kengash 2 / 3 / 6 ustunda portret kartalari; portret 4:5. */
-  .people-grid {
+  /* Ekspertlar va rahbariyat (egasining talabi): katta portretli teng kartalar. Karta 8 px ichki chetli
+     sokin sirt, portret burchagi karta bilan konsentrik. Toʻrt qatorli subgrid: qoʻshni kartalarda
+     lavozim, ism va pochta bir chiziqdan boshlanadi. Ekspertlar 2 / 3 / 3, rahbariyat 2 / 2 / 4 ustun. */
+  .person-tiles {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 32px var(--gutter);
+    gap: var(--gutter);
     margin: 0;
     padding: 0;
     list-style: none;
   }
   @media (min-width: 600px) {
-    .people-grid {
+    .person-tiles[data-columns="3"] {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
   @media (min-width: 1024px) {
-    .people-grid {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+    .person-tiles[data-columns="4"] {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
-  .people-card-text {
+  .person-tile {
+    --tile-pad: 8px;
     display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+    row-gap: 4px;
+    padding: var(--tile-pad);
+    border: 1px solid var(--line);
+    border-radius: calc(var(--radius-media) + var(--tile-pad));
+    background: var(--surface);
+  }
+  .person-tile-portrait {
+    border-radius: var(--radius-media);
+    margin-bottom: 12px;
+  }
+  .person-tile-role,
+  .person-tile-name,
+  .person-tile-foot {
+    margin: 0;
+    padding-inline: 8px;
+  }
+  .person-tile-foot {
+    display: grid;
+    align-content: end;
     gap: 4px;
+    padding-bottom: 8px;
+  }
+  .person-tile-email {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    margin: 0;
+    min-width: 0;
+  }
+  .person-tile-email > svg {
+    flex: none;
+    color: var(--accent-text);
+  }
+  .person-tile-email > a {
+    overflow-wrap: anywhere;
   }
   .people-open {
     justify-self: start;
     min-height: 44px;
     color: var(--tint);
   }
-  /* Tasdiq kutilayotgan kengash: teng kartalar 1 / 2 / 3 ustunda, oltita aʼzo toʻliq qatorlar. */
-  .person-cards {
-    display: grid;
-    gap: 16px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
   @media (min-width: 600px) {
-    .person-cards {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--gutter);
+    .person-tile {
+      --tile-pad: 12px;
     }
-  }
-  @media (min-width: 1024px) {
-    .person-cards {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .person-tile-role,
+    .person-tile-name,
+    .person-tile-foot {
+      padding-inline: 12px;
     }
-  }
-  .person-card {
-    display: grid;
-    grid-template-columns: 64px minmax(0, 1fr);
-    align-items: center;
-    column-gap: 16px;
-  }
-  .person-card-text {
-    display: grid;
-    gap: 4px;
-  }
-
-  /* Rahbariyat: teng kartalar, telefonda bir, 600 px dan ikki ustun. Karta ikki qatorli subgrid:
-     qoʻshni kartalarda faktlar bir chiziqdan boshlanadi. Tor kartada belgi sarlavha ustida. */
-  .leaders {
-    display: grid;
-    gap: 16px;
-  }
-  @media (min-width: 600px) {
-    .leaders {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--gutter);
-    }
-  }
-  .leader {
-    container-type: inline-size;
-    display: grid;
-    grid-row: span 2;
-    grid-template-rows: subgrid;
-    row-gap: 16px;
-  }
-  .leader-head {
-    display: grid;
-    align-content: start;
-    align-items: center;
-    gap: 16px;
-  }
-  .leader-portrait {
-    width: 120px;
-  }
-  /* Belgi yonida sarlavha kamida ≈ 160 px oladi: «Руководитель» kabi soʻz boʻlinmaydi. */
-  @container (min-width: 240px) {
-    .leader-head:not([data-photo]) {
-      grid-template-columns: 64px minmax(0, 1fr);
-    }
-  }
-  @container (min-width: 360px) {
-    .leader-head[data-photo] {
-      grid-template-columns: 120px minmax(0, 1fr);
-    }
-  }
-  .leader-name {
-    display: grid;
-    gap: 4px;
-    min-width: 0;
-  }
-  .leader-facts {
-    display: grid;
-    align-content: start;
-    gap: 12px;
-    margin: 0;
-    padding-top: 16px;
-    border-top: 1px solid var(--line);
-  }
-  .leader-fact {
-    display: grid;
-    gap: 4px;
-  }
-  .leader-fact > dd {
-    margin: 0;
-  }
-  .leader-email {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    overflow-wrap: anywhere;
   }
 
   /* Aloqa: oltita teng rekvizit kartasi 1 / 2 / 3 ustunda. 600 px dan har karta uch qatorli subgrid

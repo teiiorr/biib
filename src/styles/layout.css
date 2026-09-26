@@ -414,12 +414,15 @@
   :root .brand-mark[data-tone="dark"] {
     color: var(--hero-ink);
   }
-  /* Telefonda belgi oyna ichida: rang oynaning ohangidan (tayanch ham shu ohangda), 11 px yozuvga
-     qalinroq tayanch — mayda glif ingichka, uch qavat yetmaydi. */
-  :root .top-bar .brand-mark {
+  /* Belgi har oʻlchamda oyna ichida: rang oynaning ohangidan (tayanch ham shu ohangda), mayda yozuvga
+     qalinroq tayanch — ingichka glifga uch qavat yetmaydi. */
+  :root .surface .brand-mark {
     color: var(--material-ink);
   }
-  .top-bar .brand-name {
+  .header-brand .brand-mark {
+    padding-inline: 8px 12px;
+  }
+  .surface .brand-name {
     text-shadow:
       0 0 1px var(--material-base),
       0 0 2px var(--material-base),

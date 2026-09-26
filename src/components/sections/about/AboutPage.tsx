@@ -25,7 +25,7 @@ interface PageProps {
 
 /**
  * Biz haqimizda (15.3): markazdagi sarlavha; maqsad markazdagi bitta oʻqish ustunida (ikki xatboshi
- * va kamtar iqtibos); keng UPOP TREND kadri; yoʻnalishlar teng toʻrda (chiziq va nomi, tavsifsiz);
+ * va kamtar iqtibos); matn ustunidagi UPOP TREND kadri; yoʻnalishlar teng toʻrda (chiziq va nomi, tavsifsiz);
  * tarix faqat yillari tasdiqlanganda; oxirida UPOP TREND lentasi. Sarlavhalar ostida tavsif yoʻq.
  * Harakat: sarlavhalar soʻzma-soʻz, matn va roʻyxatlar doira ritmida koʻtariladi.
  */
@@ -69,18 +69,24 @@ export function AboutPage({ locale, dict }: PageProps) {
       {/* Egasining UPOP TREND tasviri: matnli sahifaga bitta keng kadr — maqsaddan yoʻnalishlarga oʻtish. */}
       <Section as="div" rhythm="section" className="about-media">
         <Container>
-          {/* Ohang faqat suratda: sut rangli izoh ostida oyna tungi ohangga oʻtib qolmasin (10.1.3). */}
-          <figure className="about-media-figure">
-            <MediaFrame ratio="16:9" tone="dark" motion={{ mode: "smooth", parallax: true }}>
-              <Picture
-                src="/brand/upop-scene.jpg"
-                alt={a.media.alt}
-                fill
-                sizes="(min-width: 1440px) 1312px, (min-width: 1024px) calc(100vw - 96px), calc(100vw - 32px)"
-              />
-            </MediaFrame>
-            <figcaption className="t-small text-ink-3">{a.media.caption}</figcaption>
-          </figure>
+          {/* Kadr maqsad matni bilan aynan bir ustunlarda (egasining talabi): chetlar bir chiziqda.
+              Ohang faqat suratda: sut rangli izoh ostida oyna tungi ohangga oʻtib qolmasin (10.1.3). */}
+          <div className="grid-site">
+            <figure
+              className="about-media-figure col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3 xl:col-span-6 xl:col-start-4"
+              data-grid-item=""
+            >
+              <MediaFrame ratio="16:9" tone="dark" motion={{ mode: "smooth", parallax: true }}>
+                <Picture
+                  src="/brand/upop-scene.jpg"
+                  alt={a.media.alt}
+                  fill
+                  sizes="(min-width: 1440px) 640px, (min-width: 1024px) 66vw, 100vw"
+                />
+              </MediaFrame>
+              <figcaption className="t-small text-ink-3">{a.media.caption}</figcaption>
+            </figure>
+          </div>
         </Container>
       </Section>
       <Section labelledBy="about-values" tone="light">

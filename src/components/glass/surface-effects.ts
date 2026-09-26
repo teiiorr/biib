@@ -52,11 +52,11 @@ function quantize(value: number): number {
 
 let filterCount = 0;
 
-/* Siljish qirra kengligiga nisbatan (egasining talabi: oyna effekti 2–3 baravar kuchli): Zichlik 0 da
-   1.2 qirra, 50 da 2.7, 100 da 4.2 (qalin muz, chetda tasvir aniq egiladi). feDisplacementMap eng
+/* Siljish qirra kengligiga nisbatan (egasining talabi: oyna yana kuchliroq): Zichlik 0 da 1.8 qirra,
+   50 da 3.9, 100 da 6 (qalin muz, chetda tasvir linzadagi kabi aniq egiladi). feDisplacementMap eng
    koʻpi scale / 2 suradi. */
-const REFRACT_BASE = 1.2;
-const REFRACT_RANGE = 3;
+const REFRACT_BASE = 1.8;
+const REFRACT_RANGE = 4.2;
 
 /** Har sirt uchun alohida filtr: xarita oʻsha sirt oʻlchamidan chizilgan, kuchi Zichlikdan. */
 function mountRefraction(element: HTMLElement): () => void {

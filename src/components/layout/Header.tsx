@@ -27,9 +27,19 @@ export function Header({ locale, dict }: HeaderProps) {
     <header className="site-header" data-testid="header">
       <ScrollEdge position="bottom" />
       <div className="container-site header-row hidden lg:flex">
-        <BrandMark locale={locale} name={brand.name}>
-          {mark}
-        </BrandMark>
+        {/* Belgi ham oʻz oynasida: ostidan oʻtayotgan matn nom bilan aralashmaydi, parda kerak emas. */}
+        <Surface
+          as="div"
+          radius="control"
+          padding={8}
+          text
+          adaptiveTone
+          className="header-capsule header-brand"
+        >
+          <BrandMark locale={locale} name={brand.name}>
+            {mark}
+          </BrandMark>
+        </Surface>
         <DesktopNav locale={locale} dict={dict.nav} />
         <Surface as="div" radius="control" padding={8} text adaptiveTone className="header-group">
           <LanguageMenu locale={locale} dict={dict.nav} />

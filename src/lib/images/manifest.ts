@@ -19,7 +19,7 @@ export const PREPARED_IMAGES: Readonly<Record<string, PreparedImage>> = {
     width: 408,
     height: 408,
     base: "/img/logo-hero",
-    widths: [240, 408],
+    widths: [40, 80, 120, 240, 408],
   },
   "/brand/upop-logo.png": {
     width: 900,

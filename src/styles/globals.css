@@ -87,12 +87,12 @@
   --g-t: 0.5;
   --g-d: 0.5;
   /* Apple Liquid Glass: muz kabi tiniq. Tus 0.30 → 0.02 (oʻrtada 0.16), xiralik 0.5 → 5.5 px (oʻrtada
-     2 px, kvadratik: tiniq uchida nozik boshqaruv), toʻyinganlik 1.5 → 1.9. Orqadan oʻtayotgan matn
+     2 px, kvadratik: tiniq uchida nozik boshqaruv), toʻyinganlik 1.6 → 2.1. Orqadan oʻtayotgan matn
      va surat aniq koʻrinadi; sinish kuchi JS da (surface-effects). */
   --g-tint: calc(0.3 - 0.28 * var(--g-t));
   --g-blur: calc(0.5px + 1px * var(--g-d) + 4px * var(--g-d) * var(--g-d));
-  --g-sat: calc(1.5 + 0.4 * var(--g-d));
-  --g-rim: calc(0.55 + 0.4 * var(--g-d));
+  --g-sat: calc(1.6 + 0.5 * var(--g-d));
+  --g-rim: calc(0.7 + 0.45 * var(--g-d));
   /* Yorliqli oynada tus 0.10 dan past tushmaydi; oʻqilishni asosan yorliq atrofidagi tayanch beradi
      (materials.css, --m-halo), shu sabab oyna ortidagi kontent koʻrinib turadi. */
   --g-tint-text: max(var(--g-tint), 0.1);
