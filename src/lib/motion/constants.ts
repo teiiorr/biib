@@ -38,10 +38,10 @@ export const SCRUB = 0.8;
 
 /**
  * Qahramon sahnasi uzunligi viewportga nisbatan (CSS --hero-scene-length bilan bir xil):
- * kompyuter 1.0, telefon 0.7; PIN_LENGTH dan oshmaydi.
+ * kompyuter 0.8, telefon 0.6; PIN_LENGTH dan oshmaydi.
  */
 export const SCENE_LENGTH = {
-  hero: { expanded: 1, compact: 0.7 },
+  hero: { expanded: 0.8, compact: 0.6 },
 } as const;
 
 /**

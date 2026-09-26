@@ -1,6 +1,7 @@
 import { getAppearanceSnapshot, subscribeAppearance } from "@/lib/appearance/store";
 
 import { refractionMap } from "./refraction-cache";
+import { bezelWidth } from "./refraction-map";
 
 /*
  * Oyna sirtining bezak qatlamlari: yaltiroq nuqta (sheen) va sinish (Chromium). Ikkalasi ham birinchi
@@ -112,6 +113,11 @@ function quantize(value: number): number {
 
 let filterCount = 0;
 
+/* Siljish qirra kengligiga nisbatan: Zichlik 0 da 0.5 qirra (yupqa muz), 50 da 1.15, 100 da 1.8
+   (qalin muz, eng chetda tasvir biroz teskari aylanadi). feDisplacementMap eng koʻpi scale / 2 suradi. */
+const REFRACT_BASE = 0.5;
+const REFRACT_RANGE = 1.3;
+
 /** Har sirt uchun alohida filtr: xarita oʻsha sirt oʻlchamidan chizilgan, kuchi Zichlikdan. */
 function mountRefraction(element: HTMLElement): () => void {
   if (!refractionSupported()) return () => undefined;
@@ -148,9 +154,11 @@ function mountRefraction(element: HTMLElement): () => void {
   filter.append(image, displace);
   svg.append(filter);
 
+  let bezel = 0;
   const setScale = (): void => {
     const density = getAppearanceSnapshot().appearance.density / 100;
-    displace.setAttribute("scale", String(8 + 56 * density));
+    const scale = Math.max(0, bezel * (REFRACT_BASE + REFRACT_RANGE * density));
+    displace.setAttribute("scale", scale.toFixed(1));
   };
   const detach = (): void => {
     svg.remove();
@@ -182,6 +190,8 @@ function mountRefraction(element: HTMLElement): () => void {
     const key = `${width}:${height}:${radius}`;
     if (key === lastKey) return;
     lastKey = key;
+    bezel = bezelWidth(width, height);
+    setScale();
     void refractionMap(width, height, radius).then((next) => {
       // Oʻlcham yana oʻzgargan boʻlsa eski xarita qoʻyilmaydi.
       if (cancelled || lastKey !== key) return;
@@ -190,7 +200,6 @@ function mountRefraction(element: HTMLElement): () => void {
     });
   };
 
-  setScale();
   measure();
   const observer = new ResizeObserver(measure);
   observer.observe(element);

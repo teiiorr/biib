@@ -11,9 +11,9 @@ import { belowViewport } from "@/lib/motion/viewport";
 import { watchPending } from "@/lib/motion/watchdog";
 
 /**
- * footer-arrive (motion-plan 3.17): tepada Chust toji chapdan oʻngga tikiladi (DrawOnView, oʻsha
- * chiziqda), toʻrt guruh 0.3 s dan doira ritmida koʻtariladi, pastki qator (muallif ham) 1.1 s da
- * oxirgi boʻlib keladi. Futer ekranda turgan boʻlsa (qisqa sahifa) hech narsa yashirilmaydi.
+ * footer-arrive (motion-plan 3.17): toʻrt guruh 0.3 s dan doira ritmida koʻtariladi, pastki qator
+ * (muallif ham) 1.1 s da oxirgi boʻlib keladi. Futer ekranda turgan boʻlsa (qisqa sahifa) hech narsa
+ * yashirilmaydi.
  */
 export function FooterArriveLeaf() {
   const anchor = useRef<HTMLSpanElement>(null);

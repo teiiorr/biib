@@ -10,12 +10,11 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
 import { pathFor, resolvePath, type PageKey } from "@/i18n/routes";
 
-import { AboutTrigger, type AboutMenuItem, type NavMarks } from "./AboutTrigger";
+import { AboutTrigger, type AboutMenuItem } from "./AboutTrigger";
 
 interface DesktopNavProps {
   readonly locale: Locale;
   readonly dict: Dictionary["nav"];
-  readonly marks: NavMarks;
 }
 
 const ABOUT_GROUP: readonly PageKey[] = ["about", "leadership", "experts", "partners"];
@@ -23,7 +22,7 @@ const PRIMARY: readonly PageKey[] = ["projects", "news", "contacts"];
 const loadAboutMenu = () => import("./AboutMenuPanel");
 
 /** Kompyuter navigatsiyasi: bitta oyna kapsulasi, ichida bir guruh boshqaruv (oyna ustiga oyna yoʻq). */
-export function DesktopNav({ locale, dict, marks }: DesktopNavProps) {
+export function DesktopNav({ locale, dict }: DesktopNavProps) {
   const pathname = usePathname();
   const current = resolvePath(pathname)?.key ?? "home";
   const aboutActive = ABOUT_GROUP.includes(current);
@@ -54,7 +53,6 @@ export function DesktopNav({ locale, dict, marks }: DesktopNavProps) {
           dict={dict}
           items={aboutItems}
           active={aboutActive}
-          marks={marks}
           initialOpen={wantOpen}
           focusTrigger={restoreFocus}
         />
@@ -63,7 +61,6 @@ export function DesktopNav({ locale, dict, marks }: DesktopNavProps) {
           ref={shellRef}
           dict={dict}
           active={aboutActive}
-          marks={marks}
           aria-expanded={false}
           onPointerEnter={warm}
           onPointerDown={warm}
@@ -77,12 +74,10 @@ export function DesktopNav({ locale, dict, marks }: DesktopNavProps) {
           <Link
             key={key}
             href={pathFor(locale, key)}
-            className="nav-item zardozi-host t-label"
+            className="nav-item t-label"
             aria-current={active ? "page" : undefined}
           >
             <span className="text-trim">{dict[key as "projects"]}</span>
-            {marks.underline}
-            {active ? marks.mark : null}
           </Link>
         );
       })}

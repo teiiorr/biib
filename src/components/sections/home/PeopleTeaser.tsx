@@ -1,12 +1,11 @@
 import { Icon } from "@/components/icons/Icon";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
-import { SplitLines } from "@/components/motion/SplitLines";
+import { SectionHeader } from "@/components/layout/SectionHeader";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { Heading } from "@/components/ui/Heading";
 import { Picture } from "@/components/ui/Picture";
 import { PortraitFrame } from "@/components/ui/PortraitFrame";
-import { Text } from "@/components/ui/Text";
 import { getExperts, getLeadership, t } from "@/content";
 import type { Person } from "@/content/types";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -96,9 +95,9 @@ function PeopleGroup({ heading, href, people, locale, awaiting, className }: Peo
 }
 
 /**
- * Rahbariyat va ekspertlar: sarlavha va mazmun bitta sirtda. Tasdiqlanmagan odamlar lavozim
- * roʻyxati boʻlib chiqadi (kompyuterda ikki ustun, 3 + 3 qator); hammasi tasdiqlangan guruh
- * avtomatik portret kartalariga oʻtadi.
+ * Rahbariyat va ekspertlar: markazdagi sarlavha, ostida ikki teng guruh yonma-yon. Tasdiqlanmagan
+ * odamlar lavozim roʻyxati boʻlib chiqadi (kompyuterda ikki ustun, 3 + 3 qator); hammasi tasdiqlangan
+ * guruh avtomatik portret kartalariga oʻtadi.
  */
 export function PeopleTeaser({ locale, dict }: PeopleTeaserProps) {
   const leaders = getLeadership().slice(0, 3);
@@ -107,15 +106,10 @@ export function PeopleTeaser({ locale, dict }: PeopleTeaserProps) {
   const awaiting = dict.common.status.awaiting;
   return (
     <Section labelledBy="home-people" rhythm="band" className="people-section">
+      <Container>
+        <SectionHeader id="home-people" title={h.heading} split />
+      </Container>
       <Container grid className="people-groups">
-        <div className="people-head section-head">
-          <SplitLines as="h2" className="t-h2 text-balance text-ink" id="home-people">
-            {h.heading}
-          </SplitLines>
-          <Text as="p" size="body-l" tone="ink-2" measure>
-            {h.lead}
-          </Text>
-        </div>
         <PeopleGroup
           heading={h.leadership}
           href={pathFor(locale, "leadership")}

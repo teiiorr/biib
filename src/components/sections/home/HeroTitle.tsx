@@ -1,5 +1,9 @@
 import { Fragment, type CSSProperties } from "react";
 
+import { headingClass } from "@/components/ui/Heading";
+import { tightMarks } from "@/components/ui/tight-marks";
+import { cx } from "@/lib/cx";
+
 interface HeroTitleProps {
   readonly name: string;
 }
@@ -14,14 +18,14 @@ export function HeroTitle({ name }: HeroTitleProps) {
   return (
     <h1
       id="hero-title"
-      className="t-display-xl text-balance text-ink home-hero-title gold-pour"
+      className={cx(headingClass(1, "display-xl", "center"), "home-hero-title")}
       aria-label={name}
     >
       {words.map((word, index) => (
         <Fragment key={`${index}-${word}`}>
           {index > 0 ? " " : null}
           <span className="hero-word" style={{ "--i": index } as CSSProperties} aria-hidden="true">
-            <span className="hero-word-in">{word}</span>
+            <span className="hero-word-in">{tightMarks(word)}</span>
           </span>
         </Fragment>
       ))}

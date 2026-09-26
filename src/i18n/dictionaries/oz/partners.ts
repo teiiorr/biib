@@ -3,7 +3,6 @@ import type { partners as source } from "../uz/partners";
 
 export const partners: typeof source = {
   title: "Ҳамкорлар",
-  lead: "Бирлашма билан бирга ишлайдиган ташкилотлар. Логотиплар ҳамкорнинг ўзи берган шаклда кўрсатилади.",
   groups: {
     state: "Давлат идоралари",
     international: "Халқаро ташкилотлар",

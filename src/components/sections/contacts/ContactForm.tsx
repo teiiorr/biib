@@ -36,23 +36,32 @@ export function ContactForm({ dict, privacyHref }: ContactFormProps) {
 
   return (
     <form action={action} className="contact-form" data-testid="contact-form" noValidate>
-      <Field id={`${id}-name`} label={dict.name} required error={errorText("name")}>
-        {(control) => (
-          <Input {...control} name="name" autoComplete="name" enterKeyHint="next" maxLength={80} />
-        )}
-      </Field>
-      <Field id={`${id}-contact`} label={dict.contact} required error={errorText("contact")}>
-        {(control) => (
-          <Input
-            {...control}
-            name="contact"
-            autoComplete="tel email"
-            inputMode="email"
-            enterKeyHint="next"
-            maxLength={80}
-          />
-        )}
-      </Field>
+      {/* Ism va aloqa yonma-yon (600 px dan): teng ustunlar, yorliqlar bir chiziqda. */}
+      <div className="contact-form-pair">
+        <Field id={`${id}-name`} label={dict.name} required error={errorText("name")}>
+          {(control) => (
+            <Input
+              {...control}
+              name="name"
+              autoComplete="name"
+              enterKeyHint="next"
+              maxLength={80}
+            />
+          )}
+        </Field>
+        <Field id={`${id}-contact`} label={dict.contact} required error={errorText("contact")}>
+          {(control) => (
+            <Input
+              {...control}
+              name="contact"
+              autoComplete="tel email"
+              inputMode="email"
+              enterKeyHint="next"
+              maxLength={80}
+            />
+          )}
+        </Field>
+      </div>
       <Field id={`${id}-message`} label={dict.message} required error={errorText("message")}>
         {(control) => (
           <Textarea {...control} name="message" rows={5} enterKeyHint="enter" maxLength={2000} />

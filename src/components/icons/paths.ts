@@ -41,15 +41,11 @@ export const ICON_NAMES = [
 export type IconName = (typeof ICON_NAMES)[number];
 
 export const ICON_PATHS: Record<IconName, string> = {
-  /* Zardoʻzi: uchta ip va har 6 px da mayda bogʻlovchi choklar. */
-  menu: "M3 7 L21 7 M3 12 L21 12 M3 17 L21 17 M6 6 L6 8 M12 6 L12 8 M18 6 L18 8 M6 11 L6 13 M12 11 L12 13 M18 11 L18 13 M6 16 L6 18 M12 16 L12 18 M18 16 L18 18",
+  menu: "M4 7 L20 7 M4 12 L20 12 M4 17 L20 17",
   close: "M6 6 L18 18 M18 6 L6 18",
-  /* Girih: oʻn qirrali yulduz, uchlari jonli maydondan 2–4 % chiqadi. */
   language:
-    "M12 2.4 L13.83 6.36 L17.64 4.23 L16.8 8.51 L21.13 9.03 L17.93 12 L21.13 14.97 L16.8 15.49 L17.64 19.77 L13.83 17.64 L12 21.6 L10.17 17.64 L6.36 19.77 L7.2 15.49 L2.87 14.97 L6.07 12 L2.87 9.03 L7.2 8.51 L6.36 4.23 L10.17 6.36 Z",
-  /* Uchi bodom shaklida. */
-  external:
-    "M10 5 H6 Q5 5 5 6 V18 Q5 19 6 19 H18 Q19 19 19 18 V14 M11 13 L16 8 M19.5 4.5 Q18.2 8.1 14.6 9.4 Q15.9 5.8 19.5 4.5 Z",
+    "M12 21 A9 9 0 1 0 12 3 A9 9 0 1 0 12 21 Z M3 12 H21 M12 3 Q16.5 7.5 16.5 12 Q16.5 16.5 12 21 Q7.5 16.5 7.5 12 Q7.5 7.5 12 3 Z",
+  external: "M10 5 H6 Q5 5 5 6 V18 Q5 19 6 19 H18 Q19 19 19 18 V14 M11 13 L20 4 M14 4 H20 V10",
   /* Strelkalar uchi tomon 1 px siljigan. */
   "arrow-right": "M5 12 L21 12 M15 6 L21 12 L15 18",
   "arrow-left": "M19 12 L3 12 M9 6 L3 12 L9 18",

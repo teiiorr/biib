@@ -31,6 +31,7 @@ interface InViewVideoProps {
  * Ovozsiz halqa: faqat koʻrinishda va ambient reyestr ruxsati bilan ijro etiladi; kamaytirilgan
  * harakatda va Harakat = off da manba qoʻyilmaydi, poster turadi (WCAG 2.2.2). preload="none":
  * tarmoq faqat ijro boshlanganda band boʻladi. Manba oʻlchami bir marta, gidratsiyadan keyin tanlanadi.
+ * Boshqaruv kadr ustida turadi: sirt doim tungi materialda, belgi qorongʻi kadrda ham ≥ 3:1.
  */
 export function InViewVideo({
   src,
@@ -89,6 +90,7 @@ export function InViewVideo({
           radius="control"
           padding={0}
           text
+          data-tone="dark"
           className="media-video-control"
           onClick={toggle}
           aria-pressed={paused}

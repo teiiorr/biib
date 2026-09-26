@@ -18,7 +18,7 @@ export const appearance: typeof source = {
   densityTo: "Thick",
   reset: "Reset",
   sound: "Sound",
-  soundHint: "A soft doira note when the theme or section changes",
+  soundHint: "A soft chime with every tap",
   motion: "Motion",
   motionHint: "Decorative motion; text and page transitions stay",
   valueText: "{value}%",

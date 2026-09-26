@@ -3,7 +3,6 @@ import type { contacts as source } from "../uz/contacts";
 
 export const contacts: typeof source = {
   title: "Aloqa",
-  lead: "Savol, taklif va hamkorlik uçun. Iş kunlari bir kun içida javob beramiz.",
   details: {
     heading: "Rekvizitlar",
     address: "Manzil",
@@ -11,16 +10,13 @@ export const contacts: typeof source = {
     email: "Poçta",
     telegram: "Telegram",
     hours: "Iş vaqti",
-    hoursValue: "Duşanba–juma, 09:00–18:00",
     copy: "Nusxa oliş",
     copied: "Nusxa olindi",
     pending: "Tasdiq kutilmoqda",
   },
   map: {
-    heading: "Xaritada",
     yandex: "Yandex Xaritada oçiş",
     google: "Google Xaritada oçiş",
-    pending: "Manzil nuqtasi taşkilot tasdiğini kutmoqda",
   },
   form: {
     heading: "Xabar yuboriş",
@@ -39,7 +35,6 @@ export const contacts: typeof source = {
     tooShort: "Xabar kamida {min} belgidan iborat bölsin",
     consentRequired: "Yuboriş uçun rozilik kerak",
     fallbackHeading: "Telegram orqali yozing",
-    fallbackText: "Şakl hozirça ulanmagan, xabarni töğridan-töğri Telegramda yuborişingiz mumkin.",
     fallbackCta: "Telegramda yoziş",
   },
   socials: {

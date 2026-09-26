@@ -70,6 +70,7 @@ export function GlassDropdownMenu({
             radius="panel"
             padding={8}
             text
+            adaptiveTone
             className={cx("surface-morph glass-menu z-overlay", className)}
             data-testid={testId}
           >

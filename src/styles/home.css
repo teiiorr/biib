@@ -1,40 +1,16 @@
 @layer components {
-  /* Bosh sahifa: Darvoza, portal, UPOP TREND, yangiliklar, odamlar, aloqa lentasi. */
+  /* Bosh sahifa: Darvoza, missiya, UPOP TREND, yangiliklar, odamlar, aloqa. Boʻlim boshlari umumiy
+     SectionHeader da (layout.css .section-header). */
 
-  .section-head {
-    display: grid;
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-  @media (min-width: 600px) {
-    .section-head {
-      margin-bottom: 32px;
-    }
-  }
-  /* Sarlavha bloki va havola oxirgi qatorlarining tayanch chizigʻi bir: havola matni tugma
-     balandligida «suzmaydi». */
-  .section-head-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: last baseline;
-    justify-content: space-between;
-    gap: 8px 24px;
-    margin-bottom: 24px;
-  }
-  /* «Hammasini koʻrish» matni kontent chetiga tekislanadi: ghost tugmaning ichki boʻshligʻi optik qaytariladi
-     (bir qatorda oʻng chetga, pastga oʻtganda chap chetga). */
-  .section-head-row > .ui-button[data-variant="ghost"] {
-    margin-inline: calc(-1 * var(--btn-px)) calc(4px - var(--btn-px));
-  }
-
-  /* Darvoza: egasining videosi, belgi kadr markazida; nom, missiya va harakatlar pastda chapda, toʻrda. */
-  /* Sahna uzunligi viewportga nisbatan: kompyuter 1, telefon 0.7; harakat yoʻq va past/tor ekranda 0. */
+  /* Darvoza: egasining videosi, belgi kadr markazida; nom markazda, harakatlar uning ostida oʻngda. */
+  /* Sahna uzunligi viewportga nisbatan: kompyuter 0.8, telefon 0.6 (missiya endi bitta kamtar jumla,
+     uzun xira ekran kerak emas); harakat yoʻq va past/tor ekranda 0. */
   :root {
-    --hero-scene-length: 0.7;
+    --hero-scene-length: 0.6;
   }
   @media (min-width: 1024px) {
     :root {
-      --hero-scene-length: 1;
+      --hero-scene-length: 0.8;
     }
   }
   @media (prefers-reduced-motion: reduce), (max-height: 520px), (max-width: 359px) {
@@ -142,6 +118,14 @@
   /* Ostlik belgi ostidan boshlanadi (belgi toza qoladi), 28 px da 64 %, 140 px da 82 %, pastda 90 %;
      matn +32 px dan: sut-oq matn ikkala poster va butun viewport matritsasida ≥ 5.5:1 (D45). */
   .home-hero-content::before {
+    --hero-static-scrim: linear-gradient(
+      180deg,
+      transparent var(--logo-bottom),
+      color-mix(in oklab, var(--hero-scrim) 64%, transparent) calc(var(--logo-bottom) + 28px),
+      color-mix(in oklab, var(--hero-scrim) 82%, transparent) calc(var(--logo-bottom) + 140px),
+      color-mix(in oklab, var(--hero-scrim) 90%, transparent) calc(100% - 160px),
+      var(--hero-scrim) 100%
+    );
     content: "";
     position: absolute;
     inset: 0;
@@ -157,31 +141,14 @@
   .home-hero-grid {
     position: relative;
   }
-  /* Bosh harfning yon boʻshligʻi: chap chetga optik tekislash (§8 III.6), har shrift oʻz oʻlchovi bilan
-     (fontTools, xMin/upm): Manrope 800 da B/Б = 70/1000 em. */
-  :root .home-hero-title {
-    margin-inline-start: -0.07em;
-  }
-  /* Nom ostida bitta qator: missiya chapda (≤ 52ch), harakatlar oʻng yonida; tor ekranda pastga oʻtadi. */
-  .home-hero-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    gap: 16px 32px;
-    margin-top: 16px;
-  }
-  .home-hero-mission {
-    flex: 1 1 36ch;
-    max-width: 52ch;
-  }
-  /* Harakatlar har doim oʻng chetda (egasining talabi): matn chapda, tugmalar oʻngda — bir tartib. */
+  /* Harakatlar har doim oʻng chetda (egasining talabi): nom markazda, tugmalar uning ostida oʻngda. */
   .home-hero-actions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-end;
     gap: 12px;
-    margin-inline-start: auto;
+    margin-top: 24px;
   }
   /* Halqa boshqaruvi uyasi: video kelguncha boʻsh, joy olmaydi. */
   .home-hero-control {
@@ -202,45 +169,38 @@
   .hero-loop-control:active {
     scale: 0.97;
   }
-  /* Telefonda ikki harakat bir qatorda sigʻishi uchun 48 px (Art. IX.1 juftligi: yorliq 16). */
+  /* Telefonda 48 px (Art. IX.1 juftligi: yorliq 16). Bosh harakat toʻliq kenglikda, ostida ikkinchi
+     harakat va halqa boshqaruvi bir qatorda: boshqaruv kelganda qator balandligi oʻzgarmaydi (siljish yoʻq),
+     320 px da ham yorliqlar sigʻadi. Bosh barmoq zonasida, tab-bar ustida. */
   @media (max-width: 599px) {
     .home-hero-actions .ui-button[data-size="56"] {
       --btn-h: var(--control-m);
       --btn-px: 24px;
     }
-    /* Ikki harakat qatorni teng boʻlib toʻldiradi: oʻng chetda 20 px «ortiqcha» boʻshliq qolmaydi. */
-    .home-hero-actions {
-      flex: 1 1 100%;
-    }
     .home-hero-actions > .ui-button {
       flex: 1 1 0;
     }
-    /* Halqa boshqaruvi alohida qatorga tushmasin: missiyaning birinchi qatori yonida, oʻng chetda.
-       Joy missiyadan oldindan olinadi (tugma kelganda matn siljimaydi), matn ustiga tushmaydi. */
-    :root .home-hero-row {
-      position: relative;
-    }
-    :root .home-hero-mission {
-      padding-inline-end: calc(var(--hit-min) + 12px);
-    }
-    .home-hero-control {
-      position: absolute;
-      top: -8px;
-      right: 0;
+    .home-hero-actions > .ui-button:first-child {
+      flex-basis: 100%;
     }
   }
   @media (min-width: 1024px) {
     .home-hero-content {
       padding-bottom: 64px;
     }
-    .home-hero-row {
-      gap: 24px 48px;
-      margin-top: 24px;
+    .home-hero-actions {
+      margin-top: 32px;
     }
   }
-  /* Oyna tugmasi va boshqaruv qorongʻi kadr ustida ikkala mavzuda ham tun materialida (10.1.3). */
+  /* Oyna tugmasi va boshqaruv qorongʻi kadr ustida ikkala mavzuda ham tun materialida (10.1.3); pushti
+     ham tungi: sahifadagi har qorongʻi sirtda (UPOP maydoni, lojuvard lentalar) bitta bosh tugma rangi. */
   :root .home-hero-content {
+    --tint: #e8699f;
+    --tint-hover: #f48ab5;
+    --on-tint: #0a1026;
+    --focus: #e8699f;
     --material-ink: var(--hero-ink);
+    --material-ink-2: #c3cadb;
     --material-base: var(--hero-scrim);
     --material-rim: color-mix(in oklab, var(--hero-ink) 55%, var(--hero-scrim));
   }
@@ -264,7 +224,7 @@
     pointer-events: none;
   }
 
-  /* Missiya: belgilangan soʻzlar ostida zardoʻzi. */
+  /* Missiya: bitta kamtar jumla (h4), markazda. */
   .home-mission {
     position: relative;
     background: var(--bg);
@@ -273,10 +233,9 @@
      choksiz oʻtadi); sahna boʻlmasa ham (harakat oʻchiq) matn eng yorqin alanga ustida ≥ 5:1. */
   :root .home-hero-scene .home-mission {
     --ink: var(--hero-ink);
-    --ink-3: color-mix(in oklab, var(--hero-ink) 72%, transparent);
     z-index: 1;
     display: grid;
-    align-content: center;
+    align-content: end;
     min-height: calc(100svh * var(--hero-scene-length));
     color: var(--ink);
     background: linear-gradient(
@@ -287,25 +246,35 @@
       var(--hero-scrim) 100%
     );
   }
-  .home-mission-text {
-    display: grid;
-    gap: 16px;
+  /* Sahna yoʻq (harakat oʻchiq, past yoki tor ekran): qahramon yopishmaydi, missiya uning ostidan
+     tekis lojuvardda keladi; aks holda jumla toʻxtab qolgan sarlavha ustiga chiqib qolardi. */
+  /* Ostlik pastki 160 px da toʻliq lojuvardga yetadi: kadr tekis lentaga chiziqsiz oʻtadi. */
+  @media (prefers-reduced-motion: reduce), (max-height: 520px), (max-width: 359px) {
+    .home-hero {
+      position: relative;
+    }
+    :root .home-hero-scene .home-mission {
+      background: var(--hero-scrim);
+    }
+    .home-hero-content::before {
+      background: var(--hero-static-scrim);
+    }
   }
-  /* ch oʻz shriftida (44 px): ≈ 3–4 qator; konteyner shriftidagi 28ch ingichka ustun berardi. */
+  :root[data-motion="off"] .home-hero {
+    position: relative;
+  }
+  :root[data-motion="off"] .home-hero-scene .home-mission {
+    background: var(--hero-scrim);
+  }
+  :root[data-motion="off"] .home-hero-content::before {
+    background: var(--hero-static-scrim);
+  }
+  /* ch oʻz shriftida (18–20 px): 2–3 muvozanatli qator. */
   .home-mission-statement {
-    max-width: 20ch;
+    max-width: 40ch;
+    margin-inline: auto;
+    text-align: center;
     text-wrap: balance;
-  }
-  /* Katta jumlada zardoʻzi ostchiziq keyingi qatorga tegmasin: qator oraligʻi ochiq, chiziq harfga yaqin. */
-  :root .home-mission-statement {
-    line-height: 1.14;
-  }
-  :root .home-mission-statement .zardozi-underline {
-    bottom: -0.1em;
-  }
-  /* Zardoʻzi matn koʻtarilib boʻlgach tikiladi: koʻrinish + doira kechikishi ustiga 360 ms. */
-  .mission-words .zardozi-underline {
-    transition-delay: 360ms;
   }
 
   /* UPOP TREND: bosh loyiha boʻlimi */
@@ -333,15 +302,13 @@
     --on-tint: #0a1026;
     --focus: #e8699f;
     --accent-text: #e3c46e;
-    --accent-art: #d9b75a;
-    --accent-hi: #f0d488;
-    --accent-lo: #a88a3a;
     --art-1: #f07aae;
     --art-1-text: #e8699f;
     --art-2: #d9b75a;
     --art-2-text: #e3c46e;
     --material-base: #111a38;
     --material-ink: #f7f3ea;
+    --material-ink-2: #c3cadb;
     --material-rim: #8c95b4;
     --material-shadow: rgba(2, 5, 20, 0.5);
     --shadow-raised: 0 1px 2px rgba(2, 5, 20, 0.4);
@@ -352,16 +319,6 @@
   :root[data-theme="dark"] :is(.upop-field, .navy-band) {
     --bg: #111a38;
     --surface: #17214a;
-  }
-  /* Sarlavha lentasi tekis: relyef ham, gradient ham yoʻq; pastki qirrada bitta 1 px oltin chiziq. */
-  :root .navy-band::after {
-    content: "";
-    position: absolute;
-    inset: auto 0 0;
-    height: 1px;
-    background: var(--accent-art);
-    opacity: 0.5;
-    pointer-events: none;
   }
   /* Baxmal tovlanishi: chap yuqorida 8 % pushti, oʻng pastda 6 % oltin — rang hikoyasi, halo emas. */
   :root .upop-field {
@@ -379,18 +336,27 @@
     background: linear-gradient(180deg, var(--hero-scrim) 0, transparent 240px), var(--upop-velvet);
   }
 
+  /* Sarlavha tepada markazda; logotip va kadr bir qatorda; uch dalil teng ustunlarda, bir tepa chiziqda
+     va bir uslubda (egasining talabi: yonma-yon matnlar muvozanatda); harakatlar oʻng chetda. */
   .upop-feature-grid {
     row-gap: 32px;
     align-items: center;
   }
+  .upop-feature-head,
   .upop-feature-wordmark,
   .upop-feature-media,
   .upop-feature-text {
     grid-column: 1 / -1;
   }
-  /* Telefonda logotip toʻrt ustundan uchtasini oladi: video ustida ogʻirlik qilmaydi. */
+  /* Toʻr qator oraligʻi yetarli: sarlavhaning oʻz pastki masofasi ikki barobar boʻshliq bermasin. */
+  .upop-feature-grid > .upop-feature-head {
+    margin-bottom: 0;
+  }
+  /* Telefonda logotip toʻrt ustundan uchtasi kengligida, sarlavha va dalillar bilan bir oʻqda (markazda). */
   .upop-feature-wordmark {
-    grid-column: 1 / 4;
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 75%;
   }
   .upop-wordmark {
     display: block;
@@ -399,23 +365,21 @@
   }
   .upop-feature-text {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
+    gap: 32px;
   }
-  .upop-feature-copy {
-    display: grid;
-    gap: 12px;
-  }
-  /* Uch dalil: ingichka chiziqli roʻyxat, plitka yoki belgisiz. */
+  /* Uch dalil: har biri tepasida 1 px chiziq, matn markazda; plitka yoki belgisiz. */
   .upop-feature-list {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     margin: 0;
     padding: 0;
     list-style: none;
   }
   .upop-feature-list li {
-    padding-block: 12px;
+    padding-block: 16px;
     border-top: 1px solid var(--line);
+    text-align: center;
+    text-wrap: balance;
   }
   .upop-feature-list li:last-child {
     border-bottom: 1px solid var(--line);
@@ -427,7 +391,7 @@
     justify-content: flex-end;
     gap: 12px;
   }
-  /* Telefonda ikki harakat bir qatorga sigʻmaydi: ikkalasi toʻliq kenglikda (aloqa lentasi bilan bir xil). */
+  /* Telefonda ikki harakat bir qatorga sigʻmaydi: ikkalasi toʻliq kenglikda (aloqa kartasi bilan bir xil). */
   @media (max-width: 599px) {
     .upop-feature-actions > .ui-button {
       flex: 1 1 100%;
@@ -439,40 +403,32 @@
     }
     .upop-feature-wordmark {
       grid-column: 1 / 4;
+      justify-self: stretch;
+      width: auto;
     }
     .upop-feature-media {
       grid-column: 4 / 9;
     }
-  }
-  @media (min-width: 1024px) {
-    .upop-feature-grid {
-      row-gap: 64px;
+    /* Uch teng ustun: chiziqlar bir balandlikda, matnlar bir tepa chiziqdan boshlanadi. */
+    .upop-feature-list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: var(--gutter);
     }
+    .upop-feature-list li {
+      padding-bottom: 0;
+    }
+    .upop-feature-list li:last-child {
+      border-bottom: 0;
+    }
+  }
+  /* Kompyuterda logotip birinchi uchdan birda (1–4), kadr qolgan ikkitasida (5–12): pastdagi uch dalil
+     ham 4 ustundan, shunda ajratuvchi chiziqlar logotip va kadr chekkalari bilan bir chiziqda. */
+  @media (min-width: 1024px) {
     .upop-feature-wordmark {
-      grid-column: 1 / 6;
+      grid-column: 1 / 5;
     }
     .upop-feature-media {
-      grid-column: 6 / 13;
-    }
-    /* Matn qatori toʻrni davom ettiradi: sarlavha va harakatlar 1–7, dalillar 8–12. */
-    .upop-feature-text {
-      grid-template-columns: subgrid;
-      grid-template-rows: auto auto;
-      row-gap: 32px;
-    }
-    .upop-feature-copy {
-      grid-column: 1 / 8;
-      grid-row: 1;
-    }
-    .upop-feature-list {
-      grid-column: 8 / 13;
-      grid-row: 1;
-      align-self: start;
-    }
-    /* Harakatlar dalillar ostida, oʻng chetga tekis. */
-    .upop-feature-actions {
-      grid-column: 8 / 13;
-      grid-row: 2;
+      grid-column: 5 / 13;
     }
   }
 
@@ -504,14 +460,16 @@
   .news-title a {
     color: var(--ink);
   }
+  /* Sensorli ekranda bir qatorli sarlavha havolasi ham 44 px nishon. */
+  @media (pointer: coarse) {
+    .news-title a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+    }
+  }
   .news-title a:hover {
     color: var(--tint);
-  }
-  .news-lead-text {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
   .news-side {
     display: grid;
@@ -535,9 +493,11 @@
     gap: 16px;
     align-items: start;
   }
+  /* Kompyuterda kichik muqova viewport bilan oʻsadi (96–128 px): toʻrt qator bosh xabar balandligiga
+     teng keladi, ikkala ustun bir chiziqda tugaydi. */
   @media (min-width: 1024px) {
     .news-row {
-      grid-template-columns: 160px minmax(0, 1fr);
+      grid-template-columns: clamp(96px, 8vw, 128px) minmax(0, 1fr);
     }
   }
   .news-row-text {
@@ -547,20 +507,16 @@
 
   /* Odamlar */
   /* Sarlavha va mazmun bitta sirtda (sahifadan bir pogʻona yorugʻ sirt lentasi — yangiliklar bilan ritm).
-     Sarlavha ustida, ikki guruh ostida yonma-yon (planshet 4 + 4, kompyuter 6 + 6). */
+     Sarlavha markazda, ikki guruh ostida yonma-yon (planshet 4 + 4, kompyuter 6 + 6). */
   :root .people-section {
     background: var(--surface);
   }
   .people-groups {
     row-gap: 32px;
   }
-  .people-head,
   .people-group {
     grid-column: 1 / -1;
     min-width: 0;
-  }
-  .people-head.section-head {
-    margin-bottom: 0;
   }
   .people-group-head {
     margin-bottom: 8px;
@@ -585,7 +541,8 @@
       transform: translateX(4px);
     }
   }
-  /* Lavozim roʻyxati: qator 1 px ajratuvchi bilan, lavozim chapda, holat oʻngda (telefonda ostida). */
+  /* Lavozim roʻyxati: qator 1 px ajratuvchi bilan, lavozim chapda, holat har qatorda oʻngda. Uzun lavozim
+     oʻz ustunida qatorga oʻtadi, holat tepa chiziqda qoladi: qatorlar ritmi bir xil. */
   .people-roles {
     display: grid;
     margin: 0;
@@ -594,11 +551,10 @@
     border-top: 1px solid var(--line);
   }
   .people-role {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: baseline;
-    justify-content: space-between;
-    gap: 4px 16px;
+    gap: 16px;
     padding-block: 16px;
     border-bottom: 1px solid var(--line);
   }
@@ -661,14 +617,14 @@
     margin: 0;
   }
 
-  /* Aloqa lentasi */
-  /* Sokin karta (sirt, 1 px chiziq, 12 px radius). Kompyuterda sarlavha va harakatlar 1–7,
-     manzil va telefon 8–12; telefonda ketma-ket. Palak kichik, sarlavha yonida. */
-  .contact-band-text {
+  /* Aloqa */
+  /* Sarlavha ostida sokin karta (sirt, 1 px chiziq, 12 px radius): kompyuterda bitta muvozanatli qator —
+     chapda manzil va telefon, oʻng chetda markazda harakatlar; telefon va planshetda ketma-ket. */
+  .contact-band-card {
     display: grid;
     gap: 24px;
   }
-  :root .contact-band-text {
+  :root .contact-band-card {
     padding: 24px;
     border: 1px solid var(--line);
     border-radius: var(--radius-card);
@@ -685,44 +641,13 @@
     );
     box-shadow: inset 0 1px 0 color-mix(in oklab, var(--art-4) 55%, transparent);
   }
-  :root[data-theme="dark"] .contact-band-text {
+  :root[data-theme="dark"] .contact-band-card {
     border-color: color-mix(in oklab, var(--art-4) 45%, var(--line));
     box-shadow: var(--inner-highlight);
   }
-  /* Telefon: palak sarlavha yonida, kirish matni ostida toʻliq kenglikda (tor ustunga siqilmaydi). */
-  .contact-band-head {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: center;
-    gap: 12px 16px;
-  }
-  .contact-band-title {
-    display: contents;
-  }
-  .contact-band-title > p {
-    grid-column: 1 / -1;
-  }
-  @media (min-width: 600px) {
-    .contact-band-head {
-      align-items: start;
-      column-gap: 24px;
-    }
-    .contact-band-title {
-      display: grid;
-      gap: 12px;
-      min-width: 0;
-    }
-    .contact-band-title > p {
-      grid-column: auto;
-    }
-  }
-  .contact-band-palak {
-    flex: none;
-    color: var(--accent-art);
-  }
   .contact-band-list {
     display: grid;
-    gap: 16px;
+    gap: 16px 24px;
     margin: 0;
   }
   @media (min-width: 600px) {
@@ -746,26 +671,14 @@
     }
   }
   @media (min-width: 1024px) {
-    :root .contact-band-text {
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      grid-template-areas:
-        "head head head head head head head . list list list list"
-        ". . . . . . . . actions actions actions actions";
+    :root .contact-band-card {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 32px;
+      padding: 32px 48px;
+    }
+    .contact-band-list {
       column-gap: var(--gutter);
-      row-gap: 32px;
-      padding: 48px;
-    }
-    :root .contact-band-head {
-      grid-area: head;
-    }
-    :root .contact-band-list {
-      grid-area: list;
-      grid-template-columns: minmax(0, 1fr);
-      align-self: end;
-    }
-    /* Tugmalar oʻng ustunda, maʼlumotlar ostida, oʻng chetga tekis. */
-    :root .contact-band-actions {
-      grid-area: actions;
     }
   }
 }
@@ -776,27 +689,24 @@
   font-family: "Manrope Hero", var(--font-display);
 }
 
-/* Nom kadr ostida: ≥1024 da bir qator, telefonda ikki qator (36 px). display-xl kadrdagi belgi bilan
-   raqobatlashar va past ekranlarda belgi ustiga chiqardi (D44). */
+/* Nom kadr ostida: sahifadagi eng katta sarlavha (1440 da 76 px, boʻlim sarlavhalari 64 px), ≥1024 da
+   bir qator (1024 da 56 px, 1312 px oʻlchovga sigʻadi), telefonda ikki qator (36 px). display-xl kadrdagi
+   belgi bilan raqobatlashar va past ekranlarda belgi ustiga chiqardi (D44). */
 :root .home-hero-title {
-  font-size: clamp(2.25rem, 1.6rem + 2.2vw, 4rem);
+  font-size: clamp(2.25rem, 0.425rem + 4.808vw, 4.75rem);
   line-height: var(--lh-h1);
   letter-spacing: var(--ls-h1);
 }
 
-/* Telefonda qahramon matni belgi ostidan tab-bargacha sigʻsin (360–390 px, beshala til): missiya oddiy
-   matn oʻlchamida, kirillcha uzun nom 30 px da ikki qatorga tushadi (36 px da toʻrt qator edi). */
+/* Telefonda nom boʻlim sarlavhalaridan (t-h1) kamida 1.25 baravar katta: 430–599 px da 36 px yetmay
+   qolardi. Kirillcha uzun nom 30 px dan boshlanadi (36 px da toʻrt qator edi), 360–412 px da uch
+   qatorda belgi ostidan tab-bargacha sigʻadi (beshala til oʻlchab koʻrilgan). */
 @media (max-width: 599px) {
-  :root .home-hero-mission {
-    font-size: var(--fs-body);
-    line-height: 1.55;
+  :root .home-hero-title {
+    font-size: max(2.25rem, calc(var(--fs-h1) * 1.25));
   }
   :root .home-hero-title:lang(uz-Cyrl) {
-    font-size: 1.875rem;
-  }
-  :root .home-hero-row {
-    margin-top: 12px;
-    gap: 12px 24px;
+    font-size: max(1.875rem, calc(var(--fs-h1) * 1.25));
   }
 }
 
@@ -814,12 +724,11 @@
   }
 }
 
-/* Qatlamdan tashqarida (section-pad utilitasidan ustun): kompyuterda missiya jumlasi sahna blokining
-   pastida — yuqoridagi joy xiralashgan kadr ustida, sahna uzunligi oʻzgarmaydi; UPOP maydonigacha
-   64 px, ikki boʻlim orasida boʻsh lojuvard qolmaydi. */
+/* Qatlamdan tashqarida (section-pad utilitasidan ustun): missiya jumlasi sahna blokining pastida —
+   yuqoridagi joy xiralashgan kadr ustida; kompyuterda UPOP maydonigacha 64 px, ikki boʻlim orasida
+   boʻsh lojuvard qolmaydi. */
 @media (min-width: 1024px) {
   :root .home-hero-scene .home-mission {
-    align-content: end;
     padding-bottom: 64px;
   }
 }

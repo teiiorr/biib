@@ -54,6 +54,7 @@ export function GlassSheet({
             radius="sheet"
             padding={padding}
             text
+            adaptiveTone
             className={cx("surface-morph glass-sheet z-modal safe-bottom", className)}
             data-testid={testId}
           >

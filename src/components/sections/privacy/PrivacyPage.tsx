@@ -3,10 +3,9 @@ import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
+import { SectionHeader } from "@/components/layout/SectionHeader";
 import { Reveal } from "@/components/motion/Reveal";
-import { Heading } from "@/components/ui/Heading";
 import { Prose } from "@/components/ui/Prose";
-import { Text } from "@/components/ui/Text";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill, formatDate } from "@/i18n/format";
 import type { Locale } from "@/i18n/locales";
@@ -19,86 +18,80 @@ interface PageProps {
 
 const UPDATED = "2026-09-24";
 
-/** Maxfiylik: bolalar uchun qisqa xulosa, kompyuterda yopishqoq mundarija (1–3), matn 4–12, boʻlimlar. */
+/* Oʻqish ustuni maqola va «Biz haqimizda» bilan bir xil: kompyuterda 3–10, kengroq ekranda 4–9.
+   Xulosa kartasi, matn va sana shu ustunning chetlarida turadi. */
+const COLUMN = "col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3 xl:col-span-6 xl:col-start-4";
+
+/**
+ * Maxfiylik: sarlavha, bolalar uchun qisqa xulosa va toʻrtta huquqiy band (qisqa bandlar birlashtirilgan:
+ * har sarlavha ostida toʻliq matn bloki). Har band markazdagi sarlavha va uning ostida 12 ustunli
+ * toʻrdagi 65ch ustunda chapdan oʻqiladigan matn. Yangilangan sana — matn oxirida sokin izoh.
+ */
 export function PrivacyPage({ locale, dict }: PageProps) {
   const p = dict.privacy;
+  const last = p.sections.at(-1)?.id;
   return (
     <>
       <PageHero
         title={p.title}
-        lead={p.lead}
         breadcrumbs={[
           { href: pathFor(locale, "home"), label: dict.nav.home },
           { href: pathFor(locale, "privacy"), label: dict.nav.privacy, current: true },
         ]}
         breadcrumbsLabel={dict.common.hints.breadcrumbs}
-      >
-        <Text as="p" size="small" tone="ink-3" tnum>
-          {fill(p.updated, { date: formatDate(locale, UPDATED) })}
-        </Text>
-        <Text as="p" size="small" tone="ink-3">
-          {p.legalPending}
-        </Text>
-      </PageHero>
+      />
       <Section labelledBy="privacy-kid">
         <Container>
-          <div className="privacy-kid" data-grid-item="">
-            <Heading level={2} size="h3" id="privacy-kid">
-              {p.kid.heading}
-            </Heading>
-            <ul className="privacy-kid-list t-body-l">
+          <SectionHeader id="privacy-kid" title={p.kid.heading} />
+          <div className="grid-site">
+            <ul className={`privacy-kid ${COLUMN}`} data-grid-item="">
               {p.kid.items.map((item) => (
-                <li key={item}>{item}</li>
+                <li key={item} className="t-body-l">
+                  {item}
+                </li>
               ))}
             </ul>
           </div>
         </Container>
       </Section>
       <Section>
-        <Container grid>
-          <nav
-            className="col-span-4 md:col-span-8 lg:col-span-3 privacy-toc"
-            aria-label={p.toc}
-            data-grid-item=""
-          >
-            <p className="t-label text-ink-2">{p.toc}</p>
-            <ol className="privacy-toc-list">
-              {p.sections.map((s) => (
-                <li key={s.id}>
-                  <a href={`#${s.id}`} className="t-small privacy-toc-link">
-                    {s.heading}
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </nav>
-          <div className="col-span-4 md:col-span-8 lg:col-span-9 lg:col-start-4" data-grid-item="">
-            {p.sections.map((s) => (
-              <Reveal
-                as="section"
-                key={s.id}
-                id={s.id}
-                className="privacy-section"
-                labelledBy={`${s.id}-h`}
-                distance={16}
-              >
-                <Heading level={2} size="h3" id={`${s.id}-h`}>
-                  {s.heading}
-                </Heading>
-                <Prose>
+        <Container className="privacy-sections">
+          {p.sections.map((s) => (
+            <Reveal
+              as="section"
+              key={s.id}
+              id={s.id}
+              className="privacy-section"
+              labelledBy={`${s.id}-h`}
+              distance={16}
+            >
+              <SectionHeader id={`${s.id}-h`} title={s.heading} />
+              <div className="grid-site">
+                <Prose className={COLUMN}>
                   {s.paragraphs.map((para) => (
                     <p key={para.slice(0, 32)}>{para}</p>
                   ))}
-                  {s.id === "contact" ? (
+                  {/* Soʻrov qayerga yuborilishi oxirgi bandda aytiladi: havola shu yerda. */}
+                  {s.id === last ? (
                     <p>
-                      <Link href={pathFor(locale, "contacts")} className="text-tint underline">
+                      <Link
+                        href={pathFor(locale, "contacts")}
+                        className="privacy-contact-link text-tint underline"
+                      >
                         {dict.nav.contacts}
                       </Link>
                     </p>
                   ) : null}
                 </Prose>
-              </Reveal>
-            ))}
+              </div>
+            </Reveal>
+          ))}
+          <div className="grid-site">
+            <div className={`privacy-updated ${COLUMN}`}>
+              <p className="t-small text-ink-3 tnum">
+                {fill(p.updated, { date: formatDate(locale, UPDATED) })}
+              </p>
+            </div>
           </div>
         </Container>
       </Section>

@@ -197,7 +197,13 @@ export function useHeroScene(
         enabled = on;
         if (on) trigger.enable(false, false);
         else {
+          const reachedAt = trigger.progress;
           trigger.disable(false);
+          /* Tez skroll yoki langarga sakrashda scrub orqada qoladi: sahna toʻxtaganda holat skroll joyiga
+             tenglashadi, aks holda sarlavhadagi belgi yashirin qolib ketardi. */
+          tl.progress(reachedAt);
+          progress.current = reachedAt;
+          setAway(reachedAt < 0.76);
           if (geometryOff) {
             tl.progress(0);
             settle();

@@ -2,11 +2,10 @@ import { Container } from "@/components/layout/Container";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { Heading } from "@/components/ui/Heading";
-import { MonogramTile } from "@/components/ui/MonogramTile";
+import { PersonPlaceholder } from "@/components/ui/PersonPlaceholder";
 import { Picture } from "@/components/ui/Picture";
 import { PortraitFrame } from "@/components/ui/PortraitFrame";
 import { Table } from "@/components/ui/Table";
-import { Text } from "@/components/ui/Text";
 import { getLeadership, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
@@ -20,13 +19,14 @@ interface PageProps {
 }
 
 /**
- * Rahbariyat: eng qatʼiy sahifa. Kompyuterda ikki rahbar yonma-yon (har biri 6 ustun: portret 2,
- * matn 4), planshetda bittadan, telefonda kichik portret matn yonida; qabul jadvali, rasmiy pochta.
- * Surat tasdiqlanmagan rahbarda portret oʻrnida 64 px belgi, matn unga yaqin turadi.
+ * Rahbariyat: eng qatʼiy sahifa. Teng kartalar 2 / 1 ustunda; har kartada bosh qism (portret yoki belgi
+ * plitkasi, lavozim, ism) va bir xil tartibdagi faktlar: qabul jadvali va rasmiy pochta. Kartalar
+ * qatorlari subgrid: qoʻshni kartalarda faktlar bir chiziqdan boshlanadi.
  */
 export function LeadershipPage({ locale, dict }: PageProps) {
   const leaders = getLeadership();
   const l = dict.people.leadership;
+  const awaiting = dict.common.status.awaiting;
   const jsonld = leaders
     .map((p) => personJsonLd({ person: p, locale, dict }))
     .filter((x): x is Record<string, unknown> => Boolean(x));
@@ -35,7 +35,6 @@ export function LeadershipPage({ locale, dict }: PageProps) {
       <JsonLd data={jsonld.length ? jsonld : null} />
       <PageHero
         title={l.title}
-        lead={l.lead}
         band
         breadcrumbs={[
           { href: pathFor(locale, "home"), label: dict.nav.home },
@@ -44,88 +43,83 @@ export function LeadershipPage({ locale, dict }: PageProps) {
         breadcrumbsLabel={dict.common.hints.breadcrumbs}
       />
       <Section>
-        <Container grid className="leaders">
-          {leaders.map((person, index) => {
-            const role = t(person.role, locale);
-            const name = person.name ? t(person.name, locale) : null;
-            return (
-              <article
-                key={person.id}
-                className="leader"
-                data-card=""
-                aria-labelledby={`${person.id}-name`}
-              >
-                {person.status === "confirmed" && person.photo ? (
-                  <PortraitFrame
-                    ratio="4:5"
-                    className="leader-portrait"
-                    motion={{ mode: "smooth", index }}
-                  >
-                    <Picture
-                      src={person.photo}
-                      alt={name ?? role}
-                      fill
-                      sizes="(min-width: 1024px) 200px, (min-width: 600px) 22vw, 25vw"
-                    />
-                  </PortraitFrame>
-                ) : (
-                  /* Surat kelguncha 64 px belgi: 4:5 boʻsh ramka sahifani boʻsh koʻrsatardi. */
-                  <div className="leader-portrait leader-monogram">
-                    <MonogramTile />
-                  </div>
-                )}
-                <div className="leader-text">
-                  <Heading level={2} size="h3" id={`${person.id}-name`} data-card-title="">
-                    {name ?? role}
-                  </Heading>
-                  {name ? (
-                    <Text as="p" tone="ink-2">
-                      {role}
-                    </Text>
-                  ) : null}
-                  {person.bio ? <Text as="p">{t(person.bio, locale)}</Text> : null}
-                  {/* Yorliq qiymatiga yaqin (4 px), bloklar orasi 16 px: yaqinlik qonuni. */}
-                  <div className="leader-facts">
-                    <div className="leader-fact">
-                      <h3 className="t-label text-ink-2">{l.reception}</h3>
-                      {person.reception && person.reception.length ? (
-                        <Table
-                          caption={l.reception}
-                          columns={[
-                            { key: "day", label: l.day },
-                            { key: "hours", label: l.hours, numeric: true },
-                          ]}
-                          rows={person.reception.map((slot, i) => ({
-                            key: `${person.id}-${i}`,
-                            cells: { day: t(slot.day, locale), hours: slot.hours },
-                          }))}
-                        />
-                      ) : (
-                        <Text as="p" size="small" tone="ink-3">
-                          {dict.common.status.awaiting}
-                        </Text>
-                      )}
-                    </div>
-                    <div className="leader-fact">
-                      <h3 className="t-label text-ink-2">{l.email}</h3>
-                      {person.email ? (
-                        <a href={`mailto:${person.email}`} className="t-body text-tint">
-                          {person.email}
-                        </a>
-                      ) : (
-                        <Text as="p" size="small" tone="ink-3">
-                          {dict.common.status.awaiting}
-                        </Text>
-                      )}
+        <Container>
+          <div className="leaders" data-card-group="">
+            {leaders.map((person, index) => {
+              const role = t(person.role, locale);
+              const name = person.name ? t(person.name, locale) : null;
+              const photo = person.status === "confirmed" && person.photo ? person.photo : null;
+              return (
+                <article
+                  key={person.id}
+                  className="leader"
+                  data-card=""
+                  aria-labelledby={`${person.id}-name`}
+                >
+                  <div className="leader-head" data-photo={photo ? "" : undefined}>
+                    {photo ? (
+                      <PortraitFrame
+                        ratio="4:5"
+                        className="leader-portrait"
+                        motion={{ mode: "smooth", index }}
+                      >
+                        <Picture src={photo} alt={name ?? role} fill sizes="120px" />
+                      </PortraitFrame>
+                    ) : (
+                      <PersonPlaceholder />
+                    )}
+                    <div className="leader-name">
+                      <Heading level={2} size="h3" align="start" id={`${person.id}-name`}>
+                        {name ?? role}
+                      </Heading>
+                      {name ? <p className="t-small text-ink-3">{role}</p> : null}
+                      {person.bio ? (
+                        <p className="t-small text-ink-2">{t(person.bio, locale)}</p>
+                      ) : null}
                     </div>
                   </div>
-                </div>
-              </article>
-            );
-          })}
-          <Text as="p" size="small" tone="ink-3" className="leaders-note">
-            {l.pending}
-          </Text>
+                  <dl className="leader-facts">
+                    <div className="leader-fact">
+                      <dt className="t-small text-ink-2">{l.reception}</dt>
+                      <dd>
+                        {person.reception && person.reception.length ? (
+                          <Table
+                            caption={l.reception}
+                            captionHidden
+                            columns={[
+                              { key: "day", label: l.day },
+                              { key: "hours", label: l.hours, numeric: true },
+                            ]}
+                            rows={person.reception.map((slot, i) => ({
+                              key: `${person.id}-${i}`,
+                              cells: { day: t(slot.day, locale), hours: slot.hours },
+                            }))}
+                          />
+                        ) : (
+                          <span className="t-small text-ink-3">{awaiting}</span>
+                        )}
+                      </dd>
+                    </div>
+                    <div className="leader-fact">
+                      <dt className="t-small text-ink-2">{l.email}</dt>
+                      <dd>
+                        {person.email ? (
+                          <a
+                            href={`mailto:${person.email}`}
+                            className="leader-email t-small text-tint"
+                          >
+                            {person.email}
+                          </a>
+                        ) : (
+                          <span className="t-small text-ink-3">{awaiting}</span>
+                        )}
+                      </dd>
+                    </div>
+                  </dl>
+                </article>
+              );
+            })}
+          </div>
         </Container>
       </Section>
     </>

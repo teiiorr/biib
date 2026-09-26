@@ -121,6 +121,7 @@ export function TabBar({ locale, nav, hints }: TabBarProps) {
         radius="control"
         padding={0}
         text
+        adaptiveTone
         type="button"
         className="tab-mini"
         aria-label={`${nav.tabBarLabel}: ${miniLabel}`}

@@ -2,24 +2,57 @@
   /* Boshqaruv qatlami materiali: Oyna (Liquid Glass).
    backdrop-filter faqat shu faylda va src/components/glass/ ichida boʻlishi mumkin. */
 
+  /* Oyna material xaritasi (Apple Liquid Glass): muz. Markazda faqat 2 px xiralik va toʻyinganlik
+     (orqadan oʻtayotgan matn va surat aniq koʻrinadi), qirrada sinish (Chromium) kontentni egadi,
+     yorugʻ tomoni tiniq 1 px spekulyar qirra, ichki kaustika va pastki soya. Yorqinlik oshirilmaydi:
+     sut tuman emas, muz. */
   .material {
     --m-tint: var(--g-tint);
+    --m-blur: var(--g-blur);
+    --m-bright: 1;
+    --m-spec: color-mix(in oklab, #ffffff 80%, var(--material-rim));
+    --m-caustic: calc(var(--g-rim) * 40%);
     position: relative;
     isolation: isolate;
     color: var(--material-ink);
     background: color-mix(in oklab, var(--material-base) calc(var(--m-tint) * 100%), transparent);
-    -webkit-backdrop-filter: blur(var(--g-blur)) saturate(var(--material-sat));
-    backdrop-filter: blur(var(--g-blur)) saturate(var(--material-sat));
+    -webkit-backdrop-filter: blur(var(--m-blur)) saturate(var(--material-sat))
+      brightness(var(--m-bright));
+    backdrop-filter: blur(var(--m-blur)) saturate(var(--material-sat)) brightness(var(--m-bright));
     box-shadow:
-      inset 0 0 0 1px
-        color-mix(in oklab, var(--material-rim) calc(var(--g-rim) * 100%), transparent),
-      inset 0 1px 0 color-mix(in oklab, var(--material-rim) calc(var(--g-rim) * 120%), transparent),
-      inset 0 -6px 12px -8px
-        color-mix(in oklab, var(--material-shadow) calc(var(--g-d) * 100%), transparent),
+      inset 0 0 0 1px color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 26%), transparent),
+      inset 0 1px 0 0 color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 60%), transparent),
+      inset 0 0 18px -8px color-mix(in oklab, var(--m-spec) var(--m-caustic), transparent),
+      inset 0 -10px 14px -12px
+        color-mix(in oklab, var(--material-shadow) calc(40% + var(--g-d) * 60%), transparent),
+      0 0 0 0.5px rgba(14, 23, 51, 0.12),
       var(--shadow-floating);
   }
+  /* Vibrantlik (Apple): tus butun oynani emas, faqat yorliqni tayanadi — glif atrofida material rangidagi
+     uch qavatli yumshoq tayanch. Oyna tiniq qoladi, yorliq esa har qanday kontent ustida oʻqiladi
+     (ohang notoʻgʻri kelgan lahzada ham: oq surat tungi oyna ostida). */
   .material[data-text="true"] {
     --m-tint: var(--g-tint-text);
+  }
+  .material[data-text="true"]:not([data-variant="tinted"]) {
+    text-shadow:
+      0 0 1px color-mix(in oklab, var(--material-base) 85%, transparent),
+      0 0 3px color-mix(in oklab, var(--material-base) 70%, transparent),
+      0 0 10px color-mix(in oklab, var(--material-base) 50%, transparent);
+  }
+  .material[data-text="true"]:not([data-variant="tinted"]) svg:not(.surface-filter) {
+    filter: drop-shadow(0 0 1px color-mix(in oklab, var(--material-base) 85%, transparent))
+      drop-shadow(0 0 4px color-mix(in oklab, var(--material-base) 60%, transparent));
+  }
+  /* Menyu, varaq, dialog va panellarda matn koʻp va mayda: Apple kabi qalin muz (0.78–0.95 tus,
+     kuchli xiralik). Shaffoflik va Zichlik baribir jonli koʻrinadi, yorliqlar har fonda ≥ 4.5:1. */
+  .surface:is([data-radius="panel"], [data-radius="sheet"])[data-text="true"] {
+    --m-blur: calc(var(--g-blur) * 3 + 12px);
+    --m-tint: calc(0.95 - 0.17 * var(--g-t));
+    text-shadow: none;
+  }
+  .surface:is([data-radius="panel"], [data-radius="sheet"])[data-text="true"] svg {
+    filter: none;
   }
 
   /* Sirt: radius konsentrik, padding ichki radiusni belgilaydi. */
@@ -27,10 +60,15 @@
     border-radius: var(--surface-radius);
     corner-shape: squircle;
   }
+  /* Sinishi yoʻq dvigatellarda (Safari, Firefox) qirra linzasi yorugʻ ichki tasma bilan taqlid qilinadi. */
+  .surface:not([data-refract="on"]) {
+    --m-caustic: calc(var(--g-rim) * 62%);
+  }
   .surface[data-refract="on"] {
-    -webkit-backdrop-filter: var(--surface-refract) blur(var(--g-blur))
-      saturate(var(--material-sat));
-    backdrop-filter: var(--surface-refract) blur(var(--g-blur)) saturate(var(--material-sat));
+    -webkit-backdrop-filter: var(--surface-refract) blur(var(--m-blur))
+      saturate(var(--material-sat)) brightness(var(--m-bright));
+    backdrop-filter: var(--surface-refract) blur(var(--m-blur)) saturate(var(--material-sat))
+      brightness(var(--m-bright));
   }
   .surface-filter {
     position: absolute;
@@ -45,44 +83,100 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
+    corner-shape: inherit;
     pointer-events: none;
     background: radial-gradient(
       140px circle at var(--sheen-x, 30%) var(--sheen-y, 0%),
-      color-mix(in oklab, var(--material-rim) calc(var(--g-rim) * 55%), transparent),
+      color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 40%), transparent),
       transparent 70%
     );
-    opacity: 0.9;
     z-index: -1;
   }
-
-  /* Variantlar */
-  .surface[data-variant="clear"] {
-    --m-tint: calc(var(--g-tint) * 0.45);
-  }
-  .surface[data-variant="clear"]::after {
+  /* Spekulyar qirra: 1 px halqa, yorugʻlik yuqori-chapdan; pastki qirra aks yorugʻlikda xiraroq. */
+  .surface::after {
     content: "";
     position: absolute;
     inset: 0;
+    padding: 1px;
     border-radius: inherit;
-    background: color-mix(in oklab, var(--ink) 18%, transparent);
-    z-index: -1;
+    corner-shape: inherit;
     pointer-events: none;
+    background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 115%), transparent) 0%,
+        color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 22%), transparent) 30%,
+        transparent 55%,
+        color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 55%), transparent) 100%
+      ),
+      linear-gradient(
+        to right,
+        color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 60%), transparent) 0%,
+        transparent 24%,
+        transparent 76%,
+        color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 32%), transparent) 100%
+      );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    z-index: -1;
+  }
+
+  /* Varaq va dialog oʻzi skroll qilinadi: absolute qatlamlar kontent bilan birga ketib qolardi.
+     Ikkalasida transform bor, shu sabab fixed qatlam sirtning oʻziga bogʻlanadi va joyida turadi. */
+  .surface:is(.glass-sheet, .glass-dialog)::before,
+  .surface:is(.glass-sheet, .glass-dialog)::after {
+    position: fixed;
+  }
+
+  /* Variantlar. Tiniq: boy media ustida, ostida xiralashtiruvchi qatlam. */
+  .surface[data-variant="clear"] {
+    --m-tint: calc(var(--g-tint) * 0.45);
+    background:
+      linear-gradient(
+        color-mix(in oklab, var(--ink) 18%, transparent),
+        color-mix(in oklab, var(--ink) 18%, transparent)
+      ),
+      color-mix(in oklab, var(--material-base) calc(var(--m-tint) * 100%), transparent);
   }
   .surface[data-variant="tinted"] {
     background: color-mix(in oklab, var(--tint) calc(var(--m-tint) * 100%), transparent);
     color: var(--on-tint);
   }
 
-  /* Ostidagi boʻlim ohangi: tungi boʻlim ustida yorliq oq, kunduzgi ustida siyoh. */
-  .surface[data-tone="dark"] {
+  /* Ostidagi boʻlim ohangi (10.1.3): qorongʻi boʻlim ustida tungi material, yorugʻ ustida kunduzgi.
+     Tungi mavzuda sahifa zamini oʻzi qorongʻi: «light» deb belgilangan boʻlim ham qorongʻi ohang.
+     Tint ham ohang bilan almashadi: tanlangan tab, sozlagich va fokus har oynada oʻqiladi. */
+  .surface[data-tone="dark"],
+  :root[data-theme="dark"] .surface[data-tone] {
     --material-ink: #f7f3ea;
+    --material-ink-2: #c3cadb;
     --material-base: #111a38;
     --material-rim: #8c95b4;
+    --m-bright: 0.94;
+    --tint: #e8699f;
+    --on-tint: #0a1026;
+    --focus: #e8699f;
   }
-  .surface[data-tone="light"] {
+  :root[data-theme="light"] .surface[data-tone="light"] {
     --material-ink: #0e1733;
+    --material-ink-2: #3a4466;
     --material-base: #fffcf6;
     --material-rim: #ffffff;
+    --tint: #b8306a;
+    --on-tint: #ffffff;
+    --focus: #b8306a;
+  }
+
+  /* Ijro etilayotgan kadr ustidagi belgili tugma: kadr oq ham boʻlishi mumkin, tus 0.5 dan pastga
+     tushmaydi — tiniq sozlamada ham sut-oq belgi oq kadrda ≥ 3:1 (1.4.11). */
+  .media-video > .surface[data-tone="dark"] {
+    --m-tint: max(var(--g-tint-text), 0.5);
   }
 
   /* Morf: Flip transformni boshqaradi, CSS faqat kamaytirilgan harakatda ishlaydi. */
@@ -142,9 +236,12 @@
     transform-origin: left center;
     transition: transform var(--dur-panel) var(--ease-spring);
     border-radius: var(--surface-radius);
-    background: color-mix(in oklab, var(--material-base) 90%, var(--material-ink) 10%);
+    background: color-mix(in oklab, var(--material-base) 80%, transparent);
+    /* Sut linza sut yoʻlakda 1.01:1 edi (tanlov koʻrinmasdi): 1 px siyoh halqa yoʻlakka ≥ 3:1, yoʻlak
+       ustidagi yaltiroq dogʻ yonida ham. Yaltiroq qirra halqa ostida. */
     box-shadow:
-      inset 0 0 0 1px color-mix(in oklab, var(--material-rim) 60%, transparent),
+      inset 0 0 0 1px color-mix(in oklab, var(--material-ink) 85%, var(--material-base)),
+      inset 0 2px 0 color-mix(in oklab, var(--m-spec) 85%, transparent),
       var(--shadow-raised);
     will-change: transform;
   }
@@ -212,11 +309,13 @@
     transform: translate(-50%, 8px) scale(0.6);
     opacity: 0;
     pointer-events: none;
-    background: color-mix(in oklab, var(--material-base) 70%, transparent);
-    -webkit-backdrop-filter: blur(2px) saturate(1.2);
-    backdrop-filter: blur(2px) saturate(1.2);
+    background: color-mix(in oklab, var(--material-base) 55%, transparent);
+    -webkit-backdrop-filter: blur(1px) saturate(1.6) brightness(1.06);
+    backdrop-filter: blur(1px) saturate(1.6) brightness(1.06);
     box-shadow:
-      inset 0 0 0 1px color-mix(in oklab, var(--material-rim) 80%, transparent),
+      inset 0 0 0 1px color-mix(in oklab, var(--m-spec) 70%, transparent),
+      inset 0 1px 0 color-mix(in oklab, var(--m-spec) 95%, transparent),
+      inset 0 0 10px -4px color-mix(in oklab, var(--m-spec) 60%, transparent),
       var(--shadow-floating);
     transition:
       transform var(--dur-ui) var(--ease-ui),
@@ -255,7 +354,7 @@
     gap: 4px;
   }
   .glass-switch-hint {
-    color: color-mix(in oklab, var(--material-ink) 70%, transparent);
+    color: var(--material-ink-2);
   }
   .glass-switch {
     position: relative;
@@ -263,7 +362,9 @@
     width: 48px;
     height: 28px;
     border-radius: var(--radius-control);
-    background: color-mix(in oklab, var(--material-ink) 22%, transparent);
+    /* Oʻchiq holat ham oʻqilsin (1.4.11): siyoh va asos oʻrtasi — ikkala ohangda yoʻlak panelga ≥ 4:1,
+       oq tugmacha yoʻlakka ≥ 3.4:1. */
+    background: color-mix(in oklab, var(--material-ink) 55%, var(--material-base));
     transition: background var(--dur-ui) var(--ease-ui);
   }
   .glass-switch::after {
@@ -285,32 +386,41 @@
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: var(--surface-2);
+    background: #ffffff;
     box-shadow: var(--shadow-raised);
-    transition: transform var(--dur-ui) var(--ease-ui);
+    transition:
+      transform var(--dur-ui) var(--ease-ui),
+      background var(--dur-ui) var(--ease-ui);
   }
+  /* Tungi pushti ustida oq tugmacha 2.7:1: yoqilganda tugmacha pushti ustidagi yorliq rangida. */
   .glass-switch[aria-checked="true"] .glass-switch-knob {
     transform: translateX(20px);
+    background: var(--on-tint);
   }
 
-  /* Skroll cheti (§10.1.4): sarlavha ostidan oʻtgan mazmun qattiq chiziq oʻrniga toʻrt qatlamli
-     progressiv xiralik va ohangga mos tus bilan soʻnadi. Xiralik tepada kuchli, pastga qarab yoʻqoladi.
-     Ohang sarlavha sirtlaridan olinadi (useSurfaceTone): qorongʻi boʻlim ustida lojuvard tus. */
+  /* Skroll cheti (§10.1.4, Apple «soft» cheti): faqat oyna ustidagi ingichka tasma — ekran chetidan
+     sarlavha oynasigacha yengil xiralik va tus, 12 px da soʻnadi. Oyna ortida hech qanday parda yoʻq:
+     skrollda nima oʻtayotgani muz orqali aniq koʻrinadi. Ohang sarlavha sirtlaridan (useSurfaceTone). */
   .scroll-edge {
     --edge-tint: var(--bg);
-    --edge-strength: 86%;
+    --edge-strength: 56%;
+    --edge-top: calc(8px + var(--safe-top));
     position: fixed;
     inset: 0 0 auto 0;
-    height: calc(var(--header-h) + 36px + var(--safe-top));
+    height: calc(var(--edge-top) + 12px);
     pointer-events: none;
     z-index: -1;
+  }
+  @media (min-width: 1024px) {
+    .scroll-edge {
+      --edge-top: calc(12px + var(--safe-top));
+    }
   }
   .site-header > .scroll-edge {
     pointer-events: none;
   }
   .site-header:has(.surface[data-tone="dark"]) .scroll-edge {
     --edge-tint: var(--hero-scrim);
-    --edge-strength: 72%;
   }
   .scroll-edge-layer {
     position: absolute;
@@ -323,22 +433,10 @@
     mask-image: linear-gradient(to bottom, black 0%, black 50%, transparent 100%);
   }
   .scroll-edge-layer[data-layer="1"] {
-    -webkit-backdrop-filter: blur(2px);
-    backdrop-filter: blur(2px);
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 37.5%, transparent 75%);
-    mask-image: linear-gradient(to bottom, black 0%, black 37.5%, transparent 75%);
-  }
-  .scroll-edge-layer[data-layer="2"] {
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 50%);
-    mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 50%);
-  }
-  .scroll-edge-layer[data-layer="3"] {
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 12.5%, transparent 37.5%);
-    mask-image: linear-gradient(to bottom, black 0%, black 12.5%, transparent 37.5%);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 60%);
+    mask-image: linear-gradient(to bottom, black 0%, transparent 60%);
   }
   .scroll-edge::after {
     content: "";
@@ -347,14 +445,41 @@
     background: linear-gradient(
       to bottom,
       color-mix(in oklab, var(--edge-tint) var(--edge-strength), transparent) 0%,
-      color-mix(in oklab, var(--edge-tint) calc(var(--edge-strength) * 0.6), transparent) 45%,
+      color-mix(in oklab, var(--edge-tint) calc(var(--edge-strength) * 0.5), transparent) 50%,
       transparent 100%
     );
   }
-  /* Telefonda (iOS Safari narxi, §14.5) ikki qatlam: 2 va 8 px, qolgan pogʻonalar tus bilan yopiladi. */
-  @media (max-width: 1023px) {
-    .scroll-edge-layer:is([data-layer="0"], [data-layer="2"]) {
-      display: none;
+  /* Kompyuterda belgi va nom oynada emas, sanʼat qatlamida: ular ostidagina tus qalin, shunda
+     ostidan oʻtayotgan matn nom bilan aralashmaydi. Kapsula va til guruhi ortida kontent ochiq.
+     Tus nomning oʻz ohangidan: sut-oq nom ostida lojuvard, navy nom ostida sut-oq. */
+  .site-header:has(.header-row .brand-mark[data-tone="dark"]) .scroll-edge {
+    --brand-tint: var(--hero-scrim);
+  }
+  @media (min-width: 1024px) {
+    .scroll-edge::before {
+      --brand-edge: max(var(--margin), (100vw - var(--content-max)) / 2);
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: calc(var(--header-h) + 36px + var(--safe-top));
+      background: linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--brand-tint, var(--bg)) 82%, transparent) 0%,
+        color-mix(in oklab, var(--brand-tint, var(--bg)) 60%, transparent) 55%,
+        transparent 100%
+      );
+      -webkit-mask-image: linear-gradient(
+        to right,
+        black 0,
+        black calc(var(--brand-edge) + 260px),
+        transparent calc(var(--brand-edge) + 380px)
+      );
+      mask-image: linear-gradient(
+        to right,
+        black 0,
+        black calc(var(--brand-edge) + 260px),
+        transparent calc(var(--brand-edge) + 380px)
+      );
     }
   }
   @media (prefers-reduced-transparency: reduce) {
@@ -366,29 +491,37 @@
     }
   }
 
-  /* Shaffoflikni kamaytirish, kontrastni oshirish va backdrop-filter yoʻq brauzerlar: qattiq sirt. */
+  /* Shaffoflikni kamaytirish, kontrastni oshirish va backdrop-filter yoʻq brauzerlar: qattiq sirt.
+     :root bilan kuchaytirilgan: aks holda variant va panel qoidalari tiniq fonni qaytarardi. */
   @supports not (backdrop-filter: blur(1px)) {
-    .material {
+    :root .material:not([data-variant="tinted"]) {
       background: var(--material-base);
     }
   }
   @media (prefers-reduced-transparency: reduce) {
-    .material,
-    .surface[data-refract="on"] {
+    :root .material:not([data-variant="tinted"]) {
       background: var(--material-base);
+    }
+    :root .material,
+    :root .surface[data-refract="on"] {
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
   }
   @media (prefers-contrast: more) {
-    .material,
-    .surface[data-refract="on"] {
+    :root .material:not([data-variant="tinted"]) {
       background: var(--material-base);
+    }
+    :root .material,
+    :root .surface[data-refract="on"] {
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
       box-shadow:
         inset 0 0 0 1px var(--ink),
         var(--shadow-floating);
+    }
+    .surface::after {
+      display: none;
     }
   }
 
@@ -438,7 +571,7 @@
     margin-bottom: 16px;
   }
   .glass-dialog-description {
-    color: color-mix(in oklab, var(--material-ink) 75%, transparent);
+    color: var(--material-ink-2);
     margin-bottom: 16px;
   }
   .glass-close {
@@ -495,7 +628,7 @@
     gap: 2px;
   }
   .glass-menu-hint {
-    color: color-mix(in oklab, var(--material-ink) 65%, transparent);
+    color: var(--material-ink-2);
   }
 
   /* Koʻrinish paneli */
@@ -519,15 +652,32 @@
   .slider-ends {
     display: flex;
     justify-content: space-between;
-    color: color-mix(in oklab, var(--material-ink) 70%, transparent);
+    color: var(--material-ink-2);
   }
   .appearance-note {
-    color: color-mix(in oklab, var(--material-ink) 80%, transparent);
+    color: var(--material-ink-2);
   }
+  /* Qalin muz ham ostidagi kontentga qarab ohang oladi: pushti havola kulrang oynada 3:1 ga tushardi,
+     shu sabab qaytarish material siyohida, ostchiziq bilan. */
   .appearance-reset {
     align-self: flex-start;
     min-height: 44px;
     padding-inline: 4px;
-    color: var(--tint);
+    color: var(--material-ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+  /* Mavzu tanlovi panel kengligida: uch teng boʻlak, linza ular orasida teng suriladi. */
+  .appearance-panel .segmented {
+    display: flex;
+    width: 100%;
+  }
+  .appearance-panel .segmented-group {
+    flex: 1;
+  }
+  .appearance-panel .segmented-item {
+    flex: 1 1 0;
+    justify-content: center;
   }
 }

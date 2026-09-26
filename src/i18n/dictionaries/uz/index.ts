@@ -8,7 +8,6 @@ import { home } from "./home";
 import { meta } from "./meta";
 import { nav } from "./nav";
 import { news } from "./news";
-import { ornament } from "./ornament";
 import { partners } from "./partners";
 import { people } from "./people";
 import { privacy } from "./privacy";
@@ -21,7 +20,6 @@ export const uz = {
   footer,
   meta,
   errors,
-  ornament,
   home,
   about,
   projects,

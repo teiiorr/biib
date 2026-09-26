@@ -6,34 +6,26 @@
   initial-value: 0px;
 }
 
-/* Mavzu: palak oy medalyoni tugma joyidan kengayadi; halqada bitta ingichka boʻshliq. */
+/* Mavzu: yangi mavzu tugma joyidan tekis doira boʻlib kengayadi; halqa yoki naqsh yoʻq. */
 html.vt-theme-switch::view-transition-old(root) {
   animation: none;
   mix-blend-mode: normal;
 }
 html.vt-theme-switch::view-transition-new(root) {
-  animation: palak-bloom 700ms var(--ease-out) forwards;
+  animation: theme-reveal 700ms var(--ease-out) forwards;
   mix-blend-mode: normal;
   -webkit-mask-image: radial-gradient(
     circle at var(--vt-x, 50%) var(--vt-y, 0px),
-    black calc(var(--vt-r) - 14px),
-    transparent calc(var(--vt-r) - 12px),
-    transparent calc(var(--vt-r) - 6px),
-    black calc(var(--vt-r) - 4px),
     black var(--vt-r),
     transparent calc(var(--vt-r) + 1px)
   );
   mask-image: radial-gradient(
     circle at var(--vt-x, 50%) var(--vt-y, 0px),
-    black calc(var(--vt-r) - 14px),
-    transparent calc(var(--vt-r) - 12px),
-    transparent calc(var(--vt-r) - 6px),
-    black calc(var(--vt-r) - 4px),
     black var(--vt-r),
     transparent calc(var(--vt-r) + 1px)
   );
 }
-@keyframes palak-bloom {
+@keyframes theme-reveal {
   from {
     --vt-r: 0px;
   }

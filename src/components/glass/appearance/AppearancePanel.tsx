@@ -88,8 +88,8 @@ export function AppearancePanel({ dict }: AppearancePanelProps) {
         hint={dict.motionHint}
       />
       <GlassSwitch
-        checked={appearance.sound}
-        onCheckedChange={(v) => set({ sound: v })}
+        checked={appearance.tapSound}
+        onCheckedChange={(v) => set({ tapSound: v })}
         label={dict.sound}
         hint={dict.soundHint}
       />

@@ -46,6 +46,8 @@ function formatDuration(seconds: number): string {
  * Bosilganda yuklanadigan film: manba faqat foydalanuvchi bosganda qoʻyiladi, ovoz saqlanadi,
  * brauzer boshqaruvi koʻrsatiladi. play() bosish ichida chaqiriladi: Safari ovozli ijroni
  * faqat foydalanuvchi ishorasida boshlaydi. Yashirin varaqda va koʻrinishdan chiqqanda toʻxtaydi.
+ * Tugma qorongʻi poster ustida: sut muz ostida navy yorliq kulrangda 4.5:1 dan tushardi, shu sabab
+ * sirt doim tungi materialda.
  */
 export function ClickToPlayVideo({
   src,
@@ -107,6 +109,7 @@ export function ClickToPlayVideo({
             radius="control"
             padding={0}
             text
+            data-tone="dark"
             className="media-film-play t-label-l"
             onClick={start}
           >

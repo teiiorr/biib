@@ -52,7 +52,7 @@ const CROPS = [
   ["button-primary", '[data-variant="primary"]'],
   ["button-glass", '[data-variant="glass"]'],
   ["card-group", "[data-card-group]"],
-  ["footer-crown", '[data-testid="footer-crown"]'],
+  ["footer", '[data-testid="footer"]'],
 ];
 
 function pagePath(locale, page) {
@@ -123,7 +123,7 @@ async function shootCombo(theme, locale, vp) {
     transparency: 50,
     density: 50,
     motion: false,
-    sound: false,
+    tapSound: false,
   });
   const tab = await context.newPage();
   for (const page of PAGES) {

@@ -1,10 +1,8 @@
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
+import { SectionHeader } from "@/components/layout/SectionHeader";
 import { Reveal } from "@/components/motion/Reveal";
-import { Palak } from "@/components/ornament/Palak";
-import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
-import { Text } from "@/components/ui/Text";
 import { getContacts, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
@@ -16,35 +14,17 @@ interface ContactBandProps {
 }
 
 /**
- * Aloqa: bitta sokin karta — sarlavha yonida kichik palak (ataylab qoldirilgan boʻshligʻi bilan,
- * 11.5), oʻngda manzil va telefon, pastda ikki harakat.
+ * Aloqa: markazdagi sarlavha, ostida bitta sokin karta — manzil va telefon ikki teng ustunda
+ * (bir xil uslub, bir tepa chiziq), oʻng chetda ikki harakat (kompyuterda shu qatorda).
  */
 export function ContactBand({ locale, dict }: ContactBandProps) {
   const c = getContacts();
   const h = dict.home.contact;
   return (
-    <Section labelledBy="home-contact" tone="light" className="contact-band">
+    <Section labelledBy="home-contact" tone="light">
       <Container>
-        <Reveal className="contact-band-text">
-          <div className="contact-band-head">
-            <div className="contact-band-palak">
-              <Palak
-                size={80}
-                seed="aloqa"
-                bloom
-                gapLabel={dict.ornament.palakGapLabel}
-                gapText={dict.ornament.palakGap}
-              />
-            </div>
-            <div className="contact-band-title">
-              <Heading level={2} size="h2" id="home-contact">
-                {h.heading}
-              </Heading>
-              <Text as="p" size="body-l" tone="ink-2" measure>
-                {h.lead}
-              </Text>
-            </div>
-          </div>
+        <SectionHeader id="home-contact" title={h.heading} />
+        <Reveal className="contact-band-card">
           <dl className="contact-band-list">
             <div>
               <dt className="t-micro text-ink-3">{dict.contacts.details.address}</dt>

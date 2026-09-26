@@ -3,7 +3,6 @@ import type { contacts as source } from "../uz/contacts";
 
 export const contacts: typeof source = {
   title: "Алоқа",
-  lead: "Савол, таклиф ва ҳамкорлик учун. Иш кунлари бир кун ичида жавоб берамиз.",
   details: {
     heading: "Реквизитлар",
     address: "Манзил",
@@ -11,16 +10,13 @@ export const contacts: typeof source = {
     email: "Почта",
     telegram: "Телеграм",
     hours: "Иш вақти",
-    hoursValue: "Душанба–жума, 09:00–18:00",
     copy: "Нусха олиш",
     copied: "Нусха олинди",
     pending: "Тасдиқ кутилмоқда",
   },
   map: {
-    heading: "Харитада",
     yandex: "Яндекс Харитада очиш",
     google: "Google Харитада очиш",
-    pending: "Манзил нуқтаси ташкилот тасдиғини кутмоқда",
   },
   form: {
     heading: "Хабар юбориш",
@@ -39,7 +35,6 @@ export const contacts: typeof source = {
     tooShort: "Хабар камида {min} белгидан иборат бўлсин",
     consentRequired: "Юбориш учун розилик керак",
     fallbackHeading: "Телеграм орқали ёзинг",
-    fallbackText: "Шакл ҳозирча уланмаган, хабарни тўғридан-тўғри Телеграмда юборишингиз мумкин.",
     fallbackCta: "Телеграмда ёзиш",
   },
   socials: {

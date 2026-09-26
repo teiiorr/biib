@@ -1,12 +1,10 @@
 import { Reveal } from "@/components/motion/Reveal";
-import type { ContentStatus } from "@/content/types";
 
 export interface HistoryItem {
   readonly id: string;
-  readonly year: number | null;
+  readonly year: number;
   readonly title: string;
   readonly text: string;
-  readonly status: ContentStatus;
 }
 
 interface HistoryTimelineProps {
@@ -16,18 +14,17 @@ interface HistoryTimelineProps {
 }
 
 /**
- * Tarix chizigʻi: ingichka oltin chiziq va nuqtalar (kompyuterda gorizontal, toʻrt bosqich toʻrt
- * ustunda; telefonda vertikal). Yopishqoq sahna yoʻq: boʻsh yoʻl qolmaydi. Sana kelmagan bosqichda
- * yil qatori chizilmaydi — izoh boʻlim kirishida bir marta.
+ * Tarix: yoʻnalishlar bilan bir xil teng toʻr (ustida chiziq, yil, sarlavha, izoh). Faqat yili
+ * tasdiqlangan bosqichlar keladi (AboutPage).
  */
 export function HistoryTimeline({ items, label }: HistoryTimelineProps) {
   return (
-    <Reveal as="ol" className="history-timeline" stagger label={label}>
+    <Reveal as="ol" className="about-list history-timeline" stagger label={label}>
       {items.map((item) => (
-        <li key={item.id} className="history-item" data-status={item.status}>
-          {item.year ? <p className="history-year t-label tnum">{item.year}</p> : null}
+        <li key={item.id} className="about-list-item">
+          <p className="history-year t-label tnum">{item.year}</p>
           <h3 className="t-h4 text-ink">{item.title}</h3>
-          <p className="t-small text-ink-2">{item.text}</p>
+          <p className="t-body text-ink-2">{item.text}</p>
         </li>
       ))}
     </Reveal>

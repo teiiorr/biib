@@ -33,8 +33,9 @@ interface NewsArticlePageProps {
 }
 
 /**
- * Maqola: nonushoq, h1, sana va oʻqish vaqti, umumiy muqova, 65ch matn, iqtibos, ulashish, qalampir,
- * oldingi/keyingi. Muqova roʻyxatdan umumiy element boʻlib keladi (ikkinchi kirish yoʻq), faqat parallaks.
+ * Maqola: markazdagi bosh qism (nonushoq, h1, mavzu, sana va oʻqish vaqti), umumiy muqova, markazdagi
+ * 65ch matn ustuni, iqtibos, ulashish, oddiy oʻqish chizigʻi, oldingi/keyingi. Matn ustuni va maqola
+ * oxiri bir kenglikda, bir oʻqda. Muqova roʻyxatdan umumiy element boʻlib keladi, faqat parallaks.
  */
 export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
   const article = getArticle(slug);
@@ -67,7 +68,12 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
             className="col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3 article-head"
             data-grid-item=""
           >
-            <Breadcrumbs items={crumbs} label={dict.common.hints.breadcrumbs} collapseCurrent />
+            <Breadcrumbs
+              items={crumbs}
+              label={dict.common.hints.breadcrumbs}
+              collapseCurrent
+              align="center"
+            />
             <Heading level={1} size="h1" id="article-title">
               {title}
             </Heading>
@@ -78,11 +84,6 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
               ) : null}
               <span>{fill(dict.common.time.readingTime, { minutes })}</span>
             </p>
-            {article.status !== "confirmed" ? (
-              <Text as="p" size="small" tone="ink-3">
-                {n.draftNote}
-              </Text>
-            ) : null}
           </header>
           <div
             className="col-span-4 md:col-span-8 lg:col-span-10 lg:col-start-2 article-cover"
@@ -101,7 +102,7 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
             </ViewTransition>
           </div>
           <div
-            className="col-span-4 md:col-span-8 lg:col-span-7 lg:col-start-3 article-body"
+            className="col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3 xl:col-span-6 xl:col-start-4 article-body"
             data-grid-item=""
             id="article-body"
           >
@@ -124,18 +125,16 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
             <Divider />
             <ShareButtons url={absoluteUrl(path)} title={title} dict={dict.common.actions} />
           </div>
-          <aside
-            className="col-span-4 md:col-span-8 lg:col-span-2 lg:col-start-11 article-aside"
-            data-grid-item=""
-          >
-            <ReadingProgress dict={dict.ornament} targetId="article-body" />
-          </aside>
+          <ReadingProgress dict={dict.common.reading} targetId="article-body" />
         </Container>
       </Section>
       <Section as="div" rhythm="none" className="article-end">
         <Container grid>
-          {/* Oldingi/keyingi maqola matni bilan bir ustunlarda (3–9): chiziqlar bir chetda tugaydi. */}
-          <div className="col-span-4 md:col-span-8 lg:col-span-7 lg:col-start-3" data-grid-item="">
+          {/* Oldingi/keyingi maqola matni bilan bir ustunlarda: chiziqlar bir chetda tugaydi. */}
+          <div
+            className="col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3 xl:col-span-6 xl:col-start-4"
+            data-grid-item=""
+          >
             <nav className="article-nav" aria-label={n.title}>
               {/* Halqa: ikkala katak doim toʻla (content/index.ts). */}
               {previous ? (

@@ -4,7 +4,6 @@ import { Container } from "@/components/layout/Container";
 import { DesignArt } from "@/components/layout/DesignArt";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { Picture } from "@/components/ui/Picture";
-import { Text } from "@/components/ui/Text";
 import { HERO_LOGO_OVERLAY, HERO_MEDIA, HERO_PORTRAIT_MEDIA } from "@/content/brand";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
@@ -23,8 +22,8 @@ interface HeroSectionProps {
 const LANDSCAPE_MEDIA = `not (${HERO_PORTRAIT_MEDIA})`;
 
 /**
- * Darvoza: egasining videosi (belgi kadr markazida), nom bir qatorda kadr ostida, missiya va ikki
- * harakat pastda chapda, toʻrda. Poster serverda va LCP; video badiiy uyadan boʻsh vaqtda keladi.
+ * Darvoza: egasining videosi (belgi kadr markazida), nom kadr ostida markazda, ikki harakat uning
+ * ostida oʻng chetda. Poster serverda va LCP; video badiiy uyadan boʻsh vaqtda keladi.
  * Kadr ikkala mavzuda ham qorongʻi: ohang doim «dark», matn --hero-ink, ostida lojuvard ostlik.
  */
 export function HeroSection({ locale, dict }: HeroSectionProps) {
@@ -74,20 +73,15 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
       <div className="home-hero-content" data-hero-content="">
         <Container className="home-hero-grid">
           <HeroTitle name={dict.common.brand.name} />
-          <div className="home-hero-row">
-            <Text as="p" size="body-l" tone="ink-2" className="home-hero-mission">
-              {dict.home.hero.mission}
-            </Text>
-            <div className="home-hero-actions">
-              <LinkButton href={pathFor(locale, "projects")} variant="primary" size="56">
-                {dict.home.hero.ctaProjects}
-              </LinkButton>
-              <LinkButton href={pathFor(locale, "about")} variant="glass" size="56">
-                {dict.home.hero.ctaAbout}
-              </LinkButton>
-              {/* Halqa boshqaruvi shu uyaga portal bilan keladi: harakatlar qatorida, hech narsa ustida emas. */}
-              <span className="home-hero-control" data-hero-control="" />
-            </div>
+          <div className="home-hero-actions">
+            <LinkButton href={pathFor(locale, "projects")} variant="primary" size="56">
+              {dict.home.hero.ctaProjects}
+            </LinkButton>
+            <LinkButton href={pathFor(locale, "about")} variant="glass" size="56">
+              {dict.home.hero.ctaAbout}
+            </LinkButton>
+            {/* Halqa boshqaruvi shu uyaga portal bilan keladi: harakatlar qatorida, hech narsa ustida emas. */}
+            <span className="home-hero-control" data-hero-control="" />
           </div>
         </Container>
       </div>

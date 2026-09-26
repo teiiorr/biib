@@ -18,7 +18,7 @@ export const appearance: typeof source = {
   densityTo: "Плотное",
   reset: "Сбросить",
   sound: "Звук",
-  soundHint: "Тихий звук дойры при смене темы и раздела",
+  soundHint: "Мягкий звон при каждом нажатии",
   motion: "Анимация",
   motionHint: "Декоративная анимация; текст и переходы между страницами остаются",
   valueText: "{value}%",

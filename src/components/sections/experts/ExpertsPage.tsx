@@ -1,10 +1,9 @@
 import { Container } from "@/components/layout/Container";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
-import { MonogramTile } from "@/components/ui/MonogramTile";
+import { PersonPlaceholder } from "@/components/ui/PersonPlaceholder";
 import { Picture } from "@/components/ui/Picture";
 import { PortraitFrame } from "@/components/ui/PortraitFrame";
-import { Text } from "@/components/ui/Text";
 import { getExperts, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
@@ -21,13 +20,14 @@ interface PageProps {
 }
 
 /**
- * Ekspertlar kengashi: sarlavha tinch lojuvard lentada. Tasdiqlangan kengash portretlar 6/3/2 ustunda
- * (oltita aʼzo har kenglikda toʻliq qatorlar); tasdiq kutilayotganda 3/2/1 ustunli ixcham qatorlar.
+ * Ekspertlar kengashi: markazdagi sarlavha, ostida tavsifsiz teng kartalar toʻri. Tasdiqlangan
+ * kengash portret kartalarida (6 / 3 / 2 ustun); tasdiq kutilayotganda belgi plitkali ixcham kartalar
+ * (3 / 2 / 1 ustun), oltita aʼzo har kenglikda toʻliq qatorlar beradi.
  */
 export function ExpertsPage({ locale, dict }: PageProps) {
   const experts = getExperts();
   const e = dict.people.experts;
-  /* Hamma aʼzo tasdiqlangan va surati bor boʻlsa portret kartalari, aks holda ixcham roʻyxat. */
+  /* Hamma aʼzo tasdiqlangan va surati bor boʻlsa portret kartalari, aks holda ixcham kartalar. */
   const portraits = experts.every((p) => p.status === "confirmed" && p.name && p.photo);
   const jsonld = experts
     .map((p) => personJsonLd({ person: p, locale, dict }))
@@ -37,7 +37,6 @@ export function ExpertsPage({ locale, dict }: PageProps) {
       <JsonLd data={jsonld.length ? jsonld : null} />
       <PageHero
         title={e.title}
-        lead={e.lead}
         band
         breadcrumbs={[
           { href: pathFor(locale, "home"), label: dict.nav.home },
@@ -70,17 +69,10 @@ export function ExpertsPage({ locale, dict }: PageProps) {
                       ) : null}
                     </PortraitFrame>
                     <div className="people-card-text">
-                      <p className="t-label" data-card-title="">
+                      <p className="t-label text-ink" data-card-title="">
                         {name}
                       </p>
-                      {field ? (
-                        <p className="t-small text-ink-3">
-                          {e.field}: {field}
-                        </p>
-                      ) : null}
-                      <p className="t-small text-ink-2">
-                        {e.role}: {role}
-                      </p>
+                      <p className="t-small text-ink-3">{field ? `${field} · ${role}` : role}</p>
                     </div>
                     {person.bio ? (
                       <PersonDialogLeaf
@@ -98,27 +90,24 @@ export function ExpertsPage({ locale, dict }: PageProps) {
               })}
             </ul>
           ) : (
-            /* Ism va surat kelguncha: 64 px belgi va soha, yonida halol holat; boʻsh portret ramkasi yoʻq. */
-            <ul className="person-rows" aria-label={e.title}>
+            /* Ism va surat kelguncha: belgi plitkasi, soha va halol holat; boʻsh portret ramkasi yoʻq. */
+            <ul className="person-cards" data-card-group="" aria-label={e.title}>
               {experts.map((person) => {
                 const role = t(person.role, locale);
                 const field = person.field ? t(person.field, locale) : null;
                 return (
-                  <li key={person.id} className="person-row">
-                    <MonogramTile />
-                    <div className="person-row-text">
-                      <p className="t-label text-ink">{field ?? role}</p>
+                  <li key={person.id} className="person-card" data-card="">
+                    <PersonPlaceholder />
+                    <div className="person-card-text">
+                      <p className="t-label text-ink" data-card-title="">
+                        {field ?? role}
+                      </p>
                       <p className="t-small text-ink-3">{dict.common.status.awaiting}</p>
                     </div>
                   </li>
                 );
               })}
             </ul>
-          )}
-          {portraits ? null : (
-            <Text as="p" size="small" tone="ink-3" className="people-note">
-              {e.pending}
-            </Text>
           )}
         </Container>
       </Section>

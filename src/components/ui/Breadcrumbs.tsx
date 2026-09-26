@@ -14,6 +14,8 @@ export interface BreadcrumbsProps {
   readonly label: string;
   /** Telefonda joriy band yashiriladi (ostidagi h1 aynan shu): yoʻl ikki qatorga boʻlinmaydi. */
   readonly collapseCurrent?: boolean;
+  /** center: markazdagi sahifa sarlavhasi ustida (PageHero). */
+  readonly align?: "start" | "center";
   readonly className?: string;
 }
 
@@ -21,12 +23,19 @@ export function Breadcrumbs({
   items,
   label,
   collapseCurrent = false,
+  align = "start",
   className,
 }: BreadcrumbsProps) {
   return (
     <nav aria-label={label} className={cn("t-small text-ink-2", className)}>
-      {/* -ms-1: birinchi havolaning ichki boʻshligʻi qaytariladi, matn toʻr chetidan boshlanadi. */}
-      <ol className="-ms-1 flex flex-wrap items-center gap-1">
+      {/* -ms-1: birinchi havolaning ichki boʻshligʻi qaytariladi, matn toʻr chetidan boshlanadi.
+          Markazda ikki chetdagi ichki boʻshliq teng, qaytarish kerak emas. */}
+      <ol
+        className={cn(
+          "flex flex-wrap items-center gap-1",
+          align === "center" ? "justify-center" : "-ms-1",
+        )}
+      >
         {items.map((item, index) => (
           <li
             key={item.href}

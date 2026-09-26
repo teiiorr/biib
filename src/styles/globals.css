@@ -2,7 +2,6 @@
 @import "./fonts.css" layer(base);
 @import "./designs/atlas.css";
 @import "./materials.css";
-@import "./ornament.css";
 @import "./transitions.css";
 @import "./appearance-transitions.css";
 @import "./ui.css";
@@ -44,9 +43,6 @@
   --color-on-tint: var(--on-tint);
   --color-focus: var(--focus);
   --color-accent-text: var(--accent-text);
-  --color-accent-art: var(--accent-art);
-  --color-accent-hi: var(--accent-hi);
-  --color-accent-lo: var(--accent-lo);
   --color-success: var(--success);
   --color-info: var(--info);
   --color-danger: var(--danger);
@@ -90,13 +86,16 @@
   /* Koʻrinish paneli oʻzgartiradigan ikkita qiymat; qolgani calc(). */
   --g-t: 0.5;
   --g-d: 0.5;
-  --g-tint: calc(0.78 - 0.56 * var(--g-t));
-  --g-blur: calc(4px + 28px * var(--g-d));
-  --g-sat: calc(1.1 + 0.8 * var(--g-d));
-  --g-rim: calc(0.25 + 0.45 * var(--g-d));
-  /* Matn ostidagi material haddan tashqari tiniq boʻlib qolmasligi uchun pastki chegara. */
-  --g-tint-text: max(var(--g-tint), calc(0.62 - 0.4 * var(--g-d)));
-  --g-refract: calc(8 + 56 * var(--g-d));
+  /* Apple Liquid Glass: muz kabi tiniq. Tus 0.30 → 0.02 (oʻrtada 0.16), xiralik 0.5 → 5.5 px (oʻrtada
+     2 px, kvadratik: tiniq uchida nozik boshqaruv), toʻyinganlik 1.5 → 1.9. Orqadan oʻtayotgan matn
+     va surat aniq koʻrinadi; sinish kuchi JS da (surface-effects). */
+  --g-tint: calc(0.3 - 0.28 * var(--g-t));
+  --g-blur: calc(0.5px + 1px * var(--g-d) + 4px * var(--g-d) * var(--g-d));
+  --g-sat: calc(1.5 + 0.4 * var(--g-d));
+  --g-rim: calc(0.55 + 0.4 * var(--g-d));
+  /* Yorliqli oynada tus 0.10 dan past tushmaydi; oʻqilishni asosan yorliq atrofidagi tayanch beradi
+     (materials.css, --m-halo), shu sabab oyna ortidagi kontent koʻrinib turadi. */
+  --g-tint-text: max(var(--g-tint), 0.1);
   --light-x: 30%;
   --light-y: 0%;
 
@@ -223,9 +222,11 @@
     display: block;
     max-width: 100%;
   }
+  /* Brauzer tugmada text-shadow ni oʻchiradi: oyna yorligʻi tayanchi (vibrantlik) tugmaga ham yetsin. */
   button {
     font: inherit;
     color: inherit;
+    text-shadow: inherit;
     background: none;
     border: 0;
     padding: 0;

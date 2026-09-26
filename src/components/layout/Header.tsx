@@ -1,13 +1,10 @@
 import { AppearanceControl } from "@/components/glass/appearance/AppearanceControl";
 import { ScrollEdge } from "@/components/glass/ScrollEdge";
 import { Surface } from "@/components/glass/Surface";
-import { ZardoziMark } from "@/components/ornament/ZardoziMark";
-import { ZardoziUnderline } from "@/components/ornament/ZardoziUnderline";
-import { Picture } from "@/components/ui/Picture";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
 
-import type { NavMarks } from "./AboutTrigger";
 import { BrandMark } from "./BrandMark";
 import { DesktopNav } from "./DesktopNav";
 import { LanguageMenu } from "./LanguageMenu";
@@ -24,30 +21,16 @@ interface HeaderProps {
  */
 export function Header({ locale, dict }: HeaderProps) {
   const brand = dict.common.brand;
-  const brandText = { line1: brand.line1, line2: brand.line2, name: brand.name };
   /* data-brand-mark: qahramon sahnasi belgini shu rasmga qoʻndiradi (useHeroScene). */
-  const mark = (
-    <Picture
-      src="/brand/mark.png"
-      alt={brand.markAlt}
-      width={40}
-      height={40}
-      eager
-      attrs={{ "data-brand-mark": "" }}
-    />
-  );
-  const navMarks: NavMarks = {
-    underline: <ZardoziUnderline draw="hover" className="nav-underline" />,
-    mark: <ZardoziMark className="nav-mark" />,
-  };
+  const mark = <BrandLogo alt={brand.markAlt} eager attrs={{ "data-brand-mark": "" }} />;
   return (
     <header className="site-header" data-testid="header">
       <ScrollEdge position="bottom" />
       <div className="container-site header-row hidden lg:flex">
-        <BrandMark locale={locale} brand={brandText}>
+        <BrandMark locale={locale} name={brand.name}>
           {mark}
         </BrandMark>
-        <DesktopNav locale={locale} dict={dict.nav} marks={navMarks} />
+        <DesktopNav locale={locale} dict={dict.nav} />
         <Surface as="div" radius="control" padding={8} text adaptiveTone className="header-group">
           <LanguageMenu locale={locale} dict={dict.nav} />
           <AppearanceControl dict={dict.appearance} />
@@ -63,7 +46,7 @@ export function Header({ locale, dict }: HeaderProps) {
           className="top-bar mx-4 mt-2"
           data-top-bar=""
         >
-          <BrandMark locale={locale} brand={brandText} className="pl-2">
+          <BrandMark locale={locale} name={brand.name}>
             {mark}
           </BrandMark>
           <div className="header-group" data-top-bar-group="">

@@ -7,7 +7,7 @@ export interface DividerProps {
   readonly className?: string;
 }
 
-/* Oltin ingichka chiziq: bezak rangi accent-art. */
+/* Neytral ingichka chiziq (--line): bezak rangi yoʻq. */
 export function Divider({
   orientation = "horizontal",
   decorative = false,
@@ -18,7 +18,7 @@ export function Divider({
       {...(decorative ? { role: "presentation" } : {})}
       aria-orientation={orientation === "vertical" ? "vertical" : undefined}
       className={cn(
-        "m-0 border-0 border-accent-art",
+        "m-0 border-0 border-line",
         orientation === "vertical" ? "self-stretch border-l" : "w-full border-t",
         className,
       )}

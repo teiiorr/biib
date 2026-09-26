@@ -2,7 +2,6 @@ import type { partners as source } from "../uz/partners";
 
 export const partners: typeof source = {
   title: "Partners",
-  lead: "Organisations that work with the association. Logos are shown as the partner supplied them.",
   groups: {
     state: "State bodies",
     international: "International organisations",

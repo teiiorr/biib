@@ -6,11 +6,11 @@ export interface ScrollEdgeProps {
   readonly className?: string;
 }
 
-const LAYERS = [1, 2, 4, 8] as const;
+const LAYERS = [1, 3] as const;
 
 /**
- * Progressiv xiralik: toʻrt qatlam, har biri kuchliroq blur va torroq maska.
- * Sarlavha ostidan oʻtayotgan kontent qattiq chiziq oʻrniga yumshoq soʻnadi.
+ * Progressiv xiralik: ikki qatlam, har biri kuchliroq blur va torroq maska. Faqat oyna ustidagi
+ * ingichka tasmada: oyna ortidagi kontent pardasiz koʻrinadi.
  */
 export function ScrollEdge({ position = "bottom", className }: ScrollEdgeProps) {
   return (

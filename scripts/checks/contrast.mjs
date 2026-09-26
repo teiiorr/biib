@@ -56,8 +56,8 @@ export function contrastRatio(a, b) {
 const composite = (top, bottom, alpha) =>
   top.map((v, i) => Math.round(v * alpha + bottom[i] * (1 - alpha)));
 
-/* §10.3 formulalari: --g-tint va matn ostidagi pastki chegara --g-tint-text. */
-export const tintText = (t, d) => Math.max(0.78 - 0.56 * t, 0.62 - 0.4 * d);
+/* globals.css dagi formulalar: --g-tint va matn ostidagi pastki chegara --g-tint-text. */
+export const tintText = (t) => Math.max(0.3 - 0.28 * t, 0.1);
 
 function pair(id, fg, bg, min, note) {
   if (!fg || !bg) return warn(id, "rang hex emas, oʻtkazib yuborildi");
@@ -99,7 +99,7 @@ export function checkContrast() {
           checks.push(warn(id, "material tokenlari hex emas"));
           continue;
         }
-        const alpha = tintText(t, d);
+        const alpha = tintText(t);
         const ground = composite(base, parseColor(backdrop), alpha);
         const own = contrastRatio(ink, ground);
         if (own >= TEXT_MIN) {

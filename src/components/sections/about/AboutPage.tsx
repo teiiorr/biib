@@ -1,15 +1,13 @@
 import { Container } from "@/components/layout/Container";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
+import { SectionHeader } from "@/components/layout/SectionHeader";
 import { Reveal } from "@/components/motion/Reveal";
-import { SplitLines } from "@/components/motion/SplitLines";
-import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { MediaFrame } from "@/components/ui/MediaFrame";
 import { Picture } from "@/components/ui/Picture";
 import { Prose } from "@/components/ui/Prose";
 import { PullQuote } from "@/components/ui/PullQuote";
-import { Text } from "@/components/ui/Text";
 import { getMilestones, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
@@ -23,25 +21,23 @@ interface PageProps {
 }
 
 /**
- * Biz haqimizda (15.3): sarlavha, ikki ustunli matn va bitta iqtibos, keng UPOP TREND kadri, yoʻnalishlar
- * roʻyxati — matnli boʻlimlarda sarlavha 1–4 ustunda (kompyuterda yopishqoq), matn 6–12; tarix chizigʻi
- * sirt lentasida; oxirida UPOP TREND lentasi. Bezak qatlamlari yoʻq. Harakat: sarlavhalar
- * soʻzma-soʻz, matn va qadriyatlar doira ritmida koʻtariladi, tarix nuqtalari ketma-ket.
+ * Biz haqimizda (15.3): markazdagi sarlavha; maqsad markazdagi bitta oʻqish ustunida (ikki xatboshi
+ * va kamtar iqtibos); keng UPOP TREND kadri; yoʻnalishlar teng toʻrda (chiziq va nomi, tavsifsiz);
+ * tarix faqat yillari tasdiqlanganda; oxirida UPOP TREND lentasi. Sarlavhalar ostida tavsif yoʻq.
+ * Harakat: sarlavhalar soʻzma-soʻz, matn va roʻyxatlar doira ritmida koʻtariladi.
  */
 export function AboutPage({ locale, dict }: PageProps) {
   const a = dict.about;
-  const milestones = getMilestones().map((m) => ({
-    id: m.id,
-    year: m.year,
-    title: t(m.title, locale),
-    text: t(m.text, locale),
-    status: m.status,
-  }));
+  /* Tarix faqat yili tasdiqlangan bosqichlar bilan: yilsiz uchta yorliq tugallanmagan koʻrinardi. */
+  const milestones = getMilestones().flatMap((m) =>
+    m.status === "confirmed" && m.year !== null
+      ? [{ id: m.id, year: m.year, title: t(m.title, locale), text: t(m.text, locale) }]
+      : [],
+  );
   return (
     <>
       <PageHero
         title={a.title}
-        lead={a.lead}
         breadcrumbs={[
           { href: pathFor(locale, "home"), label: dict.nav.home },
           { href: pathFor(locale, "about"), label: dict.nav.about, current: true },
@@ -49,32 +45,30 @@ export function AboutPage({ locale, dict }: PageProps) {
         breadcrumbsLabel={dict.common.hints.breadcrumbs}
       />
       <Section labelledBy="about-mission">
-        <Container grid className="about-split">
-          <div className="about-split-head" data-grid-item="">
-            <SplitLines as="h2" className="t-h2 text-balance text-ink" id="about-mission">
-              {a.mission.heading}
-            </SplitLines>
+        <Container>
+          <SectionHeader id="about-mission" title={a.mission.heading} split />
+          {/* Oʻqish ustuni maqola bilan bir xil: kompyuterda 3–10, kengroq ekranda 4–9 (65ch dan oshmaydi). */}
+          <div className="grid-site">
+            <Reveal
+              className="about-mission col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3 xl:col-span-6 xl:col-start-4"
+              attrs={{ "data-grid-item": "" }}
+            >
+              <Prose size="body-l">
+                {a.mission.paragraphs.map((para) => (
+                  <p key={para.slice(0, 24)}>{para}</p>
+                ))}
+              </Prose>
+              <PullQuote attribution={a.mission.quoteSource}>{a.mission.quote}</PullQuote>
+            </Reveal>
           </div>
-          <Reveal className="about-split-body about-mission" attrs={{ "data-grid-item": "" }}>
-            <Prose size="body-l">
-              {a.mission.paragraphs.slice(0, 2).map((para) => (
-                <p key={para.slice(0, 24)}>{para}</p>
-              ))}
-            </Prose>
-            <PullQuote attribution={a.mission.quoteSource}>{a.mission.quote}</PullQuote>
-            <Prose size="body-l">
-              {a.mission.paragraphs.slice(2).map((para) => (
-                <p key={para.slice(0, 24)}>{para}</p>
-              ))}
-            </Prose>
-          </Reveal>
         </Container>
       </Section>
       {/* Egasining UPOP TREND tasviri: matnli sahifaga bitta keng kadr — maqsaddan yoʻnalishlarga oʻtish. */}
       <Section as="div" rhythm="section" className="about-media">
         <Container>
+          {/* Ohang faqat suratda: sut rangli izoh ostida oyna tungi ohangga oʻtib qolmasin (10.1.3). */}
           <figure className="about-media-figure">
-            <MediaFrame ratio="16:9" hairline motion={{ mode: "smooth", parallax: true }}>
+            <MediaFrame ratio="16:9" tone="dark" motion={{ mode: "smooth", parallax: true }}>
               <Picture
                 src="/brand/upop-scene.jpg"
                 alt={a.media.alt}
@@ -87,72 +81,44 @@ export function AboutPage({ locale, dict }: PageProps) {
         </Container>
       </Section>
       <Section labelledBy="about-values" tone="light">
-        <Container grid className="about-split">
-          <div className="about-split-head" data-grid-item="">
-            <SplitLines as="h2" className="t-h2 text-balance text-ink" id="about-values">
-              {a.values.heading}
-            </SplitLines>
-          </div>
-          <Reveal
-            as="ul"
-            className="about-split-body about-values"
-            stagger
-            attrs={{ "data-grid-item": "", "data-audit": "gap" }}
-          >
+        <Container>
+          <SectionHeader id="about-values" title={a.values.heading} split />
+          <Reveal as="ul" className="about-list" stagger attrs={{ "data-audit": "gap" }}>
             {a.values.items.map((item) => (
-              <li key={item.title} className="about-value">
-                <Heading level={3} size="h4">
-                  {item.title}
-                </Heading>
-                <Text as="p" tone="ink-2">
-                  {item.text}
-                </Text>
+              <li key={item} className="about-list-item t-h4 text-ink">
+                {item}
               </li>
             ))}
           </Reveal>
         </Container>
       </Section>
-      <Section labelledBy="about-history" tone="light" rhythm="band" className="about-history">
-        <Container>
-          <div className="section-head">
-            <SplitLines as="h2" className="t-h2 text-balance text-ink" id="about-history">
-              {a.history.heading}
-            </SplitLines>
-            <Text as="p" size="body-l" tone="ink-2" measure>
-              {a.history.lead}
-            </Text>
-          </div>
-          <div className="about-timeline-wrap">
+      {milestones.length > 0 ? (
+        <Section labelledBy="about-history" tone="light" rhythm="band" className="about-history">
+          <Container>
+            <SectionHeader id="about-history" title={a.history.heading} split />
             <HistoryTimeline items={milestones} label={a.history.heading} />
-          </div>
-          {/* Taʼsis hujjatlari kelguncha alohida boʻlim ochilmaydi: bitta izoh tarix ostida. */}
-          <Text as="p" size="small" tone="ink-3" className="about-docs-note">
-            {a.documents.pending}
-          </Text>
-        </Container>
-      </Section>
+          </Container>
+        </Section>
+      ) : null}
       {/* Lojuvard UPOP lentasi: sut-oq tarix sirtidan keyin sahifani yopadi. */}
       <Section labelledBy="about-next" tone="dark" rhythm="band" className="about-next upop-field">
-        <Container grid className="upop-register-grid">
-          <div className="upop-register-text" data-grid-item="">
-            <Heading level={2} size="h2" id="about-next">
-              {a.next.heading}
-            </Heading>
-            <Text as="p" size="body-l" tone="ink-2" measure>
-              {a.next.text}
-            </Text>
-          </div>
-          <div className="upop-register-actions" data-grid-item="">
-            <LinkButton
-              href={pathFor(locale, "projects")}
-              variant="primary"
-              size="56"
-              icon="arrow-right"
-              iconPosition="end"
-            >
-              {a.next.cta}
-            </LinkButton>
-          </div>
+        <Container>
+          <SectionHeader
+            id="about-next"
+            title={a.next.heading}
+            split
+            actions={
+              <LinkButton
+                href={pathFor(locale, "projects")}
+                variant="primary"
+                size="56"
+                icon="arrow-right"
+                iconPosition="end"
+              >
+                {a.next.cta}
+              </LinkButton>
+            }
+          />
         </Container>
       </Section>
     </>

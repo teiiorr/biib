@@ -1,9 +1,8 @@
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
+import { SectionHeader } from "@/components/layout/SectionHeader";
 import { Reveal } from "@/components/motion/Reveal";
-import { Heading } from "@/components/ui/Heading";
 import { Picture } from "@/components/ui/Picture";
-import { Text } from "@/components/ui/Text";
 import { getArtworks, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
@@ -24,14 +23,7 @@ export function GallerySection({ locale, dict }: GallerySectionProps) {
   return (
     <Section labelledBy="home-gallery" tone="light">
       <Container>
-        <Reveal className="section-head">
-          <Heading level={2} size="h2" id="home-gallery">
-            {g.heading}
-          </Heading>
-          <Text as="p" size="body-l" tone="ink-2" measure>
-            {g.lead}
-          </Text>
-        </Reveal>
+        <SectionHeader id="home-gallery" title={g.heading} split />
         <Reveal
           as="ul"
           className="gallery-wall"

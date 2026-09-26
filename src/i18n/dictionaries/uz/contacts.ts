@@ -1,6 +1,5 @@
 export const contacts = {
   title: "Aloqa",
-  lead: "Savol, taklif va hamkorlik uchun. Ish kunlari bir kun ichida javob beramiz.",
   details: {
     heading: "Rekvizitlar",
     address: "Manzil",
@@ -8,16 +7,13 @@ export const contacts = {
     email: "Pochta",
     telegram: "Telegram",
     hours: "Ish vaqti",
-    hoursValue: "Dushanba–juma, 09:00–18:00",
     copy: "Nusxa olish",
     copied: "Nusxa olindi",
     pending: "Tasdiq kutilmoqda",
   },
   map: {
-    heading: "Xaritada",
     yandex: "Yandex Xaritada ochish",
     google: "Google Xaritada ochish",
-    pending: "Manzil nuqtasi tashkilot tasdigʻini kutmoqda",
   },
   form: {
     heading: "Xabar yuborish",
@@ -36,8 +32,6 @@ export const contacts = {
     tooShort: "Xabar kamida {min} belgidan iborat boʻlsin",
     consentRequired: "Yuborish uchun rozilik kerak",
     fallbackHeading: "Telegram orqali yozing",
-    fallbackText:
-      "Shakl hozircha ulanmagan, xabarni toʻgʻridan-toʻgʻri Telegramda yuborishingiz mumkin.",
     fallbackCta: "Telegramda yozish",
   },
   socials: {

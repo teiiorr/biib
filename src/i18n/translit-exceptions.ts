@@ -27,8 +27,6 @@ export const KEEP_WORDS: ReadonlySet<string> = new Set([
   // Boʻlim identifikatorlari (privacy.sections[].id) havola boʻlib ishlaydi.
   "collected",
   "purpose",
-  "where",
-  "retention",
   "children",
   "rights",
   "contact",

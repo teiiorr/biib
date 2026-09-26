@@ -9,6 +9,5 @@ export const footer: typeof source = {
   copyright: "© {year} Болалар Ижодкорлиги Ижодий Бирлашмаси",
   credit: "Designed & Developed by teiior",
   privacy: "Махфийлик",
-  crownAlt: "Чуст дўпписининг ўн олти равоқли ҳошияси",
   label: "Сайт охири",
 };

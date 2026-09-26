@@ -10,11 +10,14 @@
   --lh-display-xl: 1;
   --ls-display-xl: -0.04em;
   --fw-display-xl: 800;
-  --fs-display-l: clamp(2.5rem, 1.5rem + 4.4444vw, 5.5rem);
+  /* Sahifa sarlavhasi (h1) va boʻlim sarlavhasi (h2 → t-h1): 320 px da eng uzun soʻz
+     («конфиденциальности») ham boʻlinmay sigʻadi — 30 / 24 px dan 88 / 64 px gacha (320 → 1440).
+     h1 har kenglikda h2 dan kamida 1.25 baravar katta: telefonda ham ierarxiya aniq. */
+  --fs-display-l: clamp(1.875rem, 0.8393rem + 5.1786vw, 5.5rem);
   --lh-display-l: 1.04;
   --ls-display-l: -0.035em;
   --fw-display-l: 800;
-  --fs-h1: clamp(2.25rem, 1.6667rem + 2.5926vw, 4rem);
+  --fs-h1: clamp(1.5rem, 0.671rem + 4.143vw, 4rem);
   --lh-h1: 1.06;
   --ls-h1: -0.03em;
   --fw-h1: 800;
@@ -107,6 +110,11 @@
   --dur-transition: 700ms;
 
   --material-sat: var(--g-sat);
+
+  /* Oltin sarlavhalar va oltin tugma toʻldirishi: klassik metall oltin oilasi (#D4AF37 atrofida).
+     Toʻldirish ikkala mavzuda bir xil yorqin, ustidagi navy yorliq 8:1 dan yuqori. */
+  --gold-fill: #d4af37;
+  --gold-fill-hi: #f7e08a;
 }
 
 :root[data-theme="light"] {
@@ -123,9 +131,15 @@
   --on-tint: #ffffff;
   --focus: #b8306a;
   --accent-text: #7a5c1a;
-  --accent-art: #c9a646;
-  --accent-hi: #e8cf7a;
-  --accent-lo: #8a6a22;
+  /* Sut-oq zaminda eng yorqin toʻyingan oltin: har bir toʻxtash katta sarlavha chegarasi 3:1 dan
+     yuqori, undan yorugʻi 3:1 dan tushadi. Sut-oq #F7F3EA / sirt #FFFCF6 / oq ustida: chuqur
+     3.83 / 4.14 / 4.24, asosiy 3.47 / 3.75 / 3.85, porlash 3.03 / 3.28 / 3.36. Porlash tor tasmada va
+     eng toʻyingan (OKLCH C 0.132). Sut-oqda porlash asosiydan bir pogʻona yorugʻ, xolos: tasma yonidagi
+     chuqurroq qirra (4.31 / 4.66 / 4.77) boʻlmasa yaltirash deyarli koʻrinmaydi. */
+  --gold-lo: #9e7400;
+  --gold: #a47c00;
+  --gold-flank: #946c00;
+  --gold-shine: #b08600;
   --success: #1d7a55;
   --info: #173a8c;
   --danger: #a5162f;
@@ -146,6 +160,7 @@
 
   --material-base: #fffcf6;
   --material-ink: #0e1733;
+  --material-ink-2: #3a4466;
   --material-rim: #ffffff;
   --material-shadow: rgba(14, 23, 51, 0.1);
 
@@ -174,9 +189,11 @@
   --on-tint: #0a1026;
   --focus: #e8699f;
   --accent-text: #e3c46e;
-  --accent-art: #d9b75a;
-  --accent-hi: #f0d488;
-  --accent-lo: #a88a3a;
+  /* Lojuvard tunda yorqin oltin: asosiy 8.96:1, chuqur qismi 5.79:1. */
+  --gold-lo: #b8860b;
+  --gold: #d4af37;
+  --gold-flank: #f7e08a;
+  --gold-shine: #fff1b8;
   --success: #3fbf8a;
   --info: #6f95f0;
   --danger: #ff7a8a;
@@ -197,6 +214,7 @@
 
   --material-base: #111a38;
   --material-ink: #f7f3ea;
+  --material-ink-2: #c3cadb;
   --material-rim: #8c95b4;
   --material-shadow: rgba(2, 5, 20, 0.5);
 
@@ -210,4 +228,12 @@
   --hero-ink: #f7f3ea;
   --hero-scrim: #0a1026;
   --hero-veil: #01111a;
+}
+
+/* Qorongʻi sirt kunduzgi mavzuda ham (qahramon kadri, missiya, lojuvard lentalar): yorqin oltin. */
+:root :is([data-tone="dark"], .home-hero, .upop-field, .navy-band) {
+  --gold-lo: #b8860b;
+  --gold: #d4af37;
+  --gold-flank: #f7e08a;
+  --gold-shine: #fff1b8;
 }

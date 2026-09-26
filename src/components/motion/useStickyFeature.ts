@@ -22,7 +22,7 @@ interface FeatureParts {
   readonly wordmark: HTMLElement;
   readonly media: HTMLElement;
   readonly text: HTMLElement;
-  readonly copy: HTMLElement | null;
+  readonly head: HTMLElement | null;
   readonly items: readonly HTMLElement[];
   readonly actions: HTMLElement | null;
   readonly dim: HTMLElement | null;
@@ -52,7 +52,7 @@ function queryParts(root: HTMLElement): FeatureParts | null {
     wordmark,
     media,
     text,
-    copy: text.querySelector<HTMLElement>(".upop-feature-copy"),
+    head: root.querySelector<HTMLElement>(".upop-feature-head"),
     items: Array.from(text.querySelectorAll<HTMLElement>(".upop-feature-list > li")),
     actions: text.querySelector<HTMLElement>(".upop-feature-actions"),
     dim: media.querySelector<HTMLElement>("[data-upop-dim]"),
@@ -85,8 +85,8 @@ function centreOn(el: HTMLElement, stage: HTMLElement, scale: number): Placement
 
 /**
  * Kompyuter sahnasi: kadr butun sahnani qoplab (cover), xiralashgan holda boshlanadi, logotip
- * markazda katta; skroll bilan ikkalasi oʻz katagiga qoʻnadi, soʻng matn, dalillar va harakatlar
- * keladi. Foydalanuvchi allaqachon shu yerda boʻlsa — null (qurilmaydi). Kontent sigʻmasa sahna
+ * markazda katta; skroll bilan ikkalasi oʻz katagiga qoʻnadi, soʻng sarlavha, dalillar va
+ * harakatlar keladi. Foydalanuvchi allaqachon shu yerda boʻlsa — null (qurilmaydi). Kontent sigʻmasa sahna
  * yakuniy holatda kutadi va har refresh da qayta tekshiriladi (masalan shriftlar kelgach).
  */
 function buildScene(
@@ -95,7 +95,7 @@ function buildScene(
   late: boolean,
   progress: { current: number },
 ): (() => void) | null {
-  const { root, stage, grid, wordmark, media, copy, items, actions, dim, control } = parts;
+  const { root, stage, grid, wordmark, media, head, items, actions, dim, control } = parts;
   if (late && reached(root)) return null;
   /* Oʻlchamsiz kadr cheksiz «cover» masshtabi berib, sahifa boshini qoplardi. */
   if (media.offsetWidth === 0 || media.offsetHeight === 0 || wordmark.offsetHeight === 0)
@@ -142,12 +142,9 @@ function buildScene(
   if (dim) tl.fromTo(dim, { opacity: 0.45 }, { opacity: 0, duration: 0.5 }, 0);
   // 44 px boshqaruv kadr bilan birga kattalashmasin: qoʻngandan keyin paydo boʻladi.
   if (control) tl.fromTo(control, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.05 }, 0.45);
-  // Oltin chiziq ham: butun sahnaga choʻzilgan kadrda u ekran boʻylab adashgan chiziqdek koʻrinardi.
-  const hairline = media.querySelector<HTMLElement>(".media-frame-line");
-  if (hairline) tl.fromTo(hairline, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.05 }, 0.45);
-  if (copy) {
+  if (head) {
     tl.fromTo(
-      copy,
+      head,
       { y: 32, autoAlpha: 0 },
       { y: 0, autoAlpha: 1, duration: 0.3, ease: EASE.out },
       0.4,
@@ -244,9 +241,34 @@ function buildScene(
   };
 }
 
+/* Blok koʻrinishga kirganda nishonlar doira ritmida koʻtariladi; ekranda turgan blok yashirilmaydi. */
+function riseIn(
+  { gsap }: MotionEngine,
+  trigger: HTMLElement,
+  targets: readonly HTMLElement[],
+  distance: number,
+): (() => void) | null {
+  if (targets.length === 0 || !belowViewport(trigger, 1)) return null;
+  let tween: gsap.core.Tween | null = null;
+  const watch = watchPending(trigger, targets, () => {
+    tween?.scrollTrigger?.kill(false, true);
+    tween?.play();
+  });
+  tween = gsap.from(targets, {
+    autoAlpha: 0,
+    y: distance,
+    duration: DURATION.reveal,
+    ease: EASE.out,
+    stagger: doiraStaggerFn(doiraUnit(targets.length)),
+    clearProps: "transform,opacity,visibility",
+    scrollTrigger: { trigger, start: "top 85%", once: true, onEnter: watch.started },
+  });
+  return watch.dispose;
+}
+
 /**
- * Telefon va sahna sigʻmagan ekran: logotip va kadr yumshoq ochiladi (kadrda parallaks), matn,
- * dalillar va harakatlar doira ritmida koʻtariladi. Ekranda turgan qism yashirilmaydi.
+ * Telefon va sahna sigʻmagan ekran: sarlavha koʻtariladi, logotip va kadr yumshoq ochiladi (kadrda
+ * parallaks), dalillar va harakatlar doira ritmida koʻtariladi. Ekranda turgan qism yashirilmaydi.
  */
 function buildStacked(
   engine: MotionEngine,
@@ -255,9 +277,12 @@ function buildStacked(
   depth: number,
   distance: number,
 ): () => void {
-  const { gsap } = engine;
-  const { wordmark, media, text, copy, items, actions } = parts;
+  const { wordmark, media, text, head, items, actions } = parts;
   const disposers: Array<() => void> = [];
+
+  // Sarlavha matndan uzoqda (tepada): oʻz triggeri bilan, aks holda koʻrinib turib yashirin qolardi.
+  const headRise = head ? riseIn(engine, head, [head], distance) : null;
+  if (headRise) disposers.push(headRise);
 
   const image = wordmark.querySelector<HTMLElement>("img");
   if (image && belowViewport(wordmark, 1)) {
@@ -285,24 +310,9 @@ function buildStacked(
     }
   }
 
-  const lines = [copy, ...items, actions].filter((el): el is HTMLElement => el !== null);
-  if (lines.length > 0 && belowViewport(text, 1)) {
-    let tween: gsap.core.Tween | null = null;
-    const watch = watchPending(text, lines, () => {
-      tween?.scrollTrigger?.kill(false, true);
-      tween?.play();
-    });
-    tween = gsap.from(lines, {
-      autoAlpha: 0,
-      y: distance,
-      duration: DURATION.reveal,
-      ease: EASE.out,
-      stagger: doiraStaggerFn(doiraUnit(lines.length)),
-      clearProps: "transform,opacity,visibility",
-      scrollTrigger: { trigger: text, start: "top 85%", once: true, onEnter: watch.started },
-    });
-    disposers.push(watch.dispose);
-  }
+  const lines = [...items, actions].filter((el): el is HTMLElement => el !== null);
+  const linesRise = riseIn(engine, text, lines, distance);
+  if (linesRise) disposers.push(linesRise);
 
   return () => disposers.forEach((dispose) => dispose());
 }

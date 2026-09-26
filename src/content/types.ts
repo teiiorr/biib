@@ -68,7 +68,6 @@ export interface Project {
   readonly flagship: boolean;
   readonly name: Localized;
   readonly tagline: Localized;
-  readonly body: Localized<readonly string[]>;
   readonly age: { readonly from: number; readonly to: number; readonly status: ContentStatus };
   readonly format: ProjectFact;
   readonly place: ProjectFact;

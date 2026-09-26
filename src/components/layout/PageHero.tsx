@@ -1,36 +1,32 @@
-import type { ReactNode } from "react";
-
 import { cn } from "@/lib/cn";
 
 import { Breadcrumbs, type BreadcrumbItem } from "@/components/ui/Breadcrumbs";
 import { Heading } from "@/components/ui/Heading";
-import { Text } from "@/components/ui/Text";
 
 import { Container } from "./Container";
 import { Section } from "./Section";
 
 interface PageHeroProps {
   readonly title: string;
-  readonly lead?: string;
   readonly breadcrumbs?: readonly BreadcrumbItem[];
   readonly breadcrumbsLabel?: string;
   /** Rasmiy sahifalar: sarlavha tinch lojuvard lentada, bezaksiz. */
   readonly band?: boolean;
   readonly titleId?: string;
   readonly className?: string;
-  readonly children?: ReactNode;
 }
 
-/** Sahifa boshi: bitta h1, qisqa kirish, non-ushoq yoʻl. */
+/**
+ * Sahifa boshi: markazda nonushoq yoʻli va bitta katta oltin h1 (display-l). Sarlavha ostida
+ * tavsif yoʻq (egasining talabi); nonushoq ham markazda, ikkalasi bir oʻqda turadi.
+ */
 export function PageHero({
   title,
-  lead,
   breadcrumbs,
   breadcrumbsLabel,
   band = false,
   titleId = "page-title",
   className,
-  children,
 }: PageHeroProps) {
   return (
     <Section
@@ -41,17 +37,11 @@ export function PageHero({
     >
       <Container className="page-hero relative">
         {breadcrumbs && breadcrumbsLabel ? (
-          <Breadcrumbs items={breadcrumbs} label={breadcrumbsLabel} />
+          <Breadcrumbs items={breadcrumbs} label={breadcrumbsLabel} align="center" />
         ) : null}
-        <Heading level={1} size="h1" id={titleId}>
+        <Heading level={1} id={titleId}>
           {title}
         </Heading>
-        {lead ? (
-          <Text as="p" size="body-l" tone="ink-2" className="page-hero-lead">
-            {lead}
-          </Text>
-        ) : null}
-        {children}
       </Container>
     </Section>
   );

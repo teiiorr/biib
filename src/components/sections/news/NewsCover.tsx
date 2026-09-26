@@ -1,17 +1,15 @@
-import type { CSSProperties } from "react";
-
 import type { MediaRevealProps } from "@/components/motion/MediaReveal";
-import { GirihStar } from "@/components/ornament/GirihStar";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { MediaFrame } from "@/components/ui/MediaFrame";
 import { Picture } from "@/components/ui/Picture";
 import { t } from "@/content";
 import type { NewsArticle } from "@/content/types";
 import type { Locale } from "@/i18n/locales";
 import { cn } from "@/lib/cn";
-import type { AspectRatio } from "@/lib/ornament/ratio";
+import type { AspectRatio } from "@/lib/aspect-ratio";
 
 export interface NewsCoverProps {
-  readonly article: Pick<NewsArticle, "cover" | "story">;
+  readonly article: Pick<NewsArticle, "cover">;
   readonly ratio: AspectRatio;
   readonly locale: Locale;
   /** Ramka viewportning qancha qismini egallaydi (srcset tanlovi uchun). */
@@ -26,7 +24,7 @@ export interface NewsCoverProps {
 
 /**
  * Yangilik muqovasi: surat bor va tasdiq kutmayotgan boʻlsa tayyor rasm (Picture), aks holda sokin oʻrin
- * (hikoya rangida yengil zamin va kichik belgi). Naqshli tasmalar yoʻq.
+ * (neytral yengil zamin va markazda birlashma belgisi).
  */
 export function NewsCover({
   article,
@@ -38,15 +36,14 @@ export function NewsCover({
   motion,
   className,
 }: NewsCoverProps) {
-  const { cover, story } = article;
+  const { cover } = article;
   const alt = meaningful ? t(cover.alt, locale) : "";
   const src = cover.status === "pending" ? null : cover.src;
-  const style = { "--cover-tint": `var(--${story.primary})` } as CSSProperties;
   return (
     <MediaFrame
       ratio={ratio}
       className={cn("news-cover", className)}
-      style={style}
+      {...(src ? { tone: "dark" as const } : {})}
       {...(motion ? { motion } : {})}
     >
       {src ? (
@@ -57,7 +54,7 @@ export function NewsCover({
           data-status={cover.status}
           {...(alt ? { role: "img", "aria-label": alt } : { "aria-hidden": true })}
         >
-          <GirihStar symmetry={8} size={20} ring={false} />
+          <BrandLogo alt="" size={40} />
         </div>
       )}
     </MediaFrame>

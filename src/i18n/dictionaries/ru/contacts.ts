@@ -2,7 +2,6 @@ import type { contacts as source } from "../uz/contacts";
 
 export const contacts: typeof source = {
   title: "Контакты",
-  lead: "Пишите с вопросами, предложениями и идеями сотрудничества. В рабочие дни отвечаем в тот же день.",
   details: {
     heading: "Контактные данные",
     address: "Адрес",
@@ -10,16 +9,13 @@ export const contacts: typeof source = {
     email: "Почта",
     telegram: "Telegram",
     hours: "Часы работы",
-    hoursValue: "Понедельник – пятница, 09:00–18:00",
     copy: "Скопировать",
     copied: "Скопировано",
     pending: "Ожидает подтверждения",
   },
   map: {
-    heading: "На карте",
     yandex: "Открыть в Яндекс Картах",
     google: "Открыть в Google Картах",
-    pending: "Точка на карте ожидает подтверждения объединения",
   },
   form: {
     heading: "Написать нам",
@@ -38,7 +34,6 @@ export const contacts: typeof source = {
     tooShort: "Сообщение должно быть не короче {min} символов",
     consentRequired: "Для отправки нужно согласие",
     fallbackHeading: "Напишите в Telegram",
-    fallbackText: "Форма пока не подключена, сообщение можно отправить напрямую в Telegram.",
     fallbackCta: "Написать в Telegram",
   },
   socials: {

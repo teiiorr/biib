@@ -2,12 +2,11 @@ import { ViewTransition } from "react";
 
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
+import { SectionHeader } from "@/components/layout/SectionHeader";
 import { Reveal } from "@/components/motion/Reveal";
-import { SplitLines } from "@/components/motion/SplitLines";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
-import { Text } from "@/components/ui/Text";
 import { getNews, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { formatDate } from "@/i18n/format";
@@ -23,7 +22,8 @@ interface NewsTeaserProps {
 }
 
 /**
- * Yangiliklar: bitta bosh xabar (3:2) va yonida qolgan toʻrttasi ustma-ust (1:1 kichik muqova).
+ * Yangiliklar: markazdagi sarlavha, bitta bosh xabar (3:2) va yonida qolgan toʻrttasi ustma-ust
+ * (1:1 kichik muqova). Kartada faqat sana (yoki mavzu) va nom: parcha matn yoʻq (egasining talabi).
  * Yon ustun bosh xabar balandligiga choʻziladi: ikkala ustun bir chiziqda tugaydi. Telefonda ketma-ket.
  * Harakat: bosh muqova yumshoq ochiladi va parallaksda yuradi, yon qatorlar doira ritmida koʻtariladi.
  */
@@ -35,25 +35,22 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
   return (
     <Section labelledBy="home-news" tone="light" className="news-section">
       <Container>
-        <div className="section-head section-head-row">
-          <div>
-            <SplitLines as="h2" className="t-h2 text-balance text-ink" id="home-news">
-              {h.heading}
-            </SplitLines>
-            <Text as="p" size="body-l" tone="ink-2" measure>
-              {h.lead}
-            </Text>
-          </div>
-          <LinkButton
-            href={pathFor(locale, "news")}
-            variant="ghost"
-            size="40"
-            icon="arrow-right"
-            iconPosition="end"
-          >
-            {h.all}
-          </LinkButton>
-        </div>
+        <SectionHeader
+          id="home-news"
+          title={h.heading}
+          split
+          actions={
+            <LinkButton
+              href={pathFor(locale, "news")}
+              variant="ghost"
+              size="40"
+              icon="arrow-right"
+              iconPosition="end"
+            >
+              {h.all}
+            </LinkButton>
+          }
+        />
         <div className="news-teaser" data-card-group="">
           <article className="news-lead" data-card="">
             <TransitionLink
@@ -75,14 +72,11 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
             <p className="t-micro text-ink-3 tnum news-meta">
               {lead.status === "confirmed" ? formatDate(locale, lead.date) : t(lead.topic, locale)}
             </p>
-            <Heading level={3} size="h2" className="news-title" data-card-title="">
+            <Heading level={3} size="h3" className="news-title" attrs={{ "data-card-title": "" }}>
               <TransitionLink href={pathFor(locale, "newsItem", lead.slug)}>
                 {t(lead.title, locale)}
               </TransitionLink>
             </Heading>
-            <Text as="p" tone="ink-2" className="news-lead-text" data-clamp="">
-              {t(lead.lead, locale)}
-            </Text>
           </article>
           <Reveal as="div" className="news-side" stagger>
             {side.map((item) => (
@@ -108,7 +102,12 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
                       ? formatDate(locale, item.date)
                       : t(item.topic, locale)}
                   </p>
-                  <Heading level={3} size="h4" className="news-title" data-card-title="">
+                  <Heading
+                    level={3}
+                    size="h4"
+                    className="news-title"
+                    attrs={{ "data-card-title": "" }}
+                  >
                     <TransitionLink href={pathFor(locale, "newsItem", item.slug)}>
                       {t(item.title, locale)}
                     </TransitionLink>

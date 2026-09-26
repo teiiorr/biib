@@ -61,6 +61,7 @@ export function GlassPopover({
             radius="panel"
             padding={padding}
             text
+            adaptiveTone
             className={cx("surface-morph glass-popover z-overlay", className)}
           >
             {children}

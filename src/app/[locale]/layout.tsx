@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { preload } from "react-dom";
 import { notFound } from "next/navigation";
 
+import { AppearanceBootFallback } from "@/lib/appearance/BootFallback";
 import { AppearanceProvider } from "@/lib/appearance/context";
 import { APPEARANCE_BOOT_SCRIPT } from "@/lib/appearance/boot";
 import { Footer } from "@/components/layout/Footer";
@@ -19,6 +20,7 @@ import { fontPreloads, heroFontFace } from "@/lib/fonts";
 import { JsonLd } from "@/lib/seo/JsonLdScript";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/jsonld";
 import { siteUrl } from "@/lib/site";
+import { TapSound } from "@/lib/sound/TapSound";
 
 import "@/styles/globals.css";
 
@@ -65,6 +67,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       data-orthography={meta.orthography === "2026" ? "2026" : undefined}
       data-theme="light"
       data-motion="on"
+      data-sound="on"
       suppressHydrationWarning
     >
       <head>
@@ -74,6 +77,8 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       </head>
       <body>
         <IconSprite />
+        <AppearanceBootFallback />
+        <TapSound />
         <AppearanceProvider>
           <MotionProvider>
             <SkipLink label={dict.common.skipToContent} />

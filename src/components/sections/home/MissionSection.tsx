@@ -1,11 +1,9 @@
 import { Container } from "@/components/layout/Container";
 import { Reveal } from "@/components/motion/Reveal";
-import { ZardoziText } from "@/components/ornament/ZardoziText";
 
 export interface MissionCopy {
   /** Boʻlim nomi (aria-label): sarlavha ustida koʻrinadigan yorliq yoʻq (§8 XIV). */
   readonly label: string;
-  /** "{{soʻz}}" belgili jumla: koʻpi bilan uchta zardoʻzi. */
   readonly statement: string;
 }
 
@@ -14,9 +12,8 @@ interface MissionSectionProps {
 }
 
 /**
- * Missiya: qahramon sahnasining ikkinchi yarmi — yopishqoq, xiralashayotgan kadr ustidan koʻtariladi
- * (lojuvard ostlik bilan). Jumla reveal-rise bilan koʻtariladi, belgilangan soʻzlar ostida zardoʻzi
- * koʻrinishga kirganda doira ritmida tikiladi.
+ * Missiya: qahramon sahnasining ikkinchi yarmi — xiralashgan kadr ustidan koʻtariladigan bitta sokin
+ * jumla. Egasining talabi bilan kamtar oʻlchamda (h4), markazda, oddiy siyoh rangida.
  */
 export function MissionSection({ copy }: MissionSectionProps) {
   return (
@@ -27,10 +24,8 @@ export function MissionSection({ copy }: MissionSectionProps) {
       aria-label={copy.label}
     >
       <Container>
-        <Reveal className="home-mission-text">
-          <p className="t-display-l home-mission-statement gold-pour">
-            <ZardoziText text={copy.statement} lines={2} draw="view" className="mission-words" />
-          </p>
+        <Reveal as="p" className="t-h4 text-ink home-mission-statement">
+          {copy.statement}
         </Reveal>
       </Container>
     </section>

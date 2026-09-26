@@ -1,5 +1,3 @@
-import { playSound } from "@/lib/sound/play";
-
 import { getAppearanceSnapshot, setAppearance } from "./store";
 import type { ThemeChoice } from "./types";
 
@@ -45,7 +43,6 @@ export function setTheme(next: ThemeChoice, origin?: ThemeOrigin): void {
   const y = origin?.y ?? 0;
   html.style.setProperty("--vt-x", `${Math.round(x)}px`);
   html.style.setProperty("--vt-y", `${Math.round(y)}px`);
-  playSound("doira");
   runTransition("theme-switch", async () => {
     setAppearance({ theme: next });
     await nextTask();

@@ -1,12 +1,13 @@
 @layer components {
-  /* hero-enter (D-M5): soʻzlar niqob ostidan doira ritmida koʻtariladi, missiya va harakatlar keyin.
+  /* hero-enter (D-M5): soʻzlar niqob ostidan doira ritmida koʻtariladi, harakatlar keyin.
      CSS kadrlar, JS kutilmaydi; kamaytirilgan harakat va Harakat = off da qahramon darhol toʻliq. */
   .hero-word {
     display: inline-block;
     overflow: hidden;
-    /* Niqob glif chetlarini kesmasin: Manrope siyoh qutisi harf balandligidan ≈ 0.08em chiqadi; kenglik oʻzgarmaydi. */
-    padding: 0.12em 0.04em;
-    margin: -0.12em -0.04em;
+    /* Niqob glif chetlarini kesmasin: Manrope siyoh qutisi harf balandligidan ≈ 0.08em chiqadi, quyi
+       osma harflar (g, y, j) esa qator qutisidan ≈ 0.22em pastga tushadi; oʻlcham oʻzgarmaydi. */
+    padding: 0.12em 0.04em 0.32em;
+    margin: -0.12em -0.04em -0.32em;
     vertical-align: top;
   }
   .hero-word-in {
@@ -19,13 +20,6 @@
       animation: hero-rise var(--dur-reveal) var(--ease-out) both;
       /* Doira: 90, 90, 180 ms guruhlari */
       animation-delay: calc((var(--i) - mod(var(--i), 3)) / 3 * 360ms + mod(var(--i), 3) * 90ms);
-    }
-    /* Missiya telefonda LCP: shaffoflik 0 dan boshlansa LCP kirish oxirigacha kechikadi (4× CPU da 1.9 s),
-       shu sabab faqat siljish, matn birinchi kadrdan koʻrinadi. */
-    :root:not([data-motion="off"])
-      .home-hero:not([data-enter="skip"]):not([data-done])
-      .home-hero-mission {
-      animation: hero-settle var(--dur-reveal) var(--ease-out) 500ms both;
     }
     :root:not([data-motion="off"])
       .home-hero:not([data-enter="skip"]):not([data-done])
@@ -54,14 +48,6 @@
       transform: translateY(0);
     }
   }
-  @keyframes hero-settle {
-    from {
-      transform: translateY(16px);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
   @keyframes hero-lift {
     from {
       transform: translateY(16px);
@@ -75,12 +61,12 @@
 
   /* split-lines v2: niqob glif chetlarini (Ў, Ö, ʻ) kesmasin — quti oʻlchami oʻzgarmaydi. */
   .split-word-mask {
-    padding: 0.12em 0.04em;
-    margin: -0.12em -0.04em;
+    padding: 0.12em 0.04em 0.32em;
+    margin: -0.12em -0.04em -0.32em;
   }
   .split-line-mask {
-    padding-block: 0.12em;
-    margin-block: -0.12em;
+    padding-block: 0.12em 0.32em;
+    margin-block: -0.12em -0.32em;
   }
 
   /* hover-media (3.20): karta ustida surat ramka ichida 1.03 gacha kattalashadi, sarlavha pushti.
@@ -154,96 +140,96 @@
   pointer-events: none;
 }
 
-/* ---------- Oltin quyilishi (egasining talabi) ----------
-   Katta sarlavhalar oltin bilan toʻladi: oltin harflarga pastdan yuqoriga quyiladi. Tinch holatda
-   harf siyohning 22 % i, quyilish sarlavha koʻrinishga kirganda skroll bilan (view timeline), bosh sahifa
-   nomida esa yuklanganda. Harakat oʻchiq yoki qoʻllanmasa — darhol toʻliq oltin. Oltin metall: gradient
-   faqat shu material uchun (Art. V.6). Yorugʻ fonda toʻq oltin (≥ 3.5:1), qorongʻi fonda yorqin oltin. */
-@property --pour {
-  syntax: "<percentage>";
-  inherits: true;
-  initial-value: 100%;
-}
+/* ---------- Oltin matn (egasining talabi) ----------
+   Katta sarlavhalar doim oltin va ular ustidan tinch yorugʻlik tasmasi toʻxtovsiz oʻtadi. Plitka matndan
+   ikki baravar keng va chetlari bir xil rangda: 200% ga surilganda kadr aynan boshiga qaytadi, choki
+   koʻrinmaydi. Kamaytirilgan harakat va Harakat oʻchiq: xuddi shu oltin, harakatsiz. Oltin metall:
+   gradient faqat shu material uchun (Art. V.6). Ranglar atlas.css dagi --gold-* tokenlari. */
 :root {
-  --pour-gold-lo: #6b4f14;
-  --pour-gold-mid: #8a6a22;
-  --pour-gold-hi: #a07c25;
+  --gold-cycle: 8s;
 }
-:root[data-theme="dark"],
-:root :is([data-tone="dark"], .home-hero, .upop-field),
-:root .home-hero-scene .home-mission {
-  --pour-gold-lo: #b8923a;
-  --pour-gold-mid: #d9b75a;
-  --pour-gold-hi: #f3dc93;
-}
-:root .gold-pour,
-:root .gold-pour :is(.split-line, .split-word, .hero-word-in, .zardozi-word) {
-  background-image:
-    linear-gradient(
-      0deg,
-      var(--pour-gold-lo) 0%,
-      var(--pour-gold-mid) 38%,
-      var(--pour-gold-hi) 52%,
-      var(--pour-gold-mid) 66%,
-      var(--pour-gold-lo) 100%
-    ),
-    linear-gradient(
-      color-mix(in oklab, var(--ink) 22%, transparent),
-      color-mix(in oklab, var(--ink) 22%, transparent)
-    );
-  background-size:
-    100% var(--pour),
-    100% 100%;
-  background-position:
-    0 100%,
-    0 0;
-  background-repeat: no-repeat;
+/* Matn boʻyicha kesilgan fon faqat element qutisi ichini boʻyaydi: quyi osma harflar (g, p, y, j, р, у)
+   kesilmasin deb quti pastga 0.3em (tepaga 0.1em) kengaytiriladi, manfiy chet joylashuvni saqlaydi. */
+:root .gold-text,
+:root .gold-text :is(.split-line, .split-word, .hero-word-in) {
+  padding-block: 0.1em 0.3em;
+  margin-block: -0.1em -0.3em;
+  background-image: linear-gradient(
+    100deg,
+    var(--gold-lo) 0%,
+    var(--gold-lo) 4%,
+    var(--gold) 18%,
+    var(--gold) 38%,
+    var(--gold-flank) 46%,
+    var(--gold-shine) 50%,
+    var(--gold-flank) 54%,
+    var(--gold) 62%,
+    var(--gold) 82%,
+    var(--gold-lo) 96%,
+    var(--gold-lo) 100%
+  );
+  background-size: 200% 100%;
+  background-repeat: repeat-x;
+  background-position: 0% 0;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
-/* Ichki boʻlaklar oʻz foni bilan: ota fon ular ostida ikki marta chizilmasin. */
-:root .gold-pour:has(.split-line, .hero-word-in) {
+/* Boʻlingan sarlavhada har boʻlak oʻz foni bilan (koʻtarilayotgan boʻlak ota fonini olmaydi). */
+:root .gold-text:has(.split-line, .split-word, .hero-word-in) {
   background-image: none;
 }
-/* Zardoʻzi iplari matn rangida chiziladi: oltin sarlavhada ular aniq oltin. */
-:root .gold-pour .zardozi-underline {
-  color: var(--pour-gold-mid);
+/* Bosh sahifa nomi: soʻzlar bitta plitkani boʻlishadi (HeroEnter --title-w va --word-x ni oʻlchaydi),
+   tasma butun nom boʻylab bitta boʻlib oʻtadi, har soʻzda qaytadan boshlanmaydi. */
+:root .home-hero-title[data-shine] .hero-word-in {
+  background-size: calc(var(--title-w) * 2) 100%;
+  background-position: calc(0px - var(--word-x)) 0;
 }
-@keyframes gold-pour {
+@keyframes gold-shimmer {
   from {
-    --pour: 0%;
+    background-position: 200% 0;
   }
   to {
-    --pour: 100%;
+    background-position: 0% 0;
+  }
+}
+@keyframes gold-shimmer-title {
+  from {
+    background-position: calc(var(--title-w) * 2 - var(--word-x)) 0;
+  }
+  to {
+    background-position: calc(0px - var(--word-x)) 0;
   }
 }
 @media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    :root:not([data-motion="off"]) .gold-pour:not(.home-hero-title) {
-      animation: gold-pour linear both;
-      animation-timeline: view();
-      animation-range: entry 10% cover 45%;
-    }
+  :root:not([data-motion="off"]) .gold-text,
+  :root:not([data-motion="off"]) .gold-text :is(.split-line, .split-word, .hero-word-in) {
+    animation: gold-shimmer var(--gold-cycle) var(--ease-in-out) infinite;
   }
-  /* Bosh sahifa nomi: soʻzlar koʻtarilgach oltin quyiladi (hero-enter ritmida). Mijoz navigatsiyasida
-     (data-enter="skip") kirish yoʻq: nom darhol toʻliq oltin. */
+  :root:not([data-motion="off"]) .home-hero-title[data-shine] .hero-word-in {
+    animation-name: gold-shimmer-title;
+  }
+  /* Kirish paytida koʻtarilish va yaltirash birga; yaltirash hamma soʻzda bir vaqtda (bitta tasma). */
   :root:not([data-motion="off"])
-    .home-hero:not([data-enter="skip"])
+    .home-hero:not([data-enter="skip"]):not([data-done])
     .home-hero-title
     .hero-word-in {
     animation:
       hero-rise var(--dur-reveal) var(--ease-out) both,
-      gold-pour 1400ms var(--ease-out) both;
-    animation-delay:
-      calc((var(--i) - mod(var(--i), 3)) / 3 * 360ms + mod(var(--i), 3) * 90ms),
-      calc(420ms + var(--i) * 140ms);
+      gold-shimmer var(--gold-cycle) var(--ease-in-out) infinite;
+    animation-delay: calc((var(--i) - mod(var(--i), 3)) / 3 * 360ms + mod(var(--i), 3) * 90ms), 0s;
+  }
+  :root:not([data-motion="off"])
+    .home-hero:not([data-enter="skip"]):not([data-done])
+    .home-hero-title[data-shine]
+    .hero-word-in {
+    animation-name: hero-rise, gold-shimmer-title;
   }
 }
 @media (forced-colors: active) {
-  :root .gold-pour,
-  :root .gold-pour * {
+  :root .gold-text,
+  :root .gold-text * {
     background: none;
     -webkit-text-fill-color: currentColor;
     color: CanvasText;

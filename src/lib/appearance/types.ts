@@ -8,7 +8,8 @@ export interface Appearance {
   readonly transparency: number;
   /** Zichlik, 0–100. */
   readonly density: number;
-  readonly sound: boolean;
+  /** Bosish ovozi. Eski `sound` maydoni (sukutda oʻchiq edi) ataylab oʻqilmaydi: endi hammada yoqiq. */
+  readonly tapSound: boolean;
   readonly motion: boolean;
 }
 
@@ -18,7 +19,7 @@ export const DEFAULT_APPEARANCE: Appearance = {
   theme: "system",
   transparency: 50,
   density: 50,
-  sound: false,
+  tapSound: true,
   motion: true,
 };
 
@@ -39,7 +40,7 @@ export function normalizeAppearance(raw: unknown): Appearance {
     theme: isThemeChoice(r.theme) ? r.theme : DEFAULT_APPEARANCE.theme,
     transparency: clampPercent(r.transparency, DEFAULT_APPEARANCE.transparency),
     density: clampPercent(r.density, DEFAULT_APPEARANCE.density),
-    sound: r.sound === true,
+    tapSound: r.tapSound !== false,
     motion: r.motion !== false,
   };
 }

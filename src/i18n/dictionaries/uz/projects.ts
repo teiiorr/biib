@@ -1,6 +1,5 @@
 export const projects = {
   title: "UPOP TREND",
-  lead: "Milliy qoʻshiqchilik kastingi: viloyat bosqichlari, yarim final va poytaxtdagi yakuniy konsert. Ariza bepul, tavsiya kerak emas.",
   facts: {
     heading: "Asosiy maʼlumot",
     age: "Yosh",
@@ -13,11 +12,7 @@ export const projects = {
     pending: "Tasdiq kutilmoqda",
   },
   filmHeading: "Kasting haqida video",
-  filmLead: "Loyiha haqida qisqa video. Ovozi bor, bosilganda yuklanadi.",
   playFilm: "Videoni ijro etish",
   registrationHeading: "Roʻyxatdan oʻtish",
-  upopNote:
-    "Roʻyxatdan oʻtish faqat upop.uz saytida. Bu sayt kastingni oʻtkazmaydi, faqat u haqida xabar beradi.",
   openExternal: "upop.uz saytiga oʻtish",
-  mediaPending: "Video tashkilotdan kelgach shu yerda chiqadi",
 };

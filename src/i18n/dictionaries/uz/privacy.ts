@@ -1,9 +1,6 @@
 export const privacy = {
   title: "Maxfiylik siyosati",
-  lead: "Sayt qanday maʼlumot yigʻadi, nima uchun va qancha vaqt saqlaydi.",
   updated: "Yangilangan: {date}",
-  toc: "Mundarija",
-  legalPending: "Matn yuridik tekshiruvdan oʻtmagan, tashkilot tasdigʻini kutmoqda.",
   kid: {
     heading: "Qisqacha, oddiy soʻzlar bilan",
     items: [
@@ -15,50 +12,36 @@ export const privacy = {
   sections: [
     {
       id: "collected",
-      heading: "Nima yigʻiladi",
+      heading: "Nima yigʻiladi va qayerga yuboriladi",
       paragraphs: [
         "Aloqa shakli orqali yuborilgan ism, telefon yoki pochta va xabar matni. Boshqa hech narsa: saytda hisob, izoh, cookie va analitika yoʻq.",
-        "Koʻrinish sozlamalari (mavzu, shaffoflik, zichlik) faqat sizning brauzeringizda, localStorage ichida saqlanadi va bizga yuborilmaydi.",
+        "Koʻrinish sozlamalari (mavzu, shaffoflik, zichlik, harakat va ovoz) faqat sizning brauzeringizda, localStorage ichida saqlanadi va bizga yuborilmaydi.",
+        "Shakl xabarni Telegram Bot API orqali birlashmaning xizmat chatiga yuboradi. Shu sabab maʼlumot Telegram serverlari orqali oʻtadi.",
       ],
     },
     {
       id: "purpose",
-      heading: "Nima uchun",
+      heading: "Nima uchun va qancha saqlanadi",
       paragraphs: [
         "Xabaringizga javob berish va soʻrovingizni koʻrib chiqish uchun. Maʼlumot reklama yoki uchinchi shaxslarga berilmaydi.",
+        "Xabar soʻrov hal boʻlguncha, koʻpi bilan 12 oy saqlanadi, keyin oʻchiriladi.",
       ],
-    },
-    {
-      id: "where",
-      heading: "Qayerga yuboriladi",
-      paragraphs: [
-        "Shakl xabarni Telegram Bot API orqali birlashmaning xizmat chatiga yuboradi. Shu sabab Telegram serverlari orqali oʻtadi; bu Oʻzbekiston Respublikasining «Shaxsiy maʼlumotlar toʻgʻrisida»gi qonuni (OʻRQ-547, 2019-yil 2-iyul) talablariga muvofiqligi yuridik tekshiruvda.",
-      ],
-    },
-    {
-      id: "retention",
-      heading: "Qancha saqlanadi",
-      paragraphs: ["Xabar soʻrov hal boʻlguncha, koʻpi bilan 12 oy saqlanadi, keyin oʻchiriladi."],
     },
     {
       id: "children",
       heading: "Bolalar ishlari va suratlari",
       paragraphs: [
         "Bolaning rasmi yoki surati saytga faqat ota-onaning yozma roziligi va bolaning oʻz xohishi bilan qoʻyiladi. Ism faqat birinchi ism, yosh va viloyat koʻrsatiladi; maktab va aniq manzil hech qachon.",
-        "Roziligingizni istalgan vaqtda qaytarib olishingiz mumkin: quyidagi manzilga yozing, ish ikki ish kuni ichida olib tashlanadi.",
+        "Roziligingizni istalgan vaqtda qaytarib olishingiz mumkin: aloqa sahifasidagi manzilga yozing, ish ikki ish kuni ichida olib tashlanadi.",
       ],
     },
     {
       id: "rights",
       heading: "Huquqlaringiz",
       paragraphs: [
-        "Oʻzingiz haqingizdagi maʼlumotni soʻrash, tuzatish yoki oʻchirtirish huquqingiz bor. Soʻrov aloqa sahifasidagi manzilga yuboriladi.",
+        "Oʻzingiz haqingizdagi maʼlumotni soʻrash, tuzatish yoki oʻchirtirish huquqingiz bor. Soʻrov va maxfiylik boʻyicha savollarni aloqa sahifasidagi pochta manziliga yuboring.",
+        "Bu huquqlar Oʻzbekiston Respublikasining «Shaxsga doir maʼlumotlar toʻgʻrisida»gi Qonuni (OʻRQ-547, 2019-yil 2-iyul) bilan belgilangan.",
       ],
-    },
-    {
-      id: "contact",
-      heading: "Bogʻlanish",
-      paragraphs: ["Maxfiylik boʻyicha savollar uchun aloqa sahifasidagi pochta manziliga yozing."],
     },
   ],
 };

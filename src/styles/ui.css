@@ -1,5 +1,5 @@
 @layer components {
-  /* UI primitivlari: boshqaruv oʻlchamlari, zardoʻzi ostchiziq, prose. */
+  /* UI primitivlari: boshqaruv oʻlchamlari, tugmalar, media ramkalari, prose. */
 
   :root {
     --control-s: 40px;
@@ -83,6 +83,14 @@
   .ui-button[data-variant="link"]::after {
     content: none;
   }
+  /* Matn havolasi yolgʻiz turadi (matn ichida emas): sezish maydoni 44 px gacha psevdoelement bilan
+     kengayadi. ::after ostchiziq animatsiyasi uchun band, shu sabab ::before. */
+  .ui-button[data-variant="link"]::before {
+    content: "";
+    position: absolute;
+    inset-block: min(0px, calc((100% - var(--hit)) / 2));
+    inset-inline: min(0px, calc((100% - var(--hit)) / 2));
+  }
   /* underline-draw (3.11), matn havolasi: tinch holatda yarim rangli chiziq, hover/fokusda toʻliq chiziq
      chapdan chiziladi va chiqishda oʻngga qarab qisqaradi (oʻqish yoʻnalishi). Chiziq tayanch chizigʻiga
      text-box orqali bogʻlanadi; qoʻllamaydigan brauzerda faqat rang toʻladi. */
@@ -128,28 +136,17 @@
     }
   }
 
-  /* Zardoʻzi ostchiziq: ikki oltin ip va har 6 px da koʻndalang chok, faqat sichqoncha bor qurilmada. */
+  /* Ghost ostchizigʻi: 2 px oltin chiziq, faqat sichqoncha bor qurilmada va fokusda. */
   .ui-button[data-variant="ghost"]::before {
     content: "";
     position: absolute;
     inset-inline: var(--btn-px);
     bottom: 22%;
-    height: 5px;
-    color: var(--accent-text);
-    background-image:
-      repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 6px),
-      linear-gradient(currentColor, currentColor), linear-gradient(currentColor, currentColor);
-    background-size:
-      100% 5px,
-      100% 1px,
-      100% 1px;
-    background-position:
-      0 0,
-      0 0,
-      0 4px;
-    background-repeat: no-repeat;
-    /* underline-draw (3.11): chok naqshi choʻzilmaydi — chiziq kesish maydoni bilan chapdan tikiladi.
-       Chiqishda 150 ms da soʻnadi, soʻng koʻrinmas holda boshiga qaytadi (keyingi hover yana chapdan). */
+    height: 2px;
+    border-radius: 1px;
+    background: var(--accent-text);
+    /* underline-draw (3.11): chiziq kesish maydoni bilan chapdan chiziladi. Chiqishda 150 ms da
+       soʻnadi, soʻng koʻrinmas holda boshiga qaytadi (keyingi hover yana chapdan). */
     clip-path: inset(0 100% 0 0);
     opacity: 0;
     transition:
@@ -198,8 +195,9 @@
   }
 
   /* ---------- Teg ---------- */
+  /* 12 px yorliq: 10 % fonda pushti matn ≥ 4.5:1 (16 % da 4.22 edi). */
   .ui-tag[data-tone="art-1"] {
-    background: color-mix(in oklab, var(--art-1) 16%, transparent);
+    background: color-mix(in oklab, var(--art-1) 10%, transparent);
     color: var(--art-1-text);
   }
   .ui-tag[data-tone="art-2"] {
@@ -282,7 +280,7 @@
     width: 0.35em;
     height: 0.35em;
     border-radius: 50%;
-    background: var(--accent-art);
+    background: var(--ink-3);
   }
   .ui-prose ol > li::before {
     counter-increment: prose-item;
@@ -310,20 +308,27 @@
     font-weight: var(--fw-display-strong);
   }
 
-  /* Osilgan tinish belgisi: Safari hanging-punctuation, boshqalarda manfiy text-indent. */
-  .ui-pullquote-text {
-    text-indent: -0.42em;
-  }
-  @supports (hanging-punctuation: first) {
+  /* Iqtibos kamtar (egasining talabi: katta matn yoʻq): body-l oʻlchamida (qalinligi faylning oxirida).
+     Osilgan tinish belgisi faqat keng ekranda — telefonda « chetga yaqinlashmasin. */
+  @media (min-width: 600px) {
     .ui-pullquote-text {
-      text-indent: 0;
-      hanging-punctuation: first last;
+      text-indent: -0.42em;
+    }
+    @supports (hanging-punctuation: first) {
+      .ui-pullquote-text {
+        text-indent: 0;
+        hanging-punctuation: first last;
+      }
     }
   }
   /* ---------- Media: halqa video, film va muqova oʻrni ---------- */
   /* Picture: <picture> oʻrami qutisiz, joylashuvni ichidagi <img> belgilaydi (next/image dagi kabi). */
   picture.picture {
     display: contents;
+  }
+  /* <source> ota qutisiz qolganda flex/grid bandiga aylanadi va gap oladi (belgi 16–24 px surilardi). */
+  picture.picture > source {
+    display: none;
   }
   .picture-fill {
     position: absolute;
@@ -388,24 +393,24 @@
   .icon-play {
     translate: 1px 0;
   }
-  /* Surat kutilayotgan muqova: hikoya rangida yengil zamin va kichik belgi. */
+  /* Surat kutilayotgan muqova: neytral yengil zamin va kichik belgi (bezak rangi yoʻq). */
   .news-cover-placeholder {
     position: absolute;
     inset: 0;
     display: grid;
     place-items: center;
-    background: color-mix(in oklab, var(--cover-tint, var(--ink)) 10%, var(--surface-2));
-    color: var(--accent-art);
+    background: color-mix(in oklab, var(--ink) 6%, var(--surface-2));
+    color: var(--ink-3);
   }
 
   /* ---------- Tugma shakli (egasining talabi: kapsula emas) ----------
-     Aniq toʻrtburchak (--radius-control 12 px), ichida 3 px chekinishda 1 px nozik chiziq (zardoʻzi
-     ramkasi bilan bir til), bosilganda yoki ustiga kelganda pastdan oltin quyiladi. */
+     Aniq toʻrtburchak (--radius-control 12 px), ichida 3 px chekinishda 1 px nozik chiziq; bosilganda
+     yoki ustiga kelganda pastdan yorqin oltin toʻladi (ikkala mavzuda bir xil, navy yorliq 8:1 dan yuqori). */
   :root .ui-button[data-variant="primary"],
   :root .ui-button[data-variant="glass"]:not([data-icon="only"]) {
     position: relative;
     isolation: isolate;
-    background-image: linear-gradient(0deg, var(--pour-gold-mid), var(--pour-gold-hi));
+    background-image: linear-gradient(0deg, var(--gold-fill), var(--gold-fill-hi));
     background-size: 100% 0%;
     background-position: 0 100%;
     background-repeat: no-repeat;
@@ -424,18 +429,36 @@
     border-radius: calc(var(--radius-control) - 3px);
     pointer-events: none;
   }
+  /* Yorliq rangi oʻzgaruvchi orqali almashadi: text-on-tint va text-material-ink utilitalari
+     (utilities qatlami) shu oʻzgaruvchilarni oʻqiydi, shunda oltin ustida doim navy (≥ 8:1). */
   @media (hover: hover) {
     :root .ui-button[data-variant="primary"]:hover:not([aria-disabled="true"]),
     :root
       .ui-button[data-variant="glass"]:not([data-icon="only"]):hover:not([aria-disabled="true"]) {
+      --on-tint: var(--hero-scrim);
+      --material-ink: var(--hero-scrim);
       background-size: 100% 100%;
       color: var(--hero-scrim);
+      text-shadow: none;
     }
   }
   :root .ui-button[data-variant="primary"]:focus-visible,
   :root .ui-button[data-variant="glass"]:not([data-icon="only"]):focus-visible {
+    --on-tint: var(--hero-scrim);
+    --material-ink: var(--hero-scrim);
     background-size: 100% 100%;
     color: var(--hero-scrim);
+    text-shadow: none;
+  }
+  @media (hover: hover) {
+    :root
+      .ui-button[data-variant="glass"]:not([data-icon="only"]):hover:not([aria-disabled="true"])
+      svg {
+      filter: none;
+    }
+  }
+  :root .ui-button[data-variant="glass"]:not([data-icon="only"]):focus-visible svg {
+    filter: none;
   }
   @media (prefers-reduced-motion: reduce) {
     :root .ui-button[data-variant="primary"],
@@ -443,4 +466,93 @@
       transition: color 150ms var(--ease-ui);
     }
   }
+
+  /* Markazdagi sarlavha (Heading 1–2 darajalar sukut boʻyicha): oʻz kengligida balanslanadi. */
+  .heading-center {
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  /* ---------- Media ramkasi ----------
+     Nisbat qulflangan toʻrtburchak, 12 px radius; ichida bezak yoʻq. */
+  .media-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: var(--frame-ratio);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: var(--surface-2);
+    isolation: isolate;
+  }
+  .media-frame-media {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    overflow: hidden;
+  }
+  .media-frame-media > * {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ---------- Birlashma belgisi ----------
+     Belgi koʻk disk, shakllar shaffof kesilgan: tunda va qorongʻi boʻlim ustida filtr uni sof oq
+     diskka aylantiradi (kulrang emas: avval qora, soʻng teskari). */
+  .brand-logo {
+    flex: none;
+  }
+  :root[data-theme="dark"] .brand-logo,
+  :where([data-tone="dark"]) .brand-logo {
+    filter: brightness(0) invert(1);
+  }
+  @media (forced-colors: active) {
+    .brand-logo {
+      forced-color-adjust: none;
+    }
+  }
+
+  /* Surat kutilayotgan portret va odam: sahifa zaminidan bir pogʻona iliq tus, markazda belgi. */
+  .portrait-frame-placeholder,
+  .person-placeholder {
+    display: grid;
+    place-items: center;
+    background: color-mix(in oklab, var(--ink) 5%, var(--surface));
+  }
+  .portrait-frame-placeholder {
+    position: absolute;
+    inset: 0;
+  }
+  .person-placeholder {
+    flex: none;
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-card);
+  }
+
+  /* ---------- Oʻqish chizigʻi ----------
+     Ekran tepasida 2 px; holatni bildiradi, shu sabab matn oltini (3:1). Faqat transform oʻzgaradi. */
+  .reading-progress {
+    position: fixed;
+    top: var(--safe-top);
+    left: 0;
+    right: 0;
+    z-index: var(--z-header);
+    height: 2px;
+    background: var(--accent-text);
+    transform: scaleX(var(--progress, 0));
+    transform-origin: left center;
+    pointer-events: none;
+  }
+}
+
+/* Qatlamdan tashqarida: t-body-l utilitasining 400 qalinligidan ustun — iqtibos oʻrta qalinlikda. */
+:root .ui-pullquote-text {
+  font-weight: 500;
+}
+
+/* ʻ va ʼ katta sarlavhada: har tomondan 0.05em yonbosh olinadi, soʻz yaxlit oʻqiladi (tight-marks.tsx). */
+:root .tight-mark {
+  margin-inline: -0.05em;
 }

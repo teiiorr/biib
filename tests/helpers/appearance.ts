@@ -19,7 +19,7 @@ export async function primeAppearance(page: Page, stored: StoredAppearance): Pro
     transparency: stored.transparency ?? 50,
     density: stored.density ?? 50,
     motion: stored.motion ?? true,
-    sound: false,
+    tapSound: false,
   };
   await page.addInitScript(
     ([key, json]) => {

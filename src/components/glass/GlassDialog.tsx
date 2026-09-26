@@ -51,6 +51,7 @@ export function GlassDialog({
             radius="panel"
             padding={padding}
             text
+            adaptiveTone
             className={cx("surface-morph glass-dialog z-modal", className)}
           >
             <div className="glass-dialog-head">

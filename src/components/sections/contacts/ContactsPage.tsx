@@ -3,10 +3,10 @@ import type { IconName } from "@/components/icons/paths";
 import { Container } from "@/components/layout/Container";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
+import { SectionHeader } from "@/components/layout/SectionHeader";
 import { Reveal } from "@/components/motion/Reveal";
-import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
-import { Text } from "@/components/ui/Text";
+import { VisuallyHidden } from "@/components/ui/VisuallyHidden";
 import { getContacts, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
@@ -20,7 +20,7 @@ interface PageProps {
   readonly dict: Dictionary;
 }
 
-interface DetailRow {
+interface Fact {
   readonly key: string;
   readonly icon: IconName;
   readonly label: string;
@@ -29,15 +29,16 @@ interface DetailRow {
 }
 
 /**
- * Aloqa: chapda rekvizitlar (nusxa tugmasi bilan), oʻngda xarita, tarmoqlar va yozish bloki (shakl
- * yoki Telegram zaxirasi) — ikki ustun bir balandlikda tugaydi, alohida boʻlim ochilmaydi.
+ * Aloqa: markazdagi sarlavha ostida oltita teng rekvizit kartasi (3 / 2 / 1 ustun). Har kartada bir xil
+ * uch qator: yorliq, qiymat, oʻngda harakat; qatorlar subgrid, qoʻshni kartalarda bir chiziqda turadi.
+ * Keyin yozish boʻlimi: shakl (tugma oʻngda) yoki Telegram havolasi.
  */
 export function ContactsPage({ locale, dict }: PageProps) {
   const c = getContacts();
   const d = dict.contacts;
   const formEnabled = contactFormEnabled();
   const phone = c.phones.value?.[0] ?? null;
-  const rows: DetailRow[] = [
+  const facts: Fact[] = [
     {
       key: "address",
       icon: "map-pin",
@@ -73,12 +74,14 @@ export function ContactsPage({ locale, dict }: PageProps) {
     },
   ];
   const map = c.map.value;
+  /* Telegram oʻz kartasida turibdi: tarmoqlar kartasida takrorlanmaydi (bitta maqsadga bitta havola). */
+  const socials = c.socials.filter((s) => s.status === "confirmed" && s.id !== "telegram");
+  const external = dict.common.hints.external;
 
   return (
     <>
       <PageHero
         title={d.title}
-        lead={d.lead}
         breadcrumbs={[
           { href: pathFor(locale, "home"), label: dict.nav.home },
           { href: pathFor(locale, "contacts"), label: dict.nav.contacts, current: true },
@@ -86,138 +89,137 @@ export function ContactsPage({ locale, dict }: PageProps) {
         breadcrumbsLabel={dict.common.hints.breadcrumbs}
       />
       <Section labelledBy="contacts-details">
-        <Container grid className="contact-grid">
-          <div className="col-span-4 md:col-span-8 lg:col-span-6" data-grid-item="">
-            <Heading level={2} size="h3" id="contacts-details">
-              {d.details.heading}
-            </Heading>
-            <Reveal
-              as="dl"
-              className="contact-details"
-              stagger
-              distance={16}
-              attrs={{ "data-audit": "gap" }}
-            >
-              {rows.map((row) => (
-                <div key={row.key} className="contact-row">
-                  <dt className="t-label text-ink-2 contact-row-label">
-                    <Icon name={row.icon} size={20} />
-                    {row.label}
-                  </dt>
-                  <dd className="contact-row-value">
-                    {row.value ? (
+        <Container>
+          {/* Sahifa sarlavhasi darhol kartalar ustida: koʻrinadigan ikkinchi sarlavha ortiqcha,
+              ekran oʻquvchisi uchun boʻlim nomi saqlanadi. */}
+          <h2 id="contacts-details" className="sr-only">
+            {d.details.heading}
+          </h2>
+          <Reveal
+            as="dl"
+            className="contact-facts"
+            stagger
+            distance={16}
+            attrs={{ "data-audit": "gap", "data-card-group": "" }}
+          >
+            {facts.map((fact) => (
+              <div key={fact.key} className="contact-fact" data-card="">
+                <dt className="contact-fact-label t-label text-ink-2" data-card-title="">
+                  <Icon name={fact.icon} size={20} />
+                  {fact.label}
+                </dt>
+                <dd className="contact-fact-value">
+                  {fact.value && fact.href ? (
+                    <a
+                      href={fact.href}
+                      className="t-body tnum text-ink"
+                      {...(fact.href.startsWith("http")
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
+                    >
+                      {/* Havola manzili qisqa koʻrsatiladi (t.me/…), nusxaga toʻliq manzil olinadi. */}
+                      {fact.value.replace(/^https?:\/\//, "")}
+                    </a>
+                  ) : (
+                    <span className={fact.value ? "t-body tnum" : "t-body text-ink-3"}>
+                      {fact.value ?? d.details.pending}
+                    </span>
+                  )}
+                </dd>
+                {fact.value ? (
+                  <dd className="contact-fact-actions">
+                    {fact.key === "address" && map ? (
                       <>
-                        {row.href ? (
-                          <a
-                            href={row.href}
-                            className="t-body tnum text-ink"
-                            {...(row.href.startsWith("http")
-                              ? { target: "_blank", rel: "noopener noreferrer" }
-                              : {})}
-                          >
-                            {row.value}
-                          </a>
-                        ) : (
-                          <span className="t-body tnum">{row.value}</span>
-                        )}
-                        <CopyButtonLeaf
-                          value={row.value}
-                          label={d.details.copy}
-                          copiedLabel={d.details.copied}
+                        <LinkButton
+                          href={`https://yandex.uz/maps/?pt=${map.lng},${map.lat}&z=16`}
                           variant="ghost"
                           size="40"
-                        />
+                          external
+                          externalHint={external}
+                        >
+                          {d.map.yandex}
+                        </LinkButton>
+                        <LinkButton
+                          href={`https://www.google.com/maps?q=${map.lat},${map.lng}`}
+                          variant="ghost"
+                          size="40"
+                          external
+                          externalHint={external}
+                        >
+                          {d.map.google}
+                        </LinkButton>
                       </>
-                    ) : (
-                      <span className="t-body text-ink-3">{d.details.pending}</span>
-                    )}
+                    ) : null}
+                    <CopyButtonLeaf
+                      value={fact.value}
+                      label={d.details.copy}
+                      copiedLabel={d.details.copied}
+                      variant="ghost"
+                      size="40"
+                    />
                   </dd>
-                </div>
-              ))}
-            </Reveal>
-          </div>
-          <div className="col-span-4 md:col-span-8 lg:col-span-6 contact-aside" data-grid-item="">
-            <div className="contact-aside-block">
-              <Heading level={2} size="h3">
-                {d.map.heading}
-              </Heading>
-              {map ? (
-                <div className="flex flex-wrap justify-end gap-3">
-                  <LinkButton
-                    href={`https://yandex.uz/maps/?pt=${map.lng},${map.lat}&z=16`}
-                    variant="glass"
-                    external
-                    externalHint={dict.common.hints.external}
-                  >
-                    {d.map.yandex}
-                  </LinkButton>
-                  <LinkButton
-                    href={`https://www.google.com/maps?q=${map.lat},${map.lng}`}
-                    variant="glass"
-                    external
-                    externalHint={dict.common.hints.external}
-                  >
-                    {d.map.google}
-                  </LinkButton>
-                </div>
-              ) : (
-                <Text as="p" tone="ink-3">
-                  {d.map.pending}
-                </Text>
-              )}
-            </div>
-            <div className="contact-aside-block">
-              <Heading level={2} size="h3">
+                ) : null}
+              </div>
+            ))}
+            <div className="contact-fact" data-card="">
+              <dt className="contact-fact-label t-label text-ink-2" data-card-title="">
+                <Icon name="share" size={20} />
                 {d.socials.heading}
-              </Heading>
-              <ul className="flex flex-wrap gap-3">
-                {c.socials
-                  .filter((s) => s.status === "confirmed")
-                  .map((s) => (
+              </dt>
+              {/* Tarmoqlar ham boshqa kartalardagi harakatlar kabi pastki qatorda, oʻngda. */}
+              <dd className="contact-fact-actions">
+                <ul className="contact-socials">
+                  {socials.map((s) => (
                     <li key={s.id}>
-                      <LinkButton
+                      <a
                         href={s.href}
-                        variant="glass"
-                        size="40"
-                        icon={s.id as IconName}
-                        external
-                        externalHint={dict.common.hints.external}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="contact-social t-label text-ink"
                       >
+                        <Icon name={s.id as IconName} size={20} />
                         {s.label}
-                      </LinkButton>
+                        <VisuallyHidden> ({external})</VisuallyHidden>
+                      </a>
                     </li>
                   ))}
-              </ul>
+                </ul>
+              </dd>
             </div>
-            <div className="contact-write">
-              <Heading level={2} size="h3" id="contacts-form">
-                {formEnabled ? d.form.heading : d.form.fallbackHeading}
-              </Heading>
-              {formEnabled ? (
-                <ContactFormLeaf dict={d.form} privacyHref={pathFor(locale, "privacy")} />
-              ) : (
-                <>
-                  <Text as="p" tone="ink-2" measure>
-                    {d.form.fallbackText}
-                  </Text>
-                  {c.telegram.value ? (
-                    <div>
-                      <LinkButton
-                        href={c.telegram.value}
-                        variant="primary"
-                        size="48"
-                        icon="telegram"
-                        external
-                        externalHint={dict.common.hints.external}
-                      >
-                        {d.form.fallbackCta}
-                      </LinkButton>
-                    </div>
-                  ) : null}
-                </>
-              )}
+          </Reveal>
+        </Container>
+      </Section>
+      <Section labelledBy="contacts-write">
+        <Container grid>
+          <SectionHeader
+            id="contacts-write"
+            className="col-span-full"
+            title={formEnabled ? d.form.heading : d.form.fallbackHeading}
+            {...(!formEnabled && c.telegram.value
+              ? {
+                  actions: (
+                    <LinkButton
+                      href={c.telegram.value}
+                      variant="primary"
+                      size="48"
+                      icon="telegram"
+                      external
+                      externalHint={external}
+                    >
+                      {d.form.fallbackCta}
+                    </LinkButton>
+                  ),
+                }
+              : {})}
+          />
+          {formEnabled ? (
+            <div
+              className="contact-write col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3"
+              data-grid-item=""
+            >
+              <ContactFormLeaf dict={d.form} privacyHref={pathFor(locale, "privacy")} />
             </div>
-          </div>
+          ) : null}
         </Container>
       </Section>
     </>

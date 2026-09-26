@@ -23,33 +23,6 @@ export const PROJECTS: readonly Project[] = [
       ru: "Национальный вокальный кастинг",
       en: "National singing auditions",
     },
-    body: {
-      uz: [
-        "Birlashmaning bosh loyihasi. Tanlov viloyat bosqichlaridan boshlanadi: ariza topshirgan har bir ishtirokchi jonli chiqish qiladi va ustozlardan izoh oladi.",
-        "Keyingi bosqichga oʻtganlar bilan bir necha hafta ishlanadi: ovoz, nafas, sahnada turish. Yakunda poytaxtdagi katta konsert.",
-        "Kastingning oʻz sayti bor: muddatlar, shartlar va ariza shakli oʻsha yerda.",
-      ],
-      oz: [
-        "Бирлашманинг бош лойиҳаси. Танлов вилоят босқичларидан бошланади: ариза топширган ҳар бир иштирокчи жонли чиқиш қилади ва устозлардан изоҳ олади.",
-        "Кейинги босқичга ўтганлар билан бир неча ҳафта ишланади: овоз, нафас, саҳнада туриш. Якунда пойтахтдаги катта концерт.",
-        "Кастингнинг ўз сайти бор: муддатлар, шартлар ва ариза шакли ўша ерда.",
-      ],
-      ozbekca: [
-        "Birlaşmaning boş loyihasi. Tanlov viloyat bosqiçlaridan boşlanadi: ariza topşirgan har bir iştirokçi jonli çiqiş qiladi va ustozlardan izoh oladi.",
-        "Keyingi bosqiçga ötganlar bilan bir neça hafta işlanadi: ovoz, nafas, sahnada turiş. Yakunda poytaxtdagi katta konsert.",
-        "Kastingning öz sayti bor: muddatlar, şartlar va ariza şakli öşa yerda.",
-      ],
-      ru: [
-        "Главный проект объединения. Конкурс начинается с областных этапов: каждый участник, подавший заявку, выступает вживую и получает разбор от наставников.",
-        "С теми, кто проходит дальше, работают несколько недель: голос, дыхание, поведение на сцене. В финале большой концерт в столице.",
-        "У кастинга есть свой сайт: сроки, условия и форма заявки собраны там.",
-      ],
-      en: [
-        "The flagship project of the association. The competition starts with the regional rounds: every participant who applies performs live and gets comments from the mentors.",
-        "Those who go through spend several weeks working on voice, breathing and holding the stage. It ends with a big concert in the capital.",
-        "The auditions have a site of their own, with the dates, the terms and the application form.",
-      ],
-    },
     age: {
       from: 14,
       to: 19,

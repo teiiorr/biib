@@ -9,7 +9,7 @@ Muhit: `BASE_URL` (sukut http://localhost:3100). Saytda bitta dizayn (Atlas), te
 
 `data-testid`: `skip-link`, `header`, `tab-bar`, `menu-sheet`, `appearance-open`, `appearance-panel`,
 `slider-transparency`, `slider-density`, `language-open`, `language-menu`, `contact-form`,
-`footer-crown`, `portal-scene`.
+`footer`, `portal-scene`.
 
 Atributlar: `[data-card-group]` (karta guruhi), `[data-card]`, `[data-card-title]`, `[data-card-cta]`,
 `[data-grid-item]` (toʻr chetiga tekislanishi tekshiriladi), `[data-audit]` (gap/padding shkalasi),

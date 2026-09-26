@@ -42,6 +42,7 @@ export function MenuTrigger({ label, openLabel, active, ref, ...rest }: MenuTrig
       ref={ref}
       type="button"
       className="tab-item"
+      data-testid="menu-open"
       data-lens-item=""
       data-active={active ? "true" : undefined}
       aria-label={openLabel}

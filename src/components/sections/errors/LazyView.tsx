@@ -4,7 +4,7 @@ import { useEffect, useState, type ComponentType } from "react";
 
 /**
  * 404 va xato chegaralari har sahifaning birinchi yuklanishiga kiradi (Next ularni layout bilan
- * birga yuboradi). Chegara faqat shu kichik yuklovchi: koʻrinish (palak, tugmalar, matn) chegara
+ * birga yuboradi). Chegara faqat shu kichik yuklovchi: koʻrinish (sarlavha, matn, tugmalar) chegara
  * haqiqatan chizilganda alohida chunk boʻlib keladi. Suspense emas: uning ochilishi sahifa
  * View Transition ini ishga tushirardi.
  */

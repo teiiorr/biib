@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
 
-export type ArtSlot = "home-hero" | "footer-crown";
+export type ArtSlot = "home-hero";
 
 /** Badiiy modullar lugʻatni oʻzi yuklamaydi (beshta til chunkka kirib qolmasin): matn serverdan keladi. */
 export interface ArtCopy {

@@ -1,6 +1,6 @@
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
-import { Heading } from "@/components/ui/Heading";
+import { SectionHeader } from "@/components/layout/SectionHeader";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { Picture } from "@/components/ui/Picture";
 import { t } from "@/content";
@@ -22,20 +22,21 @@ export function PartnersField({ locale, dict, partners }: PartnersFieldProps) {
   return (
     <Section labelledBy="home-partners" tone="light">
       <Container>
-        <div className="section-head-row">
-          <Heading level={2} size="h2" id="home-partners">
-            {h.heading}
-          </Heading>
-          <LinkButton
-            href={pathFor(locale, "partners")}
-            variant="ghost"
-            size="40"
-            icon="arrow-right"
-            iconPosition="end"
-          >
-            {h.all}
-          </LinkButton>
-        </div>
+        <SectionHeader
+          id="home-partners"
+          title={h.heading}
+          actions={
+            <LinkButton
+              href={pathFor(locale, "partners")}
+              variant="ghost"
+              size="40"
+              icon="arrow-right"
+              iconPosition="end"
+            >
+              {h.all}
+            </LinkButton>
+          }
+        />
         <ul className="partner-grid" data-card-group="">
           {partners.map((partner) => {
             const name = partner.name ? t(partner.name, locale) : "";

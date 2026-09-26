@@ -8,6 +8,5 @@ export const footer: typeof source = {
   copyright: "© {year} Bolalar Ijodkorligi Ijodiy Birlashmasi",
   credit: "Designed & Developed by teiior",
   privacy: "Конфиденциальность",
-  crownAlt: "Кайма чустской тюбетейки из шестнадцати арок",
   label: "Подвал сайта",
 };

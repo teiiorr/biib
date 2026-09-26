@@ -21,9 +21,9 @@ export function PullQuote({
   className,
 }: PullQuoteProps) {
   return (
-    <figure className={cn("ui-pullquote border-t border-accent-art pt-6", className)}>
+    <figure className={cn("ui-pullquote border-t border-line pt-6", className)}>
       <blockquote {...(cite ? { cite } : {})}>
-        <p className="ui-pullquote-text t-h2 text-ink">
+        <p className="ui-pullquote-text t-body-l text-ink">
           {openMark}
           {children}
           {closeMark}
