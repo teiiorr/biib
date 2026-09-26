@@ -790,11 +790,13 @@
   font-family: "Unbounded Hero", var(--font-display);
 }
 
-/* Nom kadr ostida: boshqa sarlavhalar bilan bitta standart oʻlchamda (egasining talabi). */
+/* Nom kadr ostida: boshqa sarlavhalar bilan bitta standart oʻlchamda, bosh harflarda (egasining
+   talabi); bosh harflar uchun kichik ochiq tracking. Matn lugʻatda odatiy yozuvda: sarlavha va SEO. */
 :root .home-hero-title {
   font-size: var(--fs-display-l);
   line-height: var(--lh-display-l);
-  letter-spacing: var(--ls-display-l);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
 }
 
 /* 320–389 px: «upop.uz saytida roʻyxatdan oʻtish» bir qatorga sigʻmaydi — tugma toʻliq kenglikda, yorliq

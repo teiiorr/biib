@@ -17,7 +17,11 @@ mkdirSync(OUT, { recursive: true });
 const python = process.env.PYTHON ?? "python3";
 
 const texts: Record<string, string> = {};
-for (const locale of LOCALES) texts[locale] = getDictionary(locale).common.brand.name;
+/* Nom saytda bosh harflarda koʻrsatiladi (text-transform): toʻplamga ikkala shakl ham kiradi. */
+for (const locale of LOCALES) {
+  const name = getDictionary(locale).common.brand.name;
+  texts[locale] = `${name} ${name.toUpperCase()}`;
+}
 const spec = path.resolve(".verify/hero-text.json");
 mkdirSync(path.dirname(spec), { recursive: true });
 writeFileSync(spec, JSON.stringify(texts));
