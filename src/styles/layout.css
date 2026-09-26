@@ -425,9 +425,6 @@
   :root .surface .brand-mark {
     color: var(--material-ink);
   }
-  .header-brand .brand-mark {
-    padding-inline: 8px 12px;
-  }
   .surface .brand-name {
     text-shadow:
       0 0 1px var(--material-base),
