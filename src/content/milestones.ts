@@ -16,6 +16,7 @@ export const MILESTONES: readonly Milestone[] = [
       ru: "Устав утверждён",
       en: "Charter approved",
     },
+    icon: "users",
   },
   {
     id: "registration",
@@ -28,6 +29,7 @@ export const MILESTONES: readonly Milestone[] = [
       ru: "Зарегистрировано в Министерстве юстиции",
       en: "Registered with the Ministry of Justice",
     },
+    icon: "building",
   },
   {
     id: "studios",
@@ -40,6 +42,7 @@ export const MILESTONES: readonly Milestone[] = [
       ru: "Первые региональные студии",
       en: "The first regional studios",
     },
+    icon: "calendar",
   },
   {
     id: "upop",
@@ -52,5 +55,6 @@ export const MILESTONES: readonly Milestone[] = [
       ru: "Первый сезон UPOP TREND",
       en: "The first season of UPOP TREND",
     },
+    icon: "calendar",
   },
 ];

@@ -50,4 +50,6 @@ export const CONTACTS: Contacts = {
       status: "confirmed",
     },
   ],
+  postalCode: "100011",
+  locality: "Tashkent",
 };

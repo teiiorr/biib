@@ -14,7 +14,9 @@
     "verify:quick": "node scripts/verify.mjs --quick",
     "verify:full": "node scripts/verify.mjs --full",
     "verify:prod": "node scripts/verify.mjs --prod",
-    "translit": "tsx scripts/transliterate.mts"
+    "translit": "tsx scripts/transliterate.mts",
+    "content:seed": "tsx --env-file-if-exists=.env.local scripts/cms/seed.mts",
+    "content:pull": "tsx --env-file-if-exists=.env.local scripts/cms/pull.mts"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.23",
