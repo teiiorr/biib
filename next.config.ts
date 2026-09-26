@@ -30,6 +30,30 @@ const securityHeaders = [
   { key: "X-Frame-Options", value: "DENY" },
 ];
 
+/* Panel brauzerdan Supabase ga toʻgʻridan-toʻgʻri yuklaydi (imzoli URL) va blob: oldindan koʻrishni
+   ishlatadi: ruxsat faqat /admin da, ommaviy CSP bir bayt ham oʻzgarmaydi. */
+const supabaseOrigin = (() => {
+  try {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    return url ? new URL(url).origin : null;
+  } catch {
+    return null;
+  }
+})();
+const supabaseSource = supabaseOrigin ? ` ${supabaseOrigin}` : "";
+const adminCsp = csp
+  .replace("img-src 'self' data: blob:", `img-src 'self' data: blob:${supabaseSource}`)
+  .replace("media-src 'self'", "media-src 'self' blob:")
+  .replace("connect-src 'self'", `connect-src 'self'${supabaseSource}`);
+
+const adminHeaders = [
+  { key: "Content-Security-Policy", value: adminCsp },
+  /* Imzoli yuklash URL larida kalit bor: panel hech qayerga manzil yubormaydi. */
+  { key: "Referrer-Policy", value: "no-referrer" },
+  { key: "X-Robots-Tag", value: "noindex, nofollow" },
+  { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+];
+
 const nextConfig: NextConfig = {
   reactCompiler: true,
   poweredByHeader: false,
@@ -41,7 +65,11 @@ const nextConfig: NextConfig = {
     return [{ source: "/", destination: "/uz", permanent: false }];
   },
   async headers() {
-    return [{ source: "/(.*)", headers: securityHeaders }];
+    /* Bir kalit ikki yozuvda boʻlsa oxirgisi gʻolib (headers.md): panel yozuvi umumiydan keyin. */
+    return [
+      { source: "/(.*)", headers: securityHeaders },
+      { source: "/admin/:path*", headers: adminHeaders },
+    ];
   },
 };
 

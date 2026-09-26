@@ -5,8 +5,10 @@ import { ROOT, fail, log, pass, readJson, runLive, tail } from "./util.mjs";
 const LOCALE_PATH = /^\/(uz|oz|ozbekca|ru|en)(?:\/|$)/;
 const METADATA_FILE =
   /\/(?:opengraph-image|twitter-image|icon|apple-icon)(?:-[\w]+)?(?:\.\w+)?$|\.(?:xml|txt|webmanifest|png|ico)$/;
-/* Faqat 404 zaxirasi dinamik boʻlishi mumkin; aloqa shakli server action, marshrut emas. */
-const ALLOWED_DYNAMIC = /^\/(?:_not-found|_global-not-found|global-not-found)$|\[|not-found/;
+/* Faqat 404 zaxirasi va boshqaruv paneli (/admin, uning Route Handler lari /admin/api da) dinamik boʻlishi
+   mumkin; aloqa shakli server action, marshrut emas. */
+const ALLOWED_DYNAMIC =
+  /^\/(?:_not-found|_global-not-found|global-not-found)$|\[|not-found|^\/admin(?:\/|$)/;
 
 export function parseRouteTable(output) {
   const rows = [];
