@@ -7,6 +7,7 @@ import { Picture } from "@/components/ui/Picture";
 import { PortraitFrame } from "@/components/ui/PortraitFrame";
 import { Table } from "@/components/ui/Table";
 import { getLeadership, t } from "@/content";
+import { FILLER, fillerName } from "@/content/placeholder";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
@@ -26,7 +27,6 @@ interface PageProps {
 export function LeadershipPage({ locale, dict }: PageProps) {
   const leaders = getLeadership();
   const l = dict.people.leadership;
-  const awaiting = dict.common.status.awaiting;
   const jsonld = leaders
     .map((p) => personJsonLd({ person: p, locale, dict }))
     .filter((x): x is Record<string, unknown> => Boolean(x));
@@ -47,7 +47,7 @@ export function LeadershipPage({ locale, dict }: PageProps) {
           <div className="leaders" data-card-group="">
             {leaders.map((person, index) => {
               const role = t(person.role, locale);
-              const name = person.name ? t(person.name, locale) : null;
+              const name = person.name ? t(person.name, locale) : fillerName(index);
               const photo = person.status === "confirmed" && person.photo ? person.photo : null;
               return (
                 <article
@@ -63,16 +63,16 @@ export function LeadershipPage({ locale, dict }: PageProps) {
                         className="leader-portrait"
                         motion={{ mode: "smooth", index }}
                       >
-                        <Picture src={photo} alt={name ?? role} fill sizes="120px" />
+                        <Picture src={photo} alt={name} fill sizes="120px" />
                       </PortraitFrame>
                     ) : (
                       <PersonPlaceholder />
                     )}
                     <div className="leader-name">
                       <Heading level={2} size="h3" align="start" id={`${person.id}-name`}>
-                        {name ?? role}
+                        {name}
                       </Heading>
-                      {name ? <p className="t-small text-ink-3">{role}</p> : null}
+                      <p className="t-small text-ink-3">{role}</p>
                       {person.bio ? (
                         <p className="t-small text-ink-2">{t(person.bio, locale)}</p>
                       ) : null}
@@ -96,7 +96,7 @@ export function LeadershipPage({ locale, dict }: PageProps) {
                             }))}
                           />
                         ) : (
-                          <span className="t-small text-ink-3">{awaiting}</span>
+                          <span className="t-small text-ink-3">{FILLER.word}</span>
                         )}
                       </dd>
                     </div>
@@ -111,7 +111,7 @@ export function LeadershipPage({ locale, dict }: PageProps) {
                             {person.email}
                           </a>
                         ) : (
-                          <span className="t-small text-ink-3">{awaiting}</span>
+                          <span className="t-small text-ink-3">{FILLER.word}</span>
                         )}
                       </dd>
                     </div>

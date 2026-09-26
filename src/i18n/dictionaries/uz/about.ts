@@ -1,7 +1,6 @@
 export const about = {
   title: "Biz haqimizda",
   mission: {
-    heading: "Maqsad",
     paragraphs: [
       "Har bir bola oʻz qiziqishini sinab koʻrishi uchun yaqin joyda studiya, tajribali ustoz va tomoshabin boʻlishi kerak. Biz shu uchalasini bir joyga yigʻamiz.",
       "Ish viloyatlardan boshlanadi: studiyalar shahar va tuman markazlarida ochiladi, eng yaxshi ishlar poytaxt sahnasiga va koʻrgazmalarga chiqadi.",

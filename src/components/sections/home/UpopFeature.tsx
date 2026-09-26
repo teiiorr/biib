@@ -5,6 +5,7 @@ import { Section } from "@/components/layout/Section";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { Button } from "@/components/ui/Button";
+import { FeatureIcon } from "@/components/ui/FeatureIcon";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { MediaFrame } from "@/components/ui/MediaFrame";
 import { Picture } from "@/components/ui/Picture";
@@ -17,6 +18,8 @@ import { sharedName } from "@/lib/motion/transitions";
 import { InViewVideoLeaf } from "../lazy-leaves";
 import { UpopMotion } from "./UpopMotion";
 
+/* Punktlar tartibi content/projects.ts dagi highlights bilan: bepul ariza, yosh, yakuniy konsert. */
+const HIGHLIGHT_ICONS = ["ticket", "users", "mic"] as const;
 interface UpopFeatureProps {
   readonly locale: Locale;
   readonly dict: Dictionary;
@@ -67,8 +70,11 @@ export function UpopFeature({ locale, dict }: UpopFeatureProps) {
           </div>
           <div className="upop-feature-text" data-grid-item="" data-upop-text="">
             <ul className="upop-feature-list t-body-l text-ink">
-              {t(project.highlights, locale).map((item) => (
-                <li key={item}>{item}</li>
+              {t(project.highlights, locale).map((item, index) => (
+                <li key={item} className="feature upop-feature-item">
+                  <FeatureIcon name={HIGHLIGHT_ICONS[index % HIGHLIGHT_ICONS.length] ?? "star"} />
+                  <span>{item}</span>
+                </li>
               ))}
             </ul>
             <div className="upop-feature-actions">

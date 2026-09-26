@@ -7,6 +7,7 @@ import { motionAllowed } from "@/lib/motion/prefs";
 import { enqueueSliced, viewportPriority } from "@/lib/motion/scheduler";
 import { belowViewport } from "@/lib/motion/viewport";
 import { watchPending, type PendingWatch } from "@/lib/motion/watchdog";
+import { isLitePerf } from "@/lib/perf";
 import { useEngineEffect } from "./engine";
 import { useMotionPrefs } from "./motion-context";
 
@@ -45,7 +46,8 @@ export function SplitLines({
     ref,
     ({ gsap, SplitText }, { context }) => {
       const el = ref.current;
-      if (!el || !allowed || done.current) return;
+      // Kuchsiz qurilmada soʻzlarga boʻlish ogʻir: sarlavha joyida, oltin yaltirash qoladi.
+      if (!el || !allowed || done.current || isLitePerf()) return;
       if (!belowViewport(el, 1)) {
         done.current = true;
         return;
@@ -84,10 +86,14 @@ export function SplitLines({
                 duration: DURATION.lines,
                 ease: EASE.out,
                 stagger: doiraStaggerFn(doiraUnit(parts.length, 1.2, words ? 0.045 : 0.09)),
-                scrollTrigger: { trigger: el, start, once: true, onEnter: pending.started },
-                onComplete: () => {
-                  done.current = true;
-                  window.requestAnimationFrame(() => split?.revert());
+                // Ikki yoʻnalish (egasining talabi): ekrandan chiqqanda soʻzlar niqob ortiga qaytadi,
+                // pastdan ham, yuqoridan ham qaytganda qayta koʻtariladi. Boʻlinish saqlanadi.
+                scrollTrigger: {
+                  trigger: el,
+                  start,
+                  end: "bottom 8%",
+                  toggleActions: "play reverse play reverse",
+                  onEnter: pending.started,
                 },
               });
               return tween;

@@ -86,11 +86,18 @@
     corner-shape: inherit;
     pointer-events: none;
     background: radial-gradient(
-      140px circle at var(--sheen-x, 30%) var(--sheen-y, 0%),
-      color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 40%), transparent),
+      220px circle at var(--sheen-x, 30%) var(--sheen-y, 0%),
+      color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 95%), transparent),
       transparent 70%
     );
     z-index: -1;
+  }
+  /* Kuchsiz qurilma: sinishsiz, yupqa xiralik, yaltiroq nuqtasiz — oyna shakli va qirrasi qoladi. */
+  :root[data-perf="lite"] .material {
+    --m-blur: 6px;
+  }
+  :root[data-perf="lite"] .surface::before {
+    display: none;
   }
   /* Spekulyar qirra: 1 px halqa, yorugʻlik yuqori-chapdan; pastki qirra aks yorugʻlikda xiraroq. */
   .surface::after {
@@ -104,8 +111,8 @@
     background:
       linear-gradient(
         to bottom,
-        color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 115%), transparent) 0%,
-        color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 22%), transparent) 30%,
+        color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 150%), transparent) 0%,
+        color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 40%), transparent) 30%,
         transparent 55%,
         color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 55%), transparent) 100%
       ),

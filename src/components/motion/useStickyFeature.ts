@@ -6,6 +6,7 @@ import { registerAmbient } from "@/lib/motion/ambient-governor";
 import { DURATION, EASE, SCRUB } from "@/lib/motion/constants";
 import { doiraStaggerFn, doiraUnit } from "@/lib/motion/doira";
 import { motionAllowed } from "@/lib/motion/prefs";
+import { isLitePerf } from "@/lib/perf";
 import { belowViewport, reached } from "@/lib/motion/viewport";
 import { watchPending } from "@/lib/motion/watchdog";
 
@@ -340,7 +341,8 @@ export function useStickyFeature(
     scope,
     (engine, info) => {
       const root = scope.current;
-      if (!root || !allowed) return;
+      // Kuchsiz qurilmada yopishqoq sahna yoʻq: boʻlim oddiy oqimda.
+      if (!root || !allowed || isLitePerf()) return;
       const parts = queryParts(root);
       if (!parts) return;
       const late = info.late || lateMount;

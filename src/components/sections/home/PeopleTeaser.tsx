@@ -4,9 +4,11 @@ import { Section } from "@/components/layout/Section";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { Heading } from "@/components/ui/Heading";
+import { FeatureIcon } from "@/components/ui/FeatureIcon";
 import { Picture } from "@/components/ui/Picture";
 import { PortraitFrame } from "@/components/ui/PortraitFrame";
 import { getExperts, getLeadership, t } from "@/content";
+import { fillerName } from "@/content/placeholder";
 import type { Person } from "@/content/types";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
@@ -53,13 +55,14 @@ interface PeopleGroupProps {
   readonly href: string;
   readonly people: readonly Person[];
   readonly locale: Locale;
-  readonly awaiting: string;
+  /** Oʻrinbosar nomlar guruhlar orasida takrorlanmasin. */
+  readonly offset: number;
   readonly className: string;
 }
 
 /* Guruh sarlavhasining oʻzi sahifaga havola: ikki guruh yonma-yon turganda «hammasini koʻrish»
    strelkasi qoʻshni guruh sarlavhasiga qarab qolmaydi. */
-function PeopleGroup({ heading, href, people, locale, awaiting, className }: PeopleGroupProps) {
+function PeopleGroup({ heading, href, people, locale, offset, className }: PeopleGroupProps) {
   const portraits = people.length > 0 && people.every(hasPortrait);
   return (
     <div className={`people-group ${className}`}>
@@ -76,15 +79,16 @@ function PeopleGroup({ heading, href, people, locale, awaiting, className }: Peo
           ))}
         </ul>
       ) : (
-        /* Ism va surat kelguncha: lavozim roʻyxati, yonida halol holat. Boʻsh portret ramkasi yoʻq. */
+        /* Surat kelguncha: belgi, ism (tasdiqlanmagan boʻlsa oʻrinbosar) va lavozim bir qatorda. */
         <ul className="people-roles" aria-label={heading}>
-          {people.map((p) => {
-            const name = p.name ? t(p.name, locale) : null;
+          {people.map((p, index) => {
+            const name = p.name ? t(p.name, locale) : fillerName(offset + index);
             const role = p.field ? t(p.field, locale) : t(p.role, locale);
             return (
-              <li key={p.id} className="people-role">
-                <span className="t-body text-ink">{name ?? role}</span>
-                <span className="t-small text-ink-3">{name ? role : awaiting}</span>
+              <li key={p.id} className="people-role feature">
+                <FeatureIcon name="user" />
+                <span className="t-body text-ink">{name}</span>
+                <span className="t-small text-ink-3">{role}</span>
               </li>
             );
           })}
@@ -103,7 +107,6 @@ export function PeopleTeaser({ locale, dict }: PeopleTeaserProps) {
   const leaders = getLeadership().slice(0, 3);
   const experts = getExperts().slice(0, 3);
   const h = dict.home.people;
-  const awaiting = dict.common.status.awaiting;
   return (
     <Section labelledBy="home-people" rhythm="band" className="people-section">
       <Container>
@@ -115,7 +118,7 @@ export function PeopleTeaser({ locale, dict }: PeopleTeaserProps) {
           href={pathFor(locale, "leadership")}
           people={leaders}
           locale={locale}
-          awaiting={awaiting}
+          offset={0}
           className="people-group-leaders"
         />
         <PeopleGroup
@@ -123,7 +126,7 @@ export function PeopleTeaser({ locale, dict }: PeopleTeaserProps) {
           href={pathFor(locale, "experts")}
           people={experts}
           locale={locale}
-          awaiting={awaiting}
+          offset={3}
           className="people-group-experts"
         />
       </Container>

@@ -6,6 +6,8 @@ import { notFound } from "next/navigation";
 import { AppearanceBootFallback } from "@/lib/appearance/BootFallback";
 import { AppearanceProvider } from "@/lib/appearance/context";
 import { APPEARANCE_BOOT_SCRIPT } from "@/lib/appearance/boot";
+import { FeatureSpotlight } from "@/components/layout/FeatureSpotlight";
+import { PerfProbe } from "@/components/layout/PerfProbe";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { SkipLink } from "@/components/layout/SkipLink";
@@ -79,6 +81,8 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
         <IconSprite />
         <AppearanceBootFallback />
         <TapSound />
+        <PerfProbe />
+        <FeatureSpotlight />
         <AppearanceProvider>
           <MotionProvider>
             <SkipLink label={dict.common.skipToContent} />

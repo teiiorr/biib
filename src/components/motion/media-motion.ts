@@ -50,7 +50,14 @@ export function buildMediaReveal(
   });
   timeline = gsap.timeline({
     delay,
-    scrollTrigger: { trigger, start, once: true, onEnter: watch.started },
+    // Ikki yoʻnalish: ekrandan chiqqanda parda yopiladi, qaytganda yana ochiladi.
+    scrollTrigger: {
+      trigger,
+      start,
+      end: "bottom 8%",
+      toggleActions: "play reverse play reverse",
+      onEnter: watch.started,
+    },
     ...(onDone ? { onComplete: onDone } : {}),
   });
   timeline
@@ -61,7 +68,6 @@ export function buildMediaReveal(
         clipPath: `inset(0% 0% 0% 0% round ${radius})`,
         duration: DURATION.transition,
         ease: mode === "abr" ? "steps(6)" : EASE.out,
-        clearProps: "clipPath",
       },
       0,
     )

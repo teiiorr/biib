@@ -110,7 +110,13 @@ const RULES = [
     allow: (file, hit) => file.endsWith(".css") && /z-index:\s*(?:-1|0|1)\b/.test(hit.match),
   },
   { id: "dead-link", re: /href\s*[:=]\s*["'`]#["'`]/ },
-  { id: "lorem", re: /\blorem\b/i },
+  {
+    id: "lorem",
+    re: /\blorem\b/i,
+    /* Egasining qarori (2026-09-26, decisions D44): tasdiq kutilayotgan boʻsh joylar uchun lorem faqat
+       bitta oʻrinbosar modulida; boshqa har qanday faylda taqiq oʻz kuchida. */
+    allow: (file) => file.replace(/\\/g, "/").endsWith("src/content/placeholder.ts"),
+  },
   {
     id: "coming-soon",
     re: /coming soon|скоро (?:здесь|появится|будет)|tez (?:kunda|orada) (?:bu yerda|paydo)/i,

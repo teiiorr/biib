@@ -4,6 +4,7 @@ import { Icon } from "@/components/icons/Icon";
 import type { IconName } from "@/components/icons/paths";
 import { ExternalLink } from "@/components/ui/ExternalLink";
 import { getContacts, getFlagship } from "@/content";
+import { FILLER } from "@/content/placeholder";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
 import type { Locale } from "@/i18n/locales";
@@ -67,7 +68,7 @@ export function Footer({ locale, dict }: FooterProps) {
                 Telegram
               </a>
             ) : null}
-            <p className="t-small text-ink-3 footer-note">{dict.contacts.details.pending}</p>
+            <p className="t-small text-ink-3 footer-note">{FILLER.line}</p>
           </div>
           <div className="footer-group">
             <p className="t-label text-ink footer-group-label">{dict.footer.follow}</p>

@@ -9,7 +9,6 @@ export const contacts = {
     hours: "Ish vaqti",
     copy: "Nusxa olish",
     copied: "Nusxa olindi",
-    pending: "Tasdiq kutilmoqda",
   },
   map: {
     yandex: "Yandex Xaritada ochish",

@@ -34,13 +34,10 @@
   }
 
   /* Film markazda: kompyuterda 2–11 ustun, sarlavha bilan bir oʻqda. */
+  /* Egasining talabi: bir sahifada takrorlanadigan media bir xil oʻlchamda — film ramkasi yuqoridagi sahna
+     videosi bilan bir kenglikda (toʻliq konteyner, 16:9). */
   .upop-film-media {
     grid-column: 1 / -1;
-  }
-  @media (min-width: 1024px) {
-    .upop-film-media {
-      grid-column: 2 / 12;
-    }
   }
 
   /* Biz haqimizda */
@@ -119,13 +116,60 @@
     .news-grid-lead {
       grid-template-columns: repeat(12, minmax(0, 1fr));
       column-gap: var(--gutter);
-      align-items: center;
+      align-items: stretch;
     }
     .news-grid-lead > .news-cover-link {
-      grid-column: 1 / 9;
+      grid-column: 1 / 7;
     }
+    /* Matn muqova balandligida: sarlavha yuqori chetda, mavzu va oʻq pastki chetda. */
     .news-grid-lead-text {
-      grid-column: 9 / 13;
+      grid-column: 7 / 13;
+      align-content: space-between;
+      padding-block: 8px;
+    }
+    .news-grid-lead .news-title {
+      font-size: var(--fs-h2);
+      line-height: 1.2;
+    }
+  }
+  .news-grid-lead-head {
+    display: grid;
+    gap: 16px;
+  }
+  /* Bosh xabarning qisqa kirishi: uch qatordan oshmaydi. */
+  .news-grid-lead-lead {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+  .news-grid-lead-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .news-grid-lead-go {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-control);
+    border: 1px solid var(--line-strong);
+    color: var(--ink);
+    transition:
+      background-color var(--dur-ui) var(--ease-ui),
+      color var(--dur-ui) var(--ease-ui),
+      transform var(--dur-ui) var(--ease-ui);
+  }
+  @media (hover: hover) {
+    [data-card]:hover .news-grid-lead-go {
+      background: var(--tint);
+      border-color: var(--tint);
+      color: var(--on-tint);
+      transform: translateX(4px);
     }
   }
 
@@ -215,7 +259,6 @@
   .person-card,
   .leader,
   .contact-fact,
-  .partners-empty,
   .privacy-kid {
     border: 1px solid var(--line);
     border-radius: var(--radius-card);
@@ -225,6 +268,9 @@
   .leader,
   .contact-fact {
     padding: 16px;
+  }
+  .contact-fact.feature > .feature-icon {
+    grid-row: span 3;
   }
   @media (min-width: 600px) {
     .person-card,
@@ -496,27 +542,19 @@
 
   /* Hamkorlar roʻyxati boʻsh: halol holat chapda, keyingi qadam oʻngda (telefonda ostida, oʻngda). */
   /* Bitta minmax(0, 1fr) ustun: uzun tugma yorligʻi ustunni kengaytirib karta va ekrandan chiqmasin. */
-  .partners-empty {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    justify-items: end;
-    gap: 16px;
-    padding: 24px;
+  /* Tasdiqlanmagan hamkor plitkasi: haqiqiy plitka oʻlchamida, belgi va oʻrinbosar nom markazda. */
+  .partner-tile-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
   }
-  .partners-empty > :last-child {
-    max-width: 100%;
-    white-space: normal;
-  }
-  .partners-empty > p {
-    justify-self: stretch;
-  }
-  @media (min-width: 600px) {
-    .partners-empty {
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: center;
-      gap: var(--gutter);
-      padding: 32px;
-    }
+  .partners-invite {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 32px;
   }
 
   /* Maxfiylik: yangilangan sana matn ustunining oxirida, chiziq ostida sokin izoh. Oʻram matn oʻlchamida
@@ -530,18 +568,15 @@
      shunda karta va xatboshilar bir kenglikda); belgilar matn chetidan tashqarida osiladi. */
   .privacy-kid {
     display: grid;
-    gap: 12px;
+    gap: 16px;
     max-width: var(--measure);
     margin: 0;
-    padding: 24px 24px 24px 48px;
-    list-style: disc outside;
-  }
-  .privacy-kid > li::marker {
-    color: var(--ink-3);
+    padding: 24px;
+    list-style: none;
   }
   @media (min-width: 1024px) {
     .privacy-kid {
-      padding: 32px 32px 32px 64px;
+      padding: 32px;
     }
   }
   /* Bandlar orasi boʻlim qadamining yarmi: bir hujjat, alohida sahifalar emas. */

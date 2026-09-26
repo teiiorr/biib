@@ -110,12 +110,11 @@ export function ClickToPlayVideo({
             padding={0}
             text
             data-tone="dark"
-            className="media-film-play t-label-l"
+            className="media-film-play"
+            aria-label={duration ? `${playLabel}, ${formatDuration(duration)}` : playLabel}
             onClick={start}
           >
-            <Icon name="play" size={20} className="icon-play" />
-            <span className="text-trim">{playLabel}</span>
-            {duration ? <span className="text-trim tnum">{formatDuration(duration)}</span> : null}
+            <Icon name="play" size={24} className="icon-play" />
           </Surface>
         </div>
       )}

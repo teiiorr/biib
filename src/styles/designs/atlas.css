@@ -12,16 +12,16 @@
   --lh-display-xl: 1.05;
   --ls-display-xl: -0.02em;
   --fw-display-xl: 700;
-  /* Sahifa sarlavhasi (h1) va boʻlim sarlavhasi (h2 → t-h1): 26 / 20 px dan 72 / 52 px gacha
-     (360 → 1440). h1 har kenglikda h2 dan kamida 1.25 baravar katta. Unbounded keng: telefonda eng uzun
-     soʻz («конфиденциальности», 14.7 em) boʻgʻin boʻyicha boʻlinadi (ui.css). */
-  --fs-display-l: clamp(1.625rem, 0.6667rem + 4.259vw, 4.5rem);
-  --lh-display-l: 1.1;
+  /* Egasining talabi: barcha sarlavhalar (bosh sahifa nomi, sahifa h1, boʻlim h2) bitta standart katta
+     oʻlchamda — 28 px dan 64 px gacha (360 → 1440). Unbounded keng: telefonda eng uzun soʻz
+     («конфиденциальности», 14.7 em) boʻgʻin boʻyicha boʻlinadi (ui.css). */
+  --fs-display-l: clamp(1.75rem, 1rem + 3.333vw, 4rem);
+  --lh-display-l: 1.12;
   --ls-display-l: -0.015em;
   --fw-display-l: 700;
-  --fs-h1: clamp(1.25rem, 0.5833rem + 2.963vw, 3.25rem);
-  --lh-h1: 1.14;
-  --ls-h1: -0.01em;
+  --fs-h1: var(--fs-display-l);
+  --lh-h1: var(--lh-display-l);
+  --ls-h1: var(--ls-display-l);
   --fw-h1: 700;
   --fs-h2: clamp(1.125rem, 0.875rem + 1.111vw, 1.875rem);
   --lh-h2: 1.2;

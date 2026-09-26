@@ -6,8 +6,10 @@ import { Section } from "@/components/layout/Section";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { Reveal } from "@/components/motion/Reveal";
 import { LinkButton } from "@/components/ui/LinkButton";
+import { FeatureIcon } from "@/components/ui/FeatureIcon";
 import { VisuallyHidden } from "@/components/ui/VisuallyHidden";
 import { getContacts, t } from "@/content";
+import { FILLER } from "@/content/placeholder";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
@@ -103,9 +105,9 @@ export function ContactsPage({ locale, dict }: PageProps) {
             attrs={{ "data-audit": "gap", "data-card-group": "" }}
           >
             {facts.map((fact) => (
-              <div key={fact.key} className="contact-fact" data-card="">
+              <div key={fact.key} className="contact-fact feature" data-card="">
+                <FeatureIcon name={fact.icon} />
                 <dt className="contact-fact-label t-label text-ink-2" data-card-title="">
-                  <Icon name={fact.icon} size={20} />
                   {fact.label}
                 </dt>
                 <dd className="contact-fact-value">
@@ -122,7 +124,7 @@ export function ContactsPage({ locale, dict }: PageProps) {
                     </a>
                   ) : (
                     <span className={fact.value ? "t-body tnum" : "t-body text-ink-3"}>
-                      {fact.value ?? d.details.pending}
+                      {fact.value ?? FILLER.line}
                     </span>
                   )}
                 </dd>

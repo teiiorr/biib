@@ -4,6 +4,7 @@ import { Section } from "@/components/layout/Section";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { Reveal } from "@/components/motion/Reveal";
 import { LinkButton } from "@/components/ui/LinkButton";
+import { FeatureIcon } from "@/components/ui/FeatureIcon";
 import { MediaFrame } from "@/components/ui/MediaFrame";
 import { Picture } from "@/components/ui/Picture";
 import { Prose } from "@/components/ui/Prose";
@@ -15,6 +16,8 @@ import { pathFor } from "@/i18n/routes";
 
 import { HistoryTimeline } from "./HistoryTimeline";
 
+/* Yoʻnalishlar tartibi lugʻatdagi bilan: qoʻshiq, teatr, tasviriy sanʼat, animatsiya. */
+const DIRECTION_ICONS = ["mic", "mask", "palette", "film"] as const;
 interface PageProps {
   readonly locale: Locale;
   readonly dict: Dictionary;
@@ -44,9 +47,9 @@ export function AboutPage({ locale, dict }: PageProps) {
         ]}
         breadcrumbsLabel={dict.common.hints.breadcrumbs}
       />
-      <Section labelledBy="about-mission">
+      {/* Sahifa sarlavhasidan keyin ikkinchi sarlavha yoʻq (egasining talabi): maqsad matni h1 ostida. */}
+      <Section labelledBy="page-title">
         <Container>
-          <SectionHeader id="about-mission" title={a.mission.heading} split />
           {/* Oʻqish ustuni maqola bilan bir xil: kompyuterda 3–10, kengroq ekranda 4–9 (65ch dan oshmaydi). */}
           <div className="grid-site">
             <Reveal
@@ -84,9 +87,10 @@ export function AboutPage({ locale, dict }: PageProps) {
         <Container>
           <SectionHeader id="about-values" title={a.values.heading} split />
           <Reveal as="ul" className="about-list" stagger attrs={{ "data-audit": "gap" }}>
-            {a.values.items.map((item) => (
-              <li key={item} className="about-list-item t-h4 text-ink">
-                {item}
+            {a.values.items.map((item, index) => (
+              <li key={item} className="about-list-item feature t-h4 text-ink">
+                <FeatureIcon name={DIRECTION_ICONS[index % DIRECTION_ICONS.length] ?? "star"} />
+                <span>{item}</span>
               </li>
             ))}
           </Reveal>

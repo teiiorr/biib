@@ -4,6 +4,7 @@ import { Container } from "@/components/layout/Container";
 import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { TransitionLink } from "@/components/motion/TransitionLink";
+import { Icon } from "@/components/icons/Icon";
 import { headingClass } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import { getNews, t } from "@/content";
@@ -22,8 +23,8 @@ interface PageProps {
 }
 
 /**
- * Yangiliklar: markazdagi sarlavha; bosh xabar butun kenglikda (kompyuterda muqova 1–8, matn 9–12
- * oʻrtada), qolgan toʻrttasi bir qatorda (planshetda 2 × 2). Kartada faqat
+ * Yangiliklar: markazdagi sarlavha; bosh xabar butun kenglikda (kompyuterda muqova 1–6, matn 7–12
+ * muqova balandligida: sarlavha tepada, mavzu va oʻq pastda), qolgan toʻrttasi bir qatorda (planshetda 2 × 2). Kartada faqat
  * sana yoki mavzu va sarlavha: uzun kirish matni yoʻq (egasining talabi). Muqovalar bir nisbatda,
  * sarlavhalar bir chiziqda boshlanadi. Harakat: bosh muqova yumshoq ochiladi va parallaksda yuradi,
  * qolgan muqovalar abr pogʻonalarida doira ritmida ochiladi (matn joyida).
@@ -67,19 +68,34 @@ export function NewsListPage({ locale, dict }: PageProps) {
                     />
                   </ViewTransition>
                 </TransitionLink>
+                {/* Matn ustuni muqova bilan bir balandlikda: sarlavha muqovaning yuqori chizigʻida, mavzu va
+                    oʻq pastki chizigʻida (egasining talabi: matn darajalari surat chetlariga teng). */}
                 <div className="news-grid-lead-text">
-                  <p className="t-micro text-ink-3 tnum news-meta">
-                    {lead.status === "confirmed"
-                      ? formatDate(locale, lead.date)
-                      : t(lead.topic, locale)}
-                  </p>
-                  {/* Karta sarlavhasi oltin emas: oltin faqat sahifa va boʻlim sarlavhalarida. Telefonda
-                      h3 oʻlchamida: sahifa sarlavhasi bilan raqobatlashmaydi. */}
-                  <h2 className="t-h3 md:t-h2 text-balance text-ink news-title" data-card-title="">
-                    <TransitionLink href={pathFor(locale, "newsItem", lead.slug)}>
-                      {t(lead.title, locale)}
+                  <div className="news-grid-lead-head">
+                    <h2 className="t-h3 text-balance text-ink news-title" data-card-title="">
+                      <TransitionLink href={pathFor(locale, "newsItem", lead.slug)}>
+                        {t(lead.title, locale)}
+                      </TransitionLink>
+                    </h2>
+                    <p className="t-body-l text-ink-2 news-grid-lead-lead" data-clamp="">
+                      {t(lead.lead, locale)}
+                    </p>
+                  </div>
+                  <div className="news-grid-lead-foot">
+                    <p className="t-micro text-ink-3 tnum news-meta">
+                      {lead.status === "confirmed"
+                        ? formatDate(locale, lead.date)
+                        : t(lead.topic, locale)}
+                    </p>
+                    <TransitionLink
+                      href={pathFor(locale, "newsItem", lead.slug)}
+                      className="news-grid-lead-go"
+                      tabIndex={-1}
+                      aria-hidden="true"
+                    >
+                      <Icon name="arrow-right" size={24} />
                     </TransitionLink>
-                  </h2>
+                  </div>
                 </div>
               </article>
               {rest.map((item, index) => (

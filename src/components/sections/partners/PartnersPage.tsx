@@ -3,8 +3,10 @@ import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { LinkButton } from "@/components/ui/LinkButton";
+import { FeatureIcon } from "@/components/ui/FeatureIcon";
 import { Picture } from "@/components/ui/Picture";
 import { getPartners, t } from "@/content";
+import { fillerName } from "@/content/placeholder";
 import type { PartnerGroup } from "@/content/types";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
@@ -41,13 +43,21 @@ export function PartnersPage({ locale, dict }: PageProps) {
         breadcrumbsLabel={dict.common.hints.breadcrumbs}
       />
       {groups.length === 0 ? (
+        /* Hamkorlar tasdiqlanguncha: haqiqiy plitkalar bilan bir xil toʻr, ichida oʻrinbosar matn
+           (egasining talabi — boʻsh sahifa emas); taklif tugmasi oʻngda. */
         <Section>
-          <Container grid>
-            <div
-              className="partners-empty col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3"
-              data-grid-item=""
-            >
-              <p className="t-body text-ink-2">{p.pending}</p>
+          <Container>
+            <ul className="partner-grid" data-card-group="" data-audit="gap">
+              {Array.from({ length: 6 }, (_, index) => (
+                <li key={index}>
+                  <span className="partner-tile partner-tile-placeholder feature" data-card="">
+                    <FeatureIcon name="building" />
+                    <span className="t-label text-ink-2">{fillerName(index)}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <div className="partners-invite">
               <LinkButton
                 href={pathFor(locale, "contacts")}
                 variant="glass"

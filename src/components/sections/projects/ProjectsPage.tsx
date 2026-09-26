@@ -6,8 +6,11 @@ import { Section } from "@/components/layout/Section";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { Reveal } from "@/components/motion/Reveal";
 import { LinkButton } from "@/components/ui/LinkButton";
+import { FeatureIcon } from "@/components/ui/FeatureIcon";
+import type { IconName } from "@/components/icons/paths";
 import { MediaFrame } from "@/components/ui/MediaFrame";
 import { getFlagship, t } from "@/content";
+import { FILLER } from "@/content/placeholder";
 import type { Project } from "@/content/types";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
@@ -43,13 +46,17 @@ export function ProjectsPage({ locale, dict }: PageProps) {
   const { loop, film } = project.media;
   /* Halqa kadri ikkala oʻlchamda LCP: poster HTML bilan birga yuqori ustuvorlikda soʻraladi. */
   preload(loop.poster, { as: "image", fetchPriority: "high" });
-  const facts: ReadonlyArray<readonly [string, string]> = [
-    [p.facts.age, fill(dict.common.age.range, { from: project.age.from, to: project.age.to })],
-    [p.facts.format, factValue(project, "format", locale, p.facts.pending)],
-    [p.facts.place, factValue(project, "place", locale, p.facts.pending)],
-    [p.facts.schedule, factValue(project, "schedule", locale, p.facts.pending)],
-    [p.facts.cost, project.cost.free === true ? p.facts.free : p.facts.pending],
-    [p.facts.teacher, factValue(project, "teacher", locale, p.facts.pending)],
+  const facts: ReadonlyArray<readonly [string, string, IconName]> = [
+    [
+      p.facts.age,
+      fill(dict.common.age.range, { from: project.age.from, to: project.age.to }),
+      "users",
+    ],
+    [p.facts.format, factValue(project, "format", locale, FILLER.word), "star"],
+    [p.facts.place, factValue(project, "place", locale, FILLER.word), "map-pin"],
+    [p.facts.schedule, factValue(project, "schedule", locale, FILLER.word), "calendar"],
+    [p.facts.cost, project.cost.free === true ? p.facts.free : FILLER.word, "ticket"],
+    [p.facts.teacher, factValue(project, "teacher", locale, FILLER.word), "user"],
   ];
 
   return (
@@ -83,8 +90,9 @@ export function ProjectsPage({ locale, dict }: PageProps) {
         <Container>
           <SectionHeader id="upop-facts-title" title={p.facts.heading} split />
           <Reveal as="dl" className="upop-facts" stagger distance={16}>
-            {facts.map(([label, value]) => (
-              <div key={label} className="upop-fact">
+            {facts.map(([label, value, icon]) => (
+              <div key={label} className="upop-fact feature">
+                <FeatureIcon name={icon} />
                 <dt className="t-micro text-ink-3">{label}</dt>
                 <dd className="t-body text-ink tnum">{value}</dd>
               </div>

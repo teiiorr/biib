@@ -3,7 +3,9 @@ import { Section } from "@/components/layout/Section";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { Reveal } from "@/components/motion/Reveal";
 import { LinkButton } from "@/components/ui/LinkButton";
+import { FeatureIcon } from "@/components/ui/FeatureIcon";
 import { getContacts, t } from "@/content";
+import { FILLER } from "@/content/placeholder";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
@@ -26,17 +28,17 @@ export function ContactBand({ locale, dict }: ContactBandProps) {
         <SectionHeader id="home-contact" title={h.heading} />
         <Reveal className="contact-band-card">
           <dl className="contact-band-list">
-            <div>
+            <div className="feature contact-band-item">
+              <FeatureIcon name="map-pin" />
               <dt className="t-micro text-ink-3">{dict.contacts.details.address}</dt>
               <dd className="t-body">
-                {c.address.value ? t(c.address.value, locale) : dict.contacts.details.pending}
+                {c.address.value ? t(c.address.value, locale) : FILLER.line}
               </dd>
             </div>
-            <div>
+            <div className="feature contact-band-item">
+              <FeatureIcon name="phone" />
               <dt className="t-micro text-ink-3">{dict.contacts.details.phone}</dt>
-              <dd className="t-body tnum">
-                {c.phones.value?.[0] ?? dict.contacts.details.pending}
-              </dd>
+              <dd className="t-body tnum">{c.phones.value?.[0] ?? FILLER.word}</dd>
             </div>
           </dl>
           <div className="contact-band-actions">

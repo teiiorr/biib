@@ -3,6 +3,7 @@
 import { useRef, type RefObject } from "react";
 
 import { motionAllowed } from "@/lib/motion/prefs";
+import { isLitePerf } from "@/lib/perf";
 import { belowViewport } from "@/lib/motion/viewport";
 
 import { useEngineEffect } from "./engine";
@@ -35,7 +36,8 @@ export function useMediaReveal(
     ref,
     (engine) => {
       const box = ref.current;
-      if (!box || !allowed || !enabled || done.current) return;
+      // Kuchsiz qurilmada surat pardasiz, joyida koʻrinadi.
+      if (!box || !allowed || !enabled || done.current || isLitePerf()) return;
       if (!belowViewport(box, 1)) {
         done.current = true;
         return;

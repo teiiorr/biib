@@ -3,7 +3,6 @@ import type { about as source } from "../uz/about";
 export const about: typeof source = {
   title: "About",
   mission: {
-    heading: "Purpose",
     paragraphs: [
       "For a child to try what interests them, there has to be a studio nearby, an experienced mentor and an audience. We bring those three things together.",
       "The work starts in the regions: studios open in towns and district centres, and the best work goes to a stage and exhibitions in the capital.",

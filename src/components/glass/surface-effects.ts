@@ -1,5 +1,7 @@
 import { getAppearanceSnapshot, subscribeAppearance } from "@/lib/appearance/store";
 
+import { isLitePerf } from "@/lib/perf";
+
 import { refractionMap } from "./refraction-cache";
 import { bezelWidth } from "./refraction-map";
 
@@ -43,33 +45,44 @@ function mountSheen(element: HTMLElement): () => void {
   };
   rest();
 
-  if (window.matchMedia(FINE_POINTER).matches) {
-    const move = (event: PointerEvent): void => {
-      const rect = element.getBoundingClientRect();
-      x = event.clientX - rect.left;
-      y = event.clientY - rect.top;
-      schedule();
-    };
-    element.addEventListener("pointermove", move, { passive: true });
-    element.addEventListener("pointerleave", rest);
-    return () => {
-      cancelAnimationFrame(frame);
-      element.removeEventListener("pointermove", move);
-      element.removeEventListener("pointerleave", rest);
-    };
-  }
-
+  /* Skroll: nuqta sirt boʻylab toʻliq kenglikda va balandlikda yuradi (egasining talabi: oyna harakati
+     kuchliroq) — kompyuterda ham, kursor sirt ustida boʻlmasa. */
+  let hovering = false;
   const onScroll = (): void => {
+    if (hovering) return;
     const rect = element.getBoundingClientRect();
-    const progress = (window.scrollY / Math.max(1, window.innerHeight)) % 1;
-    x = rect.width * 0.3 + progress * rect.width * 0.4;
-    y = progress * rect.height;
+    const progress = (window.scrollY / Math.max(1, window.innerHeight * 0.75)) % 1;
+    const wave = Math.sin(progress * Math.PI);
+    x = rect.width * (0.05 + progress * 0.9);
+    y = rect.height * (0.15 + wave * 0.7);
     schedule();
   };
   window.addEventListener("scroll", onScroll, { passive: true });
+
+  if (!window.matchMedia(FINE_POINTER).matches) {
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }
+  const move = (event: PointerEvent): void => {
+    hovering = true;
+    const rect = element.getBoundingClientRect();
+    x = event.clientX - rect.left;
+    y = event.clientY - rect.top;
+    schedule();
+  };
+  const leave = (): void => {
+    hovering = false;
+    rest();
+  };
+  element.addEventListener("pointermove", move, { passive: true });
+  element.addEventListener("pointerleave", leave);
   return () => {
     cancelAnimationFrame(frame);
     window.removeEventListener("scroll", onScroll);
+    element.removeEventListener("pointermove", move);
+    element.removeEventListener("pointerleave", leave);
   };
 }
 
@@ -113,14 +126,15 @@ function quantize(value: number): number {
 
 let filterCount = 0;
 
-/* Siljish qirra kengligiga nisbatan: Zichlik 0 da 0.5 qirra (yupqa muz), 50 da 1.15, 100 da 1.8
-   (qalin muz, eng chetda tasvir biroz teskari aylanadi). feDisplacementMap eng koʻpi scale / 2 suradi. */
-const REFRACT_BASE = 0.5;
-const REFRACT_RANGE = 1.3;
+/* Siljish qirra kengligiga nisbatan (egasining talabi: oyna effekti 2–3 baravar kuchli): Zichlik 0 da
+   1.2 qirra, 50 da 2.7, 100 da 4.2 (qalin muz, chetda tasvir aniq egiladi). feDisplacementMap eng
+   koʻpi scale / 2 suradi. Kuchsiz qurilmada (data-perf="lite") sinish umuman qoʻyilmaydi. */
+const REFRACT_BASE = 1.2;
+const REFRACT_RANGE = 3;
 
 /** Har sirt uchun alohida filtr: xarita oʻsha sirt oʻlchamidan chizilgan, kuchi Zichlikdan. */
 function mountRefraction(element: HTMLElement): () => void {
-  if (!refractionSupported()) return () => undefined;
+  if (!refractionSupported() || isLitePerf()) return () => undefined;
   const reduced = window.matchMedia(REDUCED_TRANSPARENCY);
   filterCount += 1;
   const id = `lg-refract-${filterCount}`;

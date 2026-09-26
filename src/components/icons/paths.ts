@@ -36,6 +36,18 @@ export const ICON_NAMES = [
   "news",
   "contact",
   "about",
+  "user",
+  "users",
+  "ticket",
+  "mic",
+  "mask",
+  "palette",
+  "film",
+  "shield",
+  "heart",
+  "calendar",
+  "star",
+  "building",
 ] as const;
 
 export type IconName = (typeof ICON_NAMES)[number];
@@ -87,4 +99,20 @@ export const ICON_PATHS: Record<IconName, string> = {
   contact: "M3 9 L12 3.5 L21 9 V19 Q21 20 20 20 H4 Q3 20 3 19 Z M3 9 L12 15 L21 9",
   about:
     "M12 6.5 Q9 4.5 3.5 5 V18 Q9 17.5 12 19.5 Q15 17.5 20.5 18 V5 Q15 4.5 12 6.5 Z M12 6.5 V19.5",
+  user: "M12 12 A4 4 0 1 0 12 4 A4 4 0 1 0 12 12 Z M4.5 20.5 Q5 15.5 12 15.5 Q19 15.5 19.5 20.5",
+  users:
+    "M9 11 A3.5 3.5 0 1 0 9 4 A3.5 3.5 0 1 0 9 11 Z M2.5 20 Q3 14.5 9 14.5 Q15 14.5 15.5 20 M15.5 4.3 A3.2 3.2 0 0 1 15.5 10.7 M17.5 14.8 Q21.2 15.8 21.5 20",
+  ticket:
+    "M3 7 H21 V10 A2 2 0 0 0 21 14 V17 H3 V14 A2 2 0 0 0 3 10 Z M14.5 7.5 V9 M14.5 11.25 V12.75 M14.5 15 V16.5",
+  mic: "M12 14.5 A3 3 0 0 0 15 11.5 V6 A3 3 0 0 0 9 6 V11.5 A3 3 0 0 0 12 14.5 Z M5.5 11 A6.5 6.5 0 0 0 18.5 11 M12 17.5 V21 M8.5 21 H15.5",
+  mask: "M4 4 H20 V11 A8 8 0 0 1 4 11 Z M8 8.5 H10 M14 8.5 H16 M9 14 Q12 16.5 15 14",
+  palette:
+    "M12 3 A9 9 0 1 0 12 21 Q14 21 14 19 Q14 17.8 13 17 Q12.2 16 13.2 15 H16 A5 5 0 0 0 21 10 Q21 3 12 3 Z M7.5 11.5 H7.6 M9.5 7.5 H9.6 M14.5 7.5 H14.6",
+  film: "M4 4 H20 V20 H4 Z M8 4 V20 M16 4 V20 M4 8.5 H8 M4 15.5 H8 M16 8.5 H20 M16 15.5 H20",
+  shield: "M12 3 L19.5 6 V11 Q19.5 17.5 12 21 Q4.5 17.5 4.5 11 V6 Z M9 12 L11.2 14.2 L15.2 10",
+  heart: "M12 20 Q4 14.8 4 9.2 A4.2 4.2 0 0 1 12 7.4 A4.2 4.2 0 0 1 20 9.2 Q20 14.8 12 20 Z",
+  calendar: "M4 6 H20 V20 H4 Z M4 10.5 H20 M8.5 3.5 V7.5 M15.5 3.5 V7.5",
+  star: "M12 3.5 L14.5 8.9 L20.4 9.5 L16 13.5 L17.3 19.3 L12 16.3 L6.7 19.3 L8 13.5 L3.6 9.5 L9.5 8.9 Z",
+  building:
+    "M3 20.5 H21 M5.5 20.5 V10 M10 20.5 V10 M14 20.5 V10 M18.5 20.5 V10 M3.5 10 H20.5 L12 4 Z",
 };

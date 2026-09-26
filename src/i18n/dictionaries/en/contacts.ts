@@ -11,7 +11,6 @@ export const contacts: typeof source = {
     hours: "Working hours",
     copy: "Copy",
     copied: "Copied",
-    pending: "Awaiting confirmation",
   },
   map: {
     yandex: "Open in Yandex Maps",

@@ -8,7 +8,6 @@ export const partners: typeof source = {
     creative: "Творческие партнёры",
     sponsors: "Спонсоры",
   },
-  pending: "Список партнёров ожидает подтверждения объединения",
   logoAlt: "Логотип: {name}",
   visit: "Перейти на сайт {name}",
   invite: "Предложить сотрудничество",

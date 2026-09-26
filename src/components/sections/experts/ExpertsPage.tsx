@@ -5,6 +5,7 @@ import { PersonPlaceholder } from "@/components/ui/PersonPlaceholder";
 import { Picture } from "@/components/ui/Picture";
 import { PortraitFrame } from "@/components/ui/PortraitFrame";
 import { getExperts, t } from "@/content";
+import { fillerName } from "@/content/placeholder";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
 import type { Locale } from "@/i18n/locales";
@@ -92,7 +93,7 @@ export function ExpertsPage({ locale, dict }: PageProps) {
           ) : (
             /* Ism va surat kelguncha: belgi plitkasi, soha va halol holat; boʻsh portret ramkasi yoʻq. */
             <ul className="person-cards" data-card-group="" aria-label={e.title}>
-              {experts.map((person) => {
+              {experts.map((person, index) => {
                 const role = t(person.role, locale);
                 const field = person.field ? t(person.field, locale) : null;
                 return (
@@ -100,9 +101,9 @@ export function ExpertsPage({ locale, dict }: PageProps) {
                     <PersonPlaceholder />
                     <div className="person-card-text">
                       <p className="t-label text-ink" data-card-title="">
-                        {field ?? role}
+                        {person.name ? t(person.name, locale) : fillerName(index + 3)}
                       </p>
-                      <p className="t-small text-ink-3">{dict.common.status.awaiting}</p>
+                      <p className="t-small text-ink-3">{field ?? role}</p>
                     </div>
                   </li>
                 );

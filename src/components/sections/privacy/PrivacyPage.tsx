@@ -6,11 +6,14 @@ import { Section } from "@/components/layout/Section";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { Reveal } from "@/components/motion/Reveal";
 import { Prose } from "@/components/ui/Prose";
+import { FeatureIcon } from "@/components/ui/FeatureIcon";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill, formatDate } from "@/i18n/format";
 import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
 
+/* Bolalar uchun qisqa izoh: maʼlumot yigʻilmaydi, rozilik, olib tashlash. */
+const KID_ICONS = ["shield", "heart", "check"] as const;
 interface PageProps {
   readonly locale: Locale;
   readonly dict: Dictionary;
@@ -45,9 +48,10 @@ export function PrivacyPage({ locale, dict }: PageProps) {
           <SectionHeader id="privacy-kid" title={p.kid.heading} />
           <div className="grid-site">
             <ul className={`privacy-kid ${COLUMN}`} data-grid-item="">
-              {p.kid.items.map((item) => (
-                <li key={item} className="t-body-l">
-                  {item}
+              {p.kid.items.map((item, index) => (
+                <li key={item} className="feature t-body-l">
+                  <FeatureIcon name={KID_ICONS[index % KID_ICONS.length] ?? "check"} />
+                  <span>{item}</span>
                 </li>
               ))}
             </ul>

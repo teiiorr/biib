@@ -12,7 +12,6 @@ export const contacts: typeof source = {
     hours: "Iş vaqti",
     copy: "Nusxa oliş",
     copied: "Nusxa olindi",
-    pending: "Tasdiq kutilmoqda",
   },
   map: {
     yandex: "Yandex Xaritada oçiş",

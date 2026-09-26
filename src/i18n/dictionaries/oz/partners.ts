@@ -9,7 +9,6 @@ export const partners: typeof source = {
     creative: "Ижодий ҳамкорлар",
     sponsors: "Ҳомийлар",
   },
-  pending: "Ҳамкорлар рўйхати ташкилот тасдиғини кутмоқда",
   logoAlt: "{name} логотипи",
   visit: "{name} сайтига ўтиш",
   invite: "Ҳамкорлик таклифи учун ёзинг",

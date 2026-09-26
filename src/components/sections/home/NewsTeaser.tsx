@@ -69,14 +69,18 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
                 />
               </ViewTransition>
             </TransitionLink>
-            <p className="t-micro text-ink-3 tnum news-meta">
-              {lead.status === "confirmed" ? formatDate(locale, lead.date) : t(lead.topic, locale)}
-            </p>
-            <Heading level={3} size="h3" className="news-title" attrs={{ "data-card-title": "" }}>
-              <TransitionLink href={pathFor(locale, "newsItem", lead.slug)}>
-                {t(lead.title, locale)}
-              </TransitionLink>
-            </Heading>
+            <div className="news-lead-text">
+              <p className="t-micro text-ink-3 tnum news-meta">
+                {lead.status === "confirmed"
+                  ? formatDate(locale, lead.date)
+                  : t(lead.topic, locale)}
+              </p>
+              <Heading level={3} size="h3" className="news-title" attrs={{ "data-card-title": "" }}>
+                <TransitionLink href={pathFor(locale, "newsItem", lead.slug)}>
+                  {t(lead.title, locale)}
+                </TransitionLink>
+              </Heading>
+            </div>
           </article>
           <Reveal as="div" className="news-side" stagger>
             {side.map((item) => (
