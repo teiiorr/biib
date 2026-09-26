@@ -27,6 +27,8 @@ export interface InViewPlaybackOptions {
 export interface InViewPlayback {
   /** Manba qoʻyish mumkin: kamaytirilgan harakat yoki Harakat = off boʻlsa false. */
   readonly allowed: boolean;
+  /** Ruxsat bir marta aniqlandi (boʻsh vaqtda, ≤ 2 s): shungacha allowed=false «hali nomaʼlum» degani. */
+  readonly settled: boolean;
   readonly inView: boolean;
   /** Foydalanuvchi toʻxtatgan; toggle bilan almashadi. */
   readonly paused: boolean;
@@ -51,6 +53,7 @@ export function useInViewPlayback(
 ): InViewPlayback {
   // Serverda va gidratsiyada false: manba faqat brauzer sozlamalari oʻqilgach qoʻyiladi.
   const [allowed, setAllowed] = useState(false);
+  const [settled, setSettled] = useState(false);
   const [inView, setInView] = useState(false);
   const [active, setActive] = useState(!ambient);
   const [hidden, setHidden] = useState(false);
@@ -67,11 +70,17 @@ export function useInViewPlayback(
 
   useEffect(() => {
     if (!ambient) {
-      queueMicrotask(() => setAllowed(true));
+      queueMicrotask(() => {
+        setAllowed(true);
+        setSettled(true);
+      });
       return;
     }
     const mql = window.matchMedia(REDUCED_MOTION_QUERY);
-    const apply = (): void => setAllowed(!mql.matches && !isMotionOff());
+    const apply = (): void => {
+      setAllowed(!mql.matches && !isMotionOff());
+      setSettled(true);
+    };
     mql.addEventListener("change", apply);
     const observer = new MutationObserver(apply);
     observer.observe(document.documentElement, {
@@ -150,5 +159,5 @@ export function useInViewPlayback(
     setPaused((value) => !value);
   }, [finished, ref]);
 
-  return { allowed, inView, paused, finished, toggle };
+  return { allowed, settled, inView, paused, finished, toggle };
 }

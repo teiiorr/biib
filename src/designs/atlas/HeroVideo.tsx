@@ -64,7 +64,7 @@ export default function HeroVideo({ copy }: ArtProps) {
   const portrait = useMediaQuery(HERO_PORTRAIT_MEDIA);
   const orientation = portrait ? "portrait" : "landscape";
   const media = HERO_MEDIA[orientation];
-  const { allowed, inView, paused, finished, toggle } = useInViewPlayback(videoRef, {
+  const { allowed, settled, inView, paused, finished, toggle } = useInViewPlayback(videoRef, {
     once: true,
   });
   const [gate] = useState(createGate);
@@ -125,6 +125,15 @@ export default function HeroVideo({ copy }: ArtProps) {
     const scene = sceneRef.current;
     const hero = scene?.querySelector<HTMLElement>("[data-hero]");
     if (!video || !scene || !hero) return;
+    /* Qahramon ortda qolganda video hali yuklanmagan boʻlishi mumkin (pastda qayta yuklash, preload
+       none): oxirgi kadrga oʻtish metamaʼlumot kelgach bajariladi. */
+    let pendingEnd = false;
+    const toEnd = (): void => {
+      if (Number.isFinite(video.duration) && video.duration > 0) {
+        video.currentTime = video.duration - 0.05;
+        pendingEnd = false;
+      } else pendingEnd = true;
+    };
     const formed = (): void => {
       hero.dataset.lock = "";
       hero.dataset.formed = "";
@@ -136,6 +145,11 @@ export default function HeroVideo({ copy }: ArtProps) {
     /* Video boshidan qayta oʻynasa (pastda qayta yuklangach tepaga qaytildi, takror tugmasi) belgi yana
        yigʻilguncha uchish kutadi: animatsiya yana toʻliq koʻrinadi. */
     const restart = (): void => {
+      /* Kutilayotgan oxirgi kadr: bu qayta ijro emas, belgi sarlavhada qoladi. */
+      if (pendingEnd) {
+        toEnd();
+        return;
+      }
       if (video.currentTime < HERO_LOCK_AT) {
         delete hero.dataset.lock;
         delete hero.dataset.formed;
@@ -149,20 +163,23 @@ export default function HeroVideo({ copy }: ArtProps) {
     const hurry = (): void => {
       if (gate.open() || video.currentTime >= HERO_LOCK_AT || video.ended) return;
       if (scene.getBoundingClientRect().bottom <= window.innerHeight + 1) {
-        if (Number.isFinite(video.duration) && video.duration > 0) {
-          video.currentTime = video.duration - 0.05;
-        }
+        toEnd();
         formed();
         return;
       }
       if (window.scrollY > 24) video.playbackRate = HURRY_RATE;
     };
+    const onMetadata = (): void => {
+      if (pendingEnd) toEnd();
+    };
     hurry();
+    video.addEventListener("loadedmetadata", onMetadata);
     video.addEventListener("timeupdate", lock);
     video.addEventListener("ended", lock);
     video.addEventListener("play", restart);
     window.addEventListener("scroll", hurry, { passive: true });
     return () => {
+      video.removeEventListener("loadedmetadata", onMetadata);
       video.removeEventListener("timeupdate", lock);
       video.removeEventListener("ended", lock);
       video.removeEventListener("play", restart);
@@ -202,7 +219,19 @@ export default function HeroVideo({ copy }: ArtProps) {
       className="hero-loop"
       data-hero-media=""
       data-chunk="hero-video"
-      data-state={allowed ? (finished ? "ended" : paused ? "paused" : "playing") : "still"}
+      /* Ruxsat hali aniqlanmagan (boʻsh vaqtgacha): 0-kadr posteri turadi. «still» boʻlsa oxirgi kadr
+         posteri bir lahza chiqib, video boshlanganda yana soʻnardi (yuklanishdagi miltillash). */
+      data-state={
+        !settled
+          ? "pending"
+          : allowed
+            ? finished
+              ? "ended"
+              : paused
+                ? "paused"
+                : "playing"
+            : "still"
+      }
     >
       <video
         ref={videoRef}

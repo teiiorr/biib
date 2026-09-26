@@ -100,7 +100,10 @@
   }
   :root[data-motion="off"] .home-hero-picture-end,
   .home-hero:has(.hero-loop:is([data-state="still"], [data-state="paused"]:not([data-ready])))
-    .home-hero-picture-end {
+    .home-hero-picture-end,
+  /* Belgi yigʻilgan deb belgilangan (oʻtib ketilgan qahramon): video hali yuklanayotgan boʻlsa ham
+     kadrda yigʻilgan belgi turadi, 0-kadr koʻrinmaydi. */
+  .home-hero[data-formed] .home-hero-picture-end {
     opacity: 1;
   }
   @media (prefers-reduced-motion: reduce) {

@@ -269,6 +269,8 @@ export function useHeroScene(
         },
         onUpdate: (self) => {
           scrollProgress = self.progress;
+          /* Sahna oʻchiq (past ekran, Harakat): trigger ishlab qolsa ham belgi qimirlamaydi. */
+          if (!enabled || geometryOff) return;
           render(aim(), true);
         },
         onRefresh: () => {
@@ -279,6 +281,9 @@ export function useHeroScene(
           checkGeometry();
         },
       });
+      /* Yaratish paytidagi refresh trigger hali yoʻqligida sahnani oʻchirgan boʻlishi mumkin: holat endi
+         triggerning oʻziga ham qoʻllanadi, aks holda past ekranda belgi skroll bilan uchib ketardi. */
+      if (!enabled) trigger.disable(false);
       setStatic(geometryOff);
       if (geometryOff) apply();
       else syncToScroll();
