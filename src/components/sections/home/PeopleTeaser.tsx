@@ -5,7 +5,7 @@ import { SectionHeader } from "@/components/layout/SectionHeader";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { Heading } from "@/components/ui/Heading";
 import { FeatureIcon } from "@/components/ui/FeatureIcon";
-import { Picture } from "@/components/ui/Picture";
+import { ContentPicture } from "@/components/ui/ContentPicture";
 import { PortraitFrame } from "@/components/ui/PortraitFrame";
 import { getExperts, getLeadership, t } from "@/content";
 import { fillerName } from "@/content/placeholder";
@@ -32,7 +32,7 @@ function PersonCard({ person, locale, index }: { person: Person; locale: Locale;
     <li className="people-card" data-card="">
       <PortraitFrame ratio="4:5" className="people-portrait" motion={{ mode: "smooth", index }}>
         {person.photo ? (
-          <Picture
+          <ContentPicture
             src={person.photo}
             alt={name ?? role}
             fill
@@ -103,9 +103,10 @@ function PeopleGroup({ heading, href, people, locale, offset, className }: Peopl
  * odamlar lavozim roʻyxati boʻlib chiqadi (kompyuterda ikki ustun, 3 + 3 qator); hammasi tasdiqlangan
  * guruh avtomatik portret kartalariga oʻtadi.
  */
-export function PeopleTeaser({ locale, dict }: PeopleTeaserProps) {
-  const leaders = getLeadership().slice(0, 3);
-  const experts = getExperts().slice(0, 3);
+export async function PeopleTeaser({ locale, dict }: PeopleTeaserProps) {
+  const [allLeaders, allExperts] = await Promise.all([getLeadership(), getExperts()]);
+  const leaders = allLeaders.slice(0, 3);
+  const experts = allExperts.slice(0, 3);
   const h = dict.home.people;
   return (
     <Section labelledBy="home-people" rhythm="band" className="people-section">

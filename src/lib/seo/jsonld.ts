@@ -29,8 +29,8 @@ export function organizationJsonLd(input: {
           address: {
             "@type": "PostalAddress",
             streetAddress: t(contacts.address.value, locale),
-            postalCode: "100011",
-            addressLocality: "Tashkent",
+            postalCode: contacts.postalCode ?? "100011",
+            addressLocality: contacts.locality ?? "Tashkent",
             addressCountry: "UZ",
           },
         }

@@ -2,7 +2,7 @@ import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { Reveal } from "@/components/motion/Reveal";
-import { Picture } from "@/components/ui/Picture";
+import { ContentPicture } from "@/components/ui/ContentPicture";
 import { getArtworks, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
@@ -17,8 +17,8 @@ interface GallerySectionProps {
  * Bolalar galereyasi (25.4.1): faqat rozilik yozuvi bor ishlar; imzo — ism, yosh, viloyat, nom.
  * Ish yoʻq boʻlsa boʻlim umuman chizilmaydi (HomePage); kutilayotgani content-pending.md da.
  */
-export function GallerySection({ locale, dict }: GallerySectionProps) {
-  const artworks = getArtworks();
+export async function GallerySection({ locale, dict }: GallerySectionProps) {
+  const artworks = await getArtworks();
   const g = dict.home.gallery;
   return (
     <Section labelledBy="home-gallery">
@@ -34,7 +34,7 @@ export function GallerySection({ locale, dict }: GallerySectionProps) {
           {artworks.map((art) => (
             <li key={art.id} className="gallery-item" data-card="">
               <figure>
-                <Picture
+                <ContentPicture
                   src={art.src}
                   alt={t(art.title, locale)}
                   width={art.width}

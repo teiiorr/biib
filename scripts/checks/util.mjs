@@ -177,3 +177,15 @@ export function runHelper(name) {
   if (result.status !== 0) throw new Error(`${name} ishlamadi:\n${tail(result.stderr, 15)}`);
   return JSON.parse(result.stdout);
 }
+
+/* Koʻrik va Lighthouse bir maqolada oʻlchanadi (natijalar solishtirilsin); u kontentdan olib
+   tashlansa, nusxadagi birinchi yangilik olinadi. */
+const REVIEW_SLUG = "upop-trend-yangi-mavsum";
+
+/** Koʻrik toʻplami va Lighthouse uchun maqola slugi (repodagi kontent nusxasidan). */
+export function reviewNewsSlug() {
+  const slugs = runHelper("routes.mts")
+    .routes.filter((r) => r.key === "newsItem" && r.locale === "uz")
+    .map((r) => r.slug);
+  return slugs.includes(REVIEW_SLUG) ? REVIEW_SLUG : slugs[0];
+}

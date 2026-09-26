@@ -22,8 +22,8 @@ interface PageProps {
  * Ekspertlar kengashi: markazdagi sarlavha, ostida katta portretli teng kartalar (2 / 3 / 3 ustun):
  * oltita aʼzo har kenglikda toʻliq qatorlar beradi. Tarjimai hol faqat tasdiqlangan aʼzoda, oynada.
  */
-export function ExpertsPage({ locale, dict }: PageProps) {
-  const experts = getExperts();
+export async function ExpertsPage({ locale, dict }: PageProps) {
+  const experts = await getExperts();
   const e = dict.people.experts;
   const jsonld = experts
     .map((p) => personJsonLd({ person: p, locale, dict }))

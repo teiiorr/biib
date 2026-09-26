@@ -59,6 +59,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const dict = getDictionary(locale);
+  const contacts = await getContacts();
   const meta = LOCALE_META[locale];
   /* Til toʻplamlari (≤4) sarlavhaga preload sifatida koʻchadi; JSX link ikki marta chiqar edi. */
   for (const href of fontPreloads(locale)) {
@@ -104,10 +105,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
           }}
         />
         <JsonLd
-          data={[
-            organizationJsonLd({ locale, dict, contacts: getContacts() }),
-            websiteJsonLd({ locale, dict }),
-          ]}
+          data={[organizationJsonLd({ locale, dict, contacts }), websiteJsonLd({ locale, dict })]}
         />
       </body>
     </html>

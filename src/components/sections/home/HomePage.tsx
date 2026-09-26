@@ -21,9 +21,9 @@ interface HomePageProps {
  * Bosh sahifa: Darvoza (video sahnasi) → missiya → UPOP TREND → yangiliklar → galereya (rozilik bilan
  * ishlar boʻlsa) → odamlar → hamkorlar (≥ 6 boʻlsa) → aloqa. Boʻsh boʻlim chizilmaydi.
  */
-export function HomePage({ locale, dict }: HomePageProps) {
-  const partners = getConfirmedPartners();
-  const hasArtworks = getArtworks().length > 0;
+export async function HomePage({ locale, dict }: HomePageProps) {
+  const [partners, artworks] = await Promise.all([getConfirmedPartners(), getArtworks()]);
+  const hasArtworks = artworks.length > 0;
   return (
     <>
       {/* Missiya sahnaning ikkinchi yarmi: yopishqoq kadr ustidan koʻtariladi, boʻsh xira ekran qolmaydi. */}

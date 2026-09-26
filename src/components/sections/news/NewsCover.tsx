@@ -1,7 +1,7 @@
 import type { MediaRevealProps } from "@/components/motion/MediaReveal";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { MediaFrame } from "@/components/ui/MediaFrame";
-import { Picture } from "@/components/ui/Picture";
+import { ContentPicture } from "@/components/ui/ContentPicture";
 import { t } from "@/content";
 import type { NewsArticle } from "@/content/types";
 import type { Locale } from "@/i18n/locales";
@@ -23,8 +23,8 @@ export interface NewsCoverProps {
 }
 
 /**
- * Yangilik muqovasi: surat bor va tasdiq kutmayotgan boʻlsa tayyor rasm (Picture), aks holda sokin oʻrin
- * (neytral yengil zamin va markazda birlashma belgisi).
+ * Yangilik muqovasi: surat bor va tasdiq kutmayotgan boʻlsa tayyor rasm (ContentPicture), aks holda
+ * sokin oʻrin (neytral yengil zamin va markazda birlashma belgisi).
  */
 export function NewsCover({
   article,
@@ -47,7 +47,7 @@ export function NewsCover({
       {...(motion ? { motion } : {})}
     >
       {src ? (
-        <Picture src={src} alt={alt} fill sizes={sizes} priority={priority} />
+        <ContentPicture src={src} alt={alt} fill sizes={sizes} priority={priority} />
       ) : (
         <div
           className="news-cover-placeholder"

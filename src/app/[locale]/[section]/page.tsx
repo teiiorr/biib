@@ -9,13 +9,13 @@ import { NewsListPage } from "@/components/sections/news/NewsListPage";
 import { PartnersPage } from "@/components/sections/partners/PartnersPage";
 import { PrivacyPage } from "@/components/sections/privacy/PrivacyPage";
 import { ProjectsPage } from "@/components/sections/projects/ProjectsPage";
+import { getPageStatus } from "@/content";
 import { getDictionary, type Dictionary } from "@/i18n/dictionaries";
 import { isLocale, LOCALES, type Locale } from "@/i18n/locales";
 import { SECTION_KEYS, resolveSection, sectionSegment, type SectionKey } from "@/i18n/routes";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { statusForPage } from "@/lib/seo/status";
 
-/* Nomaʼlum segment lokal 404 ni koʻrsatishi uchun (G2): 70 sahifa statik, qolgani notFound(). */
+/* Nomaʼlum segment lokal 404 ni koʻrsatishi uchun (G2): boʻlimlar statik, qolgani notFound(). */
 export const dynamicParams = true;
 
 /** 8 boʻlim × 5 til = 40 sahifa; slug segmentlari boshqa faylda. */
@@ -29,7 +29,10 @@ interface PageProps {
   readonly params: Promise<{ locale: Locale; section: string }>;
 }
 
-type SectionPage = (props: { locale: Locale; dict: Dictionary }) => React.ReactNode;
+type SectionPage = (props: {
+  locale: Locale;
+  dict: Dictionary;
+}) => React.ReactNode | Promise<React.ReactNode>;
 
 const PAGES: Record<SectionKey | "news", SectionPage> = {
   about: AboutPage,
@@ -47,7 +50,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!isLocale(locale)) return {};
   const key = resolveSection(locale, section);
   if (!key) return {};
-  return buildMetadata({ locale, key, dict: getDictionary(locale), status: statusForPage(key) });
+  return buildMetadata({
+    locale,
+    key,
+    dict: getDictionary(locale),
+    status: await getPageStatus(key),
+  });
 }
 
 export default async function Page({ params }: PageProps) {

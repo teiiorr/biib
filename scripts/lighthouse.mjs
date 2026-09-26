@@ -5,6 +5,7 @@ import path from "node:path";
 import lighthouse from "lighthouse";
 import { throttling } from "lighthouse/core/config/constants.js";
 import { launch } from "chrome-launcher";
+import { reviewNewsSlug } from "./checks/util.mjs";
 
 const BASE_URL = process.env.BASE_URL ?? "http://localhost:3100";
 const OUT = path.resolve(".lighthouse");
@@ -17,7 +18,7 @@ const PAGES = {
   about: "/uz/biz-haqimizda",
   projects: "/uz/loyihalar",
   news: "/uz/yangiliklar",
-  newsItem: "/uz/yangiliklar/upop-trend-yangi-mavsum",
+  newsItem: `/uz/yangiliklar/${reviewNewsSlug()}`,
   experts: "/uz/ekspertlar-kengashi",
   leadership: "/uz/rahbariyat",
   partners: "/uz/hamkorlar",

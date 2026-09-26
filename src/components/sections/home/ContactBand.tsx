@@ -19,8 +19,8 @@ interface ContactBandProps {
  * Aloqa: markazdagi sarlavha, ostida bitta sokin karta — manzil va telefon ikki teng ustunda
  * (bir xil uslub, bir tepa chiziq), oʻng chetda ikki harakat (kompyuterda shu qatorda).
  */
-export function ContactBand({ locale, dict }: ContactBandProps) {
-  const c = getContacts();
+export async function ContactBand({ locale, dict }: ContactBandProps) {
+  const c = await getContacts();
   const h = dict.home.contact;
   return (
     <Section labelledBy="home-contact">
@@ -40,8 +40,8 @@ export function ContactBand({ locale, dict }: ContactBandProps) {
               <dt className="sr-only">{dict.contacts.details.phone}</dt>
               <dd className="t-body tnum contact-band-phones">
                 {c.phones.value?.length
-                  ? c.phones.value.map((phone) => (
-                      <a key={phone} href={`tel:${phone.replace(/\s/g, "")}`}>
+                  ? c.phones.value.map((phone, index) => (
+                      <a key={index} href={`tel:${phone.replace(/\s/g, "")}`}>
                         {phone}
                       </a>
                     ))

@@ -15,16 +15,10 @@ export const PAGE_KEYS = [
 export type PageKey = (typeof PAGE_KEYS)[number];
 export type SectionKey = Exclude<PageKey, "home" | "newsItem">;
 
-/** Yangiliklar sluglari faqat ASCII: Telegram va pochtada %D1%8F… boʻlib qolmasligi uchun. */
-export const NEWS_SLUGS = [
-  "upop-trend-taqdimoti",
-  "upop-trend-yangi-mavsum",
-  "bolalar-ishlari-korgazmasi",
-  "teatr-studiyalari-korsatuvi",
-  "ustozlar-uchun-seminar",
-  "birinchi-multfilmlar",
-] as const;
-export type NewsSlug = (typeof NEWS_SLUGS)[number];
+/* Yangiliklar sluglari faqat ASCII: Telegram va pochtada %D1%8F… boʻlib qolmasligi uchun. Roʻyxatning
+   oʻzi kontentda (select.ts), bu yerda faqat shakl: yangi maqola kodga tegmasdan ochiladi. */
+export const NEWS_SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+export const NEWS_SLUG_MAX = 80;
 
 type SegmentMap = Record<"uz" | "ru" | "en", string>;
 
@@ -72,8 +66,10 @@ export function resolveSection(locale: Locale, segment: string): SectionKey | "n
   return null;
 }
 
-export function isNewsSlug(value: string): value is NewsSlug {
-  return (NEWS_SLUGS as readonly string[]).includes(value);
+/** Faqat shakl: tasodifiy skanerlar kontentga murojaat qilmasdan 404 oladi. */
+export function isNewsSlug(value: string): boolean {
+  // Yigʻishda metadata params boʻsh kelishi mumkin: undefined «undefined» matni boʻlib oʻtmasin.
+  return typeof value === "string" && value.length <= NEWS_SLUG_MAX && NEWS_SLUG_RE.test(value);
 }
 
 /** Har bir sahifa uchun beshta tildagi yoʻl: til almashtirgich, alternates, sitemap. */
@@ -97,19 +93,19 @@ export function hreflangFor(key: PageKey, slug?: string): Record<string, string>
 export interface RouteEntry {
   readonly locale: Locale;
   readonly key: PageKey;
-  readonly slug?: NewsSlug;
+  readonly slug?: string;
   readonly path: string;
 }
 
-/** Barcha 70 sahifa: 9 statik × 5 til + 5 yangilik × 5 til. */
-export function allRoutes(): readonly RouteEntry[] {
+/** Barcha sahifalar: (9 statik + har yangilik) × 5 til. Sluglar kontent nusxasidan beriladi. */
+export function allRoutes(newsSlugs: readonly string[]): readonly RouteEntry[] {
   const out: RouteEntry[] = [];
   for (const locale of LOCALES) {
     out.push({ locale, key: "home", path: pathFor(locale, "home") });
     for (const key of SECTION_KEYS) {
       out.push({ locale, key, path: pathFor(locale, key) });
     }
-    for (const slug of NEWS_SLUGS) {
+    for (const slug of newsSlugs) {
       out.push({ locale, key: "newsItem", slug, path: pathFor(locale, "newsItem", slug) });
     }
   }
@@ -119,7 +115,7 @@ export function allRoutes(): readonly RouteEntry[] {
 export interface ResolvedPath {
   readonly locale: Locale;
   readonly key: PageKey;
-  readonly slug?: NewsSlug;
+  readonly slug?: string;
 }
 
 /** Brauzer yoʻlidan sahifa kalitini topadi: til menyusi va faol belgi uchun. */

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import { Icon } from "@/components/icons/Icon";
-import { Picture } from "@/components/ui/Picture";
+import { ContentPicture } from "@/components/ui/ContentPicture";
 import { PortraitFrame } from "@/components/ui/PortraitFrame";
 import { FILLER } from "@/content/placeholder";
 
@@ -40,7 +40,7 @@ export function PersonCard({
         className="person-tile-portrait"
         motion={{ mode: "smooth", index }}
       >
-        {photo ? <Picture src={photo} alt={name} fill sizes={sizes} /> : null}
+        {photo ? <ContentPicture src={photo} alt={name} fill sizes={sizes} /> : null}
       </PortraitFrame>
       <p className="t-small text-ink-3 person-tile-role">{role}</p>
       <h2

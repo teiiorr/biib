@@ -27,8 +27,8 @@ interface NewsTeaserProps {
  * Yon ustun bosh xabar balandligiga choʻziladi: ikkala ustun bir chiziqda tugaydi. Telefonda ketma-ket.
  * Harakat: bosh muqova yumshoq ochiladi va parallaksda yuradi, yon qatorlar doira ritmida koʻtariladi.
  */
-export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
-  const [lead, ...rest] = getNews();
+export async function NewsTeaser({ locale, dict }: NewsTeaserProps) {
+  const [lead, ...rest] = await getNews();
   const side = rest.slice(0, 4);
   if (!lead) return null;
   const h = dict.home.news;

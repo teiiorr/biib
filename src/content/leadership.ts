@@ -27,7 +27,6 @@ export const LEADERSHIP: readonly Person[] = [
     field: null,
     bio: null,
     photo: "/brand/leader-chair.jpg",
-    reception: null,
     email: null,
   },
   {
@@ -51,7 +50,6 @@ export const LEADERSHIP: readonly Person[] = [
     field: null,
     bio: null,
     photo: "/brand/leader-director.jpg",
-    reception: null,
     email: null,
   },
   {
@@ -69,7 +67,6 @@ export const LEADERSHIP: readonly Person[] = [
     field: null,
     bio: null,
     photo: null,
-    reception: null,
     email: null,
   },
   {
@@ -87,7 +84,6 @@ export const LEADERSHIP: readonly Person[] = [
     field: null,
     bio: null,
     photo: null,
-    reception: null,
     email: null,
   },
 ];

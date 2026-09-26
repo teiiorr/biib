@@ -17,6 +17,8 @@ interface PictureBase {
   /** <img> ga data-* belgilar (harakat sahnasi shu belgi orqali topadi). */
   readonly attrs?: Readonly<Record<`data-${string}`, string>>;
   readonly ariaHidden?: boolean;
+  /** Tayyor nusxalar tashqaridan (ContentPicture: yuklangan rasm); berilmasa manifestdan. */
+  readonly image?: PreparedImage | undefined;
 }
 
 /** fill: ota ramkani toʻldiradi (object-fit: cover); aks holda width/height bilan joy ajratiladi. */
@@ -37,7 +39,7 @@ function srcSet(image: PreparedImage, format: "avif" | "webp"): string {
  */
 export function Picture(props: PictureProps) {
   const { src, alt, sizes, priority = false, eager = false, className, attrs, ariaHidden } = props;
-  const image = PREPARED_IMAGES[src];
+  const image = props.image ?? PREPARED_IMAGES[src];
   const fill = props.fill === true;
   const width = fill ? image?.width : props.width;
   const height = fill ? image?.height : props.height;

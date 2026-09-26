@@ -1,5 +1,5 @@
+import type { IconName } from "@/components/icons/paths";
 import type { Locale } from "@/i18n/locales";
-import type { NewsSlug } from "@/i18n/routes";
 
 export type Localized<T = string> = Record<Locale, T>;
 
@@ -81,7 +81,8 @@ export interface Project {
 }
 
 export interface NewsArticle {
-  readonly slug: NewsSlug;
+  /** ASCII slug (routes.ts dagi NEWS_SLUG_RE): roʻyxat kontentdan olinadi, kodda qotirilmaydi. */
+  readonly slug: string;
   readonly status: ContentStatus;
   /** ISO sana. Faqat confirmed boʻlganda koʻrsatiladi. */
   readonly date: string;
@@ -103,11 +104,6 @@ export interface NewsArticle {
 
 export type PersonKind = "expert" | "leader";
 
-export interface ReceptionSlot {
-  readonly day: Localized;
-  readonly hours: string;
-}
-
 export interface Person {
   readonly id: string;
   readonly kind: PersonKind;
@@ -118,7 +114,6 @@ export interface Person {
   readonly field: Localized | null;
   readonly bio: Localized | null;
   readonly photo: string | null;
-  readonly reception: readonly ReceptionSlot[] | null;
   readonly email: string | null;
 }
 
@@ -153,6 +148,9 @@ export interface Contacts {
   readonly hours: ContactDetail<Localized>;
   readonly map: ContactDetail<{ readonly lat: number; readonly lng: number }>;
   readonly socials: readonly SocialLink[];
+  /** JSON-LD manzili uchun; berilmasa jsonld.ts dagi hozirgi qiymat. */
+  readonly postalCode?: string;
+  readonly locality?: string;
 }
 
 /** Bolalar galereyasi (25.4.1): rozilik yozuvisiz element qurilmaydi. */
@@ -174,4 +172,6 @@ export interface Milestone {
   readonly status: ContentStatus;
   readonly year: number | null;
   readonly title: Localized;
+  /** Berilmasa AboutPage dagi id boʻyicha belgi. */
+  readonly icon?: IconName;
 }

@@ -1,15 +1,16 @@
 import { readdirSync } from "node:fs";
 import path from "node:path";
+import { bundledSnapshot } from "../../src/content/bundled";
 import {
-  getArtworks,
-  getContacts,
-  getExperts,
-  getLeadership,
-  getMilestones,
-  getNews,
-  getPartners,
-  getProjects,
-} from "../../src/content/index";
+  selectArtworks,
+  selectContacts,
+  selectExperts,
+  selectLeadership,
+  selectMilestones,
+  selectNews,
+  selectPartners,
+  selectProjects,
+} from "../../src/content/select";
 import { getDictionary } from "../../src/i18n/dictionaries/index";
 import { LOCALES } from "../../src/i18n/locales";
 import { KEEP_WORDS } from "../../src/i18n/translit-exceptions";
@@ -51,16 +52,17 @@ function walk(value: unknown, at: string, out: Entry[]): void {
 }
 
 const content: Entry[] = [];
+const snapshot = bundledSnapshot();
 walk(
   {
-    projects: getProjects(),
-    news: getNews(),
-    experts: getExperts(),
-    leadership: getLeadership(),
-    partners: getPartners(),
-    contacts: getContacts(),
-    milestones: getMilestones(),
-    artworks: getArtworks(),
+    projects: selectProjects(snapshot),
+    news: selectNews(snapshot),
+    experts: selectExperts(snapshot),
+    leadership: selectLeadership(snapshot),
+    partners: selectPartners(snapshot),
+    contacts: selectContacts(snapshot),
+    milestones: selectMilestones(snapshot),
+    artworks: selectArtworks(snapshot),
   },
   "",
   content,

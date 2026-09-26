@@ -1,21 +1,27 @@
 import type { MetadataRoute } from "next";
-import { getArticle, getNews, getProjects } from "@/content";
+import { getNews, getProjects } from "@/content";
+import type { NewsArticle, Project } from "@/content/types";
 import { LOCALE_META, LOCALES, type Locale } from "@/i18n/locales";
 import { allRoutes, pathFor, type PageKey } from "@/i18n/routes";
 import { siteUrl } from "@/lib/site";
 
 /** Tasdiqlanmagan kontentli sahifalar lastModified daʼvo qilmaydi (18.1). */
-function lastModifiedFor(key: PageKey, slug?: string): Date | undefined {
+function lastModifiedFor(
+  key: PageKey,
+  slug: string | undefined,
+  news: readonly NewsArticle[],
+  projects: readonly Project[],
+): Date | undefined {
   if (key === "newsItem" && slug) {
-    const article = getArticle(slug as Parameters<typeof getArticle>[0]);
-    return article.status === "confirmed" ? new Date(article.date) : undefined;
+    const article = news.find((n) => n.slug === slug);
+    return article?.status === "confirmed" ? new Date(article.date) : undefined;
   }
   if (key === "news") {
-    const confirmed = getNews().filter((n) => n.status === "confirmed");
+    const confirmed = news.filter((n) => n.status === "confirmed");
     return confirmed.length ? new Date(confirmed[0]?.date ?? 0) : undefined;
   }
   if (key === "projects") {
-    return getProjects().every((p) => p.status === "confirmed") ? new Date() : undefined;
+    return projects.every((p) => p.status === "confirmed") ? new Date() : undefined;
   }
   return undefined;
 }
@@ -32,11 +38,12 @@ function languagesFor(key: PageKey, slug?: string): Record<string, string> {
   return out;
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = siteUrl();
-  return allRoutes().map((route) => {
+  const [news, projects] = await Promise.all([getNews(), getProjects()]);
+  return allRoutes(news.map((n) => n.slug)).map((route) => {
     const locale: Locale = route.locale;
-    const lastModified = lastModifiedFor(route.key, route.slug);
+    const lastModified = lastModifiedFor(route.key, route.slug, news, projects);
     const entry: MetadataRoute.Sitemap[number] = {
       url: `${base}${route.path}`,
       changeFrequency: route.key === "news" || route.key === "home" ? "weekly" : "monthly",

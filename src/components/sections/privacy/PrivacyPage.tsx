@@ -49,7 +49,7 @@ export function PrivacyPage({ locale, dict }: PageProps) {
           <div className="grid-site">
             <ul className={`privacy-kid ${COLUMN}`} data-grid-item="">
               {p.kid.items.map((item, index) => (
-                <li key={item} className="feature t-body-l">
+                <li key={index} className="feature t-body-l">
                   <FeatureIcon name={KID_ICONS[index % KID_ICONS.length] ?? "check"} />
                   <span>{item}</span>
                 </li>
@@ -72,8 +72,8 @@ export function PrivacyPage({ locale, dict }: PageProps) {
               <SectionHeader id={`${s.id}-h`} title={s.heading} />
               <div className="grid-site">
                 <Prose className={COLUMN}>
-                  {s.paragraphs.map((para) => (
-                    <p key={para.slice(0, 32)}>{para}</p>
+                  {s.paragraphs.map((para, index) => (
+                    <p key={index}>{para}</p>
                   ))}
                   {/* Soʻrov qayerga yuborilishi oxirgi bandda aytiladi: havola shu yerda. */}
                   {s.id === last ? (

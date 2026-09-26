@@ -4,7 +4,7 @@ import { Section } from "@/components/layout/Section";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { FeatureIcon } from "@/components/ui/FeatureIcon";
-import { Picture } from "@/components/ui/Picture";
+import { ContentPicture } from "@/components/ui/ContentPicture";
 import { getPartners, t } from "@/content";
 import { fillerName } from "@/content/placeholder";
 import type { Partner, PartnerGroup } from "@/content/types";
@@ -33,7 +33,7 @@ function PartnerTile({ partner, locale, dict }: PartnerTileProps) {
   const tile = (
     <span className="partner-tile" data-card="">
       {partner.logo ? (
-        <Picture
+        <ContentPicture
           src={partner.logo}
           alt={fill(dict.logoAlt, { name })}
           width={240}
@@ -69,8 +69,8 @@ function PartnerTile({ partner, locale, dict }: PartnerTileProps) {
  * Hamkorlar: faqat haqiqiy tashkilotlar. Oltitadan kam boʻlsa bitta toʻr (haqiqiylari birinchi), aks holda
  * har guruh markazdagi sarlavha ostida teng plitkalar toʻrida.
  */
-export function PartnersPage({ locale, dict }: PageProps) {
-  const partners = getPartners().filter((p) => p.status !== "pending" && p.name);
+export async function PartnersPage({ locale, dict }: PageProps) {
+  const partners = (await getPartners()).filter((p) => p.status !== "pending" && p.name);
   const p = dict.partners;
   const groups = GROUPS.map((group) => ({
     group,

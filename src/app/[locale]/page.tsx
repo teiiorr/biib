@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { HomePage } from "@/components/sections/home/HomePage";
+import { getPageStatus } from "@/content";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale } from "@/i18n/locales";
 import { buildMetadata, notFoundMetadata } from "@/lib/seo/metadata";
-import { statusForPage } from "@/lib/seo/status";
 
 interface PageProps {
   readonly params: Promise<{ locale: string }>;
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     locale,
     key: "home",
     dict: getDictionary(locale),
-    status: statusForPage("home"),
+    status: await getPageStatus("home"),
   });
 }
 

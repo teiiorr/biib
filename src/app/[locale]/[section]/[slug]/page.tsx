@@ -2,19 +2,20 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { NewsArticlePage } from "@/components/sections/news/NewsArticlePage";
-import { getArticle, t } from "@/content";
+import { getArticle, getNews, t } from "@/content";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, LOCALES, type Locale } from "@/i18n/locales";
-import { NEWS_SLUGS, isNewsSlug, resolveSection, sectionSegment } from "@/i18n/routes";
+import { isNewsSlug, resolveSection, sectionSegment } from "@/i18n/routes";
 import { buildMetadata, notFoundMetadata } from "@/lib/seo/metadata";
 
-/* Nomaʼlum segment lokal 404 ni koʻrsatishi uchun (G2): 70 sahifa statik, qolgani notFound(). */
+/* Nomaʼlum segment lokal 404 ni koʻrsatishi uchun (G2): maqolalar statik, qolgani notFound(). */
 export const dynamicParams = true;
 
-/** Faqat yangiliklar: 5 slug × 5 til = 25 sahifa. */
-export function generateStaticParams() {
+/** Faqat yangiliklar: har maqola × 5 til; sluglar kontent nusxasidan. */
+export async function generateStaticParams() {
+  const news = await getNews();
   return LOCALES.flatMap((locale) =>
-    NEWS_SLUGS.map((slug) => ({ locale, section: sectionSegment(locale, "news"), slug })),
+    news.map(({ slug }) => ({ locale, section: sectionSegment(locale, "news"), slug })),
   );
 }
 
@@ -28,7 +29,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (resolveSection(locale, section) !== "news" || !isNewsSlug(slug)) {
     return notFoundMetadata();
   }
-  const article = getArticle(slug);
+  const article = await getArticle(slug);
+  if (!article) return notFoundMetadata();
   return buildMetadata({
     locale,
     key: "newsItem",
@@ -44,6 +46,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function Page({ params }: PageProps) {
   const { locale, section, slug } = await params;
   if (!isLocale(locale)) notFound();
+  /* Shakli notoʻgʻri slug kontentga murojaat qilmasdan 404 oladi. */
   if (resolveSection(locale, section) !== "news" || !isNewsSlug(slug)) notFound();
-  return <NewsArticlePage locale={locale} dict={getDictionary(locale)} slug={slug} />;
+  const article = await getArticle(slug);
+  if (!article) notFound();
+  return <NewsArticlePage locale={locale} dict={getDictionary(locale)} article={article} />;
 }

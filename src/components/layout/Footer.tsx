@@ -24,9 +24,8 @@ const ORG_LINKS: readonly PageKey[] = ["about", "leadership", "experts", "partne
 const DEVELOPER = "teiior";
 
 /** Futer: tepada ingichka ajratuvchi chiziq, toʻrt guruh, pastki qator (15.10); kirishi FooterArrive da. */
-export function Footer({ locale, dict }: FooterProps) {
-  const contacts = getContacts();
-  const flagship = getFlagship();
+export async function Footer({ locale, dict }: FooterProps) {
+  const [contacts, flagship] = await Promise.all([getContacts(), getFlagship()]);
   const year = 2026;
 
   return (
@@ -47,13 +46,15 @@ export function Footer({ locale, dict }: FooterProps) {
             <Link href={pathFor(locale, "projects")} className="footer-link t-small">
               {dict.nav.projects}
             </Link>
-            <ExternalLink
-              href={flagship.external.href}
-              hint={dict.common.hints.external}
-              className="footer-link t-small text-ink-2 no-underline hover:text-tint"
-            >
-              {dict.nav.upop}
-            </ExternalLink>
+            {flagship ? (
+              <ExternalLink
+                href={flagship.external.href}
+                hint={dict.common.hints.external}
+                className="footer-link t-small text-ink-2 no-underline hover:text-tint"
+              >
+                {dict.nav.upop}
+              </ExternalLink>
+            ) : null}
           </div>
           <div className="footer-group">
             <p className="t-label text-ink footer-group-label">{dict.footer.contacts}</p>

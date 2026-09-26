@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { preload } from "react-dom";
 
 import { Container } from "@/components/layout/Container";
@@ -42,8 +43,9 @@ function factValue(
  * uzun matn oʻrniga faqat faktlar (egasining talabi). Harakat: halqa yumshoq ochiladi va parallaksda
  * yuradi, sarlavhalar soʻzma-soʻz, faktlar doira ritmida; film ramkasi yumshoq ochiladi.
  */
-export function ProjectsPage({ locale, dict }: PageProps) {
-  const project = getFlagship();
+export async function ProjectsPage({ locale, dict }: PageProps) {
+  const project = await getFlagship();
+  if (!project) notFound();
   const p = dict.projects;
   const { loop, film } = project.media;
   /* Halqa kadri ikkala oʻlchamda LCP: poster HTML bilan birga yuqori ustuvorlikda soʻraladi. */

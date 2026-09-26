@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { FeatureIcon } from "@/components/ui/FeatureIcon";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { MediaFrame } from "@/components/ui/MediaFrame";
-import { Picture } from "@/components/ui/Picture";
+import { ContentPicture } from "@/components/ui/ContentPicture";
 import { getFlagship, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
@@ -32,8 +32,9 @@ interface UpopFeatureProps {
  * Harakat (upop-scene) UpopMotion da: kompyuterda kadr butun sahnadan oʻz katagiga qoʻnadi, telefonda
  * ketma-ket ochiladi; DOM yakuniy holat.
  */
-export function UpopFeature({ locale, dict }: UpopFeatureProps) {
-  const project = getFlagship();
+export async function UpopFeature({ locale, dict }: UpopFeatureProps) {
+  const project = await getFlagship();
+  if (!project) return null;
   const u = dict.home.upop;
   const { loop, wordmark } = project.media;
 
@@ -45,7 +46,7 @@ export function UpopFeature({ locale, dict }: UpopFeatureProps) {
           <SectionHeader id="home-upop" title={u.heading} className="upop-feature-head" />
           <div className="upop-feature-wordmark" data-grid-item="" data-upop-wordmark="">
             <ViewTransition name={sharedName("project-media", project.key)}>
-              <Picture
+              <ContentPicture
                 src={wordmark.src}
                 alt={t(wordmark.alt, locale)}
                 width={wordmark.width}
@@ -71,7 +72,7 @@ export function UpopFeature({ locale, dict }: UpopFeatureProps) {
           <div className="upop-feature-text" data-grid-item="" data-upop-text="">
             <ul className="upop-feature-list t-body-l text-ink">
               {t(project.highlights, locale).map((item, index) => (
-                <li key={item} className="feature upop-feature-item">
+                <li key={index} className="feature upop-feature-item">
                   <FeatureIcon name={HIGHLIGHT_ICONS[index % HIGHLIGHT_ICONS.length] ?? "star"} />
                   <span>{item}</span>
                 </li>

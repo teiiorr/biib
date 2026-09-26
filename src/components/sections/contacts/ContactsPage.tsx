@@ -51,8 +51,8 @@ const telHref = (phone: string): string => `tel:${phone.replace(/\s/g, "")}`;
  * uch qator: yorliq, qiymat, oʻngda harakat; qatorlar subgrid, qoʻshni kartalarda bir chiziqda turadi.
  * Keyin yozish boʻlimi: shakl (tugma oʻngda) yoki Telegram havolasi.
  */
-export function ContactsPage({ locale, dict }: PageProps) {
-  const c = getContacts();
+export async function ContactsPage({ locale, dict }: PageProps) {
+  const c = await getContacts();
   const d = dict.contacts;
   const formEnabled = contactFormEnabled();
   const phones = c.phones.value ?? [];
@@ -124,8 +124,8 @@ export function ContactsPage({ locale, dict }: PageProps) {
                   <dd className="contact-row-value">
                     {fact.links ? (
                       <ul className="contact-row-links">
-                        {fact.links.map((link) => (
-                          <li key={link.href}>
+                        {fact.links.map((link, index) => (
+                          <li key={index}>
                             <a href={link.href} className="t-body tnum text-ink">
                               {link.text}
                             </a>

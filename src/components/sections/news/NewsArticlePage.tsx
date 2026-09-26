@@ -15,11 +15,12 @@ import { Prose } from "@/components/ui/Prose";
 import { PullQuote } from "@/components/ui/PullQuote";
 import { Tag } from "@/components/ui/Tag";
 import { Text } from "@/components/ui/Text";
-import { getArticle, getArticleNeighbours, getNews, t } from "@/content";
+import { getArticleNeighbours, getMedia, getNews, t } from "@/content";
+import type { NewsArticle } from "@/content/types";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill, formatDate, readingMinutes } from "@/i18n/format";
 import type { Locale } from "@/i18n/locales";
-import { pathFor, type NewsSlug } from "@/i18n/routes";
+import { pathFor } from "@/i18n/routes";
 import { NAV_BACK, sharedName } from "@/lib/motion/transitions";
 import { JsonLd } from "@/lib/seo/JsonLdScript";
 import { breadcrumbJsonLd, newsArticleJsonLd } from "@/lib/seo/jsonld";
@@ -33,7 +34,7 @@ import { ShareButtons } from "./ShareButtons";
 interface NewsArticlePageProps {
   readonly locale: Locale;
   readonly dict: Dictionary;
-  readonly slug: NewsSlug;
+  readonly article: NewsArticle;
 }
 
 /**
@@ -41,12 +42,14 @@ interface NewsArticlePageProps {
  * 65ch matn ustuni, iqtibos, ulashish, oddiy oʻqish chizigʻi, oldingi/keyingi. Matn ustuni va maqola
  * oxiri bir kenglikda, bir oʻqda. Muqova roʻyxatdan umumiy element boʻlib keladi, faqat parallaks.
  */
-export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
-  const article = getArticle(slug);
-  const { previous, next } = getArticleNeighbours(slug);
-  const related = getNews()
-    .filter((item) => item.slug !== slug)
-    .slice(0, 3);
+export async function NewsArticlePage({ locale, dict, article }: NewsArticlePageProps) {
+  const { slug } = article;
+  const [{ previous, next }, news, media] = await Promise.all([
+    getArticleNeighbours(slug),
+    getNews(),
+    getMedia(),
+  ]);
+  const related = news.filter((item) => item.slug !== slug).slice(0, 3);
   const path = pathFor(locale, "newsItem", slug);
   const title = t(article.title, locale);
   const body = t(article.body, locale);
@@ -111,10 +114,13 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
                   previousLabel={n.photos.previous}
                   nextLabel={n.photos.next}
                 >
+                  {/* Slayder bolalarni Children.toArray bilan sanaydi: shu sabab sinxron Picture va nusxa
+                      shu yerda beriladi (asinxron bola mijozga kechiktirilgan boʻlak boʻlib borardi). */}
                   {slides.map((src, i) => (
                     <Picture
-                      key={src}
+                      key={i}
                       src={src}
+                      image={media[src]}
                       alt={
                         i === 0
                           ? t(article.cover.alt, locale)
@@ -149,8 +155,8 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
             </Text>
             {/* Har xatboshi oʻzi koʻtariladi (16 px): oʻqish ritmi buzilmaydi, ekrandagilar joyida. */}
             <Prose size="body-l">
-              {body.map((para) => (
-                <Reveal as="p" key={para.slice(0, 24)} distance={16}>
+              {body.map((para, index) => (
+                <Reveal as="p" key={index} distance={16}>
                   {para}
                 </Reveal>
               ))}
@@ -174,7 +180,7 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
             data-grid-item=""
           >
             <nav className="article-nav" aria-label={n.title}>
-              {/* Halqa: ikkala katak doim toʻla (content/index.ts). */}
+              {/* Halqa: ikkala katak doim toʻla (content/select.ts). */}
               {/* Ikkala katak bir xil karta: kichik muqova, yoʻnalish va sarlavha. */}
               {previous ? (
                 <TransitionLink

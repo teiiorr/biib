@@ -27,7 +27,6 @@ export const EXPERTS: readonly Person[] = [
     },
     bio: null,
     photo: null,
-    reception: null,
     email: null,
   },
   {
@@ -51,7 +50,6 @@ export const EXPERTS: readonly Person[] = [
     },
     bio: null,
     photo: null,
-    reception: null,
     email: null,
   },
   {
@@ -75,7 +73,6 @@ export const EXPERTS: readonly Person[] = [
     },
     bio: null,
     photo: null,
-    reception: null,
     email: null,
   },
   {
@@ -99,7 +96,6 @@ export const EXPERTS: readonly Person[] = [
     },
     bio: null,
     photo: null,
-    reception: null,
     email: null,
   },
   {
@@ -123,7 +119,6 @@ export const EXPERTS: readonly Person[] = [
     },
     bio: null,
     photo: null,
-    reception: null,
     email: null,
   },
   {
@@ -147,7 +142,6 @@ export const EXPERTS: readonly Person[] = [
     },
     bio: null,
     photo: null,
-    reception: null,
     email: null,
   },
 ];

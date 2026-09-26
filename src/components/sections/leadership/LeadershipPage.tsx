@@ -20,8 +20,8 @@ interface PageProps {
  * Rahbariyat: eng qatʼiy sahifa. Toʻrtta teng karta (2 / 2 / 4 ustun): katta portret, ostida lavozim,
  * ism-familiya va rasmiy pochta (egasining talabi: kartada faqat shular).
  */
-export function LeadershipPage({ locale, dict }: PageProps) {
-  const leaders = getLeadership();
+export async function LeadershipPage({ locale, dict }: PageProps) {
+  const leaders = await getLeadership();
   const l = dict.people.leadership;
   const jsonld = leaders
     .map((p) => personJsonLd({ person: p, locale, dict }))

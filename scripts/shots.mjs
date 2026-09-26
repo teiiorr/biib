@@ -3,6 +3,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { chromium } from "@playwright/test";
 import sharp from "sharp";
+import { reviewNewsSlug } from "./checks/util.mjs";
 
 const BASE_URL = process.env.BASE_URL ?? "http://localhost:3100";
 const OUT = path.resolve("docs/qa/shots");
@@ -28,7 +29,7 @@ const SECTIONS = {
     privacy: "konfidentsialnost",
   },
 };
-const SLUG = "upop-trend-yangi-mavsum";
+const SLUG = reviewNewsSlug();
 const PAGES = [
   "home",
   "about",

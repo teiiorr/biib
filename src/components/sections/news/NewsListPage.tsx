@@ -29,8 +29,8 @@ interface PageProps {
  * sarlavhalar bir chiziqda boshlanadi. Harakat: bosh muqova yumshoq ochiladi va parallaksda yuradi,
  * qolgan muqovalar abr pogʻonalarida doira ritmida ochiladi (matn joyida).
  */
-export function NewsListPage({ locale, dict }: PageProps) {
-  const [lead, ...rest] = getNews();
+export async function NewsListPage({ locale, dict }: PageProps) {
+  const [lead, ...rest] = await getNews();
   const n = dict.news;
   return (
     <>
@@ -80,8 +80,8 @@ export function NewsListPage({ locale, dict }: PageProps) {
                       oldidan sekin soʻnadi (egasining talabi: boʻsh joy qolmasin). */}
                   <div className="news-grid-lead-excerpt" data-clamp="">
                     <p className="t-body-l text-ink-2">{t(lead.lead, locale)}</p>
-                    {t(lead.body, locale).map((para) => (
-                      <p key={para.slice(0, 24)} className="t-body text-ink-2">
+                    {t(lead.body, locale).map((para, index) => (
+                      <p key={index} className="t-body text-ink-2">
                         {para}
                       </p>
                     ))}

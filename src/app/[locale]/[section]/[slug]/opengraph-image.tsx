@@ -15,9 +15,9 @@ interface ImageProps {
   readonly params: Promise<{ locale: Locale; section: string; slug: string }>;
 }
 
-function titleFor(locale: Locale, slug: string): string {
-  const dict = getDictionary(locale);
-  return isNewsSlug(slug) ? t(getArticle(slug).title, locale) : dict.meta.news.title;
+async function titleFor(locale: Locale, slug: string): Promise<string> {
+  const article = isNewsSlug(slug) ? await getArticle(slug) : null;
+  return article ? t(article.title, locale) : getDictionary(locale).meta.news.title;
 }
 
 /* Sahifa maʼlumoti yigʻilayotganda params boʻsh kelishi mumkin: shunda umumiy alt. */
@@ -26,7 +26,12 @@ export async function generateImageMetadata({ params }: ImageProps) {
   if (!isLocale(locale)) return [{ id: "og", alt: SITE_ALT, size, contentType }];
   const dict = getDictionary(locale);
   return [
-    { id: "og", alt: ogAlt(dict.meta.news.title, titleFor(locale, slug)), size, contentType },
+    {
+      id: "og",
+      alt: ogAlt(dict.meta.news.title, await titleFor(locale, slug)),
+      size,
+      contentType,
+    },
   ];
 }
 
@@ -34,7 +39,7 @@ export default async function Image({ params }: ImageProps) {
   const { locale, slug } = await params;
   const dict = getDictionary(locale);
   return new ImageResponse(
-    <OgImage locale={locale} title={titleFor(locale, slug)} topic={dict.meta.news.title} />,
+    <OgImage locale={locale} title={await titleFor(locale, slug)} topic={dict.meta.news.title} />,
     { ...OG_SIZE, fonts: await loadOgFonts() },
   );
 }

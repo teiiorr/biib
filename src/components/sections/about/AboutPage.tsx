@@ -40,18 +40,19 @@ interface PageProps {
  * tarix faqat yillari tasdiqlanganda; oxirida UPOP TREND lentasi. Sarlavhalar ostida tavsif yoʻq.
  * Harakat: sarlavhalar soʻzma-soʻz, matn va roʻyxatlar doira ritmida koʻtariladi.
  */
-export function AboutPage({ locale, dict }: PageProps) {
+export async function AboutPage({ locale, dict }: PageProps) {
   const a = dict.about;
-  const upop = getFlagship().media.loop;
+  const [flagship, allMilestones] = await Promise.all([getFlagship(), getMilestones()]);
+  const upop = flagship?.media.loop ?? null;
   /* Tarix faqat yili tasdiqlangan bosqichlar bilan: yilsiz uchta yorliq tugallanmagan koʻrinardi. */
-  const milestones = getMilestones().flatMap((m) =>
+  const milestones = allMilestones.flatMap((m) =>
     m.status === "confirmed" && m.year !== null
       ? [
           {
             id: m.id,
             year: m.year,
             title: t(m.title, locale),
-            icon: HISTORY_ICONS[m.id] ?? "calendar",
+            icon: m.icon ?? HISTORY_ICONS[m.id] ?? "calendar",
           },
         ]
       : [],
@@ -85,8 +86,8 @@ export function AboutPage({ locale, dict }: PageProps) {
               attrs={{ "data-grid-item": "" }}
             >
               <Prose size="body-l">
-                {a.mission.paragraphs.map((para) => (
-                  <p key={para.slice(0, 24)}>{hyphenate(para, locale)}</p>
+                {a.mission.paragraphs.map((para, index) => (
+                  <p key={index}>{hyphenate(para, locale)}</p>
                 ))}
               </Prose>
               <PullQuote attribution={a.mission.quoteSource}>
@@ -106,7 +107,7 @@ export function AboutPage({ locale, dict }: PageProps) {
             attrs={{ "data-audit": "gap", "data-columns": "3" }}
           >
             {a.values.items.map((item, index) => (
-              <li key={item} className="about-list-item feature text-ink">
+              <li key={index} className="about-list-item feature text-ink">
                 <FeatureIcon name={DIRECTION_ICONS[index % DIRECTION_ICONS.length] ?? "star"} />
                 <span>{item}</span>
               </li>
@@ -124,7 +125,7 @@ export function AboutPage({ locale, dict }: PageProps) {
             attrs={{ "data-audit": "gap", "data-columns": "3" }}
           >
             {a.tasks.items.map((item, index) => (
-              <li key={item} className="about-list-item feature text-ink">
+              <li key={index} className="about-list-item feature text-ink">
                 <FeatureIcon name={TASK_ICONS[index % TASK_ICONS.length] ?? "star"} />
                 <span>{item}</span>
               </li>
@@ -142,37 +143,44 @@ export function AboutPage({ locale, dict }: PageProps) {
       ) : null}
       {/* Sahifa UPOP TREND lentasi bilan yopiladi (egasining talabi): sarlavha, ostida loyiha videosi
           (koʻrinishga kirganda oʻzi oʻynaydi, poster videoning oʻz birinchi kadri), eng pastda loyihaga
-          oʻtish tugmasi. */}
-      <Section labelledBy="about-next" tone="dark" rhythm="band" className="about-next upop-field">
-        <Container>
-          <SectionHeader id="about-next" title={a.next.heading} split />
-          <div className="grid-site">
-            <figure className="about-media-figure col-span-full" data-grid-item="">
-              <MediaFrame ratio="16:9" tone="dark" motion={{ mode: "smooth", parallax: true }}>
-                <InViewVideoLeaf
-                  sources={upop.desktop}
-                  mobileSources={upop.mobile}
-                  poster={upop.poster}
-                  alt={a.media.alt}
-                  pauseLabel={dict.common.actions.pause}
-                  playLabel={dict.common.actions.play}
-                />
-              </MediaFrame>
-            </figure>
-          </div>
-          <div className="about-next-cta">
-            <LinkButton
-              href={pathFor(locale, "projects")}
-              variant="primary"
-              size="56"
-              icon="arrow-right"
-              iconPosition="end"
-            >
-              {a.next.cta}
-            </LinkButton>
-          </div>
-        </Container>
-      </Section>
+          oʻtish tugmasi. Bosh loyiha yozuvi boʻlmasa lenta chizilmaydi. */}
+      {upop ? (
+        <Section
+          labelledBy="about-next"
+          tone="dark"
+          rhythm="band"
+          className="about-next upop-field"
+        >
+          <Container>
+            <SectionHeader id="about-next" title={a.next.heading} split />
+            <div className="grid-site">
+              <figure className="about-media-figure col-span-full" data-grid-item="">
+                <MediaFrame ratio="16:9" tone="dark" motion={{ mode: "smooth", parallax: true }}>
+                  <InViewVideoLeaf
+                    sources={upop.desktop}
+                    mobileSources={upop.mobile}
+                    poster={upop.poster}
+                    alt={a.media.alt}
+                    pauseLabel={dict.common.actions.pause}
+                    playLabel={dict.common.actions.play}
+                  />
+                </MediaFrame>
+              </figure>
+            </div>
+            <div className="about-next-cta">
+              <LinkButton
+                href={pathFor(locale, "projects")}
+                variant="primary"
+                size="56"
+                icon="arrow-right"
+                iconPosition="end"
+              >
+                {a.next.cta}
+              </LinkButton>
+            </div>
+          </Container>
+        </Section>
+      ) : null}
     </>
   );
 }
