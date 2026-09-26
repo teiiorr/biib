@@ -23,7 +23,13 @@ export function ogAlt(topic: string, title: string): string {
 }
 
 export function OgImage({ title, topic }: OgImageProps) {
-  const size = title.length > 48 ? 56 : title.length > 28 ? 68 : 84;
+  /* Sarlavha Unbounded da (saytdagi kabi): keng shrift, eng uzun soʻz ham 820 px ga sigʻishi kerak
+     (Satori soʻzni boʻlmaydi) — bir harf ≈ 0.82 em. */
+  const longest = Math.max(...title.split(/\s+/).map((word) => word.length));
+  const size = Math.min(
+    title.length > 48 ? 44 : title.length > 28 ? 54 : 66,
+    Math.floor(980 / longest),
+  );
   return (
     <div
       style={{
@@ -44,10 +50,11 @@ export function OgImage({ title, topic }: OgImageProps) {
           style={{
             display: "flex",
             width: 820,
+            fontFamily: "Unbounded",
             fontSize: size,
             fontWeight: 700,
-            lineHeight: 1.04,
-            letterSpacing: -0.02 * size,
+            lineHeight: 1.1,
+            letterSpacing: -0.01 * size,
           }}
         >
           {title}

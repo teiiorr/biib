@@ -684,9 +684,9 @@
 }
 
 /* Qatlamdan tashqarida: t-display-xl (utilities qatlami) shrift oilasini beradi, bu qoida undan ustun.
-   Til boʻyicha mayda preload toʻplami (Manrope Hero): birinchi kadrda haqiqiy shrift, almashinuv yoʻq. */
+   Til boʻyicha mayda preload toʻplami (Unbounded Hero): birinchi kadrda haqiqiy shrift, almashinuv yoʻq. */
 :root .home-hero-title {
-  font-family: "Manrope Hero", var(--font-display);
+  font-family: "Unbounded Hero", var(--font-display);
 }
 
 /* Nom kadr ostida: sahifadagi eng katta sarlavha (1440 da 76 px, boʻlim sarlavhalari 64 px), ≥1024 da
@@ -698,15 +698,15 @@
   letter-spacing: var(--ls-h1);
 }
 
-/* Telefonda nom boʻlim sarlavhalaridan (t-h1) kamida 1.25 baravar katta: 430–599 px da 36 px yetmay
-   qolardi. Kirillcha uzun nom 30 px dan boshlanadi (36 px da toʻrt qator edi), 360–412 px da uch
-   qatorda belgi ostidan tab-bargacha sigʻadi (beshala til oʻlchab koʻrilgan). */
+/* Telefonda nom ikki qatorda («Bolalar Ijodkorligi» / «Ijodiy Birlashmasi», har biri ≈ 10.6 em Unbounded
+   da): oʻlcham ekran kengligidan, boʻlim sarlavhalaridan (t-h1) doim kamida 1.25 baravar katta. Kirillcha
+   nom biroz kengroq. */
 @media (max-width: 599px) {
   :root .home-hero-title {
-    font-size: max(2.25rem, calc(var(--fs-h1) * 1.25));
+    font-size: max(calc(var(--fs-h1) * 1.25), 8.2vw);
   }
   :root .home-hero-title:lang(uz-Cyrl) {
-    font-size: max(1.875rem, calc(var(--fs-h1) * 1.25));
+    font-size: max(calc(var(--fs-h1) * 1.25), 7.6vw);
   }
 }
 

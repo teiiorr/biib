@@ -18,7 +18,7 @@ export const privacy: typeof source = {
       paragraphs: [
         "The name, phone or email and message text sent through the contact form. Nothing else: the site has no accounts, comments, cookies or analytics.",
         "Appearance settings (theme, transparency, density, motion and sound) are kept only in your browser, in localStorage, and are never sent to us.",
-        "The form sends the message to the association's service chat through the Telegram Bot API, so the data passes through Telegram's servers.",
+        "The form sends the message to the association’s service chat through the Telegram Bot API, so the data passes through Telegram’s servers.",
       ],
     },
     {
@@ -31,9 +31,9 @@ export const privacy: typeof source = {
     },
     {
       id: "children",
-      heading: "Children's work and photos",
+      heading: "Children’s work and photos",
       paragraphs: [
-        "A child's drawing or photo is published only with written parental consent and the child's own wish. Only the first name, age and region are shown; never the school or an exact address.",
+        "A child’s drawing or photo is published only with written parental consent and the child’s own wish. Only the first name, age and region are shown; never the school or an exact address.",
         "Consent can be withdrawn at any time: write to the address on the contacts page and the work is removed within two working days.",
       ],
     },

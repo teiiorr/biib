@@ -11,7 +11,7 @@ export const meta: typeof source = {
   about: {
     title: "About",
     description:
-      "The purpose, directions and history of the association: studios, a stage and exhibitions for children's creativity.",
+      "The purpose, directions and history of the association: studios, a stage and exhibitions for children’s creativity.",
   },
   projects: {
     title: "UPOP TREND",

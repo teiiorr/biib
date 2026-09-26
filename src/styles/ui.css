@@ -551,3 +551,12 @@
 :root .ui-pullquote-text {
   font-weight: 500;
 }
+
+/* Unbounded keng: telefonda eng uzun soʻz («конфиденциальности», 14.7 em) sarlavha oʻlchamida ekranga
+   sigʻmaydi — til boʻyicha boʻgʻin koʻchirish, lugʻati yoʻq brauzerda soʻz chetda boʻlinadi (toshmaydi). */
+@media (max-width: 599px) {
+  :root :is(.t-display-xl, .t-display-l, .t-h1, .t-h2) {
+    hyphens: auto;
+    overflow-wrap: break-word;
+  }
+}

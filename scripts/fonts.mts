@@ -1,7 +1,8 @@
 /*
- * Manrope UZ toʻplamlari manba TTF dan (src/assets/fonts) fontTools bilan yasaladi: wght oʻqi saytda
- * ishlatiladigan 400–800 ga qisqartiriladi, Google unicode-range toʻplamlari boʻyicha boʻlinadi va woff2
- * ga yoziladi. Manba — oʻzbek belgilari qoʻshilgan nusxa (scripts/manrope-uz.mts), CDN dagi Manrope emas.
+ * Manrope UZ va Unbounded UZ toʻplamlari manba TTF dan (src/assets/fonts) fontTools bilan yasaladi:
+ * Manrope wght oʻqi saytda ishlatiladigan 400–800 ga qisqartiriladi (Unbounded — statik 700), Google
+ * unicode-range toʻplamlari boʻyicha boʻlinadi va woff2 ga yoziladi. Manbalar — oʻzbek belgilari
+ * qoʻshilgan nusxalar (scripts/manrope-uz.mts, scripts/unbounded-uz.mts), CDN dagi shriftlar emas.
  * Natija: public/fonts/*.woff2 va src/styles/fonts.css. Qahramon toʻplami alohida (hero-fonts.mts).
  */
 import { execFileSync } from "node:child_process";
@@ -43,6 +44,17 @@ const FAMILIES: readonly Family[] = [
     weight: "400 800",
     fallback: { local: "Arial", ascent: "106.6%", descent: "30%", sizeAdjust: "109.7%" },
   },
+  {
+    /* Egasining tanlovi: katta sarlavhalar. Manba — Қ Ғ Ҳ qurilgan statik 700 nusxa
+       (scripts/unbounded-uz.mts). hhea 995/−245 (upm 1000); Arial Bold dan a–z boʻyicha 1.355 keng,
+       override qiymatlari size-adjust ga boʻlingan. */
+    name: "Unbounded",
+    file: "unbounded",
+    source: "src/assets/fonts/UnboundedUZ-700.ttf",
+    axes: {},
+    weight: "700",
+    fallback: { local: "Arial Bold", ascent: "73.4%", descent: "18.1%", sizeAdjust: "135.5%" },
+  },
 ];
 
 const script = `
@@ -77,7 +89,8 @@ for fam in spec["families"]:
         subsetter.subset(font)
         if font["maxp"].numGlyphs <= 1:
             continue
-        font = instancer.instantiateVariableFont(font, limits, inplace=False, updateFontNames=False)
+        if limits:
+            font = instancer.instantiateVariableFont(font, limits, inplace=False, updateFontNames=False)
         target = os.path.join(out, f"{fam['file']}-{name}.woff2")
         font.flavor = "woff2"
         font.save(target)
@@ -114,7 +127,7 @@ writeFileSync(
 );
 execFileSync(python, ["-c", script, spec], { stdio: "inherit" });
 
-let css = `/* scripts/fonts.mts yaratgan: Manrope UZ toʻplamlari, til boʻyicha unicode-range. Qoʻlda tahrir qilinmaydi. */\n`;
+let css = `/* scripts/fonts.mts yaratgan: Manrope UZ va Unbounded UZ toʻplamlari, til boʻyicha unicode-range. Qoʻlda tahrir qilinmaydi. */\n`;
 for (const family of FAMILIES) {
   for (const [name, range] of Object.entries(SUBSETS)) {
     const file = `${family.file}-${name}.woff2`;
