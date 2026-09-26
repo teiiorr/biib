@@ -44,25 +44,27 @@ tekshiruv uni ushlaydi.
 
 ## Kontentni tahrirlash
 
-Hamma matn `src/content` ichida, beshta tilda. Har yozuvning `status` maydoni bor:
-`confirmed` (tashkilot tasdiqlagan), `draft` (qoralama), `pending` (fakt kutilmoqda).
-Tasdiqlanmagan sahifalar `noindex` bilan chiqadi va sitemapda sana daʼvo qilmaydi.
+Kontent (loyiha, yangiliklar, odamlar, hamkorlar, aloqa, tarix, UPOP TREND galereyasi) Supabase
+maʼlumotlar bazasida, beshta tilda. Sayt uni bitta `content_snapshot()` soʻrovi bilan oʻqiydi.
+Har yozuvning `status` maydoni bor: `confirmed` (tashkilot tasdiqlagan), `draft` (qoralama),
+`pending` (fakt kutilmoqda). Tasdiqlanmagan sahifalar `noindex` bilan chiqadi va sitemapda sana
+daʼvo qilmaydi.
 
-### Yangilik qoʻshish
+`src/content/snapshot.json` — bazaning repodagi nusxasi: zaxira manba (baza ishlamasa), tekshiruvlar
+(`verify`) va testlar faqat shuni oʻqiydi. Uni qoʻlda tahrirlamang:
 
-1. `src/i18n/routes.ts` dagi `NEWS_SLUGS` ga ASCII slug qoʻshing (masalan `yangi-studiya`).
-2. `src/content/news/yangi-studiya.ts` faylini yarating: `NewsArticle` shaklida, beshta tilda.
-3. `src/content/news/index.ts` ga import qoʻshing.
-4. `pnpm verify:quick`, keyin `pnpm verify:full`.
+```bash
+pnpm content:pull            # bazadan snapshot.json ni yangilaydi
+pnpm content:pull --check    # baza va nusxa aynan tengmi (farq boʻlsa roʻyxat va xato)
+pnpm content:seed            # nusxani bazaga yozadi (tiklash; maxfiy kalit faqat .env.local da)
+```
 
-### Loyiha, odam, hamkor
-
-`src/content/projects.ts`, `experts.ts`, `leadership.ts`, `partners.ts`. Surat va logotiplar
-`public/brand` ga qoʻyiladi va `scripts/images.mjs` roʻyxatiga qoʻshiladi (`node scripts/images.mjs`
-AVIF/WebP nusxalarni yaratadi); bolalar suratlari faqat ota-ona roziligi bilan. UPOP TREND galereyasi
-(8 joy) — `src/content/upop-gallery.ts`, fayllar `public/upop` da.
+Surat va logotiplar `public/brand` ga qoʻyiladi va `scripts/images.mjs` roʻyxatiga qoʻshiladi
+(`node scripts/images.mjs` AVIF/WebP nusxalarni yaratadi); bolalar suratlari faqat ota-ona roziligi
+bilan.
 
 ## Muhit oʻzgaruvchilari
 
-`.env.example` ga qarang: `NEXT_PUBLIC_SITE_URL`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`.
-Telegram qiymatlari boʻlmasa aloqa shakli oʻrniga toʻgʻridan-toʻgʻri havola chiqadi.
+`.env.example` ga qarang: `NEXT_PUBLIC_SITE_URL`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`,
+Supabase manzili va kalitlari. Telegram qiymatlari boʻlmasa aloqa shakli oʻrniga toʻgʻridan-toʻgʻri
+havola chiqadi. `SUPABASE_SERVICE_ROLE_KEY` faqat `.env.local` da turadi va Vercel ga qoʻyilmaydi.

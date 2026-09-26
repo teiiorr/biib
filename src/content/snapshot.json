@@ -1,0 +1,863 @@
+{
+  "version": 1,
+  "projects": [
+    {
+      "key": "upop-trend",
+      "status": "draft",
+      "flagship": true,
+      "name": {
+        "uz": "UPOP TREND",
+        "oz": "UPOP TREND",
+        "ozbekca": "UPOP TREND",
+        "ru": "UPOP TREND",
+        "en": "UPOP TREND"
+      },
+      "tagline": {
+        "uz": "Milliy qoʻshiqchilik kastingi",
+        "oz": "Миллий қўшиқчилик кастинги",
+        "ozbekca": "Milliy qöşiqçilik kastingi",
+        "ru": "Национальный вокальный кастинг",
+        "en": "National singing auditions"
+      },
+      "age": { "from": 14, "to": 19, "status": "draft" },
+      "format": {
+        "value": {
+          "uz": "Viloyat bosqichlari, yarim final va poytaxtdagi yakuniy konsert",
+          "oz": "Вилоят босқичлари, ярим финал ва пойтахтдаги якуний концерт",
+          "ozbekca": "Viloyat bosqiçlari, yarim final va poytaxtdagi yakuniy konsert",
+          "ru": "Областные этапы, полуфинал и финальный концерт в столице",
+          "en": "Regional rounds, a semi-final and a final concert in the capital"
+        },
+        "status": "draft"
+      },
+      "place": { "value": null, "status": "pending" },
+      "schedule": { "value": null, "status": "pending" },
+      "cost": { "free": true, "status": "draft" },
+      "teacher": { "value": null, "status": "pending" },
+      "highlights": {
+        "uz": [
+          "Ariza bepul, tavsiya kerak emas",
+          "14 yoshdan 19 yoshgacha",
+          "Yakuniy konsert poytaxt sahnasida"
+        ],
+        "oz": [
+          "Ариза бепул, тавсия керак эмас",
+          "14 ёшдан 19 ёшгача",
+          "Якуний концерт пойтахт саҳнасида"
+        ],
+        "ozbekca": [
+          "Ariza bepul, tavsiya kerak emas",
+          "14 yoşdan 19 yoşgaça",
+          "Yakuniy konsert poytaxt sahnasida"
+        ],
+        "ru": [
+          "Заявка бесплатная, рекомендации не нужны",
+          "От 14 до 19 лет",
+          "Финальный концерт на столичной сцене"
+        ],
+        "en": [
+          "Applying is free, no reference needed",
+          "From 14 to 19 years old",
+          "Final concert on a stage in the capital"
+        ]
+      },
+      "external": { "href": "https://upop.uz", "label": "upop.uz" },
+      "media": {
+        "loop": {
+          "desktop": { "webm": "/media/upop-girls-d.webm", "mp4": "/media/upop-girls-d.mp4" },
+          "mobile": { "webm": "/media/upop-girls-m.webm", "mp4": "/media/upop-girls-m.mp4" },
+          "poster": "/media/upop-girls-poster.avif",
+          "width": 1280,
+          "height": 720,
+          "alt": {
+            "uz": "Milliy libosdagi toʻrt qiz sahnada: doira, dutor va mikrofon, ortda suzani naqshi",
+            "oz": "Миллий либосдаги тўрт қиз саҳнада: доира, дутор ва микрофон, ортда сўзана нақши",
+            "ozbekca": "Milliy libosdagi tört qiz sahnada: doira, dutor va mikrofon, ortda suzani naqşi",
+            "ru": "Четыре девушки в национальных костюмах на сцене: дойра, дутар и микрофон, позади узор сюзане",
+            "en": "Four young women in national dress on stage with a doira, a dutar and a microphone, a suzani pattern behind them"
+          },
+          "status": "draft"
+        },
+        "film": {
+          "src": "/media/upop-video.mp4",
+          "poster": "/media/upop-video-poster.avif",
+          "duration": 54,
+          "alt": {
+            "uz": "Loyiha muhokamasi: yigʻilish stolida chiqish qilayotgan rahbar",
+            "oz": "Лойиҳа муҳокамаси: йиғилиш столида чиқиш қилаётган раҳбар",
+            "ozbekca": "Loyiha muhokamasi: yiğiliş stolida çiqiş qilayotgan rahbar",
+            "ru": "Обсуждение проекта: выступление руководителя за столом совещания",
+            "en": "A discussion of the project: a speaker at the meeting table"
+          },
+          "status": "draft"
+        },
+        "wordmark": {
+          "src": "/brand/upop-logo.png",
+          "width": 900,
+          "height": 703,
+          "alt": {
+            "uz": "UPOP TREND logotipi",
+            "oz": "UPOP TREND логотипи",
+            "ozbekca": "UPOP TREND logotipi",
+            "ru": "Логотип UPOP TREND",
+            "en": "The UPOP TREND logo"
+          }
+        }
+      }
+    }
+  ],
+  "news": [
+    {
+      "slug": "upop-trend-taqdimoti",
+      "status": "confirmed",
+      "date": "2026-09-08",
+      "topic": {
+        "uz": "Taqdimot",
+        "oz": "Тақдимот",
+        "ozbekca": "Taqdimot",
+        "ru": "Презентация",
+        "en": "Presentation"
+      },
+      "title": {
+        "uz": "UPOP TREND loyihasi taqdim etildi",
+        "oz": "UPOP TREND лойиҳаси тақдим этилди",
+        "ozbekca": "UPOP TREND loyihasi taqdim etildi",
+        "ru": "Представлен проект UPOP TREND",
+        "en": "UPOP TREND project presented"
+      },
+      "lead": {
+        "uz": "Bolalar Ijodkorligi Ijodiy Birlashmasi milliy musiqa merosini zamonaviy sahnaga olib chiqadigan yangi shou-tanlov — UPOP TREND loyihasini taqdim etdi. Loyiha qoʻllab-quvvatlandi.",
+        "oz": "Болалар Ижодкорлиги Ижодий Бирлашмаси миллий мусиқа меросини замонавий саҳнага олиб чиқадиган янги шоу-танлов — UPOP TREND лойиҳасини тақдим этди. Лойиҳа қўллаб-қувватланди.",
+        "ozbekca": "Bolalar Ijodkorligi Ijodiy Birlaşmasi milliy musiqa merosini zamonaviy sahnaga olib çiqadigan yangi şou-tanlov — UPOP TREND loyihasini taqdim etdi. Loyiha qöllab-quvvatlandi.",
+        "ru": "Творческое объединение детского творчества представило UPOP TREND — новое шоу-состязание, которое выводит национальное музыкальное наследие на современную сцену. Проект получил поддержку.",
+        "en": "The Creative Association of Children’s Creativity has presented UPOP TREND, a new show competition that brings the national musical heritage to a contemporary stage. The project received support."
+      },
+      "body": {
+        "uz": [
+          "Taqdimotda Oʻzbekiston Respublikasi Prezidentining madaniyat boʻyicha vakili Hasan Salihov, Madaniyat vazirining birinchi oʻrinbosari, Kinematografiya agentligi direktori Jahongir Ahmedov hamda soha vakillari ishtirok etdi.",
+          "UPOP TREND milliy musiqiy meros, folklor sanʼati va anʼanaviy raqslarni zamonaviy jahon musiqasi, yuqori texnologiyalar va moda bilan birlashtiradi. Loyihaning maqsadi — milliy ohanglarning oʻziga xosligini saqlagan holda ularni bugungi oʻsmirlarning didiga yaqinlashtirish, ota-bobolar merosini yoshlar oʻzlari izlab tinglaydigan qoʻshiqlarga aylantirish.",
+          "Loyiha faqat musiqa bilan cheklanmaydi: sahna liboslari, raqslar, vizual yechimlar va sahna texnologiyalari ham milliy ruh bilan uygʻunlashadi. Tashkilotchilar UPOP TREND orqali milliy qadriyatlarni zamonaviy formatda xalqaro sahnaga olib chiqishni koʻzlamoqda.",
+          "Taqdimot yakunida loyiha qoʻllab-quvvatlandi, uni rivojlantirish boʻyicha taklif va tavsiyalar bildirildi.",
+          "Bolalar Ijodkorligi Ijodiy Birlashmasi Oʻzbekiston Respublikasi Prezidentining 2026-yil 2-iyundagi PF-103-son Farmoni bilan tashkil etilgan."
+        ],
+        "oz": [
+          "Тақдимотда Ўзбекистон Республикаси Президентининг маданият бўйича вакили Ҳасан Салиҳов, Маданият вазирининг биринчи ўринбосари, Кинематография агентлиги директори Жаҳонгир Аҳмедов ҳамда соҳа вакиллари иштирок этди.",
+          "UPOP TREND миллий мусиқий мерос, фолклор санъати ва анъанавий рақсларни замонавий жаҳон мусиқаси, юқори технологиялар ва мода билан бирлаштиради. Лойиҳанинг мақсади — миллий оҳангларнинг ўзига хослигини сақлаган ҳолда уларни бугунги ўсмирларнинг дидига яқинлаштириш, ота-боболар меросини ёшлар ўзлари излаб тинглайдиган қўшиқларга айлантириш.",
+          "Лойиҳа фақат мусиқа билан чекланмайди: саҳна либослари, рақслар, визуал ечимлар ва саҳна технологиялари ҳам миллий руҳ билан уйғунлашади. Ташкилотчилар UPOP TREND орқали миллий қадриятларни замонавий форматда халқаро саҳнага олиб чиқишни кўзламоқда.",
+          "Тақдимот якунида лойиҳа қўллаб-қувватланди, уни ривожлантириш бўйича таклиф ва тавсиялар билдирилди.",
+          "Болалар Ижодкорлиги Ижодий Бирлашмаси Ўзбекистон Республикаси Президентининг 2026-йил 2-июндаги ПФ-103-сон Фармони билан ташкил этилган."
+        ],
+        "ozbekca": [
+          "Taqdimotda Özbekiston Respublikasi Prezidentining madaniyat böyiça vakili Hasan Salihov, Madaniyat vazirining birinçi örinbosari, Kinematografiya agentligi direktori Jahongir Ahmedov hamda soha vakillari iştirok etdi.",
+          "UPOP TREND milliy musiqiy meros, folklor sanʼati va anʼanaviy raqslarni zamonaviy jahon musiqasi, yuqori texnologiyalar va moda bilan birlaştiradi. Loyihaning maqsadi — milliy ohanglarning öziga xosligini saqlagan holda ularni bugungi ösmirlarning didiga yaqinlaştiriş, ota-bobolar merosini yoşlar özlari izlab tinglaydigan qöşiqlarga aylantiriş.",
+          "Loyiha faqat musiqa bilan çeklanmaydi: sahna liboslari, raqslar, vizual yeçimlar va sahna texnologiyalari ham milliy ruh bilan uyğunlaşadi. Taşkilotçilar UPOP TREND orqali milliy qadriyatlarni zamonaviy formatda xalqaro sahnaga olib çiqişni közlamoqda.",
+          "Taqdimot yakunida loyiha qöllab-quvvatlandi, uni rivojlantiriş böyiça taklif va tavsiyalar bildirildi.",
+          "Bolalar Ijodkorligi Ijodiy Birlaşmasi Özbekiston Respublikasi Prezidentining 2026-yil 2-iyundagi PF-103-son Farmoni bilan taşkil etilgan."
+        ],
+        "ru": [
+          "В презентации приняли участие представитель Президента Республики Узбекистан по вопросам культуры Хасан Салихов, первый заместитель министра культуры, директор Агентства кинематографии Жахонгир Ахмедов, а также представители отрасли.",
+          "UPOP TREND соединяет национальное музыкальное наследие, фольклор и традиционный танец с современной мировой музыкой, высокими технологиями и модой. Цель проекта — сохранить своеобразие национальных мелодий и приблизить их к сегодняшним подросткам: превратить наследие предков в песни, которые молодёжь сама ищет и слушает.",
+          "Проект не ограничивается музыкой: сценические костюмы, танцы, визуальные решения и сценические технологии тоже строятся на национальном духе. Через UPOP TREND организаторы намерены вывести национальные ценности на международную сцену в современном формате.",
+          "По итогам презентации проект поддержали, участники высказали предложения и рекомендации по его развитию.",
+          "Объединение создано Указом Президента Республики Узбекистан от 2 июня 2026 года № УП-103."
+        ],
+        "en": [
+          "The presentation was attended by Hasan Salihov, Representative of the President of the Republic of Uzbekistan for Culture; Jahongir Ahmedov, First Deputy Minister of Culture and Director of the Cinematography Agency; and representatives of the industry.",
+          "UPOP TREND combines national music, folklore and traditional dance with contemporary world music, advanced technology and fashion. Its aim is to keep the character of national melodies while bringing them closer to today’s teenagers, turning the heritage of their ancestors into songs young people look for and listen to by choice.",
+          "The project goes beyond music: stage costumes, dance, visual design and stage technology also follow the national spirit. Through UPOP TREND the organisers aim to take national values to the international stage in a contemporary format.",
+          "At the end of the presentation the project was endorsed, and participants made proposals and recommendations for its further development.",
+          "The association was established by Decree No. PF-103 of the President of the Republic of Uzbekistan dated 2 June 2026."
+        ]
+      },
+      "quote": {
+        "uz": "Endi navbat — gʻoyani sahnaga, milliy ohanglarni esa yangi avlod qalbiga olib chiqish.",
+        "oz": "Энди навбат — ғояни саҳнага, миллий оҳангларни эса янги авлод қалбига олиб чиқиш.",
+        "ozbekca": "Endi navbat — ğoyani sahnaga, milliy ohanglarni esa yangi avlod qalbiga olib çiqiş.",
+        "ru": "Теперь очередь за тем, чтобы вынести идею на сцену, а национальные мелодии — в сердца нового поколения.",
+        "en": "Now it is time to take the idea to the stage, and national melodies to the hearts of a new generation."
+      },
+      "cover": {
+        "src": "/brand/news-taqdimot-01.jpg",
+        "alt": {
+          "uz": "UPOP TREND loyihasi taqdimoti ishtirokchilari loyiha vizuali oldida",
+          "oz": "UPOP TREND лойиҳаси тақдимоти иштирокчилари лойиҳа визуали олдида",
+          "ozbekca": "UPOP TREND loyihasi taqdimoti iştirokçilari loyiha vizuali oldida",
+          "ru": "Участники презентации UPOP TREND на фоне визуала проекта",
+          "en": "Participants of the UPOP TREND presentation in front of the project visual"
+        },
+        "status": "confirmed"
+      },
+      "story": { "primary": "art-1", "secondary": "art-2" },
+      "photos": [
+        "/brand/news-taqdimot-02.jpg",
+        "/brand/news-taqdimot-03.jpg",
+        "/brand/news-taqdimot-04.jpg",
+        "/brand/news-taqdimot-05.jpg",
+        "/brand/news-taqdimot-06.jpg",
+        "/brand/news-taqdimot-07.jpg",
+        "/brand/news-taqdimot-08.jpg",
+        "/brand/news-taqdimot-09.jpg",
+        "/brand/news-taqdimot-10.jpg"
+      ]
+    },
+    {
+      "slug": "upop-trend-yangi-mavsum",
+      "status": "draft",
+      "date": "2026-08-28",
+      "topic": {
+        "uz": "Kasting",
+        "oz": "Кастинг",
+        "ozbekca": "Kasting",
+        "ru": "Кастинг",
+        "en": "Auditions"
+      },
+      "title": {
+        "uz": "UPOP TREND yangi mavsumga ariza qabul qilmoqda",
+        "oz": "UPOP TREND янги мавсумга ариза қабул қилмоқда",
+        "ozbekca": "UPOP TREND yangi mavsumga ariza qabul qilmoqda",
+        "ru": "UPOP TREND принимает заявки на новый сезон",
+        "en": "UPOP TREND is taking applications for the new season"
+      },
+      "lead": {
+        "uz": "Viloyat bosqichlari kuz boshida boshlanadi. Ariza kastingning oʻz sayti orqali topshiriladi.",
+        "oz": "Вилоят босқичлари куз бошида бошланади. Ариза кастингнинг ўз сайти орқали топширилади.",
+        "ozbekca": "Viloyat bosqiçlari kuz boşida boşlanadi. Ariza kastingning öz sayti orqali topşiriladi.",
+        "ru": "Областные этапы начнутся в начале осени. Заявку подают через сайт кастинга.",
+        "en": "The regional rounds begin in early autumn. Applications go through the site of the auditions."
+      },
+      "body": {
+        "uz": [
+          "Yangi mavsumda tanlov barcha viloyatlarda oʻtadi. Har bir bosqichda ishtirokchi jonli chiqish qiladi va ustozlardan yozma izoh oladi. Bu izoh keyingi bosqichga oʻtmaganlarga ham beriladi.",
+          "Bu yil tayyorgarlik qismi uzaytirildi: yarim finalga oʻtgan ishtirokchilar bilan ovoz va sahna ustida uch hafta ishlanadi.",
+          "Ariza topshirish uchun tavsiya, hujjat yoki toʻlov talab qilinmaydi. Yosh chegarasi: 14–19."
+        ],
+        "oz": [
+          "Янги мавсумда танлов барча вилоятларда ўтади. Ҳар бир босқичда иштирокчи жонли чиқиш қилади ва устозлардан ёзма изоҳ олади. Бу изоҳ кейинги босқичга ўтмаганларга ҳам берилади.",
+          "Бу йил тайёргарлик қисми узайтирилди: ярим финалга ўтган иштирокчилар билан овоз ва саҳна устида уч ҳафта ишланади.",
+          "Ариза топшириш учун тавсия, ҳужжат ёки тўлов талаб қилинмайди. Ёш чегараси: 14–19."
+        ],
+        "ozbekca": [
+          "Yangi mavsumda tanlov barça viloyatlarda ötadi. Har bir bosqiçda iştirokçi jonli çiqiş qiladi va ustozlardan yozma izoh oladi. Bu izoh keyingi bosqiçga ötmaganlarga ham beriladi.",
+          "Bu yil tayyorgarlik qismi uzaytirildi: yarim finalga ötgan iştirokçilar bilan ovoz va sahna ustida uç hafta işlanadi.",
+          "Ariza topşiriş uçun tavsiya, hujjat yoki tölov talab qilinmaydi. Yoş çegarasi: 14–19."
+        ],
+        "ru": [
+          "В новом сезоне конкурс пройдёт во всех областях. На каждом этапе участник выступает вживую и получает письменный разбор от наставников — его отдают и тем, кто дальше не прошёл.",
+          "В этом году подготовительная часть стала длиннее: с участниками полуфинала три недели работают над голосом и сценой.",
+          "Для заявки не нужны рекомендации, документы или оплата. Возраст участников: от 14 до 19 лет."
+        ],
+        "en": [
+          "In the new season the competition runs in every region. At each round the participant performs live and receives written comments from the mentors. Children who do not go through receive them too.",
+          "This year the preparation part has been made longer: participants who reach the semi-final spend three weeks working on voice and stage.",
+          "No reference, papers or payment are required to apply. The age range is 14 to 19."
+        ]
+      },
+      "cover": {
+        "src": "/brand/news-upop-stage.jpg",
+        "alt": {
+          "uz": "Boʻsh sahnada mikrofon va yorugʻlik nurlari, polda girih naqshi",
+          "oz": "Бўш саҳнада микрофон ва ёруғлик нурлари, полда гириҳ нақши",
+          "ozbekca": "Böş sahnada mikrofon va yoruğlik nurlari, polda girih naqşi",
+          "ru": "Микрофон и лучи света на пустой сцене, на полу узор гирих",
+          "en": "A microphone and beams of light on an empty stage, a girih pattern on the floor"
+        },
+        "status": "draft"
+      },
+      "story": { "primary": "art-1", "secondary": "art-2" }
+    },
+    {
+      "slug": "bolalar-ishlari-korgazmasi",
+      "status": "draft",
+      "date": "2026-07-14",
+      "topic": {
+        "uz": "Koʻrgazma",
+        "oz": "Кўргазма",
+        "ozbekca": "Körgazma",
+        "ru": "Выставка",
+        "en": "Exhibition"
+      },
+      "title": {
+        "uz": "Bolalar ishlari koʻrgazmasi viloyatlar boʻylab yoʻlga chiqdi",
+        "oz": "Болалар ишлари кўргазмаси вилоятлар бўйлаб йўлга чиқди",
+        "ozbekca": "Bolalar işlari körgazmasi viloyatlar böylab yölga çiqdi",
+        "ru": "Выставка детских работ отправилась по областям",
+        "en": "The exhibition of children’s work sets off around the regions"
+      },
+      "lead": {
+        "uz": "Studiyalarda yil davomida yigʻilgan ishlardan koʻchma koʻrgazma tuzildi: rasm, grafika va amaliy sanʼat.",
+        "oz": "Студияларда йил давомида йиғилган ишлардан кўчма кўргазма тузилди: расм, графика ва амалий санъат.",
+        "ozbekca": "Studiyalarda yil davomida yiğilgan işlardan köçma körgazma tuzildi: rasm, grafika va amaliy sanʼat.",
+        "ru": "Из работ, собранных в студиях за год, составили передвижную выставку: рисунок, графика и прикладное искусство.",
+        "en": "A travelling exhibition has been put together from the work collected in the studios over the year: drawing, graphic art and applied art."
+      },
+      "body": {
+        "uz": [
+          "Ishlarni ekspertlar kengashi tanladi. Har bir ish yonida muallifning ismi, yoshi va viloyati koʻrsatilgan; maktab va familiya koʻrsatilmaydi.",
+          "Koʻrgazma viloyat markazlarida navbatma-navbat ochiladi va har shaharda bir necha kun turadi.",
+          "Ishini koʻrgazmaga bermoqchi boʻlgan studiya ustozlari aloqa sahifasi orqali murojaat qilishi mumkin."
+        ],
+        "oz": [
+          "Ишларни экспертлар кенгаши танлади. Ҳар бир иш ёнида муаллифнинг исми, ёши ва вилояти кўрсатилган; мактаб ва фамилия кўрсатилмайди.",
+          "Кўргазма вилоят марказларида навбатма-навбат очилади ва ҳар шаҳарда бир неча кун туради.",
+          "Ишини кўргазмага бермоқчи бўлган студия устозлари алоқа саҳифаси орқали мурожаат қилиши мумкин."
+        ],
+        "ozbekca": [
+          "Işlarni ekspertlar kengaşi tanladi. Har bir iş yonida muallifning ismi, yoşi va viloyati körsatilgan; maktab va familiya körsatilmaydi.",
+          "Körgazma viloyat markazlarida navbatma-navbat oçiladi va har şaharda bir neça kun turadi.",
+          "Işini körgazmaga bermoqçi bölgan studiya ustozlari aloqa sahifasi orqali murojaat qilişi mumkin."
+        ],
+        "ru": [
+          "Работы отбирал экспертный совет. Рядом с каждой работой указаны имя автора, возраст и область; школа и фамилия не указываются.",
+          "Выставка открывается по очереди в областных центрах и стоит в каждом городе несколько дней.",
+          "Наставники студий, которые хотят передать работы на выставку, могут написать через страницу контактов."
+        ],
+        "en": [
+          "The pieces were chosen by the Expert Council. Next to each piece are the first name, the age and the region of the author; no school and no surname.",
+          "The exhibition opens in the regional centres one after another and stays a few days in each city.",
+          "Studio mentors who want to send work to the exhibition can write through the contacts page."
+        ]
+      },
+      "cover": {
+        "src": "/brand/news-korgazma.jpg",
+        "alt": {
+          "uz": "Devorga osilgan bolalar rasmlari qatori",
+          "oz": "Деворга осилган болалар расмлари қатори",
+          "ozbekca": "Devorga osilgan bolalar rasmlari qatori",
+          "ru": "Ряд детских рисунков на стене",
+          "en": "A row of children’s paintings hung on a wall"
+        },
+        "status": "draft"
+      },
+      "story": { "primary": "art-4", "secondary": "art-6" }
+    },
+    {
+      "slug": "teatr-studiyalari-korsatuvi",
+      "status": "draft",
+      "date": "2026-06-03",
+      "topic": { "uz": "Teatr", "oz": "Театр", "ozbekca": "Teatr", "ru": "Театр", "en": "Theatre" },
+      "title": {
+        "uz": "Teatr studiyalari mavsum yakunida spektakl koʻrsatdi",
+        "oz": "Театр студиялари мавсум якунида спектакль кўрсатди",
+        "ozbekca": "Teatr studiyalari mavsum yakunida spektakl körsatdi",
+        "ru": "Театральные студии показали спектакли в конце сезона",
+        "en": "The theatre studios closed the season with their plays"
+      },
+      "lead": {
+        "uz": "Bir yil davomida tayyorlangan sahna ishlari ota-onalar va maktab oldida koʻrsatildi. Har guruh oʻz spektaklini olib chiqdi.",
+        "oz": "Бир йил давомида тайёрланган саҳна ишлари ота-оналар ва мактаб олдида кўрсатилди. Ҳар гуруҳ ўз спектаклини олиб чиқди.",
+        "ozbekca": "Bir yil davomida tayyorlangan sahna işlari ota-onalar va maktab oldida körsatildi. Har guruh öz spektaklini olib çiqdi.",
+        "ru": "Сценические работы, подготовленные за год, показали родителям и школе. Каждая группа вышла со своим спектаклем.",
+        "en": "The stage work prepared over the year was shown to parents and the school. Each group brought a play of its own."
+      },
+      "body": {
+        "uz": [
+          "Mashgʻulotlar nutqdan boshlangan edi: nafas, talaffuz, matn bilan ishlash. Keyin sahna harakati va kichik sahnachalar, mavsum oxirida esa toʻliq spektakl.",
+          "Koʻrsatuvdan keyin ustozlar har guruh bilan tahlil oʻtkazdi: nima chiqdi, nima ustida yana ishlash kerak.",
+          "Keyingi mavsumga yozilish kuzda ochiladi; yangi kelganlar uchun alohida boshlovchi guruhlar boʻladi."
+        ],
+        "oz": [
+          "Машғулотлар нутқдан бошланган эди: нафас, талаффуз, матн билан ишлаш. Кейин саҳна ҳаракати ва кичик саҳначалар, мавсум охирида эса тўлиқ спектакль.",
+          "Кўрсатувдан кейин устозлар ҳар гуруҳ билан таҳлил ўтказди: нима чиқди, нима устида яна ишлаш керак.",
+          "Кейинги мавсумга ёзилиш кузда очилади; янги келганлар учун алоҳида бошловчи гуруҳлар бўлади."
+        ],
+        "ozbekca": [
+          "Maşğulotlar nutqdan boşlangan edi: nafas, talaffuz, matn bilan işlaş. Keyin sahna harakati va kiçik sahnaçalar, mavsum oxirida esa töliq spektakl.",
+          "Körsatuvdan keyin ustozlar har guruh bilan tahlil ötkazdi: nima çiqdi, nima ustida yana işlaş kerak.",
+          "Keyingi mavsumga yoziliş kuzda oçiladi; yangi kelganlar uçun alohida boşlovçi guruhlar böladi."
+        ],
+        "ru": [
+          "Занятия начинались с речи: дыхание, произношение, работа с текстом. Потом сценическое движение и небольшие этюды, а в конце сезона полный спектакль.",
+          "После показа наставники разобрали работу с каждой группой: что получилось и над чем ещё работать.",
+          "Запись на следующий сезон откроется осенью; для новичков будут отдельные группы начинающих."
+        ],
+        "en": [
+          "The classes began with speech: breathing, pronunciation, working with a text. Then came stage movement and short scenes, and at the end of the season a full play.",
+          "After the showing the mentors went through the work with each group: what came off and what still needs work.",
+          "Sign-up for the next season opens in autumn; newcomers get beginner groups of their own."
+        ]
+      },
+      "cover": {
+        "src": "/brand/news-teatr.jpg",
+        "alt": {
+          "uz": "Ochiq teatr pardasi, boʻsh sahnadagi yorugʻlik doirasi va ikki niqob",
+          "oz": "Очиқ театр пардаси, бўш саҳнадаги ёруғлик доираси ва икки ниқоб",
+          "ozbekca": "Oçiq teatr pardasi, böş sahnadagi yoruğlik doirasi va ikki niqob",
+          "ru": "Открытый театральный занавес, круг света на пустой сцене и две маски",
+          "en": "An open theatre curtain, a circle of light on an empty stage and two masks"
+        },
+        "status": "draft"
+      },
+      "story": { "primary": "art-5", "secondary": "art-2" }
+    },
+    {
+      "slug": "ustozlar-uchun-seminar",
+      "status": "draft",
+      "date": "2026-05-20",
+      "topic": {
+        "uz": "Taʼlim",
+        "oz": "Таълим",
+        "ozbekca": "Taʼlim",
+        "ru": "Обучение",
+        "en": "Training"
+      },
+      "title": {
+        "uz": "Studiya ustozlari uchun yozgi seminar oʻtkazildi",
+        "oz": "Студия устозлари учун ёзги семинар ўтказилди",
+        "ozbekca": "Studiya ustozlari uçun yozgi seminar ötkazildi",
+        "ru": "Для наставников студий прошёл летний семинар",
+        "en": "A summer seminar was held for studio mentors"
+      },
+      "lead": {
+        "uz": "Toʻrt kunlik seminarda oʻquv dasturi, guruh bilan ishlash va baholash muhokama qilindi.",
+        "oz": "Тўрт кунлик семинарда ўқув дастури, гуруҳ билан ишлаш ва баҳолаш муҳокама қилинди.",
+        "ozbekca": "Tört kunlik seminarda öquv dasturi, guruh bilan işlaş va baholaş muhokama qilindi.",
+        "ru": "За четыре дня семинара обсудили учебную программу, работу с группой и оценивание.",
+        "en": "Over four days the seminar went through the study programme, working with a group and assessment."
+      },
+      "body": {
+        "uz": [
+          "Seminarga vokal, teatr, tasviriy sanʼat va animatsiya studiyalaridan ustozlar yigʻildi. Asosiy mavzu: bir guruhda turli tayyorgarlikdagi bolalar bilan ishlash.",
+          "Amaliy qismda ustozlar bir-birining mashgʻulotini kuzatdi va yozma tahlil qildi.",
+          "Seminar materiallari studiyalarga tarqatildi va keyingi mavsumda dasturga kiritiladi."
+        ],
+        "oz": [
+          "Семинарга вокал, театр, тасвирий санъат ва анимация студияларидан устозлар йиғилди. Асосий мавзу: бир гуруҳда турли тайёргарликдаги болалар билан ишлаш.",
+          "Амалий қисмда устозлар бир-бирининг машғулотини кузатди ва ёзма таҳлил қилди.",
+          "Семинар материаллари студияларга тарқатилди ва кейинги мавсумда дастурга киритилади."
+        ],
+        "ozbekca": [
+          "Seminarga vokal, teatr, tasviriy sanʼat va animatsiya studiyalaridan ustozlar yiğildi. Asosiy mavzu: bir guruhda turli tayyorgarlikdagi bolalar bilan işlaş.",
+          "Amaliy qismda ustozlar bir-birining maşğulotini kuzatdi va yozma tahlil qildi.",
+          "Seminar materiallari studiyalarga tarqatildi va keyingi mavsumda dasturga kiritiladi."
+        ],
+        "ru": [
+          "На семинар собрались наставники вокальных, театральных, художественных и анимационных студий. Главная тема: работа с детьми разной подготовки в одной группе.",
+          "В практической части наставники приходили на занятия друг к другу и писали разбор.",
+          "Материалы семинара разослали по студиям, в следующем сезоне они войдут в программу."
+        ],
+        "en": [
+          "Mentors from the singing, theatre, art and animation studios came to the seminar. The main subject was working with children of different levels in one group.",
+          "In the practical part the mentors watched each other’s classes and wrote up what they saw.",
+          "The seminar material was sent out to the studios and goes into the programme next season."
+        ]
+      },
+      "cover": {
+        "src": "/brand/news-seminar.jpg",
+        "alt": {
+          "uz": "Doira qilib qoʻyilgan stullar va doskadagi chizmalar",
+          "oz": "Доира қилиб қўйилган стуллар ва доскадаги чизмалар",
+          "ozbekca": "Doira qilib qöyilgan stullar va doskadagi çizmalar",
+          "ru": "Стулья, расставленные кругом, и схемы на доске",
+          "en": "Chairs arranged in a circle and diagrams on a board"
+        },
+        "status": "draft"
+      },
+      "story": { "primary": "art-2", "secondary": "art-5" }
+    },
+    {
+      "slug": "birinchi-multfilmlar",
+      "status": "draft",
+      "date": "2026-04-11",
+      "topic": {
+        "uz": "Animatsiya",
+        "oz": "Анимация",
+        "ozbekca": "Animatsiya",
+        "ru": "Анимация",
+        "en": "Animation"
+      },
+      "title": {
+        "uz": "Bolalar yozgan hikoyalar birinchi multfilmlarga aylandi",
+        "oz": "Болалар ёзган ҳикоялар биринчи мультфильмларга айланди",
+        "ozbekca": "Bolalar yozgan hikoyalar birinçi multfilmlarga aylandi",
+        "ru": "Истории, написанные детьми, стали первыми мультфильмами",
+        "en": "Stories written by children have become the first animated films"
+      },
+      "lead": {
+        "uz": "Animatsiya ustaxonasining birinchi mavsumi yakunlandi: bolalar oʻz hikoyasini yozdi, chizdi va ovoz berdi. Ishlar mualliflar ismi bilan eʼlon qilindi.",
+        "oz": "Анимация устахонасининг биринчи мавсуми якунланди: болалар ўз ҳикоясини ёзди, чизди ва овоз берди. Ишлар муаллифлар исми билан эълон қилинди.",
+        "ozbekca": "Animatsiya ustaxonasining birinçi mavsumi yakunlandi: bolalar öz hikoyasini yozdi, çizdi va ovoz berdi. Işlar mualliflar ismi bilan eʼlon qilindi.",
+        "ru": "Первый сезон мастерской анимации завершён: дети написали свои истории, нарисовали их и озвучили. Работы опубликованы с именами авторов.",
+        "en": "The first season of the animation workshop is over: the children wrote their stories, drew them and did the voices. The work has been published under the names of the authors."
+      },
+      "body": {
+        "uz": [
+          "Har bir multfilm bir necha daqiqa. Hikoyani bola yozgan, rasmni studiya guruhi chizgan, ovozni mualliflarning oʻzi bergan.",
+          "Ustaxona bir mavsum davom etdi: avval matn, keyin storibord, oxirgi oylarda rasm va montaj.",
+          "Multfilmlar birlashmaning kanalida chiqadi. Keyingi mavsumga yozilish kuzda ochiladi."
+        ],
+        "oz": [
+          "Ҳар бир мультфильм бир неча дақиқа. Ҳикояни бола ёзган, расмни студия гуруҳи чизган, овозни муаллифларнинг ўзи берган.",
+          "Устахона бир мавсум давом этди: аввал матн, кейин сториборд, охирги ойларда расм ва монтаж.",
+          "Мультфильмлар бирлашманинг каналида чиқади. Кейинги мавсумга ёзилиш кузда очилади."
+        ],
+        "ozbekca": [
+          "Har bir multfilm bir neça daqiqa. Hikoyani bola yozgan, rasmni studiya guruhi çizgan, ovozni mualliflarning özi bergan.",
+          "Ustaxona bir mavsum davom etdi: avval matn, keyin storibord, oxirgi oylarda rasm va montaj.",
+          "Multfilmlar birlaşmaning kanalida çiqadi. Keyingi mavsumga yoziliş kuzda oçiladi."
+        ],
+        "ru": [
+          "Каждый мультфильм идёт несколько минут. Историю написал ребёнок, рисунки сделала студийная группа, озвучили авторы сами.",
+          "Мастерская шла один сезон: сначала текст, потом раскадровка, в последние месяцы рисунок и монтаж.",
+          "Мультфильмы выходят на канале объединения. Запись на следующий сезон откроется осенью."
+        ],
+        "en": [
+          "Each film runs a few minutes. The story was written by a child, the drawings were made by the studio group, and the children did the voices themselves.",
+          "The workshop ran for one season: the text first, then the storyboard, and the drawing and editing in the final months.",
+          "The films go out on the channel of the association. Sign-up for the next season opens in autumn."
+        ]
+      },
+      "cover": {
+        "src": "/brand/news-multfilm.jpg",
+        "alt": {
+          "uz": "Ochiq kitob ustida qogʻozdan qirqilgan qush, yulduz va bulut, yonida kinolenta",
+          "oz": "Очиқ китоб устида қоғоздан қирқилган қуш, юлдуз ва булут, ёнида кинолента",
+          "ozbekca": "Oçiq kitob ustida qoğozdan qirqilgan quş, yulduz va bulut, yonida kinolenta",
+          "ru": "Раскрытая книга с вырезанными из бумаги птицей, звездой и облаком, рядом кинолента",
+          "en": "An open book with a paper-cut bird, star and cloud, a strip of film beside it"
+        },
+        "status": "draft"
+      },
+      "story": { "primary": "art-3", "secondary": "art-7" }
+    }
+  ],
+  "leadership": [
+    {
+      "id": "leader-chair",
+      "kind": "leader",
+      "status": "confirmed",
+      "name": {
+        "uz": "Jahongir Ahmedov",
+        "oz": "Жаҳонгир Аҳмедов",
+        "ozbekca": "Jahongir Ahmedov",
+        "ru": "Жахонгир Ахмедов",
+        "en": "Jahongir Ahmedov"
+      },
+      "role": {
+        "uz": "Birlashma raisi",
+        "oz": "Бирлашма раиси",
+        "ozbekca": "Birlaşma raisi",
+        "ru": "Председатель объединения",
+        "en": "Chair of the association"
+      },
+      "field": null,
+      "bio": null,
+      "photo": "/brand/leader-chair.jpg",
+      "email": null
+    },
+    {
+      "id": "leader-director",
+      "kind": "leader",
+      "status": "confirmed",
+      "name": {
+        "uz": "Hasan Toshxoʻjayev",
+        "oz": "Ҳасан Тошхўжаев",
+        "ozbekca": "Hasan Toşxöjayev",
+        "ru": "Хасан Тошходжаев",
+        "en": "Hasan Toshxoʻjayev"
+      },
+      "role": {
+        "uz": "Ijrochi direktor",
+        "oz": "Ижрочи директор",
+        "ozbekca": "Ijroçi direktor",
+        "ru": "Исполнительный директор",
+        "en": "Executive director"
+      },
+      "field": null,
+      "bio": null,
+      "photo": "/brand/leader-director.jpg",
+      "email": null
+    },
+    {
+      "id": "leader-cochair",
+      "kind": "leader",
+      "status": "pending",
+      "name": null,
+      "role": {
+        "uz": "Birlashma hamraisi",
+        "oz": "Бирлашма ҳамраиси",
+        "ozbekca": "Birlaşma hamraisi",
+        "ru": "Сопредседатель объединения",
+        "en": "Co-chair of the association"
+      },
+      "field": null,
+      "bio": null,
+      "photo": null,
+      "email": null
+    },
+    {
+      "id": "leader-audit",
+      "kind": "leader",
+      "status": "pending",
+      "name": null,
+      "role": {
+        "uz": "Taftish komissiyasi raisi",
+        "oz": "Тафтиш комиссияси раиси",
+        "ozbekca": "Taftiş komissiyasi raisi",
+        "ru": "Председатель ревизионной комиссии",
+        "en": "Chair of the audit commission"
+      },
+      "field": null,
+      "bio": null,
+      "photo": null,
+      "email": null
+    }
+  ],
+  "experts": [
+    {
+      "id": "expert-1",
+      "kind": "expert",
+      "status": "pending",
+      "name": null,
+      "role": {
+        "uz": "Kengash aʼzosi",
+        "oz": "Кенгаш аъзоси",
+        "ozbekca": "Kengaş aʼzosi",
+        "ru": "Член совета",
+        "en": "Council member"
+      },
+      "field": {
+        "uz": "Adabiyot",
+        "oz": "Адабиёт",
+        "ozbekca": "Adabiyot",
+        "ru": "Литература",
+        "en": "Literature"
+      },
+      "bio": null,
+      "photo": null,
+      "email": null
+    },
+    {
+      "id": "expert-2",
+      "kind": "expert",
+      "status": "pending",
+      "name": null,
+      "role": {
+        "uz": "Kengash aʼzosi",
+        "oz": "Кенгаш аъзоси",
+        "ozbekca": "Kengaş aʼzosi",
+        "ru": "Член совета",
+        "en": "Council member"
+      },
+      "field": { "uz": "Teatr", "oz": "Театр", "ozbekca": "Teatr", "ru": "Театр", "en": "Theatre" },
+      "bio": null,
+      "photo": null,
+      "email": null
+    },
+    {
+      "id": "expert-3",
+      "kind": "expert",
+      "status": "pending",
+      "name": null,
+      "role": {
+        "uz": "Kengash aʼzosi",
+        "oz": "Кенгаш аъзоси",
+        "ozbekca": "Kengaş aʼzosi",
+        "ru": "Член совета",
+        "en": "Council member"
+      },
+      "field": {
+        "uz": "Kino va animatsiya",
+        "oz": "Кино ва анимация",
+        "ozbekca": "Kino va animatsiya",
+        "ru": "Кино и анимация",
+        "en": "Film and animation"
+      },
+      "bio": null,
+      "photo": null,
+      "email": null
+    },
+    {
+      "id": "expert-4",
+      "kind": "expert",
+      "status": "pending",
+      "name": null,
+      "role": {
+        "uz": "Kengash aʼzosi",
+        "oz": "Кенгаш аъзоси",
+        "ozbekca": "Kengaş aʼzosi",
+        "ru": "Член совета",
+        "en": "Council member"
+      },
+      "field": {
+        "uz": "Musiqa",
+        "oz": "Мусиқа",
+        "ozbekca": "Musiqa",
+        "ru": "Музыка",
+        "en": "Music"
+      },
+      "bio": null,
+      "photo": null,
+      "email": null
+    },
+    {
+      "id": "expert-5",
+      "kind": "expert",
+      "status": "pending",
+      "name": null,
+      "role": {
+        "uz": "Kengash aʼzosi",
+        "oz": "Кенгаш аъзоси",
+        "ozbekca": "Kengaş aʼzosi",
+        "ru": "Член совета",
+        "en": "Council member"
+      },
+      "field": {
+        "uz": "Tasviriy sanʼat",
+        "oz": "Тасвирий санъат",
+        "ozbekca": "Tasviriy sanʼat",
+        "ru": "Изобразительное искусство",
+        "en": "Fine art"
+      },
+      "bio": null,
+      "photo": null,
+      "email": null
+    },
+    {
+      "id": "expert-6",
+      "kind": "expert",
+      "status": "pending",
+      "name": null,
+      "role": {
+        "uz": "Kengash aʼzosi",
+        "oz": "Кенгаш аъзоси",
+        "ozbekca": "Kengaş aʼzosi",
+        "ru": "Член совета",
+        "en": "Council member"
+      },
+      "field": {
+        "uz": "Media va raqamli ijod",
+        "oz": "Медиа ва рақамли ижод",
+        "ozbekca": "Media va raqamli ijod",
+        "ru": "Медиа и цифровое творчество",
+        "en": "Media and digital creativity"
+      },
+      "bio": null,
+      "photo": null,
+      "email": null
+    }
+  ],
+  "partners": [
+    {
+      "id": "uzbekgidroenergo",
+      "status": "confirmed",
+      "group": "state",
+      "name": {
+        "uz": "Oʻzbekgidroenergo",
+        "oz": "Ўзбекгидроэнерго",
+        "ozbekca": "Özbekgidroenergo",
+        "ru": "Узбекгидроэнерго",
+        "en": "Uzbekhydroenergo"
+      },
+      "logo": "/brand/partner-uzbekgidroenergo.png",
+      "href": null
+    }
+  ],
+  "contacts": {
+    "address": {
+      "value": {
+        "uz": "100011, Oʻzbekiston, Toshkent, Shayxontohur tumani, Abdulla Qodiriy koʻchasi, 35-uy",
+        "oz": "100011, Ўзбекистон, Тошкент, Шайхонтоҳур тумани, Абдулла Қодирий кўчаси, 35-уй",
+        "ozbekca": "100011, Özbekiston, Toşkent, Şayxontohur tumani, Abdulla Qodiriy köçasi, 35-uy",
+        "ru": "100011, Узбекистан, Ташкент, Шайхантахурский район, улица Абдуллы Кадыри, дом 35",
+        "en": "35 Abdulla Qodiriy Street, Shaykhantahur District, Tashkent 100011, Uzbekistan"
+      },
+      "status": "confirmed"
+    },
+    "phones": {
+      "value": ["+998 55 511 15 05", "+998 77 495 00 40", "+998 94 682 27 06"],
+      "status": "confirmed"
+    },
+    "email": { "value": "biib02062026@gmail.com", "status": "confirmed" },
+    "telegram": { "value": "https://t.me/bolalar_ijodkorligi", "status": "confirmed" },
+    "hours": { "value": null, "status": "pending" },
+    "map": { "value": null, "status": "pending" },
+    "socials": [
+      {
+        "id": "telegram",
+        "href": "https://t.me/bolalar_ijodkorligi",
+        "label": "Telegram",
+        "status": "confirmed"
+      },
+      {
+        "id": "instagram",
+        "href": "https://www.instagram.com/bolalar_ijodkorligi",
+        "label": "Instagram",
+        "status": "confirmed"
+      },
+      {
+        "id": "youtube",
+        "href": "https://www.youtube.com/@bolalar_ijodkorligi",
+        "label": "YouTube",
+        "status": "confirmed"
+      },
+      {
+        "id": "facebook",
+        "href": "https://www.facebook.com/profile.php?id=61593281378591",
+        "label": "Facebook",
+        "status": "confirmed"
+      }
+    ],
+    "postalCode": "100011",
+    "locality": "Tashkent"
+  },
+  "milestones": [
+    {
+      "id": "founding",
+      "status": "confirmed",
+      "year": 2026,
+      "title": {
+        "uz": "Ustav tasdiqlandi",
+        "oz": "Устав тасдиқланди",
+        "ozbekca": "Ustav tasdiqlandi",
+        "ru": "Устав утверждён",
+        "en": "Charter approved"
+      },
+      "icon": "users"
+    },
+    {
+      "id": "registration",
+      "status": "confirmed",
+      "year": 2026,
+      "title": {
+        "uz": "Adliya vazirligida roʻyxatdan oʻtdi",
+        "oz": "Адлия вазирлигида рўйхатдан ўтди",
+        "ozbekca": "Adliya vazirligida röyxatdan ötdi",
+        "ru": "Зарегистрировано в Министерстве юстиции",
+        "en": "Registered with the Ministry of Justice"
+      },
+      "icon": "building"
+    },
+    {
+      "id": "studios",
+      "status": "pending",
+      "year": null,
+      "title": {
+        "uz": "Birinchi hududiy studiyalar",
+        "oz": "Биринчи ҳудудий студиялар",
+        "ozbekca": "Birinçi hududiy studiyalar",
+        "ru": "Первые региональные студии",
+        "en": "The first regional studios"
+      },
+      "icon": "calendar"
+    },
+    {
+      "id": "upop",
+      "status": "pending",
+      "year": null,
+      "title": {
+        "uz": "UPOP TREND birinchi mavsumi",
+        "oz": "UPOP TREND биринчи мавсуми",
+        "ozbekca": "UPOP TREND birinçi mavsumi",
+        "ru": "Первый сезон UPOP TREND",
+        "en": "The first season of UPOP TREND"
+      },
+      "icon": "calendar"
+    }
+  ],
+  "upopGallery": [],
+  "artworks": [],
+  "media": {},
+  "redirects": {},
+  "texts": {},
+  "allowWords": []
+}

@@ -12,13 +12,15 @@ import type {
   Partner,
   Person,
   Project,
+  UpopFrame,
+  UpopMotion,
+  UpopShot,
 } from "./types";
-import type { UpopFrame, UpopMotion, UpopShot } from "./upop-gallery";
 
 /**
  * Butun sayt kontenti bitta nusxada: sahifalar faqat shu nusxadan selektorlar orqali oʻqiydi
- * (select.ts). Manba hozir repodagi TS modullar (bundled.ts); keyin maʼlumotlar bazasi ham shu shaklni
- * beradi, sahifalar oʻzgarmaydi. Shakl oʻzgarsa versiya oshiriladi: eski keshlar aralashmaydi.
+ * (select.ts). Manba maʼlumotlar bazasidagi content_snapshot() yoki uning repodagi nusxasi
+ * (snapshot.json, bundled.ts). Shakl oʻzgarsa versiya oshiriladi: eski keshlar aralashmaydi.
  */
 export const SNAPSHOT_VERSION = 1;
 

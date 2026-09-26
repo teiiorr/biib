@@ -124,7 +124,7 @@ export async function ProjectsPage({ locale, dict }: PageProps) {
         </Container>
       </Section>
 
-      {/* Galereya: 8 joy src/content/upop-gallery.ts da izohdan chiqariladi; boʻsh boʻlsa koʻrinmaydi. */}
+      {/* Galereya: 8 joy upop_shots jadvalidan; boʻsh boʻlsa koʻrinmaydi. */}
       <UpopGallery locale={locale} dict={dict} />
 
       <Section

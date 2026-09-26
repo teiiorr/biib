@@ -11,8 +11,8 @@ import type {
   Partner,
   Person,
   Project,
+  UpopShot,
 } from "./types";
-import type { UpopShot } from "./upop-gallery";
 
 /*
  * Nusxadan oʻqish qoidalari: sof funksiyalar, tarmoq va keshsiz. Sahifalar ularni content/index.ts

@@ -18,7 +18,7 @@ import { sharedName } from "@/lib/motion/transitions";
 import { InViewVideoLeaf } from "../lazy-leaves";
 import { UpopMotion } from "./UpopMotion";
 
-/* Punktlar tartibi content/projects.ts dagi highlights bilan: bepul ariza, yosh, yakuniy konsert. */
+/* Punktlar tartibi loyiha yozuvidagi highlights bilan: bepul ariza, yosh, yakuniy konsert. */
 const HIGHLIGHT_ICONS = ["ticket", "users", "mic"] as const;
 interface UpopFeatureProps {
   readonly locale: Locale;

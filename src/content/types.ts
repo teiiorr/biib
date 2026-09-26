@@ -175,3 +175,23 @@ export interface Milestone {
   /** Berilmasa AboutPage dagi id boʻyicha belgi. */
   readonly icon?: IconName;
 }
+
+/** Ramka: har joyning oʻz koʻrinishi (pages.css va materials.css, .upop-shot). */
+export type UpopFrame = "stage" | "gold" | "glass" | "ticket" | "film" | "mat";
+
+/** Skroll bilan kirish (ikki yoʻnalishda qaytadi): har joyning oʻz harakati. */
+export type UpopMotion =
+  "curtain" | "slide-end" | "wipe" | "rise" | "iris" | "tilt" | "slide-start" | "zoom";
+
+/** UPOP TREND galereyasining bitta joyi (8 tagacha; tartib = joy, 1-joy eng katta kadr). */
+export interface UpopShot {
+  readonly kind: "photo" | "video";
+  /** Sayt ichidagi yoʻl: public/ dagi fayl yoki /uploads/… (tashqi havola CSP da bloklanadi). */
+  readonly src: string;
+  /** Faqat video uchun: birinchi kadr surati (boʻlmasa kadr video yuklanguncha boʻsh turadi). */
+  readonly poster?: string;
+  readonly frame: UpopFrame;
+  readonly motion: UpopMotion;
+  /** Ixtiyoriy tavsif; berilmasa lugʻatdagi «UPOP TREND: N-lavha» ishlatiladi. */
+  readonly alt?: Localized;
+}
