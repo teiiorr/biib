@@ -36,10 +36,6 @@ const nextConfig: NextConfig = {
   experimental: {
     globalNotFound: true,
   },
-  images: {
-    formats: ["image/avif", "image/webp"],
-    qualities: [75, 90],
-  },
   async redirects() {
     // 307: keyinroq til aniqlash qoʻshilsa kesh zaharlanmaydi.
     return [{ source: "/", destination: "/uz", permanent: false }];

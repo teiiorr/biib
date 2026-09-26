@@ -11,12 +11,6 @@ export interface PreparedImage {
 }
 
 export const PREPARED_IMAGES: Readonly<Record<string, PreparedImage>> = {
-  "/brand/mark.png": {
-    width: 640,
-    height: 640,
-    base: "/img/mark",
-    widths: [40, 80, 120, 192],
-  },
   "/brand/logo-hero.png": {
     width: 408,
     height: 408,
@@ -28,13 +22,6 @@ export const PREPARED_IMAGES: Readonly<Record<string, PreparedImage>> = {
     height: 703,
     base: "/img/upop-logo",
     widths: [240, 360, 480, 720, 900],
-  },
-  "/brand/upop-scene.jpg": {
-    width: 1920,
-    height: 1085,
-    base: "/img/upop-scene",
-    widths: [640, 960, 1280, 1920],
-    blur: "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoQAAkAA4BaJQBOgCHdFKKaswAA/vGEDZFaP4WkldApTH7fyJdJfsJtS1A+YNp6swAAAA==",
   },
   "/brand/news-upop-stage.jpg": {
     width: 1344,

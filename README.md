@@ -1,7 +1,7 @@
 # Bolalar Ijodkorligi Ijodiy Birlashmasi — sayt
 
 Birlashmaning rasmiy sayti. Next.js (App Router), TypeScript, Tailwind CSS 4, GSAP, Lenis.
-Beshta til, bitta dizayn (Atlas), kunduzgi va tungi mavzu.
+Beshta til, bitta dizayn (Atlas), faqat tungi mavzu.
 
 ## Ishga tushirish
 
@@ -28,8 +28,8 @@ pnpm verify:full      # toʻliq tekshiruv: yigʻma, 70 sahifa, brauzer matritsas
 | `src/designs/atlas`       | Kechiktirib yuklanadigan badiiy qatlam (qahramon videosi).        |
 | `src/content`             | Kontent: loyihalar, yangiliklar, odamlar, hamkorlar, aloqa.       |
 | `src/i18n`                | Tillar, marshrut xaritasi, lugʻatlar, transliteratsiya.           |
-| `src/styles`              | Tokenlar (kunduz va tun), Tailwind mavzusi, materiallar.          |
-| `scripts`                 | Tekshiruv (`verify.mjs`), transliteratsiya, media, poster.        |
+| `src/styles`              | Tokenlar (tungi mavzu), Tailwind mavzusi, materiallar.            |
+| `scripts`                 | Tekshiruv (`verify.mjs`), transliteratsiya, media, rasmlar.       |
 | `tests`                   | Playwright: marshrutlar, joylashuv, qulaylik, unumdorlik, vizual. |
 
 ## Tillar
@@ -58,7 +58,9 @@ Tasdiqlanmagan sahifalar `noindex` bilan chiqadi va sitemapda sana daʼvo qilmay
 ### Loyiha, odam, hamkor
 
 `src/content/projects.ts`, `experts.ts`, `leadership.ts`, `partners.ts`. Surat va logotiplar
-`src/assets` ga qoʻyiladi, bolalar suratlari faqat ota-ona roziligi bilan.
+`public/brand` ga qoʻyiladi va `scripts/images.mjs` roʻyxatiga qoʻshiladi (`node scripts/images.mjs`
+AVIF/WebP nusxalarni yaratadi); bolalar suratlari faqat ota-ona roziligi bilan. UPOP TREND galereyasi
+(8 joy) — `src/content/upop-gallery.ts`, fayllar `public/upop` da.
 
 ## Muhit oʻzgaruvchilari
 

@@ -34,8 +34,8 @@ interface PageProps {
 }
 
 /**
- * Biz haqimizda (15.3), matn birlashma ustavidan: markazdagi sarlavha; maqsad bitta oʻqish ustunida
- * (ikki xatboshi, ustavdan iqtibos, ustavni yuklab olish); matn ustunidagi UPOP TREND kadri; yoʻnalishlar
+ * Biz haqimizda (15.3), matn birlashma ustavidan: markazdagi sarlavha; chapda belgi animatsiyasi, oʻngda
+ * maqsad (ikki xatboshi va ustavdan iqtibos, ikki chetga tekis); yoʻnalishlar
  * va asosiy vazifalar teng toʻrda (belgi va nomi, tavsifsiz);
  * tarix faqat yillari tasdiqlanganda; oxirida UPOP TREND lentasi. Sarlavhalar ostida tavsif yoʻq.
  * Harakat: sarlavhalar soʻzma-soʻz, matn va roʻyxatlar doira ritmida koʻtariladi.

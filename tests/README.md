@@ -2,8 +2,8 @@
 
 Playwright matritsasi (§16, §21.3). Ishga tushirish: `pnpm test:e2e` (server 3100 da boʻlishi kerak) yoki `node scripts/verify.mjs --full`.
 
-Muhit: `BASE_URL` (sukut http://localhost:3100). Saytda bitta dizayn (Atlas), testlar ikki mavzuni
-(kunduz va tun) tekshiradi.
+Muhit: `BASE_URL` (sukut http://localhost:3100). Saytda bitta dizayn (Atlas) va bitta
+(tungi) mavzu.
 
 ## Sahifa quruvchilar uchun belgilar
 

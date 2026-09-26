@@ -33,7 +33,7 @@ export default defineConfig({
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
     locale: "uz-Latn",
-    colorScheme: "light",
+    colorScheme: "dark",
   },
   projects: [
     /* channel: "chromium" — yangi headless rejim, GPU (Metal) bilan: kadr oʻlchovi haqiqiy, SwiftShader emas. */

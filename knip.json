@@ -7,12 +7,7 @@
   ],
   "project": ["src/**/*.{ts,tsx}", "scripts/**/*.{mjs,mts,ts}", "tests/**/*.ts"],
   "ignore": [],
-  "ignoreDependencies": [
-    "babel-plugin-react-compiler",
-    "eslint-plugin-jsx-a11y",
-    "sharp",
-    "tailwindcss"
-  ],
-  "ignoreBinaries": ["ffmpeg", "ffprobe", "playwright"],
+  "ignoreDependencies": ["tailwindcss"],
+  "ignoreBinaries": ["ffmpeg", "ffprobe"],
   "ignoreExportsUsedInFile": true
 }
