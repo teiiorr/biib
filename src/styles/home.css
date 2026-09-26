@@ -675,6 +675,65 @@
     grid-column: 3;
     text-align: end;
   }
+  /* Qatordagi yuz va belgi bir oʻlchamda: ism va lavozim bir chiziqda qoladi. */
+  .people-role .feature-icon,
+  .people-avatar {
+    width: 56px;
+    height: 56px;
+  }
+  /* Yuz belgi plitkasi oʻrnida, birinchi ustunda (.feature faqat .feature-icon ni birinchi ustunga qoʻyadi). */
+  .people-role.feature > .people-avatar {
+    grid-column: 1;
+  }
+  .people-avatar {
+    position: relative;
+    display: block;
+  }
+  .people-avatar-thumb {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: var(--radius-control);
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--gold) 45%, transparent);
+  }
+  .people-avatar-thumb img,
+  .people-avatar-preview img {
+    object-position: 50% 18%;
+  }
+  /* Katta portret yuz ustida ochiladi: kattalashib va koʻtarilib chiqadi, sichqoncha ketganda yopiladi.
+     Sensorli ekranda hover yoʻq: faqat kichik surat. */
+  .people-avatar-preview {
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + 12px);
+    z-index: var(--z-overlay);
+    width: 200px;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--gold) 55%, transparent),
+      var(--shadow-overlay);
+    opacity: 0;
+    transform: translateY(12px) scale(0.86);
+    transform-origin: 28px 100%;
+    pointer-events: none;
+    transition:
+      opacity var(--dur-ui) var(--ease-out),
+      transform var(--dur-panel) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .people-role:hover .people-avatar-preview {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .people-avatar-preview {
+      transform: none;
+      transition: opacity 150ms linear;
+    }
+  }
   /* Tasdiqlangan guruh: portretlar bitta toʻla qator. */
   .people-row {
     display: grid;

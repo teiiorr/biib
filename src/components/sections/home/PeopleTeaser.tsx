@@ -19,6 +19,24 @@ interface PeopleTeaserProps {
   readonly dict: Dictionary;
 }
 
+/**
+ * Roʻyxat qatoridagi yuz: kichik surat, sichqoncha ustiga kelganda uning ustida katta asl portret
+ * ochiladi (egasining talabi). Surati yoʻq odamda belgi plitkasi.
+ */
+function PersonAvatar({ person, name }: { person: Person; name: string }) {
+  if (!hasPortrait(person)) return <FeatureIcon name="user" />;
+  return (
+    <span className="people-avatar" aria-hidden="true">
+      <span className="people-avatar-thumb">
+        <ContentPicture src={person.photo} alt="" fill sizes="56px" />
+      </span>
+      <span className="people-avatar-preview">
+        <ContentPicture src={person.photo} alt={name} fill sizes="240px" />
+      </span>
+    </span>
+  );
+}
+
 /** Portret faqat tasdiqlangan va surati bor odamda: boʻsh ramkalar qatori chizilmaydi. */
 function hasPortrait(person: Person): person is Person & { photo: string } {
   return person.status === "confirmed" && person.photo !== null && person.name !== null;
@@ -79,14 +97,15 @@ function PeopleGroup({ heading, href, people, locale, offset, className }: Peopl
           ))}
         </ul>
       ) : (
-        /* Surat kelguncha: belgi, ism (tasdiqlanmagan boʻlsa oʻrinbosar) va lavozim bir qatorda. */
+        /* Suratlar hammada boʻlguncha: yuz yoki belgi, ism (tasdiqlanmagan boʻlsa oʻrinbosar) va lavozim
+           bir qatorda. */
         <ul className="people-roles" aria-label={heading}>
           {people.map((p, index) => {
             const name = p.name ? t(p.name, locale) : fillerName(offset + index);
             const role = p.field ? t(p.field, locale) : t(p.role, locale);
             return (
               <li key={p.id} className="people-role feature">
-                <FeatureIcon name="user" />
+                <PersonAvatar person={p} name={name} />
                 <span className="t-body text-ink">{name}</span>
                 <span className="t-small text-ink-3">{role}</span>
               </li>
