@@ -6,6 +6,12 @@ export const news: typeof source = {
   backToList: "Барча янгиликлар",
   previous: "Олдинги хабар",
   next: "Кейинги хабар",
+  photos: {
+    label: "Суратлар",
+    previous: "Олдинги сурат",
+    next: "Кейинги сурат",
+    alt: "{title}: {n}-сурат",
+  },
   related: "Бошқа янгиликлар",
   empty: "Ҳозирча янгилик йўқ.",
 };

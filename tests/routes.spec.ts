@@ -12,11 +12,12 @@ import {
   pathFor,
 } from "./helpers/routes";
 
-/* G2: 70 manzil, toʻgʻri lang, lokal 404, global 404, yoʻnaltirish, til almashtirgich. */
+/* G2: barcha manzillar, toʻgʻri lang, lokal 404, global 404, yoʻnaltirish, til almashtirgich. */
 test.describe("G2 marshrutlar", () => {
-  test("70 manzil 200 va toʻgʻri <html lang>", async ({ request }, testInfo) => {
+  test("barcha manzillar 200 va toʻgʻri <html lang>", async ({ request }, testInfo) => {
     const routes = allRoutes();
-    expect(routes.length).toBe(70);
+    /* 9 sahifa va har yangilik, har biri besh tilda. */
+    expect(routes.length).toBe((9 + NEWS_SLUGS.length) * LOCALES.length);
     const bad: string[] = [];
     for (const route of routes) {
       const response = await request.get(route.path);

@@ -1071,3 +1071,65 @@
     }
   }
 }
+
+@layer components {
+  /* Maqola suratlari (NewsSlider): 3:2 kadrlar gorizontal skroll-snap tasmasida, boshqaruv oyna
+     guruhi kadr ostida markazda — suratni yopmaydi. Varaqlash telefonda barmoq bilan. */
+  .news-slider {
+    display: grid;
+    gap: 16px;
+    justify-items: center;
+  }
+  .news-slider-track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    border-radius: var(--radius-media);
+  }
+  .news-slider-track::-webkit-scrollbar {
+    display: none;
+  }
+  .news-slide {
+    position: relative;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    background: var(--surface);
+  }
+  .news-slider-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .news-slider-button {
+    display: grid;
+    place-items: center;
+    width: var(--hit-min);
+    height: var(--hit-min);
+    border-radius: calc(var(--surface-radius) - var(--surface-padding));
+    color: var(--material-ink);
+    transition:
+      opacity var(--dur-ui) var(--ease-ui),
+      transform var(--dur-ui) var(--ease-ui);
+  }
+  .news-slider-button:active:not(:disabled) {
+    transform: scale(0.94);
+  }
+  .news-slider-button:disabled {
+    opacity: 0.4;
+  }
+  .news-slider-count {
+    min-width: 64px;
+    text-align: center;
+    color: var(--material-ink);
+  }
+}

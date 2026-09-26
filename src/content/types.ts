@@ -96,6 +96,9 @@ export interface NewsArticle {
     readonly status: ContentStatus;
   };
   readonly story: ColorStory;
+  /** Muqovadan keyingi suratlar: maqolada muqova bilan birga varaqlanadi (public/brand yoʻllari,
+      scripts/images.mjs roʻyxatida). Tavsif lugʻatdan: «Sarlavha: N-surat». */
+  readonly photos?: readonly string[];
 }
 
 export type PersonKind = "expert" | "leader";

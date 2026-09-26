@@ -23,6 +23,17 @@ const BRIGHT_MIN = 0.35;
 const JOBS = [
   { src: "/brand/logo-hero.png", widths: [40, 80, 120, 240, 408] },
   { src: "/brand/upop-logo.png", widths: [240, 360, 480, 720, 900] },
+  /* «UPOP TREND taqdimoti» yangiligi: rasmiy Telegram kanalidagi suratlar (manba 800 px). */
+  { src: "/brand/news-taqdimot-01.jpg", widths: [256, 384, 640, 800], blur: true },
+  { src: "/brand/news-taqdimot-02.jpg", widths: [400, 800], blur: true },
+  { src: "/brand/news-taqdimot-03.jpg", widths: [400, 800], blur: true },
+  { src: "/brand/news-taqdimot-04.jpg", widths: [400, 800], blur: true },
+  { src: "/brand/news-taqdimot-05.jpg", widths: [400, 800], blur: true },
+  { src: "/brand/news-taqdimot-06.jpg", widths: [400, 800], blur: true },
+  { src: "/brand/news-taqdimot-07.jpg", widths: [400, 800], blur: true },
+  { src: "/brand/news-taqdimot-08.jpg", widths: [400, 800], blur: true },
+  { src: "/brand/news-taqdimot-09.jpg", widths: [400, 800], blur: true },
+  { src: "/brand/news-taqdimot-10.jpg", widths: [400, 800], blur: true },
   { src: "/brand/news-upop-stage.jpg", widths: [256, 384, 640, 960, 1344], blur: true },
   { src: "/brand/news-korgazma.jpg", widths: [256, 384, 640, 1024], blur: true },
   { src: "/brand/news-multfilm.jpg", widths: [256, 384, 640, 1024], blur: true },

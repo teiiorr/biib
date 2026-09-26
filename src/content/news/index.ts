@@ -1,3 +1,4 @@
+import { upopTrendTaqdimoti } from "./upop-trend-taqdimoti";
 import { upopTrendYangiMavsum } from "./upop-trend-yangi-mavsum";
 import { bolalarIshlariKorgazmasi } from "./bolalar-ishlari-korgazmasi";
 import { teatrStudiyalariKorsatuvi } from "./teatr-studiyalari-korsatuvi";
@@ -7,6 +8,7 @@ import type { NewsArticle } from "../types";
 
 /** Yangidan eskiga tartiblangan. */
 export const NEWS: readonly NewsArticle[] = [
+  upopTrendTaqdimoti,
   upopTrendYangiMavsum,
   bolalarIshlariKorgazmasi,
   teatrStudiyalariKorsatuvi,

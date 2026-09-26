@@ -10,6 +10,7 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { Divider } from "@/components/ui/Divider";
 import { Heading } from "@/components/ui/Heading";
+import { Picture } from "@/components/ui/Picture";
 import { Prose } from "@/components/ui/Prose";
 import { PullQuote } from "@/components/ui/PullQuote";
 import { Tag } from "@/components/ui/Tag";
@@ -25,6 +26,7 @@ import { breadcrumbJsonLd, newsArticleJsonLd } from "@/lib/seo/jsonld";
 import { absoluteUrl } from "@/lib/site";
 
 import { NewsCover } from "./NewsCover";
+import { NewsSlider } from "./NewsSlider";
 import { ReadingProgress } from "./ReadingProgress";
 import { ShareButtons } from "./ShareButtons";
 
@@ -51,6 +53,11 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
   const minutes = readingMinutes(body);
   const n = dict.news;
   const quote = article.quote ? t(article.quote, locale) : null;
+  /* Bir nechta surat: muqova birinchi, keyin qolganlari — maqolada varaqlanadi. */
+  const slides =
+    article.photos && article.photos.length > 0 && article.cover.src
+      ? [article.cover.src, ...article.photos]
+      : null;
   const crumbs = [
     { href: pathFor(locale, "home"), label: dict.nav.home },
     { href: pathFor(locale, "news"), label: dict.nav.news },
@@ -98,15 +105,38 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
             data-grid-item=""
           >
             <ViewTransition name={sharedName("news-cover", slug)}>
-              <NewsCover
-                article={article}
-                ratio="16:9"
-                locale={locale}
-                sizes="(min-width: 1440px) 640px, (min-width: 1024px) 66vw, 100vw"
-                meaningful
-                priority
-                motion={{ mode: "none", parallax: true }}
-              />
+              {slides ? (
+                <NewsSlider
+                  label={n.photos.label}
+                  previousLabel={n.photos.previous}
+                  nextLabel={n.photos.next}
+                >
+                  {slides.map((src, i) => (
+                    <Picture
+                      key={src}
+                      src={src}
+                      alt={
+                        i === 0
+                          ? t(article.cover.alt, locale)
+                          : fill(n.photos.alt, { title, n: i + 1 })
+                      }
+                      fill
+                      priority={i === 0}
+                      sizes="(min-width: 1440px) 640px, (min-width: 1024px) 66vw, 100vw"
+                    />
+                  ))}
+                </NewsSlider>
+              ) : (
+                <NewsCover
+                  article={article}
+                  ratio="16:9"
+                  locale={locale}
+                  sizes="(min-width: 1440px) 640px, (min-width: 1024px) 66vw, 100vw"
+                  meaningful
+                  priority
+                  motion={{ mode: "none", parallax: true }}
+                />
+              )}
             </ViewTransition>
           </div>
           <div

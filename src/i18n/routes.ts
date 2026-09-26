@@ -17,6 +17,7 @@ export type SectionKey = Exclude<PageKey, "home" | "newsItem">;
 
 /** Yangiliklar sluglari faqat ASCII: Telegram va pochtada %D1%8F… boʻlib qolmasligi uchun. */
 export const NEWS_SLUGS = [
+  "upop-trend-taqdimoti",
   "upop-trend-yangi-mavsum",
   "bolalar-ishlari-korgazmasi",
   "teatr-studiyalari-korsatuvi",

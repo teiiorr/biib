@@ -5,6 +5,12 @@ export const news: typeof source = {
   backToList: "Все новости",
   previous: "Предыдущая новость",
   next: "Следующая новость",
+  photos: {
+    label: "Фотографии",
+    previous: "Предыдущее фото",
+    next: "Следующее фото",
+    alt: "{title}: фото {n}",
+  },
   related: "Другие новости",
   empty: "Новостей пока нет.",
 };
