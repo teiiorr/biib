@@ -87,9 +87,9 @@ export const PROJECTS: readonly Project[] = [
     },
     media: {
       loop: {
-        desktop: { webm: "/media/upop-live-d.webm", mp4: "/media/upop-live-d.mp4" },
-        mobile: { webm: "/media/upop-live-m.webm", mp4: "/media/upop-live-m.mp4" },
-        poster: "/media/upop-live-poster.avif",
+        desktop: { webm: "/media/upop-girls-d.webm", mp4: "/media/upop-girls-d.mp4" },
+        mobile: { webm: "/media/upop-girls-m.webm", mp4: "/media/upop-girls-m.mp4" },
+        poster: "/media/upop-girls-poster.avif",
         width: 1280,
         height: 720,
         alt: {

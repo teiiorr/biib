@@ -18,13 +18,16 @@ import { ROOT } from "./checks/util.mjs";
 /*
  * §18.4 media quvuri: public/brand (egadan kelgan manbalar) → public/media.
  * Byudjetlar §17: har bir video ≤ 1,8 MB (desktop) / ≤ 0,9 MB (mobil), poster ≤ 120 KB AVIF.
- * Halqa videolar (upop-live) ovozsiz; upop-video bosib koʻriladigan, ovozi saqlanadi. Qahramon videosi
+ * Halqa videolar (upop-girls) ovozsiz; upop-video bosib koʻriladigan, ovozi saqlanadi. Qahramon videosi
  * alohida: scripts/hero-video.mts (bir marta ijro, halqa emas).
  * Har bir chiqish uchun crf byudjetga sigʻguncha +3 qadam bilan oshiriladi.
  *
  * Manba halqalarning birinchi va oxirgi kadri mos kelmaydi (ular 5–11 % farq qiladi, ketma-ket
  * kadrlar esa 1–2 %). Shu sabab halqa xfade bilan yopiladi: oxirgi X soniya boshlanishdagi X soniyaga
  * eriydi, natija D−X soniya va oxirgi kadr birinchi kadrga ulanadi (chok ≈ ketma-ket kadr farqi).
+ * Kamera butun kadr davomida siljisa (upop-girls: eng yaqin ikki kadr ham 4,6 % farq), xfade yuzlarni
+ * ikkilantiradi. Bunday manba «bumerang» bilan yopiladi: tanlangan oraliq oldinga, keyin teskari
+ * oʻynaydi; burilish kadrlari takrorlanmaydi, chok ketma-ket kadr farqiga teng.
  *
  * Qoʻlda takrorlash uchun buyruqlar (crf qiymati byudjetga qarab tanlangan):
  *   ffmpeg -y -i public/brand/upop-video.mp4 -map_metadata -1 -fflags +bitexact -vf scale=1280:-2,format=yuv420p \
@@ -32,6 +35,9 @@ import { ROOT } from "./checks/util.mjs";
  *   Poster: tayyor MP4 ning birinchi kadri PNG → sharp AVIF (sifat byudjetga sigʻguncha −8 qadam bilan tushadi).
  */
 const SRC = path.join(ROOT, "public/brand");
+/* Katta manbalar (26 MB) public/ da emas: ular saytga yuklanmaydi, faqat tayyor nusxalar chiqadi. */
+const ASSETS = path.join(ROOT, "src/assets/video");
+const sourceOf = (job) => path.join(job.dir ?? SRC, job.source);
 const MB = 1024 * 1024;
 const KB = 1024;
 const args = process.argv.slice(2);
@@ -42,24 +48,28 @@ const kb = (bytes) => `${(bytes / KB).toFixed(0)} KB`;
 /** width: masshtab kengligi; loop: xfade uzunligi (s); audio: false boʻlsa ovoz olib tashlanadi. */
 const JOBS = [
   {
-    name: "upop-live-d",
-    source: "upop-live.mp4",
+    name: "upop-girls-d",
+    source: "upop-girls.mp4",
+    dir: ASSETS,
+    crop: "crop=1916:1078:0:2",
     width: 1280,
-    loop: 1.5,
+    boomerang: { start: 2, end: 8, fps: 24 },
     outputs: [
-      { file: "upop-live-d.webm", kind: "av1", crf: 30, budget: 1.8 * MB },
-      { file: "upop-live-d.mp4", kind: "h264", crf: 23, budget: 1.8 * MB },
+      { file: "upop-girls-d.webm", kind: "av1", crf: 30, budget: 1.8 * MB },
+      { file: "upop-girls-d.mp4", kind: "h264", crf: 23, budget: 1.8 * MB },
     ],
-    poster: { file: "upop-live-poster.avif", budget: 90 * KB },
+    poster: { file: "upop-girls-poster.avif", budget: 90 * KB },
   },
   {
-    name: "upop-live-m",
-    source: "upop-live.mp4",
+    name: "upop-girls-m",
+    source: "upop-girls.mp4",
+    dir: ASSETS,
+    crop: "crop=1916:1078:0:2",
     width: 854,
-    loop: 1.5,
+    boomerang: { start: 2, end: 8, fps: 24 },
     outputs: [
-      { file: "upop-live-m.webm", kind: "av1", crf: 32, budget: 0.9 * MB },
-      { file: "upop-live-m.mp4", kind: "h264", crf: 25, budget: 0.9 * MB },
+      { file: "upop-girls-m.webm", kind: "av1", crf: 32, budget: 0.9 * MB },
+      { file: "upop-girls-m.mp4", kind: "h264", crf: 25, budget: 0.9 * MB },
     ],
   },
   {
@@ -93,14 +103,26 @@ function codecArgs(kind, codec, crf) {
 
 /** Halqa uchun oxirgi X soniya boshlanishga eriydi; oddiy video faqat masshtablanadi. */
 function videoFilter(job) {
+  const crop = job.crop ? `${job.crop},` : "";
   const scale = `scale=${job.width}:-2,format=yuv420p[v]`;
-  if (!job.loop) return ["-vf", `${scale.replace("[v]", "")}`];
+  if (job.boomerang) {
+    const { start, end, fps } = job.boomerang;
+    const frames = Math.round((end - start) * fps);
+    /* Teskari qism oxirgi va birinchi kadrsiz: burilishda kadr ikki marta turmaydi (qotish yoʻq). */
+    return [
+      "-filter_complex",
+      `[0:v]${crop}fps=${fps},trim=start=${start}:end=${end},setpts=PTS-STARTPTS,split[f][r];[r]reverse,trim=start_frame=1:end_frame=${frames - 1},setpts=PTS-STARTPTS[rv];[f][rv]concat=n=2:v=1:a=0,${scale}`,
+      "-map",
+      "[v]",
+    ];
+  }
+  if (!job.loop) return ["-vf", `${crop}${scale.replace("[v]", "")}`];
   const x = job.loop;
-  const d = probe(path.join(SRC, job.source)).duration;
+  const d = probe(sourceOf(job)).duration;
   const offset = (d - 2 * x).toFixed(3);
   return [
     "-filter_complex",
-    `[0:v]split[a][b];[a]trim=start=${x},setpts=PTS-STARTPTS[a];[b]trim=end=${x},setpts=PTS-STARTPTS[b];[a][b]xfade=transition=fade:duration=${x}:offset=${offset},${scale}`,
+    `[0:v]${crop}split[a][b];[a]trim=start=${x},setpts=PTS-STARTPTS[a];[b]trim=end=${x},setpts=PTS-STARTPTS[b];[a][b]xfade=transition=fade:duration=${x}:offset=${offset},${scale}`,
     "-map",
     "[v]",
   ];
@@ -114,7 +136,7 @@ function encode(job, output, codec) {
   for (let attempt = 0; attempt < 6; attempt++) {
     const list = [
       "-i",
-      path.join(SRC, job.source),
+      sourceOf(job),
       ...audio,
       "-map_metadata",
       "-1",
@@ -174,7 +196,7 @@ function describe(file) {
 }
 
 async function runJob(job, encoders) {
-  const source = path.join(SRC, job.source);
+  const source = sourceOf(job);
   console.log(`\n${job.name} ← ${job.source} (${describe(source)})`);
   let ok = true;
   for (const output of job.outputs) {
@@ -194,7 +216,7 @@ async function runJob(job, encoders) {
     console.log(
       `  ${output.file.padEnd(24)} ${kb(result.size).padStart(8)} / ${kb(output.budget)}  crf ${result.crf}  ${describe(target)}  ${result.ok ? "ok" : "BYUDJETDAN OSHDI"}`,
     );
-    if (job.loop && output.kind === "h264") {
+    if ((job.loop || job.boomerang) && output.kind === "h264") {
       const seam = await loopSeam(target);
       console.log(
         `  halqa choki (${output.file}): ${(seam * 100).toFixed(1)} %${seam > SEAM_THRESHOLD ? "  (sezilarli, manbani tekshiring)" : ""}`,
@@ -208,7 +230,7 @@ async function runJob(job, encoders) {
       `  ${job.poster.file.padEnd(24)} ${kb(p.size).padStart(8)} / ${kb(job.poster.budget)}  sifat ${p.quality}  ${p.width}×${p.height}  ${p.ok ? "ok" : "BYUDJETDAN OSHDI"}`,
     );
   }
-  if (job.loop && !dryRun) {
+  if (job.loop && !job.boomerang && !dryRun) {
     const seam = await loopSeam(source);
     console.log(`  halqa choki (manba): ${(seam * 100).toFixed(1)} %`);
   }
@@ -220,9 +242,7 @@ async function main() {
     console.log("ffmpeg topilmadi: media quvuri oʻtkazib yuborildi (brew install ffmpeg).");
     return 0;
   }
-  const jobs = JOBS.filter(
-    (j) => existsSync(path.join(SRC, j.source)) && (!only || j.name.startsWith(only)),
-  );
+  const jobs = JOBS.filter((j) => existsSync(sourceOf(j)) && (!only || j.name.startsWith(only)));
   if (!jobs.length) {
     console.log("Manba video topilmadi (public/brand).");
     return 0;
