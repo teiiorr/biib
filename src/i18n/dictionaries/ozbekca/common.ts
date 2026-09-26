@@ -4,7 +4,7 @@ import type { common as source } from "../uz/common";
 export const common: typeof source = {
   brand: {
     name: "Bolalar Ijodkorligi Ijodiy Birlaşmasi",
-    tagline: "Özbekistonda bolalar va ösmirlar ijodini qöllab-quvvatlaydigan birlaşma",
+    tagline: "Bolalar va ösmirlar ijodkorligini qöllab-quvvatlovçi nodavlat notijorat taşkilot",
     markAlt: "Birlaşma belgisi",
   },
   skipToContent: "Asosiy qismga ötiş",

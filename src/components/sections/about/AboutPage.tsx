@@ -3,6 +3,9 @@ import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { Reveal } from "@/components/motion/Reveal";
+import { Icon } from "@/components/icons/Icon";
+import type { IconName } from "@/components/icons/paths";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { FeatureIcon } from "@/components/ui/FeatureIcon";
 import { MediaFrame } from "@/components/ui/MediaFrame";
@@ -16,16 +19,26 @@ import { pathFor } from "@/i18n/routes";
 
 import { HistoryTimeline } from "./HistoryTimeline";
 
-/* Yoʻnalishlar tartibi lugʻatdagi bilan: qoʻshiq, teatr, tasviriy sanʼat, animatsiya. */
-const DIRECTION_ICONS = ["mic", "mask", "palette", "film"] as const;
+/* Yoʻnalishlar ustavdagi tartibda (6.10): adabiyot, teatr, kino va animatsiya, musiqa, tasviriy sanʼat,
+   media va raqamli ijod. */
+const DIRECTION_ICONS: readonly IconName[] = ["news", "mask", "film", "mic", "palette", "play"];
+/* Vazifalar (2.2): kontent, iqtidor izlash, tanlovlar zanjiri, mahorat darslari, xalqaro, inklyuziya. */
+const TASK_ICONS: readonly IconName[] = ["projects", "map-pin", "star", "users", "ticket", "heart"];
+const HISTORY_ICONS: Readonly<Record<string, IconName>> = {
+  founding: "users",
+  registration: "building",
+};
+/* Ustav nusxasi (skan, 16 bet): public/docs, ASCII nom bilan — havola har tilda buzilmaydi. */
+const CHARTER_HREF = "/docs/ustav.pdf";
 interface PageProps {
   readonly locale: Locale;
   readonly dict: Dictionary;
 }
 
 /**
- * Biz haqimizda (15.3): markazdagi sarlavha; maqsad markazdagi bitta oʻqish ustunida (ikki xatboshi
- * va kamtar iqtibos); matn ustunidagi UPOP TREND kadri; yoʻnalishlar teng toʻrda (chiziq va nomi, tavsifsiz);
+ * Biz haqimizda (15.3), matn birlashma ustavidan: markazdagi sarlavha; maqsad bitta oʻqish ustunida
+ * (ikki xatboshi, ustavdan iqtibos, ustavni yuklab olish); matn ustunidagi UPOP TREND kadri; yoʻnalishlar
+ * va asosiy vazifalar teng toʻrda (belgi va nomi, tavsifsiz);
  * tarix faqat yillari tasdiqlanganda; oxirida UPOP TREND lentasi. Sarlavhalar ostida tavsif yoʻq.
  * Harakat: sarlavhalar soʻzma-soʻz, matn va roʻyxatlar doira ritmida koʻtariladi.
  */
@@ -34,7 +47,15 @@ export function AboutPage({ locale, dict }: PageProps) {
   /* Tarix faqat yili tasdiqlangan bosqichlar bilan: yilsiz uchta yorliq tugallanmagan koʻrinardi. */
   const milestones = getMilestones().flatMap((m) =>
     m.status === "confirmed" && m.year !== null
-      ? [{ id: m.id, year: m.year, title: t(m.title, locale), text: t(m.text, locale) }]
+      ? [
+          {
+            id: m.id,
+            year: m.year,
+            title: t(m.title, locale),
+            text: t(m.text, locale),
+            icon: HISTORY_ICONS[m.id] ?? "calendar",
+          },
+        ]
       : [],
   );
   return (
@@ -62,6 +83,19 @@ export function AboutPage({ locale, dict }: PageProps) {
                 ))}
               </Prose>
               <PullQuote attribution={a.mission.quoteSource}>{a.mission.quote}</PullQuote>
+              <div className="about-charter">
+                <a
+                  href={CHARTER_HREF}
+                  download="bolalar-ijodkorligi-ustav.pdf"
+                  className={buttonVariants({ variant: "ghost", size: "48" })}
+                  data-variant="ghost"
+                  data-size="48"
+                >
+                  <Icon name="download" size={20} />
+                  <span className="text-trim">{a.mission.charter}</span>
+                  <span className="t-small text-ink-3">{a.mission.charterHint}</span>
+                </a>
+              </div>
             </Reveal>
           </div>
         </Container>
@@ -96,6 +130,24 @@ export function AboutPage({ locale, dict }: PageProps) {
             {a.values.items.map((item, index) => (
               <li key={item} className="about-list-item feature t-h4 text-ink">
                 <FeatureIcon name={DIRECTION_ICONS[index % DIRECTION_ICONS.length] ?? "star"} />
+                <span>{item}</span>
+              </li>
+            ))}
+          </Reveal>
+        </Container>
+      </Section>
+      <Section labelledBy="about-tasks" tone="light">
+        <Container>
+          <SectionHeader id="about-tasks" title={a.tasks.heading} split />
+          <Reveal
+            as="ul"
+            className="about-list"
+            stagger
+            attrs={{ "data-audit": "gap", "data-columns": "3" }}
+          >
+            {a.tasks.items.map((item, index) => (
+              <li key={item} className="about-list-item feature t-body text-ink">
+                <FeatureIcon name={TASK_ICONS[index % TASK_ICONS.length] ?? "star"} />
                 <span>{item}</span>
               </li>
             ))}

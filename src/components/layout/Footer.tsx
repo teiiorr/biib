@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Icon } from "@/components/icons/Icon";
 import type { IconName } from "@/components/icons/paths";
 import { ExternalLink } from "@/components/ui/ExternalLink";
-import { getContacts, getFlagship } from "@/content";
+import { getContacts, getFlagship, t } from "@/content";
 import { FILLER } from "@/content/placeholder";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
@@ -68,7 +68,22 @@ export function Footer({ locale, dict }: FooterProps) {
                 Telegram
               </a>
             ) : null}
-            <p className="t-small text-ink-3 footer-note">{FILLER.line}</p>
+            {contacts.phones.value?.[0] ? (
+              <a
+                href={`tel:${contacts.phones.value[0].replace(/\s/g, "")}`}
+                className="footer-link t-small tnum"
+              >
+                {contacts.phones.value[0]}
+              </a>
+            ) : null}
+            {contacts.email.value ? (
+              <a href={`mailto:${contacts.email.value}`} className="footer-link t-small">
+                {contacts.email.value}
+              </a>
+            ) : null}
+            <p className="t-small text-ink-3 footer-note">
+              {contacts.address.value ? t(contacts.address.value, locale) : FILLER.line}
+            </p>
           </div>
           <div className="footer-group">
             <p className="t-label text-ink footer-group-label">{dict.footer.follow}</p>

@@ -6,12 +6,12 @@ export const meta: typeof source = {
   home: {
     title: "Bolalar Ijodkorligi Ijodiy Birlashmasi",
     description:
-      "An association for the creativity of children and young people in Uzbekistan: the UPOP TREND auditions, theatre and art studios, exhibitions.",
+      "A non-governmental non-profit supporting the creativity of children and teenagers: literature, theatre, film, animation, music and UPOP TREND.",
   },
   about: {
     title: "About",
     description:
-      "The purpose, directions and history of the association: studios, a stage and exhibitions for children’s creativity.",
+      "From the charter: the purpose of the association, its areas of work, main tasks and legal status.",
   },
   projects: {
     title: "UPOP TREND",
@@ -29,7 +29,7 @@ export const meta: typeof source = {
   },
   leadership: {
     title: "Leadership",
-    description: "The leadership of the association: positions, reception days and official email.",
+    description: "The chair, co-chair, executive director and chair of the audit commission.",
   },
   partners: {
     title: "Partners",

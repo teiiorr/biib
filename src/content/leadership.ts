@@ -1,9 +1,55 @@
 import type { Person } from "./types";
 
-/** Rahbariyat. Lavozimlar tuzilmaviy, ism va surat tashkilotdan kelishi kerak. */
+/**
+ * Rahbariyat birlashma ustavi boʻyicha (6-boʻlim): rais (Boshqaruv kengashi raisi), hamrais, ijrochi
+ * direktor va taftish komissiyasi raisi. Rais ismi ustavdagi imzodan (J. Ahmedov), ijrochi direktor
+ * egasidan. Suratlar, pochta va qolgan ismlar tashkilotdan kutilmoqda.
+ */
 export const LEADERSHIP: readonly Person[] = [
   {
-    id: "leader-1",
+    id: "leader-chair",
+    kind: "leader",
+    status: "pending",
+    name: {
+      uz: "J. Ahmedov",
+      oz: "Ж. Аҳмедов",
+      ozbekca: "J. Ahmedov",
+      ru: "Ж. Ахмедов",
+      en: "J. Ahmedov",
+    },
+    role: {
+      uz: "Birlashma raisi",
+      oz: "Бирлашма раиси",
+      ozbekca: "Birlaşma raisi",
+      ru: "Председатель объединения",
+      en: "Chair of the association",
+    },
+    field: null,
+    bio: null,
+    photo: null,
+    reception: null,
+    email: null,
+  },
+  {
+    id: "leader-cochair",
+    kind: "leader",
+    status: "pending",
+    name: null,
+    role: {
+      uz: "Birlashma hamraisi",
+      oz: "Бирлашма ҳамраиси",
+      ozbekca: "Birlaşma hamraisi",
+      ru: "Сопредседатель объединения",
+      en: "Co-chair of the association",
+    },
+    field: null,
+    bio: null,
+    photo: null,
+    reception: null,
+    email: null,
+  },
+  {
+    id: "leader-director",
     kind: "leader",
     status: "pending",
     name: {
@@ -14,11 +60,11 @@ export const LEADERSHIP: readonly Person[] = [
       en: "Hasan Toshxoʻjayev",
     },
     role: {
-      uz: "Direktor",
-      oz: "Директор",
-      ozbekca: "Direktor",
-      ru: "Директор",
-      en: "Director",
+      uz: "Ijrochi direktor",
+      oz: "Ижрочи директор",
+      ozbekca: "Ijroçi direktor",
+      ru: "Исполнительный директор",
+      en: "Executive director",
     },
     field: null,
     bio: null,
@@ -27,52 +73,16 @@ export const LEADERSHIP: readonly Person[] = [
     email: null,
   },
   {
-    id: "leader-2",
+    id: "leader-audit",
     kind: "leader",
     status: "pending",
     name: null,
     role: {
-      uz: "Loyihalar boʻyicha direktor oʻrinbosari",
-      oz: "Лойиҳалар бўйича директор ўринбосари",
-      ozbekca: "Loyihalar böyiça direktor örinbosari",
-      ru: "Заместитель директора по проектам",
-      en: "Deputy Director for Projects",
-    },
-    field: null,
-    bio: null,
-    photo: null,
-    reception: null,
-    email: null,
-  },
-  {
-    id: "leader-3",
-    kind: "leader",
-    status: "pending",
-    name: null,
-    role: {
-      uz: "Hududiy studiyalar boshligʻi",
-      oz: "Ҳудудий студиялар бошлиғи",
-      ozbekca: "Hududiy studiyalar boşliği",
-      ru: "Руководитель региональных студий",
-      en: "Head of Regional Studios",
-    },
-    field: null,
-    bio: null,
-    photo: null,
-    reception: null,
-    email: null,
-  },
-  {
-    id: "leader-4",
-    kind: "leader",
-    status: "pending",
-    name: null,
-    role: {
-      uz: "Matbuot kotibi",
-      oz: "Матбуот котиби",
-      ozbekca: "Matbuot kotibi",
-      ru: "Пресс-секретарь",
-      en: "Press Secretary",
+      uz: "Taftish komissiyasi raisi",
+      oz: "Тафтиш комиссияси раиси",
+      ozbekca: "Taftiş komissiyasi raisi",
+      ru: "Председатель ревизионной комиссии",
+      en: "Chair of the audit commission",
     },
     field: null,
     bio: null,

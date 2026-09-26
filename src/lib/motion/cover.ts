@@ -9,12 +9,25 @@ export interface CoverRect {
   readonly s: number;
 }
 
-/** object-fit: cover ostidagi media toʻrtburchagi: quti toʻlguncha kattalashtiriladi, ortiqchasi teng kesiladi. */
-export function coverRect(mediaW: number, mediaH: number, boxW: number, boxH: number): CoverRect {
+/**
+ * Qahramon kadrining vertikal langari (home.css object-position: 50% 75%): kadr ekrandan baland boʻlsa
+ * ortiqchaning chorak qismi pastdan, uch chorak qismi yuqoridan kesiladi — kadr tepasi va pasti bir
+ * xil tekis fon, belgi yuqoriroq turadi va noutbukda matn bilan tugmalar bir ekranga sigʻadi.
+ */
+export const HERO_FOCUS_Y = 0.75;
+
+/** object-fit: cover ostidagi media toʻrtburchagi: quti toʻlguncha kattalashtiriladi, ortiqchasi kesiladi. */
+export function coverRect(
+  mediaW: number,
+  mediaH: number,
+  boxW: number,
+  boxH: number,
+  focusY = 0.5,
+): CoverRect {
   const s = Math.max(boxW / mediaW, boxH / mediaH);
   const w = mediaW * s;
   const h = mediaH * s;
-  return { x: (boxW - w) / 2, y: (boxH - h) / 2, w, h, s };
+  return { x: (boxW - w) / 2, y: (boxH - h) * focusY, w, h, s };
 }
 
 /**

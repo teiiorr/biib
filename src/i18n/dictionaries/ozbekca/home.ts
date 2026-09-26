@@ -8,7 +8,7 @@ export const home: typeof source = {
     videoAlt: "Birlaşma belgisi qoronği sahnada, atrofida oltin va puşti ipak tölqinlari",
   },
   portal: {
-    statement: "Har bir bola öz ovozini, rangini va sahnasini topsin deb işlaymiz. Viloyat studiyalaridan poytaxt konsertigaça bitta yöl.",
+    statement: "Iqtidorli bolalarni respublikaning barça hududlaridan, ayniqsa çekka tumanlardan izlab topamiz va mahalladan respublika sahnasigaça olib çiqamiz.",
     label: "Darvoza",
   },
   upop: {

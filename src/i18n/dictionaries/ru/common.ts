@@ -3,7 +3,8 @@ import type { common as source } from "../uz/common";
 export const common: typeof source = {
   brand: {
     name: "Bolalar Ijodkorligi Ijodiy Birlashmasi",
-    tagline: "Объединение, которое поддерживает творчество детей и подростков в Узбекистане",
+    tagline:
+      "Негосударственная некоммерческая организация, которая поддерживает творчество детей и подростков",
     markAlt: "Знак объединения",
   },
   skipToContent: "Перейти к содержанию",

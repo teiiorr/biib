@@ -5,10 +5,9 @@ import { useRef, type RefObject } from "react";
 import type { LogoBox } from "@/content/brand";
 import { registerAmbient } from "@/lib/motion/ambient-governor";
 import { PIN_LENGTH, SCENE_LENGTH, SCRUB } from "@/lib/motion/constants";
-import { coverRect, heroMediaBox, logoRect } from "@/lib/motion/cover";
+import { HERO_FOCUS_Y, coverRect, heroMediaBox, logoRect } from "@/lib/motion/cover";
 import { motionAllowed } from "@/lib/motion/prefs";
 import { scheduleScrollRefresh } from "@/lib/motion/refresh";
-import { reached } from "@/lib/motion/viewport";
 
 import { useEngineEffect } from "./engine";
 import { useMotionPrefs } from "./motion-context";
@@ -103,23 +102,32 @@ export function useHeroScene(
         setAway(false);
         if (mark) gsap.set(mark, { autoAlpha: 1 });
       };
+      /* Sahna geometriya sababli oʻchsa CSS ham sahnasiz joylashuvga oʻtadi (home.css data-hero-static):
+         qahramon yopishmaydi, missiya uning ustidan oʻtmaydi. */
+      const setStatic = (on: boolean): void => {
+        if (on === "heroStatic" in html.dataset) return;
+        if (on) html.dataset.heroStatic = "";
+        else delete html.dataset.heroStatic;
+        scheduleScrollRefresh();
+      };
       const release = (): void => {
         delete html.dataset.heroScene;
+        delete html.dataset.heroStatic;
         setAway(false);
         hero.style.removeProperty("--scene-progress");
         for (const el of layers) el.style.removeProperty("will-change");
       };
 
-      // Dvigatel kech keldi, foydalanuvchi allaqachon pastda: sahna statik yakuniy holatda qoladi (sakrash yoʻq).
-      if (reached(wrapper) && window.scrollY > window.innerHeight * 0.1) {
-        settle();
-        return release;
-      }
-
       /* Belgining tinch holati: qahramon yopishganda (0,0) da turadi, shuning uchun viewport koordinatasi. */
       const rest = (): RestRect => {
         const box = heroMediaBox(hero);
-        const cover = coverRect(options.media.width, options.media.height, box.width, box.height);
+        const cover = coverRect(
+          options.media.width,
+          options.media.height,
+          box.width,
+          box.height,
+          HERO_FOCUS_Y,
+        );
         const r = logoRect(cover, options.logoBox);
         return { left: r.cx - r.size / 2, top: r.cy - r.size / 2, size: r.size };
       };
@@ -195,8 +203,9 @@ export function useHeroScene(
         enabled = on;
         if (on) {
           trigger.enable(false, false);
-          /* Yakuniy holatdan qaytildi (masalan shriftlar kelib qahramon sigʻdi): belgi yana sahnada. */
-          setAway(trigger.progress < 0.76);
+          /* Yakuniy holatdan qaytildi (shriftlar kelib qahramon sigʻdi, Harakat qayta yoqildi): vaqt
+             chizigʻi darhol skroll joyiga tenglashadi — belgi bir lahza ham yoʻqolmaydi. */
+          syncToScroll();
         } else {
           const reachedAt = trigger.progress;
           trigger.disable(false);
@@ -211,17 +220,37 @@ export function useHeroScene(
           }
         }
       };
+      /* Skroll joyidagi holat: sahna pastda boshlansa ham (qayta yuklash, orqaga qaytish) sakrashsiz
+         yakuniy holatda turadi va yuqoriga qaytganda belgi yana uchadi. */
+      const syncToScroll = (): void => {
+        /* Trigger hali oʻlchanmagan boʻlishi mumkin (sahifa pastda qayta yuklandi): oʻram joyidan hisoblanadi. */
+        const start = Number.isFinite(trigger.start)
+          ? trigger.start
+          : wrapper.getBoundingClientRect().top + window.scrollY;
+        const end = Number.isFinite(trigger.end)
+          ? trigger.end
+          : start + wrapper.offsetHeight - window.innerHeight;
+        const raw = (window.scrollY - start) / Math.max(1, end - start);
+        const p = Math.min(1, Math.max(0, Number.isFinite(raw) ? raw : 0));
+        tl.progress(p);
+        progress.current = p;
+        hero.style.setProperty("--scene-progress", p.toFixed(3));
+        setAway(p < 0.76);
+      };
       /* Refresh vaqt chizigʻini qayta chizadi (invalidateOnRefresh): oʻchiq sahnada belgi yana
          yashirinib qolmasin — yakuniy holat har tekshiruvdan keyin qayta qoʻyiladi. */
       function checkGeometry(): void {
         geometryOff = !runnable();
+        setStatic(geometryOff);
         apply();
         if (geometryOff) {
           tl.progress(0);
           settle();
         }
       }
+      setStatic(geometryOff);
       if (geometryOff) apply();
+      else syncToScroll();
       /* Shrift almashishi yoki tugmalar qatori qahramon balandligini oʻzgartiradi; ScrollTrigger buni
          oʻzi sezmaydi. Balandlik oʻzgarsa bitta refresh: sahna sigʻdimi yoki yoʻqmi qayta hisoblanadi. */
       /* Oʻchiq trigger refreshda qatnashmaydi (onRefresh chaqirilmaydi): shu sabab geometriya shu yerda

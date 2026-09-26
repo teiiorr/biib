@@ -62,6 +62,19 @@
     filter: none;
   }
 
+  /* Oyna ustida oyna yoʻq (10.1.2): sarlavha guruhi ichidagi oyna tugma (Koʻrinish) oʻz muzini, soyasini
+     va qirrasini chizmaydi — guruhning bitta oynasi yetadi, ichida alohida ramkali quti koʻrinmaydi. */
+  .surface .ui-button.material[data-variant="glass"] {
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+  @media (hover: hover) {
+    .surface .ui-button.material[data-variant="glass"]:hover {
+      background: color-mix(in oklab, var(--material-ink) 8%, transparent);
+    }
+  }
   /* Sirt: radius konsentrik, padding ichki radiusni belgilaydi. */
   .surface {
     border-radius: var(--surface-radius);

@@ -6,7 +6,7 @@ export const home = {
   },
   portal: {
     statement:
-      "Har bir bola oʻz ovozini, rangini va sahnasini topsin deb ishlaymiz. Viloyat studiyalaridan poytaxt konsertigacha bitta yoʻl.",
+      "Iqtidorli bolalarni respublikaning barcha hududlaridan, ayniqsa chekka tumanlardan izlab topamiz va mahalladan respublika sahnasigacha olib chiqamiz.",
     label: "Darvoza",
   },
   upop: {

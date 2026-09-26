@@ -6,11 +6,11 @@ export const meta: typeof source = {
   titleTemplate: "{title} · Bolalar Ijodkorligi",
   home: {
     title: "Bolalar Ijodkorligi Ijodiy Birlaşmasi",
-    description: "Özbekistonda bolalar va ösmirlar ijodini qöllab-quvvatlaydigan birlaşma: UPOP TREND milliy kastingi, teatr va rasm studiyalari, körgazmalar.",
+    description: "Bolalar va ösmirlar ijodkorligini qöllab-quvvatlovçi nodavlat notijorat taşkilot: adabiyot, teatr, kino, animatsiya, musiqa va UPOP TREND.",
   },
   about: {
     title: "Biz haqimizda",
-    description: "Birlaşmaning maqsadi, yönalişlari va tarixi: bolalar ijodi uçun studiya, sahna va körgazma taşkil qilamiz.",
+    description: "Ustav asosida: birlaşmaning maqsadi, yönalişlari, asosiy vazifalari va huquqiy maqomi.",
   },
   projects: {
     title: "UPOP TREND",
@@ -26,7 +26,7 @@ export const meta: typeof source = {
   },
   leadership: {
     title: "Rahbariyat",
-    description: "Birlaşma rahbariyati: lavozimlar, qabul kunlari va rasmiy poçta manzillari.",
+    description: "Birlaşma raisi, hamraisi, ijroçi direktori va taftiş komissiyasi raisi.",
   },
   partners: {
     title: "Hamkorlar",

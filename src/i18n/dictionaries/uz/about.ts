@@ -1,12 +1,17 @@
+/* Maqsad, yoʻnalishlar va vazifalar birlashma ustavidan (2026, Adliya vazirligida roʻyxatdan oʻtgan):
+   1.1, 1.3, 2.1, 2.2 va 6.10-bandlar. Matn qisqartirilgan, maʼnosi oʻzgartirilmagan. */
 export const about = {
   title: "Biz haqimizda",
   mission: {
     paragraphs: [
-      "Har bir bola oʻz qiziqishini sinab koʻrishi uchun yaqin joyda studiya, tajribali ustoz va tomoshabin boʻlishi kerak. Biz shu uchalasini bir joyga yigʻamiz.",
-      "Ish viloyatlardan boshlanadi: studiyalar shahar va tuman markazlarida ochiladi, eng yaxshi ishlar poytaxt sahnasiga va koʻrgazmalarga chiqadi.",
+      "Bolalar ijodkorligi ijodiy birlashmasi bolalar va oʻsmirlar ijodkorligini qoʻllab-quvvatlash, bolalar uchun milliy kontent yaratish sohasida ishlaydigan ijodkorlar va mutaxassislarni birlashtiradi. Birlashma jamoat birlashmasi shaklidagi nodavlat notijorat tashkilot boʻlib, 2026-yilda Oʻzbekiston Respublikasi Adliya vazirligida davlat roʻyxatidan oʻtgan.",
+      "Birlashma adabiyot, teatr, kino, animatsiya, musiqa, tasviriy sanʼat va media sohalarida bolalar uchun yuksak saviyali milliy kontent yaratilishini ragʻbatlantiradi, respublikaning barcha hududlaridan, ayniqsa chekka tumanlardan iqtidorli bolalarni izlab topib, ularni ijodiy yoʻnaltiradi. Faoliyat ixtiyoriylik, oshkoralik, teng huquqlilik, oʻzini oʻzi boshqarish va qonuniylik tamoyillariga asoslanadi.",
     ],
-    quote: "Bola ijod qilganda unga sahna emas, ishonch kerak. Sahna keyin topiladi.",
-    quoteSource: "Birlashma nizomidan",
+    quote:
+      "Bolalar va oʻsmirlar ijodkorligini tizimli ravishda qoʻllab-quvvatlash… hamda milliy madaniyat, maʼnaviy qadriyatlar va sogʻlom turmush tarzini bolalar ongiga ijodiy vositalar orqali singdirish.",
+    quoteSource: "Birlashma ustavi, 2.1-band",
+    charter: "Birlashma ustavi",
+    charterHint: "PDF, 1 MB",
   },
   media: {
     caption: "UPOP TREND loyihasining vizual obrazi",
@@ -15,10 +20,23 @@ export const about = {
   values: {
     heading: "Yoʻnalishlar",
     items: [
-      "Qoʻshiq va vokal",
-      "Teatr va sahna nutqi",
+      "Adabiyot",
+      "Teatr",
+      "Kino va animatsiya",
+      "Musiqa",
       "Tasviriy sanʼat",
-      "Animatsiya va adabiyot",
+      "Media va raqamli ijod",
+    ],
+  },
+  tasks: {
+    heading: "Asosiy vazifalar",
+    items: [
+      "Bolalar uchun multfilmlar, audiohikoyalar, ertaklar, qoʻshiqlar, adabiy va raqamli mahsulotlar yaratilishiga koʻmaklashish",
+      "Barcha hududlardan, ayniqsa chekka tumanlardan iqtidorli bolalar va oʻsmirlarni izlab topish",
+      "«Mahalla – tuman – viloyat – respublika» zanjirida koʻrik-tanlovlar va festivallar oʻtkazish",
+      "Tajribali ijodkor va pedagoglarning mahorat darslarini, tanlovlarga tayyorlov kurslarini tashkil etish",
+      "Oʻzbekiston bolalari asarlarini nufuzli xalqaro festival va tanlovlarda namoyish etish",
+      "Nogironligi boʻlgan bolalar uchun inklyuziv ijodiy ustaxonalar yaratishga koʻmaklashish",
     ],
   },
   history: {

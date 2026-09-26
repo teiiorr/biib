@@ -142,6 +142,8 @@
     gap: 4px;
     min-width: var(--hit-min);
     min-height: 56px;
+    /* Pastda tanlov chizigʻi uchun joy: yozuv dumlari (g, y) chiziqqa tegmaydi. */
+    padding-bottom: 8px;
     border-radius: var(--surface-radius);
     color: var(--material-ink);
     z-index: 1;
@@ -149,6 +151,20 @@
   .tab-item[aria-current="page"],
   .tab-item[data-active="true"] {
     color: var(--tint);
+  }
+  /* Tanlangan tab ostida qisqa tint chizigʻi: ramkasiz koʻzgu linza tungi oynada deyarli koʻrinmaydi,
+     holat esa faqat rang bilan bildirilmasin (1.4.1, 1.4.11 — chiziq fonga ≥ 3:1). */
+  .tab-item[aria-current="page"]::after,
+  .tab-item[data-active="true"]::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 4px;
+    width: 16px;
+    height: 3px;
+    border-radius: 2px;
+    background: currentColor;
+    transform: translateX(-50%);
   }
   .tab-lens {
     position: absolute;

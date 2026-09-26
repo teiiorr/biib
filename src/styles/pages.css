@@ -78,6 +78,25 @@
       grid-auto-columns: minmax(0, 1fr);
     }
   }
+  /* Vazifalar: jumlalar uzun, kompyuterda uch ustun (ikki qator), bitta qatorga siqilmaydi. */
+  @media (min-width: 1024px) {
+    .about-list[data-columns="3"] {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-auto-flow: row;
+    }
+  }
+  .history-body {
+    display: grid;
+    gap: 4px;
+  }
+  /* Ustavni yuklab olish: harakat oʻng chetda (egasining talabi). */
+  .about-charter {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .about-charter .ui-button {
+    gap: 8px;
+  }
   :root .about-history {
     background: var(--surface);
   }
@@ -432,6 +451,14 @@
     }
   }
 
+  /* Telefonlar kartasi: har raqam alohida qatorda, oʻz havolasi bilan. */
+  .contact-fact-links {
+    display: grid;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
   /* Aloqa: oltita teng rekvizit kartasi 1 / 2 / 3 ustunda. 600 px dan har karta uch qatorli subgrid
      (yorliq, qiymat, harakatlar): qoʻshni kartalarda qiymat va tugmalar bir chiziqda. */
   .contact-facts {

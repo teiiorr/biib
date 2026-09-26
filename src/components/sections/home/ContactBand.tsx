@@ -38,7 +38,15 @@ export function ContactBand({ locale, dict }: ContactBandProps) {
             <div className="feature contact-band-item">
               <FeatureIcon name="phone" />
               <dt className="sr-only">{dict.contacts.details.phone}</dt>
-              <dd className="t-body tnum">{c.phones.value?.[0] ?? FILLER.word}</dd>
+              <dd className="t-body tnum contact-band-phones">
+                {c.phones.value?.length
+                  ? c.phones.value.map((phone) => (
+                      <a key={phone} href={`tel:${phone.replace(/\s/g, "")}`}>
+                        {phone}
+                      </a>
+                    ))
+                  : FILLER.word}
+              </dd>
             </div>
           </dl>
           <div className="contact-band-actions">

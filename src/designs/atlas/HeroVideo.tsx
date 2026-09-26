@@ -11,7 +11,7 @@ import { useHeroScene } from "@/components/motion/useHeroScene";
 import { HERO_LOCK_AT, HERO_LOGO_BOX, HERO_MEDIA, HERO_PORTRAIT_MEDIA } from "@/content/brand";
 import { useMediaQuery } from "@/lib/appearance/media";
 import { cx } from "@/lib/cx";
-import { coverRect, heroMediaBox, logoRect } from "@/lib/motion/cover";
+import { HERO_FOCUS_Y, coverRect, heroMediaBox, logoRect } from "@/lib/motion/cover";
 import { notifyHeroReady } from "@/lib/motion/refresh";
 
 import type { ArtProps } from "../registry";
@@ -53,7 +53,7 @@ export default function HeroVideo({ copy }: ArtProps) {
     /* Kadrdagi belgining oʻrni: sahna ustidagi belgi va parda shu oʻlchamlar bilan joylashadi. */
     const write = (): void => {
       const box = heroMediaBox(hero);
-      const cover = coverRect(media.width, media.height, box.width, box.height);
+      const cover = coverRect(media.width, media.height, box.width, box.height, HERO_FOCUS_Y);
       const rect = logoRect(cover, HERO_LOGO_BOX[orientation]);
       hero.style.setProperty("--logo-x", `${rect.cx.toFixed(1)}px`);
       hero.style.setProperty("--logo-y", `${rect.cy.toFixed(1)}px`);

@@ -4,7 +4,7 @@ export const common: typeof source = {
   brand: {
     name: "Bolalar Ijodkorligi Ijodiy Birlashmasi",
     tagline:
-      "An association that supports the creativity of children and young people in Uzbekistan",
+      "A non-governmental non-profit organisation that supports the creativity of children and teenagers",
     markAlt: "Association mark",
   },
   skipToContent: "Skip to content",

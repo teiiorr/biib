@@ -8,7 +8,7 @@ export const home: typeof source = {
   },
   portal: {
     statement:
-      "We work so that every child finds their voice, their colour and their stage. One road from a regional studio to a concert in the capital.",
+      "We look for gifted children in every region of the country, especially in remote districts, and take them from their neighbourhood to the national stage.",
     label: "The gate",
   },
   upop: {

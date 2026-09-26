@@ -1,24 +1,44 @@
 import type { Milestone } from "./types";
 
-/** Tarix sanalari tashkilotdan kelmagan: ustunlar tuzilmaviy oʻrinbosar bilan chiziladi. */
+/** Tarix: taʼsis va davlat roʻyxati ustavdan (2026). Qolgan bosqichlar sanasi tashkilotdan kutilmoqda. */
 export const MILESTONES: readonly Milestone[] = [
   {
     id: "founding",
-    status: "pending",
-    year: null,
+    status: "confirmed",
+    year: 2026,
     title: {
-      uz: "Birlashma taʼsis etildi",
-      oz: "Бирлашма таъсис этилди",
-      ozbekca: "Birlaşma taʼsis etildi",
-      ru: "Основание объединения",
-      en: "The association is founded",
+      uz: "Taʼsis yigʻilishi",
+      oz: "Таъсис йиғилиши",
+      ozbekca: "Taʼsis yiğilişi",
+      ru: "Учредительное собрание",
+      en: "Founding meeting",
     },
     text: {
-      uz: "Taʼsis sanasi va hujjati tashkilotdan tasdiq kutmoqda.",
-      oz: "Таъсис санаси ва ҳужжати ташкилотдан тасдиқ кутмоқда.",
-      ozbekca: "Taʼsis sanasi va hujjati taşkilotdan tasdiq kutmoqda.",
-      ru: "Дата и документ об основании ожидают подтверждения объединения.",
-      en: "The founding date and document await confirmation by the association.",
+      uz: "Iyun oyida tashabbuskorlarning taʼsis yigʻilishi birlashma ustavini tasdiqladi.",
+      oz: "Июнь ойида ташаббускорларнинг таъсис йиғилиши бирлашма уставини тасдиқлади.",
+      ozbekca: "Iyun oyida taşabbuskorlarning taʼsis yiğilişi birlaşma ustavini tasdiqladi.",
+      ru: "В июне учредительное собрание инициаторов утвердило устав объединения.",
+      en: "In June the founding meeting of the initiators approved the charter of the association.",
+    },
+  },
+  {
+    id: "registration",
+    status: "confirmed",
+    year: 2026,
+    title: {
+      uz: "Davlat roʻyxati",
+      oz: "Давлат рўйхати",
+      ozbekca: "Davlat röyxati",
+      ru: "Государственная регистрация",
+      en: "State registration",
+    },
+    text: {
+      uz: "Birlashma Oʻzbekiston Respublikasi Adliya vazirligida davlat roʻyxatidan oʻtdi va yuridik shaxs boʻldi.",
+      oz: "Бирлашма Ўзбекистон Республикаси Адлия вазирлигида давлат рўйхатидан ўтди ва юридик шахс бўлди.",
+      ozbekca:
+        "Birlaşma Özbekiston Respublikasi Adliya vazirligida davlat röyxatidan ötdi va yuridik şaxs böldi.",
+      ru: "Объединение прошло государственную регистрацию в Министерстве юстиции Республики Узбекистан и стало юридическим лицом.",
+      en: "The association was registered with the Ministry of Justice of the Republic of Uzbekistan and became a legal entity.",
     },
   },
   {

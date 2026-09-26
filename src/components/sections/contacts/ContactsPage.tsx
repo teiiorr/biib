@@ -28,7 +28,11 @@ interface Fact {
   readonly label: string;
   readonly value: string | null;
   readonly href?: string;
+  /** Bir nechta qiymat (telefonlar): har biri oʻz havolasi, alohida qatorda. */
+  readonly links?: ReadonlyArray<{ readonly text: string; readonly href: string }>;
 }
+
+const telHref = (phone: string): string => `tel:${phone.replace(/\s/g, "")}`;
 
 /**
  * Aloqa: markazdagi sarlavha ostida oltita teng rekvizit kartasi (3 / 2 / 1 ustun). Har kartada bir xil
@@ -39,7 +43,8 @@ export function ContactsPage({ locale, dict }: PageProps) {
   const c = getContacts();
   const d = dict.contacts;
   const formEnabled = contactFormEnabled();
-  const phone = c.phones.value?.[0] ?? null;
+  const phones = c.phones.value ?? [];
+  const addressUz = c.address.value?.uz ?? null;
   const facts: Fact[] = [
     {
       key: "address",
@@ -51,8 +56,8 @@ export function ContactsPage({ locale, dict }: PageProps) {
       key: "phone",
       icon: "phone",
       label: d.details.phone,
-      value: phone,
-      ...(phone ? { href: `tel:${phone.replace(/\s/g, "")}` } : {}),
+      value: phones[0] ?? null,
+      ...(phones.length ? { links: phones.map((p) => ({ text: p, href: telHref(p) })) } : {}),
     },
     {
       key: "email",
@@ -111,7 +116,17 @@ export function ContactsPage({ locale, dict }: PageProps) {
                   {fact.label}
                 </dt>
                 <dd className="contact-fact-value">
-                  {fact.value && fact.href ? (
+                  {fact.links ? (
+                    <ul className="contact-fact-links">
+                      {fact.links.map((link) => (
+                        <li key={link.href}>
+                          <a href={link.href} className="t-body tnum text-ink">
+                            {link.text}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : fact.value && fact.href ? (
                     <a
                       href={fact.href}
                       className="t-body tnum text-ink"
@@ -128,12 +143,16 @@ export function ContactsPage({ locale, dict }: PageProps) {
                     </span>
                   )}
                 </dd>
-                {fact.value ? (
+                {fact.value && !fact.links ? (
                   <dd className="contact-fact-actions">
-                    {fact.key === "address" && map ? (
+                    {fact.key === "address" && (map || addressUz) ? (
                       <>
                         <LinkButton
-                          href={`https://yandex.uz/maps/?pt=${map.lng},${map.lat}&z=16`}
+                          href={
+                            map
+                              ? `https://yandex.uz/maps/?pt=${map.lng},${map.lat}&z=16`
+                              : `https://yandex.uz/maps/?text=${encodeURIComponent(addressUz ?? "")}`
+                          }
                           variant="ghost"
                           size="40"
                           external
@@ -142,7 +161,11 @@ export function ContactsPage({ locale, dict }: PageProps) {
                           {d.map.yandex}
                         </LinkButton>
                         <LinkButton
-                          href={`https://www.google.com/maps?q=${map.lat},${map.lng}`}
+                          href={
+                            map
+                              ? `https://www.google.com/maps?q=${map.lat},${map.lng}`
+                              : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressUz ?? "")}`
+                          }
                           variant="ghost"
                           size="40"
                           external

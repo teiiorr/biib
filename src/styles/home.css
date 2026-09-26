@@ -35,7 +35,7 @@
     --cover-h: calc(var(--hero-media-h) * var(--cover-scale));
     --logo-bottom: var(
       --logo-bottom-js,
-      calc((100svh - var(--cover-h)) / 2 + var(--hero-logo-bottom) * var(--cover-h))
+      calc((100svh - var(--cover-h)) * 0.75 + var(--hero-logo-bottom) * var(--cover-h))
     );
     --ink: var(--hero-ink);
     --ink-2: color-mix(in oklab, var(--hero-ink) 88%, transparent);
@@ -84,9 +84,11 @@
     width: 100%;
     height: 100%;
   }
+  /* Langar cover.ts HERO_FOCUS_Y bilan bir xil: belgining JS oʻlchami kadrdagi belgiga toʻgʻri keladi. */
   .home-hero-poster,
   .hero-loop-video {
     object-fit: cover;
+    object-position: 50% 75%;
   }
   /* Oxirgi kadr posteri: harakat oʻchiq, kamaytirilgan harakat yoki video hali boshlanmagan (trafik
      tejash) — belgi yigʻilgan holda turadi; video boshlanganda uning ostida qoladi. */
@@ -190,10 +192,10 @@
       flex: 1 1 auto;
     }
   }
-  /* 320–359 px: uchta element bir qatorga sigʻmaydi. Halqa boshqaruvi yashiriladi (video bir marta
+  /* 320–374 px: uchta element bir qatorga sigʻmaydi (kirillcha «Биз ҳақимизда» 360 px da ham). Halqa boshqaruvi yashiriladi (video bir marta
      oʻynaydi, toʻxtatish Koʻrinish panelidagi Harakat kaliti bilan qoladi — 2.2.2), ikki tugma bir qatorda
      qoladi va tab-bar ostiga tushmaydi. */
-  @media (max-width: 359px) {
+  @media (max-width: 374px) {
     .home-hero-actions .ui-button[data-size="56"] {
       --btn-px: 12px;
     }
@@ -220,6 +222,32 @@
     }
     .home-hero-actions {
       margin-top: 32px;
+    }
+  }
+  /* Noutbuk oynalari (1366×657, 1280×720…): qahramon bir ekranga sigʻishi uchun oraliqlar bir qadam
+     qisqa — aks holda tugmalar pastda kesiladi va belgi sarlavhaga uchmaydi. */
+  @media (min-width: 1024px) and (max-height: 820px) {
+    .home-hero-content {
+      padding-top: max(
+        calc(var(--header-h) + 32px + var(--safe-top)),
+        calc(var(--logo-bottom) + 24px)
+      );
+      padding-bottom: 32px;
+    }
+    .home-hero-actions {
+      margin-top: 24px;
+    }
+  }
+  @media (min-width: 1024px) and (max-height: 640px) {
+    .home-hero-content {
+      padding-top: max(
+        calc(var(--header-h) + 24px + var(--safe-top)),
+        calc(var(--logo-bottom) + 16px)
+      );
+      padding-bottom: 24px;
+    }
+    .home-hero-actions {
+      margin-top: 16px;
     }
   }
   /* Oyna tugmasi va boshqaruv qorongʻi kadr ustida ikkala mavzuda ham tun materialida (10.1.3); pushti
@@ -286,8 +314,13 @@
       background: var(--hero-scrim);
     }
   }
-  :root[data-motion="off"] .home-hero {
+  :root[data-motion="off"] .home-hero,
+  :root[data-hero-static] .home-hero {
     position: relative;
+  }
+  :root[data-hero-static] .home-hero-scene .home-mission {
+    min-height: 0;
+    background: var(--hero-scrim);
   }
   :root[data-motion="off"] .home-hero-scene .home-mission {
     background: var(--hero-scrim);
@@ -767,6 +800,10 @@
   }
   .contact-band-list dd {
     margin: 4px 0 0;
+  }
+  .contact-band-phones {
+    display: grid;
+    gap: 4px;
   }
   .contact-band-actions {
     display: flex;

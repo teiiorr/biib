@@ -1,3 +1,4 @@
+import { t } from "@/content";
 import type { Contacts, NewsArticle, Person } from "@/content/types";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { LOCALE_META, type Locale } from "@/i18n/locales";
@@ -15,8 +16,31 @@ export function organizationJsonLd(input: {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: dict.common.brand.name,
+    /* Ustavdagi rasmiy nomlar (1.10-band): oʻzbek, rus va ingliz tillarida. */
+    legalName: "Bolalar ijodkorligi ijodiy birlashmasi",
+    alternateName: [
+      "Творческое объединение детского творчества",
+      "Creative Association of Children’s Creativity",
+    ],
     url: absoluteUrl(`/${locale}`),
     logo: absoluteUrl("/icon.png"),
+    ...(contacts.address.status === "confirmed" && contacts.address.value
+      ? {
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: t(contacts.address.value, locale),
+            postalCode: "100011",
+            addressLocality: "Tashkent",
+            addressCountry: "UZ",
+          },
+        }
+      : {}),
+    ...(contacts.phones.status === "confirmed" && contacts.phones.value?.length
+      ? { telephone: contacts.phones.value.map((p) => p.replace(/\s/g, "")) }
+      : {}),
+    ...(contacts.email.status === "confirmed" && contacts.email.value
+      ? { email: contacts.email.value }
+      : {}),
     sameAs: contacts.socials.filter((s) => s.status === "confirmed").map((s) => s.href),
   };
 }

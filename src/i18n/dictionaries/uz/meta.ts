@@ -4,12 +4,12 @@ export const meta = {
   home: {
     title: "Bolalar Ijodkorligi Ijodiy Birlashmasi",
     description:
-      "Oʻzbekistonda bolalar va oʻsmirlar ijodini qoʻllab-quvvatlaydigan birlashma: UPOP TREND milliy kastingi, teatr va rasm studiyalari, koʻrgazmalar.",
+      "Bolalar va oʻsmirlar ijodkorligini qoʻllab-quvvatlovchi nodavlat notijorat tashkilot: adabiyot, teatr, kino, animatsiya, musiqa va UPOP TREND.",
   },
   about: {
     title: "Biz haqimizda",
     description:
-      "Birlashmaning maqsadi, yoʻnalishlari va tarixi: bolalar ijodi uchun studiya, sahna va koʻrgazma tashkil qilamiz.",
+      "Ustav asosida: birlashmaning maqsadi, yoʻnalishlari, asosiy vazifalari va huquqiy maqomi.",
   },
   projects: {
     title: "UPOP TREND",
@@ -27,7 +27,7 @@ export const meta = {
   },
   leadership: {
     title: "Rahbariyat",
-    description: "Birlashma rahbariyati: lavozimlar, qabul kunlari va rasmiy pochta manzillari.",
+    description: "Birlashma raisi, hamraisi, ijrochi direktori va taftish komissiyasi raisi.",
   },
   partners: {
     title: "Hamkorlar",

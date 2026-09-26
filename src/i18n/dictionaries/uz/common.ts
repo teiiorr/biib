@@ -1,7 +1,7 @@
 export const common = {
   brand: {
     name: "Bolalar Ijodkorligi Ijodiy Birlashmasi",
-    tagline: "Oʻzbekistonda bolalar va oʻsmirlar ijodini qoʻllab-quvvatlaydigan birlashma",
+    tagline: "Bolalar va oʻsmirlar ijodkorligini qoʻllab-quvvatlovchi nodavlat notijorat tashkilot",
     markAlt: "Birlashma belgisi",
   },
   skipToContent: "Asosiy qismga oʻtish",
