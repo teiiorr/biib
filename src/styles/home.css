@@ -61,6 +61,15 @@
     position: absolute;
     inset: 0;
   }
+  /* Media qatlami bir ekran balandligida (cover.ts heroMediaBox): matn uzun boʻlsa qahramon pastga
+     oʻsadi, kadr esa joyida qoladi; pastdagi ortiqcha joy ostlik rangida. */
+  .home-hero-art {
+    bottom: auto;
+    height: 100svh;
+  }
+  .home-hero {
+    background: var(--hero-scrim);
+  }
   /* Kadr belgiga qarab kattalashadi (sahna): poster va video bir xil nuqtadan. */
   .home-hero-media,
   .hero-loop {
@@ -187,19 +196,43 @@
   .hero-loop-control:active {
     scale: 0.97;
   }
-  /* Telefonda 48 px (Art. IX.1 juftligi: yorliq 16). Bosh harakat toʻliq kenglikda, ostida ikkinchi
-     harakat va halqa boshqaruvi bir qatorda: boshqaruv kelganda qator balandligi oʻzgarmaydi (siljish yoʻq),
-     320 px da ham yorliqlar sigʻadi. Bosh barmoq zonasida, tab-bar ustida. */
+  /* Telefonda 48 px (Art. IX.1 juftligi: yorliq 16). Ikki harakat va halqa boshqaruvi bitta qatorda:
+     qahramon bir ekranga sigʻadi (aks holda sahna — belgining sarlavhaga uchishi — telefonda ishlamasdi)
+     va tugmalar tab-bar ostida qolmaydi. Sigʻmasa (320 px) qator oʻz-oʻzidan ikkiga boʻlinadi. */
   @media (max-width: 599px) {
     .home-hero-actions .ui-button[data-size="56"] {
       --btn-h: var(--control-m);
-      --btn-px: 24px;
+      --btn-px: 16px;
+    }
+    .home-hero-actions {
+      gap: 8px;
     }
     .home-hero-actions > .ui-button {
-      flex: 1 1 0;
+      flex: 1 1 auto;
     }
-    .home-hero-actions > .ui-button:first-child {
-      flex-basis: 100%;
+  }
+  /* 320–359 px: uchta element bir qatorga sigʻmaydi. Halqa boshqaruvi yashiriladi (video bir marta
+     oʻynaydi, toʻxtatish Koʻrinish panelidagi Harakat kaliti bilan qoladi — 2.2.2), ikki tugma bir qatorda
+     qoladi va tab-bar ostiga tushmaydi. */
+  @media (max-width: 359px) {
+    .home-hero-actions .ui-button[data-size="56"] {
+      --btn-px: 12px;
+    }
+    .home-hero-control {
+      display: none;
+    }
+  }
+  /* Past telefonlar (SE, mini): oraliqlar bir qadam qisqa, qahramon baribir bir ekranda. */
+  @media (max-width: 599px) and (max-height: 600px) {
+    .home-hero-content {
+      padding-top: max(
+        calc(var(--header-h) + 32px + var(--safe-top)),
+        calc(var(--logo-bottom) + 16px)
+      );
+      padding-bottom: calc(var(--tabbar-h) + 16px + var(--safe-bottom));
+    }
+    .home-hero-actions {
+      margin-top: 16px;
     }
   }
   @media (min-width: 1024px) {

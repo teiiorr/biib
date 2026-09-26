@@ -41,7 +41,7 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
       aria-labelledby="hero-title"
     >
       <HeroEnter />
-      <div className="home-hero-art">
+      <div className="home-hero-art" data-hero-art="">
         {/* Ohang faqat shu qatlamda: kadr ikkala mavzuda qorongʻi, sarlavha oynasi shuni oʻqiydi. */}
         <div className="home-hero-media" data-hero-media="" data-tone="dark" aria-hidden="true">
           <picture className="home-hero-picture">

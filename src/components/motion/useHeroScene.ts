@@ -5,8 +5,9 @@ import { useRef, type RefObject } from "react";
 import type { LogoBox } from "@/content/brand";
 import { registerAmbient } from "@/lib/motion/ambient-governor";
 import { PIN_LENGTH, SCENE_LENGTH, SCRUB } from "@/lib/motion/constants";
-import { coverRect, logoRect } from "@/lib/motion/cover";
+import { coverRect, heroMediaBox, logoRect } from "@/lib/motion/cover";
 import { motionAllowed } from "@/lib/motion/prefs";
+import { scheduleScrollRefresh } from "@/lib/motion/refresh";
 import { reached } from "@/lib/motion/viewport";
 
 import { useEngineEffect } from "./engine";
@@ -110,19 +111,15 @@ export function useHeroScene(
       };
 
       // Dvigatel kech keldi, foydalanuvchi allaqachon pastda: sahna statik yakuniy holatda qoladi (sakrash yoʻq).
-      if (!runnable() || (reached(wrapper) && window.scrollY > window.innerHeight * 0.1)) {
+      if (reached(wrapper) && window.scrollY > window.innerHeight * 0.1) {
         settle();
         return release;
       }
 
       /* Belgining tinch holati: qahramon yopishganda (0,0) da turadi, shuning uchun viewport koordinatasi. */
       const rest = (): RestRect => {
-        const cover = coverRect(
-          options.media.width,
-          options.media.height,
-          hero.clientWidth,
-          hero.clientHeight,
-        );
+        const box = heroMediaBox(hero);
+        const cover = coverRect(options.media.width, options.media.height, box.width, box.height);
         const r = logoRect(cover, options.logoBox);
         return { left: r.cx - r.size / 2, top: r.cy - r.size / 2, size: r.size };
       };
@@ -167,7 +164,9 @@ export function useHeroScene(
       setAway(true);
       let enabled = true;
       let governorOff = false;
-      let geometryOff = false;
+      /* Qahramon hozir ekranga sigʻmasa ham sahna quriladi, faqat oʻchiq: shriftlar yuklangach (refresh)
+         sigʻsa yoqiladi. Aks holda birinchi kadrdagi zaxira shrift telefonda sahnani butunlay oʻchirardi. */
+      let geometryOff = !runnable();
       const trigger = ScrollTrigger.create({
         trigger: wrapper,
         start: "top top",
@@ -187,16 +186,18 @@ export function useHeroScene(
           setAway(self.progress < 0.76);
         },
         onRefresh: () => {
-          geometryOff = !runnable();
-          apply();
+          checkGeometry();
         },
       });
       const apply = (): void => {
         const on = !governorOff && !geometryOff;
         if (on === enabled) return;
         enabled = on;
-        if (on) trigger.enable(false, false);
-        else {
+        if (on) {
+          trigger.enable(false, false);
+          /* Yakuniy holatdan qaytildi (masalan shriftlar kelib qahramon sigʻdi): belgi yana sahnada. */
+          setAway(trigger.progress < 0.76);
+        } else {
           const reachedAt = trigger.progress;
           trigger.disable(false);
           /* Tez skroll yoki langarga sakrashda scrub orqada qoladi: sahna toʻxtaganda holat skroll joyiga
@@ -210,6 +211,29 @@ export function useHeroScene(
           }
         }
       };
+      /* Refresh vaqt chizigʻini qayta chizadi (invalidateOnRefresh): oʻchiq sahnada belgi yana
+         yashirinib qolmasin — yakuniy holat har tekshiruvdan keyin qayta qoʻyiladi. */
+      function checkGeometry(): void {
+        geometryOff = !runnable();
+        apply();
+        if (geometryOff) {
+          tl.progress(0);
+          settle();
+        }
+      }
+      if (geometryOff) apply();
+      /* Shrift almashishi yoki tugmalar qatori qahramon balandligini oʻzgartiradi; ScrollTrigger buni
+         oʻzi sezmaydi. Balandlik oʻzgarsa bitta refresh: sahna sigʻdimi yoki yoʻqmi qayta hisoblanadi. */
+      /* Oʻchiq trigger refreshda qatnashmaydi (onRefresh chaqirilmaydi): shu sabab geometriya shu yerda
+         toʻgʻridan-toʻgʻri qayta tekshiriladi, keyin yoqilgan trigger oʻlchamlari yangilanadi. */
+      let heroHeight = hero.offsetHeight;
+      const heroResize = new ResizeObserver(() => {
+        if (hero.offsetHeight === heroHeight) return;
+        heroHeight = hero.offsetHeight;
+        checkGeometry();
+        scheduleScrollRefresh();
+      });
+      heroResize.observe(hero);
       const unregister = registerAmbient(wrapper, "scene", {
         pause: () => {
           governorOff = true;
@@ -222,6 +246,7 @@ export function useHeroScene(
       });
 
       return () => {
+        heroResize.disconnect();
         unregister();
         trigger.kill();
         tl.kill();

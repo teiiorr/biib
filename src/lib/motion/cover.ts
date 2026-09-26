@@ -17,6 +17,19 @@ export function coverRect(mediaW: number, mediaH: number, boxW: number, boxH: nu
   return { x: (boxW - w) / 2, y: (boxH - h) / 2, w, h, s };
 }
 
+/**
+ * Qahramon media qatlami (home.css .home-hero-art): doim bir ekran balandligida. Kadr shu qutiga
+ * cover boʻladi; qahramon matni uzun boʻlsa ham belgi pastga surilmaydi (aks holda sikl: kadr oʻssa
+ * belgi tushadi, matn tushadi, qahramon yana oʻsadi va telefonda sahna ishlamay qolardi).
+ */
+export function heroMediaBox(hero: HTMLElement): {
+  readonly width: number;
+  readonly height: number;
+} {
+  const art = hero.querySelector<HTMLElement>("[data-hero-art]") ?? hero;
+  return { width: art.clientWidth, height: art.clientHeight };
+}
+
 export interface LogoRect {
   /** Markaz, quti koordinatalarida (px). */
   readonly cx: number;
