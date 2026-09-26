@@ -13,8 +13,8 @@ export const contacts: typeof source = {
     copied: "Скопировано",
   },
   map: {
-    yandex: "Открыть в Яндекс Картах",
-    google: "Открыть в Google Картах",
+    yandex: "Яндекс Карты",
+    google: "Google Карты",
   },
   form: {
     heading: "Написать нам",

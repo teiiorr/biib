@@ -62,6 +62,129 @@
     filter: none;
   }
 
+  /* ---------- Tugmalar ham oyna (egasining talabi: oyna effekti hamma joyda) ----------
+     Yaltiroq qatlami (158°) harakatsiz, fon rangi oʻtishi silliq (background-color). Yorliqlar har holatda
+     ≥ 4.5:1: pushti ustida oq/navy, tiniq muzda pushti (tint) — muz tusi matnli oyna chegarasidan past emas. */
+  .ui-button:is([data-variant="primary"], [data-variant="ghost"]) {
+    --btn-glare: linear-gradient(
+      158deg,
+      color-mix(in oklab, #ffffff 22%, transparent) 0%,
+      color-mix(in oklab, #ffffff 6%, transparent) 30%,
+      transparent 52%
+    );
+    transition:
+      background-color var(--dur-ui) var(--ease-ui),
+      box-shadow var(--dur-ui) var(--ease-ui),
+      color var(--dur-ui) var(--ease-ui),
+      scale 200ms var(--ease-ui),
+      translate 500ms var(--ease-out);
+  }
+  /* Bosh tugma: pushti tusli muz — orqadagi rang ozgina oʻtadi, qirrada ichki yorugʻlik. */
+  :root .ui-button[data-variant="primary"] {
+    background-color: color-mix(in oklab, var(--tint) 92%, transparent);
+    background-image: var(--btn-glare);
+    -webkit-backdrop-filter: blur(10px) saturate(1.6);
+    backdrop-filter: blur(10px) saturate(1.6);
+    box-shadow:
+      inset 0 0 18px -8px color-mix(in oklab, #ffffff 60%, transparent),
+      inset 0 -8px 12px -10px color-mix(in oklab, var(--material-shadow) 90%, transparent),
+      var(--shadow-raised);
+  }
+  /* Ustiga kelganda (va fokusda): navbar kabi tiniq muz, yorliq pushti — tugma «eriydi», orqa koʻrinadi. */
+  @media (hover: hover) {
+    :root .ui-button[data-variant="primary"]:hover:not([aria-disabled="true"]) {
+      --on-tint: var(--tint);
+      background-color: color-mix(
+        in oklab,
+        var(--material-base) calc(max(var(--g-tint-text), 0.55) * 100%),
+        transparent
+      );
+      box-shadow:
+        inset 0 0 22px -8px color-mix(in oklab, var(--tint) 45%, transparent),
+        inset 0 -8px 12px -10px color-mix(in oklab, var(--material-shadow) 90%, transparent),
+        var(--shadow-floating);
+    }
+  }
+  :root .ui-button[data-variant="primary"]:focus-visible {
+    --on-tint: var(--tint);
+    background-color: color-mix(
+      in oklab,
+      var(--material-base) calc(max(var(--g-tint-text), 0.55) * 100%),
+      transparent
+    );
+  }
+  /* Ghost: tinch holatda faqat yorliq; ustiga kelganda va fokusda muz plitka paydo boʻladi. */
+  :root .ui-button[data-variant="ghost"] {
+    background-color: transparent;
+  }
+  @media (hover: hover) {
+    :root .ui-button[data-variant="ghost"]:hover:not([aria-disabled="true"]) {
+      background-color: color-mix(
+        in oklab,
+        var(--material-base) calc(max(var(--g-tint-text), 0.45) * 100%),
+        transparent
+      );
+      background-image: var(--btn-glare);
+      -webkit-backdrop-filter: blur(8px) saturate(1.6);
+      backdrop-filter: blur(8px) saturate(1.6);
+      box-shadow:
+        inset 0 0 16px -8px color-mix(in oklab, var(--m-spec, #ffffff) 55%, transparent),
+        var(--shadow-raised);
+    }
+  }
+  :root .ui-button[data-variant="ghost"]:focus-visible {
+    background-color: color-mix(
+      in oklab,
+      var(--material-base) calc(max(var(--g-tint-text), 0.45) * 100%),
+      transparent
+    );
+  }
+  /* Oyna tugma: ustiga kelganda muz tiniqlashadi, ichki yorugʻlik kuchayadi (oltin toʻlish oʻrniga). */
+  @media (hover: hover) {
+    :root
+      .ui-button.material[data-variant="glass"]:not([data-icon="only"]):hover:not(
+        [aria-disabled="true"]
+      ) {
+      --m-tint: calc(var(--g-tint-text) * 0.6);
+      box-shadow:
+        inset 0 0 26px -8px color-mix(in oklab, var(--m-spec) 70%, transparent),
+        inset 0 -10px 14px -12px color-mix(in oklab, var(--material-shadow) 80%, transparent),
+        var(--shadow-floating);
+    }
+  }
+  /* Kunduzgi mavzudagi qorongʻi lentalar (UPOP maydoni, rasmiy sarlavha): muz tungi materialda. */
+  :root[data-theme="light"] :is(.upop-field, .navy-band) {
+    --material-base: #111a38;
+    --material-ink: #f7f3ea;
+    --material-ink-2: #c3cadb;
+    --material-rim: #8c95b4;
+    --material-shadow: rgba(2, 5, 20, 0.5);
+  }
+
+  /* Roʻyxatlardagi belgi plitkalari ham kichik oyna: muz, yaltiroq va ichki yorugʻlik; oltin qirra faqat
+     ustiga kelganda (egasining talabi). */
+  .feature-icon {
+    background-color: color-mix(in oklab, var(--material-base) 42%, transparent);
+    background-image: linear-gradient(
+      158deg,
+      color-mix(in oklab, #ffffff 20%, transparent) 0%,
+      transparent 50%
+    );
+    -webkit-backdrop-filter: blur(6px) saturate(1.5);
+    backdrop-filter: blur(6px) saturate(1.5);
+    box-shadow:
+      inset 0 0 14px -6px color-mix(in oklab, var(--accent-text) 38%, transparent),
+      var(--shadow-raised);
+  }
+  @media (hover: hover) {
+    .feature:hover .feature-icon {
+      box-shadow:
+        inset 0 0 0 1.5px var(--accent-text),
+        inset 0 0 14px -6px color-mix(in oklab, var(--accent-text) 38%, transparent),
+        var(--shadow-raised);
+    }
+  }
+
   /* Oyna ustida oyna yoʻq (10.1.2): sarlavha guruhi ichidagi oyna tugma (Koʻrinish) oʻz muzini, soyasini
      va qirrasini chizmaydi — guruhning bitta oynasi yetadi, ichida alohida ramkali quti koʻrinmaydi. */
   .surface .ui-button.material[data-variant="glass"] {

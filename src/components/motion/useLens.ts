@@ -36,17 +36,16 @@ export function useLens(ref: RefObject<HTMLElement | null>, activeIndex: number)
       }
       lens.style.opacity = "";
       const before = lens.getBoundingClientRect();
-      const rootRect = root.getBoundingClientRect();
-      const rect = target.getBoundingClientRect();
-      if (rect.width === 0) return;
+      /* Oʻlcham layout qiymatlaridan (offset*): panel yigʻilish animatsiyasida scale qilingan boʻlsa ham
+         linza bandning haqiqiy kengligi va markazida turadi (getBoundingClientRect transformni ham oʻlchardi). */
+      const itemWidth = target.offsetWidth;
+      if (itemWidth === 0) return;
+      const rootWidth = root.clientWidth;
       const inset = 2;
-      const width = Math.min(
-        rootRect.width - inset * 2,
-        Math.max(LENS_MIN, rect.width + LENS_PAD * 2),
-      );
-      const center = rect.left - rootRect.left + rect.width / 2;
-      const left = Math.min(Math.max(inset, center - width / 2), rootRect.width - inset - width);
-      lens.style.left = `${left + root.scrollLeft}px`;
+      const width = Math.min(rootWidth - inset * 2, Math.max(LENS_MIN, itemWidth + LENS_PAD * 2));
+      const center = target.offsetLeft + itemWidth / 2;
+      const left = Math.min(Math.max(inset, center - width / 2), rootWidth - inset - width);
+      lens.style.left = `${left}px`;
       lens.style.width = `${width}px`;
       // Birinchi joylashuv, oʻlcham oʻzgarishi va harakat taqiqi: animatsiyasiz.
       if (!withMotion || !settled.current || before.width === 0) {
@@ -62,8 +61,19 @@ export function useLens(ref: RefObject<HTMLElement | null>, activeIndex: number)
       lens.style.transform = "";
     };
     place(animate);
+    /* Panel oʻlchami oʻzgarmasa ham bandlar kengayishi mumkin (shrift yuklandi, til almashdi): har band
+       kuzatiladi, shriftlar tayyor boʻlgach yana bir bor joylanadi. */
     const observer = new ResizeObserver(() => place(false));
     observer.observe(root);
-    return () => observer.disconnect();
+    for (const item of root.querySelectorAll<HTMLElement>("[data-lens-item]"))
+      observer.observe(item);
+    let alive = true;
+    void document.fonts?.ready.then(() => {
+      if (alive) place(false);
+    });
+    return () => {
+      alive = false;
+      observer.disconnect();
+    };
   }, [ref, activeIndex, animate]);
 }

@@ -6,7 +6,8 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-tint text-on-tint hover:bg-tint-hover",
+        /* Fon materials.css da (pushti tusli muz, hover da tiniq muz): utilita uni bosib ketmasin. */
+        primary: "text-on-tint",
         glass: "material text-material-ink",
         ghost: "text-ink",
         link: "text-tint underline decoration-1 underline-offset-4",

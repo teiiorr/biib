@@ -136,40 +136,6 @@
     }
   }
 
-  /* Ghost ostchizigʻi: 2 px oltin chiziq, faqat sichqoncha bor qurilmada va fokusda. */
-  .ui-button[data-variant="ghost"]::before {
-    content: "";
-    position: absolute;
-    inset-inline: var(--btn-px);
-    bottom: 22%;
-    height: 2px;
-    border-radius: 1px;
-    background: var(--accent-text);
-    /* underline-draw (3.11): chiziq kesish maydoni bilan chapdan chiziladi. Chiqishda 150 ms da
-       soʻnadi, soʻng koʻrinmas holda boshiga qaytadi (keyingi hover yana chapdan). */
-    clip-path: inset(0 100% 0 0);
-    opacity: 0;
-    transition:
-      opacity 150ms var(--ease-ui),
-      clip-path 0s linear 150ms;
-  }
-  .ui-button[data-variant="ghost"]:focus-visible::before {
-    clip-path: inset(0 0 0 0);
-    opacity: 1;
-    transition:
-      clip-path var(--dur-panel) var(--ease-out),
-      opacity 0s;
-  }
-  @media (hover: hover) {
-    .ui-button[data-variant="ghost"]:hover:not([aria-disabled="true"])::before {
-      clip-path: inset(0 0 0 0);
-      opacity: 1;
-      transition:
-        clip-path var(--dur-panel) var(--ease-out),
-        opacity 0s;
-    }
-  }
-
   .ui-button[aria-disabled="true"] {
     cursor: not-allowed;
     color: var(--ink-3);
@@ -399,21 +365,13 @@
   }
 
   /* ---------- Tugma shakli (egasining talabi: kapsula emas) ----------
-     Aniq toʻrtburchak (--radius-control 12 px), ichida 3 px chekinishda 1 px nozik chiziq; bosilganda
-     yoki ustiga kelganda pastdan yorqin oltin toʻladi (ikkala mavzuda bir xil, navy yorliq 8:1 dan yuqori). */
+     Aniq toʻrtburchak (--radius-control 12 px), ichida 3 px chekinishda 1 px nozik chiziq. Material —
+     oyna (materials.css «Tugmalar ham oyna»): bosh tugma pushti tusli muz, ustiga kelinganda navbar kabi
+     tiniq muzga aylanadi; ghost tugma ustiga kelinganda muz koʻrinadi. */
   :root .ui-button[data-variant="primary"],
   :root .ui-button[data-variant="glass"]:not([data-icon="only"]) {
     position: relative;
     isolation: isolate;
-    background-image: linear-gradient(0deg, var(--gold-fill), var(--gold-fill-hi));
-    background-size: 100% 0%;
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    transition:
-      background-size 420ms var(--ease-out),
-      color 240ms var(--ease-ui),
-      scale 200ms var(--ease-ui),
-      translate 500ms var(--ease-out);
   }
   :root .ui-button[data-variant="primary"]::before,
   :root .ui-button[data-variant="glass"]:not([data-icon="only"])::before {
@@ -423,43 +381,6 @@
     border: 1px solid color-mix(in oklab, currentColor 34%, transparent);
     border-radius: calc(var(--radius-control) - 3px);
     pointer-events: none;
-  }
-  /* Yorliq rangi oʻzgaruvchi orqali almashadi: text-on-tint va text-material-ink utilitalari
-     (utilities qatlami) shu oʻzgaruvchilarni oʻqiydi, shunda oltin ustida doim navy (≥ 8:1). */
-  @media (hover: hover) {
-    :root .ui-button[data-variant="primary"]:hover:not([aria-disabled="true"]),
-    :root
-      .ui-button[data-variant="glass"]:not([data-icon="only"]):hover:not([aria-disabled="true"]) {
-      --on-tint: var(--hero-scrim);
-      --material-ink: var(--hero-scrim);
-      background-size: 100% 100%;
-      color: var(--hero-scrim);
-      text-shadow: none;
-    }
-  }
-  :root .ui-button[data-variant="primary"]:focus-visible,
-  :root .ui-button[data-variant="glass"]:not([data-icon="only"]):focus-visible {
-    --on-tint: var(--hero-scrim);
-    --material-ink: var(--hero-scrim);
-    background-size: 100% 100%;
-    color: var(--hero-scrim);
-    text-shadow: none;
-  }
-  @media (hover: hover) {
-    :root
-      .ui-button[data-variant="glass"]:not([data-icon="only"]):hover:not([aria-disabled="true"])
-      svg {
-      filter: none;
-    }
-  }
-  :root .ui-button[data-variant="glass"]:not([data-icon="only"]):focus-visible svg {
-    filter: none;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    :root .ui-button[data-variant="primary"],
-    :root .ui-button[data-variant="glass"] {
-      transition: color 150ms var(--ease-ui);
-    }
   }
 
   /* Markazdagi sarlavha (Heading 1–2 darajalar sukut boʻyicha): oʻz kengligida balanslanadi. */
@@ -585,8 +506,7 @@
     height: 44px;
     border-radius: var(--radius-control);
     color: var(--accent-text);
-    background: color-mix(in oklab, var(--accent-text) 9%, transparent);
-    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent-text) 26%, transparent);
+    /* Muz, yaltiroq va qirra: materials.css (belgi plitkalari ham kichik oyna). */
     transition: box-shadow var(--dur-ui) var(--ease-ui);
   }
   .feature-icon svg {
@@ -608,13 +528,6 @@
     }
     to {
       stroke-dashoffset: 0;
-    }
-  }
-  /* Hover (egasining talabi): faqat plitka qirrasi oltin — butun punkt yoritilmaydi, belgi joyidan
-     qimirlamaydi. */
-  @media (hover: hover) {
-    .feature:hover .feature-icon {
-      box-shadow: inset 0 0 0 1.5px var(--accent-text);
     }
   }
   /* Qorongʻi lentada (UPOP, lojuvard boʻlimlar) plitka yorugʻ oltinda: toʻq oltin koʻrinmay qolardi. */

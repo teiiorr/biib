@@ -13,6 +13,8 @@ export interface CopyButtonProps {
   readonly failedLabel?: string;
   readonly variant?: ButtonVariant;
   readonly size?: ButtonSize;
+  /** Faqat belgi (ixcham kartalarda): yorliq aria-label boʻlib qoladi, holat baribir eʼlon qilinadi. */
+  readonly iconOnly?: boolean;
   readonly className?: string;
 }
 
@@ -25,6 +27,7 @@ export function CopyButton({
   failedLabel,
   variant = "glass",
   size = "48",
+  iconOnly = false,
   className,
 }: CopyButtonProps) {
   const [state, setState] = useState<CopyState>("idle");
@@ -48,15 +51,28 @@ export function CopyButton({
     state === "copied" ? copiedLabel : state === "failed" ? (failedLabel ?? label) : label;
   return (
     <>
-      <Button
-        variant={variant}
-        size={size}
-        icon={state === "copied" ? "check" : "copy"}
-        onClick={() => void copy()}
-        {...(className ? { className } : {})}
-      >
-        {text}
-      </Button>
+      {iconOnly ? (
+        <Button
+          variant={variant}
+          size={size}
+          icon={state === "copied" ? "check" : "copy"}
+          iconOnly
+          aria-label={text}
+          title={text}
+          onClick={() => void copy()}
+          {...(className ? { className } : {})}
+        />
+      ) : (
+        <Button
+          variant={variant}
+          size={size}
+          icon={state === "copied" ? "check" : "copy"}
+          onClick={() => void copy()}
+          {...(className ? { className } : {})}
+        >
+          {text}
+        </Button>
+      )}
       <VisuallyHidden role="status" aria-live="polite">
         {state === "idle" ? "" : text}
       </VisuallyHidden>

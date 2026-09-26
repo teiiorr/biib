@@ -50,6 +50,61 @@
     gap: 12px;
     margin: 0;
   }
+  /* Belgi animatsiyasi va matn yonma-yon (egasining talabi): ikki ustun vertikal markazda, bir balandlikda. */
+  .about-intro {
+    row-gap: 32px;
+    align-items: center;
+  }
+  /* Telefon va planshetda belgi kichikroq va markazda: matn birinchi ekranda koʻrinadi. */
+  @media (max-width: 1023px) {
+    .about-intro-media {
+      width: 100%;
+      max-width: 280px;
+      justify-self: center;
+    }
+  }
+  .about-logo {
+    position: absolute;
+    inset: 0;
+  }
+  .about-logo-video,
+  .about-logo-end,
+  .about-logo-end > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .about-logo-end {
+    opacity: 0;
+  }
+  /* Harakat oʻchiq yoki kamaytirilgan: video yuklanmaydi, yigʻilgan belgi darhol koʻrinadi. */
+  .about-logo[data-state="still"] .about-logo-end {
+    opacity: 1;
+  }
+  .about-logo[data-state="still"] .about-logo-video {
+    opacity: 0;
+  }
+  /* Telefonda matn markazda (tor ustunda ikki chetga tekislash soʻzlar orasini kengaytirardi); keng
+     ekranda matn belgi yonida ikki chetga tekis — oʻngda boʻshliq qolmaydi. */
+  .about-mission .ui-prose p,
+  .about-mission .ui-pullquote,
+  .about-media-figure figcaption {
+    text-align: center;
+  }
+  .about-mission .ui-prose p {
+    text-wrap: pretty;
+  }
+  @media (min-width: 1024px) {
+    .about-mission .ui-prose p {
+      text-align: justify;
+      hyphens: auto;
+    }
+    .about-mission .ui-pullquote {
+      text-align: start;
+    }
+  }
   /* Yoʻnalishlar va tarix: bitta teng toʻr (1 / 2 ustun, kompyuterda bandlar soni qancha boʻlsa shuncha
      ustun); har band ustida bitta chiziq, sarlavhalar bir chiziqdan boshlanadi. */
   .about-list {
@@ -98,10 +153,15 @@
     display: grid;
     gap: 4px;
   }
-  /* Ustavni yuklab olish: harakat oʻng chetda (egasining talabi). */
+  /* Ustavni yuklab olish: telefonda markazda, keng ekranda matn ustunining oʻng chetida (tugmalar oʻngda). */
   .about-charter {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+  }
+  @media (min-width: 1024px) {
+    .about-charter {
+      justify-content: flex-end;
+    }
   }
   .about-charter .ui-button {
     gap: 8px;
@@ -367,10 +427,6 @@
   .contact-fact {
     padding: 16px;
   }
-  /* Qiymat va nusxa tugmasi ikki qatorda: belgi ikkalasining markazida. */
-  .contact-fact.feature > .feature-icon {
-    grid-row: span 2;
-  }
   /* Kartalar qatorda bir balandlikda: tugmasiz kartada mazmun yuqoriga yopishmaydi, markazda turadi. */
   .contact-fact.feature {
     align-content: center;
@@ -463,7 +519,7 @@
   /* Telefonlar kartasi: har raqam alohida qatorda, oʻz havolasi bilan. */
   .contact-fact-links {
     display: grid;
-    gap: 4px;
+    gap: 0;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -500,9 +556,12 @@
   }
   /* Qiymat katagi 44 px: havola nishoni shu balandlikni oladi, qiymat matni esa hamma kartada katak
      tepasidan boshlanadi va qoʻshni kartalar bilan bir tayanch chizigʻida turadi. */
+  /* Qiymat oʻz qatorida vertikal markazda: bir qatorli pochta uch qatorli manzil yonida tepaga yopishib,
+     ostida boʻshliq qoldirmaydi (egasining talabi: kartalar teng, boʻshliqsiz). */
   .contact-fact-value {
     display: flex;
     align-items: center;
+    align-self: center;
     min-width: 0;
     min-height: var(--hit-min);
     margin: 0;
@@ -528,9 +587,15 @@
     gap: 8px;
     margin: 0;
   }
-  /* Ghost tugma matni karta matni chetiga tekislanadi: ichki boʻshligʻi optik qaytariladi. */
-  .contact-fact-actions > .ui-button[data-variant="ghost"] {
-    margin-inline-end: calc(-1 * min(var(--btn-px), 16px));
+  /* Harakatlar kartaning butun kengligida (belgi ustuni ostidan ham): xarita va nusxa bir qatorga sigʻadi.
+     Belgi faqat qiymat qatorida, uning markazida. */
+  .contact-fact.feature > .contact-fact-actions {
+    grid-column: 1 / -1;
+    align-items: center;
+  }
+  .contact-fact.feature > .feature-icon {
+    grid-row: auto;
+    align-self: center;
   }
   .contact-socials {
     display: flex;

@@ -17,11 +17,14 @@ export interface HeroSceneOptions {
   readonly logoBox: LogoBox;
   /** Media kadri (px): cover hisobi uchun. */
   readonly media: { readonly width: number; readonly height: number };
-  /**
-   * Skroll boshqaradigan video: sahnaning birinchi qismi (--hero-scrub-length) shu chaqiruvga 0–1
-   * ulushni beradi, qolgan qismi belgini sarlavhaga olib boradi.
-   */
-  readonly onScrub?: (share: number) => void;
+  /** Belgi kadrda yigʻildimi: yigʻilmaguncha uchish kutadi (video tezlashib oxirigacha oʻynaydi). */
+  readonly gate?: HeroGate;
+}
+
+export interface HeroGate {
+  readonly open: () => boolean;
+  /** Eshik ochilganda chaqiriladi; qaytgan funksiya obunani bekor qiladi. */
+  readonly subscribe: (listener: () => void) => () => void;
 }
 
 export interface HeroScene {
@@ -49,17 +52,12 @@ function cssSceneLength(wrapper: HTMLElement, fallback: number): number {
   return Number.isFinite(raw) ? raw : fallback;
 }
 
-/** Video skroll qismi (ekran balandligi ulushida, home.css --hero-scrub-length). */
-function cssScrubLength(wrapper: HTMLElement): number {
-  const raw = parseFloat(getComputedStyle(wrapper).getPropertyValue("--hero-scrub-length"));
-  return Number.isFinite(raw) && raw > 0 ? raw : 0;
-}
-
 /**
- * hero-scene: yopishqoq qahramon ustida skrablangan sahna (scrub 0.8, pin yoʻq). Avval skroll videoni
- * kadrma-kadr suradi (belgi yigʻiladi), keyin kadr belgiga yaqinlashadi va xiralashadi, matn koʻtarilib
- * ketadi, belgi kadrdan chiqib sarlavhadagi belgiga qoʻnadi. Qiymatlar funksiya: refresh da qayta
- * hisoblanadi (Flip emas, D-M2).
+ * hero-scene: yopishqoq qahramon ustida skrablangan sahna (scrub 0.8, pin yoʻq). Uchish faqat video
+ * belgini yigʻib boʻlgach boshlanadi (gate): erta skrollda video tezlashadi, belgi toʻliq yigʻiladi,
+ * keyin sahna skroll joyiga yumshoq yetib oladi — animatsiya hech qachon chala qolmaydi. Kadr belgiga
+ * yaqinlashadi va xiralashadi, matn koʻtarilib ketadi, belgi kadrdan chiqib sarlavhadagi
+ * belgiga qoʻnadi. Qiymatlar funksiya: refresh da qayta hisoblanadi (Flip emas, D-M2).
  */
 export function useHeroScene(
   scope: RefObject<HTMLElement | null>,
@@ -75,7 +73,6 @@ export function useHeroScene(
   useEngineEffect(
     scope,
     ({ gsap, ScrollTrigger }) => {
-      const onScrub = options.onScrub;
       const wrapper = scope.current;
       if (!wrapper || !allowed) return;
       const hero = wrapper.querySelector<HTMLElement>("[data-hero]");
@@ -110,7 +107,6 @@ export function useHeroScene(
         else delete html.dataset.brandAway;
       };
       const settle = (): void => {
-        onScrub?.(1);
         progress.current = 1;
         hero.style.setProperty("--scene-progress", "1");
         setAway(false);
@@ -163,47 +159,25 @@ export function useHeroScene(
         return t && r.size > 0 ? t.width / r.size : 0.2;
       };
 
-      /* Video qismi butun yoʻlning shu ulushi: qolgani belgining uchishi (ichki vaqt chizigʻi). */
-      const scrubLength = onScrub ? cssScrubLength(wrapper) : 0;
-      const sceneLength = cssSceneLength(wrapper, fallbackLength);
-      const share = scrubLength > 0 ? scrubLength / (scrubLength + sceneLength) : 0;
-      /* Belgining uchish qismidagi nuqta butun sahna progressida qayerda. */
-      const dockAt = (x: number): number => share + x * (1 - share);
       const tl = gsap.timeline({ paused: true, defaults: { ease: "none" } });
-      /* Video ulushi vaqt chizigʻining umumiy progressidan olinadi, alohida tween dan emas: refresh
-         (invalidateOnRefresh) ichki tweenlarni boshlangʻich qiymatga qaytaradi, umumiy progress esa
-         oʻzgarmaydi — video hech qachon boshiga sakrab ketmaydi. */
-      const scrubShare = (p: number): number => (share > 0 ? Math.min(1, p / share) : 1);
-      if (share > 0 && onScrub) {
-        tl.eventCallback("onUpdate", () => onScrub(scrubShare(tl.progress())));
-      }
-      const dock = gsap.timeline({ defaults: { ease: "none" } });
       if (media.length)
-        dock.fromTo(
-          media,
-          { scale: 1 },
-          { scale: 1.12, transformOrigin: "50% 42%", duration: 1 },
-          0,
-        );
-      if (dim) dock.fromTo(dim, { opacity: 0 }, { opacity: 0.72, duration: 0.7 }, 0);
+        tl.fromTo(media, { scale: 1 }, { scale: 1.12, transformOrigin: "50% 42%", duration: 1 }, 0);
+      if (dim) tl.fromTo(dim, { opacity: 0 }, { opacity: 0.72, duration: 0.7 }, 0);
       if (content)
-        dock.fromTo(content, { y: 0, autoAlpha: 1 }, { y: -48, autoAlpha: 0, duration: 0.45 }, 0.1);
+        tl.fromTo(content, { y: 0, autoAlpha: 1 }, { y: -48, autoAlpha: 0, duration: 0.45 }, 0.1);
       // Parda kadrdagi doirani belgi koʻchishidan oldin yopadi: sahna oxirida ikkita belgi koʻrinmaydi.
-      if (veil) dock.fromTo(veil, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.1 }, 0.08);
+      if (veil) tl.fromTo(veil, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.1 }, 0.08);
       if (logo) {
-        dock.fromTo(
+        tl.fromTo(
           logo,
           { autoAlpha: 0, x: 0, y: 0, scale: 1 },
           { autoAlpha: 1, duration: 0.1 },
           0.05,
         );
-        dock.to(logo, { x: dx, y: dy, scale: scaleTo, duration: 0.6 }, 0.15);
-        dock.to(logo, { autoAlpha: 0, duration: 0.08 }, 0.72);
+        tl.to(logo, { x: dx, y: dy, scale: scaleTo, duration: 0.6 }, 0.15);
+        tl.to(logo, { autoAlpha: 0, duration: 0.08 }, 0.72);
       }
-      if (mark) dock.fromTo(mark, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.08 }, 0.72);
-
-      /* Uchish qismi sahnaning qolgan ulushiga siqiladi (video yoʻq boʻlsa butun sahna). */
-      tl.add(dock.timeScale(1 / (1 - share)), share);
+      if (mark) tl.fromTo(mark, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.08 }, 0.72);
 
       setAway(true);
       let enabled = true;
@@ -211,74 +185,70 @@ export function useHeroScene(
       /* Qahramon hozir ekranga sigʻmasa ham sahna quriladi, faqat oʻchiq: shriftlar yuklangach (refresh)
          sigʻsa yoqiladi. Aks holda birinchi kadrdagi zaxira shrift telefonda sahnani butunlay oʻchirardi. */
       let geometryOff = !runnable();
-      const trigger = ScrollTrigger.create({
-        trigger: wrapper,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: SCRUB,
-        animation: tl,
-        invalidateOnRefresh: true,
-        onToggle: (self) => {
-          for (const el of layers) {
-            if (self.isActive) el.style.setProperty("will-change", "transform, opacity");
-            else el.style.removeProperty("will-change");
-          }
-        },
-        onUpdate: (self) => {
-          progress.current = self.progress;
-          hero.style.setProperty("--scene-progress", self.progress.toFixed(3));
-          setAway(self.progress < dockAt(0.76));
-        },
-        onRefresh: () => {
-          checkGeometry();
-        },
-      });
+      const gate = options.gate;
+      /* Skroll ulushi (xom) va vaqt chizigʻi unga yumshoq ergashadi; eshik yopiq ekan uchish 0 da kutadi. */
+      let scrollProgress = 0;
+      let drive: gsap.core.Tween | null = null;
+      /* Trigger oxirida yaratiladi: ScrollTrigger refresh ni yaratish paytida ham chaqirishi mumkin, shu
+         sabab hamma yordamchi undan oldin aniqlangan va trigger yoʻqligini koʻtara oladi. */
+      let trigger: ScrollTrigger | null = null;
+      const aim = (): number => (!gate || gate.open() ? scrollProgress : 0);
+      /* Koʻrinayotgan holat vaqt chizigʻidan: sarlavha belgisi va telefon paneli uchish bilan bir vaqtda. */
+      const report = (): void => {
+        const p = tl.progress();
+        progress.current = p;
+        hero.style.setProperty("--scene-progress", p.toFixed(3));
+        setAway(p < 0.76);
+      };
+      tl.eventCallback("onUpdate", report);
+      const render = (p: number, smooth: boolean): void => {
+        drive?.kill();
+        drive = null;
+        if (smooth && Math.abs(tl.progress() - p) > 0.0005) {
+          drive = gsap.to(tl, { progress: p, duration: SCRUB, ease: "power3.out" });
+        } else {
+          /* Bir xil progressga qayta qoʻyish chizilmaydi: avval jim holda 0 ga, keyin p ga. */
+          tl.progress(0, true).progress(p);
+          report();
+        }
+      };
+      const measure = (): number => {
+        /* Trigger hali oʻlchanmagan boʻlishi mumkin (sahifa pastda qayta yuklandi): oʻram joyidan hisoblanadi. */
+        const fallbackStart = wrapper.getBoundingClientRect().top + window.scrollY;
+        const start = trigger && Number.isFinite(trigger.start) ? trigger.start : fallbackStart;
+        const end =
+          trigger && Number.isFinite(trigger.end)
+            ? trigger.end
+            : start + wrapper.offsetHeight - window.innerHeight;
+        const raw = (window.scrollY - start) / Math.max(1, end - start);
+        return Math.min(1, Math.max(0, Number.isFinite(raw) ? raw : 0));
+      };
+      /* Skroll joyidagi holat: sahna pastda boshlansa ham (qayta yuklash, orqaga qaytish) sakrashsiz
+         turadi va yuqoriga qaytganda belgi yana uchadi. */
+      const syncToScroll = (): void => {
+        scrollProgress = measure();
+        render(aim(), false);
+      };
       const apply = (): void => {
         const on = !governorOff && !geometryOff;
         if (on === enabled) return;
         enabled = on;
         if (on) {
-          trigger.enable(false, false);
+          trigger?.enable(false, false);
           /* Yakuniy holatdan qaytildi (shriftlar kelib qahramon sigʻdi, Harakat qayta yoqildi): vaqt
              chizigʻi darhol skroll joyiga tenglashadi — belgi bir lahza ham yoʻqolmaydi. */
           syncToScroll();
         } else {
-          const reachedAt = trigger.progress;
-          trigger.disable(false);
-          /* Tez skroll yoki langarga sakrashda scrub orqada qoladi: sahna toʻxtaganda holat skroll joyiga
-             tenglashadi, aks holda sarlavhadagi belgi yashirin qolib ketardi. */
-          tl.progress(reachedAt);
-          progress.current = reachedAt;
-          setAway(reachedAt < dockAt(0.76));
+          drive?.kill();
+          drive = null;
+          trigger?.disable(false);
           if (geometryOff) {
             tl.progress(0);
             settle();
           }
         }
       };
-      /* Skroll joyidagi holat: sahna pastda boshlansa ham (qayta yuklash, orqaga qaytish) sakrashsiz
-         yakuniy holatda turadi va yuqoriga qaytganda belgi yana uchadi. */
-      const syncToScroll = (): void => {
-        /* Trigger hali oʻlchanmagan boʻlishi mumkin (sahifa pastda qayta yuklandi): oʻram joyidan hisoblanadi. */
-        const start = Number.isFinite(trigger.start)
-          ? trigger.start
-          : wrapper.getBoundingClientRect().top + window.scrollY;
-        const end = Number.isFinite(trigger.end)
-          ? trigger.end
-          : start + wrapper.offsetHeight - window.innerHeight;
-        const raw = (window.scrollY - start) / Math.max(1, end - start);
-        const p = Math.min(1, Math.max(0, Number.isFinite(raw) ? raw : 0));
-        /* Bir xil progressga qayta qoʻyish chizilmaydi: avval jim holda 0 ga, keyin p ga — hamma tween
-           shu nuqtada qayta chiziladi (refresh ularni boshlangʻich holatga qaytargan boʻlishi mumkin). */
-        tl.progress(0, true).progress(p);
-        onScrub?.(scrubShare(p));
-        progress.current = p;
-        hero.style.setProperty("--scene-progress", p.toFixed(3));
-        setAway(p < dockAt(0.76));
-      };
-      /* Refresh vaqt chizigʻini qayta chizadi (invalidateOnRefresh): oʻchiq sahnada belgi yana
-         yashirinib qolmasin — yakuniy holat har tekshiruvdan keyin qayta qoʻyiladi. */
-      function checkGeometry(): void {
+      const checkGeometry = (): void => {
         geometryOff = !runnable();
         setStatic(geometryOff);
         apply();
@@ -286,17 +256,43 @@ export function useHeroScene(
           tl.progress(0);
           settle();
         }
-      }
-      /* Refresh tugagach (shriftlar, video tayyor) holat haqiqiy skroll joyiga tenglashadi: brauzer skroll
-         joyini sahna qurilgandan keyin tiklasa ham (Safari, qayta yuklash) video toʻgʻri kadrda. Refresh
-         paytida emas — oʻlchash vaqtida skroll vaqtincha 0 boʻladi. */
+      };
+      trigger = ScrollTrigger.create({
+        trigger: wrapper,
+        start: "top top",
+        end: "bottom bottom",
+        onToggle: (self) => {
+          for (const el of layers) {
+            if (self.isActive) el.style.setProperty("will-change", "transform, opacity");
+            else el.style.removeProperty("will-change");
+          }
+        },
+        onUpdate: (self) => {
+          scrollProgress = self.progress;
+          render(aim(), true);
+        },
+        onRefresh: () => {
+          /* Oʻlchamga bogʻliq qiymatlar (belgining nishoni) qayta hisoblanadi, holat joyida qoladi. */
+          const p = tl.progress();
+          tl.invalidate();
+          tl.progress(0, true).progress(p, true);
+          checkGeometry();
+        },
+      });
+      setStatic(geometryOff);
+      if (geometryOff) apply();
+      else syncToScroll();
+      /* Refresh tugagach (shriftlar, media) holat haqiqiy skroll joyiga tenglashadi: brauzer skroll joyini
+         sahna qurilgandan keyin tiklasa ham (Safari, qayta yuklash). Refresh paytida emas — oʻlchash
+         vaqtida skroll vaqtincha 0 boʻladi. */
       const onRefreshed = (): void => {
         if (enabled && !geometryOff) syncToScroll();
       };
       ScrollTrigger.addEventListener("refresh", onRefreshed);
-      setStatic(geometryOff);
-      if (geometryOff) apply();
-      else syncToScroll();
+      /* Belgi yigʻildi: uchish skroll joyiga yumshoq yetib oladi. */
+      const unsubscribe = gate?.subscribe(() => {
+        if (enabled && !geometryOff) render(aim(), true);
+      });
       /* Shrift almashishi yoki tugmalar qatori qahramon balandligini oʻzgartiradi; ScrollTrigger buni
          oʻzi sezmaydi. Balandlik oʻzgarsa bitta refresh: sahna sigʻdimi yoki yoʻqmi qayta hisoblanadi. */
       /* Oʻchiq trigger refreshda qatnashmaydi (onRefresh chaqirilmaydi): shu sabab geometriya shu yerda
@@ -321,15 +317,17 @@ export function useHeroScene(
       });
 
       return () => {
+        unsubscribe?.();
+        drive?.kill();
         ScrollTrigger.removeEventListener("refresh", onRefreshed);
         heroResize.disconnect();
         unregister();
-        trigger.kill();
+        trigger?.kill();
         tl.kill();
         release();
       };
     },
-    [allowed, options.logoBox, options.media, options.onScrub, maxLength, fallbackLength],
+    [allowed, options.logoBox, options.media, options.gate, maxLength, fallbackLength],
   );
 
   return { progress };

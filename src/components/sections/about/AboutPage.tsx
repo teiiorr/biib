@@ -17,6 +17,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
 
+import { AboutLogoVideo } from "./AboutLogoVideo";
 import { HistoryTimeline } from "./HistoryTimeline";
 
 /* Yoʻnalishlar ustavdagi tartibda (6.10): adabiyot, teatr, kino va animatsiya, musiqa, tasviriy sanʼat,
@@ -71,10 +72,19 @@ export function AboutPage({ locale, dict }: PageProps) {
       {/* Sahifa sarlavhasidan keyin ikkinchi sarlavha yoʻq (egasining talabi): maqsad matni h1 ostida. */}
       <Section labelledBy="page-title">
         <Container>
-          {/* Oʻqish ustuni maqola bilan bir xil: kompyuterda 3–10, kengroq ekranda 4–9 (65ch dan oshmaydi). */}
-          <div className="grid-site">
+          {/* Egasining talabi: chapda belgi animatsiyasi, yonida matn — ikki ustun bir balandlikda, chetlar
+              toʻr ustunlarida. Telefonda ustma-ust: avval belgi, keyin matn. */}
+          <div className="grid-site about-intro">
             <Reveal
-              className="about-mission col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3 xl:col-span-6 xl:col-start-4"
+              className="about-intro-media col-span-4 md:col-span-8 lg:col-span-5"
+              attrs={{ "data-grid-item": "" }}
+            >
+              <MediaFrame ratio="1:1" tone="dark" motion={{ mode: "smooth" }}>
+                <AboutLogoVideo label={dict.home.hero.videoAlt} />
+              </MediaFrame>
+            </Reveal>
+            <Reveal
+              className="about-mission col-span-4 md:col-span-8 lg:col-span-7"
               attrs={{ "data-grid-item": "" }}
             >
               <Prose size="body-l">
@@ -103,19 +113,16 @@ export function AboutPage({ locale, dict }: PageProps) {
       {/* Egasining UPOP TREND tasviri: matnli sahifaga bitta keng kadr — maqsaddan yoʻnalishlarga oʻtish. */}
       <Section as="div" rhythm="section" className="about-media">
         <Container>
-          {/* Kadr maqsad matni bilan aynan bir ustunlarda (egasining talabi): chetlar bir chiziqda.
+          {/* Kadr yuqoridagi ikki ustunli blok bilan bir kenglikda (egasining talabi): chetlar bir chiziqda.
               Ohang faqat suratda: sut rangli izoh ostida oyna tungi ohangga oʻtib qolmasin (10.1.3). */}
           <div className="grid-site">
-            <figure
-              className="about-media-figure col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3 xl:col-span-6 xl:col-start-4"
-              data-grid-item=""
-            >
+            <figure className="about-media-figure col-span-full" data-grid-item="">
               <MediaFrame ratio="16:9" tone="dark" motion={{ mode: "smooth", parallax: true }}>
                 <Picture
                   src="/brand/upop-scene.jpg"
                   alt={a.media.alt}
                   fill
-                  sizes="(min-width: 1440px) 640px, (min-width: 1024px) 66vw, 100vw"
+                  sizes="(min-width: 1440px) 1312px, (min-width: 1024px) calc(100vw - 96px), calc(100vw - 32px)"
                 />
               </MediaFrame>
               <figcaption className="t-small text-ink-3">{a.media.caption}</figcaption>

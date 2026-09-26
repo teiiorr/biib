@@ -92,6 +92,8 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
             <LinkButton href={pathFor(locale, "about")} variant="glass" size="56">
               {dict.home.hero.ctaAbout}
             </LinkButton>
+            {/* Halqa boshqaruvi shu uyaga portal bilan keladi: harakatlar qatorida, hech narsa ustida emas. */}
+            <span className="home-hero-control" data-hero-control="" />
           </div>
         </Container>
       </div>

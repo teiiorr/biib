@@ -14,8 +14,8 @@ export const contacts: typeof source = {
     copied: "Нусха олинди",
   },
   map: {
-    yandex: "Яндекс Харитада очиш",
-    google: "Google Харитада очиш",
+    yandex: "Яндекс Харита",
+    google: "Google Харита",
   },
   form: {
     heading: "Хабар юбориш",

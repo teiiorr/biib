@@ -29,8 +29,6 @@ export function HomePage({ locale, dict }: HomePageProps) {
       {/* Missiya sahnaning ikkinchi yarmi: yopishqoq kadr ustidan koʻtariladi, boʻsh xira ekran qolmaydi. */}
       <HeroScene>
         <HeroSection locale={locale} dict={dict} />
-        {/* Video skroll qismi: qahramon yopishgan holda shu masofada kadrma-kadr suriladi. */}
-        <div className="home-hero-scrub" aria-hidden="true" />
         <MissionSection
           copy={{
             label: dict.home.portal.label,

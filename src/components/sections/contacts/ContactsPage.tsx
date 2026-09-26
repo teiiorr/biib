@@ -153,7 +153,7 @@ export function ContactsPage({ locale, dict }: PageProps) {
                               ? `https://yandex.uz/maps/?pt=${map.lng},${map.lat}&z=16`
                               : `https://yandex.uz/maps/?text=${encodeURIComponent(addressUz ?? "")}`
                           }
-                          variant="ghost"
+                          variant="glass"
                           size="40"
                           external
                           externalHint={external}
@@ -166,7 +166,7 @@ export function ContactsPage({ locale, dict }: PageProps) {
                               ? `https://www.google.com/maps?q=${map.lat},${map.lng}`
                               : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressUz ?? "")}`
                           }
-                          variant="ghost"
+                          variant="glass"
                           size="40"
                           external
                           externalHint={external}
@@ -175,12 +175,14 @@ export function ContactsPage({ locale, dict }: PageProps) {
                         </LinkButton>
                       </>
                     ) : null}
+                    {/* Nusxa tugmasi faqat belgi: kartalar ixcham, harakatlar bir qatorga sigʻadi. */}
                     <CopyButtonLeaf
                       value={fact.value}
                       label={d.details.copy}
                       copiedLabel={d.details.copied}
-                      variant="ghost"
+                      variant="glass"
                       size="40"
+                      iconOnly
                     />
                   </dd>
                 ) : null}
