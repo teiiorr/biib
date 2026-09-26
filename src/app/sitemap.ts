@@ -5,6 +5,9 @@ import { LOCALE_META, LOCALES, type Locale } from "@/i18n/locales";
 import { allRoutes, pathFor, type PageKey } from "@/i18n/routes";
 import { siteUrl } from "@/lib/site";
 
+/* Yangi maqola sitemapga soat ichida (saqlashdan keyin esa darhol) tushadi; [locale] maketi bilan bir xil. */
+export const revalidate = 3600;
+
 /** Tasdiqlanmagan kontentli sahifalar lastModified daʼvo qilmaydi (18.1). */
 function lastModifiedFor(
   key: PageKey,

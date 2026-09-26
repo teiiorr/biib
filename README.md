@@ -59,6 +59,12 @@ pnpm content:pull --check    # baza va nusxa aynan tengmi (farq boʻlsa roʻyxat
 pnpm content:seed            # nusxani bazaga yozadi (tiklash; maxfiy kalit faqat .env.local da)
 ```
 
+Sayt qaysi manbani oʻqishini `CONTENT_SOURCE` belgilaydi: `bundled` (standart, mahalliy va
+tekshiruvda) yoki `supabase` (Vercel). `supabase` rejimida `pnpm build` avval
+`scripts/cms/prefetch.mts` bilan bitta nusxani `.content-cache/` ga oladi va hamma sahifa shundan
+yigʻiladi; keyin sahifalar soatda bir marta (admin saqlaganda esa darhol) yangilanadi. Yuklangan
+rasmlar `/uploads/…` manzilida: avval `public/uploads`, boʻlmasa Supabase ochiq bucketi.
+
 Surat va logotiplar `public/brand` ga qoʻyiladi va `scripts/images.mjs` roʻyxatiga qoʻshiladi
 (`node scripts/images.mjs` AVIF/WebP nusxalarni yaratadi); bolalar suratlari faqat ota-ona roziligi
 bilan.
@@ -66,5 +72,5 @@ bilan.
 ## Muhit oʻzgaruvchilari
 
 `.env.example` ga qarang: `NEXT_PUBLIC_SITE_URL`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`,
-Supabase manzili va kalitlari. Telegram qiymatlari boʻlmasa aloqa shakli oʻrniga toʻgʻridan-toʻgʻri
+Supabase manzili va kalitlari, `CONTENT_SOURCE`, `CMS_BUILD_FALLBACK`. Telegram qiymatlari boʻlmasa aloqa shakli oʻrniga toʻgʻridan-toʻgʻri
 havola chiqadi. `SUPABASE_SERVICE_ROLE_KEY` faqat `.env.local` da turadi va Vercel ga qoʻyilmaydi.

@@ -29,6 +29,10 @@ import "@/styles/globals.css";
    Nomaʼlum til pastdagi notFound() bilan global 404 ga boradi. */
 export const dynamicParams = true;
 
+/* Kontent maʼlumotlar bazasidan: sahifalar soatda bir marta yangilanadi (saqlashdan keyin esa darhol,
+   cms tegi orqali). Qiymat literal boʻlishi shart; lib/cms/load.ts dagi bilan bir xil. */
+export const revalidate = 3600;
+
 /* Segment darajasidagi opengraph-image fayllari sahifa metadatasidan oldin yigʻiladi: asos shu yerda
    boʻlmasa ular localhost ga bogʻlanardi (yigʻishda va har 404 da ogohlantirish). */
 export const metadata: Metadata = {
