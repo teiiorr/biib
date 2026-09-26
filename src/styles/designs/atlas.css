@@ -173,7 +173,7 @@
   /* Qahramon (bosh sahifa): matn, ostlik va kadr pardasi; Atlasda kadr ikkala mavzuda qorongʻi. */
   --hero-ink: #f7f3ea;
   --hero-scrim: #0a1026;
-  --hero-veil: #01111a;
+  --hero-veil: #0f193c;
 }
 
 :root[data-theme="dark"] {
@@ -228,7 +228,7 @@
   /* Qahramon (bosh sahifa): matn, ostlik va kadr pardasi; Atlasda kadr ikkala mavzuda qorongʻi. */
   --hero-ink: #f7f3ea;
   --hero-scrim: #0a1026;
-  --hero-veil: #01111a;
+  --hero-veil: #0f193c;
 }
 
 /* Qorongʻi sirt kunduzgi mavzuda ham (qahramon kadri, missiya, lojuvard lentalar): yorqin oltin. */

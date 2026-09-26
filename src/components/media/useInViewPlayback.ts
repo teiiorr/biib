@@ -17,6 +17,11 @@ export interface InViewPlaybackOptions {
   readonly kind?: AmbientKind;
   /** Koʻrinish ulushi: shundan boshlab ijro (sukut 0.4). */
   readonly threshold?: number;
+  /**
+   * Bir marta ijro (qahramon videosi): oxiriga yetgach oxirgi kadrda turadi, koʻrinishga qaytganda
+   * qayta boshlanmaydi; toggle uni boshidan qayta oʻynaydi.
+   */
+  readonly once?: boolean;
 }
 
 export interface InViewPlayback {
@@ -25,6 +30,8 @@ export interface InViewPlayback {
   readonly inView: boolean;
   /** Foydalanuvchi toʻxtatgan; toggle bilan almashadi. */
   readonly paused: boolean;
+  /** once: video oxiriga yetgan (oxirgi kadrda turibdi). */
+  readonly finished: boolean;
   readonly toggle: () => void;
 }
 
@@ -40,7 +47,7 @@ function saveData(): boolean {
  */
 export function useInViewPlayback(
   ref: RefObject<HTMLVideoElement | null>,
-  { ambient = true, kind = "ambient", threshold = 0.4 }: InViewPlaybackOptions = {},
+  { ambient = true, kind = "ambient", threshold = 0.4, once = false }: InViewPlaybackOptions = {},
 ): InViewPlayback {
   // Serverda va gidratsiyada false: manba faqat brauzer sozlamalari oʻqilgach qoʻyiladi.
   const [allowed, setAllowed] = useState(false);
@@ -48,6 +55,15 @@ export function useInViewPlayback(
   const [active, setActive] = useState(!ambient);
   const [hidden, setHidden] = useState(false);
   const [paused, setPaused] = useState(false);
+  const [finished, setFinished] = useState(false);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!once || !video) return;
+    const onEnded = (): void => setFinished(true);
+    video.addEventListener("ended", onEnded);
+    return () => video.removeEventListener("ended", onEnded);
+  }, [ref, once]);
 
   useEffect(() => {
     if (!ambient) {
@@ -108,7 +124,7 @@ export function useInViewPlayback(
     return () => document.removeEventListener("visibilitychange", onVisibility);
   }, []);
 
-  const shouldPlay = ambient && allowed && inView && active && !hidden && !paused;
+  const shouldPlay = ambient && allowed && inView && active && !hidden && !paused && !finished;
   const mustPause = !ambient && (hidden || !inView);
 
   useEffect(() => {
@@ -122,7 +138,17 @@ export function useInViewPlayback(
     }
   }, [ref, ambient, shouldPlay, mustPause]);
 
-  const toggle = useCallback(() => setPaused((value) => !value), []);
+  const toggle = useCallback(() => {
+    if (finished) {
+      // Tugagan videoni qayta koʻrish: boshidan, toʻxtatilmagan holda.
+      const video = ref.current;
+      if (video) video.currentTime = 0;
+      setPaused(false);
+      setFinished(false);
+      return;
+    }
+    setPaused((value) => !value);
+  }, [finished, ref]);
 
-  return { allowed, inView, paused, toggle };
+  return { allowed, inView, paused, finished, toggle };
 }

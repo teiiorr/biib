@@ -28,9 +28,9 @@
   }
   /* Qahramon yopishqoq. Kadrdagi belgining pastki chekkasi cover hisobidan; JS aniq qiymat bersa u ustun. */
   .home-hero {
-    --hero-media-w: 1280;
-    --hero-media-h: 720;
-    --hero-logo-bottom: 0.6028;
+    --hero-media-w: 1920;
+    --hero-media-h: 1080;
+    --hero-logo-bottom: 0.601;
     --cover-scale: max(100vw / var(--hero-media-w), 100svh / var(--hero-media-h));
     --cover-h: calc(var(--hero-media-h) * var(--cover-scale));
     --logo-bottom: var(
@@ -48,9 +48,9 @@
   }
   @media (max-width: 1023px) and (orientation: portrait) {
     .home-hero {
-      --hero-media-w: 720;
-      --hero-media-h: 1280;
-      --hero-logo-bottom: 0.4811;
+      --hero-media-w: 1080;
+      --hero-media-h: 1920;
+      --hero-logo-bottom: 0.4729;
     }
   }
   .home-hero-art,
@@ -76,6 +76,24 @@
   .home-hero-poster,
   .hero-loop-video {
     object-fit: cover;
+  }
+  /* Oxirgi kadr posteri: harakat oʻchiq, kamaytirilgan harakat yoki video hali boshlanmagan (trafik
+     tejash) — belgi yigʻilgan holda turadi; video boshlanganda uning ostida qoladi. */
+  .home-hero-picture-end {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 600ms var(--ease-out);
+  }
+  :root[data-motion="off"] .home-hero-picture-end,
+  .home-hero:has(.hero-loop:is([data-state="still"], [data-state="paused"]:not([data-ready])))
+    .home-hero-picture-end {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .home-hero-picture-end {
+      opacity: 1;
+    }
   }
   /* Video poster ustida: poster 0-kadr, almashinuv sezilmaydi, belgi shunchaki jonlanadi. */
   .hero-loop-video {

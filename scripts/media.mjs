@@ -18,7 +18,8 @@ import { ROOT } from "./checks/util.mjs";
 /*
  * §18.4 media quvuri: public/brand (egadan kelgan manbalar) → public/media.
  * Byudjetlar §17: har bir video ≤ 1,8 MB (desktop) / ≤ 0,9 MB (mobil), poster ≤ 120 KB AVIF.
- * Halqa videolar (hero, upop-live) ovozsiz; upop-video bosib koʻriladigan, ovozi saqlanadi.
+ * Halqa videolar (upop-live) ovozsiz; upop-video bosib koʻriladigan, ovozi saqlanadi. Qahramon videosi
+ * alohida: scripts/hero-video.mts (bir marta ijro, halqa emas).
  * Har bir chiqish uchun crf byudjetga sigʻguncha +3 qadam bilan oshiriladi.
  *
  * Manba halqalarning birinchi va oxirgi kadri mos kelmaydi (ular 5–11 % farq qiladi, ketma-ket
@@ -26,12 +27,6 @@ import { ROOT } from "./checks/util.mjs";
  * eriydi, natija D−X soniya va oxirgi kadr birinchi kadrga ulanadi (chok ≈ ketma-ket kadr farqi).
  *
  * Qoʻlda takrorlash uchun buyruqlar (crf qiymati byudjetga qarab tanlangan):
- *   LOOP="[0:v]split[a][b];[a]trim=start=X,setpts=PTS-STARTPTS[a];[b]trim=end=X,setpts=PTS-STARTPTS[b];\
- *         [a][b]xfade=transition=fade:duration=X:offset=D-2X,scale=1280:-2,format=yuv420p[v]"
- *   ffmpeg -y -i public/brand/hero-logo-d.mp4 -an -map_metadata -1 -fflags +bitexact -filter_complex "$LOOP" -map "[v]" \
- *     -c:v libsvtav1 -crf <crf> -preset 4 -g 120 -svtav1-params tune=0 public/media/hero-d.webm
- *   ffmpeg -y -i public/brand/hero-logo-d.mp4 -an -map_metadata -1 -fflags +bitexact -filter_complex "$LOOP" -map "[v]" \
- *     -c:v libx264 -crf <crf> -preset slow -profile:v high -g 120 -movflags +faststart public/media/hero-d.mp4
  *   ffmpeg -y -i public/brand/upop-video.mp4 -map_metadata -1 -fflags +bitexact -vf scale=1280:-2,format=yuv420p \
  *     -c:v libx264 -crf <crf> -preset slow -profile:v high -c:a aac -b:a 96k -ac 2 -movflags +faststart public/media/upop-video.mp4
  *   Poster: tayyor MP4 ning birinchi kadri PNG → sharp AVIF (sifat byudjetga sigʻguncha −8 qadam bilan tushadi).
@@ -46,28 +41,6 @@ const kb = (bytes) => `${(bytes / KB).toFixed(0)} KB`;
 
 /** width: masshtab kengligi; loop: xfade uzunligi (s); audio: false boʻlsa ovoz olib tashlanadi. */
 const JOBS = [
-  {
-    name: "hero-d",
-    source: "hero-logo-d.mp4",
-    width: 1280,
-    loop: 1,
-    outputs: [
-      { file: "hero-d.webm", kind: "av1", crf: 28, budget: 1.6 * MB },
-      { file: "hero-d.mp4", kind: "h264", crf: 21, budget: 1.8 * MB },
-    ],
-    poster: { file: "hero-d-poster.avif", budget: 90 * KB },
-  },
-  {
-    name: "hero-m",
-    source: "hero-logo-m.mp4",
-    width: 720,
-    loop: 1,
-    outputs: [
-      { file: "hero-m.webm", kind: "av1", crf: 30, budget: 0.9 * MB },
-      { file: "hero-m.mp4", kind: "h264", crf: 23, budget: 0.9 * MB },
-    ],
-    poster: { file: "hero-m-poster.avif", budget: 70 * KB },
-  },
   {
     name: "upop-live-d",
     source: "upop-live.mp4",

@@ -56,6 +56,18 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
               className="home-hero-poster"
             />
           </picture>
+          {/* Oxirgi kadr: harakat oʻchiq yoki video hali boshlanmagan — belgi darhol yigʻilgan holda. */}
+          <picture className="home-hero-picture home-hero-picture-end">
+            <source media={HERO_PORTRAIT_MEDIA} srcSet={portrait.end} type="image/avif" />
+            <img
+              src={landscape.end}
+              width={landscape.width}
+              height={landscape.height}
+              alt=""
+              decoding="async"
+              className="home-hero-poster"
+            />
+          </picture>
         </div>
         {/* Video tavsifi (aria-label) oʻqilishi uchun uya aria-hidden emas. */}
         <DesignArt

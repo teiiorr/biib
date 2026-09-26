@@ -20,7 +20,7 @@ const MANIFEST = path.join(ROOT, "src/lib/images/manifest.ts");
 /** widths: srcset kengliklari (manbadan katta boʻlsa manba kengligi bilan cheklanadi). */
 const JOBS = [
   { src: "/brand/mark.png", widths: [40, 80, 120, 192] },
-  { src: "/brand/logo-mark.png", widths: [256] },
+  { src: "/brand/logo-hero.png", widths: [240, 408] },
   { src: "/brand/upop-logo.png", widths: [240, 360, 480, 720, 900] },
   { src: "/brand/upop-scene.jpg", widths: [640, 960, 1280, 1920], blur: true },
   { src: "/brand/news-upop-stage.jpg", widths: [256, 384, 640, 960, 1344], blur: true },

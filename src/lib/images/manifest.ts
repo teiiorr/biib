@@ -15,11 +15,11 @@ export const PREPARED_IMAGES: Readonly<Record<string, PreparedImage>> = {
     base: "/img/mark",
     widths: [40, 80, 120, 192],
   },
-  "/brand/logo-mark.png": {
-    width: 256,
-    height: 256,
-    base: "/img/logo-mark",
-    widths: [256],
+  "/brand/logo-hero.png": {
+    width: 408,
+    height: 408,
+    base: "/img/logo-hero",
+    widths: [240, 408],
   },
   "/brand/upop-logo.png": {
     width: 900,

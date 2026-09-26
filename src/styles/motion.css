@@ -240,3 +240,22 @@
     color: CanvasText;
   }
 }
+
+/* Belgi yigʻilgan lahza (HeroVideo data-lock): nom bir marta oltin chaqnaydi — video va sarlavha bitta
+   hikoya. Faqat filter (kichik qatlam), joylashuv oʻzgarmaydi. */
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion="off"]) .home-hero[data-lock] .home-hero-title {
+    animation: hero-lock-glow 1.8s var(--ease-out) 1 both;
+  }
+}
+@keyframes hero-lock-glow {
+  0% {
+    filter: drop-shadow(0 0 0 rgb(247 224 138 / 0)) brightness(1);
+  }
+  25% {
+    filter: drop-shadow(0 0 26px rgb(247 224 138 / 0.7)) brightness(1.35);
+  }
+  100% {
+    filter: drop-shadow(0 0 0 rgb(247 224 138 / 0)) brightness(1);
+  }
+}
