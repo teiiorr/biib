@@ -101,6 +101,32 @@
     white-space: nowrap;
     font-size: clamp(1.5rem, 1.1rem + 2vw, 2.25rem);
   }
+  /* Parol maydoni ichidagi koʻz tugmasi: 44 px nishon, matn uning ostiga kirmaydi. */
+  .admin-password {
+    position: relative;
+    display: block;
+  }
+  .admin-password input {
+    padding-inline-end: 52px;
+  }
+  .admin-password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 4px;
+    display: grid;
+    place-items: center;
+    width: var(--hit-min);
+    height: var(--hit-min);
+    border-radius: calc(var(--radius-control) - 4px);
+    color: var(--ink-2);
+    transform: translateY(-50%);
+    transition: color var(--dur-ui) var(--ease-ui);
+  }
+  @media (hover: hover) {
+    .admin-password-toggle:hover {
+      color: var(--ink);
+    }
+  }
   .admin-form {
     display: flex;
     flex-direction: column;

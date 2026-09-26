@@ -11,6 +11,8 @@ export const ADMIN_COPY = {
     formLabel: "Panelga kirish",
     email: "Elektron pochta",
     password: "Parol",
+    showPassword: "Parolni koʻrsatish",
+    hidePassword: "Parolni yashirish",
     submit: "Kirish",
     submitting: "Tekshirilmoqda…",
     invalid: "Email yoki parol notoʻgʻri",

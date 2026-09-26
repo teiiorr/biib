@@ -1,7 +1,15 @@
 /* Panelning oʻz belgilari: sayt toʻplami bilan bir oilada (24 px toʻr, 20 px jonli maydon, 1.75 px chiziq,
    faqat absolyut buyruqlar). Ommaviy sprit kattalashmaydi: bular faqat panel HTML ida. */
 
-export const ADMIN_ICON_NAMES = ["dashboard", "image", "text", "folder", "log-out"] as const;
+export const ADMIN_ICON_NAMES = [
+  "dashboard",
+  "image",
+  "text",
+  "folder",
+  "log-out",
+  "eye",
+  "eye-off",
+] as const;
 
 export type AdminIconName = (typeof ADMIN_ICON_NAMES)[number];
 
@@ -13,4 +21,7 @@ export const ADMIN_ICON_PATHS: Record<AdminIconName, string> = {
   text: "M4 6 H20 M4 10 H20 M4 14 H20 M4 18 H13",
   folder: "M3 7 Q3 5 5 5 H9 L11 7 H19 Q21 7 21 9 V17 Q21 19 19 19 H5 Q3 19 3 17 Z M3 10 H21",
   "log-out": "M10 4 H6 Q4 4 4 6 V18 Q4 20 6 20 H10 M15 8 L19 12 L15 16 M19 12 H9",
+  eye: "M2 12 Q7 5 12 5 Q17 5 22 12 Q17 19 12 19 Q7 19 2 12 Z M12 15 A3 3 0 1 0 12 9 A3 3 0 1 0 12 15 Z",
+  "eye-off":
+    "M2 12 Q7 5 12 5 Q17 5 22 12 Q17 19 12 19 Q7 19 2 12 Z M12 15 A3 3 0 1 0 12 9 A3 3 0 1 0 12 15 Z M4 4 L20 20",
 };

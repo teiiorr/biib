@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useId } from "react";
+import { useActionState, useId, useState } from "react";
 
 import { Surface } from "@/components/glass/Surface";
 import { Button } from "@/components/ui/Button";
@@ -11,6 +11,8 @@ import { signIn } from "@/lib/admin/actions/auth";
 import { SIGN_IN_IDLE } from "@/lib/admin/auth-state";
 import { ADMIN_COPY } from "@/lib/admin/copy";
 import type { AdminPath } from "@/lib/admin/paths";
+
+import { AdminIcon } from "./AdminIcon";
 
 interface LoginFormProps {
   /** Kirishdan keyin qaytiladigan panel sahifasi (serverda tekshirilgan). */
@@ -25,6 +27,8 @@ const T = ADMIN_COPY.login;
 export function LoginForm({ next, closed }: LoginFormProps) {
   const [state, action, pending] = useActionState(signIn, SIGN_IN_IDLE);
   const id = useId();
+  /* Telefonda parolni xatosiz terish uchun: koʻz tugmasi uni vaqtincha matn qilib koʻrsatadi. */
+  const [visible, setVisible] = useState(false);
   const status = closed ? "closed" : state.status;
   const message = status === "invalid" ? T.invalid : status === "closed" ? T.closed : null;
   return (
@@ -49,14 +53,28 @@ export function LoginForm({ next, closed }: LoginFormProps) {
         </Field>
         <Field id={`${id}-password`} label={T.password} required requiredLabel={T.required}>
           {(control) => (
-            <Input
-              {...control}
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              enterKeyHint="go"
-              maxLength={512}
-            />
+            <span className="admin-password">
+              <Input
+                {...control}
+                name="password"
+                type={visible ? "text" : "password"}
+                autoComplete="current-password"
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck={false}
+                enterKeyHint="go"
+                maxLength={512}
+              />
+              <button
+                type="button"
+                className="admin-password-toggle"
+                aria-label={visible ? T.hidePassword : T.showPassword}
+                aria-pressed={visible}
+                onClick={() => setVisible((v) => !v)}
+              >
+                <AdminIcon name={visible ? "eye-off" : "eye"} size={20} />
+              </button>
+            </span>
           )}
         </Field>
         <FormMessage tone="error">{message}</FormMessage>
