@@ -3,9 +3,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { Section } from "@/components/layout/Section";
 import { SectionHeader } from "@/components/layout/SectionHeader";
 import { Reveal } from "@/components/motion/Reveal";
-import { Icon } from "@/components/icons/Icon";
 import type { IconName } from "@/components/icons/paths";
-import { buttonVariants } from "@/components/ui/button-variants";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { FeatureIcon } from "@/components/ui/FeatureIcon";
 import { MediaFrame } from "@/components/ui/MediaFrame";
@@ -30,8 +28,6 @@ const HISTORY_ICONS: Readonly<Record<string, IconName>> = {
   founding: "users",
   registration: "building",
 };
-/* Ustav nusxasi (skan, 16 bet): public/docs, ASCII nom bilan — havola har tilda buzilmaydi. */
-const CHARTER_HREF = "/docs/ustav.pdf";
 interface PageProps {
   readonly locale: Locale;
   readonly dict: Dictionary;
@@ -77,7 +73,7 @@ export function AboutPage({ locale, dict }: PageProps) {
               toʻr ustunlarida. Telefonda ustma-ust: avval belgi, keyin matn. */}
           <div className="grid-site about-intro">
             <Reveal
-              className="about-intro-media col-span-4 md:col-span-8 lg:col-span-5"
+              className="about-intro-media col-span-4 md:col-span-8 lg:col-span-12 xl:col-span-5"
               attrs={{ "data-grid-item": "" }}
             >
               <MediaFrame ratio="1:1" tone="dark" motion={{ mode: "smooth" }}>
@@ -85,7 +81,7 @@ export function AboutPage({ locale, dict }: PageProps) {
               </MediaFrame>
             </Reveal>
             <Reveal
-              className="about-mission col-span-4 md:col-span-8 lg:col-span-7"
+              className="about-mission col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3 xl:col-span-7 xl:col-start-auto"
               attrs={{ "data-grid-item": "" }}
             >
               <Prose size="body-l">
@@ -96,19 +92,6 @@ export function AboutPage({ locale, dict }: PageProps) {
               <PullQuote attribution={a.mission.quoteSource}>
                 {hyphenate(a.mission.quote, locale)}
               </PullQuote>
-              <div className="about-charter">
-                <a
-                  href={CHARTER_HREF}
-                  download="bolalar-ijodkorligi-ustav.pdf"
-                  className={buttonVariants({ variant: "ghost", size: "48" })}
-                  data-variant="ghost"
-                  data-size="48"
-                >
-                  <Icon name="download" size={20} />
-                  <span className="text-trim">{a.mission.charter}</span>
-                  <span className="t-small text-ink-3">{a.mission.charterHint}</span>
-                </a>
-              </div>
             </Reveal>
           </div>
         </Container>

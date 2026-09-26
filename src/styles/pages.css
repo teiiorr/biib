@@ -55,8 +55,23 @@
     row-gap: 32px;
     align-items: center;
   }
-  /* Telefon va planshetda belgi kichikroq va markazda: matn birinchi ekranda koʻrinadi. */
-  @media (max-width: 1023px) {
+  /* Kompyuterda kadr matn ustuni bilan aynan bir balandlikda: tepa va past chetlari matnning birinchi
+     va oxirgi qatori bilan bir chiziqda (egasining talabi). */
+  @media (min-width: 1280px) {
+    .about-intro {
+      align-items: stretch;
+    }
+    .about-intro-media {
+      display: flex;
+    }
+    .about-intro-media > .media-frame {
+      aspect-ratio: auto;
+      height: 100%;
+    }
+  }
+  /* 1280 px dan tor ekranda belgi kichikroq va markazda, matn uning ostida: tor ustunda yonma-yon kadr
+     choʻzilib ketardi. */
+  @media (max-width: 1279px) {
     .about-intro-media {
       width: 100%;
       max-width: 280px;
@@ -67,6 +82,10 @@
     position: absolute;
     inset: 0;
   }
+  /* Kadr matn balandligiga choʻziladi: kvadrat video kesilmaydi, videoning oʻz lojuvard fonida markazda. */
+  .about-intro-media .media-frame {
+    background: var(--hero-ground);
+  }
   .about-logo-video,
   .about-logo-end,
   .about-logo-end > img {
@@ -74,7 +93,7 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
   .about-logo-end {
     opacity: 0;
@@ -99,23 +118,10 @@
   .about-media-figure figcaption {
     text-align: center;
   }
-  @media (min-width: 1024px) {
+  @media (min-width: 1280px) {
     .about-mission .ui-pullquote figcaption {
       text-align: start;
     }
-  }
-  /* Ustavni yuklab olish: telefonda markazda, keng ekranda matn ustunining oʻng chetida (tugmalar oʻngda). */
-  .about-charter {
-    display: flex;
-    justify-content: center;
-  }
-  @media (min-width: 1024px) {
-    .about-charter {
-      justify-content: flex-end;
-    }
-  }
-  .about-charter .ui-button {
-    gap: 8px;
   }
   :root .about-history {
     background: var(--surface);

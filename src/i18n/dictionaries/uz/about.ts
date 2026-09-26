@@ -11,8 +11,6 @@ export const about = {
     quote:
       "Birlashmaning asosiy maqsadi – bolalar va oʻsmirlar ijodkorligini tizimli ravishda qoʻllab-quvvatlash… hamda milliy madaniyat, maʼnaviy qadriyatlar va sogʻlom turmush tarzini bolalar ongiga ijodiy vositalar orqali singdirishdan iborat.",
     quoteSource: "Birlashma ustavi, 2.1-band",
-    charter: "Birlashma ustavi",
-    charterHint: "PDF, 1 MB",
   },
   media: {
     caption: "UPOP TREND loyihasining vizual obrazi",

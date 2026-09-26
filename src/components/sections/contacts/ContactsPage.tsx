@@ -79,13 +79,6 @@ export function ContactsPage({ locale, dict }: PageProps) {
       ...(c.email.value ? { href: `mailto:${c.email.value}` } : {}),
     },
     {
-      key: "telegram",
-      icon: "telegram",
-      label: d.details.telegram,
-      value: c.telegram.value,
-      ...(c.telegram.value ? { href: c.telegram.value } : {}),
-    },
-    {
       key: "hours",
       icon: "clock",
       label: d.details.hours,
@@ -93,8 +86,8 @@ export function ContactsPage({ locale, dict }: PageProps) {
     },
   ];
   const map = c.map.value;
-  /* Telegram oʻz kartasida turibdi: tarmoqlar kartasida takrorlanmaydi (bitta maqsadga bitta havola). */
-  const socials = c.socials.filter((s) => s.status === "confirmed" && s.id !== "telegram");
+  /* Telegram boshqa tarmoqlar qatorida (egasining talabi: takror yoʻq, bitta maqsadga bitta havola). */
+  const socials = c.socials.filter((s) => s.status === "confirmed");
   const external = dict.common.hints.external;
 
   return (
@@ -231,39 +224,21 @@ export function ContactsPage({ locale, dict }: PageProps) {
           </div>
         </Container>
       </Section>
-      <Section labelledBy="contacts-write">
-        <Container grid>
-          <SectionHeader
-            id="contacts-write"
-            className="col-span-full"
-            title={formEnabled ? d.form.heading : d.form.fallbackHeading}
-            {...(!formEnabled && c.telegram.value
-              ? {
-                  actions: (
-                    <LinkButton
-                      href={c.telegram.value}
-                      variant="primary"
-                      size="48"
-                      icon="telegram"
-                      external
-                      externalHint={external}
-                    >
-                      {d.form.fallbackCta}
-                    </LinkButton>
-                  ),
-                }
-              : {})}
-          />
-          {formEnabled ? (
+      {/* Yozish shakli faqat bot ulangan boʻlsa. Aks holda alohida «Telegram orqali yozing» boʻlimi yoʻq:
+          Telegram yuqoridagi tarmoqlar qatorida (takror boʻlmasin). */}
+      {formEnabled ? (
+        <Section labelledBy="contacts-write">
+          <Container grid>
+            <SectionHeader id="contacts-write" className="col-span-full" title={d.form.heading} />
             <div
               className="contact-write col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3"
               data-grid-item=""
             >
               <ContactFormLeaf dict={d.form} privacyHref={pathFor(locale, "privacy")} />
             </div>
-          ) : null}
-        </Container>
-      </Section>
+          </Container>
+        </Section>
+      ) : null}
     </>
   );
 }

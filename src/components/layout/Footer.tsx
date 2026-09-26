@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Icon } from "@/components/icons/Icon";
 import type { IconName } from "@/components/icons/paths";
 import { ExternalLink } from "@/components/ui/ExternalLink";
+import { VisuallyHidden } from "@/components/ui/VisuallyHidden";
 import { getContacts, getFlagship, t } from "@/content";
 import { FILLER } from "@/content/placeholder";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -20,6 +21,7 @@ interface FooterProps {
 }
 
 const ORG_LINKS: readonly PageKey[] = ["about", "leadership", "experts", "partners"];
+const DEVELOPER = "teiior";
 
 /** Futer: tepada ingichka ajratuvchi chiziq, toʻrt guruh, pastki qator (15.10); kirishi FooterArrive da. */
 export function Footer({ locale, dict }: FooterProps) {
@@ -58,16 +60,6 @@ export function Footer({ locale, dict }: FooterProps) {
             <Link href={pathFor(locale, "contacts")} className="footer-link t-small">
               {dict.nav.contacts}
             </Link>
-            {contacts.telegram.value ? (
-              <a
-                href={contacts.telegram.value}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-link t-small"
-              >
-                Telegram
-              </a>
-            ) : null}
             {contacts.phones.value?.[0] ? (
               <a
                 href={`tel:${contacts.phones.value[0].replace(/\s/g, "")}`}
@@ -109,7 +101,19 @@ export function Footer({ locale, dict }: FooterProps) {
             {dict.footer.privacy}
           </Link>
           <FooterLangs locale={locale} label={dict.nav.chooseLanguage} />
-          <p className="footer-credit">{dict.footer.credit}</p>
+          {/* Muallif nomi pushti havola (egasining talabi): teiior.uz yangi varaqda ochiladi. */}
+          <p className="footer-credit">
+            {dict.footer.credit.split(DEVELOPER)[0]}
+            <a
+              href="https://teiior.uz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-credit-link"
+            >
+              {DEVELOPER}
+              <VisuallyHidden> ({dict.common.hints.external})</VisuallyHidden>
+            </a>
+          </p>
         </div>
       </Container>
     </footer>

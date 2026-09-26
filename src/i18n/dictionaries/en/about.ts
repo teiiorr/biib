@@ -10,8 +10,6 @@ export const about: typeof source = {
     quote:
       "The main purpose of the association is to support the creativity of children and teenagers systematically… and to instil national culture, spiritual values and a healthy way of life in children through creative means.",
     quoteSource: "Charter of the association, clause 2.1 (translation)",
-    charter: "Charter of the association",
-    charterHint: "PDF, 1 MB, in Uzbek",
   },
   media: {
     caption: "Visual identity of the UPOP TREND project",

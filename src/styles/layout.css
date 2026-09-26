@@ -315,6 +315,19 @@
   .footer-credit {
     color: var(--ink-3);
   }
+  .footer-credit-link {
+    color: var(--tint);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 3px;
+    transition: text-decoration-color var(--dur-ui) var(--ease-ui);
+  }
+  @media (hover: hover) {
+    .footer-credit-link:hover {
+      text-decoration-color: currentColor;
+    }
+  }
   @media (max-width: 1279px) {
     .footer-bottom .footer-langs {
       flex-basis: 100%;
