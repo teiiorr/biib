@@ -4,24 +4,41 @@
  * oxirgi kadrda belgi turadi, keyin skroll sahnasi belgini sarlavhaga olib boradi.
  *   kompyuter: 1920×1080 AV1 (webm) + H.264 (mp4) — belgi tafsilotlari aniq koʻrinsin;
  *   telefon: 1080×1920 — butun animatsiya kengligi (kadrning 21–75 %) sigʻadi: markaziy qism videoning
- *   oʻz fon rangida (#0B1430) tekis maydonga qoʻyiladi, yuqori va pastki cheti 140 px da eriydi (chok
+ *   zamin rangida (#0A1026) tekis maydonga qoʻyiladi, yuqori va pastki cheti 140 px da eriydi (chok
  *   koʻrinmaydi), belgi HERO_LOGO_BOX.portrait oʻrniga tushadi;
- *   posterlar: birinchi kadr (ijro oldidan) va oxirgi kadr (harakat oʻchiq, belgi tayyor).
+ *   posterlar: birinchi kadr (ijro oldidan) va oxirgi kadr (harakat oʻchiq, belgi tayyor);
+ *   «Biz haqimizda» dagi belgi videosi (720×720, belgi atrofidagi kvadrat) ham shu manbadan.
+ * Fon bir tusda (egasining talabi): manbadagi viñetka va markazdagi yorugʻ dogʻ sayt zamini (#0A1026)
+ * rangiga tekislanadi — yorugʻligi 34 dan past piksel zamin rangini oladi, 50 dan yuqorisi (belgi,
+ * oltin, uchqunlar) oʻzgarmaydi, oraligʻi yumshoq oʻtadi. Oraliq nusxa bir marta tayyorlanadi.
  * Byudjet (§17): kompyuter ≤ 1.8 MB, telefon ≤ 0.9 MB (kerak boʻlsa crf oshiriladi). ffmpeg kerak.
  */
 import { execFileSync } from "node:child_process";
-import { statSync } from "node:fs";
+import { mkdirSync, statSync } from "node:fs";
 import path from "node:path";
 
-const SOURCE = path.resolve("src/assets/video/new-hero.mp4");
+const ORIGINAL = path.resolve("src/assets/video/new-hero.mp4");
+const CACHE = path.resolve(".content-cache");
+const SOURCE = path.join(CACHE, "hero-flat.mkv");
 const OUT = path.resolve("public/media");
 const MB = 1024 * 1024;
+
+/* Zamin: sayt foni (atlas.css --bg, --hero-ground). */
+const GROUND = { r: 10, g: 16, b: 38 };
+const MASK =
+  "st(0,0.2126*r(X,Y)+0.7152*g(X,Y)+0.0722*b(X,Y));" +
+  "st(1,clip((ld(0)-34)/16,0,1));st(1,ld(1)*ld(1)*(3-2*ld(1)))";
+const FLATTEN =
+  "format=gbrp,geq=" +
+  `r='${MASK};${GROUND.r}*(1-ld(1))+r(X,Y)*ld(1)':` +
+  `g='${MASK};${GROUND.g}*(1-ld(1))+g(X,Y)*ld(1)':` +
+  `b='${MASK};${GROUND.b}*(1-ld(1))+b(X,Y)*ld(1)'`;
 
 /* Telefon kadri: manbadan 1152×1080 markaz (x 384) — animatsiyaning eng keng lahzasi ham ichida —
    1080×1013 ga, tepadan 303 px: belgi 1080×1920 kadrning shu nuqtasiga tushadi. Fon — videoning chekka
    rangi (yuqori 12/21/48 va pastki 10/18/43 oʻrtachasi), chegara alfa bilan eritiladi. */
 const PORTRAIT =
-  "color=c=0x0B1430:s=1080x1920:r=24[bg];" +
+  "color=c=0x0A1026:s=1080x1920:r=24[bg];" +
   "[0:v]crop=1152:1080:384:0,scale=1080:1013,format=rgba," +
   "geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':a='255*min(1,min(Y,H-Y)/140)'[fg];" +
   "[bg][fg]overlay=0:303:shortest=1,format=yuv420p[v]";
@@ -115,6 +132,10 @@ function poster(video: string, file: string, at: "first" | "last"): void {
   console.log(`${file}\t${(statSync(path.join(OUT, file)).size / 1024).toFixed(0)} KB`);
 }
 
+/* Tekislangan oraliq nusxa (siqilmagan FFV1): keyingi kodlashlar undan, filtr bir marta ishlaydi. */
+mkdirSync(CACHE, { recursive: true });
+run(["-i", ORIGINAL, "-an", "-vf", FLATTEN, "-c:v", "ffv1", "-pix_fmt", "gbrp", SOURCE]);
+
 fit(LANDSCAPE, "hero-d.webm", "av1", 30, 1.6 * MB);
 fit(LANDSCAPE, "hero-d.mp4", "h264", 23, 1.8 * MB);
 fit(PORTRAIT, "hero-m.webm", "av1", 32, 0.9 * MB);
@@ -123,3 +144,11 @@ poster("hero-d.mp4", "hero-d-poster.avif", "first");
 poster("hero-d.mp4", "hero-d-end.avif", "last");
 poster("hero-m.mp4", "hero-m-poster.avif", "first");
 poster("hero-m.mp4", "hero-m-end.avif", "last");
+
+/* «Biz haqimizda» belgisi: 0.8 s dan (qorongʻi boshlanish tashlanadi), belgi atrofidagi 800 px kvadrat. */
+const ABOUT =
+  "[0:v]trim=start=0.8,setpts=PTS-STARTPTS,crop=800:800:555:47,scale=720:720,format=yuv420p[v]";
+fit(ABOUT, "about-logo.webm", "av1", 34, 0.6 * MB);
+fit(ABOUT, "about-logo.mp4", "h264", 26, 0.6 * MB);
+poster("about-logo.mp4", "about-logo-poster.avif", "first");
+poster("about-logo.mp4", "about-logo-end.avif", "last");
