@@ -8,10 +8,10 @@ export const about = {
       "Birlashma adabiyot, teatr, kino, animatsiya, musiqa, tasviriy sanʼat va media sohalarida bolalar uchun yuksak saviyali milliy kontent yaratilishini ragʻbatlantiradi, respublikaning barcha hududlaridan, ayniqsa chekka tumanlardan iqtidorli bolalarni izlab topib, ularni ijodiy yoʻnaltiradi. Faoliyat ixtiyoriylik, oshkoralik, teng huquqlilik, oʻzini oʻzi boshqarish va qonuniylik tamoyillariga asoslanadi.",
     ],
     quote:
-      "Bolalar va oʻsmirlar ijodkorligini tizimli ravishda qoʻllab-quvvatlash… hamda milliy madaniyat, maʼnaviy qadriyatlar va sogʻlom turmush tarzini bolalar ongiga ijodiy vositalar orqali singdirish.",
+      "Birlashmaning asosiy maqsadi – bolalar va oʻsmirlar ijodkorligini tizimli ravishda qoʻllab-quvvatlash… hamda milliy madaniyat, maʼnaviy qadriyatlar va sogʻlom turmush tarzini bolalar ongiga ijodiy vositalar orqali singdirishdan iborat.",
     quoteSource: "Birlashma ustavi, 2.1-band",
     charter: "Birlashma ustavi",
-    charterHint: "PDF, 1 MB",
+    charterHint: "PDF, 1 MB",
   },
   media: {
     caption: "UPOP TREND loyihasining vizual obrazi",

@@ -8,10 +8,10 @@ export const about: typeof source = {
       "Bolalar ijodkorligi ijodiy birlaşmasi bolalar va ösmirlar ijodkorligini qöllab-quvvatlaş, bolalar uçun milliy kontent yaratiş sohasida işlaydigan ijodkorlar va mutaxassislarni birlaştiradi. Birlaşma jamoat birlaşmasi şaklidagi nodavlat notijorat taşkilot bölib, 2026-yilda Özbekiston Respublikasi Adliya vazirligida davlat röyxatidan ötgan.",
       "Birlaşma adabiyot, teatr, kino, animatsiya, musiqa, tasviriy sanʼat va media sohalarida bolalar uçun yuksak saviyali milliy kontent yaratilişini rağbatlantiradi, respublikaning barça hududlaridan, ayniqsa çekka tumanlardan iqtidorli bolalarni izlab topib, ularni ijodiy yönaltiradi. Faoliyat ixtiyoriylik, oşkoralik, teng huquqlilik, özini özi boşqariş va qonuniylik tamoyillariga asoslanadi.",
     ],
-    quote: "Bolalar va ösmirlar ijodkorligini tizimli ravişda qöllab-quvvatlaş… hamda milliy madaniyat, maʼnaviy qadriyatlar va soğlom turmuş tarzini bolalar ongiga ijodiy vositalar orqali singdiriş.",
+    quote: "Birlaşmaning asosiy maqsadi – bolalar va ösmirlar ijodkorligini tizimli ravişda qöllab-quvvatlaş… hamda milliy madaniyat, maʼnaviy qadriyatlar va soğlom turmuş tarzini bolalar ongiga ijodiy vositalar orqali singdirişdan iborat.",
     quoteSource: "Birlaşma ustavi, 2.1-band",
     charter: "Birlaşma ustavi",
-    charterHint: "PDF, 1 MB",
+    charterHint: "PDF, 1 MB",
   },
   media: {
     caption: "UPOP TREND loyihasining vizual obrazi",
