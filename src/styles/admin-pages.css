@@ -1,0 +1,100 @@
+/* Boshqaruv paneli: ish maydoni, sahifa, karta, harakatlar qatori va qobiqsiz sahifalar (kirish, 404,
+   xato). Qobiq va boʻlimlar roʻyxati admin.css da. */
+
+@layer components {
+  /* ---------- Ish maydoni ---------- */
+  .admin-main {
+    flex: 1;
+    width: 100%;
+    padding: calc(8px + var(--admin-bar) + 32px + var(--safe-top))
+      max(var(--margin), var(--safe-right)) calc(64px + var(--safe-bottom))
+      max(var(--margin), var(--safe-left));
+  }
+  .admin-main:focus {
+    outline: none;
+  }
+  @media (min-width: 1024px) {
+    .admin-main {
+      padding: calc(48px + var(--safe-top)) 48px 96px calc(16px + var(--admin-rail) + 48px);
+    }
+  }
+  .admin-page {
+    width: 100%;
+    max-width: 1040px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .admin-page-center {
+    gap: 16px;
+  }
+
+  .admin-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 24px;
+  }
+  .admin-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    box-shadow: var(--inner-highlight);
+  }
+  .admin-card-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .admin-card-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-control);
+    background: var(--surface-2);
+    color: var(--accent-text);
+  }
+
+  /* Harakatlar qatori doim oʻngda (egasining talabi). */
+  .admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+
+  /* ---------- Kirish, 404 va xato: qobiqsiz, markazdagi tor ustun ---------- */
+  .admin-login,
+  .admin-status {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    padding: calc(32px + var(--safe-top)) max(var(--margin), var(--safe-right))
+      calc(32px + var(--safe-bottom)) max(var(--margin), var(--safe-left));
+  }
+  .admin-login:focus,
+  .admin-status:focus {
+    outline: none;
+  }
+  .admin-login-column,
+  .admin-status-column {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .admin-mark {
+    align-self: center;
+  }
+  .admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+}

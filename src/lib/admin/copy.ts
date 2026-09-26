@@ -1,0 +1,70 @@
+/**
+ * Boshqaruv paneli matnlari. Panel bir tilli (oʻzbek lotini), shu sabab lugʻatlarga kirmaydi:
+ * u yerda har kalit besh tilda talab qilinadi.
+ */
+export const ADMIN_COPY = {
+  title: "Boshqaruv paneli",
+  brand: "Bolalar Ijodkorligi Ijodiy Birlashmasi",
+  skipToContent: "Asosiy qismga oʻtish",
+  login: {
+    title: "Boshqaruv paneli",
+    formLabel: "Panelga kirish",
+    email: "Elektron pochta",
+    password: "Parol",
+    submit: "Kirish",
+    submitting: "Tekshirilmoqda…",
+    invalid: "Email yoki parol notoʻgʻri",
+    closed: "Panel hali sozlanmagan: server sozlamalari toʻliq emas.",
+    required: "majburiy",
+  },
+  nav: {
+    label: "Panel boʻlimlari",
+    groups: {
+      content: "Kontent",
+      people: "Odamlar",
+      organization: "Tashkilot",
+      system: "Tizim",
+    },
+    openSite: "Saytni ochish",
+    newTab: "yangi oynada ochiladi",
+    logout: "Chiqish",
+    menu: "Menyu",
+    openMenu: "Menyuni ochish",
+    closeMenu: "Menyuni yopish",
+  },
+  pages: {
+    dashboard: "Boshqaruv",
+    news: "Yangiliklar",
+    upop: "UPOP",
+    gallery: "Galereya",
+    history: "Tarix",
+    texts: "Matnlar",
+    leadership: "Rahbariyat",
+    experts: "Ekspertlar",
+    partners: "Hamkorlar",
+    contacts: "Aloqa",
+    media: "Media",
+    journal: "Jurnal",
+    security: "Xavfsizlik",
+  },
+  placeholder: "Bu boʻlim tez orada ishga tushadi.",
+  dashboard: {
+    news: {
+      title: "Yangiliklar",
+      text: "Yangilik qoʻshish, matnini besh tilda tahrirlash va suratlar biriktirish.",
+      action: "Yangiliklarga oʻtish",
+    },
+  },
+  errors: {
+    notFound: "Sahifa topilmadi",
+    notFoundText: "Panelda bunday boʻlim yoʻq.",
+    backHome: "Boshqaruvga qaytish",
+    staleTitle: "Sayt yangilandi",
+    stale: "Sayt yangilandi. Sahifani qayta yuklang.",
+    reload: "Qayta yuklash",
+    generic: "Nimadir notoʻgʻri ketdi",
+    genericText: "Amal bajarilmadi. Qayta urinib koʻring.",
+    retry: "Qayta urinish",
+    previewReadOnly: "Sinov nusxasida oʻzgartirish oʻchirilgan: saytning asosiy manzilida ishlang.",
+  },
+} as const;

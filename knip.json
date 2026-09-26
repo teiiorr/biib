@@ -1,7 +1,7 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "entry": [
-    "src/app/**/{page,layout,not-found,error,global-not-found,sitemap,robots,manifest,opengraph-image}.{ts,tsx}",
+    "src/app/**/{page,layout,not-found,error,global-not-found,sitemap,robots,manifest,opengraph-image,route}.{ts,tsx}",
     "scripts/**/*.{mjs,mts,ts}",
     "tests/**/*.ts"
   ],
