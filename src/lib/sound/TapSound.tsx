@@ -4,8 +4,6 @@ import { useEffect } from "react";
 
 import { playTap, preloadTap, primeAudio } from "./synth";
 
-const INTERACTIVE =
-  "a[href],button,input,select,textarea,label,summary,[role=button],[role=link],[role=switch],[role=tab],[role=menuitem],[role=menuitemradio],[role=radio],[role=option],[role=checkbox],[role=slider]";
 /* Ovoz shu yerda yoqilishi mumkin: kontekst hozir, bosish ichida ochiladi. */
 const SOUND_CONTROLS = "[role=switch],.appearance-panel";
 const TAP_SLOP_PX = 12;
@@ -30,10 +28,9 @@ export function TapSound(): null {
 
     const respond = (target: Element | null): void => {
       if (soundOn() || target?.closest(SOUND_CONTROLS)) primeAudio();
-      const bright = target?.closest(INTERACTIVE) != null;
       /* Holat Reactʼdan keyin oʻqiladi: Ovoz yoqilganda tasdiq zarbasi chalinadi, oʻchirilganda jim. */
       window.setTimeout(() => {
-        if (soundOn()) playTap(bright);
+        if (soundOn()) playTap();
       }, 0);
     };
 
