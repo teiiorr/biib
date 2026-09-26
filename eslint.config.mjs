@@ -44,4 +44,22 @@ export default tseslint.config(
     files: ["scripts/**/*.{mjs,ts}", "tests/**/*.ts", "playwright.config.ts"],
     rules: { "@typescript-eslint/no-non-null-assertion": "off" },
   },
+  {
+    /* tsx va Playwright server-only modulni yuklay olmaydi: kontent faqat sof bundled/select/snapshot orqali. */
+    files: ["scripts/**/*.{mjs,mts,ts}", "tests/**/*.ts"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              regex: "(^|/)src/content(/index)?$|(^|/)src/lib/cms/|^@/|^server-only$|^next/cache$",
+              message:
+                "Skript va testlarda server-only modul va @/ taxallusi yoʻq: kontent src/content/{bundled,select,snapshot} orqali.",
+            },
+          ],
+        },
+      ],
+    },
+  },
 );
