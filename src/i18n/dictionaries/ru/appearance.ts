@@ -4,12 +4,6 @@ export const appearance: typeof source = {
   panel: "Оформление",
   open: "Настроить оформление",
   close: "Закрыть",
-  theme: {
-    label: "Тема",
-    light: "Светлая",
-    dark: "Тёмная",
-    system: "Системная",
-  },
   transparency: "Прозрачность",
   transparencyFrom: "Матовое",
   transparencyTo: "Прозрачное",

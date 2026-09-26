@@ -17,7 +17,7 @@ test.describe("G8 vizual etalonlar", () => {
   for (const theme of THEMES) {
     for (const type of PAGE_TYPES) {
       test(`${theme}/${type}`, async ({ page }, testInfo) => {
-        await primeAppearance(page, { theme, motion: false });
+        await primeAppearance(page, { motion: false });
         await page.goto(pagePath("uz", type));
         await settle(page);
         await revealAll(page);

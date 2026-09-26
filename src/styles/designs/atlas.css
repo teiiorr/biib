@@ -128,66 +128,9 @@
   }
 }
 
-:root[data-theme="light"] {
-  --bg: #f7f3ea;
-  --surface: #fffcf6;
-  --surface-2: #ffffff;
-  --ink: #0e1733;
-  --ink-2: #3a4466;
-  --ink-3: #5a6380;
-  --line: #d9d2c3;
-  --line-strong: #8e8672;
-  --tint: #b8306a;
-  --tint-hover: #a42a5e;
-  --on-tint: #ffffff;
-  --focus: #b8306a;
-  --accent-text: #7a5c1a;
-  /* Sut-oq zaminda oltin: tinch toʻxtashlar katta sarlavha chegarasidan yuqori — chuqur 5.88 / 6.36 / 6.51,
-     asosiy 3.47 / 3.75 / 3.85 (sut-oq / sirt / oq). Porlash tasmasi egasining talabi bilan yorqin va
-     koʻzga tashlanadigan: u tor (harf qatorining ~10 %) va doim harakatda, matn tasma oʻtgan zahoti
-     yana asosiy oltinda oʻqiladi. */
-  --gold-lo: #7a5800;
-  --gold: #a47c00;
-  --gold-flank: #c99a1e;
-  --gold-shine: #eccb5c;
-  --success: #1d7a55;
-  --info: #173a8c;
-  --danger: #a5162f;
-  --art-1: #d6457f;
-  --art-1-text: #b8306a;
-  --art-2: #c9a646;
-  --art-2-text: #7a5c1a;
-  --art-3: #2fa878;
-  --art-3-text: #1d7a55;
-  --art-4: #1fa2a6;
-  --art-4-text: #0e6f6e;
-  --art-5: #26619c;
-  --art-5-text: #173a8c;
-  --art-6: #a5162f;
-  --art-6-text: #a5162f;
-  --art-7: #e2b434;
-  --art-7-text: #7a5c1a;
-
-  --material-base: #fffcf6;
-  --material-ink: #0e1733;
-  --material-ink-2: #3a4466;
-  --material-rim: #ffffff;
-  --material-shadow: rgba(14, 23, 51, 0.1);
-
-  --shadow-raised: 0 2px 8px rgba(14, 23, 51, 0.08);
-  --shadow-floating: 0 8px 24px rgba(14, 23, 51, 0.1);
-  --shadow-overlay: 0 16px 48px rgba(14, 23, 51, 0.14);
-  --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.6);
-
-  /* Qahramon (bosh sahifa): matn, ostlik va kadr pardasi; Atlasda kadr ikkala mavzuda qorongʻi. */
-  --hero-ink: #f7f3ea;
-  --hero-scrim: #0a1026;
-  --hero-veil: #0f193c;
-  /* Qahramon videosining fon rangi (scripts/hero-video.mts dagi toʻldirish). */
-  --hero-ground: #0b1430;
-}
-
+/* Sayt faqat tungi «Rishton» mavzusida (egasining talabi, 2026-09-26): kunduzgi toʻplam olib tashlandi. */
 :root[data-theme="dark"] {
+  color-scheme: dark;
   --bg: #0a1026;
   --surface: #111a38;
   --surface-2: #17214a;
@@ -229,6 +172,14 @@
   --material-ink-2: #c3cadb;
   --material-rim: #8c95b4;
   --material-shadow: rgba(2, 5, 20, 0.5);
+  /* Yorugʻ rasm ustidagi oyna (iOS moslashuvchan muzi): sut muz, toʻq siyoh, toʻq pushti va oltin. */
+  --glass-light-base: #fffcf6;
+  --glass-light-ink: #0e1733;
+  --glass-light-ink-2: #3a4466;
+  --glass-light-rim: #ffffff;
+  --glass-light-tint: #b8306a;
+  --glass-light-on-tint: #ffffff;
+  --glass-light-gold: #7a5c1a;
 
   /* Tunda balandlik soyada emas, yorugʻroq sirt va 1 px ichki chiziqda. */
   --shadow-raised: 0 1px 2px rgba(2, 5, 20, 0.4);
@@ -236,18 +187,10 @@
   --shadow-overlay: 0 12px 40px rgba(2, 5, 20, 0.55);
   --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 
-  /* Qahramon (bosh sahifa): matn, ostlik va kadr pardasi; Atlasda kadr ikkala mavzuda qorongʻi. */
+  /* Qahramon (bosh sahifa): matn, ostlik va kadr pardasi. */
   --hero-ink: #f7f3ea;
   --hero-scrim: #0a1026;
   --hero-veil: #0f193c;
   /* Qahramon videosining fon rangi (scripts/hero-video.mts dagi toʻldirish). */
   --hero-ground: #0b1430;
-}
-
-/* Qorongʻi sirt kunduzgi mavzuda ham (qahramon kadri, missiya, lojuvard lentalar): yorqin oltin. */
-:root :is([data-tone="dark"], .home-hero, .upop-field, .navy-band) {
-  --gold-lo: #b8860b;
-  --gold: #d4af37;
-  --gold-flank: #f7e08a;
-  --gold-shine: #fff1b8;
 }

@@ -15,7 +15,7 @@ export const privacy = {
       heading: "Nima yigʻiladi va qayerga yuboriladi",
       paragraphs: [
         "Aloqa shakli orqali yuborilgan ism, telefon yoki pochta va xabar matni. Boshqa hech narsa: saytda hisob, izoh, cookie va analitika yoʻq.",
-        "Koʻrinish sozlamalari (mavzu, shaffoflik, zichlik, harakat va ovoz) faqat sizning brauzeringizda, localStorage ichida saqlanadi va bizga yuborilmaydi.",
+        "Koʻrinish sozlamalari (shaffoflik, zichlik, harakat va ovoz) faqat sizning brauzeringizda, localStorage ichida saqlanadi va bizga yuborilmaydi.",
         "Shakl xabarni Telegram Bot API orqali birlashmaning xizmat chatiga yuboradi. Shu sabab maʼlumot Telegram serverlari orqali oʻtadi.",
       ],
     },

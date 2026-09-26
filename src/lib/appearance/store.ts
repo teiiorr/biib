@@ -1,38 +1,20 @@
-import { applyAppearance, readAppearanceFromDocument, resolveTheme, writeStorage } from "./dom";
-import {
-  DEFAULT_APPEARANCE,
-  normalizeAppearance,
-  type Appearance,
-  type ResolvedTheme,
-} from "./types";
+import { applyAppearance, readAppearanceFromDocument, writeStorage } from "./dom";
+import { DEFAULT_APPEARANCE, normalizeAppearance, type Appearance } from "./types";
 
-export interface AppearanceSnapshot {
-  readonly appearance: Appearance;
-  readonly resolvedTheme: ResolvedTheme;
-}
-
-const SERVER_SNAPSHOT: AppearanceSnapshot = {
-  appearance: DEFAULT_APPEARANCE,
-  resolvedTheme: "light",
-};
-
-let snapshot: AppearanceSnapshot | null = null;
+let snapshot: Appearance | null = null;
 const listeners = new Set<() => void>();
 
 function emit(): void {
   for (const listener of listeners) listener();
 }
 
-export function getServerAppearanceSnapshot(): AppearanceSnapshot {
-  return SERVER_SNAPSHOT;
+export function getServerAppearanceSnapshot(): Appearance {
+  return DEFAULT_APPEARANCE;
 }
 
-export function getAppearanceSnapshot(): AppearanceSnapshot {
-  if (typeof document === "undefined") return SERVER_SNAPSHOT;
-  if (!snapshot) {
-    const appearance = readAppearanceFromDocument();
-    snapshot = { appearance, resolvedTheme: resolveTheme(appearance.theme) };
-  }
+export function getAppearanceSnapshot(): Appearance {
+  if (typeof document === "undefined") return DEFAULT_APPEARANCE;
+  snapshot ??= readAppearanceFromDocument();
   return snapshot;
 }
 
@@ -43,36 +25,22 @@ export function subscribeAppearance(listener: () => void): () => void {
   };
 }
 
-export function setAppearance(patch: Partial<Appearance>): AppearanceSnapshot {
-  const previous = getAppearanceSnapshot();
-  const appearance = normalizeAppearance({ ...previous.appearance, ...patch });
-  const resolvedTheme = resolveTheme(appearance.theme);
-  snapshot = { appearance, resolvedTheme };
-  applyAppearance(appearance, resolvedTheme);
+export function setAppearance(patch: Partial<Appearance>): Appearance {
+  const appearance = normalizeAppearance({ ...getAppearanceSnapshot(), ...patch });
+  snapshot = appearance;
+  applyAppearance(appearance);
   writeStorage(appearance);
   emit();
-  return snapshot;
+  return appearance;
 }
 
-export function resetAppearance(): AppearanceSnapshot {
+export function resetAppearance(): Appearance {
   return setAppearance(DEFAULT_APPEARANCE);
-}
-
-/** Tizim mavzusi oʻzgarganda faqat «system» tanlovi qayta hisoblanadi. */
-export function refreshSystemTheme(): void {
-  const current = getAppearanceSnapshot();
-  if (current.appearance.theme !== "system") return;
-  const resolvedTheme = resolveTheme("system");
-  if (resolvedTheme === current.resolvedTheme) return;
-  snapshot = { appearance: current.appearance, resolvedTheme };
-  applyAppearance(current.appearance, resolvedTheme);
-  emit();
 }
 
 /** Boshqa oynada oʻzgargan sozlama shu oynaga ham tushadi. */
 export function replaceAppearance(next: Appearance): void {
-  const resolvedTheme = resolveTheme(next.theme);
-  snapshot = { appearance: next, resolvedTheme };
-  applyAppearance(next, resolvedTheme);
+  snapshot = next;
+  applyAppearance(next);
   emit();
 }

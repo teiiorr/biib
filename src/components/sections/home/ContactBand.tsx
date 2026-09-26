@@ -23,7 +23,7 @@ export function ContactBand({ locale, dict }: ContactBandProps) {
   const c = getContacts();
   const h = dict.home.contact;
   return (
-    <Section labelledBy="home-contact" tone="light">
+    <Section labelledBy="home-contact">
       <Container>
         <SectionHeader id="home-contact" title={h.heading} />
         <Reveal className="contact-band-card">

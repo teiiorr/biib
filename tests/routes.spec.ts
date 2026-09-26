@@ -78,7 +78,7 @@ test.describe("G2 marshrutlar", () => {
   });
 
   test("til almashtirgich sahifa va slugni saqlaydi", async ({ page }, testInfo) => {
-    await primeAppearance(page, { theme: "light" });
+    await primeAppearance(page);
     const slug = NEWS_SLUGS[0];
     await page.goto(pathFor("uz", "newsItem", slug));
     await settle(page);

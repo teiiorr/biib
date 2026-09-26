@@ -13,7 +13,7 @@ test.describe("G7 kadr byudjeti", () => {
     test(`${type}`, async ({ page, context }, testInfo) => {
       const cdp = await context.newCDPSession(page);
       await cdp.send("Emulation.setCPUThrottlingRate", { rate: 4 });
-      await primeAppearance(page, { theme: "light" });
+      await primeAppearance(page);
       await page.goto(pagePath("uz", type));
       await settle(page);
       await page.waitForTimeout(600);

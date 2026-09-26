@@ -33,7 +33,7 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
   if (!lead) return null;
   const h = dict.home.news;
   return (
-    <Section labelledBy="home-news" tone="light" className="news-section">
+    <Section labelledBy="home-news" className="news-section">
       <Container>
         <SectionHeader id="home-news" title={h.heading} split />
         <div className="news-teaser" data-card-group="">

@@ -2,7 +2,8 @@ import type { ReactNode } from "react";
 
 import { cn } from "@/lib/cn";
 
-export type SectionTone = "light" | "dark";
+/* Sahifa zamini tungi: boʻlim faqat qorongʻi lenta sifatida belgilanadi; yorugʻ ohang faqat yorugʻ rasmlarda. */
+export type SectionTone = "dark";
 
 /**
  * section — qoʻshni boʻlimlar orasida 48/64/96 (har tomonda yarmi); band — rangli lenta ichi;

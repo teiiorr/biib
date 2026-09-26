@@ -18,7 +18,7 @@ export const privacy: typeof source = {
       heading: "Nima yiğiladi va qayerga yuboriladi",
       paragraphs: [
         "Aloqa şakli orqali yuborilgan ism, telefon yoki poçta va xabar matni. Boşqa heç narsa: saytda hisob, izoh, cookie va analitika yöq.",
-        "Köriniş sozlamalari (mavzu, şaffoflik, ziçlik, harakat va ovoz) faqat sizning brauzeringizda, localStorage içida saqlanadi va bizga yuborilmaydi.",
+        "Köriniş sozlamalari (şaffoflik, ziçlik, harakat va ovoz) faqat sizning brauzeringizda, localStorage içida saqlanadi va bizga yuborilmaydi.",
         "Şakl xabarni Telegram Bot API orqali birlaşmaning xizmat çatiga yuboradi. Şu sabab maʼlumot Telegram serverlari orqali ötadi.",
       ],
     },

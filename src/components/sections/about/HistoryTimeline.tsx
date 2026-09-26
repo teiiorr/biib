@@ -6,7 +6,6 @@ export interface HistoryItem {
   readonly id: string;
   readonly year: number;
   readonly title: string;
-  readonly text: string;
   readonly icon: IconName;
 }
 
@@ -17,20 +16,27 @@ interface HistoryTimelineProps {
 }
 
 /**
- * Tarix: yoʻnalishlar bilan bir xil teng toʻr (ustida chiziq, yil, sarlavha, izoh). Faqat yili
- * tasdiqlangan bosqichlar keladi (AboutPage).
+ * Tarix: yoʻnalish va vazifalar bilan bir xil katta bandlar — belgi va bitta qator «Ustav tasdiqlandi
+ * (2026)» (egasining talabi). Faqat yili tasdiqlangan bosqichlar keladi (AboutPage).
  */
 export function HistoryTimeline({ items, label }: HistoryTimelineProps) {
   return (
-    <Reveal as="ol" className="about-list history-timeline" stagger label={label}>
+    <Reveal
+      as="ol"
+      className="about-list history-timeline"
+      stagger
+      label={label}
+      attrs={{ "data-audit": "gap", "data-columns": "2" }}
+    >
       {items.map((item) => (
-        <li key={item.id} className="about-list-item feature">
+        <li key={item.id} className="about-list-item feature text-ink">
           <FeatureIcon name={item.icon} />
-          <div className="history-body">
-            <p className="history-year t-label tnum">{item.year}</p>
-            <h3 className="t-h4 text-ink">{item.title}</h3>
-            <p className="t-body text-ink-2">{item.text}</p>
-          </div>
+          <span>
+            {/* Yil oxirgi soʻzdan ajralmaydi: tor ekranda qavs yolgʻiz qatorga tushmaydi. */}
+            {item.title}
+            {"\u00a0"}
+            <span className="history-year tnum">({item.year})</span>
+          </span>
         </li>
       ))}
     </Reveal>

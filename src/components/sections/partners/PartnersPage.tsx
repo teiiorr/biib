@@ -7,7 +7,7 @@ import { FeatureIcon } from "@/components/ui/FeatureIcon";
 import { Picture } from "@/components/ui/Picture";
 import { getPartners, t } from "@/content";
 import { fillerName } from "@/content/placeholder";
-import type { PartnerGroup } from "@/content/types";
+import type { Partner, PartnerGroup } from "@/content/types";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
 import type { Locale } from "@/i18n/locales";
@@ -19,10 +19,55 @@ interface PageProps {
 }
 
 const GROUPS: readonly PartnerGroup[] = ["state", "international", "creative", "sponsors"];
+/* Toʻliq maydon: shundan kam boʻlsa guruhlarga boʻlinmaydi, bitta toʻr oʻrinbosarlar bilan toʻldiriladi. */
+const FULL_FIELD = 6;
+
+interface PartnerTileProps {
+  readonly partner: Partner;
+  readonly locale: Locale;
+  readonly dict: Dictionary["partners"];
+}
+
+function PartnerTile({ partner, locale, dict }: PartnerTileProps) {
+  const name = partner.name ? t(partner.name, locale) : "";
+  const tile = (
+    <span className="partner-tile" data-card="">
+      {partner.logo ? (
+        <Picture
+          src={partner.logo}
+          alt={fill(dict.logoAlt, { name })}
+          width={240}
+          height={160}
+          className="partner-logo"
+        />
+      ) : (
+        <span className="t-label text-center" data-card-title="">
+          {name}
+        </span>
+      )}
+    </span>
+  );
+  return (
+    <li>
+      {partner.href ? (
+        <a
+          href={partner.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={fill(dict.visit, { name })}
+        >
+          {tile}
+        </a>
+      ) : (
+        tile
+      )}
+    </li>
+  );
+}
 
 /**
- * Hamkorlar: faqat haqiqiy tashkilotlar, har guruh markazdagi sarlavha ostida teng plitkalar toʻrida.
- * Roʻyxat boʻsh boʻlsa bitta tinch karta: halol holat chapda, Aloqa havolasi oʻngda.
+ * Hamkorlar: faqat haqiqiy tashkilotlar. Oltitadan kam boʻlsa bitta toʻr (haqiqiylari birinchi), aks holda
+ * har guruh markazdagi sarlavha ostida teng plitkalar toʻrida.
  */
 export function PartnersPage({ locale, dict }: PageProps) {
   const partners = getPartners().filter((p) => p.status !== "pending" && p.name);
@@ -42,14 +87,17 @@ export function PartnersPage({ locale, dict }: PageProps) {
         ]}
         breadcrumbsLabel={dict.common.hints.breadcrumbs}
       />
-      {groups.length === 0 ? (
-        /* Hamkorlar tasdiqlanguncha: haqiqiy plitkalar bilan bir xil toʻr, ichida oʻrinbosar matn
-           (egasining talabi — boʻsh sahifa emas); taklif tugmasi oʻngda. */
+      {partners.length < FULL_FIELD ? (
+        /* Hamkorlar kam boʻlsa (egasining talabi — boʻsh joy emas): bitta toʻr, avval haqiqiy logotiplar,
+           qolgani oʻrinbosar plitkalar bilan toʻldiriladi; guruh sarlavhalari yoʻq, taklif tugmasi oʻngda. */
         <Section>
           <Container>
             <ul className="partner-grid" data-card-group="" data-audit="gap">
-              {Array.from({ length: 6 }, (_, index) => (
-                <li key={index}>
+              {partners.map((partner) => (
+                <PartnerTile key={partner.id} partner={partner} locale={locale} dict={p} />
+              ))}
+              {Array.from({ length: FULL_FIELD - partners.length }, (_, index) => (
+                <li key={`filler-${index}`}>
                   <span className="partner-tile partner-tile-placeholder feature" data-card="">
                     <FeatureIcon name="building" />
                     <span className="t-label text-ink-2">{fillerName(index)}</span>
@@ -76,42 +124,9 @@ export function PartnersPage({ locale, dict }: PageProps) {
             <Container>
               <SectionHeader id={`partners-${group}`} title={p.groups[group]} />
               <ul className="partner-grid" data-card-group="" data-audit="gap">
-                {items.map((partner) => {
-                  const name = partner.name ? t(partner.name, locale) : "";
-                  const tile = (
-                    <span className="partner-tile" data-card="">
-                      {partner.logo ? (
-                        <Picture
-                          src={partner.logo}
-                          alt={fill(p.logoAlt, { name })}
-                          width={240}
-                          height={160}
-                          className="partner-logo"
-                        />
-                      ) : (
-                        <span className="t-label text-center" data-card-title="">
-                          {name}
-                        </span>
-                      )}
-                    </span>
-                  );
-                  return (
-                    <li key={partner.id}>
-                      {partner.href ? (
-                        <a
-                          href={partner.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={fill(p.visit, { name })}
-                        >
-                          {tile}
-                        </a>
-                      ) : (
-                        tile
-                      )}
-                    </li>
-                  );
-                })}
+                {items.map((partner) => (
+                  <PartnerTile key={partner.id} partner={partner} locale={locale} dict={p} />
+                ))}
               </ul>
             </Container>
           </Section>

@@ -3,14 +3,14 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { ROOT, fail, pass, readText } from "./util.mjs";
 
-/* Atlas tokenlari: mavzusiz :root va ikki mavzu bloki. */
+/* Atlas tokenlari: mavzusiz :root va yagona tungi mavzu bloki (kunduzgi mavzu egasi talabi bilan olib tashlangan). */
 export const TOKEN_FILE = "src/styles/designs/atlas.css";
-export const THEMES = ["light", "dark"];
+export const THEMES = ["dark"];
 
 /** :root va :root[data-theme] bloklaridagi --nom: qiymat juftliklari; base = mavzusiz blok. */
 export function parseTokenScopes(file = TOKEN_FILE) {
   const css = readText(file).replace(/\/\*[\s\S]*?\*\//g, "");
-  const scopes = { base: {}, light: {}, dark: {} };
+  const scopes = { base: {}, dark: {} };
   const block = /:root(?:\[data-theme="(\w+)"\])?\s*\{([^}]*)\}/g;
   let match;
   while ((match = block.exec(css))) {
@@ -25,7 +25,7 @@ export function parseTokenScopes(file = TOKEN_FILE) {
 
 const list = (names) => names.map((n) => "--" + n).join(", ");
 
-/** Kunduz va tun bir xil token nomlarini belgilaydi; mavzusiz tokenlar mavzu blokida takrorlanmaydi. */
+/** Mavzu bloki bitta (tungi); mavzusiz tokenlar unda takrorlanmaydi; ortiqcha mavzu bloki xato. */
 export function checkTokenParity() {
   if (!existsSync(path.join(ROOT, TOKEN_FILE))) return [fail("tokens:file", `${TOKEN_FILE} yoʻq`)];
   const checks = [];
@@ -49,20 +49,10 @@ export function checkTokenParity() {
   const extra = Object.keys(scopes).filter((s) => s !== "base" && !THEMES.includes(s));
   if (extra.length) checks.push(fail("tokens:themes", `nomaʼlum mavzu bloki: ${extra.join(", ")}`));
 
-  const light = new Set(Object.keys(scopes.light ?? {}));
   const dark = new Set(Object.keys(scopes.dark ?? {}));
-  const onlyLight = [...light].filter((n) => !dark.has(n));
-  const onlyDark = [...dark].filter((n) => !light.has(n));
-  if (!onlyLight.length && !onlyDark.length) checks.push(pass("tokens:parity", `${light.size} ta`));
-  else {
-    const lines = [];
-    if (onlyLight.length) lines.push(`faqat kunduz blokida: ${list(onlyLight)}`);
-    if (onlyDark.length) lines.push(`faqat tun blokida: ${list(onlyDark)}`);
-    checks.push(fail("tokens:parity", lines.join("\n")));
-  }
 
   const base = new Set(Object.keys(scopes.base ?? {}));
-  const shadowed = [...new Set([...light, ...dark])].filter((n) => base.has(n));
+  const shadowed = [...dark].filter((n) => base.has(n));
   checks.push(
     shadowed.length
       ? fail("tokens:overlap", `mavzusiz va mavzu blokida ikki marta: ${list(shadowed)}`)

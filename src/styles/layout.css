@@ -66,12 +66,8 @@
     opacity: 0;
     transition: opacity var(--dur-ui) var(--ease-ui);
   }
-  :root[data-theme="light"] .surface[data-tone="light"] .nav-item {
-    --nav-mark: #7a5c1a;
-  }
-  .surface[data-tone="dark"] .nav-item,
-  :root[data-theme="dark"] .surface[data-tone] .nav-item {
-    --nav-mark: #e3c46e;
+  .surface[data-tone="light"] .nav-item {
+    --nav-mark: var(--glass-light-gold);
   }
   .nav-item[aria-current="page"]::after,
   .nav-item[data-active="true"]::after {
@@ -623,29 +619,49 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
+  /* Plitka 3:2, lekin mazmuni (ikki qatorli oʻrinbosar nomi) sigʻmasa oʻsadi — shunda butun toʻr
+     qatorlari teng balandlikda qoladi (1fr): qoʻshni plitkalar birga choʻziladi. */
+  .partner-grid {
+    grid-auto-rows: 1fr;
+  }
+  .partner-grid > li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    place-self: stretch;
+    aspect-ratio: 3 / 2;
+  }
+  .partner-grid > li > a {
+    display: grid;
+  }
   .partner-tile {
     display: grid;
     place-items: center;
-    aspect-ratio: 3 / 2;
     padding: 24px;
     border-radius: var(--radius-card);
     background: var(--surface);
     box-shadow: var(--shadow-raised);
   }
+  /* Tungi zaminda logotip sut-oq siyohda (rangli logotip kulrangda xira koʻrinardi); ustiga kelganda yoki
+     fokusda oʻz rangiga qaytadi — havolasiz plitkada ham. */
   .partner-logo {
-    width: 100%;
+    width: min(100%, 200px);
     height: auto;
     object-fit: contain;
-    filter: grayscale(1);
-    opacity: 0.8;
+    filter: brightness(0) invert(0.94);
+    opacity: 0.86;
     transition:
       filter var(--dur-ui) var(--ease-ui),
       opacity var(--dur-ui) var(--ease-ui);
   }
-  a:hover .partner-logo,
   a:focus-visible .partner-logo {
     filter: none;
     opacity: 1;
+  }
+  @media (hover: hover) {
+    :is(a:hover, .partner-tile:hover) .partner-logo {
+      filter: none;
+      opacity: 1;
+    }
   }
 }
 

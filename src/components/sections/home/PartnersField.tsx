@@ -20,7 +20,7 @@ interface PartnersFieldProps {
 export function PartnersField({ locale, dict, partners }: PartnersFieldProps) {
   const h = dict.home.partners;
   return (
-    <Section labelledBy="home-partners" tone="light">
+    <Section labelledBy="home-partners">
       <Container>
         <SectionHeader id="home-partners" title={h.heading} />
         <ul className="partner-grid" data-card-group="">

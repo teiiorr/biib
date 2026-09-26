@@ -16,6 +16,8 @@ import { ROOT } from "./checks/util.mjs";
 const SRC = path.join(ROOT, "public");
 const OUT = path.join(ROOT, "public/img");
 const MANIFEST = path.join(ROOT, "src/lib/images/manifest.ts");
+/* Oʻrtacha nisbiy yorugʻlik shundan yuqori boʻlsa rasm «yorugʻ» (oq fonli portret ≈ 0.44, sahna ≈ 0.08). */
+const BRIGHT_MIN = 0.35;
 
 /** widths: srcset kengliklari (manbadan katta boʻlsa manba kengligi bilan cheklanadi). */
 const JOBS = [
@@ -28,6 +30,10 @@ const JOBS = [
   { src: "/brand/news-multfilm.jpg", widths: [256, 384, 640, 1024], blur: true },
   { src: "/brand/news-seminar.jpg", widths: [256, 384, 640, 1024], blur: true },
   { src: "/brand/news-teatr.jpg", widths: [256, 384, 640, 1024], blur: true },
+  /* Rahbariyat portretlari (egasidan): EXIF va joylashuv olib tashlangan, burilish qoʻllangan. */
+  { src: "/brand/leader-chair.jpg", widths: [320, 480, 640, 960], blur: true },
+  { src: "/brand/leader-director.jpg", widths: [320, 480, 640, 960], blur: true },
+  { src: "/brand/partner-uzbekgidroenergo.png", widths: [240, 480, 720] },
 ];
 
 /* Sifat: AVIF 52 fotosuratda koʻzga farqsiz, WebP 78 — zaxira (eski Safari). Shaffof PNG sifatli qoladi. */
@@ -65,12 +71,31 @@ for (const job of JOBS) {
     const tiny = await sharp(input).resize({ width: 16 }).blur(1).webp({ quality: 40 }).toBuffer();
     blur = `data:image/webp;base64,${tiny.toString("base64")}`;
   }
+  /* Yorugʻ rasm (oq fonli portret): ustidagi oyna yorugʻ muzga oʻtadi, yorliq toʻq siyohda oʻqiladi.
+     Shaffof logotiplar hisoblanmaydi — ular qorongʻi plitkada turadi. */
+  let bright = false;
+  if (!meta.hasAlpha) {
+    /* Har piksel nisbiy yorugʻligining oʻrtachasi (oʻrtacha rangning yorugʻligi oq-qora suratni
+       pasaytirib koʻrsatadi); 64 px nusxa yetarli. */
+    const { data } = await sharp(input).resize({ width: 64 }).removeAlpha().raw().toBuffer({
+      resolveWithObject: true,
+    });
+    const lin = (c) => {
+      const v = c / 255;
+      return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+    };
+    let sum = 0;
+    for (let i = 0; i < data.length; i += 3)
+      sum += 0.2126 * lin(data[i]) + 0.7152 * lin(data[i + 1]) + 0.0722 * lin(data[i + 2]);
+    bright = sum / (data.length / 3) > BRIGHT_MIN;
+  }
   entries[job.src] = {
     width: meta.width,
     height: meta.height,
     base: `/img/${name}`,
     widths,
     ...(blur ? { blur } : {}),
+    ...(bright ? { bright } : {}),
   };
 }
 
@@ -82,6 +107,7 @@ const body = Object.entries(entries)
       `base: "${e.base}"`,
       `widths: [${e.widths.join(", ")}]`,
       ...(e.blur ? [`blur: "${e.blur}"`] : []),
+      ...(e.bright ? ["bright: true"] : []),
     ];
     return `  "${src}": {\n    ${fields.join(",\n    ")},\n  },`;
   })
@@ -97,6 +123,8 @@ export interface PreparedImage {
   readonly base: string;
   readonly widths: readonly number[];
   readonly blur?: string;
+  /** Oʻrtacha yorugʻlik baland: oyna ustida yorugʻ ohang (data-tone="light"). */
+  readonly bright?: true;
 }
 
 export const PREPARED_IMAGES: Readonly<Record<string, PreparedImage>> = {

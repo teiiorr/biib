@@ -12,7 +12,6 @@ export const about: typeof source = {
     quoteSource: "Birlaşma ustavi, 2.1-band",
   },
   media: {
-    caption: "UPOP TREND loyihasining vizual obrazi",
     alt: "Milliy atlas va adras liboslaridagi tört qiz rubob, doira va mikrofon bilan; orqada sözana naqşlari",
   },
   values: {

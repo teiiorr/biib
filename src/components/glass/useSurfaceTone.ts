@@ -94,24 +94,13 @@ export function useSurfaceTone(ref: RefObject<HTMLElement | null>, enabled = tru
       }
       setTone(bestArea > ground ? best?.getAttribute("data-tone") : null);
 
-      /* Sirt qorongʻi surat va sut zamin chegarasida: qaysi ohang tanlanmasin, yorliqlarning bir qismi
+      /* Sirt yorugʻ surat va tungi zamin chegarasida: qaysi ohang tanlanmasin, yorliqlarning bir qismi
          notoʻgʻri fonda qoladi. Bunday lahzada oyna qalinlashadi (materials.css), yorliq doim oʻqiladi. */
-      const toneOf = (node: Element): string | null => node.getAttribute("data-tone");
-      const inside = (outer: Element, node: Element): boolean =>
-        outer !== node && outer.contains(node);
-      let dark = 0;
+      let light = 0;
       for (const [node, area] of areas) {
-        /* Eng tashqi qorongʻi element hisoblanadi, uning ichidagi yorugʻ elementlar ayiriladi. */
-        if (toneOf(node) !== "dark") continue;
-        if ([...areas.keys()].some((outer) => toneOf(outer) === "dark" && inside(outer, node)))
-          continue;
-        let light = 0;
-        for (const [other, otherArea] of areas) {
-          if (toneOf(other) === "light" && inside(node, other)) light += otherArea;
-        }
-        dark += Math.max(0, area - light);
+        if (node.getAttribute("data-tone") === "light") light += area;
       }
-      const share = dark / Math.max(1, own.width * own.height);
+      const share = light / Math.max(1, own.width * own.height);
       element.toggleAttribute("data-tone-mixed", share > MIXED_MIN && share < 1 - MIXED_MIN);
     };
 

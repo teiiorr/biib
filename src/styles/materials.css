@@ -33,10 +33,9 @@
   .material[data-text="true"] {
     --m-tint: var(--g-tint-text);
   }
-  /* Oyna qorongʻi surat va sut zamin chegarasida (useSurfaceTone, data-tone-mixed): bitta ohang ikkala
+  /* Oyna yorugʻ surat va tungi zamin chegarasida (useSurfaceTone, data-tone-mixed): bitta ohang ikkala
      fonga mos kelmaydi, shu lahzada muz qalinlashadi — yorliq har qanday Shaffoflikda ≥ 4.5:1. */
-  :root[data-theme="light"]
-    .material[data-text="true"][data-tone-mixed]:not([data-variant="tinted"]):not(
+  .material[data-text="true"][data-tone-mixed]:not([data-variant="tinted"]):not(
       [data-radius="panel"],
       [data-radius="sheet"]
     ) {
@@ -152,15 +151,6 @@
         var(--shadow-floating);
     }
   }
-  /* Kunduzgi mavzudagi qorongʻi lentalar (UPOP maydoni, rasmiy sarlavha): muz tungi materialda. */
-  :root[data-theme="light"] :is(.upop-field, .navy-band) {
-    --material-base: #111a38;
-    --material-ink: #f7f3ea;
-    --material-ink-2: #c3cadb;
-    --material-rim: #8c95b4;
-    --material-shadow: rgba(2, 5, 20, 0.5);
-  }
-
   /* Roʻyxatlardagi belgi plitkalari ham kichik oyna: muz, yaltiroq va ichki yorugʻlik; oltin qirra faqat
      ustiga kelganda (egasining talabi). */
   .feature-icon {
@@ -263,11 +253,10 @@
     color: var(--on-tint);
   }
 
-  /* Ostidagi boʻlim ohangi (10.1.3): qorongʻi boʻlim ustida tungi material, yorugʻ ustida kunduzgi.
-     Tungi mavzuda sahifa zamini oʻzi qorongʻi: «light» deb belgilangan boʻlim ham qorongʻi ohang.
-     Tint ham ohang bilan almashadi: tanlangan tab, sozlagich va fokus har oynada oʻqiladi. */
-  .surface[data-tone="dark"],
-  :root[data-theme="dark"] .surface[data-tone] {
+  /* Ostidagi kontent ohangi (10.1.3): sahifa tungi, oyna sukutda tungi materialda. Qorongʻi lenta yoki
+     kadr ustida muz biroz xiralashadi; yorugʻ rasm ustida (oq fonli portret) iOS dagidek yorugʻ muzga
+     oʻtadi — yorliq toʻq siyohda oʻqiladi. */
+  .surface[data-tone="dark"] {
     --material-ink: #f7f3ea;
     --material-ink-2: #c3cadb;
     --material-base: #111a38;
@@ -277,14 +266,16 @@
     --on-tint: #0a1026;
     --focus: #e8699f;
   }
-  :root[data-theme="light"] .surface[data-tone="light"] {
-    --material-ink: #0e1733;
-    --material-ink-2: #3a4466;
-    --material-base: #fffcf6;
-    --material-rim: #ffffff;
-    --tint: #b8306a;
-    --on-tint: #ffffff;
-    --focus: #b8306a;
+
+  .surface[data-tone="light"] {
+    --material-ink: var(--glass-light-ink);
+    --material-ink-2: var(--glass-light-ink-2);
+    --material-base: var(--glass-light-base);
+    --material-rim: var(--glass-light-rim);
+    --material-shadow: rgba(14, 23, 51, 0.1);
+    --tint: var(--glass-light-tint);
+    --on-tint: var(--glass-light-on-tint);
+    --focus: var(--glass-light-tint);
   }
 
   /* Ijro etilayotgan kadr ustidagi belgili tugma: kadr oq ham boʻlishi mumkin, tus 0.5 dan pastga
@@ -297,7 +288,6 @@
   .surface-morph {
     transform-origin: top right;
   }
-  html.vt-reduced .surface-morph,
   :root[data-motion="off"] .surface-morph {
     animation: material-fade 150ms var(--ease-ui);
   }
@@ -310,54 +300,6 @@
   .glass-popover {
     min-width: 280px;
     max-width: min(360px, calc(100vw - 32px));
-  }
-
-  /* Segmentli boshqaruv: linza tanlangan element ostida prujina bilan suriladi. */
-  .segmented {
-    display: inline-flex;
-    position: relative;
-    height: 40px;
-  }
-  .segmented-group {
-    position: relative;
-    display: flex;
-    gap: 4px;
-    z-index: 1;
-  }
-  .segmented-item {
-    height: 32px;
-    padding-inline: 12px;
-    border-radius: var(--surface-radius);
-    color: var(--material-ink);
-    display: inline-flex;
-    align-items: center;
-    min-width: 44px;
-    transition: color var(--dur-ui) var(--ease-ui);
-  }
-  .segmented-item[data-state="on"] .segmented-label {
-    transform: scale(1.04);
-  }
-  .segmented-label {
-    display: inline-block;
-    transition: transform var(--dur-ui) var(--ease-ui);
-  }
-  .segmented-lens {
-    position: absolute;
-    top: 4px;
-    bottom: 4px;
-    left: 4px;
-    width: 0;
-    transform-origin: left center;
-    transition: transform var(--dur-panel) var(--ease-spring);
-    border-radius: var(--surface-radius);
-    background: color-mix(in oklab, var(--material-base) 80%, transparent);
-    /* Sut linza sut yoʻlakda 1.01:1 edi (tanlov koʻrinmasdi): 1 px siyoh halqa yoʻlakka ≥ 3:1, yoʻlak
-       ustidagi yaltiroq dogʻ yonida ham. Yaltiroq qirra halqa ostida. */
-    box-shadow:
-      inset 0 0 0 1px color-mix(in oklab, var(--material-ink) 85%, var(--material-base)),
-      inset 0 2px 0 color-mix(in oklab, var(--m-spec) 85%, transparent),
-      var(--shadow-raised);
-    will-change: transform;
   }
 
   /* Sozlagich: 4 px yoʻl, pushti toʻldirish, kapsula tugmacha; tortganda linza. */
@@ -748,17 +690,5 @@
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.2em;
-  }
-  /* Mavzu tanlovi panel kengligida: uch teng boʻlak, linza ular orasida teng suriladi. */
-  .appearance-panel .segmented {
-    display: flex;
-    width: 100%;
-  }
-  .appearance-panel .segmented-group {
-    flex: 1;
-  }
-  .appearance-panel .segmented-item {
-    flex: 1 1 0;
-    justify-content: center;
   }
 }

@@ -41,6 +41,9 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  /* Sayt faqat tungi mavzuda (egasining talabi): brauzer panellari va aylantirgich ham qorongʻi. */
+  colorScheme: "dark",
+  themeColor: "#0a1026",
 };
 
 export function generateStaticParams() {
@@ -66,7 +69,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
     <html
       lang={meta.htmlLang}
       data-orthography={meta.orthography === "2026" ? "2026" : undefined}
-      data-theme="light"
+      data-theme="dark"
       data-motion="on"
       data-sound="on"
       suppressHydrationWarning

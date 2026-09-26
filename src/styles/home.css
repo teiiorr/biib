@@ -334,42 +334,13 @@
   }
 
   /* UPOP TREND: bosh loyiha boʻlimi */
-  /* Lojuvard maydon: kunduzgi Atlasda boʻlim tungi Rishton toʻplamiga oʻtadi (juftliklar §12.2 da
-     tekshirilgan); UPOP maydoni va rasmiy sarlavha lentasi (navy-band).
-     Siyoh tokenining oʻzi almashadi: Heading dagi text-ink ham, nonushoq ham lenta ustida toʻgʻri rangda. */
+  /* Lojuvard maydon: UPOP maydoni va rasmiy sarlavha lentasi (navy-band). */
   .upop-field,
   .navy-band {
     position: relative;
     isolation: isolate;
     color: var(--ink);
     background: var(--bg);
-  }
-  :root[data-theme="light"] :is(.upop-field, .navy-band) {
-    --bg: #0a1026;
-    --surface: #111a38;
-    --surface-2: #17214a;
-    --ink: #f7f3ea;
-    --ink-2: #a9b1cc;
-    --ink-3: #8c95b4;
-    --line: #2a3560;
-    --line-strong: #6a76a2;
-    --tint: #e8699f;
-    --tint-hover: #f48ab5;
-    --on-tint: #0a1026;
-    --focus: #e8699f;
-    --accent-text: #e3c46e;
-    --art-1: #f07aae;
-    --art-1-text: #e8699f;
-    --art-2: #d9b75a;
-    --art-2-text: #e3c46e;
-    --material-base: #111a38;
-    --material-ink: #f7f3ea;
-    --material-ink-2: #c3cadb;
-    --material-rim: #8c95b4;
-    --material-shadow: rgba(2, 5, 20, 0.5);
-    --shadow-raised: 0 1px 2px rgba(2, 5, 20, 0.4);
-    --shadow-floating: 0 6px 20px rgba(2, 5, 20, 0.45);
-    --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
   /* Tunda sahifa oʻzi lojuvard: maydon bir pogʻona yorugʻroq sirt bilan ajraladi. */
   :root[data-theme="dark"] :is(.upop-field, .navy-band) {

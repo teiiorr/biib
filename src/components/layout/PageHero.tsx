@@ -30,7 +30,7 @@ export function PageHero({
 }: PageHeroProps) {
   return (
     <Section
-      tone={band ? "dark" : "light"}
+      {...(band ? { tone: "dark" as const } : {})}
       rhythm={band ? "band" : "hero"}
       labelledBy={titleId}
       className={cn("relative", band && "navy-band page-hero-band", className)}

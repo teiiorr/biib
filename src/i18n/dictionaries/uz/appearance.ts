@@ -2,12 +2,6 @@ export const appearance = {
   panel: "Koʻrinish",
   open: "Koʻrinishni sozlash",
   close: "Yopish",
-  theme: {
-    label: "Mavzu",
-    light: "Yorugʻ",
-    dark: "Tungi",
-    system: "Tizim",
-  },
   transparency: "Shaffoflik",
   transparencyFrom: "Xira",
   transparencyTo: "Tiniq",

@@ -16,9 +16,8 @@ const TEXT_TOKENS = [
   "danger",
 ].concat([1, 2, 3, 4, 5, 6, 7].map((n) => `art-${n}-text`));
 const BOUNDARY_TOKENS = ["line-strong", "focus"];
-/* Uchta eng ogʻir fon: oq surat, eng qora surat va eng yorugʻ qahramon kadri (kunduz/tun). */
+/* Uchta eng ogʻir fon: oq surat, eng qora surat va eng yorugʻ pushti kadr. */
 const BACKDROPS = {
-  light: ["#FFFFFF", "#0A0A0A", "#F2E8D8"],
   dark: ["#FFFFFF", "#0A0A0A", "#F07AAE"],
 };
 const CORNERS = [
@@ -88,10 +87,10 @@ export function checkContrast() {
 
     const base = color("material-base");
     const ink = color("material-ink");
-    /* §10.1.3: oyna orqadagi kontentga qarab ohangini almashtiradi, shu sabab ikkinchi ohang ham sinaladi. */
-    const other = scopes[theme === "light" ? "dark" : "light"] ?? {};
-    const otherBase = other["material-base"] ? parseColor(other["material-base"]) : null;
-    const otherInk = other["material-ink"] ? parseColor(other["material-ink"]) : null;
+    /* §10.1.3: yorugʻ rasm ustida oyna yorugʻ muzga oʻtadi (--glass-light-*, Picture data-tone), shu
+       sabab oq fonda ikkinchi ohang sinaladi. */
+    const lightBase = color("glass-light-base");
+    const lightInk = color("glass-light-ink");
     for (const [t, d] of CORNERS) {
       for (const backdrop of BACKDROPS[theme]) {
         const id = `${prefix}:material:t${t * 100}/d${d * 100}/${backdrop}`;
@@ -107,21 +106,21 @@ export function checkContrast() {
           continue;
         }
         const adaptive =
-          otherBase && otherInk
-            ? contrastRatio(otherInk, composite(otherBase, parseColor(backdrop), alpha))
+          lightBase && lightInk
+            ? contrastRatio(lightInk, composite(lightBase, parseColor(backdrop), alpha))
             : 0;
         if (adaptive >= TEXT_MIN)
           checks.push(
             warn(
               id,
-              `oʻz ohangi ${own.toFixed(2)} < ${TEXT_MIN}; data-tone almashsa ${adaptive.toFixed(2)} (alfa ${alpha.toFixed(2)})`,
+              `oʻz ohangi ${own.toFixed(2)} < ${TEXT_MIN}; yorugʻ rasm ustida muz yorugʻ: ${adaptive.toFixed(2)} (alfa ${alpha.toFixed(2)})`,
             ),
           );
         else
           checks.push(
             fail(
               id,
-              `${own.toFixed(2)} < ${TEXT_MIN}, ikkinchi ohang ham ${adaptive.toFixed(2)} (alfa ${alpha.toFixed(2)})`,
+              `${own.toFixed(2)} < ${TEXT_MIN}, yorugʻ muz ham ${adaptive.toFixed(2)} (alfa ${alpha.toFixed(2)})`,
             ),
           );
       }

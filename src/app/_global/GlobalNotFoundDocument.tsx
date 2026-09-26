@@ -23,7 +23,7 @@ export function GlobalNotFoundDocument() {
     preload(href, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
   }
   return (
-    <html lang="uz-Latn" data-theme="light" suppressHydrationWarning>
+    <html lang="uz-Latn" data-theme="dark" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: APPEARANCE_BOOT_SCRIPT }} />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />

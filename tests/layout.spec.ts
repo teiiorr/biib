@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { applyTheme, primeAppearance, revealAll, settle, THEMES } from "./helpers/appearance";
+import { primeAppearance, revealAll, settle, THEMES } from "./helpers/appearance";
 import { auditAlignment } from "./helpers/audit/alignment";
 import { auditUnderBars } from "./helpers/audit/bars";
 import { auditCards } from "./helpers/audit/cards";
@@ -23,14 +23,13 @@ test.describe.configure({ mode: "parallel" });
 
 for (const route of routes) {
   test(`${route.path}`, async ({ page, browserName, isMobile }, testInfo) => {
-    await primeAppearance(page, { theme: "light", motion: false });
+    await primeAppearance(page, { motion: false });
     await page.goto(route.path);
     await settle(page);
     await revealAll(page);
     const failures: string[] = [];
     const viewports = viewportsFor(browserName, isMobile ?? false);
     for (const theme of THEMES) {
-      await applyTheme(page, theme);
       for (const viewport of viewports) {
         await page.setViewportSize(viewport);
         await page.waitForTimeout(80);

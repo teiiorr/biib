@@ -4,12 +4,6 @@ export const appearance: typeof source = {
   panel: "Appearance",
   open: "Adjust appearance",
   close: "Close",
-  theme: {
-    label: "Theme",
-    light: "Light",
-    dark: "Dark",
-    system: "System",
-  },
   transparency: "Transparency",
   transparencyFrom: "Frosted",
   transparencyTo: "Clear",

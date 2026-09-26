@@ -1,23 +1,4 @@
-import {
-  DEFAULT_APPEARANCE,
-  STORAGE_KEY,
-  isThemeChoice,
-  normalizeAppearance,
-  type Appearance,
-  type ResolvedTheme,
-  type ThemeChoice,
-} from "./types";
-
-export const DARK_SCHEME_QUERY = "(prefers-color-scheme: dark)";
-
-export function systemTheme(): ResolvedTheme {
-  if (typeof window === "undefined") return "light";
-  return window.matchMedia(DARK_SCHEME_QUERY).matches ? "dark" : "light";
-}
-
-export function resolveTheme(choice: ThemeChoice): ResolvedTheme {
-  return choice === "system" ? systemTheme() : choice;
-}
+import { DEFAULT_APPEARANCE, STORAGE_KEY, normalizeAppearance, type Appearance } from "./types";
 
 export function readStorage(): Appearance {
   try {
@@ -49,12 +30,10 @@ export function readAppearanceFromDocument(): Appearance {
   const html = document.documentElement;
   const stored = readStorage();
   /* Boot skript ishlamagan (404 xato qobigʻi): atributlar server sukutlari, haqiqat saqlangan qiymatda. */
-  if (!html.hasAttribute("data-theme-choice")) return stored;
-  const theme = html.getAttribute("data-theme-choice");
+  if (!html.hasAttribute("data-boot")) return stored;
   const motion = html.getAttribute("data-motion");
   const sound = html.getAttribute("data-sound");
   return {
-    theme: isThemeChoice(theme) ? theme : stored.theme,
     transparency: percentFromVariable(html.style.getPropertyValue("--g-t"), stored.transparency),
     density: percentFromVariable(html.style.getPropertyValue("--g-d"), stored.density),
     motion: motion ? motion !== "off" : stored.motion,
@@ -62,14 +41,11 @@ export function readAppearanceFromDocument(): Appearance {
   };
 }
 
-export function applyAppearance(appearance: Appearance, resolved: ResolvedTheme): void {
+export function applyAppearance(appearance: Appearance): void {
   if (typeof document === "undefined") return;
   const html = document.documentElement;
-  html.setAttribute("data-theme", resolved);
-  html.setAttribute("data-theme-choice", appearance.theme);
   html.setAttribute("data-motion", appearance.motion ? "on" : "off");
   html.setAttribute("data-sound", appearance.tapSound ? "on" : "off");
   html.style.setProperty("--g-t", String(appearance.transparency / 100));
   html.style.setProperty("--g-d", String(appearance.density / 100));
-  html.style.colorScheme = resolved;
 }

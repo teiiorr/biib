@@ -17,7 +17,7 @@ export const privacy: typeof source = {
       heading: "What is collected and where it goes",
       paragraphs: [
         "The name, phone or email and message text sent through the contact form. Nothing else: the site has no accounts, comments, cookies or analytics.",
-        "Appearance settings (theme, transparency, density, motion and sound) are kept only in your browser, in localStorage, and are never sent to us.",
+        "Appearance settings (transparency, density, motion and sound) are kept only in your browser, in localStorage, and are never sent to us.",
         "The form sends the message to the association’s service chat through the Telegram Bot API, so the data passes through Telegram’s servers.",
       ],
     },

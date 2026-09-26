@@ -96,7 +96,7 @@ function mountRefraction(element: HTMLElement): () => void {
 
   let bezel = 0;
   const setScale = (): void => {
-    const density = getAppearanceSnapshot().appearance.density / 100;
+    const density = getAppearanceSnapshot().density / 100;
     const scale = Math.max(0, bezel * (REFRACT_BASE + REFRACT_RANGE * density));
     displace.setAttribute("scale", scale.toFixed(1));
   };

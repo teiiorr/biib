@@ -6,6 +6,8 @@ export interface PreparedImage {
   readonly base: string;
   readonly widths: readonly number[];
   readonly blur?: string;
+  /** Oʻrtacha yorugʻlik baland: oyna ustida yorugʻ ohang (data-tone="light"). */
+  readonly bright?: true;
 }
 
 export const PREPARED_IMAGES: Readonly<Record<string, PreparedImage>> = {
@@ -68,5 +70,26 @@ export const PREPARED_IMAGES: Readonly<Record<string, PreparedImage>> = {
     base: "/img/news-teatr",
     widths: [256, 384, 640, 1024],
     blur: "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAACwAQCdASoQAAsAA4BaJYwAAlxEt0L4AP74Vk+rDo9CZm/iUo7vGsWvgMFAFG4TvGwigAAA",
+  },
+  "/brand/leader-chair.jpg": {
+    width: 1200,
+    height: 1500,
+    base: "/img/leader-chair",
+    widths: [320, 480, 640, 960],
+    blur: "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAACwAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JbACdACHe8VSBvljfwAD+DqBWPhHX7C26oaqHzuD1taCZ+o7Qr3phsBiTamG53lgV59hXI5EhwQ/QxEU4pc2WxK2+DvDUtIUppAAA",
+  },
+  "/brand/leader-director.jpg": {
+    width: 1200,
+    height: 1800,
+    base: "/img/leader-director",
+    widths: [320, 480, 640, 960],
+    blur: "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADwAwCdASoQABgAPu1iqU2ppaQiMAgBMB2JZwDImCHfToMg/WtZd3YAAP7tluno/DIMYr4IkP1yg72F/GzLVa0S2OfcWZc5StJ3SJenrqk18y9d0SVyz/iWyPF+AAAA",
+    bright: true,
+  },
+  "/brand/partner-uzbekgidroenergo.png": {
+    width: 1000,
+    height: 550,
+    base: "/img/partner-uzbekgidroenergo",
+    widths: [240, 480, 720],
   },
 };

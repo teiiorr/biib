@@ -1,21 +1,20 @@
 import type { Page } from "@playwright/test";
 import { STORAGE_KEY, type Appearance } from "../../src/lib/appearance/types";
 
-export type Theme = "light" | "dark";
-export const THEMES: readonly Theme[] = ["light", "dark"];
+/* Sayt faqat tungi mavzuda: mavzu serverda yoziladi, tanlov yoʻq. */
+export type Theme = "dark";
+export const THEMES: readonly Theme[] = ["dark"];
 export const BASE_URL = process.env.BASE_URL ?? "http://localhost:3100";
 
 export interface StoredAppearance {
-  readonly theme: Theme;
   readonly transparency?: number;
   readonly density?: number;
   readonly motion?: boolean;
 }
 
 /** Sahifa skriptlaridan oldin localStorage ga yoziladi: boot skript birinchi chizilishda oʻqiydi. */
-export async function primeAppearance(page: Page, stored: StoredAppearance): Promise<void> {
+export async function primeAppearance(page: Page, stored: StoredAppearance = {}): Promise<void> {
   const value: Appearance = {
-    theme: stored.theme,
     transparency: stored.transparency ?? 50,
     density: stored.density ?? 50,
     motion: stored.motion ?? true,
@@ -62,14 +61,4 @@ export async function revealAll(page: Page): Promise<void> {
     await frame();
   });
   await page.waitForTimeout(400);
-}
-
-/** Sahifani qayta yuklamay mavzuni almashtiradi (CSS tokenlari darhol qoʻllanadi). */
-export async function applyTheme(page: Page, theme: Theme): Promise<void> {
-  await page.evaluate((t) => {
-    const html = document.documentElement;
-    html.setAttribute("data-theme", t);
-    html.style.colorScheme = t;
-  }, theme);
-  await page.waitForTimeout(150);
 }

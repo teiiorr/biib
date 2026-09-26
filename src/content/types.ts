@@ -171,5 +171,4 @@ export interface Milestone {
   readonly status: ContentStatus;
   readonly year: number | null;
   readonly title: Localized;
-  readonly text: Localized;
 }

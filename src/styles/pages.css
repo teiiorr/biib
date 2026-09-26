@@ -46,9 +46,13 @@
     gap: 32px;
   }
   .about-media-figure {
-    display: grid;
-    gap: 12px;
     margin: 0;
+  }
+  /* Loyihaga oʻtish tugmasi video ostida, markazda: sarlavha va kadr bilan bitta oʻq. */
+  .about-next-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
   }
   /* Belgi animatsiyasi va matn yonma-yon (egasining talabi): ikki ustun vertikal markazda, bir balandlikda. */
   .about-intro {
@@ -114,14 +118,69 @@
     text-align-last: start;
     hyphens: auto;
   }
-  .about-mission .ui-pullquote figcaption,
-  .about-media-figure figcaption {
-    text-align: center;
+  /* Matndan keyingi ajratuvchi chiziq yoʻq (egasining talabi): iqtibos oddiy oraliq bilan ajraladi. */
+  .about-mission .ui-pullquote {
+    border-top: 0;
+    padding-top: 0;
   }
+  .about-mission .ui-pullquote figcaption,
   @media (min-width: 1280px) {
     .about-mission .ui-pullquote figcaption {
       text-align: start;
     }
+  }
+  /* Yoʻnalishlar, vazifalar va tarix: bitta teng toʻr, har band ustida bitta chiziq. Yoʻnalish va
+     vazifalar: 900 px gacha bir, undan ikki, 1440 px dan uch ustun (egasining talabi: belgi va yozuv
+     katta, har band bir qatorda); tarix ham shunday bandlar, eng koʻpi ikki ustun. */
+  .about-list {
+    display: grid;
+    column-gap: var(--gutter);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .about-list-item {
+    display: grid;
+    gap: 8px;
+    align-content: start;
+    padding-block: 20px;
+    border-top: 1px solid var(--line);
+  }
+  @media (min-width: 600px) {
+    .about-list:not([data-columns]) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 900px) {
+    .about-list[data-columns] {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1440px) {
+    .about-list[data-columns="3"] {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  /* Katta belgi va yozuv: 56 px plitka, 28 px chizma; yozuv telefonda 18, kengroq ekranda 20–22 px. */
+  .about-list[data-columns] .about-list-item {
+    font-size: 1.125rem;
+    line-height: 1.25;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  @media (min-width: 600px) {
+    .about-list[data-columns] .about-list-item {
+      font-size: clamp(1.25rem, 1.1rem + 0.35vw, 1.375rem);
+    }
+  }
+  .about-list[data-columns] .feature-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: calc(var(--radius-control) + 2px);
+  }
+  .about-list[data-columns] .feature-icon svg {
+    width: 28px;
+    height: 28px;
   }
   :root .about-history {
     background: var(--surface);

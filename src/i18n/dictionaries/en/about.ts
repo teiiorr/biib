@@ -12,7 +12,6 @@ export const about: typeof source = {
     quoteSource: "Charter of the association, clause 2.1 (translation)",
   },
   media: {
-    caption: "Visual identity of the UPOP TREND project",
     alt: "Four young women in atlas and adras national dress with a rubab, a doira and a microphone; suzani patterns behind them",
   },
   values: {

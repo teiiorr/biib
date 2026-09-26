@@ -3,39 +3,21 @@
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill } from "@/i18n/format";
 import { useAppearance } from "@/lib/appearance/context";
-import type { ThemeChoice } from "@/lib/appearance/types";
 
 import { GlassSlider } from "../GlassSlider";
 import { GlassSwitch } from "../GlassSwitch";
-import { SegmentedControl } from "../SegmentedControl";
 
 export interface AppearancePanelProps {
   readonly dict: Dictionary["appearance"];
 }
 
-/** Koʻrinish paneli: Mavzu, Shaffoflik, Zichlik, Harakat, Ovoz, Asliga qaytarish. */
+/** Koʻrinish paneli: Shaffoflik, Zichlik, Harakat, Ovoz, Asliga qaytarish (mavzu yagona — tungi). */
 export function AppearancePanel({ dict }: AppearancePanelProps) {
-  const { appearance, reducedTransparency, set, setTheme, reset } = useAppearance();
+  const { appearance, reducedTransparency, set, reset } = useAppearance();
   const valueText = (v: number) => fill(dict.valueText, { value: v });
 
   return (
     <div className="appearance-panel" data-testid="appearance-panel">
-      <div className="appearance-group">
-        <span className="t-label text-material-ink" id="appearance-theme-label">
-          {dict.theme.label}
-        </span>
-        <SegmentedControl<ThemeChoice>
-          value={appearance.theme}
-          label={dict.theme.label}
-          options={[
-            { value: "light", label: dict.theme.light },
-            { value: "dark", label: dict.theme.dark },
-            { value: "system", label: dict.theme.system },
-          ]}
-          onValueChange={(value, origin) => setTheme(value, origin)}
-        />
-      </div>
-
       <div className="appearance-group">
         <label className="t-label text-material-ink" htmlFor="slider-transparency">
           {dict.transparency}

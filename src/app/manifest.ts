@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Oʻzbekistonda bolalar va oʻsmirlar ijodini qoʻllab-quvvatlaydigan birlashma",
     start_url: "/uz",
     display: "standalone",
-    background_color: "#f7f3ea",
-    theme_color: "#0e1733",
+    background_color: "#0a1026",
+    theme_color: "#0a1026",
     lang: "uz-Latn",
     icons: [
       { src: "/icon.png", sizes: "512x512", type: "image/png" },

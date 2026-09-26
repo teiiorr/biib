@@ -119,7 +119,6 @@ async function shootCombo(theme, locale, vp) {
     hasTouch: vp.mobile,
   });
   await prime(context, {
-    theme,
     transparency: 50,
     density: 50,
     motion: false,
@@ -196,7 +195,8 @@ async function shootCombo(theme, locale, vp) {
 }
 
 const combos = [];
-for (const theme of ["light", "dark"])
+/* Sayt faqat tungi mavzuda. */
+for (const theme of ["dark"])
   for (const locale of ["uz", "ru"]) for (const vp of VIEWPORTS) combos.push([theme, locale, vp]);
 const POOL = 4;
 let cursor = 0;

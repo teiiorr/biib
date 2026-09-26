@@ -12,7 +12,7 @@ test.describe("G4 SEO", () => {
   );
   for (const route of allRoutes()) {
     test(`${route.path}`, async ({ page }, testInfo) => {
-      await primeAppearance(page, { theme: "light" });
+      await primeAppearance(page);
       await page.goto(route.path);
       await settle(page);
       const result = await page.evaluate(() => {

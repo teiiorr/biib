@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { applyTheme, primeAppearance, settle, THEMES } from "./helpers/appearance";
+import { primeAppearance, settle, THEMES } from "./helpers/appearance";
 import { axeViolations } from "./helpers/axe";
 import { checkId, evidenceFile, recordCheck, relativeEvidence, summarize } from "./helpers/results";
 import { allRoutes, pathFor } from "./helpers/routes";
@@ -15,19 +15,14 @@ const CORNERS = [
 
 test.describe.configure({ mode: "parallel" });
 
-/* G6: axe WCAG 2.2 AA har sahifa × til × mavzu; panel toʻrt burchakda; klaviatura yoʻli. */
+/* G6: axe WCAG 2.2 AA har sahifa × til; panel toʻrt burchakda; klaviatura yoʻli. */
 for (const route of routes) {
-  /* Har manzil bir yuklash: mavzu sahifa ichida almashtiriladi, axe har mavzuda. */
+  /* Har manzil bir yuklash; sayt faqat tungi mavzuda. */
   test(`axe ${route.path}`, async ({ page }, testInfo) => {
-    await primeAppearance(page, { theme: "light" });
+    await primeAppearance(page);
     await page.goto(route.path);
     await settle(page);
-    const failures: string[] = [];
-    for (const t of THEMES) {
-      await applyTheme(page, t);
-      const violations = await axeViolations(page);
-      if (violations.length) failures.push(`${t}: ${violations.join("; ")}`);
-    }
+    const failures = await axeViolations(page);
     await recordCheck(testInfo, "G6", {
       id: checkId(testInfo, "axe", route.path),
       status: failures.length ? "fail" : "pass",
@@ -41,7 +36,7 @@ for (const theme of THEMES) {
   test(`panel burchaklari ${theme}`, async ({ page }, testInfo) => {
     const failures: string[] = [];
     for (const [t, d] of CORNERS) {
-      await primeAppearance(page, { theme, transparency: t, density: d });
+      await primeAppearance(page, { transparency: t, density: d });
       await page.goto(pathFor("uz", "home"));
       await settle(page);
       await page.getByTestId("appearance-open").locator("visible=true").first().click();
@@ -62,7 +57,7 @@ for (const theme of THEMES) {
 }
 
 test("klaviatura yoʻli", async ({ page, isMobile }, testInfo) => {
-  await primeAppearance(page, { theme: "light" });
+  await primeAppearance(page);
   await page.goto(pathFor("uz", "home"));
   await settle(page);
   const failures: string[] = [];

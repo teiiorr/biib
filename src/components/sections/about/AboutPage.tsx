@@ -7,15 +7,15 @@ import type { IconName } from "@/components/icons/paths";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { FeatureIcon } from "@/components/ui/FeatureIcon";
 import { MediaFrame } from "@/components/ui/MediaFrame";
-import { Picture } from "@/components/ui/Picture";
 import { Prose } from "@/components/ui/Prose";
 import { PullQuote } from "@/components/ui/PullQuote";
-import { getMilestones, t } from "@/content";
+import { getFlagship, getMilestones, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { hyphenate } from "@/i18n/hyphenate";
 import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
 
+import { InViewVideoLeaf } from "../lazy-leaves";
 import { AboutLogoVideo } from "./AboutLogoVideo";
 import { HistoryTimeline } from "./HistoryTimeline";
 
@@ -42,6 +42,7 @@ interface PageProps {
  */
 export function AboutPage({ locale, dict }: PageProps) {
   const a = dict.about;
+  const upop = getFlagship().media.loop;
   /* Tarix faqat yili tasdiqlangan bosqichlar bilan: yilsiz uchta yorliq tugallanmagan koʻrinardi. */
   const milestones = getMilestones().flatMap((m) =>
     m.status === "confirmed" && m.year !== null
@@ -50,7 +51,6 @@ export function AboutPage({ locale, dict }: PageProps) {
             id: m.id,
             year: m.year,
             title: t(m.title, locale),
-            text: t(m.text, locale),
             icon: HISTORY_ICONS[m.id] ?? "calendar",
           },
         ]
@@ -96,27 +96,7 @@ export function AboutPage({ locale, dict }: PageProps) {
           </div>
         </Container>
       </Section>
-      {/* Egasining UPOP TREND tasviri: matnli sahifaga bitta keng kadr — maqsaddan yoʻnalishlarga oʻtish. */}
-      <Section as="div" rhythm="section" className="about-media">
-        <Container>
-          {/* Kadr yuqoridagi ikki ustunli blok bilan bir kenglikda (egasining talabi): chetlar bir chiziqda.
-              Ohang faqat suratda: sut rangli izoh ostida oyna tungi ohangga oʻtib qolmasin (10.1.3). */}
-          <div className="grid-site">
-            <figure className="about-media-figure col-span-full" data-grid-item="">
-              <MediaFrame ratio="16:9" tone="dark" motion={{ mode: "smooth", parallax: true }}>
-                <Picture
-                  src="/brand/upop-scene.jpg"
-                  alt={a.media.alt}
-                  fill
-                  sizes="(min-width: 1440px) 1312px, (min-width: 1024px) calc(100vw - 96px), calc(100vw - 32px)"
-                />
-              </MediaFrame>
-              <figcaption className="t-small text-ink-3">{a.media.caption}</figcaption>
-            </figure>
-          </div>
-        </Container>
-      </Section>
-      <Section labelledBy="about-values" tone="light">
+      <Section labelledBy="about-values">
         <Container>
           <SectionHeader id="about-values" title={a.values.heading} split />
           <Reveal
@@ -126,7 +106,7 @@ export function AboutPage({ locale, dict }: PageProps) {
             attrs={{ "data-audit": "gap", "data-columns": "3" }}
           >
             {a.values.items.map((item, index) => (
-              <li key={item} className="about-list-item feature t-h4 text-ink">
+              <li key={item} className="about-list-item feature text-ink">
                 <FeatureIcon name={DIRECTION_ICONS[index % DIRECTION_ICONS.length] ?? "star"} />
                 <span>{item}</span>
               </li>
@@ -134,7 +114,7 @@ export function AboutPage({ locale, dict }: PageProps) {
           </Reveal>
         </Container>
       </Section>
-      <Section labelledBy="about-tasks" tone="light">
+      <Section labelledBy="about-tasks">
         <Container>
           <SectionHeader id="about-tasks" title={a.tasks.heading} split />
           <Reveal
@@ -144,7 +124,7 @@ export function AboutPage({ locale, dict }: PageProps) {
             attrs={{ "data-audit": "gap", "data-columns": "3" }}
           >
             {a.tasks.items.map((item, index) => (
-              <li key={item} className="about-list-item feature t-h4 text-ink">
+              <li key={item} className="about-list-item feature text-ink">
                 <FeatureIcon name={TASK_ICONS[index % TASK_ICONS.length] ?? "star"} />
                 <span>{item}</span>
               </li>
@@ -153,32 +133,44 @@ export function AboutPage({ locale, dict }: PageProps) {
         </Container>
       </Section>
       {milestones.length > 0 ? (
-        <Section labelledBy="about-history" tone="light" rhythm="band" className="about-history">
+        <Section labelledBy="about-history" rhythm="band" className="about-history">
           <Container>
             <SectionHeader id="about-history" title={a.history.heading} split />
             <HistoryTimeline items={milestones} label={a.history.heading} />
           </Container>
         </Section>
       ) : null}
-      {/* Lojuvard UPOP lentasi: sut-oq tarix sirtidan keyin sahifani yopadi. */}
+      {/* Sahifa UPOP TREND lentasi bilan yopiladi (egasining talabi): sarlavha, ostida loyiha videosi
+          (koʻrinishga kirganda oʻzi oʻynaydi, poster videoning oʻz birinchi kadri), eng pastda loyihaga
+          oʻtish tugmasi. */}
       <Section labelledBy="about-next" tone="dark" rhythm="band" className="about-next upop-field">
         <Container>
-          <SectionHeader
-            id="about-next"
-            title={a.next.heading}
-            split
-            actions={
-              <LinkButton
-                href={pathFor(locale, "projects")}
-                variant="primary"
-                size="56"
-                icon="arrow-right"
-                iconPosition="end"
-              >
-                {a.next.cta}
-              </LinkButton>
-            }
-          />
+          <SectionHeader id="about-next" title={a.next.heading} split />
+          <div className="grid-site">
+            <figure className="about-media-figure col-span-full" data-grid-item="">
+              <MediaFrame ratio="16:9" tone="dark" motion={{ mode: "smooth", parallax: true }}>
+                <InViewVideoLeaf
+                  sources={upop.desktop}
+                  mobileSources={upop.mobile}
+                  poster={upop.poster}
+                  alt={a.media.alt}
+                  pauseLabel={dict.common.actions.pause}
+                  playLabel={dict.common.actions.play}
+                />
+              </MediaFrame>
+            </figure>
+          </div>
+          <div className="about-next-cta">
+            <LinkButton
+              href={pathFor(locale, "projects")}
+              variant="primary"
+              size="56"
+              icon="arrow-right"
+              iconPosition="end"
+            >
+              {a.next.cta}
+            </LinkButton>
+          </div>
         </Container>
       </Section>
     </>

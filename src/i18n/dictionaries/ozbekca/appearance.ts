@@ -5,12 +5,6 @@ export const appearance: typeof source = {
   panel: "Köriniş",
   open: "Körinişni sozlaş",
   close: "Yopiş",
-  theme: {
-    label: "Mavzu",
-    light: "Yoruğ",
-    dark: "Tungi",
-    system: "Tizim",
-  },
   transparency: "Şaffoflik",
   transparencyFrom: "Xira",
   transparencyTo: "Tiniq",

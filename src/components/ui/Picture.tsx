@@ -48,7 +48,12 @@ export function Picture(props: PictureProps) {
     .filter(Boolean)
     .join(" ");
   const loading = priority || eager ? "eager" : "lazy";
-  const extra = { ...attrs, ...(ariaHidden ? { "aria-hidden": true } : {}) };
+  /* Yorugʻ rasm ustidagi oyna ohangini oʻzgartiradi (useSurfaceTone). */
+  const extra = {
+    ...attrs,
+    ...(image?.bright ? { "data-tone": "light" } : {}),
+    ...(ariaHidden ? { "aria-hidden": true } : {}),
+  };
 
   if (!image) {
     return (

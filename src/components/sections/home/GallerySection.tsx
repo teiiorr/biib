@@ -21,7 +21,7 @@ export function GallerySection({ locale, dict }: GallerySectionProps) {
   const artworks = getArtworks();
   const g = dict.home.gallery;
   return (
-    <Section labelledBy="home-gallery" tone="light">
+    <Section labelledBy="home-gallery">
       <Container>
         <SectionHeader id="home-gallery" title={g.heading} split />
         <Reveal
