@@ -583,10 +583,11 @@
   .feature > :not(.feature-icon) {
     grid-column: 2;
   }
+  /* Belgi matn blokining (yorliq + qiymat) vertikal markazida: katakchalar bir tekis koʻrinadi. */
   .feature > .feature-icon {
     grid-column: 1;
     grid-row: span 2;
-    align-self: start;
+    align-self: center;
   }
   li.feature > .feature-icon {
     grid-row: auto;

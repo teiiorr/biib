@@ -36,13 +36,12 @@
   }
   .material[data-text="true"]:not([data-variant="tinted"]) {
     text-shadow:
-      0 0 1px color-mix(in oklab, var(--material-base) 85%, transparent),
-      0 0 3px color-mix(in oklab, var(--material-base) 70%, transparent),
-      0 0 10px color-mix(in oklab, var(--material-base) 50%, transparent);
+      0 0 1px color-mix(in oklab, var(--material-base) 80%, transparent),
+      0 0 3px color-mix(in oklab, var(--material-base) 55%, transparent);
   }
   .material[data-text="true"]:not([data-variant="tinted"]) svg:not(.surface-filter) {
     filter: drop-shadow(0 0 1px color-mix(in oklab, var(--material-base) 85%, transparent))
-      drop-shadow(0 0 4px color-mix(in oklab, var(--material-base) 60%, transparent));
+      drop-shadow(0 0 2px color-mix(in oklab, var(--material-base) 45%, transparent));
   }
   /* Menyu, varaq, dialog va panellarda matn koʻp va mayda: Apple kabi qalin muz (0.78–0.95 tus,
      kuchli xiralik). Shaffoflik va Zichlik baribir jonli koʻrinadi, yorliqlar har fonda ≥ 4.5:1. */
@@ -60,9 +59,22 @@
     border-radius: var(--surface-radius);
     corner-shape: squircle;
   }
-  /* Sinishi yoʻq dvigatellarda (Safari, Firefox) qirra linzasi yorugʻ ichki tasma bilan taqlid qilinadi. */
+  /* Sinishi yoʻq dvigatellarda (iPhone Safari, Firefox, kuchsiz qurilma) chuqurlik oq nur bilan emas,
+     qalin shisha qirrasi kabi ichki soyalar bilan beriladi: yuqorida yupqa yorugʻ chiziq, pastda va
+     yonlarda qorongʻi qalinlik (egasi: telefonda oq yogʻdu emas, desktopdagidek chuqur shisha). */
   .surface:not([data-refract="on"]) {
-    --m-caustic: calc(var(--g-rim) * 62%);
+    --m-caustic: calc(var(--g-rim) * 22%);
+    box-shadow:
+      inset 0 0 0 1px color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 24%), transparent),
+      inset 0 1px 0 0 color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 70%), transparent),
+      inset 0 10px 14px -14px
+        color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 40%), transparent),
+      inset 0 -14px 18px -14px
+        color-mix(in oklab, var(--material-shadow) calc(55% + var(--g-d) * 45%), transparent),
+      inset 12px 0 16px -16px color-mix(in oklab, var(--material-shadow) 40%, transparent),
+      inset -12px 0 16px -16px color-mix(in oklab, var(--material-shadow) 40%, transparent),
+      0 0 0 0.5px rgba(14, 23, 51, 0.12),
+      var(--shadow-floating);
   }
   .surface[data-refract="on"] {
     -webkit-backdrop-filter: var(--surface-refract) blur(var(--m-blur))
@@ -86,11 +98,21 @@
     corner-shape: inherit;
     pointer-events: none;
     background: radial-gradient(
-      220px circle at var(--sheen-x, 30%) var(--sheen-y, 0%),
-      color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 95%), transparent),
+      200px circle at var(--sheen-x, 30%) var(--sheen-y, 0%),
+      color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 70%), transparent),
       transparent 70%
     );
     z-index: -1;
+  }
+  /* Telefonda panel kichik: katta yorqin dogʻ butun oynani oqartirardi. */
+  @media (hover: none) {
+    .surface::before {
+      background: radial-gradient(
+        120px circle at var(--sheen-x, 30%) var(--sheen-y, 0%),
+        color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 35%), transparent),
+        transparent 70%
+      );
+    }
   }
   /* Kuchsiz qurilma: sinishsiz, yupqa xiralik, yaltiroq nuqtasiz — oyna shakli va qirrasi qoladi. */
   :root[data-perf="lite"] .material {

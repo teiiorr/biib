@@ -6,7 +6,13 @@ export const LEADERSHIP: readonly Person[] = [
     id: "leader-1",
     kind: "leader",
     status: "pending",
-    name: null,
+    name: {
+      uz: "Hasan Toshxoʻjayev",
+      oz: "Ҳасан Тошхўжаев",
+      ozbekca: "Hasan Toşxöjayev",
+      ru: "Хасан Тошходжаев",
+      en: "Hasan Toshxoʻjayev",
+    },
     role: {
       uz: "Direktor",
       oz: "Директор",

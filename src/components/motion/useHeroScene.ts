@@ -88,16 +88,25 @@ export function useHeroScene(
 
       /* CSS skroll-animatsiyasi (dvigatelsiz zaxira) oʻchadi: belgining koʻrinishini endi GSAP boshqaradi. */
       html.dataset.heroScene = "js";
-      /* Belgining sarlavhaga uchishi faqat kompyuterda: telefonda panel birinchi kadrdan toʻliq (belgi
-         bilan), qahramondagi belgi kadr bilan birga qoladi — ikkita belgi koʻrinmaydi. */
-      const dock = window.matchMedia("(min-width: 1024px)").matches;
+      /* Telefon paneli: belgi qahramonda ekan oyna faqat oʻng guruhni oʻraydi (layout.css .top-bar). */
+      const topBar = document.querySelector<HTMLElement>("[data-top-bar]");
+      const topGroup = topBar?.querySelector<HTMLElement>("[data-top-bar-group]");
+      if (topBar && topGroup) {
+        topBar.style.setProperty("--top-bar-group-w", `${Math.ceil(topGroup.offsetWidth + 16)}px`);
+      }
+      const setAway = (away: boolean): void => {
+        if (away) html.dataset.brandAway = "";
+        else delete html.dataset.brandAway;
+      };
       const settle = (): void => {
         progress.current = 1;
         hero.style.setProperty("--scene-progress", "1");
+        setAway(false);
         if (mark) gsap.set(mark, { autoAlpha: 1 });
       };
       const release = (): void => {
         delete html.dataset.heroScene;
+        setAway(false);
         hero.style.removeProperty("--scene-progress");
         for (const el of layers) el.style.removeProperty("will-change");
       };
@@ -144,8 +153,8 @@ export function useHeroScene(
       if (content)
         tl.fromTo(content, { y: 0, autoAlpha: 1 }, { y: -48, autoAlpha: 0, duration: 0.45 }, 0.1);
       // Parda kadrdagi doirani belgi koʻchishidan oldin yopadi: sahna oxirida ikkita belgi koʻrinmaydi.
-      if (dock && veil) tl.fromTo(veil, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.1 }, 0.08);
-      if (dock && logo) {
+      if (veil) tl.fromTo(veil, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.1 }, 0.08);
+      if (logo) {
         tl.fromTo(
           logo,
           { autoAlpha: 0, x: 0, y: 0, scale: 1 },
@@ -155,8 +164,9 @@ export function useHeroScene(
         tl.to(logo, { x: dx, y: dy, scale: scaleTo, duration: 0.6 }, 0.15);
         tl.to(logo, { autoAlpha: 0, duration: 0.08 }, 0.72);
       }
-      if (dock && mark) tl.fromTo(mark, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.08 }, 0.72);
+      if (mark) tl.fromTo(mark, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.08 }, 0.72);
 
+      setAway(true);
       let enabled = true;
       let governorOff = false;
       let geometryOff = false;
@@ -176,6 +186,7 @@ export function useHeroScene(
         onUpdate: (self) => {
           progress.current = self.progress;
           hero.style.setProperty("--scene-progress", self.progress.toFixed(3));
+          setAway(self.progress < 0.76);
         },
         onRefresh: () => {
           geometryOff = !runnable();
@@ -194,6 +205,7 @@ export function useHeroScene(
              tenglashadi, aks holda sarlavhadagi belgi yashirin qolib ketardi. */
           tl.progress(reachedAt);
           progress.current = reachedAt;
+          setAway(reachedAt < 0.76);
           if (geometryOff) {
             tl.progress(0);
             settle();

@@ -44,11 +44,12 @@ export function Header({ locale, dict }: HeaderProps) {
           text
           adaptiveTone
           className="top-bar mx-4 mt-2"
+          data-top-bar=""
         >
           <BrandMark locale={locale} name={brand.name}>
             {mark}
           </BrandMark>
-          <div className="header-group">
+          <div className="header-group" data-top-bar-group="">
             <LanguageMenu locale={locale} dict={dict.nav} />
             <AppearanceControl dict={dict.appearance} />
           </div>
