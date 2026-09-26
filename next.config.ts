@@ -30,7 +30,8 @@ const securityHeaders = [
   { key: "X-Frame-Options", value: "DENY" },
 ];
 
-/* Panel brauzerdan Supabase ga toʻgʻridan-toʻgʻri yuklaydi (imzoli URL) va blob: oldindan koʻrishni
+/* Yuklangan rasmlar Supabase ochiq bucketida; manzil berilmasa /uploads faqat public/uploads dan.
+   Panel brauzerdan Supabase ga toʻgʻridan-toʻgʻri yuklaydi (imzoli URL) va blob: oldindan koʻrishni
    ishlatadi: ruxsat faqat /admin da, ommaviy CSP bir bayt ham oʻzgarmaydi. */
 const supabaseOrigin = (() => {
   try {
@@ -68,8 +69,24 @@ const nextConfig: NextConfig = {
     /* Bir kalit ikki yozuvda boʻlsa oxirgisi gʻolib (headers.md): panel yozuvi umumiydan keyin. */
     return [
       { source: "/(.*)", headers: securityHeaders },
+      /* Fayl nomida mazmun xeshi bor: nusxa hech qachon oʻzgarmaydi. */
+      {
+        source: "/uploads/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
       { source: "/admin/:path*", headers: adminHeaders },
     ];
+  },
+  /* Massiv = afterFiles: public/uploads ga tortilgan fayl ustun, baza toʻxtasa ham ishlaydi. */
+  async rewrites() {
+    return supabaseOrigin
+      ? [
+          {
+            source: "/uploads/:path*",
+            destination: `${supabaseOrigin}/storage/v1/object/public/media/:path*`,
+          },
+        ]
+      : [];
   },
 };
 
