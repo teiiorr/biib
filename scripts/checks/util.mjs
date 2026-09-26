@@ -8,10 +8,9 @@ export const VERIFY_DIR = path.join(ROOT, ".verify");
 export const RESULTS_DIR = path.join(VERIFY_DIR, "results");
 export const QA_DIR = path.join(ROOT, "docs/qa");
 export const BASE_URL = (process.env.BASE_URL ?? "http://localhost:3100").replace(/\/$/, "");
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://biib-chi.vercel.app").replace(
-  /\/$/,
-  "",
-);
+export const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://bolalar-ijodkorligi.uz"
+).replace(/\/$/, "");
 export const LOCALES = ["uz", "oz", "ozbekca", "ru", "en"];
 
 let logPath = null;

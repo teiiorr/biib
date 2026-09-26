@@ -74,7 +74,7 @@ export function OgImage({ title, topic }: OgImageProps) {
         <div style={{ display: "flex", letterSpacing: 1 }}>
           BOLALAR IJODKORLIGI IJODIY BIRLASHMASI
         </div>
-        <div style={{ display: "flex", color: ATLAS.tint }}>biib-chi.vercel.app</div>
+        <div style={{ display: "flex", color: ATLAS.tint }}>bolalar-ijodkorligi.uz</div>
       </div>
     </div>
   );

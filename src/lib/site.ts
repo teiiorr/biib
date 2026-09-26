@@ -1,4 +1,4 @@
-const DEFAULT_SITE_URL = "https://biib-chi.vercel.app";
+const DEFAULT_SITE_URL = "https://bolalar-ijodkorligi.uz";
 
 /** Boʻsh yoki notoʻgʻri NEXT_PUBLIC_SITE_URL yigʻmani buzmasligi kerak. */
 export function siteUrl(): string {
