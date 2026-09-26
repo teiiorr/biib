@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 
 import { SplitLines } from "@/components/motion/SplitLines";
 import { Heading, headingClass, type HeadingSize } from "@/components/ui/Heading";
-import { tightMarks } from "@/components/ui/tight-marks";
 import { cx } from "@/lib/cx";
 
 export interface SectionHeaderProps {
@@ -37,7 +36,7 @@ export function SectionHeader({
     <div className={cx("section-header", className)}>
       {split ? (
         <SplitLines as={`h${level}`} id={id} className={headingClass(level, size, "center")}>
-          {tightMarks(title)}
+          {title}
         </SplitLines>
       ) : (
         <Heading level={level} align="center" id={id} {...(size ? { size } : {})}>

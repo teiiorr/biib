@@ -1,10 +1,10 @@
 /*
  * Manrope (egasining tanlovi) oʻzbek belgilarini toʻliq qamramaydi: ʻ ʼ va Қ қ Ғ ғ Ҳ ҳ yoʻq.
  * Bu skript ularni Manrope ning oʻz shakllaridan quradi va «Manrope UZ» ni yozadi:
- * ʻ ʼ → Manrope ning ‘ ’ glifi; Қ қ Ҳ ҳ → К к Х х + Ц ц dumining chuqurligida oʻng oyoq ostida dum
+ * ʻ → Manrope ning ’ glifi 180° burilgan (agʻdarilgan vergul), ʼ → ’ glifi; Қ қ Ҳ ҳ → К к Х х + Ц ц dumining chuqurligida oʻng oyoq ostida dum
  * (kengligi I / l ustuni); Ғ ғ → Г г + ustun orqali koʻndalang chiziq. Ikkala master (wght 200 va 800)
  * alohida quriladi, farqi gvar ga yoziladi: oraliq qalinliklar toʻgʻri interpolyatsiya boʻladi.
- * Natija: src/assets/fonts/ManropeUZ[wght].ttf. fontTools va brotli kerak (PYTHON muhit oʻzgaruvchisi).
+ * Natija: src/assets/fonts/ManropeUZ[wght].ttf va OG uchun Manrope-400/700.ttf. fontTools va brotli kerak (PYTHON muhit oʻzgaruvchisi).
  */
 import { execFileSync } from "node:child_process";
 import path from "node:path";
@@ -21,6 +21,7 @@ from fontTools.ttLib.tables.TupleVariation import TupleVariation
 from fontTools.varLib import instancer
 from fontTools.pens.recordingPen import DecomposingRecordingPen
 from fontTools.pens.ttGlyphPen import TTGlyphPen
+from fontTools.pens.transformPen import TransformPen
 
 SRC, OUT = sys.argv[1], sys.argv[2]
 vf = TTFont(SRC)
@@ -54,6 +55,16 @@ def build(font, base, extra):
         pen.closePath()
     return pen.glyph()
 
+def turned(font, base):
+    # ʻ (U+02BB) — «agʻdarilgan vergul»: ’ belgisi oʻz qutisi markazi atrofida 180° buriladi.
+    # Manrope ‘ belgisi qalin oʻlchamda shaklsiz ponaga oʻxshaydi, burilgan ’ esa aniq «6» shakl.
+    x0, y0, x1, y1 = bounds(font, base)
+    pen = TTGlyphPen(font.getGlyphSet())
+    rec = DecomposingRecordingPen(font.getGlyphSet())
+    font.getGlyphSet()[base].draw(rec)
+    rec.replay(TransformPen(pen, (-1, 0, 0, -1, x0 + x1, y0 + y1)))
+    return pen.glyph()
+
 def descender(font, base, ref_desc, stem_glyph):
     x0, y0, x1, y1 = bounds(font, base)
     s = stem(font, stem_glyph)
@@ -80,11 +91,9 @@ JOBS = {
 
 order = vf.getGlyphOrder()
 glyf, hmtx, gvar = vf["glyf"], vf["hmtx"], vf["gvar"]
-for cp, (base_cp, make) in JOBS.items():
+def add(cp, base_cp, g_lo, g_hi):
     base = name(base_cp)
     gname = "uni%04X" % cp
-    g_lo = build(lo, base, make(lo))
-    g_hi = build(hi, base, make(hi))
     c_lo = g_lo.getCoordinates(lo["glyf"])[0]
     c_hi = g_hi.getCoordinates(hi["glyf"])[0]
     assert len(c_lo) == len(c_hi), (gname, len(c_lo), len(c_hi))
@@ -102,10 +111,14 @@ for cp, (base_cp, make) in JOBS.items():
         if t.isUnicode():
             t.cmap[cp] = gname
 
-# Oʻzbek lotin: ʻ va ʼ kavs glifining oʻzi (kenglik va shakl Manrope niki)
+for cp, (base_cp, make) in JOBS.items():
+    base = name(base_cp)
+    add(cp, base_cp, build(lo, base, make(lo)), build(hi, base, make(hi)))
+add(0x2BB, 0x2019, turned(lo, name(0x2019)), turned(hi, name(0x2019)))
+
+# Tutuq belgisi ʼ — ’ kavs glifining oʻzi (kenglik va shakl Manrope niki)
 for t in vf["cmap"].tables:
     if t.isUnicode():
-        t.cmap[0x2BB] = cmap[0x2018]
         t.cmap[0x2BC] = cmap[0x2019]
 
 vf.setGlyphOrder(order)
@@ -118,6 +131,13 @@ for rec in vf["name"].names:
         rec.string = rec.toUnicode().replace("Manrope", "Manrope UZ")
 vf.save(OUT)
 print("saved", OUT, len(order))
+
+# OG rasmlari (Satori) oʻzgaruvchan shriftni oʻqimaydi: 400 va 700 statik nusxalar shu manbadan
+import os
+for w in (400, 700):
+    static = instancer.instantiateVariableFont(TTFont(OUT), {"wght": w}, updateFontNames=False)
+    static.save(os.path.join(os.path.dirname(OUT), "Manrope-%d.ttf" % w))
+    print("saved static", w)
 `;
 
 execFileSync(python, ["-c", script, SOURCE, TARGET], { stdio: "inherit" });

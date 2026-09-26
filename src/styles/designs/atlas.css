@@ -131,15 +131,14 @@
   --on-tint: #ffffff;
   --focus: #b8306a;
   --accent-text: #7a5c1a;
-  /* Sut-oq zaminda eng yorqin toʻyingan oltin: har bir toʻxtash katta sarlavha chegarasi 3:1 dan
-     yuqori, undan yorugʻi 3:1 dan tushadi. Sut-oq #F7F3EA / sirt #FFFCF6 / oq ustida: chuqur
-     3.83 / 4.14 / 4.24, asosiy 3.47 / 3.75 / 3.85, porlash 3.03 / 3.28 / 3.36. Porlash tor tasmada va
-     eng toʻyingan (OKLCH C 0.132). Sut-oqda porlash asosiydan bir pogʻona yorugʻ, xolos: tasma yonidagi
-     chuqurroq qirra (4.31 / 4.66 / 4.77) boʻlmasa yaltirash deyarli koʻrinmaydi. */
-  --gold-lo: #9e7400;
+  /* Sut-oq zaminda oltin: tinch toʻxtashlar katta sarlavha chegarasidan yuqori — chuqur 5.88 / 6.36 / 6.51,
+     asosiy 3.47 / 3.75 / 3.85 (sut-oq / sirt / oq). Porlash tasmasi egasining talabi bilan yorqin va
+     koʻzga tashlanadigan: u tor (harf qatorining ~10 %) va doim harakatda, matn tasma oʻtgan zahoti
+     yana asosiy oltinda oʻqiladi. */
+  --gold-lo: #7a5800;
   --gold: #a47c00;
-  --gold-flank: #946c00;
-  --gold-shine: #b08600;
+  --gold-flank: #c99a1e;
+  --gold-shine: #eccb5c;
   --success: #1d7a55;
   --info: #173a8c;
   --danger: #a5162f;

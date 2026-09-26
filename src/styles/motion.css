@@ -141,12 +141,14 @@
 }
 
 /* ---------- Oltin matn (egasining talabi) ----------
-   Katta sarlavhalar doim oltin va ular ustidan tinch yorugʻlik tasmasi toʻxtovsiz oʻtadi. Plitka matndan
-   ikki baravar keng va chetlari bir xil rangda: 200% ga surilganda kadr aynan boshiga qaytadi, choki
-   koʻrinmaydi. Kamaytirilgan harakat va Harakat oʻchiq: xuddi shu oltin, harakatsiz. Oltin metall:
-   gradient faqat shu material uchun (Art. V.6). Ranglar atlas.css dagi --gold-* tokenlari. */
+   Katta sarlavhalar doim oltin va ular ustidan yorugʻlik tasmasi toʻxtovsiz, bir tekis oqadi. Plitka
+   matndan ikki baravar keng, unda ikkita tasma (25 % va 75 %): matn ustida har doim bittasi boʻladi,
+   chetlari bir xil rangda — 200% ga surilganda kadr aynan boshiga qaytadi, choki koʻrinmaydi. Egasi
+   «doimiy» deb talab qildi: tizimdagi kamaytirilgan harakatda ham ishlaydi (joy siljimaydi, faqat rang
+   oqadi); toʻxtatish — Koʻrinish panelidagi Harakat (WCAG 2.2.2). Oltin metall: gradient faqat shu
+   material uchun (Art. V.6). Ranglar atlas.css dagi --gold-* tokenlari. */
 :root {
-  --gold-cycle: 8s;
+  --gold-cycle: 6s;
 }
 /* Matn boʻyicha kesilgan fon faqat element qutisi ichini boʻyaydi: quyi osma harflar (g, p, y, j, р, у)
    kesilmasin deb quti pastga 0.3em (tepaga 0.1em) kengaytiriladi, manfiy chet joylashuvni saqlaydi. */
@@ -157,15 +159,17 @@
   background-image: linear-gradient(
     100deg,
     var(--gold-lo) 0%,
-    var(--gold-lo) 4%,
-    var(--gold) 18%,
+    var(--gold) 12%,
+    var(--gold-flank) 21%,
+    var(--gold-shine) 25%,
+    var(--gold-flank) 29%,
     var(--gold) 38%,
-    var(--gold-flank) 46%,
-    var(--gold-shine) 50%,
-    var(--gold-flank) 54%,
+    var(--gold-lo) 50%,
     var(--gold) 62%,
-    var(--gold) 82%,
-    var(--gold-lo) 96%,
+    var(--gold-flank) 71%,
+    var(--gold-shine) 75%,
+    var(--gold-flank) 79%,
+    var(--gold) 88%,
     var(--gold-lo) 100%
   );
   background-size: 200% 100%;
@@ -202,14 +206,14 @@
     background-position: calc(0px - var(--word-x)) 0;
   }
 }
+:root:not([data-motion="off"]) .gold-text,
+:root:not([data-motion="off"]) .gold-text :is(.split-line, .split-word, .hero-word-in) {
+  animation: gold-shimmer var(--gold-cycle) linear infinite;
+}
+:root:not([data-motion="off"]) .home-hero-title[data-shine] .hero-word-in {
+  animation-name: gold-shimmer-title;
+}
 @media (prefers-reduced-motion: no-preference) {
-  :root:not([data-motion="off"]) .gold-text,
-  :root:not([data-motion="off"]) .gold-text :is(.split-line, .split-word, .hero-word-in) {
-    animation: gold-shimmer var(--gold-cycle) var(--ease-in-out) infinite;
-  }
-  :root:not([data-motion="off"]) .home-hero-title[data-shine] .hero-word-in {
-    animation-name: gold-shimmer-title;
-  }
   /* Kirish paytida koʻtarilish va yaltirash birga; yaltirash hamma soʻzda bir vaqtda (bitta tasma). */
   :root:not([data-motion="off"])
     .home-hero:not([data-enter="skip"]):not([data-done])
@@ -217,7 +221,7 @@
     .hero-word-in {
     animation:
       hero-rise var(--dur-reveal) var(--ease-out) both,
-      gold-shimmer var(--gold-cycle) var(--ease-in-out) infinite;
+      gold-shimmer var(--gold-cycle) linear infinite;
     animation-delay: calc((var(--i) - mod(var(--i), 3)) / 3 * 360ms + mod(var(--i), 3) * 90ms), 0s;
   }
   :root:not([data-motion="off"])

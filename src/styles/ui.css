@@ -551,8 +551,3 @@
 :root .ui-pullquote-text {
   font-weight: 500;
 }
-
-/* ʻ va ʼ katta sarlavhada: har tomondan 0.05em yonbosh olinadi, soʻz yaxlit oʻqiladi (tight-marks.tsx). */
-:root .tight-mark {
-  margin-inline: -0.05em;
-}

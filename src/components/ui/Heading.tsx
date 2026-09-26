@@ -1,8 +1,6 @@
 import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
 
-import { tightMarks } from "./tight-marks";
-
 export type HeadingLevel = 1 | 2 | 3 | 4;
 export type HeadingSize = "display-xl" | "display-l" | "h1" | "h2" | "h3" | "h4";
 export type HeadingAlign = "start" | "center";
@@ -82,7 +80,7 @@ export function Heading({
   const Tag = `h${level}` as const;
   return (
     <Tag id={id} className={cx(headingClass(level, size, align, trim), className)} {...attrs}>
-      {typeof children === "string" ? tightMarks(children) : children}
+      {children}
     </Tag>
   );
 }
