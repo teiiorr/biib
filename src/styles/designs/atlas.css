@@ -183,6 +183,8 @@
   --hero-ink: #f7f3ea;
   --hero-scrim: #0a1026;
   --hero-veil: #0f193c;
+  /* Qahramon videosining fon rangi (scripts/hero-video.mts dagi toʻldirish). */
+  --hero-ground: #0b1430;
 }
 
 :root[data-theme="dark"] {
@@ -238,6 +240,8 @@
   --hero-ink: #f7f3ea;
   --hero-scrim: #0a1026;
   --hero-veil: #0f193c;
+  /* Qahramon videosining fon rangi (scripts/hero-video.mts dagi toʻldirish). */
+  --hero-ground: #0b1430;
 }
 
 /* Qorongʻi sirt kunduzgi mavzuda ham (qahramon kadri, missiya, lojuvard lentalar): yorqin oltin. */

@@ -67,8 +67,10 @@
     bottom: auto;
     height: 100svh;
   }
+  /* Qahramon bir tusda (egasining talabi): zamin video fonining oʻzi — kadr ostida alohida ostlik
+     yoʻq, matn ostidagi qismi ham kadr bilan bir rangda. */
   .home-hero {
-    background: var(--hero-scrim);
+    background: var(--hero-ground);
   }
   /* Kadr belgiga qarab kattalashadi (sahna): poster va video bir xil nuqtadan. */
   .home-hero-media,
@@ -141,29 +143,6 @@
       calc(var(--logo-bottom) + 32px)
     );
     padding-bottom: calc(var(--tabbar-h) + 24px + var(--safe-bottom));
-  }
-  /* Ostlik belgi ostidan boshlanadi (belgi toza qoladi), 28 px da 64 %, 140 px da 82 %, pastda 90 %;
-     matn +32 px dan: sut-oq matn ikkala poster va butun viewport matritsasida ≥ 5.5:1 (D45). */
-  .home-hero-content::before {
-    --hero-static-scrim: linear-gradient(
-      180deg,
-      transparent var(--logo-bottom),
-      color-mix(in oklab, var(--hero-scrim) 64%, transparent) calc(var(--logo-bottom) + 28px),
-      color-mix(in oklab, var(--hero-scrim) 82%, transparent) calc(var(--logo-bottom) + 140px),
-      color-mix(in oklab, var(--hero-scrim) 90%, transparent) calc(100% - 160px),
-      var(--hero-scrim) 100%
-    );
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(
-      180deg,
-      transparent var(--logo-bottom),
-      color-mix(in oklab, var(--hero-scrim) 64%, transparent) calc(var(--logo-bottom) + 28px),
-      color-mix(in oklab, var(--hero-scrim) 82%, transparent) calc(var(--logo-bottom) + 140px),
-      color-mix(in oklab, var(--hero-scrim) 90%, transparent) 100%
-    );
   }
   .home-hero-grid {
     position: relative;
@@ -299,7 +278,6 @@
   }
   /* Sahna yoʻq (harakat oʻchiq, past yoki tor ekran): qahramon yopishmaydi, missiya uning ostidan
      tekis lojuvardda keladi; aks holda jumla toʻxtab qolgan sarlavha ustiga chiqib qolardi. */
-  /* Ostlik pastki 160 px da toʻliq lojuvardga yetadi: kadr tekis lentaga chiziqsiz oʻtadi. */
   @media (prefers-reduced-motion: reduce), (max-height: 520px), (max-width: 359px) {
     .home-hero {
       position: relative;
@@ -307,18 +285,12 @@
     :root .home-hero-scene .home-mission {
       background: var(--hero-scrim);
     }
-    .home-hero-content::before {
-      background: var(--hero-static-scrim);
-    }
   }
   :root[data-motion="off"] .home-hero {
     position: relative;
   }
   :root[data-motion="off"] .home-hero-scene .home-mission {
     background: var(--hero-scrim);
-  }
-  :root[data-motion="off"] .home-hero-content::before {
-    background: var(--hero-static-scrim);
   }
   /* ch oʻz shriftida (18–20 px): 2–3 muvozanatli qator. */
   .home-mission-statement {
