@@ -691,4 +691,25 @@
     text-decoration-thickness: 1px;
     text-underline-offset: 0.2em;
   }
+
+  /* UPOP galereyasidagi oyna ramka: kadr atrofida muz paspartu — ortidagi baxmal fon xiralashib
+     koʻrinadi, yuqori chapda yaltiroq, qirrada yorugʻlik (pages.css, .upop-shot). */
+  .upop-shot[data-frame="glass"] {
+    background:
+      linear-gradient(158deg, color-mix(in oklab, #ffffff 16%, transparent) 0%, transparent 46%),
+      color-mix(in oklab, var(--material-base) 46%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(1.6);
+    backdrop-filter: blur(14px) saturate(1.6);
+    box-shadow:
+      inset 0 1px 0 color-mix(in oklab, #ffffff 34%, transparent),
+      inset 0 0 0 1px color-mix(in oklab, var(--material-rim) 40%, transparent),
+      var(--shadow-floating);
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .upop-shot[data-frame="glass"] {
+      background: var(--surface-2);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
 }

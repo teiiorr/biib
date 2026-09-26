@@ -748,3 +748,326 @@
   line-height: 1.15;
   letter-spacing: -0.01em;
 }
+
+@layer components {
+  /* UPOP TREND galereyasi: 8 joyli tahririy toʻr. Qator oʻlchami konteyner kengligidan hisoblanadi —
+     ikki qator = bitta 4:5 portret (4 ustunli katak), shunda katta kadr, yonidagi ikkita kichik va
+     pastdagi portretlar bir xil chetlarda tugaydi. Telefonda 2, planshetda 8, kompyuterda 12 ustun. */
+  .upop-gallery-frame {
+    container-type: inline-size;
+  }
+  .upop-gallery-grid {
+    --shot-gap: var(--gutter);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: calc(((100cqi - var(--shot-gap)) / 2 * 1.25 - var(--shot-gap)) / 2);
+    grid-auto-flow: row dense;
+    gap: var(--shot-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .upop-shot {
+    --shot-radius: var(--radius-media);
+    --shot-inset: 0px;
+    position: relative;
+    grid-row: span 2;
+    min-width: 0;
+    border-radius: var(--shot-radius);
+    isolation: isolate;
+    view-timeline-name: --upop-shot;
+  }
+  /* Telefon: 1 va 6 toʻliq kenglikda, 2–3 kichik juftlik, qolganlari portret. */
+  .upop-shot:nth-child(8n + 1),
+  .upop-shot:nth-child(8n + 6) {
+    grid-column: span 2;
+  }
+  .upop-shot:nth-child(8n + 2),
+  .upop-shot:nth-child(8n + 3) {
+    grid-row: span 1;
+  }
+  @media (min-width: 600px) {
+    .upop-gallery-grid {
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      grid-auto-rows: calc(((100cqi - var(--shot-gap)) / 2 * 1.25 - var(--shot-gap)) / 2);
+    }
+    .upop-shot {
+      grid-column: span 4;
+    }
+    .upop-shot:nth-child(8n + 1),
+    .upop-shot:nth-child(8n + 8) {
+      grid-column: span 8;
+    }
+    .upop-shot:nth-child(8n + 6) {
+      grid-column: span 4;
+    }
+  }
+  @media (min-width: 1024px) {
+    .upop-gallery-grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-auto-rows: calc(((100cqi - 2 * var(--shot-gap)) / 3 * 1.25 - var(--shot-gap)) / 2);
+    }
+    .upop-shot:nth-child(8n + 1) {
+      grid-column: span 8;
+    }
+    .upop-shot:nth-child(8n + 7) {
+      grid-column: span 5;
+    }
+    .upop-shot:nth-child(8n + 8) {
+      grid-column: span 7;
+    }
+  }
+  .upop-shot-media {
+    position: absolute;
+    inset: var(--shot-inset);
+    overflow: hidden;
+    border-radius: calc(var(--shot-radius) - var(--shot-inset));
+    background: var(--surface);
+  }
+  .upop-shot-media :is(img, video) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .upop-shot-media .media-video {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Ramkalar. Sahna: ikki qavat pushti ingichka chiziq (tashqisi 6 px narida) va tepadan yumshoq yorugʻ
+     dogʻ — sahna chirogʻi; nur emas, faqat kadr ustidagi iliq yoritish. */
+  .upop-shot[data-frame="stage"] {
+    outline: 1px solid color-mix(in oklab, var(--tint) 55%, transparent);
+    outline-offset: 6px;
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--tint) 70%, transparent);
+  }
+  .upop-shot[data-frame="stage"] .upop-shot-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(
+      70% 55% at 50% -8%,
+      color-mix(in oklab, var(--gold-shine) 22%, transparent),
+      transparent 70%
+    );
+  }
+  /* Oltin: 2 px oltin qirra (sarlavhalardagi oltin bilan bir oila), ichki kadr kontsentrik. */
+  .upop-shot[data-frame="gold"] {
+    --shot-inset: 2px;
+    background: linear-gradient(
+      135deg,
+      var(--gold-lo) 0%,
+      var(--gold-shine) 28%,
+      var(--gold) 52%,
+      var(--gold-lo) 76%,
+      var(--gold-flank) 100%
+    );
+    box-shadow: var(--shadow-floating);
+  }
+  /* Oyna: 10 px muz paspartu (material — materials.css), ichki kadr kontsentrik. */
+  .upop-shot[data-frame="glass"] {
+    --shot-inset: 10px;
+  }
+  /* Chipta (kasting chiptasi): pastda qirqma qism, ikki yonida yarim doira oʻyiq va oltin
+     punktir; qismda loyiha nomi va joy raqami. */
+  .upop-shot[data-frame="ticket"] {
+    --stub: 52px;
+    background: var(--surface-2);
+    -webkit-mask:
+      radial-gradient(circle 12px at 0 calc(100% - var(--stub)), transparent 11.5px, #000 12px)
+        left / 51% 100% no-repeat,
+      radial-gradient(circle 12px at 100% calc(100% - var(--stub)), transparent 11.5px, #000 12px)
+        right / 51% 100% no-repeat;
+    mask:
+      radial-gradient(circle 12px at 0 calc(100% - var(--stub)), transparent 11.5px, #000 12px)
+        left / 51% 100% no-repeat,
+      radial-gradient(circle 12px at 100% calc(100% - var(--stub)), transparent 11.5px, #000 12px)
+        right / 51% 100% no-repeat;
+  }
+  .upop-shot[data-frame="ticket"] .upop-shot-media {
+    inset: 0 0 var(--stub);
+    border-radius: var(--shot-radius) var(--shot-radius) 0 0;
+  }
+  .upop-shot-stub {
+    position: absolute;
+    inset: auto 0 0;
+    height: var(--stub);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 24px;
+    border-top: 1.5px dashed color-mix(in oklab, var(--gold) 80%, transparent);
+    color: var(--accent-text);
+    letter-spacing: 0.08em;
+  }
+  /* Kino lentasi: ikki yonida perforatsiya tasmasi (portret kadr), ichki kadr ingichka radiusda. */
+  .upop-shot[data-frame="film"] {
+    --film: 22px;
+    background: #060a1c;
+  }
+  .upop-shot[data-frame="film"] .upop-shot-media {
+    inset: 0 var(--film);
+    border-radius: 6px;
+  }
+  .upop-shot[data-frame="film"]::before,
+  .upop-shot[data-frame="film"]::after {
+    content: "";
+    position: absolute;
+    top: 14px;
+    bottom: 14px;
+    width: 8px;
+    background: repeating-linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--ink) 78%, transparent) 0 10px,
+      transparent 10px 22px
+    );
+    border-radius: 2px;
+  }
+  .upop-shot[data-frame="film"]::before {
+    left: 7px;
+  }
+  .upop-shot[data-frame="film"]::after {
+    right: 7px;
+  }
+  /* Paspartu: kadr ichida 10 px narida ingichka oltin chiziq — muzey ramkasi. */
+  .upop-shot[data-frame="mat"] .upop-shot-media::after {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    z-index: 1;
+    pointer-events: none;
+    border: 1px solid color-mix(in oklab, var(--gold-flank) 75%, transparent);
+    border-radius: calc(var(--shot-radius) - 10px);
+  }
+
+  /* Kirishlar: skroll bilan (view timeline), orqaga skrollda teskari qaytadi. Faqat transform, opacity
+     va clip-path. Qoʻllab-quvvatlanmasa, kamaytirilgan harakatda va Harakat = off da kadrlar joyida. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      :root:not([data-motion="off"]) .upop-shot {
+        animation: linear both;
+        animation-timeline: --upop-shot;
+        animation-range: entry 0% cover 42%;
+      }
+      :root:not([data-motion="off"]) .upop-shot-media > * {
+        animation: shot-settle linear both;
+        animation-timeline: --upop-shot;
+        animation-range: entry 0% cover 50%;
+      }
+      :root:not([data-motion="off"]) .upop-shot[data-motion="curtain"] {
+        animation-name: shot-curtain;
+      }
+      :root:not([data-motion="off"]) .upop-shot[data-motion="slide-end"] {
+        animation-name: shot-slide-end;
+      }
+      :root:not([data-motion="off"]) .upop-shot[data-motion="slide-start"] {
+        animation-name: shot-slide-start;
+      }
+      :root:not([data-motion="off"]) .upop-shot[data-motion="wipe"] {
+        animation-name: shot-wipe;
+      }
+      :root:not([data-motion="off"]) .upop-shot[data-motion="rise"] {
+        animation-name: shot-rise;
+      }
+      :root:not([data-motion="off"]) .upop-shot[data-motion="iris"] {
+        animation-name: shot-iris;
+      }
+      :root:not([data-motion="off"]) .upop-shot[data-motion="tilt"] {
+        animation-name: shot-tilt;
+        transform-origin: 50% 100%;
+      }
+      :root:not([data-motion="off"]) .upop-shot[data-motion="zoom"] {
+        animation-name: shot-zoom;
+      }
+    }
+  }
+  /* Parda: markazdan ikki tomonga ochiladi. */
+  @keyframes shot-curtain {
+    from {
+      clip-path: inset(0 50% 0 50% round var(--shot-radius));
+    }
+    to {
+      clip-path: inset(0 0 0 0 round var(--shot-radius));
+    }
+  }
+  @keyframes shot-slide-end {
+    from {
+      opacity: 0;
+      transform: translateX(64px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes shot-slide-start {
+    from {
+      opacity: 0;
+      transform: translateX(-64px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  /* Pastdan yuqoriga ochilish (sahna koʻtarilishi). */
+  @keyframes shot-wipe {
+    from {
+      clip-path: inset(100% 0 0 0 round var(--shot-radius));
+    }
+    to {
+      clip-path: inset(0 0 0 0 round var(--shot-radius));
+    }
+  }
+  @keyframes shot-rise {
+    from {
+      opacity: 0;
+      transform: translateY(72px) scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  /* Diafragma: markazdagi doiradan butun kadrga. */
+  @keyframes shot-iris {
+    from {
+      clip-path: circle(14% at 50% 50%);
+    }
+    to {
+      clip-path: circle(75% at 50% 50%);
+    }
+  }
+  @keyframes shot-tilt {
+    from {
+      opacity: 0;
+      transform: perspective(1200px) rotateX(16deg) translateY(56px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes shot-zoom {
+    from {
+      opacity: 0;
+      transform: scale(0.86);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  /* Ichki surat ramkadan sekinroq joylashadi: kadr ochilganda tasvir biroz yaqinlashib turadi. */
+  @keyframes shot-settle {
+    from {
+      transform: scale(1.14);
+    }
+    to {
+      transform: none;
+    }
+  }
+}

@@ -12,6 +12,8 @@ export const projects = {
   },
   filmHeading: "Jarayon",
   playFilm: "Videoni ijro etish",
+  galleryHeading: "Galereya",
+  galleryAlt: "UPOP TREND: {n}-lavha",
   registrationHeading: "Roʻyxatdan oʻtish",
   openExternal: "upop.uz saytiga oʻtish",
 };

@@ -19,6 +19,8 @@ import { pathFor } from "@/i18n/routes";
 
 import { ClickToPlayVideoLeaf, InViewVideoLeaf } from "../lazy-leaves";
 
+import { UpopGallery } from "./UpopGallery";
+
 interface PageProps {
   readonly locale: Locale;
   readonly dict: Dictionary;
@@ -36,7 +38,7 @@ function factValue(
 
 /**
  * UPOP TREND sahifasi: markazdagi sarlavha, toʻliq kenglikdagi sahna halqasi, faktlar teng toʻrda,
- * bosilganda yuklanadigan film, roʻyxatdan oʻtish lentasi (upop.uz). Sarlavhalar ostida tavsif yoʻq,
+ * bosilganda yuklanadigan film, galereya (8 joy, hozircha izohda), roʻyxatdan oʻtish lentasi (upop.uz). Sarlavhalar ostida tavsif yoʻq,
  * uzun matn oʻrniga faqat faktlar (egasining talabi). Harakat: halqa yumshoq ochiladi va parallaksda
  * yuradi, sarlavhalar soʻzma-soʻz, faktlar doira ritmida; film ramkasi yumshoq ochiladi.
  */
@@ -119,6 +121,9 @@ export function ProjectsPage({ locale, dict }: PageProps) {
           </div>
         </Container>
       </Section>
+
+      {/* Galereya: 8 joy src/content/upop-gallery.ts da izohdan chiqariladi; boʻsh boʻlsa koʻrinmaydi. */}
+      <UpopGallery locale={locale} dict={dict} />
 
       <Section
         tone="dark"

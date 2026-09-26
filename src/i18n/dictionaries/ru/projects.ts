@@ -14,6 +14,8 @@ export const projects: typeof source = {
   },
   filmHeading: "Процесс",
   playFilm: "Смотреть видео",
+  galleryHeading: "Галерея",
+  galleryAlt: "UPOP TREND: кадр {n}",
   registrationHeading: "Регистрация",
   openExternal: "Перейти на upop.uz",
 };

@@ -8,6 +8,7 @@ import { MILESTONES } from "./milestones";
 import { NEWS } from "./news";
 import { PARTNERS } from "./partners";
 import { PROJECTS } from "./projects";
+import { UPOP_GALLERY, type UpopShot } from "./upop-gallery";
 import type {
   Artwork,
   Contacts,
@@ -33,6 +34,11 @@ export function getFlagship(): Project {
   const flagship = PROJECTS.find((p) => p.flagship);
   if (!flagship) throw new Error("Bosh loyiha topilmadi");
   return flagship;
+}
+
+/** UPOP TREND galereyasi: izohdan chiqarilgan joylar (upop-gallery.ts); boʻsh boʻlsa boʻlim chizilmaydi. */
+export function getUpopGallery(): readonly UpopShot[] {
+  return UPOP_GALLERY;
 }
 
 export function getNews(_locale?: Locale): readonly NewsArticle[] {

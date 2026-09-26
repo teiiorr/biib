@@ -15,6 +15,8 @@ export const projects: typeof source = {
   },
   filmHeading: "Жараён",
   playFilm: "Видеони ижро этиш",
+  galleryHeading: "Галерея",
+  galleryAlt: "UPOP TREND: {n}-лавҳа",
   registrationHeading: "Рўйхатдан ўтиш",
   openExternal: "upop.uz сайтига ўтиш",
 };

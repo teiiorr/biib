@@ -18,7 +18,8 @@ interface InViewVideoProps {
   /** WebM (AV1) + MP4 (H.264) juftligi; telefon uchun alohida kichik nusxa. */
   readonly sources?: VideoSources;
   readonly mobileSources?: VideoSources;
-  readonly poster: string;
+  /** Birinchi kadr surati; boʻlmasa kadr video yuklanguncha sahifa zaminida turadi. */
+  readonly poster?: string;
   /** Poster LCP (birinchi ekranda): HTML da turadi. Aks holda ekranga yaqinlashganda qoʻyiladi. */
   readonly priority?: boolean;
   readonly alt: string;
@@ -73,7 +74,7 @@ export function InViewVideo({
       <video
         ref={ref}
         src={allowed && !set ? src : undefined}
-        poster={posterOn ? poster : undefined}
+        poster={posterOn && poster ? poster : undefined}
         muted
         playsInline
         loop
