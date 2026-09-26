@@ -11,8 +11,9 @@ export const contacts = {
     copied: "Nusxa olindi",
   },
   map: {
-    yandex: "Yandex Xarita",
-    google: "Google Xarita",
+    yandex: "Yandex",
+    google: "Google",
+    hint: "xaritada ochish",
   },
   form: {
     heading: "Xabar yuborish",

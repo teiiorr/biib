@@ -14,6 +14,7 @@ import { Prose } from "@/components/ui/Prose";
 import { PullQuote } from "@/components/ui/PullQuote";
 import { getMilestones, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { hyphenate } from "@/i18n/hyphenate";
 import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
 
@@ -89,10 +90,12 @@ export function AboutPage({ locale, dict }: PageProps) {
             >
               <Prose size="body-l">
                 {a.mission.paragraphs.map((para) => (
-                  <p key={para.slice(0, 24)}>{para}</p>
+                  <p key={para.slice(0, 24)}>{hyphenate(para, locale)}</p>
                 ))}
               </Prose>
-              <PullQuote attribution={a.mission.quoteSource}>{a.mission.quote}</PullQuote>
+              <PullQuote attribution={a.mission.quoteSource}>
+                {hyphenate(a.mission.quote, locale)}
+              </PullQuote>
               <div className="about-charter">
                 <a
                   href={CHARTER_HREF}

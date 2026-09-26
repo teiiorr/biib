@@ -53,7 +53,7 @@ export function ExpertsPage({ locale, dict }: PageProps) {
                   key={person.id}
                   id={person.id}
                   name={name}
-                  role={field ? `${field} · ${role}` : role}
+                  role={field ?? role}
                   photo={confirmed ? person.photo : null}
                   email={confirmed ? person.email : null}
                   index={index}

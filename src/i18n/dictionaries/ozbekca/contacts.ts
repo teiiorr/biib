@@ -14,8 +14,9 @@ export const contacts: typeof source = {
     copied: "Nusxa olindi",
   },
   map: {
-    yandex: "Yandex Xarita",
-    google: "Google Xarita",
+    yandex: "Yandex",
+    google: "Google",
+    hint: "xaritada oçiş",
   },
   form: {
     heading: "Xabar yuboriş",

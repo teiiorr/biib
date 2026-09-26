@@ -1,3 +1,5 @@
+import { Fragment, type ReactNode } from "react";
+
 import { Icon } from "@/components/icons/Icon";
 import type { IconName } from "@/components/icons/paths";
 import { Container } from "@/components/layout/Container";
@@ -30,6 +32,16 @@ interface Fact {
   readonly href?: string;
   /** Bir nechta qiymat (telefonlar): har biri oʻz havolasi, alohida qatorda. */
   readonly links?: ReadonlyArray<{ readonly text: string; readonly href: string }>;
+}
+
+/* Uzun manzil (pochta, havola) tor ekranda soʻz oʻrtasidan emas, «@» va «/» dan keyin boʻlinadi. */
+function breakable(text: string): ReactNode {
+  return text.split(/(?<=[@/])/).map((part, index) => (
+    <Fragment key={index}>
+      {index > 0 ? <wbr /> : null}
+      {part}
+    </Fragment>
+  ));
 }
 
 const telHref = (phone: string): string => `tel:${phone.replace(/\s/g, "")}`;
@@ -102,118 +114,121 @@ export function ContactsPage({ locale, dict }: PageProps) {
           <h2 id="contacts-details" className="sr-only">
             {d.details.heading}
           </h2>
-          <Reveal
-            as="dl"
-            className="contact-facts"
-            stagger
-            distance={16}
-            attrs={{ "data-audit": "gap", "data-card-group": "" }}
-          >
-            {facts.map((fact) => (
-              <div key={fact.key} className="contact-fact feature" data-card="">
-                <FeatureIcon name={fact.icon} />
-                <dt className="sr-only" data-card-title="">
-                  {fact.label}
-                </dt>
-                <dd className="contact-fact-value">
-                  {fact.links ? (
-                    <ul className="contact-fact-links">
-                      {fact.links.map((link) => (
-                        <li key={link.href}>
-                          <a href={link.href} className="t-body tnum text-ink">
-                            {link.text}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : fact.value && fact.href ? (
-                    <a
-                      href={fact.href}
-                      className="t-body tnum text-ink"
-                      {...(fact.href.startsWith("http")
-                        ? { target: "_blank", rel: "noopener noreferrer" }
-                        : {})}
-                    >
-                      {/* Havola manzili qisqa koʻrsatiladi (t.me/…), nusxaga toʻliq manzil olinadi. */}
-                      {fact.value.replace(/^https?:\/\//, "")}
-                    </a>
-                  ) : (
-                    <span className={fact.value ? "t-body tnum" : "t-body text-ink-3"}>
-                      {fact.value ?? FILLER.line}
-                    </span>
-                  )}
-                </dd>
-                {fact.value && !fact.links ? (
-                  <dd className="contact-fact-actions">
-                    {fact.key === "address" && (map || addressUz) ? (
-                      <>
-                        <LinkButton
-                          href={
-                            map
-                              ? `https://yandex.uz/maps/?pt=${map.lng},${map.lat}&z=16`
-                              : `https://yandex.uz/maps/?text=${encodeURIComponent(addressUz ?? "")}`
-                          }
-                          variant="glass"
-                          size="40"
-                          external
-                          externalHint={external}
-                        >
-                          {d.map.yandex}
-                        </LinkButton>
-                        <LinkButton
-                          href={
-                            map
-                              ? `https://www.google.com/maps?q=${map.lat},${map.lng}`
-                              : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressUz ?? "")}`
-                          }
-                          variant="glass"
-                          size="40"
-                          external
-                          externalHint={external}
-                        >
-                          {d.map.google}
-                        </LinkButton>
-                      </>
-                    ) : null}
-                    {/* Nusxa tugmasi faqat belgi: kartalar ixcham, harakatlar bir qatorga sigʻadi. */}
-                    <CopyButtonLeaf
-                      value={fact.value}
-                      label={d.details.copy}
-                      copiedLabel={d.details.copied}
-                      variant="glass"
-                      size="40"
-                      iconOnly
-                    />
-                  </dd>
-                ) : null}
-              </div>
-            ))}
-            <div className="contact-fact feature" data-card="">
-              <FeatureIcon name="share" />
-              <dt className="sr-only" data-card-title="">
-                {d.socials.heading}
-              </dt>
-              {/* Tarmoqlar ham boshqa kartalardagi harakatlar kabi pastki qatorda, oʻngda. */}
-              <dd className="contact-fact-actions">
-                <ul className="contact-socials">
-                  {socials.map((s) => (
-                    <li key={s.id}>
+          {/* Egasining talabi: boʻshliqsiz, tekis. Bitta guruhlangan roʻyxat (iOS sozlamalari kabi): har
+              rekvizit bir qator — belgi, qiymat, oʻngda harakatlar; qatorlar orasida ingichka chiziq. */}
+          <div className="grid-site">
+            <Reveal
+              as="dl"
+              className="contact-list col-span-4 md:col-span-8 lg:col-span-10 lg:col-start-2 xl:col-span-8 xl:col-start-3"
+              stagger
+              distance={16}
+              attrs={{ "data-audit": "gap", "data-grid-item": "" }}
+            >
+              {facts.map((fact) => (
+                <div key={fact.key} className="contact-row feature">
+                  <FeatureIcon name={fact.icon} />
+                  <dt className="sr-only">{fact.label}</dt>
+                  <dd className="contact-row-value">
+                    {fact.links ? (
+                      <ul className="contact-row-links">
+                        {fact.links.map((link) => (
+                          <li key={link.href}>
+                            <a href={link.href} className="t-body tnum text-ink">
+                              {link.text}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : fact.value && fact.href ? (
                       <a
-                        href={s.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="contact-social t-label text-ink"
+                        href={fact.href}
+                        className="t-body tnum text-ink"
+                        {...(fact.href.startsWith("http")
+                          ? { target: "_blank", rel: "noopener noreferrer" }
+                          : {})}
                       >
-                        <Icon name={s.id as IconName} size={20} />
-                        {s.label}
-                        <VisuallyHidden> ({external})</VisuallyHidden>
+                        {/* Havola manzili qisqa koʻrsatiladi (t.me/…), nusxaga toʻliq manzil olinadi. */}
+                        {breakable(fact.value.replace(/^https?:\/\//, ""))}
                       </a>
-                    </li>
-                  ))}
-                </ul>
-              </dd>
-            </div>
-          </Reveal>
+                    ) : (
+                      <span className={fact.value ? "t-body tnum" : "t-body text-ink-3"}>
+                        {fact.value ?? FILLER.line}
+                      </span>
+                    )}
+                  </dd>
+                  {fact.key === "address" && fact.value && (map || addressUz) ? (
+                    /* Xarita tugmalari alohida: telefonda manzil ostida, kengroq ekranda nusxa yonida. */
+                    <dd className="contact-row-maps">
+                      <LinkButton
+                        href={
+                          map
+                            ? `https://yandex.uz/maps/?pt=${map.lng},${map.lat}&z=16`
+                            : `https://yandex.uz/maps/?text=${encodeURIComponent(addressUz ?? "")}`
+                        }
+                        variant="glass"
+                        size="40"
+                        external
+                        externalHint={external}
+                      >
+                        {d.map.yandex}
+                        <VisuallyHidden>, {d.map.hint}</VisuallyHidden>
+                      </LinkButton>
+                      <LinkButton
+                        href={
+                          map
+                            ? `https://www.google.com/maps?q=${map.lat},${map.lng}`
+                            : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressUz ?? "")}`
+                        }
+                        variant="glass"
+                        size="40"
+                        external
+                        externalHint={external}
+                      >
+                        {d.map.google}
+                        <VisuallyHidden>, {d.map.hint}</VisuallyHidden>
+                      </LinkButton>
+                    </dd>
+                  ) : null}
+                  {fact.value && !fact.links ? (
+                    /* Nusxa tugmasi har qatorda bir joyda: qiymat bilan bir chiziqda, oʻng chetda. */
+                    <dd className="contact-row-actions">
+                      <CopyButtonLeaf
+                        value={fact.value}
+                        label={d.details.copy}
+                        copiedLabel={d.details.copied}
+                        variant="glass"
+                        size="40"
+                        iconOnly
+                      />
+                    </dd>
+                  ) : null}
+                </div>
+              ))}
+              <div className="contact-row feature">
+                <FeatureIcon name="share" />
+                <dt className="sr-only">{d.socials.heading}</dt>
+                {/* Tarmoqlar qiymat oʻrnida: nomlari bilan bir qatorda. */}
+                <dd className="contact-row-value">
+                  <ul className="contact-socials">
+                    {socials.map((s) => (
+                      <li key={s.id}>
+                        <a
+                          href={s.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="contact-social t-label text-ink"
+                        >
+                          <Icon name={s.id as IconName} size={20} />
+                          {s.label}
+                          <VisuallyHidden> ({external})</VisuallyHidden>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            </Reveal>
+          </div>
         </Container>
       </Section>
       <Section labelledBy="contacts-write">

@@ -86,72 +86,23 @@
   .about-logo[data-state="still"] .about-logo-video {
     opacity: 0;
   }
-  /* Telefonda matn markazda (tor ustunda ikki chetga tekislash soʻzlar orasini kengaytirardi); keng
-     ekranda matn belgi yonida ikki chetga tekis — oʻngda boʻshliq qolmaydi. */
+  /* Matn har kenglikda ikki chetga tekis (egasining talabi: oʻngda boʻshliq va notekislik yoʻq). Soʻzlar
+     orasi kengayib ketmasligi uchun boʻgʻin koʻchirish: oʻzbekchaga yumshoq tirelar (i18n/hyphenate.ts),
+     rus va inglizga brauzer lugʻati. Iqtibos ham shunday; kadr izohi markazda. */
   .about-mission .ui-prose p,
-  .about-mission .ui-pullquote,
+  .about-mission .ui-pullquote-text {
+    text-align: justify;
+    text-align-last: start;
+    hyphens: auto;
+  }
+  .about-mission .ui-pullquote figcaption,
   .about-media-figure figcaption {
     text-align: center;
   }
-  .about-mission .ui-prose p {
-    text-wrap: pretty;
-  }
   @media (min-width: 1024px) {
-    .about-mission .ui-prose p {
-      text-align: justify;
-      hyphens: auto;
-    }
-    .about-mission .ui-pullquote {
+    .about-mission .ui-pullquote figcaption {
       text-align: start;
     }
-  }
-  /* Yoʻnalishlar va tarix: bitta teng toʻr (1 / 2 ustun, kompyuterda bandlar soni qancha boʻlsa shuncha
-     ustun); har band ustida bitta chiziq, sarlavhalar bir chiziqdan boshlanadi. */
-  .about-list {
-    display: grid;
-    column-gap: var(--gutter);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .about-list-item {
-    display: grid;
-    gap: 8px;
-    align-content: start;
-    padding-block: 16px 24px;
-    border-top: 1px solid var(--line);
-  }
-  @media (min-width: 600px) {
-    .about-list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-  @media (min-width: 1024px) {
-    .about-list {
-      grid-template-columns: none;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(0, 1fr);
-    }
-  }
-  /* Yoʻnalishlar va vazifalar: har band bir qatorda (egasining talabi: qoʻshni bandlar bir balandlikda).
-     Planshetda bitta ustun, 1024 dan ikki, 1280 dan uch ustun — eng uzun (kirillcha) nom ham sigʻadi. */
-  .about-list[data-columns="3"] {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  @media (min-width: 1024px) {
-    .about-list[data-columns="3"] {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-auto-flow: row;
-    }
-  }
-  @media (min-width: 1280px) {
-    .about-list[data-columns="3"] {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-  .history-body {
-    display: grid;
-    gap: 4px;
   }
   /* Ustavni yuklab olish: telefonda markazda, keng ekranda matn ustunining oʻng chetida (tugmalar oʻngda). */
   .about-charter {
@@ -416,25 +367,11 @@
 
 @layer components {
   /* Rasmiy sahifalar: sarlavha tinch lojuvard lentada (home.css .navy-band), bezaksiz. */
-  /* Aloqa va hamkorlar kartalari bitta sokin sirt: 1 px chiziq, 12 px radius,
-     ichki chet telefonda 16, kattaroq ekranda 24 px (Art. X.4). */
-  .contact-fact,
+  /* Bolalar uchun qisqa izoh kartasi (maxfiylik): sokin sirt, 1 px chiziq. */
   .privacy-kid {
     border: 1px solid var(--line);
     border-radius: var(--radius-card);
     background: var(--surface);
-  }
-  .contact-fact {
-    padding: 16px;
-  }
-  /* Kartalar qatorda bir balandlikda: tugmasiz kartada mazmun yuqoriga yopishmaydi, markazda turadi. */
-  .contact-fact.feature {
-    align-content: center;
-  }
-  @media (min-width: 600px) {
-    .contact-fact {
-      padding: 24px;
-    }
   }
 
   /* Ekspertlar va rahbariyat (egasining talabi): katta portretli teng kartalar. Karta 8 px ichki chetli
@@ -516,91 +453,89 @@
     }
   }
 
-  /* Telefonlar kartasi: har raqam alohida qatorda, oʻz havolasi bilan. */
-  .contact-fact-links {
+  /* Aloqa: bitta guruhlangan roʻyxat (egasining talabi: boʻshliqsiz, tekis). Sirt bitta, qatorlar orasida
+     ingichka chiziq; qator: belgi, qiymat, oʻngda harakatlar — hammasi bir chiziqda. Telefonda harakatlar
+     qiymat ostiga tushadi (qiymat bilan bir chetdan). */
+  .contact-list {
+    margin: 0;
+    padding: 4px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+  }
+  .contact-row.feature {
+    grid-template-columns: 44px minmax(0, 1fr) auto;
+    column-gap: 16px;
+    row-gap: 8px;
+    align-items: center;
+    padding-block: 16px;
+  }
+  .contact-row + .contact-row {
+    border-top: 1px solid var(--line);
+  }
+  .contact-row.feature > .feature-icon {
+    grid-row: auto;
+    align-self: center;
+  }
+  .contact-row-value {
+    min-width: 0;
+    margin: 0;
+  }
+  /* Uzun manzil avval «@» va «/» dan keyin boʻlinadi (<wbr>), soʻz oʻrtasidan faqat oxirgi chora. */
+  .contact-row-value > a {
+    overflow-wrap: break-word;
+  }
+  /* Nusxa tugmasi har qatorda bir joyda: qiymat bilan bir chiziqda, oʻng chetda. Xarita tugmalari
+     telefonda manzil ostida (qiymat chetidan), kengroq ekranda nusxa tugmasi yonida. */
+  .contact-row.feature > .contact-row-actions {
+    grid-column: 3;
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+  .contact-row.feature > .contact-row-maps {
+    grid-column: 2 / -1;
+    grid-row: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+  }
+  /* Telefonlar: telefonda ustma-ust, kengroq ekranda bir qatorda. */
+  .contact-row-links {
     display: grid;
     gap: 0;
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  /* Aloqa: oltita teng rekvizit kartasi 1 / 2 / 3 ustunda. 600 px dan har karta uch qatorli subgrid
-     (yorliq, qiymat, harakatlar): qoʻshni kartalarda qiymat va tugmalar bir chiziqda. */
-  .contact-facts {
-    display: grid;
-    gap: 16px;
-    margin: 0;
-  }
-  .contact-fact {
-    display: grid;
-    align-content: start;
-    gap: 8px;
-  }
   @media (min-width: 600px) {
-    .contact-facts {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--gutter);
+    .contact-list {
+      padding: 8px 24px;
     }
-    .contact-fact {
-      grid-row: span 3;
-      grid-template-rows: subgrid;
+    .contact-row.feature > .contact-row-maps {
+      grid-column: 3;
+      grid-row: 1;
     }
-    .contact-fact-actions {
-      grid-row: 3;
+    .contact-row.feature > .contact-row-actions {
+      grid-column: 4;
     }
-  }
-  @media (min-width: 1024px) {
-    .contact-facts {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .contact-row.feature {
+      grid-template-columns: 44px minmax(0, 1fr) auto auto;
+      padding-block: 20px;
     }
-  }
-  /* Qiymat katagi 44 px: havola nishoni shu balandlikni oladi, qiymat matni esa hamma kartada katak
-     tepasidan boshlanadi va qoʻshni kartalar bilan bir tayanch chizigʻida turadi. */
-  /* Qiymat oʻz qatorida vertikal markazda: bir qatorli pochta uch qatorli manzil yonida tepaga yopishib,
-     ostida boʻshliq qoldirmaydi (egasining talabi: kartalar teng, boʻshliqsiz). */
-  .contact-fact-value {
-    display: flex;
-    align-items: center;
-    align-self: center;
-    min-width: 0;
-    min-height: var(--hit-min);
-    margin: 0;
-  }
-  /* 320 px da uzun havola (t.me/…) karta chetidan chiqmasin: havola boʻlinadi. 44 px nishon matnni
-     markazga surmasligi uchun shaffof psevdoelementda. */
-  .contact-fact-value > a {
-    position: relative;
-    display: inline-block;
-    overflow-wrap: anywhere;
-  }
-  .contact-fact-value > a::after {
-    content: "";
-    position: absolute;
-    inset-block: 0 min(0px, calc(100% - var(--hit-min)));
-    inset-inline: 0;
-  }
-  .contact-fact-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-self: end;
-    justify-content: flex-end;
-    gap: 8px;
-    margin: 0;
-  }
-  /* Harakatlar kartaning butun kengligida (belgi ustuni ostidan ham): xarita va nusxa bir qatorga sigʻadi.
-     Belgi faqat qiymat qatorida, uning markazida. */
-  .contact-fact.feature > .contact-fact-actions {
-    grid-column: 1 / -1;
-    align-items: center;
-  }
-  .contact-fact.feature > .feature-icon {
-    grid-row: auto;
-    align-self: center;
+    .contact-row-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 24px;
+    }
   }
   .contact-socials {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: flex-start;
     gap: 12px 16px;
     margin: 0;
     padding: 0;
