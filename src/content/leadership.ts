@@ -2,8 +2,8 @@ import type { Person } from "./types";
 
 /**
  * Rahbariyat birlashma ustavi boʻyicha (6-boʻlim). Tartib egasidan: rais, ijrochi direktor, keyin
- * hamrais va taftish komissiyasi raisi. Rais ismi ustavdagi imzodan (J. Ahmedov), ijrochi direktor va
- * ikkala surat egasidan. Pochta va qolgan ismlar tashkilotdan kutilmoqda.
+ * hamrais va taftish komissiyasi raisi. Rais va ijrochi direktorning toʻliq ismi hamda ikkala surat
+ * egasidan. Pochta va qolgan ismlar tashkilotdan kutilmoqda.
  */
 export const LEADERSHIP: readonly Person[] = [
   {
@@ -11,11 +11,11 @@ export const LEADERSHIP: readonly Person[] = [
     kind: "leader",
     status: "confirmed",
     name: {
-      uz: "J. Ahmedov",
-      oz: "Ж. Аҳмедов",
-      ozbekca: "J. Ahmedov",
-      ru: "Ж. Ахмедов",
-      en: "J. Ahmedov",
+      uz: "Jahongir Ahmedov",
+      oz: "Жаҳонгир Аҳмедов",
+      ozbekca: "Jahongir Ahmedov",
+      ru: "Жахонгир Ахмедов",
+      en: "Jahongir Ahmedov",
     },
     role: {
       uz: "Birlashma raisi",
