@@ -1,7 +1,17 @@
 import { spawn } from "node:child_process";
 import { existsSync, rmSync } from "node:fs";
 import path from "node:path";
-import { BASE_URL, ROOT, VERIFY_DIR, log, logRaw, readJson, run, writeJson } from "./util.mjs";
+import {
+  BASE_URL,
+  ROOT,
+  VERIFY_DIR,
+  VERIFY_ENV,
+  log,
+  logRaw,
+  readJson,
+  run,
+  writeJson,
+} from "./util.mjs";
 
 const PID_FILE = path.join(VERIFY_DIR, "server.json");
 const PORTS = [3000, 3100];
@@ -53,7 +63,7 @@ export async function startServer() {
     cwd: ROOT,
     detached: true,
     stdio: ["ignore", "pipe", "pipe"],
-    env: { ...process.env, FORCE_COLOR: "0", NEXT_TELEMETRY_DISABLED: "1" },
+    env: { ...process.env, FORCE_COLOR: "0", NEXT_TELEMETRY_DISABLED: "1", ...VERIFY_ENV },
   });
   child.stdout.on("data", (chunk) => logRaw(`[server] ${chunk}`));
   child.stderr.on("data", (chunk) => logRaw(`[server] ${chunk}`));

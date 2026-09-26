@@ -1,6 +1,8 @@
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { ROOT, fail, log, pass, readJson, runLive, tail } from "./util.mjs";
+import { ROOT, VERIFY_ENV, fail, log, pass, readJson, runLive, tail } from "./util.mjs";
+
+const CLIENT_TEXT = /\.(?:js|mjs|css|json|html|txt|map)$/;
 
 const LOCALE_PATH = /^\/(uz|oz|ozbekca|ru|en)(?:\/|$)/;
 const METADATA_FILE =
@@ -45,11 +47,52 @@ export function checkManifest(
   ];
 }
 
+/* Loyiha ref i Supabase manzilining birinchi boʻlagi; manzil maxfiy emas, .env.local dan faqat shu qator. */
+function supabaseProjectRef() {
+  let url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const envFile = path.join(ROOT, ".env.local");
+  if (!url && existsSync(envFile)) {
+    url = /^NEXT_PUBLIC_SUPABASE_URL=["']?([^"'\s]+)/m.exec(readFileSync(envFile, "utf8"))?.[1];
+  }
+  try {
+    return url ? new URL(url).hostname.split(".")[0] || null : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Brauzerga ketadigan fayllarda Supabase kaliti, paketi yoki loyiha manzili boʻlmasligi kerak. */
+export function checkClientIsolation(ref = supabaseProjectRef()) {
+  const dir = path.join(ROOT, ".next/static");
+  if (!existsSync(dir)) return fail("build:client-isolation", ".next/static yoʻq");
+  const needles = [
+    ["sb_publishable_", "publishable kalit"],
+    ["@supabase", "@supabase paketi"],
+    ...(ref ? [[ref, "loyiha manzili"]] : []),
+  ];
+  const hits = [];
+  let scanned = 0;
+  for (const rel of readdirSync(dir, { recursive: true })) {
+    const file = path.join(dir, String(rel));
+    if (!CLIENT_TEXT.test(file)) continue;
+    scanned += 1;
+    const text = readFileSync(file, "utf8");
+    for (const [needle, label] of needles)
+      if (text.includes(needle)) hits.push(`${path.relative(ROOT, file)}: ${label}`);
+  }
+  return hits.length
+    ? fail("build:client-isolation", hits.slice(0, 12).join("\n"))
+    : pass(
+        "build:client-isolation",
+        `${scanned} fayl${ref ? "" : " (manzil nomaʼlum: faqat kalit va paket nomi)"}`,
+      );
+}
+
 export async function runBuild(ctx) {
   log("G1: pnpm build");
   const result = await runLive("pnpm", ["build"], {
     timeout: 25 * 60_000,
-    env: { NEXT_TELEMETRY_DISABLED: "1" },
+    env: { NEXT_TELEMETRY_DISABLED: "1", ...VERIFY_ENV },
   });
   const checks = [];
   if (result.status !== 0) {
@@ -79,5 +122,6 @@ export async function runBuild(ctx) {
       : pass("build:middleware"),
   );
   checks.push(...checkManifest(ctx.site.routes.map((r) => r.path)));
+  checks.push(checkClientIsolation());
   return checks;
 }

@@ -12,6 +12,8 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://bolalar-ijodkorligi.uz"
 ).replace(/\/$/, "");
 export const LOCALES = ["uz", "oz", "ozbekca", "ru", "en"];
+/* Tekshiruv hech qachon jonli bazani oʻqimaydi: jarayon muhiti .env.local dan ustun turadi. */
+export const VERIFY_ENV = { CONTENT_SOURCE: "bundled" };
 
 let logPath = null;
 
