@@ -2,7 +2,7 @@ import { cx } from "@/lib/cx";
 
 import { Picture } from "./Picture";
 
-export type BrandLogoSize = 32 | 40 | 48 | 96;
+export type BrandLogoSize = 32 | 40 | 48 | 96 | 160;
 
 export interface BrandLogoProps {
   /** Maʼnoli belgi (sarlavhadagi brend) uchun nom; bezak oʻrnida boʻsh satr. */

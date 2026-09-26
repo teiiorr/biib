@@ -92,6 +92,15 @@
   .admin-mark {
     align-self: center;
   }
+  /* Kirishda belgi asosiy, sarlavha ixcham va bir qatorda (egasining talabi). */
+  .admin-login .admin-mark {
+    width: 160px;
+    height: 160px;
+  }
+  .admin-login .admin-login-title {
+    white-space: nowrap;
+    font-size: clamp(1.5rem, 1.1rem + 2vw, 2.25rem);
+  }
   .admin-form {
     display: flex;
     flex-direction: column;

@@ -23,8 +23,10 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   return (
     <main id="content" className="admin-login" tabIndex={-1}>
       <div className="admin-login-column">
-        <BrandLogo alt={ADMIN_COPY.brand} size={48} eager className="admin-mark" />
-        <Heading level={1}>{ADMIN_COPY.login.title}</Heading>
+        <BrandLogo alt={ADMIN_COPY.brand} size={160} eager className="admin-mark" />
+        <Heading level={1} size="h2" className="admin-login-title">
+          {ADMIN_COPY.login.title}
+        </Heading>
         <LoginForm next={target} closed={adminEnv() === null} />
       </div>
     </main>
