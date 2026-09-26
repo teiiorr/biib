@@ -59,27 +59,8 @@
     border-radius: var(--surface-radius);
     corner-shape: squircle;
   }
-  /* Sinishi yoʻq dvigatellarda (iPhone Safari, Firefox, kuchsiz qurilma) chuqurlik oq nur bilan emas,
-     qalin shisha qirrasi kabi ichki soyalar bilan beriladi: yuqorida yupqa yorugʻ chiziq, pastda va
-     yonlarda qorongʻi qalinlik (egasi: telefonda oq yogʻdu emas, desktopdagidek chuqur shisha). */
-  .surface:not([data-refract="on"]) {
-    --m-caustic: calc(var(--g-rim) * 22%);
-    /* Sinish boʻlmasa qalinlik xiralik va toʻyinganlik bilan: orqadagi harakat koʻrinadi, lekin shisha
-       yupqa plyonka emas. */
-    --m-blur: calc(var(--g-blur) + 4px);
-    --material-sat: calc(var(--g-sat) + 0.3);
-    box-shadow:
-      inset 0 0 0 1px color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 24%), transparent),
-      inset 0 1px 0 0 color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 70%), transparent),
-      inset 0 10px 14px -14px
-        color-mix(in oklab, var(--m-spec) calc(var(--g-rim) * 40%), transparent),
-      inset 0 -14px 18px -14px
-        color-mix(in oklab, var(--material-shadow) calc(55% + var(--g-d) * 45%), transparent),
-      inset 12px 0 16px -16px color-mix(in oklab, var(--material-shadow) 40%, transparent),
-      inset -12px 0 16px -16px color-mix(in oklab, var(--material-shadow) 40%, transparent),
-      0 0 0 0.5px rgba(14, 23, 51, 0.12),
-      var(--shadow-floating);
-  }
+  /* Telefon va kompyuterda bir xil oyna (egasining talabi): xiralik, tus, qirra va soyalar bitta
+     qiymatlarda; farq faqat qirra sinishida — uni hozircha faqat Chromium backdrop-filter da bera oladi. */
   .surface[data-refract="on"] {
     -webkit-backdrop-filter: var(--surface-refract) blur(var(--m-blur))
       saturate(var(--material-sat)) brightness(var(--m-bright));

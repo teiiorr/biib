@@ -190,10 +190,6 @@
       opacity var(--dur-ui) var(--ease-ui),
       transform var(--dur-ui) var(--ease-ui);
   }
-  .tab-mini.material {
-    --m-tint: max(var(--g-tint-text), 0.45);
-    --m-blur: calc(var(--g-blur) + 4px);
-  }
   .tab-bar-wrap[data-minimized="true"] .tab-mini {
     opacity: 1;
     transform: translateX(-50%) scale(1);
