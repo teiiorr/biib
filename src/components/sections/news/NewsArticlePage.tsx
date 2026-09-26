@@ -1,6 +1,8 @@
 import { ViewTransition } from "react";
 
+import { Icon } from "@/components/icons/Icon";
 import { Container } from "@/components/layout/Container";
+import { SectionHeader } from "@/components/layout/SectionHeader";
 import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/motion/Reveal";
 import { TransitionLink } from "@/components/motion/TransitionLink";
@@ -12,7 +14,7 @@ import { Prose } from "@/components/ui/Prose";
 import { PullQuote } from "@/components/ui/PullQuote";
 import { Tag } from "@/components/ui/Tag";
 import { Text } from "@/components/ui/Text";
-import { getArticle, getArticleNeighbours, t } from "@/content";
+import { getArticle, getArticleNeighbours, getNews, t } from "@/content";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { fill, formatDate, readingMinutes } from "@/i18n/format";
 import type { Locale } from "@/i18n/locales";
@@ -40,6 +42,9 @@ interface NewsArticlePageProps {
 export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
   const article = getArticle(slug);
   const { previous, next } = getArticleNeighbours(slug);
+  const related = getNews()
+    .filter((item) => item.slug !== slug)
+    .slice(0, 3);
   const path = pathFor(locale, "newsItem", slug);
   const title = t(article.title, locale);
   const body = t(article.body, locale);
@@ -64,9 +69,10 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
       />
       <Section as="article" rhythm="hero" labelledBy="article-title" className="article">
         <Container grid>
-          {/* Sarlavha toʻliq konteyner kengligida: uzun yangilik nomi markazda tor ustunga siqilmaydi. */}
+          {/* Yangilik nomi — butun gap: umumiy katta sarlavha oʻlchamida ekranni egallardi. Oʻz oʻlchami
+              (44 px gacha) va 10 ustun: muqova ustida ikki tekis qator. */}
           <header
-            className="col-span-4 md:col-span-8 lg:col-span-12 article-head"
+            className="col-span-4 md:col-span-8 lg:col-span-10 lg:col-start-2 article-head"
             data-grid-item=""
           >
             <Breadcrumbs
@@ -75,7 +81,7 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
               collapseCurrent
               align="center"
             />
-            <Heading level={1} size="h1" id="article-title">
+            <Heading level={1} size="h1" id="article-title" className="article-title">
               {title}
             </Heading>
             <p className="t-small text-ink-3 tnum article-meta">
@@ -139,14 +145,22 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
           >
             <nav className="article-nav" aria-label={n.title}>
               {/* Halqa: ikkala katak doim toʻla (content/index.ts). */}
+              {/* Ikkala katak bir xil karta: kichik muqova, yoʻnalish va sarlavha. */}
               {previous ? (
                 <TransitionLink
                   href={pathFor(locale, "newsItem", previous.slug)}
                   direction={NAV_BACK}
                   className="article-nav-link"
+                  data-card=""
                 >
-                  <span className="t-micro text-ink-3">{n.previous}</span>
-                  <span className="t-label">{t(previous.title, locale)}</span>
+                  <NewsCover article={previous} ratio="1:1" locale={locale} sizes="72px" />
+                  <span className="article-nav-text">
+                    <span className="t-micro text-ink-3 article-nav-dir">
+                      <Icon name="arrow-left" size={16} />
+                      {n.previous}
+                    </span>
+                    <span className="t-label">{t(previous.title, locale)}</span>
+                  </span>
                 </TransitionLink>
               ) : (
                 <span />
@@ -155,9 +169,16 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
                 <TransitionLink
                   href={pathFor(locale, "newsItem", next.slug)}
                   className="article-nav-link article-nav-next"
+                  data-card=""
                 >
-                  <span className="t-micro text-ink-3">{n.next}</span>
-                  <span className="t-label">{t(next.title, locale)}</span>
+                  <NewsCover article={next} ratio="1:1" locale={locale} sizes="72px" />
+                  <span className="article-nav-text">
+                    <span className="t-micro text-ink-3 article-nav-dir">
+                      {n.next}
+                      <Icon name="arrow-right" size={16} />
+                    </span>
+                    <span className="t-label">{t(next.title, locale)}</span>
+                  </span>
                 </TransitionLink>
               ) : (
                 <span />
@@ -177,6 +198,45 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
           </div>
         </Container>
       </Section>
+      {related.length > 0 ? (
+        <Section labelledBy="article-related" className="article-related">
+          <Container>
+            <SectionHeader id="article-related" title={n.related} />
+            {/* Roʻyxatdagi kartalar bilan bir xil: muqova 3:2, mavzu, sarlavha; uchtasi teng. */}
+            <Reveal
+              as="div"
+              className="related-grid"
+              stagger
+              distance={16}
+              attrs={{ "data-card-group": "" }}
+            >
+              {related.map((item) => (
+                <article key={item.slug} className="news-grid-item" data-card="">
+                  <TransitionLink
+                    href={pathFor(locale, "newsItem", item.slug)}
+                    className="news-cover-link"
+                    tabIndex={-1}
+                    aria-hidden="true"
+                  >
+                    <NewsCover
+                      article={item}
+                      ratio="3:2"
+                      locale={locale}
+                      sizes="(min-width: 1440px) 416px, (min-width: 1024px) 30vw, (min-width: 600px) 45vw, 100vw"
+                    />
+                  </TransitionLink>
+                  <p className="t-micro text-ink-3 tnum news-meta">{t(item.topic, locale)}</p>
+                  <h3 className="t-h4 text-balance text-ink news-title" data-card-title="">
+                    <TransitionLink href={pathFor(locale, "newsItem", item.slug)}>
+                      {t(item.title, locale)}
+                    </TransitionLink>
+                  </h3>
+                </article>
+              ))}
+            </Reveal>
+          </Container>
+        </Section>
+      ) : null}
     </>
   );
 }

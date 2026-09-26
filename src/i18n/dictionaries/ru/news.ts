@@ -5,5 +5,6 @@ export const news: typeof source = {
   backToList: "Все новости",
   previous: "Предыдущая новость",
   next: "Следующая новость",
+  related: "Другие новости",
   empty: "Новостей пока нет.",
 };

@@ -260,20 +260,64 @@
       gap: 24px;
     }
   }
+  /* Oldingi/keyingi: ikkita teng karta — 72 px muqova, yoʻnalish va sarlavha; hoverda qirra oltin. */
   .article-nav-link {
     display: grid;
-    gap: 4px;
-    min-height: 44px;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 16px;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    background: var(--surface);
     color: var(--ink);
+    transition: border-color var(--dur-ui) var(--ease-ui);
   }
-  .article-nav-link:hover .t-label {
-    color: var(--tint);
+  .article-nav-text {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
   }
-  /* Telefonda ikkala havola chapdan: bir ustunda oʻngga tekislangan qator yolgʻiz koʻrinadi. */
+  .article-nav-dir {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  @media (hover: hover) {
+    .article-nav-link:hover {
+      border-color: var(--accent-text);
+    }
+    .article-nav-link:hover .t-label {
+      color: var(--tint);
+    }
+  }
+  /* Keyingi karta oyna aksi: muqova oʻngda, matn oʻngga tekis (telefonda ham ikkalasi bir xil tuzilish). */
   @media (min-width: 600px) {
     .article-nav-next {
+      grid-template-columns: minmax(0, 1fr) 72px;
       text-align: right;
-      justify-items: end;
+    }
+    .article-nav-next > .news-cover {
+      order: 2;
+    }
+    .article-nav-next .article-nav-dir {
+      justify-content: flex-end;
+    }
+  }
+  /* Boshqa yangiliklar: roʻyxat kartalari bilan bir xil, uchta teng ustun. */
+  .related-grid {
+    display: grid;
+    gap: 32px;
+  }
+  @media (min-width: 600px) {
+    .related-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 48px var(--gutter);
+    }
+  }
+  @media (min-width: 1024px) {
+    .related-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 }
@@ -639,4 +683,12 @@
     display: block;
     height: calc(var(--header-h) + 12px + var(--safe-top));
   }
+}
+
+/* Qatlamdan tashqarida: t-h1 utilitasidan ustun. Maqola nomi sahifa sarlavhalaridan kichik (26 → 44 px):
+   uzun gap ikki-uch muvozanatli qatorda, muqova bilan uygʻun (egasining talabi). */
+:root .article-title {
+  font-size: clamp(1.625rem, 1.2rem + 1.9vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
 }

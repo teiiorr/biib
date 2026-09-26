@@ -3,5 +3,6 @@ export const news = {
   backToList: "Barcha yangiliklar",
   previous: "Oldingi xabar",
   next: "Keyingi xabar",
+  related: "Boshqa yangiliklar",
   empty: "Hozircha yangilik yoʻq.",
 };

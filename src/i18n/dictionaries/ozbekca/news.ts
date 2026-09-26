@@ -6,5 +6,6 @@ export const news: typeof source = {
   backToList: "Barça yangiliklar",
   previous: "Oldingi xabar",
   next: "Keyingi xabar",
+  related: "Boşqa yangiliklar",
   empty: "Hozirça yangilik yöq.",
 };
