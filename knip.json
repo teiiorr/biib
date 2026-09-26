@@ -6,7 +6,7 @@
     "tests/**/*.ts"
   ],
   "project": ["src/**/*.{ts,tsx}", "scripts/**/*.{mjs,mts,ts}", "tests/**/*.ts"],
-  "ignore": [],
+  "ignore": ["src/lib/admin/database.types.ts"],
   "ignoreDependencies": ["tailwindcss"],
   "ignoreBinaries": ["ffmpeg", "ffprobe"],
   "ignoreExportsUsedInFile": true
