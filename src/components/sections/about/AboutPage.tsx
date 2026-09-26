@@ -126,7 +126,12 @@ export function AboutPage({ locale, dict }: PageProps) {
       <Section labelledBy="about-values" tone="light">
         <Container>
           <SectionHeader id="about-values" title={a.values.heading} split />
-          <Reveal as="ul" className="about-list" stagger attrs={{ "data-audit": "gap" }}>
+          <Reveal
+            as="ul"
+            className="about-list"
+            stagger
+            attrs={{ "data-audit": "gap", "data-columns": "3" }}
+          >
             {a.values.items.map((item, index) => (
               <li key={item} className="about-list-item feature t-h4 text-ink">
                 <FeatureIcon name={DIRECTION_ICONS[index % DIRECTION_ICONS.length] ?? "star"} />
@@ -146,7 +151,7 @@ export function AboutPage({ locale, dict }: PageProps) {
             attrs={{ "data-audit": "gap", "data-columns": "3" }}
           >
             {a.tasks.items.map((item, index) => (
-              <li key={item} className="about-list-item feature t-body text-ink">
+              <li key={item} className="about-list-item feature t-h4 text-ink">
                 <FeatureIcon name={TASK_ICONS[index % TASK_ICONS.length] ?? "star"} />
                 <span>{item}</span>
               </li>

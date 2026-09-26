@@ -31,12 +31,12 @@ export const about: typeof source = {
   tasks: {
     heading: "Asosiy vazifalar",
     items: [
-      "Bolalar uçun multfilmlar, audiohikoyalar, ertaklar, qöşiqlar, adabiy va raqamli mahsulotlar yaratilişiga kömaklaşiş",
-      "Barça hududlardan, ayniqsa çekka tumanlardan iqtidorli bolalar va ösmirlarni izlab topiş",
-      "«Mahalla – tuman – viloyat – respublika» zanjirida körik-tanlovlar va festivallar ötkaziş",
-      "Tajribali ijodkor va pedagoglarning mahorat darslarini, tanlovlarga tayyorlov kurslarini taşkil etiş",
-      "Özbekiston bolalari asarlarini nufuzli xalqaro festival va tanlovlarda namoyiş etiş",
-      "Nogironligi bölgan bolalar uçun inklyuziv ijodiy ustaxonalar yaratişga kömaklaşiş",
+      "Bolalar uçun milliy kontent",
+      "Iqtidorlarni izlab topiş",
+      "Hududiy körik-tanlovlar",
+      "Mahorat darslari",
+      "Xalqaro festivallar",
+      "Inklyuziv ijodiy ustaxonalar",
     ],
   },
   history: {

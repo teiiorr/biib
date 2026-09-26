@@ -1,54 +1,130 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
-import { Surface } from "@/components/glass/Surface";
-import { Icon } from "@/components/icons/Icon";
-import { useInViewPlayback } from "@/components/media/useInViewPlayback";
-import { VideoSourceList } from "@/components/media/VideoSourceList";
+import { useMotionPrefs } from "@/components/motion/motion-context";
 import { useHeroScene } from "@/components/motion/useHeroScene";
-import { HERO_LOCK_AT, HERO_LOGO_BOX, HERO_MEDIA, HERO_PORTRAIT_MEDIA } from "@/content/brand";
+import {
+  HERO_LOCK_AT,
+  HERO_LOGO_BOX,
+  HERO_MEDIA,
+  HERO_PORTRAIT_MEDIA,
+  HERO_SCRUB_DURATION,
+} from "@/content/brand";
 import { useMediaQuery } from "@/lib/appearance/media";
-import { cx } from "@/lib/cx";
 import { HERO_FOCUS_Y, coverRect, heroMediaBox, logoRect } from "@/lib/motion/cover";
+import { motionAllowed } from "@/lib/motion/prefs";
 import { notifyHeroReady } from "@/lib/motion/refresh";
 
 import type { ArtProps } from "../registry";
 
+/* Kadr shu farqdan kichik boʻlsa qayta sakralmaydi (24 kadr/s da yarim kadr). */
+const SEEK_EPSILON = 1 / 48;
+
+interface Seeker {
+  /** Video elementi effektda ulanadi (render paytida ref oʻqilmaydi). */
+  readonly attach: (video: HTMLVideoElement | null) => void;
+  /** Eng soʻnggi nishon (s): sakrash tugagach aynan shu qoʻllanadi. */
+  readonly target: () => number;
+  readonly set: (time: number) => void;
+  readonly kick: () => void;
+  readonly stop: () => void;
+}
+
+/* Sakrash rAF bilan: oldingi sakrash tugamaguncha yangisi berilmaydi, faqat oxirgi nishon qoʻllanadi —
+   kadr silliq, navbat toʻplanmaydi. */
+function createSeeker(): Seeker {
+  let target = 0;
+  let frame = 0;
+  let video: HTMLVideoElement | null = null;
+  const step = (): void => {
+    frame = 0;
+    const el = video;
+    if (!el || el.readyState < 1) return;
+    if (!el.seeking && Math.abs(el.currentTime - target) > SEEK_EPSILON) el.currentTime = target;
+    if (el.seeking || Math.abs(el.currentTime - target) > SEEK_EPSILON) {
+      frame = requestAnimationFrame(step);
+    }
+  };
+  const kick = (): void => {
+    if (!frame) frame = requestAnimationFrame(step);
+  };
+  return {
+    attach: (el) => {
+      video = el;
+    },
+    target: () => target,
+    set: (time) => {
+      target = time;
+      kick();
+    },
+    kick,
+    stop: () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
+    },
+  };
+}
+
 /**
- * Qahramon videosi: egasining animatsiyasi server posteri ustida sezilmay boshlanadi (poster = 0-kadr),
- * bir marta ijro etiladi va oxirgi kadrda — yigʻilgan belgida — turadi (halqa choki yoʻq, sakramaydi).
- * Belgi yigʻilgan lahzada (HERO_LOCK_AT) sarlavha oltin chaqnaydi; foydalanuvchi video tugamasdan
- * skroll qilsa, video tezlashib belgigacha yetadi va sahna belgini sarlavhaga olib boradi. Kamaytirilgan
- * harakat, Harakat = off va trafik tejashda — oxirgi kadr posteri (home.css). Chunk boʻsh vaqtda yuklanadi.
+ * Qahramon videosi oʻynamaydi: skroll uni kadrma-kadr oldinga suradi (egasining talabi). Oltin kitob
+ * (poster = birinchi kadr) → bolalar → doira → belgi; belgi yigʻilgan lahzada (HERO_LOCK_AT) sarlavha
+ * oltin chaqnaydi, keyin sahna belgini sarlavhaga olib boradi (useHeroScene). Kamaytirilgan harakat va
+ * Harakat = off da video yuklanmaydi, oxirgi kadr posteri turadi.
  */
 export default function HeroVideo({ copy }: ArtProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const layerRef = useRef<HTMLDivElement | null>(null);
   const sceneRef = useRef<HTMLElement | null>(null);
-  const loadedRef = useRef<string | null>(null);
-  const [controlHost, setControlHost] = useState<HTMLElement | null>(null);
+  const heroRef = useRef<HTMLElement | null>(null);
+  const [seeker] = useState(createSeeker);
+  const prefs = useMotionPrefs();
+  const allowed = prefs.ready && motionAllowed(prefs);
   const portrait = useMediaQuery(HERO_PORTRAIT_MEDIA);
   const orientation = portrait ? "portrait" : "landscape";
   const media = HERO_MEDIA[orientation];
-  const { allowed, inView, paused, finished, toggle } = useInViewPlayback(videoRef, {
-    once: true,
-  });
 
-  // Sahna oʻrami va boshqaruv uyasi ota (server) DOM da; layout effekt: useHeroScene shu kadrda oʻqiydi.
+  // Sahna oʻrami ota (server) DOM da; layout effekt: useHeroScene shu kadrda oʻqiydi.
   useLayoutEffect(() => {
     const layer = layerRef.current;
     if (!layer) return;
     sceneRef.current = layer.closest<HTMLElement>("[data-hero-scene]");
-    const host = sceneRef.current?.querySelector<HTMLElement>("[data-hero-control]") ?? null;
-    queueMicrotask(() => setControlHost(host));
+    heroRef.current = sceneRef.current?.querySelector<HTMLElement>("[data-hero]") ?? null;
   }, []);
 
-  useHeroScene(sceneRef, { logoBox: HERO_LOGO_BOX[orientation], media });
+  /* Sahna 0–1 ulushni beradi: vaqtga aylantiriladi, belgi yigʻilishi sarlavhaga bildiriladi. */
+  const onScrub = useCallback(
+    (share: number): void => {
+      const video = videoRef.current;
+      const duration =
+        video && Number.isFinite(video.duration) && video.duration > 0
+          ? video.duration
+          : HERO_SCRUB_DURATION;
+      /* Oxirgi kadrdan biroz oldin: «ended» holatiga oʻtib, keyingi sakrashda qotib qolmasin. */
+      const time = Math.min(duration - 0.05, Math.max(0, share * duration));
+      const hero = heroRef.current;
+      if (hero) {
+        if (time >= HERO_LOCK_AT) hero.dataset.lock = "";
+        else delete hero.dataset.lock;
+        /* Video hali kelmagan boʻlsa (sekin tarmoq, quvvat tejash) oxirgi kadr posteri ulushga qarab chiqadi. */
+        hero.style.setProperty(
+          "--hero-end-mix",
+          Math.min(1, Math.max(0, share * 2 - 1)).toFixed(3),
+        );
+      }
+      seeker.set(time);
+    },
+    [seeker],
+  );
+
+  useHeroScene(sceneRef, {
+    logoBox: HERO_LOGO_BOX[orientation],
+    media,
+    onScrub,
+  });
 
   useEffect(() => {
-    const hero = sceneRef.current?.querySelector<HTMLElement>("[data-hero]");
+    const hero = heroRef.current;
     if (!hero) return;
     /* Kadrdagi belgining oʻrni: sahna ustidagi belgi va parda shu oʻlchamlar bilan joylashadi. */
     const write = (): void => {
@@ -66,74 +142,46 @@ export default function HeroVideo({ copy }: ArtProps) {
     return () => observer.disconnect();
   }, [media, orientation]);
 
+  /* Manba qoʻyilgach video yuklanadi. iOS toʻxtab turgan videoni oʻzi yuklamaydi: bir lahza ijro va
+     toʻxtatish buferni ochadi. Video poster ustiga faqat nishon kadri chizilgach chiqadi (seeked): aks
+     holda ijro paytidagi eski kadr bir lahza koʻrinib qolardi. Ijro taqiqlansa (quvvat tejash) ham
+     sakrab koʻriladi; kadr kelmasa poster va oxirgi kadr posteri qoladi. */
   useEffect(() => {
     const video = videoRef.current;
     const layer = layerRef.current;
     if (!video || !layer || !allowed) return;
-    // Yoʻnalish almashganda manba almashadi: video qayta yuklanadi, poster yana koʻrinadi.
-    if (loadedRef.current !== null && loadedRef.current !== media.mp4) {
-      delete layer.dataset.ready;
-      video.load();
-      if (inView && !paused) void video.play().catch(() => undefined);
-    }
-    loadedRef.current = media.mp4;
-  }, [media, allowed, inView, paused]);
-
-  // Belgi yigʻilishi: sarlavha chaqnashi (data-lock) va erta skrollda tezlashish.
-  useEffect(() => {
-    const video = videoRef.current;
-    const hero = sceneRef.current?.querySelector<HTMLElement>("[data-hero]");
-    if (!video || !hero || !allowed) return;
-    const lock = (): void => {
-      if (video.currentTime >= HERO_LOCK_AT || video.ended) hero.dataset.lock = "";
+    seeker.attach(video);
+    delete layer.dataset.ready;
+    let revealed = false;
+    const reveal = (): void => {
+      if (revealed) return;
+      revealed = true;
+      layer.dataset.ready = "true";
+      notifyHeroReady();
+      seeker.kick();
     };
-    const restart = (): void => {
-      if (video.currentTime < HERO_LOCK_AT) delete hero.dataset.lock;
-      if (video.currentTime < 0.5) video.playbackRate = 1;
+    const showTarget = (): void => {
+      video.addEventListener("seeked", reveal, { once: true });
+      video.currentTime = seeker.target();
     };
-    // Belgi hali yigʻilmagan paytda skroll boshlansa: qolgan qismi uch baravar tez, sahna belgini oladi.
-    const hurry = (): void => {
-      if (window.scrollY > 24 && !video.ended && video.currentTime < HERO_LOCK_AT) {
-        video.playbackRate = 3;
-      }
+    const prime = (): void => {
+      void video
+        .play()
+        .then(() => {
+          video.pause();
+          showTarget();
+        })
+        .catch(showTarget);
     };
-    video.addEventListener("timeupdate", lock);
-    video.addEventListener("ended", lock);
-    video.addEventListener("play", restart);
-    window.addEventListener("scroll", hurry, { passive: true });
+    video.addEventListener("loadedmetadata", prime, { once: true });
+    video.load();
     return () => {
-      video.removeEventListener("timeupdate", lock);
-      video.removeEventListener("ended", lock);
-      video.removeEventListener("play", restart);
-      window.removeEventListener("scroll", hurry);
+      video.removeEventListener("loadedmetadata", prime);
+      video.removeEventListener("seeked", reveal);
+      seeker.stop();
+      seeker.attach(null);
     };
-  }, [allowed]);
-
-  const onPlaying = (): void => {
-    const layer = layerRef.current;
-    if (!layer || layer.dataset.ready === "true") return;
-    layer.dataset.ready = "true";
-    notifyHeroReady();
-  };
-
-  const control = allowed ? (
-    <Surface
-      as="button"
-      type="button"
-      radius="control"
-      padding={0}
-      text
-      className="hero-loop-control"
-      onClick={toggle}
-      aria-label={(paused || finished ? copy?.playLabel : copy?.pauseLabel) ?? ""}
-    >
-      <Icon
-        name={paused || finished ? "play" : "pause"}
-        size={20}
-        className={cx((paused || finished) && "icon-play")}
-      />
-    </Surface>
-  ) : null;
+  }, [allowed, media, seeker]);
 
   return (
     <div
@@ -141,7 +189,7 @@ export default function HeroVideo({ copy }: ArtProps) {
       className="hero-loop"
       data-hero-media=""
       data-chunk="hero-video"
-      data-state={allowed ? (finished ? "ended" : paused ? "paused" : "playing") : "still"}
+      data-state={allowed ? "scrub" : "still"}
     >
       <video
         ref={videoRef}
@@ -149,14 +197,12 @@ export default function HeroVideo({ copy }: ArtProps) {
         muted
         playsInline
         disablePictureInPicture
-        preload="none"
+        preload="auto"
         aria-label={copy?.videoAlt}
-        onPlaying={onPlaying}
       >
-        {allowed ? <VideoSourceList sources={media} /> : null}
+        {allowed ? <source src={media.mp4} type="video/mp4" /> : null}
       </video>
       <span className="hero-loop-veil" data-hero-veil="" aria-hidden="true" />
-      {controlHost && control ? createPortal(control, controlHost) : null}
     </div>
   );
 }

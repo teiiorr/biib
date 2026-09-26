@@ -78,11 +78,20 @@
       grid-auto-columns: minmax(0, 1fr);
     }
   }
-  /* Vazifalar: jumlalar uzun, kompyuterda uch ustun (ikki qator), bitta qatorga siqilmaydi. */
+  /* Yoʻnalishlar va vazifalar: har band bir qatorda (egasining talabi: qoʻshni bandlar bir balandlikda).
+     Planshetda bitta ustun, 1024 dan ikki, 1280 dan uch ustun — eng uzun (kirillcha) nom ham sigʻadi. */
+  .about-list[data-columns="3"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
   @media (min-width: 1024px) {
     .about-list[data-columns="3"] {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       grid-auto-flow: row;
+    }
+  }
+  @media (min-width: 1280px) {
+    .about-list[data-columns="3"] {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
   .history-body {

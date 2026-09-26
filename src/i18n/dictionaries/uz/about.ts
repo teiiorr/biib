@@ -1,5 +1,6 @@
 /* Maqsad, yoʻnalishlar va vazifalar birlashma ustavidan (2026, Adliya vazirligida roʻyxatdan oʻtgan):
-   1.1, 1.3, 2.1, 2.2 va 6.10-bandlar. Matn qisqartirilgan, maʼnosi oʻzgartirilmagan. */
+   1.1, 1.3, 2.1, 2.2 va 6.10-bandlar. Vazifalar 2.2-banddan qisqa nom boʻlib olingan: har band bir
+   qatorda, belgi bilan bir chiziqda (egasining talabi). */
 export const about = {
   title: "Biz haqimizda",
   mission: {
@@ -31,12 +32,12 @@ export const about = {
   tasks: {
     heading: "Asosiy vazifalar",
     items: [
-      "Bolalar uchun multfilmlar, audiohikoyalar, ertaklar, qoʻshiqlar, adabiy va raqamli mahsulotlar yaratilishiga koʻmaklashish",
-      "Barcha hududlardan, ayniqsa chekka tumanlardan iqtidorli bolalar va oʻsmirlarni izlab topish",
-      "«Mahalla – tuman – viloyat – respublika» zanjirida koʻrik-tanlovlar va festivallar oʻtkazish",
-      "Tajribali ijodkor va pedagoglarning mahorat darslarini, tanlovlarga tayyorlov kurslarini tashkil etish",
-      "Oʻzbekiston bolalari asarlarini nufuzli xalqaro festival va tanlovlarda namoyish etish",
-      "Nogironligi boʻlgan bolalar uchun inklyuziv ijodiy ustaxonalar yaratishga koʻmaklashish",
+      "Bolalar uchun milliy kontent",
+      "Iqtidorlarni izlab topish",
+      "Hududiy koʻrik-tanlovlar",
+      "Mahorat darslari",
+      "Xalqaro festivallar",
+      "Inklyuziv ijodiy ustaxonalar",
     ],
   },
   history: {

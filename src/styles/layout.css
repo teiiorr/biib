@@ -410,6 +410,20 @@
     justify-content: flex-end;
     gap: 12px;
   }
+  /* Boʻlim oxiridagi «barchasi» havolasi: kartalar ostida, oʻng chetda. */
+  .section-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+  }
+  .section-footer > .ui-button[data-variant="ghost"]:last-child {
+    margin-inline-end: calc(4px - var(--btn-px));
+  }
+  @media (min-width: 1024px) {
+    .section-footer {
+      margin-top: 32px;
+    }
+  }
   /* Ghost tugma yozuvi kontent chetiga tekislanadi: ichki chekka optik jihatdan qoplanadi. */
   .section-header-actions > .ui-button[data-variant="ghost"]:last-child {
     margin-inline-end: calc(4px - var(--btn-px));
@@ -458,7 +472,7 @@
         [data-brand-mark] {
         animation: brand-dock linear both;
         animation-timeline: scroll(root);
-        animation-range: 0px calc(100svh * var(--hero-scene-length));
+        animation-range: 0px calc(100svh * (var(--hero-scrub-length) + var(--hero-scene-length)));
       }
     }
   }
@@ -467,29 +481,30 @@
       :root:not([data-motion="off"]):not([data-hero-scene]) body:has(.home-hero-scene) .top-bar {
         animation: top-bar-dock linear both;
         animation-timeline: scroll(root);
-        animation-range: 0px calc(100svh * var(--hero-scene-length));
+        animation-range: 0px calc(100svh * (var(--hero-scrub-length) + var(--hero-scene-length)));
       }
     }
   }
   @keyframes top-bar-dock {
     0%,
-    72% {
+    86% {
       clip-path: inset(
         0px -32px 0px calc(100% - var(--top-bar-group-w, 148px)) round var(--surface-radius) 0px 0px
           var(--surface-radius)
       );
     }
-    80%,
+    90%,
     100% {
       clip-path: inset(-32px -32px -32px -32px round 0px 0px 0px 0px);
     }
   }
+  /* Belgi yoʻlning oxirida qoʻnadi: video qismi (≈ 55 %) va uchishning 72–80 % i (useHeroScene dockAt). */
   @keyframes brand-dock {
     0%,
-    72% {
+    86% {
       opacity: 0;
     }
-    80%,
+    90%,
     100% {
       opacity: 1;
     }

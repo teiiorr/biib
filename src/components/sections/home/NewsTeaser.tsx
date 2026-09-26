@@ -35,22 +35,7 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
   return (
     <Section labelledBy="home-news" tone="light" className="news-section">
       <Container>
-        <SectionHeader
-          id="home-news"
-          title={h.heading}
-          split
-          actions={
-            <LinkButton
-              href={pathFor(locale, "news")}
-              variant="ghost"
-              size="40"
-              icon="arrow-right"
-              iconPosition="end"
-            >
-              {h.all}
-            </LinkButton>
-          }
-        />
+        <SectionHeader id="home-news" title={h.heading} split />
         <div className="news-teaser" data-card-group="">
           <article className="news-lead" data-card="">
             <TransitionLink
@@ -120,6 +105,18 @@ export function NewsTeaser({ locale, dict }: NewsTeaserProps) {
               </article>
             ))}
           </Reveal>
+        </div>
+        {/* «Barchasi» havolasi kartalar ostida, oʻng chetda (egasining talabi): avval koʻrasiz, keyin oʻtasiz. */}
+        <div className="section-footer">
+          <LinkButton
+            href={pathFor(locale, "news")}
+            variant="ghost"
+            size="40"
+            icon="arrow-right"
+            iconPosition="end"
+          >
+            {h.all}
+          </LinkButton>
         </div>
       </Container>
     </Section>

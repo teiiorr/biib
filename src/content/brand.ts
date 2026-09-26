@@ -4,7 +4,6 @@
  * uning ustida sezilmay boshlanadi), end = oxirgi kadr (harakat oʻchiq yoki video hali kelmagan).
  */
 export interface HeroMediaVariant {
-  readonly webm: string;
   readonly mp4: string;
   readonly poster: string;
   readonly end: string;
@@ -12,27 +11,29 @@ export interface HeroMediaVariant {
   readonly height: number;
 }
 
+/* Skroll bilan boshqariladigan video (scripts/hero-video.mts): H.264, zich kalit kadrlar. */
 export const HERO_MEDIA = {
   landscape: {
-    webm: "/media/hero-d.webm",
-    mp4: "/media/hero-d.mp4",
-    poster: "/media/hero-d-poster.avif",
-    end: "/media/hero-d-end.avif",
+    mp4: "/media/hero-scrub-d.mp4",
+    poster: "/media/hero-scrub-d-poster.avif",
+    end: "/media/hero-scrub-d-end.avif",
     width: 1920,
     height: 1080,
   },
   portrait: {
-    webm: "/media/hero-m.webm",
-    mp4: "/media/hero-m.mp4",
-    poster: "/media/hero-m-poster.avif",
-    end: "/media/hero-m-end.avif",
-    width: 1080,
-    height: 1920,
+    mp4: "/media/hero-scrub-m.mp4",
+    poster: "/media/hero-scrub-m-poster.avif",
+    end: "/media/hero-scrub-m-end.avif",
+    width: 720,
+    height: 1280,
   },
 } as const satisfies Record<"landscape" | "portrait", HeroMediaVariant>;
 
-/** Belgi toʻliq yigʻilgan lahza (s): sarlavha shu paytda oltin chaqnaydi. */
-export const HERO_LOCK_AT = 7.8;
+/** Qirqilgan videoning uzunligi (s): metamaʼlumot kelguncha skroll shu bilan hisoblanadi. */
+export const HERO_SCRUB_DURATION = 8.04;
+
+/** Belgi toʻliq yigʻilgan lahza (s, qirqilgan videoda): sarlavha shu paytda oltin chaqnaydi. */
+export const HERO_LOCK_AT = 5.8;
 
 /**
  * Tik telefon va planshetlar 9:16 nusxani oladi: 16:9 kadr tik ekranda kengligining 60 % ini

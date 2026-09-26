@@ -3,23 +3,35 @@
      SectionHeader da (layout.css .section-header). */
 
   /* Darvoza: egasining videosi, belgi kadr markazida; nom markazda, harakatlar uning ostida oʻngda. */
-  /* Sahna uzunligi viewportga nisbatan: kompyuter 0.8, telefon 0.6 (missiya endi bitta kamtar jumla,
-     uzun xira ekran kerak emas); harakat yoʻq va past/tor ekranda 0. */
+  /* Sahna uzunligi viewportga nisbatan. Video skroll qismi (--hero-scrub-length): kompyuter 1.0,
+     telefon 0.8 — qahramon yopishgan, ustiga hech narsa chiqmaydi. Uchish qismi (--hero-scene-length):
+     kompyuter 0.8, telefon 0.6, missiya ustidan koʻtariladi. Harakat yoʻq va past/tor ekranda ikkalasi 0. */
   :root {
+    --hero-scrub-length: 0.8;
     --hero-scene-length: 0.6;
   }
   @media (min-width: 1024px) {
     :root {
+      --hero-scrub-length: 1;
       --hero-scene-length: 0.8;
     }
   }
   @media (prefers-reduced-motion: reduce), (max-height: 520px), (max-width: 359px) {
     :root {
+      --hero-scrub-length: 0;
       --hero-scene-length: 0;
     }
   }
   :root[data-motion="off"] {
+    --hero-scrub-length: 0;
     --hero-scene-length: 0;
+  }
+  .home-hero-scrub {
+    height: calc(100svh * var(--hero-scrub-length));
+  }
+  /* Sahna geometriya sababli oʻchsa (useHeroScene, data-hero-static) skroll qismi ham yoʻqoladi. */
+  :root[data-hero-static] .home-hero-scrub {
+    height: 0;
   }
   /* Oʻram sarlavha ostiga kiradi (main ning yuqori boʻshligʻi shu yerda qaytariladi); balandligi skroll yoʻli. */
   .home-hero-scene {
@@ -99,9 +111,14 @@
     transition: opacity 600ms var(--ease-out);
   }
   :root[data-motion="off"] .home-hero-picture-end,
-  .home-hero:has(.hero-loop:is([data-state="still"], [data-state="paused"]:not([data-ready])))
-    .home-hero-picture-end {
+  .home-hero:has(.hero-loop[data-state="still"]) .home-hero-picture-end {
     opacity: 1;
+  }
+  /* Video hali kelmagan (sekin tarmoq, quvvat tejash): skroll ulushiga qarab oxirgi kadr posteri chiqadi,
+     sahna belgisiz qolmaydi (HeroVideo --hero-end-mix). */
+  .home-hero:has(.hero-loop[data-state="scrub"]:not([data-ready])) .home-hero-picture-end {
+    opacity: var(--hero-end-mix, 0);
+    transition: none;
   }
   @media (prefers-reduced-motion: reduce) {
     .home-hero-picture-end {
@@ -158,25 +175,6 @@
     gap: 12px;
     margin-top: 24px;
   }
-  /* Halqa boshqaruvi uyasi: video kelguncha boʻsh, joy olmaydi. */
-  .home-hero-control {
-    display: inline-flex;
-  }
-  .home-hero-control:empty {
-    display: none;
-  }
-  /* 44 px oyna tugmasi harakatlar qatorida (matnli tint chegarasi bilan), hech narsa ustida turmaydi. */
-  .hero-loop-control {
-    width: var(--hit-min);
-    height: var(--hit-min);
-    display: grid;
-    place-items: center;
-    cursor: pointer;
-    transition: scale 200ms var(--ease-ui);
-  }
-  .hero-loop-control:active {
-    scale: 0.97;
-  }
   /* Telefonda 48 px (Art. IX.1 juftligi: yorliq 16). Ikki harakat va halqa boshqaruvi bitta qatorda:
      qahramon bir ekranga sigʻadi (aks holda sahna — belgining sarlavhaga uchishi — telefonda ishlamasdi)
      va tugmalar tab-bar ostida qolmaydi. Sigʻmasa (320 px) qator oʻz-oʻzidan ikkiga boʻlinadi. */
@@ -192,15 +190,11 @@
       flex: 1 1 auto;
     }
   }
-  /* 320–374 px: uchta element bir qatorga sigʻmaydi (kirillcha «Биз ҳақимизда» 360 px da ham). Halqa boshqaruvi yashiriladi (video bir marta
-     oʻynaydi, toʻxtatish Koʻrinish panelidagi Harakat kaliti bilan qoladi — 2.2.2), ikki tugma bir qatorda
-     qoladi va tab-bar ostiga tushmaydi. */
+  /* 320–374 px: ikki tugma bir qatorga sigʻishi uchun ichki chekka bir qadam kichik. */
+
   @media (max-width: 374px) {
     .home-hero-actions .ui-button[data-size="56"] {
       --btn-px: 12px;
-    }
-    .home-hero-control {
-      display: none;
     }
   }
   /* Past telefonlar (SE, mini): oraliqlar bir qadam qisqa, qahramon baribir bir ekranda. */

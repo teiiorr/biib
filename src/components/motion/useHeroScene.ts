@@ -17,6 +17,11 @@ export interface HeroSceneOptions {
   readonly logoBox: LogoBox;
   /** Media kadri (px): cover hisobi uchun. */
   readonly media: { readonly width: number; readonly height: number };
+  /**
+   * Skroll boshqaradigan video: sahnaning birinchi qismi (--hero-scrub-length) shu chaqiruvga 0–1
+   * ulushni beradi, qolgan qismi belgini sarlavhaga olib boradi.
+   */
+  readonly onScrub?: (share: number) => void;
 }
 
 export interface HeroScene {
@@ -44,10 +49,17 @@ function cssSceneLength(wrapper: HTMLElement, fallback: number): number {
   return Number.isFinite(raw) ? raw : fallback;
 }
 
+/** Video skroll qismi (ekran balandligi ulushida, home.css --hero-scrub-length). */
+function cssScrubLength(wrapper: HTMLElement): number {
+  const raw = parseFloat(getComputedStyle(wrapper).getPropertyValue("--hero-scrub-length"));
+  return Number.isFinite(raw) && raw > 0 ? raw : 0;
+}
+
 /**
- * hero-scene: yopishqoq qahramon ustida skrablangan sahna (scrub 0.8, pin yoʻq). Kadr belgiga
- * yaqinlashadi va xiralashadi, matn koʻtarilib ketadi, belgi kadrdan chiqib sarlavhadagi
- * belgiga qoʻnadi. Qiymatlar funksiya: refresh da qayta hisoblanadi (Flip emas, D-M2).
+ * hero-scene: yopishqoq qahramon ustida skrablangan sahna (scrub 0.8, pin yoʻq). Avval skroll videoni
+ * kadrma-kadr suradi (belgi yigʻiladi), keyin kadr belgiga yaqinlashadi va xiralashadi, matn koʻtarilib
+ * ketadi, belgi kadrdan chiqib sarlavhadagi belgiga qoʻnadi. Qiymatlar funksiya: refresh da qayta
+ * hisoblanadi (Flip emas, D-M2).
  */
 export function useHeroScene(
   scope: RefObject<HTMLElement | null>,
@@ -63,6 +75,7 @@ export function useHeroScene(
   useEngineEffect(
     scope,
     ({ gsap, ScrollTrigger }) => {
+      const onScrub = options.onScrub;
       const wrapper = scope.current;
       if (!wrapper || !allowed) return;
       const hero = wrapper.querySelector<HTMLElement>("[data-hero]");
@@ -97,6 +110,7 @@ export function useHeroScene(
         else delete html.dataset.brandAway;
       };
       const settle = (): void => {
+        onScrub?.(1);
         progress.current = 1;
         hero.style.setProperty("--scene-progress", "1");
         setAway(false);
@@ -149,25 +163,47 @@ export function useHeroScene(
         return t && r.size > 0 ? t.width / r.size : 0.2;
       };
 
+      /* Video qismi butun yoʻlning shu ulushi: qolgani belgining uchishi (ichki vaqt chizigʻi). */
+      const scrubLength = onScrub ? cssScrubLength(wrapper) : 0;
+      const sceneLength = cssSceneLength(wrapper, fallbackLength);
+      const share = scrubLength > 0 ? scrubLength / (scrubLength + sceneLength) : 0;
+      /* Belgining uchish qismidagi nuqta butun sahna progressida qayerda. */
+      const dockAt = (x: number): number => share + x * (1 - share);
       const tl = gsap.timeline({ paused: true, defaults: { ease: "none" } });
+      /* Video ulushi vaqt chizigʻining umumiy progressidan olinadi, alohida tween dan emas: refresh
+         (invalidateOnRefresh) ichki tweenlarni boshlangʻich qiymatga qaytaradi, umumiy progress esa
+         oʻzgarmaydi — video hech qachon boshiga sakrab ketmaydi. */
+      const scrubShare = (p: number): number => (share > 0 ? Math.min(1, p / share) : 1);
+      if (share > 0 && onScrub) {
+        tl.eventCallback("onUpdate", () => onScrub(scrubShare(tl.progress())));
+      }
+      const dock = gsap.timeline({ defaults: { ease: "none" } });
       if (media.length)
-        tl.fromTo(media, { scale: 1 }, { scale: 1.12, transformOrigin: "50% 42%", duration: 1 }, 0);
-      if (dim) tl.fromTo(dim, { opacity: 0 }, { opacity: 0.72, duration: 0.7 }, 0);
+        dock.fromTo(
+          media,
+          { scale: 1 },
+          { scale: 1.12, transformOrigin: "50% 42%", duration: 1 },
+          0,
+        );
+      if (dim) dock.fromTo(dim, { opacity: 0 }, { opacity: 0.72, duration: 0.7 }, 0);
       if (content)
-        tl.fromTo(content, { y: 0, autoAlpha: 1 }, { y: -48, autoAlpha: 0, duration: 0.45 }, 0.1);
+        dock.fromTo(content, { y: 0, autoAlpha: 1 }, { y: -48, autoAlpha: 0, duration: 0.45 }, 0.1);
       // Parda kadrdagi doirani belgi koʻchishidan oldin yopadi: sahna oxirida ikkita belgi koʻrinmaydi.
-      if (veil) tl.fromTo(veil, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.1 }, 0.08);
+      if (veil) dock.fromTo(veil, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.1 }, 0.08);
       if (logo) {
-        tl.fromTo(
+        dock.fromTo(
           logo,
           { autoAlpha: 0, x: 0, y: 0, scale: 1 },
           { autoAlpha: 1, duration: 0.1 },
           0.05,
         );
-        tl.to(logo, { x: dx, y: dy, scale: scaleTo, duration: 0.6 }, 0.15);
-        tl.to(logo, { autoAlpha: 0, duration: 0.08 }, 0.72);
+        dock.to(logo, { x: dx, y: dy, scale: scaleTo, duration: 0.6 }, 0.15);
+        dock.to(logo, { autoAlpha: 0, duration: 0.08 }, 0.72);
       }
-      if (mark) tl.fromTo(mark, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.08 }, 0.72);
+      if (mark) dock.fromTo(mark, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.08 }, 0.72);
+
+      /* Uchish qismi sahnaning qolgan ulushiga siqiladi (video yoʻq boʻlsa butun sahna). */
+      tl.add(dock.timeScale(1 / (1 - share)), share);
 
       setAway(true);
       let enabled = true;
@@ -191,7 +227,7 @@ export function useHeroScene(
         onUpdate: (self) => {
           progress.current = self.progress;
           hero.style.setProperty("--scene-progress", self.progress.toFixed(3));
-          setAway(self.progress < 0.76);
+          setAway(self.progress < dockAt(0.76));
         },
         onRefresh: () => {
           checkGeometry();
@@ -213,7 +249,7 @@ export function useHeroScene(
              tenglashadi, aks holda sarlavhadagi belgi yashirin qolib ketardi. */
           tl.progress(reachedAt);
           progress.current = reachedAt;
-          setAway(reachedAt < 0.76);
+          setAway(reachedAt < dockAt(0.76));
           if (geometryOff) {
             tl.progress(0);
             settle();
@@ -232,10 +268,13 @@ export function useHeroScene(
           : start + wrapper.offsetHeight - window.innerHeight;
         const raw = (window.scrollY - start) / Math.max(1, end - start);
         const p = Math.min(1, Math.max(0, Number.isFinite(raw) ? raw : 0));
-        tl.progress(p);
+        /* Bir xil progressga qayta qoʻyish chizilmaydi: avval jim holda 0 ga, keyin p ga — hamma tween
+           shu nuqtada qayta chiziladi (refresh ularni boshlangʻich holatga qaytargan boʻlishi mumkin). */
+        tl.progress(0, true).progress(p);
+        onScrub?.(scrubShare(p));
         progress.current = p;
         hero.style.setProperty("--scene-progress", p.toFixed(3));
-        setAway(p < 0.76);
+        setAway(p < dockAt(0.76));
       };
       /* Refresh vaqt chizigʻini qayta chizadi (invalidateOnRefresh): oʻchiq sahnada belgi yana
          yashirinib qolmasin — yakuniy holat har tekshiruvdan keyin qayta qoʻyiladi. */
@@ -248,6 +287,13 @@ export function useHeroScene(
           settle();
         }
       }
+      /* Refresh tugagach (shriftlar, video tayyor) holat haqiqiy skroll joyiga tenglashadi: brauzer skroll
+         joyini sahna qurilgandan keyin tiklasa ham (Safari, qayta yuklash) video toʻgʻri kadrda. Refresh
+         paytida emas — oʻlchash vaqtida skroll vaqtincha 0 boʻladi. */
+      const onRefreshed = (): void => {
+        if (enabled && !geometryOff) syncToScroll();
+      };
+      ScrollTrigger.addEventListener("refresh", onRefreshed);
       setStatic(geometryOff);
       if (geometryOff) apply();
       else syncToScroll();
@@ -275,6 +321,7 @@ export function useHeroScene(
       });
 
       return () => {
+        ScrollTrigger.removeEventListener("refresh", onRefreshed);
         heroResize.disconnect();
         unregister();
         trigger.kill();
@@ -282,7 +329,7 @@ export function useHeroScene(
         release();
       };
     },
-    [allowed, options.logoBox, options.media, maxLength, fallbackLength],
+    [allowed, options.logoBox, options.media, options.onScrub, maxLength, fallbackLength],
   );
 
   return { progress };

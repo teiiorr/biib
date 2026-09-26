@@ -6,6 +6,9 @@ import { playTap, preloadTap, primeAudio } from "./synth";
 
 /* Ovoz shu yerda yoqilishi mumkin: kontekst hozir, bosish ichida ochiladi. */
 const SOUND_CONTROLS = "[role=switch],.appearance-panel";
+/* Egasining talabi: zarba faqat tugma yoki havola bosilganda, sahifaning boʻsh joyiga tegilganda emas. */
+const INTERACTIVE =
+  "a[href],button,summary,input[type=submit],input[type=button],[role=button],[role=link],[role=switch],[role=tab],[role=radio],[role=menuitem],[role=menuitemradio],[role=option],[role=slider]";
 const TAP_SLOP_PX = 12;
 const TOUCH_CLICK_WINDOW_MS = 800;
 
@@ -17,7 +20,7 @@ function elementOf(target: EventTarget | null): Element | null {
   return target instanceof Element ? target : null;
 }
 
-/** Hamma bosishlar uchun yagona tinglovchi: sahifaning istalgan joyiga bosilsa doira zarbasi chalinadi. */
+/** Hamma bosishlar uchun yagona tinglovchi: tugma yoki havola bosilganda doira zarbasi chalinadi. */
 export function TapSound(): null {
   useEffect(() => {
     const starts = new Map<number, { x: number; y: number }>();
@@ -27,7 +30,8 @@ export function TapSound(): null {
     if (soundOn()) idle(() => preloadTap());
 
     const respond = (target: Element | null): void => {
-      if (soundOn() || target?.closest(SOUND_CONTROLS)) primeAudio();
+      if (!target?.closest(INTERACTIVE)) return;
+      if (soundOn() || target.closest(SOUND_CONTROLS)) primeAudio();
       /* Holat Reactʼdan keyin oʻqiladi: Ovoz yoqilganda tasdiq zarbasi chalinadi, oʻchirilganda jim. */
       window.setTimeout(() => {
         if (soundOn()) playTap();

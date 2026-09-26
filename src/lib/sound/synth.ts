@@ -88,7 +88,8 @@ function createEngine(): Engine | null {
   limiter.release.value = 0.15;
   limiter.connect(ctx.destination);
   const out = ctx.createGain();
-  out.gain.value = 0.8;
+  /* Egasining talabi: zarba sokinroq (≈ −7 dB), fon ostida bezak boʻlib qoladi. */
+  out.gain.value = 0.35;
   out.connect(limiter);
   return { ctx, out, silentPlayed: false };
 }

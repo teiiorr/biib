@@ -14,11 +14,11 @@ export const MILESTONES: readonly Milestone[] = [
       en: "Founding meeting",
     },
     text: {
-      uz: "Iyun oyida tashabbuskorlarning taʼsis yigʻilishi birlashma ustavini tasdiqladi.",
-      oz: "Июнь ойида ташаббускорларнинг таъсис йиғилиши бирлашма уставини тасдиқлади.",
-      ozbekca: "Iyun oyida taşabbuskorlarning taʼsis yiğilişi birlaşma ustavini tasdiqladi.",
-      ru: "В июне учредительное собрание инициаторов утвердило устав объединения.",
-      en: "In June the founding meeting of the initiators approved the charter of the association.",
+      uz: "Ustav tasdiqlandi.",
+      oz: "Устав тасдиқланди.",
+      ozbekca: "Ustav tasdiqlandi.",
+      ru: "Устав утверждён.",
+      en: "The charter was approved.",
     },
   },
   {
@@ -33,12 +33,11 @@ export const MILESTONES: readonly Milestone[] = [
       en: "State registration",
     },
     text: {
-      uz: "Birlashma Oʻzbekiston Respublikasi Adliya vazirligida davlat roʻyxatidan oʻtdi va yuridik shaxs boʻldi.",
-      oz: "Бирлашма Ўзбекистон Республикаси Адлия вазирлигида давлат рўйхатидан ўтди ва юридик шахс бўлди.",
-      ozbekca:
-        "Birlaşma Özbekiston Respublikasi Adliya vazirligida davlat röyxatidan ötdi va yuridik şaxs böldi.",
-      ru: "Объединение прошло государственную регистрацию в Министерстве юстиции Республики Узбекистан и стало юридическим лицом.",
-      en: "The association was registered with the Ministry of Justice of the Republic of Uzbekistan and became a legal entity.",
+      uz: "Adliya vazirligida roʻyxatdan oʻtdi.",
+      oz: "Адлия вазирлигида рўйхатдан ўтди.",
+      ozbekca: "Adliya vazirligida röyxatdan ötdi.",
+      ru: "Внесено в реестр Минюста.",
+      en: "Entered in the state register.",
     },
   },
   {

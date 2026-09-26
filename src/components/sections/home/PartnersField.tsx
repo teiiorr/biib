@@ -22,21 +22,7 @@ export function PartnersField({ locale, dict, partners }: PartnersFieldProps) {
   return (
     <Section labelledBy="home-partners" tone="light">
       <Container>
-        <SectionHeader
-          id="home-partners"
-          title={h.heading}
-          actions={
-            <LinkButton
-              href={pathFor(locale, "partners")}
-              variant="ghost"
-              size="40"
-              icon="arrow-right"
-              iconPosition="end"
-            >
-              {h.all}
-            </LinkButton>
-          }
-        />
+        <SectionHeader id="home-partners" title={h.heading} />
         <ul className="partner-grid" data-card-group="">
           {partners.map((partner) => {
             const name = partner.name ? t(partner.name, locale) : "";
@@ -61,6 +47,18 @@ export function PartnersField({ locale, dict, partners }: PartnersFieldProps) {
             );
           })}
         </ul>
+        {/* «Barchasi» havolasi kartalar ostida, oʻng chetda (egasining talabi): avval koʻrasiz, keyin oʻtasiz. */}
+        <div className="section-footer">
+          <LinkButton
+            href={pathFor(locale, "partners")}
+            variant="ghost"
+            size="40"
+            icon="arrow-right"
+            iconPosition="end"
+          >
+            {h.all}
+          </LinkButton>
+        </div>
       </Container>
     </Section>
   );

@@ -31,12 +31,12 @@ export const about: typeof source = {
   tasks: {
     heading: "Main tasks",
     items: [
-      "Help create cartoons, audio stories, fairy tales, songs, literary and digital products for children",
-      "Find gifted children and teenagers in every region, especially in remote districts",
-      "Hold contests and festivals along the chain “neighbourhood – district – region – republic”",
-      "Organise master classes by experienced creative professionals and teachers, and courses that prepare children for contests",
-      "Present the work of Uzbekistan’s children at leading international festivals and contests",
-      "Help set up inclusive creative workshops for children with disabilities",
+      "National content for children",
+      "Finding gifted children",
+      "Regional contests",
+      "Master classes",
+      "International festivals",
+      "Inclusive creative workshops",
     ],
   },
   history: {
