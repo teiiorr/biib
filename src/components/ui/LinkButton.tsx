@@ -10,6 +10,8 @@ export interface LinkButtonProps {
   readonly variant?: ButtonVariant;
   readonly size?: ButtonSize;
   readonly icon?: IconName;
+  /** Boshqa spritdagi belgi (Button.graphic). */
+  readonly graphic?: ReactNode;
   readonly iconPosition?: "start" | "end";
   /** Tashqi havola: yangi oynada, rel noopener, bodom uchli strelka va yashirin izoh. */
   readonly external?: boolean;
@@ -25,6 +27,7 @@ export function LinkButton({
   variant = "primary",
   size = "48",
   icon,
+  graphic,
   iconPosition = "start",
   external = false,
   externalHint,
@@ -38,6 +41,7 @@ export function LinkButton({
     variant,
     size,
     ...(resolvedIcon ? { icon: resolvedIcon } : {}),
+    ...(graphic && !external ? { graphic } : {}),
     iconPosition: resolvedPosition,
     ...(className ? { className } : {}),
   } as const;

@@ -1,0 +1,32 @@
+/** Rasm yuklash va tanlash matnlari. */
+export const MEDIA_COPY = {
+  upload: "Rasm yuklash",
+  uploadMany: "Suratlar yuklash",
+  drop: "yoki rasmlarni shu yerga tashlang",
+  accept: "JPEG, PNG, WebP yoki AVIF, 25 MB gacha.",
+  progress: "Yuklash holati",
+  preparing: "Tayyorlanmoqda…",
+  uploading: "Yuklanmoqda…",
+  processing: "Ishlanmoqda…",
+  done: "Tayyor",
+  failed: "Yuklanmadi: {reason}",
+  summary: "Rasmlar: {done} / {total} tayyor.",
+  errors: {
+    type: "bu turdagi fayl qabul qilinmaydi",
+    size: "fayl 25 MB dan katta",
+    network: "tarmoq uzildi",
+    server: "server rasmni qabul qilmadi",
+    unreadable: "rasm oʻqilmadi",
+    denied: "sessiya tugagan, panelga qayta kiring",
+  },
+  picker: {
+    open: "Yuklanganlardan tanlash",
+    title: "Yuklangan rasmlar",
+    description: "Oxirgi yuklangan rasmlar, yangisi birinchi.",
+    empty: "Hali yuklangan rasm yoʻq.",
+    item: "{n}-rasm",
+    add: "Qoʻshish ({n})",
+    close: "Yopish",
+    cancel: "Bekor qilish",
+  },
+} as const;

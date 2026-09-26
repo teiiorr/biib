@@ -9,6 +9,15 @@ export const ADMIN_ICON_NAMES = [
   "log-out",
   "eye",
   "eye-off",
+  "plus",
+  "pencil",
+  "trash",
+  "upload",
+  "arrow-down",
+  "more",
+  "refresh",
+  "undo",
+  "alert",
 ] as const;
 
 export type AdminIconName = (typeof ADMIN_ICON_NAMES)[number];
@@ -24,4 +33,15 @@ export const ADMIN_ICON_PATHS: Record<AdminIconName, string> = {
   eye: "M2 12 Q7 5 12 5 Q17 5 22 12 Q17 19 12 19 Q7 19 2 12 Z M12 15 A3 3 0 1 0 12 9 A3 3 0 1 0 12 15 Z",
   "eye-off":
     "M2 12 Q7 5 12 5 Q17 5 22 12 Q17 19 12 19 Q7 19 2 12 Z M12 15 A3 3 0 1 0 12 9 A3 3 0 1 0 12 15 Z M4 4 L20 20",
+  plus: "M12 5 V19 M5 12 H19",
+  pencil: "M4 20 L5 15.5 L15.5 5 Q16.5 4 17.5 5 L19 6.5 Q20 7.5 19 8.5 L8.5 19 Z M13.5 7 L17 10.5",
+  trash:
+    "M4 7 H20 M9 7 V5 Q9 4 10 4 H14 Q15 4 15 5 V7 M6 7 L7 19 Q7.1 20 8 20 H16 Q16.9 20 17 19 L18 7 M10 11 V16 M14 11 V16",
+  upload: "M12 15 V4 M7 9 L12 4 L17 9 M4 15 V18 Q4 20 6 20 H18 Q20 20 20 18 V15",
+  /* arrow-up ning oynadagi aksi: uchi pastga 1 px siljigan. */
+  "arrow-down": "M12 5 L12 21 M6 15 L12 21 L18 15",
+  more: "M6 13 A1 1 0 1 0 6 11 A1 1 0 1 0 6 13 Z M12 13 A1 1 0 1 0 12 11 A1 1 0 1 0 12 13 Z M18 13 A1 1 0 1 0 18 11 A1 1 0 1 0 18 13 Z",
+  refresh: "M19.5 14.7 A8 8 0 1 1 17.1 5.9 L20 8.5 M20 4 V8.5 H15.5",
+  undo: "M9 14 L4 9 L9 4 M4 9 H15 Q20 9 20 14 Q20 19 15 19 H10",
+  alert: "M12 4 L21 19 H3 Z M12 10 V14 M12 16.8 V17",
 };

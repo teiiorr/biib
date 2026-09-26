@@ -17,6 +17,8 @@ interface ButtonOwnProps {
   readonly variant?: ButtonVariant;
   readonly size?: ButtonSize;
   readonly icon?: IconName;
+  /** Boshqa spritdagi belgi (masalan panelniki): icon oʻrnida, oʻsha oʻlcham va joyda chiziladi. */
+  readonly graphic?: ReactNode;
   readonly iconPosition?: "start" | "end";
   readonly loading?: boolean;
   readonly disabled?: boolean;
@@ -43,6 +45,7 @@ export function Button(props: ButtonProps) {
     variant = "primary",
     size = "48",
     icon,
+    graphic: customGraphic,
     iconPosition = "start",
     loading = false,
     disabled = false,
@@ -59,7 +62,8 @@ export function Button(props: ButtonProps) {
   const inactive = disabled || loading;
   const iconSize = BUTTON_ICON_SIZE[size];
   const Component = asChild ? Slot : "button";
-  const iconSlot = iconOnly ? "only" : icon || loading ? iconPosition : undefined;
+  const hasIcon = Boolean(icon || customGraphic);
+  const iconSlot = iconOnly ? "only" : hasIcon || loading ? iconPosition : undefined;
   // Magnit (≥ 48 px asosiy va oyna tugmalari, oyna belgili tugmasi 4 px): MotionProvider dagi umumiy tinglovchi.
   const magnetic = inactive
     ? undefined
@@ -72,7 +76,9 @@ export function Button(props: ButtonProps) {
     <ButtonSpinner size={iconSize} />
   ) : icon ? (
     <Icon name={icon} size={iconSize} />
-  ) : null;
+  ) : (
+    (customGraphic ?? null)
+  );
 
   const element = (
     <Component

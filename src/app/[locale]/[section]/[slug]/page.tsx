@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import { NewsArticlePage } from "@/components/sections/news/NewsArticlePage";
-import { getArticle, getNews, t } from "@/content";
+import { getArticle, getNews, getNewsRedirect, t } from "@/content";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, LOCALES, type Locale } from "@/i18n/locales";
-import { isNewsSlug, resolveSection, sectionSegment } from "@/i18n/routes";
+import { isNewsSlug, pathFor, resolveSection, sectionSegment } from "@/i18n/routes";
 import { buildMetadata, notFoundMetadata } from "@/lib/seo/metadata";
 
 /* Nomaʼlum segment lokal 404 ni koʻrsatishi uchun (G2): maqolalar statik, qolgani notFound(). */
@@ -49,6 +49,11 @@ export default async function Page({ params }: PageProps) {
   /* Shakli notoʻgʻri slug kontentga murojaat qilmasdan 404 oladi. */
   if (resolveSection(locale, section) !== "news" || !isNewsSlug(slug)) notFound();
   const article = await getArticle(slug);
-  if (!article) notFound();
+  if (!article) {
+    /* Nomi oʻzgargan maqolaning tarqalgan eski havolasi doimiy yoʻnaltiriladi. */
+    const target = await getNewsRedirect(slug);
+    if (target) permanentRedirect(pathFor(locale, "newsItem", target));
+    notFound();
+  }
   return <NewsArticlePage locale={locale} dict={getDictionary(locale)} article={article} />;
 }

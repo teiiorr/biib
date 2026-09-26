@@ -45,6 +45,12 @@ export function selectArticle(s: ContentSnapshot, slug: string): NewsArticle | n
   return s.news.find((n) => n.slug === slug) ?? null;
 }
 
+/** Nomi oʻzgargan maqola: eski slug → yangi slug (yoʻq boʻlsa null). */
+export function selectRedirect(s: ContentSnapshot, slug: string): string | null {
+  const target = s.redirects[slug];
+  return target && target !== slug && selectArticle(s, target) ? target : null;
+}
+
 /** Oldingi va keyingi maqola (sanaga koʻra). */
 export function selectNeighbours(
   s: ContentSnapshot,

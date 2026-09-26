@@ -1,40 +1,55 @@
 import type { Metadata } from "next";
 
 import { AdminIcon } from "@/components/admin/AdminIcon";
+import { HealthCard } from "@/components/admin/HealthCard";
+import { JournalTable } from "@/components/admin/JournalTable";
 import { Heading } from "@/components/ui/Heading";
 import { LinkButton } from "@/components/ui/LinkButton";
-import { Text } from "@/components/ui/Text";
 import { ADMIN_COPY } from "@/lib/admin/copy";
+import { adminDb } from "@/lib/admin/db";
 import { requireAdmin } from "@/lib/admin/guard";
+import { siteHealth } from "@/lib/admin/health";
+import { loadJournal } from "@/lib/admin/journal";
 
 export const metadata: Metadata = { title: ADMIN_COPY.pages.dashboard };
 
-const NEWS = ADMIN_COPY.dashboard.news;
+const D = ADMIN_COPY.dashboard;
 
-/** Boshqaruv: hozircha asosiy ish — yangiliklar; sayt holati va jurnal keyingi bosqichda qoʻshiladi. */
+/** Boshqaruv: asosiy ish (yangilik qoʻshish), sayt holati va oxirgi oʻzgarishlar. */
 export default async function DashboardPage() {
-  await requireAdmin("/admin");
+  const session = await requireAdmin("/admin");
+  const db = adminDb(session.accessToken);
+  const [health, journal] = await Promise.all([
+    siteHealth(db),
+    loadJournal(db, 10).catch(() => []),
+  ]);
   return (
     <section className="admin-page">
       <Heading level={1}>{ADMIN_COPY.pages.dashboard}</Heading>
-      <div className="admin-cards">
-        <article className="admin-card" aria-labelledby="admin-card-news">
-          <div className="admin-card-head">
-            <span className="admin-card-icon">
-              <AdminIcon name="news" size={24} />
-            </span>
-            <h2 id="admin-card-news" className="t-h3 text-ink">
-              {NEWS.title}
-            </h2>
-          </div>
-          <Text tone="ink-2">{NEWS.text}</Text>
-          <div className="admin-actions">
-            <LinkButton href="/admin/yangiliklar" icon="arrow-right" iconPosition="end">
-              {NEWS.action}
-            </LinkButton>
-          </div>
-        </article>
+      <div className="admin-actions">
+        <LinkButton href="/admin/yangiliklar" variant="glass" icon="news">
+          {D.allNews}
+        </LinkButton>
+        <LinkButton
+          href="/admin/yangiliklar/yangi"
+          variant="primary"
+          graphic={<AdminIcon name="plus" size={20} />}
+        >
+          {D.addNews}
+        </LinkButton>
       </div>
+      <HealthCard health={health} />
+      <section className="admin-section" aria-labelledby="admin-recent-title">
+        <h2 id="admin-recent-title" className="t-h3 text-ink">
+          {D.recent}
+        </h2>
+        <JournalTable rows={journal} />
+        <div className="admin-actions">
+          <LinkButton href="/admin/jurnal" variant="glass" icon="clock">
+            {D.allJournal}
+          </LinkButton>
+        </div>
+      </section>
     </section>
   );
 }

@@ -40,7 +40,7 @@
     flex-direction: column;
     gap: 16px;
     padding: 24px;
-    border-radius: var(--radius-card);
+    border-radius: var(--radius-control);
     background: var(--surface);
     box-shadow: var(--inner-highlight);
   }

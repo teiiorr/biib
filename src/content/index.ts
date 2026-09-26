@@ -16,6 +16,7 @@ import {
   selectNews,
   selectPartners,
   selectProjects,
+  selectRedirect,
   selectUpopGallery,
   statusForPage,
 } from "./select";
@@ -39,6 +40,11 @@ export const getNews = cache(async () => selectNews(await loadSnapshot()));
 
 /** Maqola topilmasa null: sahifa notFound() chaqiradi. */
 export const getArticle = cache(async (slug: string) => selectArticle(await loadSnapshot(), slug));
+
+/** Eski havola: maqola nomi oʻzgargan boʻlsa yangi slug (sahifa 308 bilan yoʻnaltiradi). */
+export const getNewsRedirect = cache(async (slug: string) =>
+  selectRedirect(await loadSnapshot(), slug),
+);
 
 export const getArticleNeighbours = cache(async (slug: string) =>
   selectNeighbours(await loadSnapshot(), slug),

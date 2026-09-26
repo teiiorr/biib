@@ -11,6 +11,9 @@ import { fontPreloads } from "@/lib/fonts";
 import "@/styles/globals.css";
 import "@/styles/admin.css";
 import "@/styles/admin-pages.css";
+import "@/styles/admin-editor.css";
+import "@/styles/admin-media.css";
+import "@/styles/admin-tables.css";
 
 /* Panel har soʻrovda serverda: sessiya cookie si oʻqiladi, hech bir sahifa oldindan yigʻilmaydi. */
 export const dynamic = "force-dynamic";
