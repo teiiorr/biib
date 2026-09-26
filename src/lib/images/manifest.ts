@@ -76,7 +76,7 @@ export const PREPARED_IMAGES: Readonly<Record<string, PreparedImage>> = {
     height: 1500,
     base: "/img/leader-chair",
     widths: [320, 480, 640, 960],
-    blur: "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAACwAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JbACdACHe8VSBvljfwAD+DqBWPhHX7C26oaqHzuD1taCZ+o7Qr3phsBiTamG53lgV59hXI5EhwQ/QxEU4pc2WxK2+DvDUtIUppAAA",
+    blur: "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAACwBACdASoQABQAPu1iqU2ppaQiMAgBMB2JbACdL144IkChMAK5TTBdeA2VtHXYAP4VFfrO9Iq/OMuFxM2CY7LAGN1Kd+thzL27BQvBBGuTS54iQ+RPROX/Y/Et6+uh8PIQ9wJyT9N7EJVIcyl0iv5gqY1HwJVCkIAAAA==",
   },
   "/brand/leader-director.jpg": {
     width: 1200,
