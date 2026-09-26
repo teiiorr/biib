@@ -16,7 +16,7 @@ export const appearance = {
   densityTo: "Qalin",
   reset: "Asliga qaytarish",
   sound: "Ovoz",
-  soundHint: "Har bir bosishda yumshoq qoʻngʻiroq ovozi",
+  soundHint: "Har bir bosishda doira zarbasi",
   motion: "Harakat",
   motionHint: "Bezak harakatlari; matn va sahifa oʻtishlari saqlanadi",
   valueText: "{value}%",

@@ -1,35 +1,29 @@
-/* Bosish ovozi: shishasimon qoʻngʻiroq (kalimba) tembri, butunlay Web Audio. Fayl yuklanmaydi, oflayn ishlaydi. */
+/*
+ * Bosish ovozi: egasining doira yozuvidan kesilgan eng taʼsirli zarba (public/sounds/doira-tap.mp3, 7.5 KB,
+ * scripts/doira-tap.mts). Fayl boʻsh vaqtda oldindan olinadi, birinchi bosishda dekodlanadi, keyin darhol
+ * chalinadi. Har zarba ohangi ozgina farq qiladi: ketma-ket bosishlar bir xil yangramaydi.
+ */
 
 type AudioContextCtor = typeof AudioContext;
 
 interface Engine {
   readonly ctx: AudioContext;
-  /** Quruq signal shu yerga tushadi; undan keyin cheklagich. */
-  readonly dry: GainNode;
-  /** Aks-sado yuborish; konvolver birinchi notada quriladi. */
-  readonly send: GainNode;
-  reverbReady: boolean;
+  /** Zarba shu yerga tushadi; undan keyin cheklagich. */
+  readonly out: GainNode;
   silentPlayed: boolean;
 }
 
-/* D-major pentatonika, 587–1175 Hz: ketma-ket bosishlar tinch kuy hosil qiladi. */
-const SCALE = [587.33, 659.25, 739.99, 880, 987.77, 1174.66] as const;
-/* Qoʻngʻiroq tembri: [nisbat, balandlik, soʻnish ulushi]. Nisbatlar notekis, shu sabab shishaday jaranglaydi. */
-const PARTIALS = [
-  [1, 0.085, 1],
-  [1.004, 0.028, 0.9],
-  [2.76, 0.024, 0.34],
-  [5.4, 0.008, 0.16],
-] as const;
-const DECAY = 1.35;
+const SAMPLE_URL = "/sounds/doira-tap.mp3";
 const MIN_GAP_MS = 60;
 const MAX_VOICES = 6;
+/* Dekodlash kechiksa zarba kech kelmaydi: bosishdan 350 ms oʻtgan boʻlsa jim qoladi. */
+const LATE_MS = 350;
 
 let engine: Engine | null = null;
-let noteIndex = 2;
+let bytes: Promise<ArrayBuffer | null> | null = null;
+let buffer: Promise<AudioBuffer | null> | null = null;
 let lastAt = -Infinity;
 let voices = 0;
-let pending = false;
 
 function ctor(): AudioContextCtor | undefined {
   if (typeof window === "undefined") return undefined;
@@ -52,48 +46,24 @@ function createEngine(): Engine | null {
   }
   /* Ketma-ket tez bosishlarda ham signal kesilmasligi uchun cheklagich. */
   const limiter = ctx.createDynamicsCompressor();
-  limiter.threshold.value = -14;
+  limiter.threshold.value = -10;
   limiter.knee.value = 4;
-  limiter.ratio.value = 16;
+  limiter.ratio.value = 12;
   limiter.attack.value = 0.002;
-  limiter.release.value = 0.2;
+  limiter.release.value = 0.15;
   limiter.connect(ctx.destination);
-  const dry = ctx.createGain();
-  dry.connect(limiter);
-  const send = ctx.createGain();
-  send.gain.value = 0.34;
-  return { ctx, dry, send, reverbReady: false, silentPlayed: false };
-}
-
-/* Qisqa sintetik zal: pasaytirilgan shovqin eksponentsial soʻnadi; yuqori chastotalar tezroq yoʻqoladi. */
-function buildReverb(e: Engine): void {
-  const { ctx } = e;
-  const rate = ctx.sampleRate;
-  const length = Math.floor(rate * 1.5);
-  const predelay = Math.floor(rate * 0.012);
-  const impulse = ctx.createBuffer(2, length, rate);
-  for (let channel = 0; channel < 2; channel += 1) {
-    const data = impulse.getChannelData(channel);
-    let smooth = 0;
-    for (let i = predelay; i < length; i += 1) {
-      const progress = (i - predelay) / (length - predelay);
-      smooth += (0.22 + 0.5 * (1 - progress)) * (Math.random() * 2 - 1 - smooth);
-      data[i] = smooth * Math.pow(1 - progress, 3);
-    }
-  }
-  const convolver = ctx.createConvolver();
-  convolver.buffer = impulse;
-  e.send.connect(convolver);
-  convolver.connect(e.dry);
-  e.reverbReady = true;
+  const out = ctx.createGain();
+  out.gain.value = 0.8;
+  out.connect(limiter);
+  return { ctx, out, silentPlayed: false };
 }
 
 function ensureEngine(): Engine | null {
   if (engine && engine.ctx.state === "closed") {
-    /* Yopilgan kontekstda onended kelmaydi: hisoblagich yangi kontekst bilan noldan boshlanadi. */
+    /* Yopilgan kontekstda onended kelmaydi: hisoblagich va bufer yangi kontekst bilan noldan. */
     engine = null;
+    buffer = null;
     voices = 0;
-    pending = false;
   }
   engine ??= createEngine();
   return engine;
@@ -117,80 +87,61 @@ function wake(): Engine | null {
   return e;
 }
 
+/** Fayl baytlari (7.5 KB) oldindan: birinchi bosishda tarmoq kutilmaydi. */
+export function preloadTap(): void {
+  bytes ??= fetch(SAMPLE_URL)
+    .then((response) => (response.ok ? response.arrayBuffer() : null))
+    .catch(() => null);
+}
+
+/* Eski Safari decodeAudioData ni faqat callback bilan beradi, yangilari Promise qaytaradi. */
+function decode(ctx: AudioContext, data: ArrayBuffer): Promise<AudioBuffer> {
+  return new Promise((resolve, reject) => {
+    const result = ctx.decodeAudioData(data, resolve, reject) as Promise<AudioBuffer> | undefined;
+    if (result && typeof result.then === "function") result.then(resolve, reject);
+  });
+}
+
+function sample(e: Engine): Promise<AudioBuffer | null> {
+  preloadTap();
+  buffer ??= (bytes ?? Promise.resolve(null)).then((data) =>
+    data ? decode(e.ctx, data.slice(0)).catch(() => null) : null,
+  );
+  return buffer;
+}
+
 /** Bosish hodisasi ichida sinxron chaqiriladi: Safari va Chrome ovozni faqat foydalanuvchi harakati ichida ochadi. */
 export function primeAudio(): void {
-  wake();
+  const e = wake();
+  if (e) void sample(e);
 }
 
-function nextNote(): number {
-  /* Yonidagi 1–2 pogʻonaga qadam: sakrash yoʻq, takror yoʻq. */
-  const step = (Math.random() < 0.5 ? 1 : 2) * (Math.random() < 0.5 ? -1 : 1);
-  let next = noteIndex + step;
-  if (next < 0 || next >= SCALE.length) next = noteIndex - step;
-  noteIndex = next;
-  return SCALE[next] ?? SCALE[2];
-}
-
-function pluck(e: Engine, bright: boolean): void {
-  const { ctx } = e;
-  if (!e.reverbReady) buildReverb(e);
-  const at = ctx.currentTime + 0.005;
-  const frequency = nextNote();
-  const tone = ctx.createBiquadFilter();
-  tone.type = "lowpass";
-  tone.frequency.value = bright ? 4200 : 2800;
-  tone.Q.value = 0.4;
-  tone.connect(e.dry);
-  tone.connect(e.send);
-
-  const nodes: AudioNode[] = [tone];
-  let last: OscillatorNode | null = null;
-  for (const [ratio, level, decayShare] of PARTIALS) {
-    const osc = ctx.createOscillator();
-    osc.type = "sine";
-    osc.frequency.value = frequency * ratio;
-    const gain = ctx.createGain();
-    const end = at + DECAY * decayShare;
-    gain.gain.setValueAtTime(0.0001, at);
-    gain.gain.exponentialRampToValueAtTime(level, at + 0.006);
-    gain.gain.exponentialRampToValueAtTime(0.0001, end);
-    osc.connect(gain);
-    gain.connect(tone);
-    osc.start(at);
-    osc.stop(end + 0.05);
-    nodes.push(osc, gain);
-    if (decayShare === 1) last = osc;
-  }
+function strike(e: Engine, data: AudioBuffer, bright: boolean): void {
+  const source = e.ctx.createBufferSource();
+  source.buffer = data;
+  /* Havola va tugma biroz tiniqroq (baland), boʻsh joy biroz chuqurroq; har zarbada ±1.5 % tabiiy farq. */
+  source.playbackRate.value = (bright ? 1.04 : 0.96) + (Math.random() - 0.5) * 0.03;
+  source.connect(e.out);
   voices += 1;
-  if (last) {
-    last.onended = () => {
-      voices -= 1;
-      for (const node of nodes) node.disconnect();
-    };
-  }
+  source.onended = () => {
+    voices -= 1;
+    source.disconnect();
+  };
+  source.start();
 }
 
-/** Bitta yumshoq nota; `bright` havola va tugmalar uchun biroz tiniqroq. */
+/** Bitta doira zarbasi; `bright` havola va tugmalar uchun. */
 export function playTap(bright: boolean): void {
   const now = performance.now();
   if (now - lastAt < MIN_GAP_MS || voices >= MAX_VOICES) return;
   const e = wake();
   if (!e) return;
   lastAt = now;
-  if ((e.ctx.state as string) === "running") {
-    pluck(e, bright);
-    return;
-  }
-  /* Kontekst hali ochilmagan: notalar yigʻilib qolib, keyin birdan chalinmasin. */
-  if (pending) return;
-  pending = true;
-  Promise.resolve(e.ctx.resume()).then(
-    () => {
-      pending = false;
-      pluck(e, bright);
-    },
-    () => {
-      pending = false;
+  void Promise.all([sample(e), Promise.resolve(e.ctx.resume()).catch(() => undefined)]).then(
+    ([data]) => {
+      if (!data || performance.now() - now > LATE_MS) return;
+      if ((e.ctx.state as string) !== "running") return;
+      strike(e, data, bright);
     },
   );
 }

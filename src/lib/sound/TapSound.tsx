@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { playTap, primeAudio } from "./synth";
+import { playTap, preloadTap, primeAudio } from "./synth";
 
 const INTERACTIVE =
   "a[href],button,input,select,textarea,label,summary,[role=button],[role=link],[role=switch],[role=tab],[role=menuitem],[role=menuitemradio],[role=radio],[role=option],[role=checkbox],[role=slider]";
@@ -19,16 +19,19 @@ function elementOf(target: EventTarget | null): Element | null {
   return target instanceof Element ? target : null;
 }
 
-/** Hamma bosishlar uchun yagona tinglovchi: sahifaning istalgan joyiga bosilsa yumshoq nota chalinadi. */
+/** Hamma bosishlar uchun yagona tinglovchi: sahifaning istalgan joyiga bosilsa doira zarbasi chalinadi. */
 export function TapSound(): null {
   useEffect(() => {
     const starts = new Map<number, { x: number; y: number }>();
     let lastTouchAt = -Infinity;
+    /* 7.5 KB zarba fayli sahifa tinchiganda: birinchi bosishda tarmoq kutilmaydi. */
+    const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 1500));
+    if (soundOn()) idle(() => preloadTap());
 
     const respond = (target: Element | null): void => {
       if (soundOn() || target?.closest(SOUND_CONTROLS)) primeAudio();
       const bright = target?.closest(INTERACTIVE) != null;
-      /* Holat Reactʼdan keyin oʻqiladi: Ovoz yoqilganda tasdiq notasi chalinadi, oʻchirilganda jim. */
+      /* Holat Reactʼdan keyin oʻqiladi: Ovoz yoqilganda tasdiq zarbasi chalinadi, oʻchirilganda jim. */
       window.setTimeout(() => {
         if (soundOn()) playTap(bright);
       }, 0);
@@ -57,7 +60,7 @@ export function TapSound(): null {
     const onClick = (event: MouseEvent): void => {
       if (!event.isTrusted) return;
       if (performance.now() - lastTouchAt < TOUCH_CLICK_WINDOW_MS) {
-        /* Nota pointerup da chalingan; click faqat kontekst ochilmay qolgan boʻlsa uni ochadi. */
+        /* Zarba pointerup da chalingan; click faqat kontekst ochilmay qolgan boʻlsa uni ochadi. */
         if (soundOn()) primeAudio();
         return;
       }

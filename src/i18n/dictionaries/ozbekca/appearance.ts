@@ -19,7 +19,7 @@ export const appearance: typeof source = {
   densityTo: "Qalin",
   reset: "Asliga qaytariş",
   sound: "Ovoz",
-  soundHint: "Har bir bosişda yumşoq qönğiroq ovozi",
+  soundHint: "Har bir bosişda doira zarbasi",
   motion: "Harakat",
   motionHint: "Bezak harakatlari; matn va sahifa ötişlari saqlanadi",
   valueText: "{value}%",
