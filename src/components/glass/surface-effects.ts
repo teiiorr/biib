@@ -1,90 +1,16 @@
 import { getAppearanceSnapshot, subscribeAppearance } from "@/lib/appearance/store";
 
-import { isLitePerf } from "@/lib/perf";
-
 import { refractionMap } from "./refraction-cache";
 import { bezelWidth } from "./refraction-map";
 
 /*
- * Oyna sirtining bezak qatlamlari: yaltiroq nuqta (sheen) va sinish (Chromium). Ikkalasi ham birinchi
- * chizish uchun kerak emas, shu sabab alohida chunk: Surface ularni boʻsh vaqtda ulaydi. React DOM ga
- * faqat oʻzi qoʻymagan narsalar yoziladi (--sheen-*, --surface-refract, data-refract, filtr <svg>).
+ * Oyna sirtining qirra sinishi (Chromium). Birinchi chizish uchun kerak emas, shu sabab alohida chunk:
+ * Surface uni boʻsh vaqtda ulaydi. React DOM ga faqat oʻzi qoʻymagan narsalar yoziladi (--surface-refract,
+ * data-refract, filtr <svg>). Yaltiroq harakatlanuvchi nuqta yoʻq (egasining talabi: oq dogʻ yoʻq).
  */
 
-const FINE_POINTER = "(hover: hover) and (pointer: fine)";
 const REDUCED_TRANSPARENCY = "(prefers-reduced-transparency: reduce)";
 const SVG_NS = "http://www.w3.org/2000/svg";
-
-function percentOf(value: string, size: number, fallback: number): number {
-  const n = Number.parseFloat(value);
-  return Number.isFinite(n) ? (n / 100) * size : fallback;
-}
-
-/**
- * Yaltiroq nuqta: kompyuterda kursor ortidan, sensorli qurilmada skroll boʻyicha yuradi.
- * Faqat --sheen-x/--sheen-y oʻzgaradi, qatlam oʻzi qayta yotqizilmaydi.
- */
-function mountSheen(element: HTMLElement): () => void {
-  let frame = 0;
-  let x = 0;
-  let y = 0;
-  const paint = (): void => {
-    frame = 0;
-    element.style.setProperty("--sheen-x", `${Math.round(x)}px`);
-    element.style.setProperty("--sheen-y", `${Math.round(y)}px`);
-  };
-  const schedule = (): void => {
-    if (frame === 0) frame = requestAnimationFrame(paint);
-  };
-  const rest = (): void => {
-    const rect = element.getBoundingClientRect();
-    const styles = getComputedStyle(element);
-    x = percentOf(styles.getPropertyValue("--light-x"), rect.width, rect.width * 0.3);
-    y = percentOf(styles.getPropertyValue("--light-y"), rect.height, 0);
-    schedule();
-  };
-  rest();
-
-  /* Skroll: nuqta sirt boʻylab toʻliq kenglikda va balandlikda yuradi (egasining talabi: oyna harakati
-     kuchliroq) — kompyuterda ham, kursor sirt ustida boʻlmasa. */
-  let hovering = false;
-  const onScroll = (): void => {
-    if (hovering) return;
-    const rect = element.getBoundingClientRect();
-    const progress = (window.scrollY / Math.max(1, window.innerHeight * 0.75)) % 1;
-    const wave = Math.sin(progress * Math.PI);
-    x = rect.width * (0.05 + progress * 0.9);
-    y = rect.height * (0.15 + wave * 0.7);
-    schedule();
-  };
-  window.addEventListener("scroll", onScroll, { passive: true });
-
-  if (!window.matchMedia(FINE_POINTER).matches) {
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", onScroll);
-    };
-  }
-  const move = (event: PointerEvent): void => {
-    hovering = true;
-    const rect = element.getBoundingClientRect();
-    x = event.clientX - rect.left;
-    y = event.clientY - rect.top;
-    schedule();
-  };
-  const leave = (): void => {
-    hovering = false;
-    rest();
-  };
-  element.addEventListener("pointermove", move, { passive: true });
-  element.addEventListener("pointerleave", leave);
-  return () => {
-    cancelAnimationFrame(frame);
-    window.removeEventListener("scroll", onScroll);
-    element.removeEventListener("pointermove", move);
-    element.removeEventListener("pointerleave", leave);
-  };
-}
 
 interface NavigatorBrands {
   readonly userAgentData?: { readonly brands: ReadonlyArray<{ readonly brand: string }> };
@@ -128,13 +54,13 @@ let filterCount = 0;
 
 /* Siljish qirra kengligiga nisbatan (egasining talabi: oyna effekti 2–3 baravar kuchli): Zichlik 0 da
    1.2 qirra, 50 da 2.7, 100 da 4.2 (qalin muz, chetda tasvir aniq egiladi). feDisplacementMap eng
-   koʻpi scale / 2 suradi. Kuchsiz qurilmada (data-perf="lite") sinish umuman qoʻyilmaydi. */
+   koʻpi scale / 2 suradi. */
 const REFRACT_BASE = 1.2;
 const REFRACT_RANGE = 3;
 
 /** Har sirt uchun alohida filtr: xarita oʻsha sirt oʻlchamidan chizilgan, kuchi Zichlikdan. */
 function mountRefraction(element: HTMLElement): () => void {
-  if (!refractionSupported() || isLitePerf()) return () => undefined;
+  if (!refractionSupported()) return () => undefined;
   const reduced = window.matchMedia(REDUCED_TRANSPARENCY);
   filterCount += 1;
   const id = `lg-refract-${filterCount}`;
@@ -240,10 +166,8 @@ export function mountSurfaceEffects(
   element: HTMLElement,
   { refraction }: SurfaceEffects,
 ): () => void {
-  const stopSheen = mountSheen(element);
   const stopRefraction = refraction ? mountRefraction(element) : () => undefined;
   return () => {
-    stopSheen();
     stopRefraction();
   };
 }

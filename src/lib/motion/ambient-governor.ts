@@ -67,7 +67,9 @@ function reconcile(): void {
   }
   const paused = pauseReasons.size > 0;
   for (const e of entries.values()) {
-    apply(e, !paused && winners.get(e.kind) === e);
+    // Skroll sahnalari raqobatlashmaydi (egasining talabi: harakat uzilmasin) — ikkisi chegarada
+    // koʻrinsa ham ikkalasi ishlaydi; faqat ambient sikllardan bittasi faol.
+    apply(e, !paused && (e.kind === "scene" || winners.get(e.kind) === e));
   }
 }
 

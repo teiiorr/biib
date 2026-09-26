@@ -437,6 +437,18 @@
     .upop-feature-media {
       grid-column: 5 / 13;
     }
+    /* Skroll sahnasi butun blok bir ekranga sigʻganda ishlaydi (useStickyFeature): 1440 × 900 noutbukda
+       ham sigʻishi uchun qator oraligʻi va fakt katakchalari zichroq. */
+    .upop-feature-grid {
+      row-gap: 24px;
+    }
+    .upop-feature-text {
+      gap: 16px;
+    }
+    .upop-feature-list li.feature {
+      gap: 8px;
+      padding-top: 12px;
+    }
   }
 
   /* Yangiliklar */

@@ -7,7 +7,6 @@ import { registerAmbient } from "@/lib/motion/ambient-governor";
 import { PIN_LENGTH, SCENE_LENGTH, SCRUB } from "@/lib/motion/constants";
 import { coverRect, logoRect } from "@/lib/motion/cover";
 import { motionAllowed } from "@/lib/motion/prefs";
-import { isLitePerf } from "@/lib/perf";
 import { reached } from "@/lib/motion/viewport";
 
 import { useEngineEffect } from "./engine";
@@ -65,8 +64,7 @@ export function useHeroScene(
     scope,
     ({ gsap, ScrollTrigger }) => {
       const wrapper = scope.current;
-      // Kuchsiz qurilmada sahna qurilmaydi: CSS zaxira holati (kadr joyida) qoladi.
-      if (!wrapper || !allowed || isLitePerf()) return;
+      if (!wrapper || !allowed) return;
       const hero = wrapper.querySelector<HTMLElement>("[data-hero]");
       if (!hero) return;
       const html = document.documentElement;

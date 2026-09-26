@@ -107,7 +107,7 @@ export function ContactsPage({ locale, dict }: PageProps) {
             {facts.map((fact) => (
               <div key={fact.key} className="contact-fact feature" data-card="">
                 <FeatureIcon name={fact.icon} />
-                <dt className="contact-fact-label t-label text-ink-2" data-card-title="">
+                <dt className="sr-only" data-card-title="">
                   {fact.label}
                 </dt>
                 <dd className="contact-fact-value">
@@ -163,9 +163,9 @@ export function ContactsPage({ locale, dict }: PageProps) {
                 ) : null}
               </div>
             ))}
-            <div className="contact-fact" data-card="">
-              <dt className="contact-fact-label t-label text-ink-2" data-card-title="">
-                <Icon name="share" size={20} />
+            <div className="contact-fact feature" data-card="">
+              <FeatureIcon name="share" />
+              <dt className="sr-only" data-card-title="">
                 {d.socials.heading}
               </dt>
               {/* Tarmoqlar ham boshqa kartalardagi harakatlar kabi pastki qatorda, oʻngda. */}

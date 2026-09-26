@@ -93,7 +93,7 @@ export function ProjectsPage({ locale, dict }: PageProps) {
             {facts.map(([label, value, icon]) => (
               <div key={label} className="upop-fact feature">
                 <FeatureIcon name={icon} />
-                <dt className="t-micro text-ink-3">{label}</dt>
+                <dt className="sr-only">{label}</dt>
                 <dd className="t-body text-ink tnum">{value}</dd>
               </div>
             ))}

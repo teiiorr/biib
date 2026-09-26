@@ -588,7 +588,10 @@
     grid-row: span 2;
     align-self: center;
   }
-  li.feature > .feature-icon {
+  /* Yorliq faqat ekran oʻquvchisi uchun (egasining talabi: belgi ustida izoh yoʻq): belgi va asosiy matn
+     bir qatorda, matn belgi markazida. */
+  li.feature > .feature-icon,
+  .feature:has(> dt.sr-only) > .feature-icon {
     grid-row: auto;
     align-self: center;
   }

@@ -7,7 +7,6 @@ import { motionAllowed } from "@/lib/motion/prefs";
 import { enqueueSliced, viewportPriority } from "@/lib/motion/scheduler";
 import { belowViewport } from "@/lib/motion/viewport";
 import { watchPending, type PendingWatch } from "@/lib/motion/watchdog";
-import { isLitePerf } from "@/lib/perf";
 import { useEngineEffect } from "./engine";
 import { useMotionPrefs } from "./motion-context";
 
@@ -46,8 +45,7 @@ export function SplitLines({
     ref,
     ({ gsap, SplitText }, { context }) => {
       const el = ref.current;
-      // Kuchsiz qurilmada soʻzlarga boʻlish ogʻir: sarlavha joyida, oltin yaltirash qoladi.
-      if (!el || !allowed || done.current || isLitePerf()) return;
+      if (!el || !allowed || done.current) return;
       if (!belowViewport(el, 1)) {
         done.current = true;
         return;

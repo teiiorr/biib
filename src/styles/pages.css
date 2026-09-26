@@ -339,8 +339,13 @@
   .contact-fact {
     padding: 16px;
   }
+  /* Qiymat va nusxa tugmasi ikki qatorda: belgi ikkalasining markazida. */
   .contact-fact.feature > .feature-icon {
-    grid-row: span 3;
+    grid-row: span 2;
+  }
+  /* Kartalar qatorda bir balandlikda: tugmasiz kartada mazmun yuqoriga yopishmaydi, markazda turadi. */
+  .contact-fact.feature {
+    align-content: center;
   }
   @media (min-width: 600px) {
     .person-card,
@@ -504,14 +509,11 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
-  .contact-fact-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
   /* Qiymat katagi 44 px: havola nishoni shu balandlikni oladi, qiymat matni esa hamma kartada katak
      tepasidan boshlanadi va qoʻshni kartalar bilan bir tayanch chizigʻida turadi. */
   .contact-fact-value {
+    display: flex;
+    align-items: center;
     min-width: 0;
     min-height: var(--hit-min);
     margin: 0;

@@ -18,7 +18,8 @@ function benchmark(): number {
 /**
  * Qurilma belgilari (bosh skript) koʻrmagan kuchsiz telefonlar uchun: sahifa tinchiganda qisqa hisob
  * oʻlchanadi (ikki marta, eng yaxshisi olinadi) va sekin boʻlsa <html data-perf="lite"> qoʻyiladi,
- * natija 7 kunga saqlanadi. Keyingi sahnalar (skroll sahnalari, soʻzlarga boʻlish, sinish) yengil yoʻlda.
+ * natija 7 kunga saqlanadi. Yengil rejim faqat oynani soddalashtiradi (sinish, katta xiralik, yaltiroq
+ * nuqta yoʻq); harakat hamma qurilmada ishlaydi (egasining talabi).
  */
 export function PerfProbe() {
   useEffect(() => {

@@ -30,14 +30,14 @@ export function ContactBand({ locale, dict }: ContactBandProps) {
           <dl className="contact-band-list">
             <div className="feature contact-band-item">
               <FeatureIcon name="map-pin" />
-              <dt className="t-micro text-ink-3">{dict.contacts.details.address}</dt>
+              <dt className="sr-only">{dict.contacts.details.address}</dt>
               <dd className="t-body">
                 {c.address.value ? t(c.address.value, locale) : FILLER.line}
               </dd>
             </div>
             <div className="feature contact-band-item">
               <FeatureIcon name="phone" />
-              <dt className="t-micro text-ink-3">{dict.contacts.details.phone}</dt>
+              <dt className="sr-only">{dict.contacts.details.phone}</dt>
               <dd className="t-body tnum">{c.phones.value?.[0] ?? FILLER.word}</dd>
             </div>
           </dl>

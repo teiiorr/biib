@@ -6,7 +6,6 @@ import { registerAmbient } from "@/lib/motion/ambient-governor";
 import { DURATION, EASE, SCRUB } from "@/lib/motion/constants";
 import { doiraStaggerFn, doiraUnit } from "@/lib/motion/doira";
 import { motionAllowed } from "@/lib/motion/prefs";
-import { isLitePerf } from "@/lib/perf";
 import { belowViewport, reached } from "@/lib/motion/viewport";
 import { watchPending } from "@/lib/motion/watchdog";
 
@@ -31,7 +30,7 @@ interface FeatureParts {
 }
 
 /* Sahna pastidagi boʻshliq (motion.css dagi padding-bottom bilan bir xil). */
-const STAGE_BOTTOM = 24;
+const STAGE_BOTTOM = 8;
 
 interface Placement {
   readonly x: number;
@@ -106,7 +105,13 @@ function buildScene(
     const header = parseFloat(getComputedStyle(root).getPropertyValue("--header-h")) || 64;
     return grid.offsetHeight <= window.innerHeight - (header + 12) - STAGE_BOTTOM;
   };
-  let geometryOff = !fits();
+  /* Sigʻmasa sahna umuman qurilmaydi: «cover» boshlangʻich holati qoʻyilib qolib, sahifa boshini
+     qoplardi (skroll silliqlash tweeni progress(1) ni qaytarib 0 ga olib borardi). */
+  if (!fits()) {
+    delete root.dataset.scene;
+    return null;
+  }
+  let geometryOff = false;
   const place = (): void => {
     if (geometryOff) delete root.dataset.scene;
     else root.dataset.scene = "on";
@@ -152,6 +157,8 @@ function buildScene(
     );
   }
   if (items.length > 0) {
+    // Boshlangʻich holat hamma dalil uchun: pogʻonali fromTo faqat birinchisini darhol yashirardi.
+    gsap.set(items, { y: 32, autoAlpha: 0 });
     tl.fromTo(
       items,
       { y: 32, autoAlpha: 0 },
@@ -184,6 +191,8 @@ function buildScene(
       return;
     }
     trigger.disable(false);
+    // Scrub tweeni ham toʻxtatiladi, aks holda u sahnani yana boshlangʻich holatga qaytaradi.
+    gsap.killTweensOf(tl);
     if (geometryOff) tl.progress(1);
   };
   // Oʻlcham refresh dan oldin tekshiriladi (joylashuv shu yerda oʻzgarishi mumkin), holat keyin.
@@ -215,10 +224,6 @@ function buildScene(
     },
   });
   const created = trigger;
-  if (geometryOff) {
-    enabled = true;
-    apply();
-  }
   const unregister = registerAmbient(root, "scene", {
     pause: () => {
       governorOff = true;
@@ -341,8 +346,7 @@ export function useStickyFeature(
     scope,
     (engine, info) => {
       const root = scope.current;
-      // Kuchsiz qurilmada yopishqoq sahna yoʻq: boʻlim oddiy oqimda.
-      if (!root || !allowed || isLitePerf()) return;
+      if (!root || !allowed) return;
       const parts = queryParts(root);
       if (!parts) return;
       const late = info.late || lateMount;
