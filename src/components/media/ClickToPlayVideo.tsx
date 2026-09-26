@@ -106,7 +106,7 @@ export function ClickToPlayVideo({
           <Surface
             as="button"
             type="button"
-            radius="control"
+            radius="round"
             padding={0}
             text
             data-tone="dark"

@@ -198,8 +198,12 @@ function mountRefraction(element: HTMLElement): () => void {
     if (rect.width === 0 || rect.height === 0) return;
     const width = quantize(rect.width);
     const height = quantize(rect.height);
+    // Doira tugmada radius foizda (50%): pikselga oʻtkaziladi va yarim tomondan oshmaydi.
+    const raw = getComputedStyle(element).borderTopLeftRadius;
+    const value = Number.parseFloat(raw) || 0;
+    const short = Math.min(rect.width, rect.height);
     const radius = Math.round(
-      Number.parseFloat(getComputedStyle(element).borderTopLeftRadius) || 0,
+      Math.min(raw.endsWith("%") ? (value / 100) * short : value, short / 2),
     );
     const key = `${width}:${height}:${radius}`;
     if (key === lastKey) return;

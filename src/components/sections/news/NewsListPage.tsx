@@ -71,15 +71,20 @@ export function NewsListPage({ locale, dict }: PageProps) {
                 {/* Matn ustuni muqova bilan bir balandlikda: sarlavha muqovaning yuqori chizigʻida, mavzu va
                     oʻq pastki chizigʻida (egasining talabi: matn darajalari surat chetlariga teng). */}
                 <div className="news-grid-lead-text">
-                  <div className="news-grid-lead-head">
-                    <h2 className="t-h3 text-balance text-ink news-title" data-card-title="">
-                      <TransitionLink href={pathFor(locale, "newsItem", lead.slug)}>
-                        {t(lead.title, locale)}
-                      </TransitionLink>
-                    </h2>
-                    <p className="t-body-l text-ink-2 news-grid-lead-lead" data-clamp="">
-                      {t(lead.lead, locale)}
-                    </p>
+                  <h2 className="t-h3 text-balance text-ink news-title" data-card-title="">
+                    <TransitionLink href={pathFor(locale, "newsItem", lead.slug)}>
+                      {t(lead.title, locale)}
+                    </TransitionLink>
+                  </h2>
+                  {/* Kompyuterda ustun muqova balandligida yangilik matni bilan toʻladi va pastki chiziq
+                      oldidan sekin soʻnadi (egasining talabi: boʻsh joy qolmasin). */}
+                  <div className="news-grid-lead-excerpt" data-clamp="">
+                    <p className="t-body-l text-ink-2">{t(lead.lead, locale)}</p>
+                    {t(lead.body, locale).map((para) => (
+                      <p key={para.slice(0, 24)} className="t-body text-ink-2">
+                        {para}
+                      </p>
+                    ))}
                   </div>
                   <div className="news-grid-lead-foot">
                     <p className="t-micro text-ink-3 tnum news-meta">

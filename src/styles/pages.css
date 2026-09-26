@@ -124,7 +124,6 @@
     /* Matn muqova balandligida: sarlavha yuqori chetda, mavzu va oʻq pastki chetda. */
     .news-grid-lead-text {
       grid-column: 7 / 13;
-      align-content: space-between;
       padding-block: 8px;
     }
     .news-grid-lead .news-title {
@@ -132,16 +131,43 @@
       line-height: 1.2;
     }
   }
-  .news-grid-lead-head {
+  /* Telefon va planshet: faqat qisqa kirish, uch qator. */
+  .news-grid-lead-excerpt {
     display: grid;
-    gap: 16px;
+    gap: 12px;
+    align-content: start;
   }
-  /* Bosh xabarning qisqa kirishi: uch qatordan oshmaydi. */
-  .news-grid-lead-lead {
+  .news-grid-lead-excerpt > :first-child {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     overflow: hidden;
+  }
+  .news-grid-lead-excerpt > :not(:first-child) {
+    display: none;
+  }
+  /* Kompyuter: matn ustuni qator balandligini oʻzgartirmaydi (height 0 + min-height 100%, qatorni muqova
+     belgilaydi), oʻrtadagi matn qolgan joyni toʻldirib pastda soʻnadi. */
+  @media (min-width: 1024px) {
+    .news-grid-lead-text {
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      align-content: stretch;
+      gap: 16px;
+      height: 0;
+      min-height: 100%;
+    }
+    .news-grid-lead-excerpt {
+      overflow: hidden;
+      mask-image: linear-gradient(to bottom, #000 calc(100% - 72px), transparent);
+    }
+    .news-grid-lead-excerpt > :first-child {
+      display: block;
+      -webkit-line-clamp: none;
+      overflow: visible;
+    }
+    .news-grid-lead-excerpt > :not(:first-child) {
+      display: block;
+    }
   }
   .news-grid-lead-foot {
     display: flex;

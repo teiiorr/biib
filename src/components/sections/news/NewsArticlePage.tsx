@@ -64,8 +64,9 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
       />
       <Section as="article" rhythm="hero" labelledBy="article-title" className="article">
         <Container grid>
+          {/* Sarlavha toʻliq konteyner kengligida: uzun yangilik nomi markazda tor ustunga siqilmaydi. */}
           <header
-            className="col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3 article-head"
+            className="col-span-4 md:col-span-8 lg:col-span-12 article-head"
             data-grid-item=""
           >
             <Breadcrumbs
@@ -85,8 +86,9 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
               <span>{fill(dict.common.time.readingTime, { minutes })}</span>
             </p>
           </header>
+          {/* Muqova matn ustuni bilan aynan bir kenglikda (egasining talabi): surat xatboshilardan chiqmaydi. */}
           <div
-            className="col-span-4 md:col-span-8 lg:col-span-10 lg:col-start-2 article-cover"
+            className="col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3 xl:col-span-6 xl:col-start-4 article-cover"
             data-grid-item=""
           >
             <ViewTransition name={sharedName("news-cover", slug)}>
@@ -94,7 +96,7 @@ export function NewsArticlePage({ locale, dict, slug }: NewsArticlePageProps) {
                 article={article}
                 ratio="16:9"
                 locale={locale}
-                sizes="(min-width: 1440px) 1090px, (min-width: 1024px) 83vw, 100vw"
+                sizes="(min-width: 1440px) 640px, (min-width: 1024px) 66vw, 100vw"
                 meaningful
                 priority
                 motion={{ mode: "none", parallax: true }}

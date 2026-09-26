@@ -375,12 +375,14 @@
     display: grid;
     place-items: center;
   }
-  /* Egasining talabi: yozuvsiz, faqat ijro belgisi — 80 px shisha tugma (nomi aria-label da). */
+  /* Egasining talabi: yozuvsiz, faqat ijro belgisi — 56 px dumaloq shisha tugma (nomi aria-label da). */
   .media-film-play {
     display: grid;
     place-items: center;
-    width: 80px;
-    height: 80px;
+    width: 56px;
+    height: 56px;
+    /* Shisha sirtlar squircle burchakli: ijro tugmasi esa aniq doira. */
+    corner-shape: round;
     cursor: pointer;
     transition: scale 200ms var(--ease-ui);
   }
@@ -388,10 +390,6 @@
     .media-film-play:hover {
       scale: 1.06;
     }
-  }
-  .media-film-play .icon-play {
-    width: 32px;
-    height: 32px;
   }
   .media-video-control:active,
   .media-film-play:active {
