@@ -40,8 +40,8 @@ export interface ContentSnapshot {
   readonly media: Readonly<Record<string, PreparedImage>>;
   /** Nomi oʻzgargan yangilik: eski slug → yangi slug. */
   readonly redirects: Readonly<Record<string, string>>;
-  /** Lugʻat matnlari ustidan yoziladigan qiymatlar (kalit yoʻli → besh til). */
-  readonly texts: Readonly<Record<string, Localized>>;
+  /** Lugʻat matnlari ustidan yoziladigan qiymatlar (kalit yoʻli → besh til; satr yoki roʻyxat). */
+  readonly texts: Readonly<Record<string, Localized | Localized<readonly string[]>>>;
   /** Til tekshiruvi qabul qiladigan nom va atamalar. */
   readonly allowWords: readonly string[];
 }
@@ -222,7 +222,7 @@ const snapshotSchema: z.ZodType<ContentSnapshot> = z.object({
   artworks: z.array(artwork),
   media: z.record(z.string(), preparedImage),
   redirects: z.record(z.string(), z.string()),
-  texts: z.record(z.string(), text),
+  texts: z.record(z.string(), z.union([text, localized(z.array(z.string()))])),
   allowWords: z.array(z.string()),
 });
 

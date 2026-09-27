@@ -63,6 +63,8 @@ walk(
     contacts: selectContacts(snapshot),
     milestones: selectMilestones(snapshot),
     artworks: selectArtworks(snapshot),
+    /* Paneldan yozilgan lugʻat matnlari ham xuddi shu qoidalar bilan tekshiriladi. */
+    texts: snapshot.texts,
   },
   "",
   content,
@@ -78,5 +80,10 @@ for (const locale of LOCALES) {
 }
 
 process.stdout.write(
-  JSON.stringify({ dictionaries, namespaces, content, keepWords: [...KEEP_WORDS] }),
+  JSON.stringify({
+    dictionaries,
+    namespaces,
+    content,
+    keepWords: [...KEEP_WORDS, ...snapshot.allowWords],
+  }),
 );

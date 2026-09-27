@@ -3,7 +3,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 
 import { NewsArticlePage } from "@/components/sections/news/NewsArticlePage";
 import { getArticle, getNews, getNewsRedirect, t } from "@/content";
-import { getDictionary } from "@/i18n/dictionaries";
+import { getLiveDictionary } from "@/i18n/live-dictionary";
 import { isLocale, LOCALES, type Locale } from "@/i18n/locales";
 import { isNewsSlug, pathFor, resolveSection, sectionSegment } from "@/i18n/routes";
 import { buildMetadata, notFoundMetadata } from "@/lib/seo/metadata";
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     locale,
     key: "newsItem",
     slug,
-    dict: getDictionary(locale),
+    dict: await getLiveDictionary(locale),
     title: t(article.title, locale),
     description: t(article.lead, locale),
     status: article.status,
@@ -55,5 +55,7 @@ export default async function Page({ params }: PageProps) {
     if (target) permanentRedirect(pathFor(locale, "newsItem", target));
     notFound();
   }
-  return <NewsArticlePage locale={locale} dict={getDictionary(locale)} article={article} />;
+  return (
+    <NewsArticlePage locale={locale} dict={await getLiveDictionary(locale)} article={article} />
+  );
 }

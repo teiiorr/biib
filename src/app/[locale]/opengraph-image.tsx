@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-import { getDictionary } from "@/i18n/dictionaries";
+import { getLiveDictionary } from "@/i18n/live-dictionary";
 import { isLocale, type Locale } from "@/i18n/locales";
 import { OgImage, OG_SIZE, ogAlt } from "@/lib/seo/OgImage";
 import { loadOgFonts } from "@/lib/seo/og-fonts";
@@ -17,13 +17,13 @@ interface ImageProps {
 export async function generateImageMetadata({ params }: ImageProps) {
   const { locale } = await params;
   if (!isLocale(locale)) return [{ id: "og", alt: SITE_ALT, size, contentType }];
-  const dict = getDictionary(locale);
+  const dict = await getLiveDictionary(locale);
   return [{ id: "og", alt: ogAlt(dict.meta.siteName, dict.meta.home.title), size, contentType }];
 }
 
 export default async function Image({ params }: ImageProps) {
   const { locale } = await params;
-  const dict = getDictionary(locale);
+  const dict = await getLiveDictionary(locale);
   return new ImageResponse(
     <OgImage locale={locale} title={dict.meta.home.title} topic={dict.common.brand.tagline} />,
     { ...OG_SIZE, fonts: await loadOgFonts() },

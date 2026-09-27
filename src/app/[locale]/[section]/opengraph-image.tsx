@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 
-import { getDictionary } from "@/i18n/dictionaries";
+import type { Dictionary } from "@/i18n/dictionaries";
+import { getLiveDictionary } from "@/i18n/live-dictionary";
 import { isLocale, type Locale } from "@/i18n/locales";
 import { resolveSection } from "@/i18n/routes";
 import { OgImage, OG_SIZE, ogAlt } from "@/lib/seo/OgImage";
@@ -14,8 +15,7 @@ interface ImageProps {
   readonly params: Promise<{ locale: Locale; section: string }>;
 }
 
-function titleFor(locale: Locale, section: string): string {
-  const dict = getDictionary(locale);
+function titleFor(dict: Dictionary, locale: Locale, section: string): string {
   const key = resolveSection(locale, section);
   return key ? dict.meta[key].title : dict.meta.notFound.title;
 }
@@ -24,17 +24,22 @@ function titleFor(locale: Locale, section: string): string {
 export async function generateImageMetadata({ params }: ImageProps) {
   const { locale, section } = await params;
   if (!isLocale(locale)) return [{ id: "og", alt: SITE_ALT, size, contentType }];
-  const dict = getDictionary(locale);
+  const dict = await getLiveDictionary(locale);
   return [
-    { id: "og", alt: ogAlt(dict.meta.siteName, titleFor(locale, section)), size, contentType },
+    {
+      id: "og",
+      alt: ogAlt(dict.meta.siteName, titleFor(dict, locale, section)),
+      size,
+      contentType,
+    },
   ];
 }
 
 export default async function Image({ params }: ImageProps) {
   const { locale, section } = await params;
-  const dict = getDictionary(locale);
+  const dict = await getLiveDictionary(locale);
   return new ImageResponse(
-    <OgImage locale={locale} title={titleFor(locale, section)} topic={dict.meta.siteName} />,
+    <OgImage locale={locale} title={titleFor(dict, locale, section)} topic={dict.meta.siteName} />,
     { ...OG_SIZE, fonts: await loadOgFonts() },
   );
 }

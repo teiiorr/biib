@@ -15,7 +15,7 @@ import { IconSprite } from "@/components/icons/IconSprite";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import { PageTransition } from "@/components/motion/PageTransition";
 import { getContacts } from "@/content";
-import { getDictionary } from "@/i18n/dictionaries";
+import { getLiveDictionary } from "@/i18n/live-dictionary";
 import { isLocale, LOCALE_META, LOCALES } from "@/i18n/locales";
 import { fontPreloads, heroFontFace } from "@/lib/fonts";
 import { JsonLd } from "@/lib/seo/JsonLdScript";
@@ -62,8 +62,7 @@ interface LocaleLayoutProps {
 export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  const dict = getDictionary(locale);
-  const contacts = await getContacts();
+  const [dict, contacts] = await Promise.all([getLiveDictionary(locale), getContacts()]);
   const meta = LOCALE_META[locale];
   /* Til toʻplamlari (≤4) sarlavhaga preload sifatida koʻchadi; JSX link ikki marta chiqar edi. */
   for (const href of fontPreloads(locale)) {

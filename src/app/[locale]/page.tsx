@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { HomePage } from "@/components/sections/home/HomePage";
 import { getPageStatus } from "@/content";
-import { getDictionary } from "@/i18n/dictionaries";
+import { getLiveDictionary } from "@/i18n/live-dictionary";
 import { isLocale } from "@/i18n/locales";
 import { buildMetadata, notFoundMetadata } from "@/lib/seo/metadata";
 
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return buildMetadata({
     locale,
     key: "home",
-    dict: getDictionary(locale),
+    dict: await getLiveDictionary(locale),
     status: await getPageStatus("home"),
   });
 }
@@ -26,5 +26,5 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  return <HomePage locale={locale} dict={getDictionary(locale)} />;
+  return <HomePage locale={locale} dict={await getLiveDictionary(locale)} />;
 }

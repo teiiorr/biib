@@ -10,7 +10,8 @@ import { PartnersPage } from "@/components/sections/partners/PartnersPage";
 import { PrivacyPage } from "@/components/sections/privacy/PrivacyPage";
 import { ProjectsPage } from "@/components/sections/projects/ProjectsPage";
 import { getPageStatus } from "@/content";
-import { getDictionary, type Dictionary } from "@/i18n/dictionaries";
+import type { Dictionary } from "@/i18n/dictionaries";
+import { getLiveDictionary } from "@/i18n/live-dictionary";
 import { isLocale, LOCALES, type Locale } from "@/i18n/locales";
 import { SECTION_KEYS, resolveSection, sectionSegment, type SectionKey } from "@/i18n/routes";
 import { buildMetadata } from "@/lib/seo/metadata";
@@ -53,7 +54,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return buildMetadata({
     locale,
     key,
-    dict: getDictionary(locale),
+    dict: await getLiveDictionary(locale),
     status: await getPageStatus(key),
   });
 }
@@ -64,5 +65,5 @@ export default async function Page({ params }: PageProps) {
   const key = resolveSection(locale, section);
   if (!key) notFound();
   const Component = PAGES[key];
-  return <Component locale={locale} dict={getDictionary(locale)} />;
+  return <Component locale={locale} dict={await getLiveDictionary(locale)} />;
 }

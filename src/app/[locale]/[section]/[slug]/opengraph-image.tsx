@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og";
 
 import { getArticle, t } from "@/content";
-import { getDictionary } from "@/i18n/dictionaries";
+import type { Dictionary } from "@/i18n/dictionaries";
+import { getLiveDictionary } from "@/i18n/live-dictionary";
 import { isLocale, type Locale } from "@/i18n/locales";
 import { isNewsSlug } from "@/i18n/routes";
 import { OgImage, OG_SIZE, ogAlt } from "@/lib/seo/OgImage";
@@ -15,20 +16,20 @@ interface ImageProps {
   readonly params: Promise<{ locale: Locale; section: string; slug: string }>;
 }
 
-async function titleFor(locale: Locale, slug: string): Promise<string> {
+async function titleFor(dict: Dictionary, locale: Locale, slug: string): Promise<string> {
   const article = isNewsSlug(slug) ? await getArticle(slug) : null;
-  return article ? t(article.title, locale) : getDictionary(locale).meta.news.title;
+  return article ? t(article.title, locale) : dict.meta.news.title;
 }
 
 /* Sahifa maʼlumoti yigʻilayotganda params boʻsh kelishi mumkin: shunda umumiy alt. */
 export async function generateImageMetadata({ params }: ImageProps) {
   const { locale, slug } = await params;
   if (!isLocale(locale)) return [{ id: "og", alt: SITE_ALT, size, contentType }];
-  const dict = getDictionary(locale);
+  const dict = await getLiveDictionary(locale);
   return [
     {
       id: "og",
-      alt: ogAlt(dict.meta.news.title, await titleFor(locale, slug)),
+      alt: ogAlt(dict.meta.news.title, await titleFor(dict, locale, slug)),
       size,
       contentType,
     },
@@ -37,9 +38,10 @@ export async function generateImageMetadata({ params }: ImageProps) {
 
 export default async function Image({ params }: ImageProps) {
   const { locale, slug } = await params;
-  const dict = getDictionary(locale);
-  return new ImageResponse(
-    <OgImage locale={locale} title={await titleFor(locale, slug)} topic={dict.meta.news.title} />,
-    { ...OG_SIZE, fonts: await loadOgFonts() },
-  );
+  const dict = await getLiveDictionary(locale);
+  const title = await titleFor(dict, locale, slug);
+  return new ImageResponse(<OgImage locale={locale} title={title} topic={dict.meta.news.title} />, {
+    ...OG_SIZE,
+    fonts: await loadOgFonts(),
+  });
 }
