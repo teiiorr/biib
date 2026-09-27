@@ -84,7 +84,7 @@ export default function HeroVideo({ copy }: ArtProps) {
   useEffect(() => {
     const hero = sceneRef.current?.querySelector<HTMLElement>("[data-hero]");
     if (!hero) return;
-    /* Kadrdagi belgining oʻrni: sahna ustidagi belgi va parda shu oʻlchamlar bilan joylashadi. */
+    /* Kadrdagi belgining oʻrni: sahna ustidagi uchuvchi belgi shu oʻlchamlar bilan joylashadi. */
     const write = (): void => {
       const box = heroMediaBox(hero);
       const cover = coverRect(media.width, media.height, box.width, box.height, HERO_FOCUS_Y);
@@ -245,7 +245,6 @@ export default function HeroVideo({ copy }: ArtProps) {
       >
         {allowed ? <VideoSourceList sources={media} /> : null}
       </video>
-      <span className="hero-loop-veil" data-hero-veil="" aria-hidden="true" />
       {controlHost && control ? createPortal(control, controlHost) : null}
     </div>
   );

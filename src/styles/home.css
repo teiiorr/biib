@@ -56,7 +56,6 @@
   .home-hero-art,
   .home-hero-media,
   .home-hero-slot,
-  .home-hero-dim,
   .hero-loop {
     position: absolute;
     inset: 0;
@@ -118,25 +117,6 @@
   }
   .hero-loop[data-ready="true"] .hero-loop-video {
     opacity: 1;
-  }
-  /* Parda: kadrdagi doira oʻrnida kadr rangidagi yumshoq disk; belgi koʻchganda ikkinchi doira qolmaydi. */
-  .hero-loop-veil {
-    position: absolute;
-    left: calc(var(--logo-x, 50%) - var(--logo-size, 0px) * 0.7);
-    top: calc(var(--logo-y, 50%) - var(--logo-size, 0px) * 0.7);
-    width: calc(var(--logo-size, 0px) * 1.4);
-    height: calc(var(--logo-size, 0px) * 1.4);
-    border-radius: 50%;
-    /* Toʻliq qoplama doiradan 15 % keng, cheti yumshoq: kadrdagi oq chekka ingichka halqa boʻlib qolmaydi. */
-    background: radial-gradient(closest-side, var(--hero-veil) 82%, transparent 100%);
-    opacity: 0;
-    pointer-events: none;
-  }
-  /* Xiralashtirish lojuvardda (sut-oq tuman emas): kadr qorongʻilashadi, missiya uning ustidan koʻtariladi. */
-  .home-hero-dim {
-    background: var(--hero-scrim);
-    opacity: 0;
-    pointer-events: none;
   }
   /* Matn belgidan pastda boshlanadi; sigʻmasa qahramon oʻsadi va sahna oʻchadi (useHeroScene). */
   .home-hero-content {

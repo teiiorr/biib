@@ -81,7 +81,6 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
           }}
         />
       </div>
-      <div className="home-hero-dim" data-hero-dim="" aria-hidden="true" />
       <div className="home-hero-content" data-hero-content="">
         <Container className="home-hero-grid">
           <HeroTitle name={dict.common.brand.name} />

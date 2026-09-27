@@ -56,8 +56,8 @@ function cssSceneLength(wrapper: HTMLElement, fallback: number): number {
  * hero-scene: yopishqoq qahramon ustida skrablangan sahna (scrub 0.8, pin yoʻq). Uchish faqat video
  * belgini yigʻib boʻlgach boshlanadi (gate): erta skrollda video tezlashadi, belgi toʻliq yigʻiladi,
  * keyin sahna skroll joyiga yumshoq yetib oladi — animatsiya hech qachon chala qolmaydi. Kadr belgiga
- * yaqinlashadi va xiralashadi, matn koʻtarilib ketadi, belgi kadrdan chiqib sarlavhadagi
- * belgiga qoʻnadi. Qiymatlar funksiya: refresh da qayta hisoblanadi (Flip emas, D-M2).
+ * yaqinlashadi (qorongʻilashtirish yoʻq: fon bir tusda, egasining talabi), matn koʻtarilib ketadi,
+ * belgi kadrdan chiqib sarlavhadagi belgiga qoʻnadi. Qiymatlar funksiya: refresh da qayta hisoblanadi (Flip emas, D-M2).
  */
 export function useHeroScene(
   scope: RefObject<HTMLElement | null>,
@@ -79,14 +79,10 @@ export function useHeroScene(
       if (!hero) return;
       const html = document.documentElement;
       const media = Array.from(wrapper.querySelectorAll<HTMLElement>("[data-hero-media]"));
-      const dim = wrapper.querySelector<HTMLElement>("[data-hero-dim]");
       const content = wrapper.querySelector<HTMLElement>("[data-hero-content]");
       const logo = wrapper.querySelector<HTMLElement>("[data-hero-logo]");
-      const veil = wrapper.querySelector<HTMLElement>("[data-hero-veil]");
       const mark = visibleBrandMark();
-      const layers = [...media, dim, content, logo, veil].filter(
-        (el): el is HTMLElement => el !== null,
-      );
+      const layers = [...media, content, logo].filter((el): el is HTMLElement => el !== null);
 
       // Sahna faqat qahramon bitta ekranga sigʻganda: baland qahramon yopishganda pastki qismi yashirinardi.
       const runnable = (): boolean => {
@@ -162,11 +158,12 @@ export function useHeroScene(
       const tl = gsap.timeline({ paused: true, defaults: { ease: "none" } });
       if (media.length)
         tl.fromTo(media, { scale: 1 }, { scale: 1.12, transformOrigin: "50% 42%", duration: 1 }, 0);
-      if (dim) tl.fromTo(dim, { opacity: 0 }, { opacity: 0.72, duration: 0.7 }, 0);
       if (content)
         tl.fromTo(content, { y: 0, autoAlpha: 1 }, { y: -48, autoAlpha: 0, duration: 0.45 }, 0.1);
-      // Parda kadrdagi doirani belgi koʻchishidan oldin yopadi: sahna oxirida ikkita belgi koʻrinmaydi.
-      if (veil) tl.fromTo(veil, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.1 }, 0.08);
+      /* Belgi koʻchishi boshlanganda kadr eriydi, ostida sayt zamini (xuddi shu rang): sahna oxirida ikkita
+         belgi yoʻq. Parda (disk) ishlatilmaydi — video rangi brauzerga qarab CSS rangidan biroz farq qiladi,
+         disk esa Safari da dogʻ boʻlib koʻrinardi. */
+      if (media.length) tl.fromTo(media, { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.12 }, 0.08);
       if (logo) {
         tl.fromTo(
           logo,
