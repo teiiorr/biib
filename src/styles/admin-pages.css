@@ -26,9 +26,6 @@
     flex-direction: column;
     gap: 32px;
   }
-  .admin-page-center {
-    gap: 16px;
-  }
 
   .admin-cards {
     display: grid;

@@ -49,7 +49,6 @@ export const ADMIN_COPY = {
     journal: "Jurnal",
     security: "Xavfsizlik",
   },
-  placeholder: "Bu boʻlim tez orada ishga tushadi.",
   statuses: { confirmed: "Tasdiqlangan", draft: "Qoralama", pending: "Kutilmoqda" },
   common: {
     cancel: "Bekor qilish",
@@ -102,7 +101,6 @@ export const ADMIN_COPY = {
       order: "Tartib",
       text: "Matn",
       allow_words: "Soʻzlar roʻyxati",
-      order: "Tartib",
     },
     actions: {
       create: "Yaratildi",
