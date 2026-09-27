@@ -14,6 +14,7 @@ import "@/styles/admin-pages.css";
 import "@/styles/admin-editor.css";
 import "@/styles/admin-media.css";
 import "@/styles/admin-tables.css";
+import "@/styles/admin-people.css";
 
 /* Panel har soʻrovda serverda: sessiya cookie si oʻqiladi, hech bir sahifa oldindan yigʻilmaydi. */
 export const dynamic = "force-dynamic";

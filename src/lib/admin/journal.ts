@@ -1,7 +1,9 @@
 import "server-only";
 
 import type { Json } from "./database.types";
+import { PEOPLE_COPY } from "./copy-people";
 import type { AdminDb } from "./db";
+import { PEOPLE_ENTITIES } from "./restore-people";
 
 export interface JournalRow {
   readonly id: number;
@@ -9,7 +11,7 @@ export interface JournalRow {
   readonly entity: string;
   readonly action: string;
   readonly summary: string;
-  /** Faqat yangilik uchun va oldingi holat bor boʻlsa: qaytarish tugmasi. */
+  /** Qaytariladigan boʻlim va oldingi holat bor boʻlsa: qaytarish tugmasi. */
   readonly restorable: boolean;
 }
 
@@ -22,10 +24,13 @@ function field(value: Json | undefined, ...path: readonly string[]): string | nu
   return typeof current === "string" ? current : null;
 }
 
-/* Qisqacha: yangilikda oʻzbekcha sarlavha, rasmda fayl nomi, qolganida kalit. */
+/* Qisqacha: yangilikda oʻzbekcha sarlavha, odamda ism (kutilayotganida lavozim), rasmda fayl nomi,
+   tartibda roʻyxat nomi, qolganida kalit. */
 function summarize(entity: string, key: string, before: Json, after: Json): string {
+  if (entity === "order") return PEOPLE_COPY.order[key] ?? key;
   const source = after ?? before;
-  const title = field(source, "title", "uz") ?? field(source, "name", "uz");
+  const title =
+    field(source, "title", "uz") ?? field(source, "name", "uz") ?? field(source, "role", "uz");
   if (title) return title;
   const src = field(source, "src");
   if (src) return src.split("/").at(-1) ?? src;
@@ -49,6 +54,6 @@ export async function loadJournal(
     entity: row.entity,
     action: row.action,
     summary: summarize(row.entity, row.entity_key, row.before, row.after),
-    restorable: row.entity === "news" && row.before !== null,
+    restorable: (row.entity === "news" || PEOPLE_ENTITIES.has(row.entity)) && row.before !== null,
   }));
 }

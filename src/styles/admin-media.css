@@ -98,7 +98,9 @@
   .admin-upload[data-phase="done"] .admin-upload-state {
     color: var(--success);
   }
+  /* Xato matni uzun: oʻz qatorida, fayl nomini siqib yubormaydi. */
   .admin-upload[data-phase="failed"] .admin-upload-state {
+    grid-column: 1 / -1;
     color: var(--danger);
   }
   .admin-upload progress {

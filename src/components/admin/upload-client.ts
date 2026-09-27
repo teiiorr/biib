@@ -24,10 +24,11 @@ function canvasBlob(canvas: HTMLCanvasElement, type: string): Promise<Blob | nul
 
 /**
  * Brauzerda kichraytirish: EXIF burilishi qoʻllanadi va metamaʼlumot (joylashuv) qurilmadan chiqmaydi.
- * WebP ni kodlay olmaydigan brauzer PNG qaytaradi: unda JPEG. Shaffof PNG PNG boʻlib qoladi.
+ * WebP ni kodlay olmaydigan brauzer PNG qaytaradi: unda JPEG. Shaffof PNG PNG boʻlib qoladi;
+ * alpha (logotip) soʻralsa WebP oʻrniga PNG, JPEG hech qachon (fon qorayardi).
  * Brauzer ocholmagan fayl (masalan eski Safari da AVIF) oʻzgarishsiz yuboriladi.
  */
-export async function shrink(file: File): Promise<Blob> {
+export async function shrink(file: File, alpha = false): Promise<Blob> {
   let bitmap: ImageBitmap;
   try {
     bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
@@ -42,7 +43,7 @@ export async function shrink(file: File): Promise<Blob> {
   bitmap.close();
   if (file.type === "image/png") return (await canvasBlob(canvas, "image/png")) ?? file;
   const webp = await canvasBlob(canvas, "image/webp");
-  if (webp?.type === "image/webp") return webp;
+  if (webp?.type === "image/webp" || (alpha && webp)) return webp;
   return (await canvasBlob(canvas, "image/jpeg")) ?? file;
 }
 
@@ -94,7 +95,7 @@ export async function uploadImage(
 ): Promise<MediaItem> {
   if (!isUploadType(file.type)) throw new UploadFailure("type");
   onPhase("preparing", 0);
-  const blob = await shrink(file);
+  const blob = await shrink(file, purpose === "logo");
   const mime = blob.type || file.type;
   if (!isUploadType(mime)) throw new UploadFailure("type");
   if (blob.size > UPLOAD_MAX_BYTES) throw new UploadFailure("size");

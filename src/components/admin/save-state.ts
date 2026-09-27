@@ -1,11 +1,13 @@
 import { fill } from "@/i18n/format";
 import { NEWS_COPY } from "@/lib/admin/copy-news";
-import type { FieldErrors, SaveNewsState } from "@/lib/admin/news/types";
+import type { FieldErrors } from "@/lib/admin/news/types";
+import type { RecordSaveState } from "@/lib/admin/record";
 
 import type { SaveTone } from "./SaveBar";
 
 interface SaveBarInput {
-  readonly state: SaveNewsState;
+  /* Yangilik, odam va hamkor javoblari bir xil tuzilmada: maʼlumot turi bu yerda ahamiyatsiz. */
+  readonly state: RecordSaveState<unknown>;
   readonly pending: boolean;
   readonly dirty: boolean;
   readonly uploads: number;

@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { fill } from "@/i18n/format";
 import { MEDIA_COPY } from "@/lib/admin/copy-media";
-import { UPLOAD_TYPES, type MediaPurpose } from "@/lib/admin/media/purposes";
+import { UPLOAD_TYPES, type MediaPurpose, type UploadType } from "@/lib/admin/media/purposes";
 import type { MediaItem } from "@/lib/admin/news/types";
 
 import { AdminIcon } from "./AdminIcon";
@@ -17,6 +17,9 @@ export interface UploadDropProps {
   readonly purpose: MediaPurpose;
   readonly multiple?: boolean;
   readonly label: string;
+  /** Qabul qilinadigan turlar (masalan logotip uchun faqat PNG va WebP) va ularning izohi. */
+  readonly types?: readonly UploadType[];
+  readonly acceptHint?: string;
   /** Tanlash tartibida, faqat muvaffaqiyatli yuklanganlar. */
   readonly onUploaded: (items: readonly MediaItem[]) => void;
   /** Yuklash boshlanganda +1, tugaganda −1: shakl shu vaqtda saqlanmaydi. */
@@ -50,6 +53,8 @@ export function UploadDrop({
   purpose,
   multiple = false,
   label,
+  types = UPLOAD_TYPES,
+  acceptHint = M.accept,
   onUploaded,
   onBusy,
 }: UploadDropProps) {
@@ -74,7 +79,11 @@ export function UploadDrop({
     try {
       const results = await runLimited(picked, PARALLEL, (file, i) => {
         const key = batch[i]?.key ?? "";
-        return uploadImage(file, purpose, (phase, share) => patch(key, { phase, share })).then(
+        const allowed = (types as readonly string[]).includes(file.type);
+        const upload = allowed
+          ? uploadImage(file, purpose, (phase, share) => patch(key, { phase, share }))
+          : Promise.reject(new UploadFailure("type"));
+        return upload.then(
           (item) => {
             patch(key, { phase: "done", share: 1 });
             return item;
@@ -105,7 +114,7 @@ export function UploadDrop({
       <input
         id={id}
         type="file"
-        accept={UPLOAD_TYPES.join(",")}
+        accept={types.join(",")}
         multiple={multiple}
         className="sr-only"
         aria-describedby={`${id}-accept`}
@@ -122,7 +131,7 @@ export function UploadDrop({
         <span className="admin-drop-hint t-small text-ink-3">{M.drop}</span>
       </div>
       <p id={`${id}-accept`} className="t-small text-ink-3">
-        {M.accept}
+        {acceptHint}
       </p>
       {jobs.length ? (
         <>

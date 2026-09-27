@@ -8,6 +8,7 @@ import { requireAdminAction } from "../guard";
 import { adminSchema } from "../news/schema";
 import { loadNews } from "../news/queries";
 import { newsWarmPaths, publish } from "../publish";
+import { PEOPLE_ENTITIES, restorePeopleEntry } from "../restore-people";
 
 const J = ADMIN_COPY.journal;
 
@@ -20,7 +21,7 @@ export async function refreshSite(): Promise<ActionResult> {
 
 /**
  * Jurnal yozuvini qaytarish: yozuvdagi oldingi holat (admin shakli) oʻsha saqlash RPC si bilan qayta
- * yoziladi. Oʻchirilgan yangilik oʻz id si bilan qayta tiklanadi.
+ * yoziladi. Oʻchirilgan yangilik oʻz id si bilan qayta tiklanadi; odam, hamkor va tartib alohida modulda.
  */
 export async function restoreEntry(logId: number): Promise<ActionResult> {
   const session = await requireAdminAction();
@@ -32,6 +33,7 @@ export async function restoreEntry(logId: number): Promise<ActionResult> {
   });
   const entry = rows?.[0];
   if (logError || !entry || entry.id !== logId) return { ok: false, message: J.missing };
+  if (PEOPLE_ENTITIES.has(entry.entity)) return restorePeopleEntry(db, entry);
   const before = adminSchema.safeParse(entry.before);
   if (entry.entity !== "news" || !before.success) return { ok: false, message: J.notRestorable };
   const current = await loadNews(db, entry.entity_key).catch(() => null);

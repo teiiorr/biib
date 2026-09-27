@@ -101,6 +101,7 @@ export const ADMIN_COPY = {
       upop_shots: "UPOP galereya",
       text: "Matn",
       allow_words: "Soʻzlar roʻyxati",
+      order: "Tartib",
     },
     actions: {
       create: "Yaratildi",

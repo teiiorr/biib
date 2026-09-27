@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 
-import { AdminPlaceholder } from "@/components/admin/AdminPlaceholder";
-import { ADMIN_COPY } from "@/lib/admin/copy";
+import { PeopleListScreen } from "@/components/admin/PeopleScreens";
+import { PEOPLE_COPY } from "@/lib/admin/copy-people";
+import { adminDb } from "@/lib/admin/db";
 import { requireAdmin } from "@/lib/admin/guard";
 
-export const metadata: Metadata = { title: ADMIN_COPY.pages.experts };
+export const metadata: Metadata = { title: PEOPLE_COPY.kinds.expert.title };
 
 export default async function ExpertsAdminPage() {
-  await requireAdmin("/admin/ekspertlar");
-  return <AdminPlaceholder title={ADMIN_COPY.pages.experts} />;
+  const session = await requireAdmin("/admin/ekspertlar");
+  return <PeopleListScreen kind="expert" db={adminDb(session.accessToken)} />;
 }
