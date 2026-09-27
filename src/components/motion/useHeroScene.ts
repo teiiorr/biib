@@ -104,7 +104,6 @@ export function useHeroScene(
       };
       const settle = (): void => {
         progress.current = 1;
-        hero.style.setProperty("--scene-progress", "1");
         setAway(false);
         if (mark) gsap.set(mark, { autoAlpha: 1 });
       };
@@ -120,7 +119,6 @@ export function useHeroScene(
         delete html.dataset.heroScene;
         delete html.dataset.heroStatic;
         setAway(false);
-        hero.style.removeProperty("--scene-progress");
         for (const el of layers) el.style.removeProperty("will-change");
       };
 
@@ -194,7 +192,6 @@ export function useHeroScene(
       const report = (): void => {
         const p = tl.progress();
         progress.current = p;
-        hero.style.setProperty("--scene-progress", p.toFixed(3));
         setAway(p < 0.76);
       };
       tl.eventCallback("onUpdate", report);

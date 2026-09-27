@@ -220,7 +220,6 @@ function buildScene(
     },
     onUpdate: (self) => {
       progress.current = self.progress;
-      stage.style.setProperty("--scene-progress", self.progress.toFixed(3));
     },
   });
   const created = trigger;
@@ -242,7 +241,6 @@ function buildScene(
     created.kill();
     tl.kill();
     delete root.dataset.scene;
-    stage.style.removeProperty("--scene-progress");
     for (const el of layers) el.style.removeProperty("will-change");
   };
 }
