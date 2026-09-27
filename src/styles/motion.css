@@ -16,7 +16,7 @@
   @media (prefers-reduced-motion: no-preference) {
     :root:not([data-motion="off"])
       .home-hero:not([data-enter="skip"]):not([data-done])
-      .hero-word-in {
+      .hero-word-in::after {
       animation: hero-rise var(--dur-reveal) var(--ease-out) both;
       /* Doira: 90, 90, 180 ms guruhlari */
       animation-delay: calc((var(--i) - mod(var(--i), 3)) / 3 * 360ms + mod(var(--i), 3) * 90ms);
@@ -157,6 +157,10 @@
 :root .gold-text :is(.split-line, .split-word, .hero-word-in) {
   padding-block: 0.1em 0.3em;
   margin-block: -0.1em -0.3em;
+}
+:root .gold-text,
+:root .gold-text :is(.split-line, .split-word),
+:root .gold-text .hero-word-in::after {
   background-image: linear-gradient(
     100deg,
     var(--gold-lo) 0%,
@@ -185,9 +189,23 @@
 :root .gold-text:has(.split-line, .split-word, .hero-word-in) {
   background-image: none;
 }
-/* Bosh sahifa nomi: soʻzlar bitta plitkani boʻlishadi (HeroEnter --title-w va --word-x ni oʻlchaydi),
-   tasma butun nom boʻylab bitta boʻlib oʻtadi, har soʻzda qaytadan boshlanmaydi. */
-:root .home-hero-title[data-shine] .hero-word-in {
+/* Bosh sahifa nomi: soʻzning DOM matni joyida turadi, rangi qahramon zamini bilan bir xil va 0.4 %
+   noshaffof — brauzer uni birinchi kadrdayoq toʻliq oʻlchamda chizadi (LCP nomzodi), koʻzga esa bir piksel
+   ham farq qilmaydi. Koʻrinadigan oltin nusxa ::after da, aynan shu qutida: niqob ostidan u koʻtariladi. */
+:root .gold-text .hero-word-in {
+  position: relative;
+  -webkit-text-fill-color: color-mix(in srgb, var(--hero-ground) 0.4%, transparent);
+  color: color-mix(in srgb, var(--hero-ground) 0.4%, transparent);
+}
+:root .gold-text .hero-word-in::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  padding-block: 0.1em 0.3em;
+}
+/* Soʻzlar bitta plitkani boʻlishadi (HeroEnter --title-w va --word-x ni oʻlchaydi), tasma butun nom
+   boʻylab bitta boʻlib oʻtadi, har soʻzda qaytadan boshlanmaydi. */
+:root .home-hero-title[data-shine] .hero-word-in::after {
   background-size: calc(var(--title-w) * 2) 100%;
   background-position: calc(0px - var(--word-x)) 0;
 }
@@ -208,10 +226,16 @@
   }
 }
 :root:not([data-motion="off"]) .gold-text,
-:root:not([data-motion="off"]) .gold-text :is(.split-line, .split-word, .hero-word-in) {
+:root:not([data-motion="off"]) .gold-text :is(.split-line, .split-word),
+:root:not([data-motion="off"]) .gold-text .hero-word-in::after {
   animation: gold-shimmer var(--gold-cycle) linear infinite;
 }
-:root:not([data-motion="off"]) .home-hero-title[data-shine] .hero-word-in {
+/* Nomning oʻz foni yoʻq (soʻzlar boʻyaydi): uning tasmasi hech narsa chizmaydi, faqat har kadrda uslubni
+   qayta hisoblatadi. */
+:root:not([data-motion="off"]) .gold-text.home-hero-title {
+  animation: none;
+}
+:root:not([data-motion="off"]) .home-hero-title[data-shine] .hero-word-in::after {
   animation-name: gold-shimmer-title;
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -219,7 +243,7 @@
   :root:not([data-motion="off"])
     .home-hero:not([data-enter="skip"]):not([data-done])
     .home-hero-title
-    .hero-word-in {
+    .hero-word-in::after {
     animation:
       hero-rise var(--dur-reveal) var(--ease-out) both,
       gold-shimmer var(--gold-cycle) linear infinite;
@@ -228,7 +252,7 @@
   :root:not([data-motion="off"])
     .home-hero:not([data-enter="skip"]):not([data-done])
     .home-hero-title[data-shine]
-    .hero-word-in {
+    .hero-word-in::after {
     animation-name: hero-rise, gold-shimmer-title;
   }
 }
@@ -237,18 +261,23 @@
    koʻtarilish ham toʻxtab qolardi; nomning chaqnashi (hero-lock-glow) hech qachon toʻxtatilmaydi. */
 :root .gold-text[data-gold-off]:not(.home-hero-title),
 :root .gold-text[data-gold-off] :is(.split-line, .split-word),
-:root .home-hero[data-done] .gold-text[data-gold-off] .hero-word-in,
+:root .home-hero[data-done] .gold-text[data-gold-off] .hero-word-in::after,
 :root[data-perf="lite"][data-scrolling] .gold-text:not(.home-hero-title),
 :root[data-perf="lite"][data-scrolling] .gold-text :is(.split-line, .split-word),
-:root[data-perf="lite"][data-scrolling] .home-hero[data-done] .gold-text .hero-word-in {
+:root[data-perf="lite"][data-scrolling] .home-hero[data-done] .gold-text .hero-word-in::after {
   animation-play-state: paused;
 }
 @media (forced-colors: active) {
   :root .gold-text,
-  :root .gold-text * {
+  :root .gold-text *,
+  :root .gold-text .hero-word-in {
     background: none;
     -webkit-text-fill-color: currentColor;
     color: CanvasText;
+  }
+  /* Tizim ranglarida nom oddiy DOM matni bilan koʻrinadi, oltin nusxa kerak emas. */
+  :root .gold-text .hero-word-in::after {
+    content: none;
   }
 }
 

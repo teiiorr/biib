@@ -11,6 +11,7 @@ interface HeroTitleProps {
  * Nom serverda soʻzlarga boʻlinadi: har soʻz oʻz niqogʻi ostidan CSS bilan koʻtariladi (hero-enter),
  * JS kutilmaydi. aria-label butun nomni beradi, soʻz qutilari yordamchi texnologiyaga koʻrinmaydi
  * (SplitText aria: "auto" bilan bir xil). h1 hech qachon SplitText bilan boʻlinmaydi (§13.2).
+ * data-text: koʻtariladigan oltin nusxa (::after) matni; DOM matni joyida qolib LCP boʻladi (motion.css).
  */
 export function HeroTitle({ name }: HeroTitleProps) {
   const words = name.split(/\s+/).filter(Boolean);
@@ -24,7 +25,9 @@ export function HeroTitle({ name }: HeroTitleProps) {
         <Fragment key={`${index}-${word}`}>
           {index > 0 ? " " : null}
           <span className="hero-word" style={{ "--i": index } as CSSProperties} aria-hidden="true">
-            <span className="hero-word-in">{word}</span>
+            <span className="hero-word-in" data-text={word}>
+              {word}
+            </span>
           </span>
         </Fragment>
       ))}
