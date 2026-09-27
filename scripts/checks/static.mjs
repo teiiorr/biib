@@ -1,4 +1,5 @@
 import path from "node:path";
+import { checkAdminGuards } from "./admin-guard.mjs";
 import { scanAntiSlop } from "./anti-slop.mjs";
 import { checkContrast } from "./contrast.mjs";
 import { scanSpacing } from "./spacing.mjs";
@@ -105,6 +106,12 @@ export async function runStatic() {
     checks.push(step());
   }
   log("G0: greplar, token pariteti, kontrast");
-  checks.push(...scanAntiSlop(), ...scanSpacing(), ...checkTokenParity(), ...checkContrast());
+  checks.push(
+    ...scanAntiSlop(),
+    ...scanSpacing(),
+    ...checkTokenParity(),
+    ...checkContrast(),
+    ...checkAdminGuards(),
+  );
   return checks;
 }
