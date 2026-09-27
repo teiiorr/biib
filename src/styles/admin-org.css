@@ -1,0 +1,195 @@
+/* Boshqaruv paneli: aloqa, tarix, UPOP va galereya tahrirlari — tanlash roʻyxati, juft maydonlar,
+   qatorli roʻyxatlar, kartalar va galereya tuzilishi xaritasi. Qiymatlar sayt tokenlari va boʻshliq
+   shkalasida. */
+
+@layer components {
+  /* ---------- Tanlash roʻyxati ---------- */
+  .admin-select-box {
+    position: relative;
+    display: block;
+  }
+  .admin-select-input {
+    appearance: none;
+    cursor: pointer;
+  }
+  .admin-select-chevron {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    color: var(--ink-2);
+    translate: 0 -50%;
+    pointer-events: none;
+  }
+  @media (min-width: 600px) {
+    .admin-status-select {
+      max-width: 320px;
+    }
+  }
+
+  /* ---------- Juft maydonlar: qiymat va uning holati yonma-yon ---------- */
+  .admin-pair {
+    display: grid;
+    gap: 16px 24px;
+    align-items: start;
+  }
+  @media (min-width: 600px) {
+    .admin-pair {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 240px);
+    }
+    .admin-pair-even {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .admin-pair > .admin-status-select {
+      max-width: none;
+    }
+  }
+
+  /* ---------- Qatorli roʻyxat (telefonlar): torda maydon toʻliq, tugmalar ostida oʻngda ---------- */
+  .admin-rows,
+  .admin-items,
+  .admin-socials,
+  .admin-gallery-slots {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .admin-rows {
+    gap: 12px;
+  }
+  .admin-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+  .admin-row-grow {
+    flex: 1 1 200px;
+    min-width: 0;
+  }
+  .admin-row-tools {
+    display: flex;
+    gap: 8px;
+    margin-inline-start: auto;
+  }
+  .admin-row-full {
+    flex-basis: 100%;
+  }
+
+  /* ---------- Karta (tarix bosqichi, dalil, galereya joyi) ---------- */
+  .admin-item {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+    margin: 0;
+    padding: 16px;
+    border: 0;
+    border-radius: var(--radius-control);
+    background: var(--surface);
+    box-shadow: var(--inner-highlight);
+  }
+  @media (min-width: 600px) {
+    .admin-item {
+      padding: 24px;
+    }
+  }
+  /* Guruh ichidagi karta: fon yoʻq, faqat ingichka chegara (sirt ustida sirt boʻlmasin). */
+  .admin-group .admin-item {
+    padding: 16px;
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .admin-item-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    min-height: 48px;
+  }
+  .admin-item-head h3:focus {
+    outline: none;
+  }
+  .admin-item-grid {
+    display: grid;
+    gap: 16px 24px;
+    align-items: start;
+  }
+  @media (min-width: 600px) {
+    .admin-item-grid {
+      grid-template-columns: 160px repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Belgi tanlovi va yonida saytdagi plitka: plitka 44 px, maydon 48 px — pastki chetlari tekis. */
+  .admin-icon-select {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+  }
+  .admin-icon-select > .admin-select {
+    flex: 1;
+    min-width: 0;
+  }
+  /* Panelda skroll animatsiyasi yoʻq: saytdagi belgi plitkasi chizilib chiqmaydi, doim toʻliq koʻrinadi
+     (aks holda ekrandan pastdagi namuna boʻsh plitka boʻlib turardi). */
+  :root[data-admin] .admin-body .feature-icon svg {
+    animation: none;
+  }
+  .admin-icon-preview {
+    display: inline-flex;
+    flex: none;
+    padding-bottom: 2px;
+  }
+
+  /* ---------- Ijtimoiy tarmoqlar: telefonda karta, kompyuterda jadval qatori ---------- */
+  .admin-social {
+    min-width: 0;
+    margin: 0;
+    padding: 16px;
+    border: 0;
+    border-radius: var(--radius-control);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .admin-social-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    float: left;
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 0;
+    color: var(--ink);
+  }
+  .admin-social-fields {
+    clear: both;
+    display: grid;
+    gap: 16px;
+    align-items: end;
+  }
+  .admin-social-tools {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  @media (min-width: 1024px) {
+    .admin-social-fields {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 200px) auto;
+      align-items: start;
+    }
+    /* Tugmalar maydon qatorida: yorliq balandligi (label + 8 px) qadar pastda. */
+    .admin-social-tools {
+      padding-top: 28px;
+    }
+    .admin-social .admin-status-select {
+      max-width: none;
+    }
+  }
+
+  /* ---------- Eslatma (ogohlantirish emas): tint rangida ---------- */
+  .admin-note.admin-note-info {
+    background: color-mix(in oklab, var(--tint) 10%, transparent);
+  }
+}

@@ -4,6 +4,8 @@ import type { Json } from "./database.types";
 import { PEOPLE_COPY } from "./copy-people";
 import type { AdminDb } from "./db";
 import { PEOPLE_ENTITIES } from "./restore-people";
+import { ORG_RESTORABLE } from "./org/restore";
+import { orgSummary } from "./org/summary";
 
 export interface JournalRow {
   readonly id: number;
@@ -11,7 +13,7 @@ export interface JournalRow {
   readonly entity: string;
   readonly action: string;
   readonly summary: string;
-  /** Qaytariladigan boʻlim va oldingi holat bor boʻlsa: qaytarish tugmasi. */
+  /** Oldingi holat bor va obyekt qaytariladigan boʻlsa (yangilik, odamlar, aloqa, tarix, loyiha…): tugma. */
   readonly restorable: boolean;
 }
 
@@ -27,14 +29,19 @@ function field(value: Json | undefined, ...path: readonly string[]): string | nu
 /* Qisqacha: yangilikda oʻzbekcha sarlavha, odamda ism (kutilayotganida lavozim), rasmda fayl nomi,
    tartibda roʻyxat nomi, qolganida kalit. */
 function summarize(entity: string, key: string, before: Json, after: Json): string {
-  if (entity === "order") return PEOPLE_COPY.order[key] ?? key;
+  if (entity === "order") return PEOPLE_COPY.order[key] ?? orgSummary(entity, key) ?? key;
   const source = after ?? before;
   const title =
     field(source, "title", "uz") ?? field(source, "name", "uz") ?? field(source, "role", "uz");
   if (title) return title;
   const src = field(source, "src");
   if (src) return src.split("/").at(-1) ?? src;
-  return field(source, "key") ?? field(source, "slug") ?? `${entity} ${key.slice(0, 8)}`;
+  return (
+    orgSummary(entity, key) ??
+    field(source, "key") ??
+    field(source, "slug") ??
+    `${entity} ${key.slice(0, 8)}`
+  );
 }
 
 /** Jurnal: yangisi birinchi; before berilsa shu id dan oldingilari (sahifalash). */
@@ -54,6 +61,8 @@ export async function loadJournal(
     entity: row.entity,
     action: row.action,
     summary: summarize(row.entity, row.entity_key, row.before, row.after),
-    restorable: (row.entity === "news" || PEOPLE_ENTITIES.has(row.entity)) && row.before !== null,
+    restorable:
+      row.before !== null &&
+      (row.entity === "news" || PEOPLE_ENTITIES.has(row.entity) || ORG_RESTORABLE.has(row.entity)),
   }));
 }

@@ -7,6 +7,7 @@ import { NEWS_COPY } from "../copy-news";
 import { requireAdminAction } from "../guard";
 import { adminSchema } from "../news/schema";
 import { loadNews } from "../news/queries";
+import { restoreOrgEntry } from "../org/restore";
 import { newsWarmPaths, publish } from "../publish";
 import { PEOPLE_ENTITIES, restorePeopleEntry } from "../restore-people";
 
@@ -34,6 +35,8 @@ export async function restoreEntry(logId: number): Promise<ActionResult> {
   const entry = rows?.[0];
   if (logError || !entry || entry.id !== logId) return { ok: false, message: J.missing };
   if (PEOPLE_ENTITIES.has(entry.entity)) return restorePeopleEntry(db, entry);
+  const org = await restoreOrgEntry(db, entry);
+  if (org) return org;
   const before = adminSchema.safeParse(entry.before);
   if (entry.entity !== "news" || !before.success) return { ok: false, message: J.notRestorable };
   const current = await loadNews(db, entry.entity_key).catch(() => null);

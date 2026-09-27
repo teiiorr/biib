@@ -1,0 +1,138 @@
+/* Boshqaruv paneli: UPOP galereyasi tahriri (saytdagi toʻrning kichik nusxasi, joy kartalari, video
+   muqova kadri) va UPOP tahriridagi video fayllar koʻrinishi. */
+
+@layer components {
+  /* ---------- Tuzilish xaritasi: kompyuterdagi 12 ustunli toʻr (pages.css .upop-gallery-grid) ----------
+     Qator 44 px: eng past katak ham bosish uchun yetarli. */
+  .admin-gallery-figure {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 560px;
+    margin: 0;
+  }
+  .admin-gallery-map {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-auto-rows: var(--hit-min);
+    grid-auto-flow: row dense;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .admin-gallery-cell {
+    grid-column: span 4;
+    grid-row: span 2;
+    min-width: 0;
+  }
+  .admin-gallery-cell[data-slot="1"] {
+    grid-column: span 8;
+  }
+  .admin-gallery-cell:is([data-slot="2"], [data-slot="3"]) {
+    grid-row: span 1;
+  }
+  .admin-gallery-cell[data-slot="7"] {
+    grid-column: span 5;
+  }
+  .admin-gallery-cell[data-slot="8"] {
+    grid-column: span 7;
+  }
+  .admin-gallery-cell-button {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-s);
+    background: var(--surface-2);
+    box-shadow: inset 0 0 0 1px var(--line-strong);
+    cursor: pointer;
+  }
+  .admin-gallery-cell[data-filled] .admin-gallery-cell-button {
+    box-shadow: none;
+  }
+  .admin-gallery-cell-button:focus-visible {
+    outline-offset: 2px;
+  }
+  .admin-thumb.admin-gallery-cell-thumb {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    border-radius: 0;
+  }
+  .admin-gallery-cell-n {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    display: grid;
+    place-items: center;
+    min-width: 20px;
+    height: 20px;
+    padding-inline: 4px;
+    border-radius: var(--radius-s);
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  /* ---------- Joy kartalari: kompyuterda ikki ustun, 1-joy (eng katta ramka) toʻliq kenglikda ---------- */
+  @media (min-width: 1024px) {
+    .admin-gallery-slots {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: start;
+    }
+    .admin-gallery-slots > [data-slot="1"] {
+      grid-column: 1 / -1;
+    }
+  }
+  .admin-gallery-thumb {
+    position: relative;
+  }
+  .admin-gallery-kind {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
+
+  /* ---------- Video muqova kadri ---------- */
+  /* Telefonda kadr ustida, matn va tugma ostida (tugma yorligʻi tor ustunga sigʻmaydi). */
+  .admin-gallery-poster {
+    display: grid;
+    gap: 16px;
+    align-items: start;
+    border-radius: var(--radius-control);
+  }
+  .admin-gallery-poster > .admin-thumb {
+    max-width: 240px;
+  }
+  @media (min-width: 600px) {
+    .admin-gallery-poster {
+      grid-template-columns: 160px minmax(0, 1fr);
+    }
+  }
+  .admin-gallery-poster:focus {
+    outline: 2px solid var(--focus);
+    outline-offset: 4px;
+  }
+
+  /* ---------- UPOP media: fayl koʻrinishi va tavsif ---------- */
+  .admin-media-role {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .admin-media-file {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .admin-media-thumb {
+    flex: none;
+    width: 120px;
+  }
+  .admin-media-file p {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}

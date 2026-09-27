@@ -99,6 +99,7 @@ export const ADMIN_COPY = {
       socials: "Ijtimoiy tarmoqlar",
       project: "Loyiha",
       upop_shots: "UPOP galereya",
+      order: "Tartib",
       text: "Matn",
       allow_words: "Soʻzlar roʻyxati",
       order: "Tartib",

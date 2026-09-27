@@ -16,10 +16,9 @@ import { pathFor } from "@/i18n/routes";
 import { sharedName } from "@/lib/motion/transitions";
 
 import { InViewVideoLeaf } from "../lazy-leaves";
+import { highlightIcon } from "./upop-highlight-icons";
 import { UpopMotion } from "./UpopMotion";
 
-/* Punktlar tartibi loyiha yozuvidagi highlights bilan: bepul ariza, yosh, yakuniy konsert. */
-const HIGHLIGHT_ICONS = ["ticket", "users", "mic"] as const;
 interface UpopFeatureProps {
   readonly locale: Locale;
   readonly dict: Dictionary;
@@ -73,7 +72,7 @@ export async function UpopFeature({ locale, dict }: UpopFeatureProps) {
             <ul className="upop-feature-list t-body-l text-ink">
               {t(project.highlights, locale).map((item, index) => (
                 <li key={index} className="feature upop-feature-item">
-                  <FeatureIcon name={HIGHLIGHT_ICONS[index % HIGHLIGHT_ICONS.length] ?? "star"} />
+                  <FeatureIcon name={highlightIcon(index)} />
                   <span>{item}</span>
                 </li>
               ))}
