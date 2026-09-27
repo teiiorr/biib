@@ -14,6 +14,7 @@ import { scheduleScrollRefresh } from "@/lib/motion/refresh";
 import { onQueueDrain } from "@/lib/motion/scheduler";
 
 import { getEngine, requestEngine } from "./engine";
+import { GoldShineGate } from "./GoldShineGate";
 import { MotionContext } from "./motion-context";
 
 interface MotionProviderProps {
@@ -69,5 +70,10 @@ export function MotionProvider({ children }: MotionProviderProps) {
     };
   }, [prefs]);
 
-  return <MotionContext value={prefs}>{children}</MotionContext>;
+  return (
+    <MotionContext value={prefs}>
+      <GoldShineGate />
+      {children}
+    </MotionContext>
+  );
 }

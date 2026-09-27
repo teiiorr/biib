@@ -232,6 +232,17 @@
     animation-name: hero-rise, gold-shimmer-title;
   }
 }
+/* Ekrandan chiqqan sarlavhada (GoldShineGate: data-gold-off) va yengil rejimda barmoq skroll qilayotganda
+   tasma toʻxtab turadi, qaytganda shu joyidan davom etadi. Nom faqat kirish tugagach (data-done): aks holda
+   koʻtarilish ham toʻxtab qolardi; nomning chaqnashi (hero-lock-glow) hech qachon toʻxtatilmaydi. */
+:root .gold-text[data-gold-off]:not(.home-hero-title),
+:root .gold-text[data-gold-off] :is(.split-line, .split-word),
+:root .home-hero[data-done] .gold-text[data-gold-off] .hero-word-in,
+:root[data-perf="lite"][data-scrolling] .gold-text:not(.home-hero-title),
+:root[data-perf="lite"][data-scrolling] .gold-text :is(.split-line, .split-word),
+:root[data-perf="lite"][data-scrolling] .home-hero[data-done] .gold-text .hero-word-in {
+  animation-play-state: paused;
+}
 @media (forced-colors: active) {
   :root .gold-text,
   :root .gold-text * {
