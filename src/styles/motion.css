@@ -199,6 +199,9 @@
 }
 :root .gold-text .hero-word-in::after {
   content: attr(data-text);
+  /* Ekran oʻquvchisi soʻzni DOM dan oʻqiydi: nusxaning muqobil matni boʻsh, nom ikki marta oʻqilmaydi.
+     Bu sintaksisni bilmagan eski brauzer qatorni tashlaydi va yuqoridagi qiymat qoladi. */
+  content: attr(data-text) / "";
   position: absolute;
   inset: 0;
   padding-block: 0.1em 0.3em;
