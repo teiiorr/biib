@@ -188,6 +188,17 @@
       background: color-mix(in oklab, var(--material-ink) 8%, transparent);
     }
   }
+  /* Faol boʻlmagan oyna tugma faoldan aniq farq qilsin: muz va yaltiroq oʻrniga tinch sirt, xira yorliq,
+     chegara 3:1 (IX.6). Aks holda oyna materiali ui.css dagi oʻchiq holatni bosib ketardi. */
+  :root .ui-button:not([data-variant="ghost"], [data-variant="link"])[aria-disabled="true"] {
+    /* Yorliq rangi utilita orqali (text-on-tint): oʻzgaruvchining oʻzi almashtiriladi. */
+    --on-tint: var(--ink-3);
+    color: var(--ink-3);
+    background: var(--surface-2);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: var(--ring-boundary);
+  }
   /* Sirt: radius konsentrik, padding ichki radiusni belgilaydi. */
   .surface {
     border-radius: var(--surface-radius);
