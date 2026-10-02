@@ -8,7 +8,7 @@ export const nav = {
   partners: "Hamkorlar",
   contacts: "Aloqa",
   privacy: "Maxfiylik siyosati",
-  /* Tab-bar uchun qisqa yorliq: 320 px da beshta band bir qatorga sigʻadi (toʻliq nom aria-label da). */
+  /* Beshta tugma 320 px ekranda pastki panelga sigʻsin; toʻliq nom aria-label orqali beriladi. */
   tabShort: { home: "Bosh", projects: "UPOP" },
   menu: "Menyu",
   openMenu: "Menyuni ochish",

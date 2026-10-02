@@ -1,5 +1,5 @@
-/* Panelning oʻz belgilari: sayt toʻplami bilan bir oilada (24 px toʻr, 20 px jonli maydon, 1.75 px chiziq,
-   faqat absolyut buyruqlar). Ommaviy sprit kattalashmaydi: bular faqat panel HTML ida. */
+/* Panel belgilari sayt toʻplami bilan bir uslubda: 24 px toʻr, 1.75 px chiziq, faqat absolyut buyruqlar.
+   Saytning umumiy sprite fayli ogʻirlashmasin deb ular faqat panel HTML ichida. */
 
 export const ADMIN_ICON_NAMES = [
   "dashboard",
@@ -38,7 +38,7 @@ export const ADMIN_ICON_PATHS: Record<AdminIconName, string> = {
   trash:
     "M4 7 H20 M9 7 V5 Q9 4 10 4 H14 Q15 4 15 5 V7 M6 7 L7 19 Q7.1 20 8 20 H16 Q16.9 20 17 19 L18 7 M10 11 V16 M14 11 V16",
   upload: "M12 15 V4 M7 9 L12 4 L17 9 M4 15 V18 Q4 20 6 20 H18 Q20 20 20 18 V15",
-  /* arrow-up ning oynadagi aksi: uchi pastga 1 px siljigan. */
+  /* arrow-up belgisining teskari aksi, uchi 1 px pastga surilgan. */
   "arrow-down": "M12 5 L12 21 M6 15 L12 21 L18 15",
   more: "M6 13 A1 1 0 1 0 6 11 A1 1 0 1 0 6 13 Z M12 13 A1 1 0 1 0 12 11 A1 1 0 1 0 12 13 Z M18 13 A1 1 0 1 0 18 11 A1 1 0 1 0 18 13 Z",
   refresh: "M19.5 14.7 A8 8 0 1 1 17.1 5.9 L20 8.5 M20 4 V8.5 H15.5",

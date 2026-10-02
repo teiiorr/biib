@@ -7,7 +7,7 @@ export interface MotionPrefs {
   readonly motionOff: boolean;
   readonly isTouch: boolean;
   readonly breakpoint: Breakpoint;
-  /** Brauzerda oʻqilgunga qadar false; SSR va birinchi render bir xil. */
+  /** Brauzerda oʻqilgunga qadar false: SSR va birinchi chizish bir xil boʻladi. */
   readonly ready: boolean;
 }
 
@@ -25,7 +25,6 @@ export function isMotionOff(): boolean {
   return document.documentElement.getAttribute("data-motion") === "off";
 }
 
-/** Choreografiya ishga tushishi mumkinmi: ikkala cheklov ham yoʻq boʻlsa. */
 export function motionAllowed(prefs: Pick<MotionPrefs, "reduced" | "motionOff">): boolean {
   return !prefs.reduced && !prefs.motionOff;
 }

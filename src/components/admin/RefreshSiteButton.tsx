@@ -11,7 +11,7 @@ import { AdminIcon } from "./AdminIcon";
 
 const H = ADMIN_COPY.health;
 
-/** «Saytni yangilash»: bazada qoʻlda qilingan oʻzgarish ham hamma sahifaga darhol chiqadi. */
+/** Bazada qoʻlda qilingan oʻzgarish ham hamma sahifaga darhol chiqishi uchun. */
 export function RefreshSiteButton() {
   const [pending, startTransition] = useTransition();
   const [result, setResult] = useState<"ok" | "failed" | null>(null);

@@ -16,17 +16,14 @@ import { MediaThumb } from "./MediaThumb";
 export interface MediaPickerProps {
   readonly items: readonly MediaItem[];
   readonly multiple?: boolean;
-  /** Allaqachon ishlatilganlar: roʻyxatda koʻrinmaydi. */
+  /** Allaqachon ishlatilganlar roʻyxatda koʻrinmaydi. */
   readonly exclude?: ReadonlySet<string>;
   readonly onPick: (items: readonly MediaItem[]) => void;
 }
 
 const P = MEDIA_COPY.picker;
 
-/**
- * Oldin yuklangan rasmlardan tanlash: bittasi bosilganda darhol (muqova), koʻp tanlovda belgilab,
- * keyin «Qoʻshish». Kompyuterda dialog, telefonda pastki varaq.
- */
+/** Bitta tanlovda rasm bosilishi bilan tanlanadi, koʻp tanlovda belgilanib, keyin «Qoʻshish» bosiladi. */
 export function MediaPicker({ items, multiple = false, exclude, onPick }: MediaPickerProps) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<readonly string[]>([]);

@@ -1,10 +1,7 @@
 /*
- * Sarlavhalar uchun Unbounded (egasining tanlovi) oʻzbek kirillining Қ қ Ғ ғ Ҳ ҳ harflarini qamramaydi.
- * Skript Unbounded ni sarlavha qalinligida (wght 700) statik nusxaga aylantiradi va bu harflarni shriftning
- * oʻz shakllaridan quradi: Қ қ Ҳ ҳ → К к Х х + Ц ц dumining chuqurligida oʻng oyoq ostida dum (kengligi
- * I / l ustuni), Ғ ғ → Г г + ustun orqali koʻndalang chiziq. ʻ va ʼ Unbounded da bor va toʻgʻri shaklda.
- * Natija: src/assets/fonts/UnboundedUZ-700.ttf (sayt toʻplamlari, qahramon va OG rasmlari uchun manba).
- * fontTools va brotli kerak (PYTHON muhit oʻzgaruvchisi).
+ * Unbounded shriftida oʻzbek kirillining Қ қ Ғ ғ Ҳ ҳ harflari yoʻq. Skript shriftni sarlavha qalinligida
+ * (wght 700) statik nusxaga aylantiradi va bu harflarni uning oʻz shakllaridan quradi: Қ қ Ҳ ҳ harflari
+ * К к Х х asosida Ц ц chuqurligidagi dum bilan, Ғ ғ esa Г г asosida koʻndalang chiziq bilan.
  */
 import { execFileSync } from "node:child_process";
 import path from "node:path";

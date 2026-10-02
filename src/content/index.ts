@@ -24,9 +24,8 @@ import {
 export { t } from "./select";
 
 /*
- * Sahifa va komponentlar kontentga faqat shu funksiyalar orqali kiradi: manba (repo yoki maʼlumotlar
- * bazasi) almashsa ular tegilmaydi. Hammasi serverda, bitta render ichida bir marta hisoblanadi.
- * Matnlar Localized: til tanlovi komponentda (t).
+ * Sahifalar kontentga faqat shu funksiyalar orqali kiradi: manba almashsa ularga tegilmaydi.
+ * Hammasi serverda, bitta chizish davomida bir marta hisoblanadi.
  */
 
 export const getProjects = cache(async () => selectProjects(await loadSnapshot()));
@@ -69,7 +68,7 @@ export const getMilestones = cache(async () => selectMilestones(await loadSnapsh
 /** Yuklangan rasmlarning tayyor nusxalari (ContentPicture). */
 export const getMedia = cache(async () => (await loadSnapshot()).media);
 
-/** noindex va sitemap uchun sahifa holati (18.1). */
+/** noindex va sitemap uchun sahifa holati. */
 export const getPageStatus = cache(async (key: PageKey, slug?: string) =>
   statusForPage(await loadSnapshot(), key, slug),
 );

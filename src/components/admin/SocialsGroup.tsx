@@ -16,10 +16,7 @@ import type { OrgSectionProps } from "./useOrgEditor";
 
 const C = ORG_COPY.contacts;
 
-/**
- * Toʻrtta ijtimoiy tarmoq jadval kabi: har qatorda havola, yorliq, holat va tartib. Havolasi boʻsh
- * tarmoq saytdan olinadi (bazada qatori oʻchadi). Kompyuterda bir qatorda, telefonda karta.
- */
+/** Havolasi boʻsh tarmoq saytdan olib tashlanadi, bazadagi qatori ham oʻchadi. */
 export function SocialsGroup({ draft, patch, errors, idFor }: OrgSectionProps<ContactsDraft>) {
   const [announcement, setAnnouncement] = useState("");
   const list = draft.socials;

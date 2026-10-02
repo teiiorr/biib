@@ -15,7 +15,7 @@ import { getDictionary } from "../../src/i18n/dictionaries/index";
 import { LOCALES } from "../../src/i18n/locales";
 import { KEEP_WORDS } from "../../src/i18n/translit-exceptions";
 
-/* Til tekshiruvi uchun barcha satrlar: lugʻatlar toʻliq, kontent Localized maydonlar boʻyicha. */
+/* Lugʻatlar toʻliq olinadi, kontentdan esa faqat tarjima qilinadigan maydonlar. */
 const ROOT = path.resolve(import.meta.dirname, "../..");
 const LOCALE_SET = new Set<string>(LOCALES);
 

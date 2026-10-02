@@ -1,11 +1,9 @@
 @layer components {
-  /* Boshqaruv qatlami materiali: Oyna (Liquid Glass).
-   backdrop-filter faqat shu faylda va src/components/glass/ ichida boʻlishi mumkin. */
+  /* Boshqaruv qatlami materiali (oyna). backdrop-filter faqat shu faylda va src/components/glass/
+     ichida ishlatiladi. */
 
-  /* Oyna material xaritasi (Apple Liquid Glass): koʻzgu-muz. Markazda faqat 2 px xiralik va toʻyinganlik
-     (orqadan oʻtayotgan matn va surat aniq koʻrinadi), qirrada sinish (Chromium) kontentni egadi,
-     yuqori-chapdan tinch koʻzgu yaltirogʻi, ichki kaustika va pastki soya; ramka chizigʻi yoʻq.
-     Yorqinlik oshirilmaydi: sut tuman emas, muz. */
+  /* Oyna koʻzgu-muz kabi: markazda yengil xiralik, qirrada sinish (Chromium), tinch yaltiroq va pastki
+     soya. Yorqinlik oshirilmaydi, aks holda muz sut tumanga aylanardi. */
   .material {
     --m-tint: var(--g-tint);
     --m-blur: var(--g-blur);
@@ -19,22 +17,20 @@
     -webkit-backdrop-filter: blur(var(--m-blur)) saturate(var(--material-sat))
       brightness(var(--m-bright));
     backdrop-filter: blur(var(--m-blur)) saturate(var(--material-sat)) brightness(var(--m-bright));
-    /* Ramka chizigʻi yoʻq (egasining talabi: oyna koʻzgudek): shakl qirra sinishi, ichki yumshoq
-       kaustika va pastki soyadan bilinadi — 1 px halqa va tashqi kontur olib tashlangan. */
+    /* Ramka chizigʻi yoʻq: shakl qirra sinishi, ichki kaustika va pastki soyadan bilinadi. */
     box-shadow:
       inset 0 0 24px -12px color-mix(in oklab, var(--m-spec) var(--m-caustic), transparent),
       inset 0 -10px 14px -12px
         color-mix(in oklab, var(--material-shadow) calc(40% + var(--g-d) * 60%), transparent),
       var(--shadow-floating);
   }
-  /* Vibrantlik (Apple): tus butun oynani emas, faqat yorliqni tayanadi — glif atrofida material rangidagi
-     uch qavatli yumshoq tayanch. Oyna tiniq qoladi, yorliq esa har qanday kontent ustida oʻqiladi
-     (ohang notoʻgʻri kelgan lahzada ham: oq surat tungi oyna ostida). */
+  /* Tus butun oynani emas, faqat yorliqni tayanadi: glif atrofida uch qavatli yumshoq tayanch.
+     Oyna tiniq qoladi, yorliq esa ohang notoʻgʻri kelgan lahzada ham oʻqiladi. */
   .material[data-text="true"] {
     --m-tint: var(--g-tint-text);
   }
-  /* Oyna yorugʻ surat va tungi zamin chegarasida (useSurfaceTone, data-tone-mixed): bitta ohang ikkala
-     fonga mos kelmaydi, shu lahzada muz qalinlashadi — yorliq har qanday Shaffoflikda ≥ 4.5:1. */
+  /* Oyna yorugʻ surat va tungi zamin chegarasida turganda muz qalinlashadi: bitta ohang ikkala fonga
+     mos kelmaydi. */
   .material[data-text="true"][data-tone-mixed]:not([data-variant="tinted"]):not(
       [data-radius="panel"],
       [data-radius="sheet"]
@@ -50,8 +46,7 @@
     filter: drop-shadow(0 0 1px color-mix(in oklab, var(--material-base) 85%, transparent))
       drop-shadow(0 0 2px color-mix(in oklab, var(--material-base) 45%, transparent));
   }
-  /* Menyu, varaq, dialog va panellarda matn koʻp va mayda: Apple kabi qalin muz (0.78–0.95 tus,
-     kuchli xiralik). Shaffoflik va Zichlik baribir jonli koʻrinadi, yorliqlar har fonda ≥ 4.5:1. */
+  /* Menyu, varaq, dialog va panellarda matn koʻp va mayda, shu sabab muz qalin. Yorliqlar har fonda ≥ 4.5:1. */
   .surface:is([data-radius="panel"], [data-radius="sheet"])[data-text="true"] {
     --m-blur: calc(var(--g-blur) * 3 + 12px);
     --m-tint: calc(0.95 - 0.17 * var(--g-t));
@@ -61,9 +56,8 @@
     filter: none;
   }
 
-  /* ---------- Tugmalar ham oyna (egasining talabi: oyna effekti hamma joyda) ----------
-     Yaltiroq qatlami (158°) harakatsiz, fon rangi oʻtishi silliq (background-color). Yorliqlar har holatda
-     ≥ 4.5:1: pushti ustida oq/navy, tiniq muzda pushti (tint) — muz tusi matnli oyna chegarasidan past emas. */
+  /* ---------- Tugmalar ----------
+     Yaltiroq qatlami harakatsiz, faqat background-color silliq oʻtadi. Yorliqlar har holatda ≥ 4.5:1. */
   .ui-button:is([data-variant="primary"], [data-variant="ghost"]) {
     --btn-glare: linear-gradient(
       158deg,
@@ -78,7 +72,6 @@
       scale 200ms var(--ease-ui),
       translate 500ms var(--ease-out);
   }
-  /* Bosh tugma: pushti tusli muz — orqadagi rang ozgina oʻtadi, qirrada ichki yorugʻlik. */
   :root .ui-button[data-variant="primary"] {
     background-color: color-mix(in oklab, var(--tint) 92%, transparent);
     background-image: var(--btn-glare);
@@ -89,7 +82,6 @@
       inset 0 -8px 12px -10px color-mix(in oklab, var(--material-shadow) 90%, transparent),
       var(--shadow-raised);
   }
-  /* Ustiga kelganda (va fokusda): navbar kabi tiniq muz, yorliq pushti — tugma «eriydi», orqa koʻrinadi. */
   @media (hover: hover) {
     :root .ui-button[data-variant="primary"]:hover:not([aria-disabled="true"]) {
       --on-tint: var(--tint);
@@ -112,7 +104,6 @@
       transparent
     );
   }
-  /* Ghost: tinch holatda faqat yorliq; ustiga kelganda va fokusda muz plitka paydo boʻladi. */
   :root .ui-button[data-variant="ghost"] {
     background-color: transparent;
   }
@@ -138,7 +129,6 @@
       transparent
     );
   }
-  /* Oyna tugma: ustiga kelganda muz tiniqlashadi, ichki yorugʻlik kuchayadi (oltin toʻlish oʻrniga). */
   @media (hover: hover) {
     :root
       .ui-button.material[data-variant="glass"]:not([data-icon="only"]):hover:not(
@@ -151,8 +141,6 @@
         var(--shadow-floating);
     }
   }
-  /* Roʻyxatlardagi belgi plitkalari ham kichik oyna: muz, yaltiroq va ichki yorugʻlik; oltin qirra faqat
-     ustiga kelganda (egasining talabi). */
   .feature-icon {
     background-color: color-mix(in oklab, var(--material-base) 42%, transparent);
     background-image: linear-gradient(
@@ -175,8 +163,8 @@
     }
   }
 
-  /* Oyna ustida oyna yoʻq (10.1.2): sarlavha guruhi ichidagi oyna tugma (Koʻrinish) oʻz muzini, soyasini
-     va qirrasini chizmaydi — guruhning bitta oynasi yetadi, ichida alohida ramkali quti koʻrinmaydi. */
+  /* Oyna ustida oyna boʻlmaydi: sarlavha guruhidagi oyna tugma oʻz muzi, soyasi va qirrasini chizmaydi,
+     guruhning bitta oynasi yetadi. */
   .surface .ui-button.material[data-variant="glass"] {
     background: transparent;
     -webkit-backdrop-filter: none;
@@ -188,10 +176,10 @@
       background: color-mix(in oklab, var(--material-ink) 8%, transparent);
     }
   }
-  /* Faol boʻlmagan oyna tugma faoldan aniq farq qilsin: muz va yaltiroq oʻrniga tinch sirt, xira yorliq,
-     chegara 3:1 (IX.6). Aks holda oyna materiali ui.css dagi oʻchiq holatni bosib ketardi. */
+  /* Oʻchiq oyna tugma faolidan aniq farq qilsin: tinch sirt, xira yorliq, chegara 3:1. Aks holda oyna
+     materiali ui.css faylidagi oʻchiq holatni bosib ketardi. */
   :root .ui-button:not([data-variant="ghost"], [data-variant="link"])[aria-disabled="true"] {
-    /* Yorliq rangi utilita orqali (text-on-tint): oʻzgaruvchining oʻzi almashtiriladi. */
+    /* Yorliq rangini text-on-tint utilitasi beradi, shu sabab oʻzgaruvchining oʻzi almashtiriladi. */
     --on-tint: var(--ink-3);
     color: var(--ink-3);
     background: var(--surface-2);
@@ -204,8 +192,7 @@
     border-radius: var(--surface-radius);
     corner-shape: squircle;
   }
-  /* Telefon va kompyuterda bir xil oyna (egasining talabi): xiralik, tus, qirra va soyalar bitta
-     qiymatlarda; farq faqat qirra sinishida — uni hozircha faqat Chromium backdrop-filter da bera oladi. */
+  /* Qirra sinishini hozircha faqat Chromium backdrop-filter orqali bera oladi. */
   .surface[data-refract="on"] {
     -webkit-backdrop-filter: var(--surface-refract) blur(var(--m-blur))
       saturate(var(--material-sat)) brightness(var(--m-bright));
@@ -219,8 +206,7 @@
     overflow: hidden;
   }
 
-  /* Koʻzgu yaltirogʻi: yuqori-chap burchakdan tushgan yorugʻlik aksi, harakatsiz (egasi oq plashka
-     harakatini olib tashlagan). Halqa emas, butun sirt boʻylab soʻnadi: chegara chizigʻi hosil qilmaydi. */
+  /* Yaltiroq butun sirt boʻylab soʻnadi, shu sabab chegara chizigʻi hosil qilmaydi. */
   .surface::after {
     content: "";
     position: absolute;
@@ -249,7 +235,6 @@
     position: fixed;
   }
 
-  /* Variantlar. Tiniq: boy media ustida, ostida xiralashtiruvchi qatlam. */
   .surface[data-variant="clear"] {
     --m-tint: calc(var(--g-tint) * 0.45);
     background:
@@ -264,9 +249,7 @@
     color: var(--on-tint);
   }
 
-  /* Ostidagi kontent ohangi (10.1.3): sahifa tungi, oyna sukutda tungi materialda. Qorongʻi lenta yoki
-     kadr ustida muz biroz xiralashadi; yorugʻ rasm ustida (oq fonli portret) iOS dagidek yorugʻ muzga
-     oʻtadi — yorliq toʻq siyohda oʻqiladi. */
+  /* Oq fonli rasm ustida oyna yorugʻ muzga oʻtadi va yorliq toʻq siyohda oʻqiladi. */
   .surface[data-tone="dark"] {
     --material-ink: #f7f3ea;
     --material-ink-2: #c3cadb;
@@ -289,8 +272,8 @@
     --focus: var(--glass-light-tint);
   }
 
-  /* Ijro etilayotgan kadr ustidagi belgili tugma: kadr oq ham boʻlishi mumkin, tus 0.5 dan pastga
-     tushmaydi — tiniq sozlamada ham sut-oq belgi oq kadrda ≥ 3:1 (1.4.11). */
+  /* Videodagi kadr oq ham boʻlishi mumkin: tus 0.5 dan pastga tushmaydi, oq belgi tiniq sozlamada ham
+     ≥ 3:1 (WCAG 1.4.11). */
   .media-video > .surface[data-tone="dark"] {
     --m-tint: max(var(--g-tint-text), 0.5);
   }
@@ -313,7 +296,7 @@
     max-width: min(360px, calc(100vw - 32px));
   }
 
-  /* Sozlagich: 4 px yoʻl, pushti toʻldirish, kapsula tugmacha; tortganda linza. */
+  /* Sozlagich */
   .glass-slider {
     position: relative;
     display: flex;
@@ -429,8 +412,7 @@
     width: 48px;
     height: 28px;
     border-radius: var(--radius-control);
-    /* Oʻchiq holat ham oʻqilsin (1.4.11): siyoh va asos oʻrtasi — ikkala ohangda yoʻlak panelga ≥ 4:1,
-       oq tugmacha yoʻlakka ≥ 3.4:1. */
+    /* Oʻchiq holat ham koʻrinsin (WCAG 1.4.11): yoʻlak panelga ≥ 4:1, oq tugmacha yoʻlakka ≥ 3.4:1. */
     background: color-mix(in oklab, var(--material-ink) 55%, var(--material-base));
     transition: background var(--dur-ui) var(--ease-ui);
   }
@@ -459,15 +441,13 @@
       transform var(--dur-ui) var(--ease-ui),
       background var(--dur-ui) var(--ease-ui);
   }
-  /* Tungi pushti ustida oq tugmacha 2.7:1: yoqilganda tugmacha pushti ustidagi yorliq rangida. */
+  /* Tungi pushti ustida oq tugmacha 2.7:1 berardi, shu sabab u pushti ustidagi yorliq rangida. */
   .glass-switch[aria-checked="true"] .glass-switch-knob {
     transform: translateX(20px);
     background: var(--on-tint);
   }
 
-  /* Skroll cheti (§10.1.4, Apple «soft» cheti): faqat oyna ustidagi ingichka tasma — ekran chetidan
-     sarlavha oynasigacha yengil xiralik va tus, 12 px da soʻnadi. Oyna ortida hech qanday parda yoʻq:
-     skrollda nima oʻtayotgani muz orqali aniq koʻrinadi. Ohang sarlavha sirtlaridan (useSurfaceTone). */
+  /* Oyna ortida parda yoʻq: skrollda nima oʻtayotgani muz orqali koʻrinib turadi. */
   .scroll-edge {
     --edge-tint: var(--bg);
     --edge-strength: 56%;
@@ -525,8 +505,8 @@
     }
   }
 
-  /* Shaffoflikni kamaytirish, kontrastni oshirish va backdrop-filter yoʻq brauzerlar: qattiq sirt.
-     :root bilan kuchaytirilgan: aks holda variant va panel qoidalari tiniq fonni qaytarardi. */
+  /* Shaffoflik kamaytirilganda, kontrast oshirilganda yoki backdrop-filter yoʻq boʻlsa sirt qattiq.
+     :root bilan kuchaytirilgan, aks holda variant va panel qoidalari tiniq fonni qaytarardi. */
   @supports not (backdrop-filter: blur(1px)) {
     :root .material:not([data-variant="tinted"]) {
       background: var(--material-base);
@@ -691,8 +671,8 @@
   .appearance-note {
     color: var(--material-ink-2);
   }
-  /* Qalin muz ham ostidagi kontentga qarab ohang oladi: pushti havola kulrang oynada 3:1 ga tushardi,
-     shu sabab qaytarish material siyohida, ostchiziq bilan. */
+  /* Pushti havola kulrang oynada 3:1 ga tushardi, shu sabab qaytarish tugmasi material siyohida,
+     ostchiziq bilan. */
   .appearance-reset {
     align-self: flex-start;
     min-height: 44px;
@@ -703,8 +683,7 @@
     text-underline-offset: 0.2em;
   }
 
-  /* UPOP galereyasidagi oyna ramka: kadr atrofida muz paspartu — ortidagi baxmal fon xiralashib
-     koʻrinadi, yuqori chapda yaltiroq, qirrada yorugʻlik (pages.css, .upop-shot). */
+  /* UPOP galereyasidagi oyna ramka: kadr atrofida muz paspartu (pages.css, .upop-shot). */
   .upop-shot[data-frame="glass"] {
     background:
       linear-gradient(158deg, color-mix(in oklab, #ffffff 16%, transparent) 0%, transparent 46%),

@@ -11,7 +11,6 @@ export function scorecardSnapshot() {
   return { scorecard: flattenScores(front), findings: readFindings(front) };
 }
 
-/** cleanPasses: toʻliq oʻtish va nol blocker/major/minor boʻlsa oshadi, aks holda 0. */
 export function buildState(ctx, treeHash) {
   const previous = readJson(".verify/state.json", null);
   const { scorecard, findings } = scorecardSnapshot();

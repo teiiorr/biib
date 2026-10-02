@@ -16,7 +16,7 @@ import { LocaleTabs } from "./LocaleTabs";
 import { useLocaleEditing } from "./useLocaleEditing";
 
 export interface LocaleListFieldProps {
-  /** Matn maydoni id si `${id}-${til}`: xatoga fokus yashirin tabni ham ochadi (editor-focus.ts). */
+  /** Maydon id qiymati `${id}-${til}`: xatoga fokus yashirin tabni ham ochadi (editor-focus.ts). */
   readonly id: string;
   readonly label: string;
   readonly hint: string;
@@ -30,10 +30,6 @@ export interface LocaleListFieldProps {
 
 const L = NEWS_COPY.locale;
 
-/**
- * Uzun matn (xatboshilar roʻyxati) besh tilda: har til alohida tabda, tabda toʻliqlik nuqtasi. Kirill
- * va 2026 imlosi LocaleField dagi kabi oʻzbekchadan oʻgiriladi.
- */
 export function LocaleListField({
   id,
   label,

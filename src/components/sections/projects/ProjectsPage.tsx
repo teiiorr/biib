@@ -37,12 +37,7 @@ function factValue(
   return fact.value ? t(fact.value, locale) : pending;
 }
 
-/**
- * UPOP TREND sahifasi: markazdagi sarlavha, toʻliq kenglikdagi sahna halqasi, faktlar teng toʻrda,
- * bosilganda yuklanadigan film, galereya (8 joy, hozircha izohda), roʻyxatdan oʻtish lentasi (upop.uz). Sarlavhalar ostida tavsif yoʻq,
- * uzun matn oʻrniga faqat faktlar (egasining talabi). Harakat: halqa yumshoq ochiladi va parallaksda
- * yuradi, sarlavhalar soʻzma-soʻz, faktlar doira ritmida; film ramkasi yumshoq ochiladi.
- */
+/** Sarlavhalar ostida tavsif yoʻq: uzun matn oʻrniga faqat faktlar. */
 export async function ProjectsPage({ locale, dict }: PageProps) {
   const project = await getFlagship();
   if (!project) notFound();
@@ -124,7 +119,7 @@ export async function ProjectsPage({ locale, dict }: PageProps) {
         </Container>
       </Section>
 
-      {/* Galereya: 8 joy upop_shots jadvalidan; boʻsh boʻlsa koʻrinmaydi. */}
+      {/* Galereya upop_shots jadvalidan; boʻsh boʻlsa koʻrinmaydi. */}
       <UpopGallery locale={locale} dict={dict} />
 
       <Section

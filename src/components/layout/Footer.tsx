@@ -23,7 +23,7 @@ interface FooterProps {
 const ORG_LINKS: readonly PageKey[] = ["about", "leadership", "experts", "partners"];
 const DEVELOPER = "teiior";
 
-/** Futer: tepada ingichka ajratuvchi chiziq, toʻrt guruh, pastki qator (15.10); kirishi FooterArrive da. */
+/** Kirish animatsiyasi FooterArrive komponentida. */
 export async function Footer({ locale, dict }: FooterProps) {
   const [contacts, flagship] = await Promise.all([getContacts(), getFlagship()]);
   const year = 2026;
@@ -102,7 +102,7 @@ export async function Footer({ locale, dict }: FooterProps) {
             {dict.footer.privacy}
           </Link>
           <FooterLangs locale={locale} label={dict.nav.chooseLanguage} />
-          {/* Muallif nomi pushti havola (egasining talabi): teiior.uz yangi varaqda ochiladi. */}
+          {/* Muallif nomi havola: teiior.uz yangi varaqda ochiladi. */}
           <p className="footer-credit">
             {dict.footer.credit.split(DEVELOPER)[0]}
             <a

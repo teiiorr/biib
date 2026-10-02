@@ -1,4 +1,4 @@
-/** Yangiliklar roʻyxati va tahrir oynasi matnlari (panel bir tilli: oʻzbek lotini). */
+/** Yangiliklar roʻyxati va tahrir oynasi matnlari. */
 export const NEWS_COPY = {
   list: {
     caption: "Saytdagi yangiliklar, eng yangisi birinchi",

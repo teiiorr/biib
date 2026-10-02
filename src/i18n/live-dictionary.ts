@@ -8,8 +8,8 @@ import type { Locale } from "./locales";
 import { withTextOverrides } from "./text-overrides";
 
 /**
- * Sahifa, metadata va OG rasm uchun lugʻat: repodagi matn ustidan paneldan yozilgan almashtirishlar
- * (snapshot.texts). Mijoz komponentlari lugʻatni props bilan oladi: yangi JS qoʻshilmaydi.
+ * Repodagi lugʻat ustiga paneldan yozilgan matnlar (snapshot.texts) qoʻyiladi. Mijoz komponentlari
+ * lugʻatni props orqali oladi, shu sabab JS hajmi oshmaydi.
  */
 export const getLiveDictionary = cache(async (locale: Locale): Promise<Dictionary> => {
   const { texts } = await loadSnapshot();

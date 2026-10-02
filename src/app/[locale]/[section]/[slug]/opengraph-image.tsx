@@ -21,7 +21,7 @@ async function titleFor(dict: Dictionary, locale: Locale, slug: string): Promise
   return article ? t(article.title, locale) : dict.meta.news.title;
 }
 
-/* Sahifa maʼlumoti yigʻilayotganda params boʻsh kelishi mumkin: shunda umumiy alt. */
+/* Sahifa maʼlumoti yigʻilayotganda params boʻsh kelishi mumkin, unda umumiy alt qaytadi. */
 export async function generateImageMetadata({ params }: ImageProps) {
   const { locale, slug } = await params;
   if (!isLocale(locale)) return [{ id: "og", alt: SITE_ALT, size, contentType }];

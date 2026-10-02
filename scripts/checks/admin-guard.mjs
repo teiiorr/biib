@@ -18,9 +18,8 @@ function walk(dir, out = []) {
 }
 
 /**
- * Panel himoyasi (G0): layout yoʻnaltirmaydi, shu sabab har panel sahifasi requireAdmin ni oʻzi
- * chaqiradi; har eksport qilingan server amali birinchi qatorda requireAdminAction ni chaqiradi.
- * Unutilgan bitta tekshiruv — kirmagan odam uchun ochiq sahifa yoki yozuv.
+ * Panel layout fayli yoʻnaltirmaydi, shuning uchun har bir sahifa requireAdmin, har bir server amali esa
+ * birinchi qatorda requireAdminAction chaqiruviga ega boʻlishi shart. Bitta unutilgan tekshiruv begonaga yoʻl ochadi.
  */
 export function checkAdminGuards() {
   const problems = [];

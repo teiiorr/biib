@@ -82,18 +82,17 @@
 }
 
 :root {
-  /* Koʻrinish paneli oʻzgartiradigan ikkita qiymat; qolgani calc(). */
+  /* Koʻrinish paneli faqat shu ikki qiymatni oʻzgartiradi, qolganlari ulardan hisoblanadi. */
   --g-t: 0.5;
   --g-d: 0.5;
-  /* Apple Liquid Glass: muz kabi tiniq. Tus 0.30 → 0.02 (oʻrtada 0.16), xiralik 0.5 → 5.5 px (oʻrtada
-     2 px, kvadratik: tiniq uchida nozik boshqaruv), toʻyinganlik 1.6 → 2.1. Orqadan oʻtayotgan matn
-     va surat aniq koʻrinadi; sinish kuchi JS da (surface-effects). */
+  /* Xiralik kvadratik oʻsadi: tiniq uchida sozlash nozikroq boʻladi. Sinish kuchi JS tomonida
+     (surface-effects). */
   --g-tint: calc(0.3 - 0.28 * var(--g-t));
   --g-blur: calc(0.5px + 1px * var(--g-d) + 4px * var(--g-d) * var(--g-d));
   --g-sat: calc(1.6 + 0.5 * var(--g-d));
   --g-rim: calc(0.7 + 0.45 * var(--g-d));
-  /* Yorliqli oynada tus 0.10 dan past tushmaydi; oʻqilishni asosan yorliq atrofidagi tayanch beradi
-     (materials.css, --m-halo), shu sabab oyna ortidagi kontent koʻrinib turadi. */
+  /* Yorliqli oynada oʻqilishni asosan yorliq atrofidagi tayanch beradi (materials.css, --m-halo),
+     shu sabab tus 0.10 dan pastga tushmaydi, ortidagi kontent esa koʻrinib turadi. */
   --g-tint-text: max(var(--g-tint), 0.1);
   --light-x: 30%;
   --light-y: 0%;
@@ -112,7 +111,7 @@
   --columns: 4;
   --margin: 16px;
   --gutter: 16px;
-  /* Boʻlimlar ORASIDAGI masofa (48/64/96): har boʻlim ikki tomonga yarmini beradi, qoʻshni ikkitasi toʻliq qadam. */
+  /* Har boʻlim ikki tomoniga yarim qadam oladi, qoʻshni ikkitasi birga toʻliq qadam beradi. */
   --section-gap: 48px;
   /* Rangli lenta (lojuvard, sirt) ichki boʻshligʻi: chekkasidan matngacha. */
   --band-pad: 48px;
@@ -179,7 +178,7 @@
     -webkit-text-size-adjust: 100%;
     overflow-x: clip;
   }
-  /* Ustun: qisqa sahifada futer ekran pastiga tushadi, boʻshliq futerdan tashqarida qolmaydi. */
+  /* Qisqa sahifada futer ekran pastiga tushadi, ostida boʻsh joy qolmaydi. */
   body {
     display: flex;
     flex-direction: column;
@@ -221,7 +220,7 @@
     display: block;
     max-width: 100%;
   }
-  /* Brauzer tugmada text-shadow ni oʻchiradi: oyna yorligʻi tayanchi (vibrantlik) tugmaga ham yetsin. */
+  /* Brauzer tugmada text-shadow xossasini oʻchiradi, oyna yorligʻining tayanchi esa tugmaga ham kerak. */
   button {
     font: inherit;
     color: inherit;
@@ -329,7 +328,7 @@
   letter-spacing: var(--ls-micro);
   font-weight: var(--fw-micro);
 }
-/* Tugma, yorliq va bir qatorli sarlavhalar: matn cap-height va baseline boʻyicha tekislanadi. */
+/* Matn qator qutisi boʻyicha emas, cap-height va baseline boʻyicha tekislanadi. */
 @utility text-trim {
   text-box: trim-both cap alphabetic;
 }
@@ -337,7 +336,7 @@
   max-width: var(--measure);
 }
 
-/* Toʻr: ustunlar va chetlar breakpointga qarab :root da oʻzgaradi. */
+/* Ustunlar soni va chetlar :root ichida ekran kengligiga qarab oʻzgaradi. */
 @utility container-site {
   width: 100%;
   max-width: calc(var(--content-max) + 2 * var(--margin));
@@ -349,14 +348,13 @@
   grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
   column-gap: var(--gutter);
 }
-/* Qoʻshni ikki oddiy boʻlim orasida matndan matngacha aynan --section-gap qoladi (ikki baravar emas). */
+/* Yarim qadam: qoʻshni ikki boʻlim orasida aynan --section-gap qoladi, ikki baravar emas. */
 @utility section-pad {
   padding-block: calc(var(--section-gap) / 2);
 }
 @utility section-band {
   padding-block: var(--band-pad);
 }
-/* Nonushoq oyna sarlavhasiga yaqin turadi; pastda keyingi boʻlim bilan bir xil yarim qadam. */
 @utility section-hero {
   padding-top: var(--hero-pad-top);
   padding-bottom: calc(var(--section-gap) / 2);

@@ -2,17 +2,14 @@
 
 import { useEffect } from "react";
 
-/**
- * Saqlanmagan oʻzgarish bor ekan: sahifani yopish yoki yangilashda brauzer soʻraydi, panel ichidagi
- * havolaga oʻtishda esa tasdiqlash oynasi chiqadi (Next havolasi beforeunload ni chaqirmaydi).
- */
+/** Next havolasi beforeunload ni chaqirmaydi, shu sabab panel ichidagi oʻtishlar alohida soʻraladi. */
 export function useLeaveGuard(active: boolean, message: string): void {
   useEffect(() => {
     if (!active) return;
     const beforeUnload = (event: BeforeUnloadEvent) => {
       event.preventDefault();
     };
-    /* Hujjatning ushlash bosqichida: React ildiz tinglovchisidan (Link) oldin ishlaydi. */
+    /* Ushlash bosqichi: Link ning React tinglovchisidan oldin ishlashi kerak. */
     const click = (event: MouseEvent) => {
       if (event.defaultPrevented || event.button !== 0) return;
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;

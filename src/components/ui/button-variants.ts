@@ -6,7 +6,7 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        /* Fon materials.css da (pushti tusli muz, hover da tiniq muz): utilita uni bosib ketmasin. */
+        /* Fon materials.css faylida: utilita klassi uni bosib ketmasin. */
         primary: "text-on-tint",
         glass: "material text-material-ink",
         ghost: "text-ink",
@@ -25,7 +25,7 @@ export const buttonVariants = cva(
 export type ButtonVariant = NonNullable<VariantProps<typeof buttonVariants>["variant"]>;
 export type ButtonSize = NonNullable<VariantProps<typeof buttonVariants>["size"]>;
 
-/* §8 IX.1 juftliklari: 40 → 16, 48 → 20, 56 → 24. */
+/* Tugma balandligi va belgi oʻlchami juftligi: 40 → 16, 48 → 20, 56 → 24. */
 export const BUTTON_ICON_SIZE: Record<ButtonSize, IconSize> = {
   "40": 16,
   "48": 20,

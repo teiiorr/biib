@@ -1,4 +1,4 @@
-// G7: Lighthouse 13 mobil va kompyuter, har sahifa turi, byudjetlar §17. Natija .verify/results/G7-lighthouse.json.
+// Har sahifa turi telefon va kompyuter rejimida oʻlchanib, hajm va tezlik chegaralari bilan solishtiriladi.
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { gzipSync } from "node:zlib";
 import path from "node:path";
@@ -29,7 +29,7 @@ const BUDGET = {
   mobile: { performance: 90, lcp: 2000, cls: 0.05, tbt: 150 },
   desktop: { performance: 98, lcp: 2500, cls: 0.05, tbt: 150 },
 };
-/* ONLY=home,about — tez tekshiruv uchun sahifalar kesimi (toʻliq gate hammasini yuradi). */
+/* ONLY=home,about tez tekshiruvda sahifalarni cheklaydi; toʻliq tekshiruv hammasini oʻlchaydi. */
 const ONLY = (process.env.ONLY ?? "").split(",").filter(Boolean);
 const PAGE_LIST = Object.entries(PAGES).filter(([key]) => !ONLY.length || ONLY.includes(key));
 
@@ -51,7 +51,7 @@ async function isNoindex(url) {
   const html = await fetchHtml(url);
   return /<meta name="robots" content="[^"]*noindex/.test(html);
 }
-/* Lighthouse toifasi kabi: vaznli oʻrtacha, bitta audit chiqarib tashlangan holda. */
+/* Lighthouse toifasi bilan bir xil vaznli oʻrtacha, faqat bitta audit chiqarib tashlanadi. */
 function scoreWithout(refs, audits, skipId) {
   let sum = 0;
   let weight = 0;
@@ -79,8 +79,8 @@ try {
           form === "mobile"
             ? { mobile: true, width: 412, height: 915, deviceScaleFactor: 2.6, disabled: false }
             : { mobile: false, width: 1440, height: 900, deviceScaleFactor: 1, disabled: false },
-        /* formFactor tarmoq va CPU sekinlashuvini oʻzgartirmaydi: kompyuterga Lighthouse ning rasmiy
-           desktop sozlamasi berilmasa, u telefon 4G va 4× CPU bilan oʻlchanadi. */
+        /* formFactor tarmoq va CPU sekinlashuvini oʻzgartirmaydi: kompyuter rejimiga rasmiy desktop
+           sozlamasi berilmasa, u ham telefondagi 4G va 4× CPU bilan oʻlchanadi. */
         throttling: form === "mobile" ? throttling.mobileSlow4G : throttling.desktopDense4G,
         throttlingMethod: "simulate",
         onlyCategories: ["performance", "accessibility", "seo", "best-practices"],
@@ -100,8 +100,8 @@ try {
       const tbt = audit("total-blocking-time");
       const seo = cat("seo");
       const a11y = cat("accessibility");
-      /* Birinchi yuklanish JS = boshlangʻich HTML dagi <script src> (Next «First Load JS»);
-         boʻsh vaqtda keladigan dvigatel, badiiy va panel chunklari alohida hisoblanadi. */
+      /* Birinchi yuklanish hajmi boshlangʻich HTML ichidagi <script src> fayllaridan olinadi;
+         boʻsh vaqtda keladigan boʻlaklar alohida hisoblanadi. */
       const initial = await initialScripts(url);
       const scripts = (lhr.audits["network-requests"]?.details?.items ?? []).filter(
         (i) => i.resourceType === "Script",
@@ -112,7 +112,7 @@ try {
       const lazyBytes = scripts
         .filter((i) => !initial.has(new URL(i.url).pathname))
         .reduce((s, i) => s + (i.transferSize ?? 0), 0);
-      /* Tasdiqlanmagan mazmun noindex (§18.1): is-crawlable auditi ataylab yiqiladi, SEO qolgan auditlar boʻyicha. */
+      /* Tasdiqlanmagan sahifa ataylab noindex, shuning uchun SEO bahosi is-crawlable auditisiz hisoblanadi. */
       const seoRefs = lhr.categories.seo?.auditRefs ?? [];
       const noindex = (lhr.audits["is-crawlable"]?.score ?? 1) < 1 && (await isNoindex(url));
       const seoScore = noindex ? scoreWithout(seoRefs, lhr.audits, "is-crawlable") : seo;
@@ -138,7 +138,7 @@ try {
   await chrome.kill();
 }
 
-/* Qahramon video chunki (HeroVideo, data-chunk="hero-video") ≤ 10 KB gzip: boʻsh vaqtda yuklanadi. */
+/* Qahramon video boʻlagi boʻsh vaqtda yuklanadi va gzip bilan 10 KB dan oshmasligi kerak. */
 const chunkDir = path.resolve(".next/static/chunks");
 if (existsSync(chunkDir)) {
   const walk = (dir) =>
@@ -158,7 +158,7 @@ if (existsSync(chunkDir)) {
   }
   if (!heroChunks.length) push("hero-video-chunk", false, "hero-video chunk topilmadi");
 }
-/* Posterlar (LCP rasmi) ≤ 120 KB AVIF (§17). */
+/* Poster LCP rasmi boʻlgani uchun 120 KB dan oshmasligi kerak. */
 for (const poster of ["hero-d-poster.avif", "hero-m-poster.avif"]) {
   const file = path.resolve("public/media", poster);
   const size = existsSync(file) ? statSync(file).size : Infinity;

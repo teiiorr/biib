@@ -15,7 +15,7 @@ export interface PortraitFieldProps {
   readonly id: string;
   readonly value: MediaItem | null;
   readonly onChange: (item: MediaItem | null) => void;
-  /** Portret tavsifi saytda odamning ismi: bu yerda ham shu. */
+  /** Saytda portret tavsifi odamning ismi, bu yerda ham shunday. */
   readonly alt: string;
   readonly library: readonly MediaItem[];
   readonly onUploaded: (items: readonly MediaItem[]) => void;
@@ -24,7 +24,6 @@ export interface PortraitFieldProps {
 
 const T = PEOPLE_COPY.editor;
 
-/** Portret: saytdagi 4:5 ramkada oldindan koʻrish, yuklash yoki tanlash, olib tashlash. */
 export function PortraitField({
   id,
   value,

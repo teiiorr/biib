@@ -13,7 +13,7 @@ export interface NewsCounts {
 }
 
 export interface SiteHealth {
-  /** Ommaviy sahifalar qayerdan oʻqiydi (Vercel da supabase). */
+  /** Ommaviy sahifalar maʼlumotni qayerdan oʻqiydi (Vercel muhitida supabase). */
   readonly source: ContentSource;
   readonly reachable: boolean;
   /** Bazadagi nusxa hozir yigʻilgan vaqt (content_snapshot generatedAt). */
@@ -31,8 +31,8 @@ function record(value: Json | undefined): Readonly<Record<string, Json | undefin
 }
 
 /**
- * Sayt holati bitta chaqiruvda: ommaviy sahifalar oʻqiydigan content_snapshot() ning oʻzi. Javob
- * kelsa baza tirik, undagi yozuvlardan hisoblagichlar.
+ * Ommaviy sahifalar oʻqiydigan content_snapshot() chaqiriladi: javob kelsa baza ishlayapti,
+ * hisoblagichlar esa undagi yozuvlardan olinadi.
  */
 export async function siteHealth(db: AdminDb): Promise<SiteHealth> {
   const source = contentSource();

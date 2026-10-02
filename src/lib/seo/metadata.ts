@@ -33,8 +33,8 @@ export function assertMetaLengths(title: string, description: string): void {
 }
 
 /**
- * Nomaʼlum yoʻl (404): indekslanmaydi. Tana mijozda chiziladi — Next dinamik notFound() da serverda
- * faqat xato qobigʻini beradi (Fizz da xato chegaralari ishlamaydi, Suspense bilan esa holat 200 boʻlardi).
+ * Nomaʼlum yoʻl (404) indekslanmaydi. Sahifa tanasi mijozda chiziladi: dinamik notFound() chaqiruvida
+ * server faqat xato qobigʻini beradi, Suspense bilan esa javob holati 200 boʻlib qolardi.
  */
 export function notFoundMetadata(): Metadata {
   return { robots: { index: false, follow: false } };

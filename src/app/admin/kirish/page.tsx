@@ -15,7 +15,6 @@ interface LoginPageProps {
   readonly searchParams: Promise<{ next?: string | string[] }>;
 }
 
-/** Kirish: markazdagi belgi va oltin sarlavha, ostida oyna panelda shakl. Sessiya bor boʻlsa panelga. */
 export default async function LoginPage({ searchParams }: LoginPageProps) {
   const { next } = await searchParams;
   const target = safeNext(typeof next === "string" ? next : undefined);

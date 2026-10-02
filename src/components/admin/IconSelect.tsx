@@ -14,10 +14,7 @@ interface IconSelectProps {
   readonly onChange: (icon: IconName) => void;
 }
 
-/**
- * Tarix bandining belgisi: saytdagi belgi plitkalari roʻyxatidan, yonida oʻsha plitkaning oʻzi (saytda
- * qanday koʻrinsa). Bazada roʻyxatdan tashqari belgi boʻlsa, u ham tanlovda qoladi.
- */
+/** Bazadagi belgi roʻyxatda boʻlmasa ham tanlovda qoladi. */
 export function IconSelect({ id, value, onChange }: IconSelectProps) {
   const names: readonly IconName[] = MILESTONE_ICONS.some((name) => name === value)
     ? MILESTONE_ICONS

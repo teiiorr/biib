@@ -46,7 +46,7 @@ const ORDER_WARM: Readonly<Record<string, readonly string[]>> = {
   partners: ORG_WARM.partners,
 };
 
-/* Jurnal obyekti → oʻsha saqlash RPC si. before admin shaklida: qaytarish = uni qayta saqlash. */
+/* Jurnaldagi before allaqachon admin shaklida: qaytarish uni oʻsha saqlash RPC orqali qayta yozadi. */
 const RESTORERS: Readonly<Record<string, Restorer>> = {
   contacts: {
     schema: contactsSchema,
@@ -107,10 +107,7 @@ const RESTORERS: Readonly<Record<string, Restorer>> = {
 /** Jurnal «Qaytarish» tugmasi shu obyektlar uchun ham chiqadi. */
 export const ORG_RESTORABLE: ReadonlySet<string> = new Set(Object.keys(RESTORERS));
 
-/**
- * Tashkilot yozuvlarini (aloqa, tarmoqlar, tarix, loyiha, galereya, tartib) qaytarish. Boshqa obyekt
- * boʻlsa null: chaqiruvchi oʻz yoʻlidan davom etadi.
- */
+/** Tashkilot yozuvini qaytaradi; boshqa obyekt boʻlsa null, chaqiruvchi oʻz yoʻlidan davom etadi. */
 export async function restoreOrgEntry(
   db: AdminDb,
   entry: JournalEntry,

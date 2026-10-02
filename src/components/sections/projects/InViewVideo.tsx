@@ -20,7 +20,7 @@ interface InViewVideoProps {
   readonly mobileSources?: VideoSources;
   /** Birinchi kadr surati; boʻlmasa kadr video yuklanguncha sahifa zaminida turadi. */
   readonly poster?: string;
-  /** Poster LCP (birinchi ekranda): HTML da turadi. Aks holda ekranga yaqinlashganda qoʻyiladi. */
+  /** Poster birinchi ekranda LCP boʻlsa HTML ichida turadi, aks holda ekranga yaqinlashganda qoʻyiladi. */
   readonly priority?: boolean;
   readonly alt: string;
   readonly pauseLabel: string;
@@ -29,10 +29,9 @@ interface InViewVideoProps {
 }
 
 /**
- * Ovozsiz halqa: faqat koʻrinishda va ambient reyestr ruxsati bilan ijro etiladi; kamaytirilgan
- * harakatda va Harakat = off da manba qoʻyilmaydi, poster turadi (WCAG 2.2.2). preload="none":
- * tarmoq faqat ijro boshlanganda band boʻladi. Manba oʻlchami bir marta, gidratsiyadan keyin tanlanadi.
- * Boshqaruv kadr ustida turadi: sirt doim tungi materialda, belgi qorongʻi kadrda ham ≥ 3:1.
+ * Kamaytirilgan harakatda yoki Harakat oʻchiq boʻlsa manba qoʻyilmaydi, faqat poster turadi.
+ * preload="none": tarmoq ijro boshlangandagina band boʻladi. Boshqaruv sirti doim tungi
+ * materialda, shunda belgi qorongʻi kadrda ham kamida 3:1 kontrastda qoladi.
  */
 export function InViewVideo({
   src,
@@ -47,8 +46,8 @@ export function InViewVideo({
 }: InViewVideoProps) {
   const ref = useRef<HTMLVideoElement | null>(null);
   const { allowed, paused, toggle } = useInViewPlayback(ref);
-  /* Brauzer <video poster> ni sahifa ochilishi bilan soʻraydi (≈ 90 KB): pastdagi video posteri
-     birinchi ekranning LCP yuklamasiga qoʻshilmasin, u ekranga bir ekran qolganda qoʻyiladi. */
+  /* Brauzer <video poster> faylini sahifa ochilishi bilan soʻraydi (≈ 90 KB): pastdagi video
+     posteri birinchi ekran yuklamasiga qoʻshilmasin. */
   const [posterOn, setPosterOn] = useState(priority);
   useEffect(() => {
     const video = ref.current;

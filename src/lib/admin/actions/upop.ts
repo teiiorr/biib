@@ -11,8 +11,8 @@ import { failure, genericError, ORG_WARM } from "../org/results";
 import { publish } from "../publish";
 
 /**
- * UPOP galereyasi: sakkiz joy bitta RPC da almashadi. Kadr turi brauzerdan emas, bazadagi media
- * qatoridan olinadi (video posteri shart), muqova kadri faqat rasm boʻladi (RPC ham tekshiradi).
+ * Sakkiz joy bitta chaqiruvda almashadi. Kadr turi brauzerdan emas, bazadagi media qatoridan
+ * olinadi (videoga poster shart). Muqova kadri faqat rasm boʻladi, buni baza ham tekshiradi.
  */
 export async function saveGallery(
   prev: SaveGalleryState,

@@ -12,11 +12,11 @@ export interface GsapKit {
   readonly Flip: typeof Flip;
 }
 
-/** scripts/spring-curve.mjs 0.4 0.86 32 bilan bir xil nuqtalar. */
+/** Nuqtalar scripts/spring-curve.mjs 0.4 0.86 32 chiqishi bilan bir xil. */
 const SPRING_POINTS =
   "0,0 0.0313,0.0728 0.0625,0.2277 0.0938,0.4015 0.125,0.5618 0.1563,0.6949 0.1875,0.7977 0.2188,0.8729 0.25,0.9251 0.2813,0.9597 0.3125,0.9813 0.3438,0.9941 0.375,1.0009 0.4063,1.004 0.4375,1.005 0.4688,1.0048 0.5,1.0041 0.5313,1.0032 0.5625,1.0024 0.5938,1.0017 0.625,1.0011 0.6563,1.0007 0.6875,1.0004 0.7188,1.0003 0.75,1.0001 0.7813,1.0001 0.8125,1 0.8438,1 0.875,1 0.9063,1 0.9375,1 0.9688,1 1,1";
 
-/* designs/atlas.css dagi --ease-out, --ease-in-out, --ease-ui: CSS oʻtishi va tween bir xil egri chiziqda. */
+/* designs/atlas.css faylidagi --ease-out, --ease-in-out va --ease-ui bilan bir xil: CSS oʻtishi va tween bir xil yuradi. */
 const CSS_EASES = {
   out: "M0,0 C0.22,1 0.36,1 1,1",
   "in-out": "M0,0 C0.65,0 0.35,1 1,1",
@@ -26,9 +26,8 @@ const CSS_EASES = {
 let kit: Promise<GsapKit> | null = null;
 
 /**
- * GSAP va plaginlar bir marta, plaginlar shu yerda roʻyxatga olinadi. Tarmoq soʻrovlari parallel,
- * modullar esa navbat bilan baholanadi va orada asosiy oqimga navbat beriladi: dvigatel kelishi
- * 50 ms dan uzun vazifa bermaydi (§17 TBT).
+ * Tarmoq soʻrovlari parallel ketadi, modullar esa navbat bilan baholanadi va orada asosiy oqim boʻshatiladi:
+ * shunda dvigatel yuklanishi 50 ms dan uzun vazifa bermaydi.
  */
 export function loadGsap(): Promise<GsapKit> {
   kit ??= (async () => {
@@ -55,7 +54,7 @@ export function loadGsap(): Promise<GsapKit> {
       "spring-glass",
       pairs.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x},${y}`).join(" "),
     );
-    // iOS manzil paneli har skrollda balandlikni oʻzgartiradi: refresh boʻroni boʻlmasin.
+    // iOS manzil paneli har skrollda balandlikni oʻzgartiradi, qayta hisoblash toʻxtovsiz takrorlanmasin.
     ScrollTrigger.config({ ignoreMobileResize: true });
     gsap.defaults({ ease: "out", duration: 0.9 });
     return { gsap, ScrollTrigger, SplitText, Flip };

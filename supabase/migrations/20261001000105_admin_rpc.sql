@@ -150,7 +150,7 @@ begin
   if v_id is not null then
     select private.news_admin_json(n) into v_before from public.news n where n.id = v_id for update;
   end if;
-  -- expected bor-u yozuv yoʻq: uni boshqa oynada oʻchirishgan (yangi yozuv expected siz keladi)
+  -- expected berilgan, lekin yozuv yoʻq: uni boshqa oynada oʻchirishgan (yangi yozuv expected qiymatisiz keladi)
   if v_before is null and expected is not null then
     raise exception 'topilmadi' using errcode = 'P0002';
   end if;

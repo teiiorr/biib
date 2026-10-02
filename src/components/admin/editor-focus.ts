@@ -1,8 +1,8 @@
 import type { FieldErrors } from "@/lib/admin/news/types";
 
 /**
- * Xato kalitidan maydon id si: «title.ru» → `${form}-title-ru`. Tartib sahifadagi koʻrinish tartibi:
- * birinchi xato shu roʻyxat boʻyicha tanlanadi.
+ * Xato kalitidan maydon id qiymati: «title.ru» → `${form}-title-ru`. Tartib sahifadagi tartib bilan bir
+ * xil, birinchi xato shu boʻyicha tanlanadi.
  */
 export function firstErrorId(
   errors: FieldErrors,
@@ -20,8 +20,8 @@ export function firstErrorId(
 }
 
 /**
- * Maydonga fokus: yopiq til tabida boʻlsa avval tab ochiladi. Yopishqoq saqlash paneli ostida
- * qolmasin deb maydon ekran oʻrtasiga suriladi.
+ * Yopiq til tabidagi maydon uchun avval tab ochiladi. Maydon yopishqoq saqlash paneli ostida qolmasin deb
+ * ekran oʻrtasiga suriladi.
  */
 export function focusField(id: string): void {
   const element = document.getElementById(id);

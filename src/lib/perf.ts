@@ -1,7 +1,6 @@
 /**
- * Qurilma quvvati (egasining talabi: kuchsiz telefonda ham qulay, kuchlida — toʻliq effekt).
- * <html data-perf="lite|full"> ni bosh skript qoʻyadi (qurilma belgilari va oldingi oʻlchov),
- * PerfProbe esa birinchi soniyalarda kadr tezligini oʻlchab kerak boʻlsa «lite» ga tushiradi.
+ * data-perf qiymatini bosh skript qurilma belgilariga qarab qoʻyadi; PerfProbe birinchi soniyalarda
+ * kadr tezligini oʻlchab, kerak boʻlsa «lite» rejimiga oʻtkazadi.
  */
 export const PERF_STORAGE_KEY = "biib:perf";
 

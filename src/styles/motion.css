@@ -1,11 +1,10 @@
 @layer components {
-  /* hero-enter (D-M5): soʻzlar niqob ostidan doira ritmida koʻtariladi, harakatlar keyin.
-     CSS kadrlar, JS kutilmaydi; kamaytirilgan harakat va Harakat = off da qahramon darhol toʻliq. */
+  /* Qahramon kirishi faqat CSS kadrlarda, JS kutilmaydi; harakat oʻchiq boʻlsa qahramon darhol toʻliq. */
   .hero-word {
     display: inline-block;
     overflow: hidden;
-    /* Niqob glif chetlarini kesmasin: Manrope siyoh qutisi harf balandligidan ≈ 0.08em chiqadi, quyi
-       osma harflar (g, y, j) esa qator qutisidan ≈ 0.22em pastga tushadi; oʻlcham oʻzgarmaydi. */
+    /* Niqob glif chetlarini kesmasin: Manrope harflari qutidan ≈ 0.08em yuqoriga, osma harflar
+       (g, y, j) ≈ 0.22em pastga chiqadi. Manfiy margin oʻlchamni saqlaydi. */
     padding: 0.12em 0.04em 0.32em;
     margin: -0.12em -0.04em -0.32em;
     vertical-align: top;
@@ -18,7 +17,7 @@
       .home-hero:not([data-enter="skip"]):not([data-done])
       .hero-word-in::after {
       animation: hero-rise var(--dur-reveal) var(--ease-out) both;
-      /* Doira: 90, 90, 180 ms guruhlari */
+      /* Doira ritmi: 90, 90, 180 ms */
       animation-delay: calc((var(--i) - mod(var(--i), 3)) / 3 * 360ms + mod(var(--i), 3) * 90ms);
     }
     :root:not([data-motion="off"])
@@ -59,7 +58,7 @@
     }
   }
 
-  /* split-lines v2: niqob glif chetlarini (Ў, Ö, ʻ) kesmasin — quti oʻlchami oʻzgarmaydi. */
+  /* Niqob glif chetlarini (Ў, Ö, ʻ) kesmasin, manfiy margin quti oʻlchamini saqlaydi. */
   .split-word-mask {
     padding: 0.12em 0.04em 0.32em;
     margin: -0.12em -0.04em -0.32em;
@@ -69,8 +68,7 @@
     margin-block: -0.12em -0.32em;
   }
 
-  /* hover-media (3.20): karta ustida surat ramka ichida 1.03 gacha kattalashadi, sarlavha pushti.
-     Karta koʻtarilmaydi, soya oʻzgarmaydi. Faqat aniq koʻrsatkich; fokus hover ni takrorlaydi. */
+  /* Karta koʻtarilmaydi, faqat surat kattalashadi; fokus hover holatini takrorlaydi. */
   .news-cover .media-frame-media :is(img, .news-cover-placeholder) {
     transition: scale 400ms var(--ease-out);
   }
@@ -105,9 +103,8 @@
   }
 }
 
-/* upop-scene (motion-plan 3.8): sahna faqat qurilganda (data-scene="on": ≥ 1024, harakat yoqilgan,
-   kontent bir ekranga sigʻadi). Boʻlim ikki ekran, ichidagi sahna yopishqoq bir ekran (pin emas, D-M7);
-   kontent sarlavha ostida markazda. Qatlamdan tashqarida: .section-band utilitasidan ustun. */
+/* Sahna faqat qurilganda ishlaydi (data-scene="on"). Qatlamdan tashqarida, shunda .section-band
+   utilitasidan ustun turadi. */
 .upop-feature[data-scene="on"] {
   height: 200svh;
   padding-block: 0;
@@ -119,11 +116,11 @@
   align-content: center;
   height: 100svh;
   padding-top: calc(var(--header-h) + 12px + var(--safe-top));
-  /* useStickyFeature STAGE_BOTTOM bilan bir xil. */
+  /* useStickyFeature ichidagi STAGE_BOTTOM bilan bir xil boʻlishi shart. */
   padding-bottom: 8px;
   overflow: clip;
 }
-/* Logotip qoʻngunga qadar kadr ustida turadi (DOM da undan oldin). */
+/* Logotip DOM ichida kadrdan oldin keladi, qoʻngunga qadar kadr ustida turishi uchun z-index kerak. */
 .upop-feature[data-scene="on"] .upop-feature-wordmark {
   position: relative;
   z-index: 1;
@@ -131,7 +128,7 @@
 .upop-feature-media {
   position: relative;
 }
-/* Sahna boshida kadr ustidagi lojuvard xiralik (logotip oʻqilsin); sahnasiz holatda koʻrinmas. */
+/* Sahna boshida kadr ustidagi lojuvard xiralik logotipni oʻqiladigan qiladi; sahna boʻlmasa koʻrinmaydi. */
 .upop-feature-dim {
   position: absolute;
   inset: 0;
@@ -141,18 +138,14 @@
   pointer-events: none;
 }
 
-/* ---------- Oltin matn (egasining talabi) ----------
-   Katta sarlavhalar doim oltin va ular ustidan yorugʻlik tasmasi toʻxtovsiz, bir tekis oqadi. Plitka
-   matndan ikki baravar keng, unda ikkita tasma (25 % va 75 %): matn ustida har doim bittasi boʻladi,
-   chetlari bir xil rangda — 200% ga surilganda kadr aynan boshiga qaytadi, choki koʻrinmaydi. Egasi
-   «doimiy» deb talab qildi: tizimdagi kamaytirilgan harakatda ham ishlaydi (joy siljimaydi, faqat rang
-   oqadi); toʻxtatish — Koʻrinish panelidagi Harakat (WCAG 2.2.2). Oltin metall: gradient faqat shu
-   material uchun (Art. V.6). Ranglar atlas.css dagi --gold-* tokenlari. */
+/* ---------- Oltin matn ----------
+   Plitka matndan ikki baravar keng, ikkita tasma bilan: 200% ga surilganda kadr aynan boshiga qaytadi.
+   Faqat rang oqadi, shu sabab kamaytirilgan harakatda ham ishlaydi; toʻxtatish Harakat kaliti orqali. */
 :root {
   --gold-cycle: 6s;
 }
-/* Matn boʻyicha kesilgan fon faqat element qutisi ichini boʻyaydi: quyi osma harflar (g, p, y, j, р, у)
-   kesilmasin deb quti pastga 0.3em (tepaga 0.1em) kengaytiriladi, manfiy chet joylashuvni saqlaydi. */
+/* Matn shaklida kesilgan fon faqat element qutisini boʻyaydi: osma harflar (g, p, y, j) kesilmasin deb quti
+   pastga 0.3em, tepaga 0.1em kengaytiriladi, manfiy margin joylashuvni saqlaydi. */
 :root .gold-text,
 :root .gold-text :is(.split-line, .split-word, .hero-word-in) {
   padding-block: 0.1em 0.3em;
@@ -185,13 +178,12 @@
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
-/* Boʻlingan sarlavhada har boʻlak oʻz foni bilan (koʻtarilayotgan boʻlak ota fonini olmaydi). */
+/* Boʻlingan sarlavhada har boʻlak oʻz fonini oladi: koʻtarilayotgan boʻlak otasining fonini ola olmaydi. */
 :root .gold-text:has(.split-line, .split-word, .hero-word-in) {
   background-image: none;
 }
-/* Bosh sahifa nomi: soʻzning DOM matni joyida turadi, rangi qahramon zamini bilan bir xil va 0.4 %
-   noshaffof — brauzer uni birinchi kadrdayoq toʻliq oʻlchamda chizadi (LCP nomzodi), koʻzga esa bir piksel
-   ham farq qilmaydi. Koʻrinadigan oltin nusxa ::after da, aynan shu qutida: niqob ostidan u koʻtariladi. */
+/* Bosh sahifa nomining DOM matni joyida turadi, rangi zamin bilan bir xil va deyarli shaffof: brauzer
+   uni birinchi kadrda chizadi va u LCP boʻladi. Koʻrinadigan oltin nusxa ::after ichida koʻtariladi. */
 :root .gold-text .hero-word-in {
   position: relative;
   -webkit-text-fill-color: color-mix(in srgb, var(--hero-ground) 0.4%, transparent);
@@ -199,15 +191,15 @@
 }
 :root .gold-text .hero-word-in::after {
   content: attr(data-text);
-  /* Ekran oʻquvchisi soʻzni DOM dan oʻqiydi: nusxaning muqobil matni boʻsh, nom ikki marta oʻqilmaydi.
-     Bu sintaksisni bilmagan eski brauzer qatorni tashlaydi va yuqoridagi qiymat qoladi. */
+  /* Ekran oʻquvchisi nomni DOM matnidan oʻqiydi, nusxaning muqobil matni boʻsh. Bu sintaksisni bilmagan
+     brauzer qatorni tashlaydi va yuqoridagi qiymat qoladi. */
   content: attr(data-text) / "";
   position: absolute;
   inset: 0;
   padding-block: 0.1em 0.3em;
 }
-/* Soʻzlar bitta plitkani boʻlishadi (HeroEnter --title-w va --word-x ni oʻlchaydi), tasma butun nom
-   boʻylab bitta boʻlib oʻtadi, har soʻzda qaytadan boshlanmaydi. */
+/* Soʻzlar bitta plitkani boʻlishadi (HeroEnter --title-w va --word-x ni oʻlchaydi): tasma har soʻzda
+   qaytadan boshlanmay, butun nom boʻylab bitta boʻlib oʻtadi. */
 :root .home-hero-title[data-shine] .hero-word-in::after {
   background-size: calc(var(--title-w) * 2) 100%;
   background-position: calc(0px - var(--word-x)) 0;
@@ -233,8 +225,8 @@
 :root:not([data-motion="off"]) .gold-text .hero-word-in::after {
   animation: gold-shimmer var(--gold-cycle) linear infinite;
 }
-/* Nomning oʻz foni yoʻq (soʻzlar boʻyaydi): uning tasmasi hech narsa chizmaydi, faqat har kadrda uslubni
-   qayta hisoblatadi. */
+/* Nomning oʻz foni yoʻq, uni soʻzlar boʻyaydi: tasma bu yerda hech narsa chizmasdan uslubni qayta
+   hisoblatardi. */
 :root:not([data-motion="off"]) .gold-text.home-hero-title {
   animation: none;
 }
@@ -242,7 +234,7 @@
   animation-name: gold-shimmer-title;
 }
 @media (prefers-reduced-motion: no-preference) {
-  /* Kirish paytida koʻtarilish va yaltirash birga; yaltirash hamma soʻzda bir vaqtda (bitta tasma). */
+  /* Kirishda koʻtarilish va yaltirash birga, yaltirash hamma soʻzda bir vaqtda. */
   :root:not([data-motion="off"])
     .home-hero:not([data-enter="skip"]):not([data-done])
     .home-hero-title
@@ -259,9 +251,8 @@
     animation-name: hero-rise, gold-shimmer-title;
   }
 }
-/* Ekrandan chiqqan sarlavhada (GoldShineGate: data-gold-off) va yengil rejimda barmoq skroll qilayotganda
-   tasma toʻxtab turadi, qaytganda shu joyidan davom etadi. Nom faqat kirish tugagach (data-done): aks holda
-   koʻtarilish ham toʻxtab qolardi; nomning chaqnashi (hero-lock-glow) hech qachon toʻxtatilmaydi. */
+/* Ekrandan chiqqan sarlavhada va yengil rejimda skroll paytida tasma toʻxtaydi. Nom faqat kirish
+   tugagach toʻxtatiladi, aks holda koʻtarilish ham qotib qolardi. */
 :root .gold-text[data-gold-off]:not(.home-hero-title),
 :root .gold-text[data-gold-off] :is(.split-line, .split-word),
 :root .home-hero[data-done] .gold-text[data-gold-off] .hero-word-in::after,
@@ -284,8 +275,8 @@
   }
 }
 
-/* Belgi yigʻilgan lahza (HeroVideo data-lock): nom bir marta oltin chaqnaydi — video va sarlavha bitta
-   hikoya. Faqat filter (kichik qatlam), joylashuv oʻzgarmaydi. */
+/* Belgi yigʻilgan lahzada (HeroVideo, data-lock) nom bir marta oltin chaqnaydi. Faqat filter,
+   joylashuv oʻzgarmaydi. */
 @media (prefers-reduced-motion: no-preference) {
   :root:not([data-motion="off"]) .home-hero[data-lock] .home-hero-title {
     animation: hero-lock-glow 1.8s var(--ease-out) 1 both;

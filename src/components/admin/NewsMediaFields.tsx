@@ -17,7 +17,6 @@ interface NewsMediaFieldsProps extends EditorSectionProps {
 
 const G = NEWS_COPY.editor.groups;
 
-/** Oʻng ustun: muqova va maqoladagi qoʻshimcha suratlar. */
 export function NewsMediaFields({
   draft,
   patch,

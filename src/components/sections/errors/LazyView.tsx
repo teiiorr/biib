@@ -3,10 +3,9 @@
 import { useEffect, useState, type ComponentType } from "react";
 
 /**
- * 404 va xato chegaralari har sahifaning birinchi yuklanishiga kiradi (Next ularni layout bilan
- * birga yuboradi). Chegara faqat shu kichik yuklovchi: koʻrinish (sarlavha, matn, tugmalar) chegara
- * haqiqatan chizilganda alohida chunk boʻlib keladi. Suspense emas: uning ochilishi sahifa
- * View Transition ini ishga tushirardi.
+ * Next 404 va xato chegaralarini har sahifaning birinchi yuklanishiga qoʻshadi, shuning uchun chegarada
+ * faqat shu kichik yuklovchi turadi: koʻrinishning oʻzi chegara chizilganda alohida boʻlak boʻlib keladi.
+ * Suspense ishlatilmaydi, chunki u ochilganda sahifa oʻtishi (View Transition) ishga tushadi.
  */
 export function useLazyView<P>(load: () => Promise<ComponentType<P>>): {
   readonly View: ComponentType<P> | null;

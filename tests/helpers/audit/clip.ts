@@ -66,8 +66,8 @@ export function auditClip(): Finding[] {
     if (rect.width <= 1 || rect.height <= 1) continue;
 
     /*
-     * Balandlik: glif chegarasi qator qutisidan chiqishi (zich sarlavha, iqtibos) qirqish emas.
-     * Haqiqiy qirqish — overflow yashiradigan eng yaqin ajdod qutisidan matnning chiqishi.
+     * Balandlik: glif qator qutisidan chiqsa (zich sarlavha, iqtibos), bu qirqish emas. Haqiqiy
+     * qirqish: matn overflow yashiradigan eng yaqin ota-ona qutisidan chiqib ketgan.
      */
     const clipper = (start: HTMLElement): HTMLElement | null => {
       let node: HTMLElement | null = start;
@@ -83,7 +83,7 @@ export function auditClip(): Finding[] {
       return null;
     };
     if (el.scrollWidth > el.clientWidth + 1 && !/hidden|clip/.test(cs.overflowX)) {
-      // Kenglik: soʻz oʻz qutisidan chiqib ketgan (uzun soʻz, nowrap) — bu doim xato.
+      // Kenglik: soʻz oʻz qutisidan chiqib ketsa (uzun soʻz, nowrap), bu doim xato.
       const inkRight = el.getBoundingClientRect().left + el.scrollWidth;
       if (inkRight > window.innerWidth + 1) {
         findings.push({

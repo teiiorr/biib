@@ -20,7 +20,7 @@ const ARBITRARY_RE = new RegExp(
 const RADIUS_RE =
   /(?<![\w-])(?:[\w-]+:)*rounded(?:-(?:t|b|l|r|s|e|tl|tr|bl|br|ss|se|es|ee)(?=-))?(?:-([\w.[\]/-]+))?(?![\w-])/g;
 
-/** docs/qa/decisions.md D14 qatoridagi backtick ichidagi qiymatlar ruxsat roʻyxati. */
+/** Ruxsat roʻyxati docs/qa/decisions.md jadvalidagi kerakli qatordan, backtick ichidagi qiymatlardan olinadi. */
 export function arbitraryAllowlist() {
   const file = path.join(ROOT, "docs/qa/decisions.md");
   if (!existsSync(file)) return new Set();
@@ -31,7 +31,7 @@ export function arbitraryAllowlist() {
   return new Set([...row.matchAll(/`([^`]+)`/g)].map((m) => m[1].trim()));
 }
 
-/** Kod ichidagi oddiy `rounded` soʻzi (oʻzgaruvchi nomi) class emas: faqat satr literalida yoki CSS da sanaladi. */
+/** Oʻzgaruvchi nomidagi rounded soʻzi klass emas, shuning uchun u faqat satr ichida yoki CSS faylida sanaladi. */
 function insideClassString(hit, file) {
   if (file.endsWith(".css")) return true;
   const before = hit.text.slice(0, Math.max(0, hit.text.indexOf(hit.match)));

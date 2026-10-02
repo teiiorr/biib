@@ -8,11 +8,9 @@ import { ADMIN_COPY } from "@/lib/admin/copy";
 interface AdminStatusProps {
   readonly title: string;
   readonly text: string;
-  /** Oʻngda turadigan harakatlar qatori. */
   readonly actions: ReactNode;
 }
 
-/** 404 va xato: panel qobigʻisiz toʻliq ekran, markazda belgi, sarlavha, izoh va harakatlar. */
 export function AdminStatus({ title, text, actions }: AdminStatusProps) {
   return (
     <main id="content" className="admin-status" tabIndex={-1}>

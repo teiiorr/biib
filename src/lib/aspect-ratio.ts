@@ -1,4 +1,4 @@
-/** Ruxsat etilgan nisbatlar (§8 X.3): boshqasi yoʻq. */
+/** Faqat shu nisbatlar ishlatiladi. */
 export const ASPECT_RATIOS = {
   "4:5": [4, 5],
   "3:2": [3, 2],
@@ -9,7 +9,6 @@ export const ASPECT_RATIOS = {
 
 export type AspectRatio = keyof typeof ASPECT_RATIOS;
 
-/** CSS aspect-ratio qiymati: "4 / 5". */
 export function ratioCss(ratio: AspectRatio): string {
   const [w, h] = ASPECT_RATIOS[ratio];
   return `${w} / ${h}`;

@@ -1,4 +1,4 @@
-/** UPOP TREND loyihasi va uning galereyasi tahrirlari matnlari. */
+/** UPOP TREND loyihasi va galereyasini tahrirlash matnlari. */
 export const UPOP_COPY = {
   project: {
     groups: {

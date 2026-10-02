@@ -2,8 +2,8 @@ import { MEDIA } from "./constants";
 import { INITIAL_PREFS, isMotionOff, type MotionPrefs } from "./prefs";
 
 /**
- * Harakat sozlamalari tashqi doʻkon sifatida: media soʻrovlari va <html data-motion>
- * oʻzgarganda bitta yangi obyekt beriladi, useSyncExternalStore uni oʻqiydi.
+ * Media soʻrovlari yoki <html data-motion> oʻzgarganda yangi obyekt bir marta yaratiladi,
+ * chunki useSyncExternalStore har oʻqishda bir xil qiymat kutadi.
  */
 let cached: MotionPrefs | null = null;
 const listeners = new Set<() => void>();

@@ -12,7 +12,7 @@ const load = () =>
 
 export default function ErrorPage({ reset }: ErrorProps) {
   const { View } = useLazyView(load);
-  /* Koʻrinish chunki kelguncha joy saqlanadi: futer yuqoriga sakrab, keyin qaytib tushmaydi. */
+  /* Koʻrinish boʻlagi yuklanguncha joy band qilinadi, aks holda futer yuqoriga sakrab, keyin qaytib tushadi. */
   return View ? (
     <View retry={reset} />
   ) : (

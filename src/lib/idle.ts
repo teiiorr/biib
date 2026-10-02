@@ -1,7 +1,6 @@
 /**
- * Ogʻir qismlar (harakat dvigateli, oyna panellari, badiiy chunklar) birinchi chizishdan keyin,
- * sahifa toʻliq yuklangach va brauzer boʻsh boʻlganda olinadi. Safari da requestIdleCallback yoʻq:
- * qisqa taymer bilan almashtiriladi. Qaytgan funksiya rejani bekor qiladi.
+ * Ogʻir qismlar birinchi chizishdan keyin, sahifa toʻliq yuklanib brauzer boʻshaganda olinadi.
+ * Safari brauzerida requestIdleCallback yoʻq, oʻrniga qisqa taymer ishlaydi.
  */
 export function whenIdle(callback: () => void, timeout = 2000): () => void {
   if (typeof window === "undefined") return () => undefined;

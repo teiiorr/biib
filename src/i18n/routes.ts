@@ -15,8 +15,8 @@ export const PAGE_KEYS = [
 export type PageKey = (typeof PAGE_KEYS)[number];
 export type SectionKey = Exclude<PageKey, "home" | "newsItem">;
 
-/* Yangiliklar sluglari faqat ASCII: Telegram va pochtada %D1%8F… boʻlib qolmasligi uchun. Roʻyxatning
-   oʻzi kontentda (select.ts), bu yerda faqat shakl: yangi maqola kodga tegmasdan ochiladi. */
+/* Slug faqat ASCII: Telegram va pochtada %D1%8F… koʻrinishiga oʻtib ketmasin. Roʻyxat kontentda
+   (select.ts), bu yerda faqat shakl tekshiriladi: yangi maqola kodga tegmasdan qoʻshiladi. */
 export const NEWS_SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 export const NEWS_SLUG_MAX = 80;
 
@@ -79,7 +79,7 @@ export function alternatesFor(key: PageKey, slug?: string): Record<Locale, strin
   return out;
 }
 
-/** hreflang klasteri: ozbekca chiqarib tashlanadi (6.5), x-default uz ga. */
+/** ozbekca hreflang toʻplamiga kirmaydi, x-default esa uz sahifasini koʻrsatadi. */
 export function hreflangFor(key: PageKey, slug?: string): Record<string, string> {
   const out: Record<string, string> = {};
   for (const locale of LOCALES) {

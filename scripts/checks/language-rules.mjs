@@ -1,9 +1,9 @@
-/* §7.1 imlo qonuni va til sizishi uchun qoidalar. */
+/* Imlo qoidalari va matnga boshqa til soʻzlari sizib kirishini ushlash. */
 export const UZBEK = new Set(["uz", "oz", "ozbekca"]);
 export const NON_ENGLISH = new Set(["uz", "oz", "ozbekca", "ru"]);
 export const NATIVE_NAMES = new Set(["Özbekça", "Ўзбекча", "English", "Русский", "Oʻzbekcha"]);
 export const LATIN_ALLOW = new Set(
-  "upop trend teiior youtube facebook instagram telegram google higgsfield vercel pdf svg png mp4 webm avif url id api bot ok uz ru en".split(
+  "upop trend teiior youtube facebook instagram telegram google vercel pdf svg png mp4 webm avif url id api bot ok uz ru en".split(
     " ",
   ),
 );
@@ -17,10 +17,9 @@ export const REFORM_LETTERS = /[ÖöĞğŞşÇç]/;
 export const ROMANIAN_LETTERS = /[ȘșȚț]/;
 export const LOREM = /\blorem\b/i;
 
-/** Tekshiruvga aloqasi yoʻq boʻlaklar: oʻrinbosarlar, havolalar, pochta. */
-/* Futer imzosi barcha tillarda aynan shu koʻrinishda (D18). */
+/* Futer imzosi barcha tillarda bir xil yoziladi. */
 const CREDIT = /Designed & Developed by teiior/g;
-/* Belgi yonidagi yozuv hamma tilda aynan shu lotin bosh harflarda (egasining talabi); faqat shu satr. */
+/* Belgi yonidagi yozuv hamma tilda lotin bosh harflarida qoladi, istisno faqat shu satrga tegishli. */
 const WORDMARK = /BOLALAR IJODKORLIGI\s+IJODIY BIRLASHMASI|BOLALAR IJODKORLIGI|IJODIY BIRLASHMASI/g;
 
 export function stripNonWords(value) {

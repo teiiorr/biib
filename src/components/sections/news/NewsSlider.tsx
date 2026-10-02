@@ -17,9 +17,8 @@ interface NewsSliderProps {
 }
 
 /**
- * Maqola suratlari: gorizontal skroll-snap tasmasi — telefonda barmoq bilan suriladi, kompyuterda
- * oyna tugmalari, trekpad yoki klaviatura (tasma fokusida ← →) bilan. Avtomatik aylanish yoʻq. Joriy slayd skroll
- * holatidan hisoblanadi, shuning uchun qoʻl bilan surish ham hisoblagichni yangilaydi.
+ * Avtomatik aylanish yoʻq. Joriy slayd skroll holatidan hisoblanadi, shuning uchun qoʻl bilan
+ * surish ham hisoblagichni yangilaydi.
  */
 export function NewsSlider({ children, label, previousLabel, nextLabel }: NewsSliderProps) {
   const trackRef = useRef<HTMLUListElement | null>(null);
@@ -59,8 +58,8 @@ export function NewsSlider({ children, label, previousLabel, nextLabel }: NewsSl
 
   return (
     <div className="news-slider" role="region" aria-roledescription="carousel" aria-label={label}>
-      {/* Lenis sahifa skrollini boshqaradi: tasmaning gorizontal surilishi unga berilmaydi. Tasma fokus
-          oladi — klaviaturada ← → brauzerning oʻzi slayddan slaydga suradi (skroll-snap). */}
+      {/* Lenis faqat sahifa skrollini boshqaradi, tasmaning gorizontal surilishi unga berilmaydi.
+         Tasma fokus oladi: ← → tugmalarida brauzerning oʻzi slayddan slaydga suradi. */}
       <ul
         ref={trackRef}
         className="news-slider-track"

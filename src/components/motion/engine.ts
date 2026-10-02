@@ -26,7 +26,7 @@ function serverSnapshot(): null {
   return null;
 }
 
-/** Dvigatel (GSAP, plaginlar, Lenis) bir marta yuklanadi; takroriy chaqiruv oʻsha vaʼdani qaytaradi. */
+/** Dvigatel bir marta yuklanadi: takroriy chaqiruv oʻsha Promise ni qaytaradi. */
 export function requestEngine(): Promise<MotionEngine> {
   if (engine) return Promise.resolve(engine);
   loading ??= import("./engine-core")
@@ -47,26 +47,25 @@ export function useEngine(): MotionEngine | null {
   return useSyncExternalStore(subscribe, snapshot, serverSnapshot);
 }
 
-/* React effekt shartnomasi: hech narsa yoki tozalash funksiyasi. */
 type Cleanup = ReturnType<EffectCallback>;
 
 export interface EngineEffectOptions {
-  /** Skrablangan sahna (qahramon, UPOP, parallaks): kech dvigatelda oddiy kirishlardan oldin quriladi. */
+  /** Skrollga bogʻlangan sahna (qahramon, UPOP, parallaks): dvigatel kech kelsa, oddiy kirishlardan oldin quriladi. */
   readonly scene?: boolean;
 }
 
 export interface EngineEffectInfo {
-  /** Dvigatel komponent chizilgandan keyin keldi: ekranda turgan narsa yashirilib qayta koʻrsatilmaydi. */
+  /** Dvigatel komponent chizilgandan keyin keldi: ekrandagi narsa yashirilib, qayta koʻrsatilmasin. */
   readonly late: boolean;
-  /** Kechiktirilgan tweenlar (masalan shriftlardan keyin) shu kontekstga qoʻshiladi, unmount da qaytadi. */
+  /** Kechiktirilgan tweenlar (masalan, shriftlar kelgach) shu kontekstga qoʻshiladi va komponent bilan birga bekor boʻladi. */
   readonly context: gsap.Context;
 }
 
 const useIsoLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 /**
- * useGSAP oʻrnini bosadi: dvigatel tayyor boʻlganda gsap.context ichida ishlaydi; bogʻliqlik
- * oʻzgarganda yoki unmount da hammasi qaytariladi. Bogʻliqliklarni chaqiruvchi beradi.
+ * useGSAP oʻrnida: dvigatel tayyor boʻlgach gsap.context ichida ishlaydi, bogʻliqliklar oʻzgarganda yoki
+ * komponent olib tashlanganda hammasi qaytariladi. Bogʻliqliklar roʻyxatini chaqiruvchi beradi.
  */
 export function useEngineEffect(
   scope: RefObject<Element | null>,
@@ -85,15 +84,15 @@ export function useEngineEffect(
     const late = lateRef.current === true;
     lateRef.current = false;
     let cleanup: Cleanup = undefined;
-    // Kontekst avval yaratiladi: gsap.context(fn) fn ni darhol chaqiradi, oʻzgaruvchi hali yoʻq boʻlardi.
+    // gsap.context(fn) fn ni darhol chaqiradi, shuning uchun kontekst oldinroq yaratiladi.
     const context = current.gsap.context(() => undefined, scope.current ?? undefined);
     const start = (): void => {
       context.add(() => {
         cleanup = effect(current, { late, context });
       });
     };
-    // Kech kelgan dvigatel: sahnalar kadrlarga boʻlib quriladi (uzun vazifa yoʻq), koʻrinishdagilar oldin,
-    // skroll sahnalari foydalanuvchi ularga yetguncha tayyor boʻlishi uchun yarim pogʻona oldinroq.
+    // Dvigatel kech kelsa, uzun vazifa boʻlmasligi uchun sahnalar kadrlarga boʻlib quriladi: ekrandagilar oldin,
+    // skroll sahnalari esa foydalanuvchi yetib kelguncha tayyor turishi uchun yarim pogʻona oldinroq.
     const priority = viewportPriority(scope.current) - (scene ? 0.5 : 0);
     const cancel = late ? enqueueSliced(start, priority) : (start(), null);
     return () => {

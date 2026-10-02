@@ -24,13 +24,10 @@ export interface LogoFieldProps {
 }
 
 const P = PEOPLE_COPY.partners;
-/* Shaffof fon saqlanadi: JPEG va AVIF (Safari da ochilmasligi mumkin) logotip uchun qabul qilinmaydi. */
+/* Fon shaffof qolishi kerak: JPEG va Safari ochmasligi mumkin boʻlgan AVIF qabul qilinmaydi. */
 const LOGO_TYPES = ["image/png", "image/webp"] as const;
 
-/**
- * Logotip: saytdagi qorongʻi plitkada ikki holatda — odatdagi (sut-oq siyoh) va ustiga kelgandagi
- * (asl rang). Yuklash faqat PNG va WebP.
- */
+/** Logotip saytdagi qorongʻi plitkada ikki holatda koʻrinadi: odatda sut-oq, ustiga kelganda asl rangda. */
 export function LogoField({
   id,
   value,

@@ -14,22 +14,20 @@ import { useLeaveGuard } from "./useLeaveGuard";
 export interface OrgEditorOptions<D, T> {
   readonly action: (prev: OrgSaveState<T>, formData: FormData) => Promise<OrgSaveState<T>>;
   readonly initial: D;
-  /** Sahifa yuklangandagi kutilgan versiya (updated_at yoki roʻyxat izi). */
+  /** Sahifa yuklangandagi versiya (updated_at yoki roʻyxat izi). */
   readonly version: string | null;
-  /** Saqlanmagan oʻzgarish izi. */
+  /** Saqlanmagan oʻzgarishni aniqlash uchun iz. */
   readonly keyOf: (draft: D) => string;
-  /** Brauzerdagi tekshiruv: server bilan bir xil funksiya, xato boʻlsa soʻrov ketmaydi. */
+  /** Server bilan bir xil tekshiruv: xato boʻlsa soʻrov ketmaydi. */
   readonly check: (draft: D) => FieldErrors;
-  /** Saqlangan (meʼyorlangan) maʼlumotdan yangi tahrir holati. */
   readonly fromSaved: (data: T, draft: D) => D;
-  /** Xato kalitlari sahifadagi tartibda: fokus birinchisiga. */
+  /** Fokus birinchi xatoga tushishi uchun sahifadagi tartib. */
   readonly errorOrder: (draft: D) => readonly string[];
   readonly idFor: (field: string) => string;
-  /** Rasm yuklanmoqda: saqlash kutadi. */
+  /** Yuklanayotgan rasmlar soni: tugaguncha saqlash kutadi. */
   readonly uploads?: number;
 }
 
-/** Tahrir boʻlimlari uchun umumiy xususiyatlar. */
 export interface OrgSectionProps<D> {
   readonly draft: D;
   readonly patch: (next: Partial<D>) => void;
@@ -58,9 +56,8 @@ function barState<T>(
 }
 
 /**
- * Aloqa, tarix, UPOP va galereya tahrirlarining umumiy qolipi (yangilik tahriri bilan bir xil xulq):
- * holat JSON yashirin maydonda server amaliga ketadi, javobdagi meʼyorlangan qiymat tahrirga qaytadi,
- * saqlanmagan oʻzgarishda sahifadan chiqish soʻraladi, xato boʻlsa fokus birinchi xato maydonga.
+ * Holat yashirin maydonda JSON boʻlib server amaliga ketadi, javobdagi meʼyorlangan qiymat tahrirga
+ * qaytadi. Xulqi yangilik tahriri bilan bir xil.
  */
 export function useOrgEditor<D, T>(options: OrgEditorOptions<D, T>) {
   const { action, initial, keyOf, check, fromSaved, errorOrder, idFor, uploads = 0 } = options;
@@ -74,7 +71,7 @@ export function useOrgEditor<D, T>(options: OrgEditorOptions<D, T>) {
   const [seen, setSeen] = useState(state.revision);
   const [clientErrors, setClientErrors] = useState<FieldErrors>({});
 
-  /* Server javobi kelgan render: saqlangan qiymatlar tahrirga va solishtirish asosiga qaytadi. */
+  /* Yangi server javobi: saqlangan qiymat tahrirga ham, solishtirish asosiga ham yoziladi. */
   if (state.revision !== seen) {
     setSeen(state.revision);
     if (state.status === "saved") {

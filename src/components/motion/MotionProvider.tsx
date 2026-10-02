@@ -22,9 +22,8 @@ interface MotionProviderProps {
 }
 
 /**
- * Ildizda bir marta: sozlamalar (600/1024, reduced-motion, touch, Harakat tugmasi) kuzatiladi,
- * harakat ruxsat etilsa dvigatel gidratsiyadan keyin boʻsh vaqtda yoki birinchi niyatda yuklanadi.
- * Magnit tugmalar uchun bitta umumiy tinglovchi shu yerda. Mazmun dvigatelsiz ham toʻliq koʻrinadi.
+ * Ildizda bir marta ishlaydi: sozlamalarni kuzatadi, harakatga ruxsat boʻlsa dvigatelni gidratsiyadan keyin
+ * brauzer boʻshaganda yoki foydalanuvchi birinchi marta harakat qilganda yuklaydi. Kontent dvigatelsiz ham toʻliq koʻrinadi.
  */
 export function MotionProvider({ children }: MotionProviderProps) {
   const prefs = useSyncExternalStore(subscribeMotionPrefs, getMotionPrefs, getServerMotionPrefs);
@@ -32,7 +31,7 @@ export function MotionProvider({ children }: MotionProviderProps) {
   // Kech qurilgan sahnalar navbati tugaganda joylashuv bir marta qayta oʻlchanadi.
   useEffect(() => onQueueDrain(scheduleScrollRefresh), []);
 
-  // Magnit faqat aniq koʻrsatkichda: tinglovchi kodi alohida kichik chunk, telefon uni olmaydi.
+  // Magnit effekti faqat aniq koʻrsatkichda (sichqoncha): kodi alohida boʻlakda, telefon uni yuklamaydi.
   useEffect(() => {
     if (!prefs.ready || prefs.isTouch || !motionAllowed(prefs)) return;
     let cancelled = false;

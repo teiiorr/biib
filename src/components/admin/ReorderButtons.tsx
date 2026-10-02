@@ -7,9 +7,9 @@ import { ORG_COPY } from "@/lib/admin/copy-org";
 import { AdminIcon } from "./AdminIcon";
 
 interface ReorderButtonsProps {
-  /** Berilgan oʻrindagi tugmalar id asosi: koʻchirilgach fokus yangi oʻrindagi tugmaga oʻtadi. */
+  /** Koʻchirilgach fokus yangi oʻrindagi tugmaga oʻtishi uchun kerak. */
   readonly idAt: (index: number) => string;
-  /** Ekran oʻquvchisi uchun nom, masalan «+998 55 511 15 05» yoki «Telegram». */
+  /** Ekran oʻquvchisi uchun nom, masalan «Telegram». */
   readonly item: string;
   readonly index: number;
   readonly count: number;
@@ -17,10 +17,7 @@ interface ReorderButtonsProps {
   readonly onAnnounce: (text: string) => void;
 }
 
-/**
- * Yuqoriga va pastga (faqat sudrash emas): 48 px tugmalar, oʻzgarish aria-live orqali aytiladi, fokus
- * koʻchgan band bilan birga ketadi (chetga yetsa qarama-qarshi tugmaga).
- */
+/** Sudrashsiz tartiblash: fokus koʻchgan qator bilan ketadi, chetga yetsa qarama-qarshi tugmaga oʻtadi. */
 export function ReorderButtons({
   idAt,
   item,

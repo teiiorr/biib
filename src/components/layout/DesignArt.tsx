@@ -13,10 +13,7 @@ export interface DesignArtProps extends ArtProps {
   readonly meaningful?: boolean;
 }
 
-/**
- * Badiiy uya sahifa yuklanib boʻsh vaqt kelganda olinadi (shrift va CSS bilan raqobatlashmaydi);
- * kelguncha oʻram boʻsh turadi.
- */
+/** Bezak brauzer boʻshaganda yuklanadi, shrift va CSS bilan raqobatlashmasligi uchun. */
 export function DesignArt({ slot, meaningful = false, className, ...art }: DesignArtProps) {
   const [Component, setComponent] = useState<ComponentType<ArtProps> | null>(null);
 
@@ -25,7 +22,7 @@ export function DesignArt({ slot, meaningful = false, className, ...art }: Desig
     const cancelIdle = whenIdle(() => {
       void loadArt().then(async (map) => {
         const mod = await map[slot]();
-        // Komponent funksiya: setState uni yangilovchi funksiya deb chaqirmasin, shu sabab oʻraladi.
+        // setState funksiyani yangilovchi deb chaqirmasligi uchun komponent oʻraladi.
         if (!cancelled) setComponent(() => mod.default);
       });
     }, 1200);

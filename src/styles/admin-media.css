@@ -1,8 +1,8 @@
-/* Boshqaruv paneli: tahrir maketi, rasm ramkalari, yuklash, tanlash oynasi, saqlash paneli va jadvallar. */
+/* Panel: tahrir maketi, rasm ramkalari, yuklash, tanlash oynasi va saqlash paneli. */
 
 @layer components {
   /* ---------- Tahrir maketi ----------
-     Saqlash paneli toʻr ichida emas: toʻr bandining yopishqoqligi oʻz qatori bilan cheklanardi. */
+     Saqlash paneli toʻrdan tashqarida: toʻr ichida sticky faqat oʻz qatori chegarasida ishlardi. */
   .admin-editor {
     display: flex;
     flex-direction: column;
@@ -67,7 +67,7 @@
     align-items: center;
     gap: 8px 12px;
   }
-  /* Telefonda sudrab tashlash yoʻq: izoh ham kerak emas. */
+  /* Telefonda sudrab tashlash yoʻq, shu sabab izoh ham yashiriladi. */
   @media (pointer: coarse) {
     .admin-drop-hint {
       display: none;
@@ -98,7 +98,7 @@
   .admin-upload[data-phase="done"] .admin-upload-state {
     color: var(--success);
   }
-  /* Xato matni uzun: oʻz qatorida, fayl nomini siqib yubormaydi. */
+  /* Xato matni uzun boʻladi: oʻz qatoriga tushadi va fayl nomini siqmaydi. */
   .admin-upload[data-phase="failed"] .admin-upload-state {
     grid-column: 1 / -1;
     color: var(--danger);
@@ -200,8 +200,8 @@
     font: 600 12px / 1 var(--font-ui);
   }
 
-  /* ---------- Saqlash paneli: bosh barmoq zonasida yopishqoq ---------- */
-  /* Holat qatori ostidan oʻtayotgan matn bilan aralashmasin: saqlash paneli qalin muz. */
+  /* ---------- Saqlash paneli ---------- */
+  /* Ostidan oʻtayotgan matn holat qatoriga aralashmasin deb muz qalin. */
   .surface.admin-savebar[data-text="true"][data-radius] {
     --m-tint: 0.94;
   }
@@ -232,8 +232,8 @@
   }
 }
 
-/* Qaytarib boʻlmaydigan amal: oyna tugma, yorligʻi xato rangida (alohida tugma turi yoʻq). Qatlamsiz:
-   tugmaning text-material-ink utilitasidan ustun. */
+/* Qaytarib boʻlmaydigan amal: oyna tugma, yorligʻi xato rangida. Qatlamdan tashqarida, shunda
+   text-material-ink utilitasidan ustun turadi. */
 .ui-button.admin-danger {
   color: color-mix(in oklab, var(--danger) 85%, var(--material-ink));
 }

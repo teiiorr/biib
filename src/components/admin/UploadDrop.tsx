@@ -17,12 +17,11 @@ export interface UploadDropProps {
   readonly purpose: MediaPurpose;
   readonly multiple?: boolean;
   readonly label: string;
-  /** Qabul qilinadigan turlar (masalan logotip uchun faqat PNG va WebP) va ularning izohi. */
   readonly types?: readonly UploadType[];
   readonly acceptHint?: string;
-  /** Tanlash tartibida, faqat muvaffaqiyatli yuklanganlar. */
+  /** Faqat muvaffaqiyatli yuklanganlar, tanlash tartibida. */
   readonly onUploaded: (items: readonly MediaItem[]) => void;
-  /** Yuklash boshlanganda +1, tugaganda −1: shakl shu vaqtda saqlanmaydi. */
+  /** Yuklash davomida shakl saqlanmasligi uchun. */
   readonly onBusy?: (delta: 1 | -1) => void;
 }
 
@@ -34,7 +33,7 @@ interface Job {
   readonly error?: string;
 }
 
-/* Telefon tarmogʻi: bir vaqtda uchtadan ortiq yuklash bir-biriga xalaqit beradi. */
+/* Telefon tarmogʻida uchtadan ortiq parallel yuklash bir-birini sekinlashtiradi. */
 const PARALLEL = 3;
 const M = MEDIA_COPY;
 
@@ -44,10 +43,7 @@ function phaseText(job: Job): string {
   return { preparing: M.preparing, processing: M.processing, done: M.done }[job.phase];
 }
 
-/**
- * Rasm yuklash: oyna tugma koʻrinishidagi fayl tanlagich (telefonda galereyadan bir nechtasi), kompyuterda
- * sudrab tashlash ham. Har fayl uchun holat va foiz; natija tanlash tartibida qaytadi.
- */
+/** Asosiy yoʻl oddiy fayl tanlagich: telefonda galereyadan bir nechtasini birdan olish mumkin. */
 export function UploadDrop({
   id,
   purpose,

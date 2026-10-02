@@ -10,7 +10,6 @@ import type { OrgSectionProps } from "./useOrgEditor";
 
 const P = UPOP_COPY.project;
 
-/** Toʻrtta fakt (shakli, joyi, jadvali, ustozlar): besh tilda va har biri oʻz holati bilan. */
 export function UpopFactsGroup({ draft, patch, errors, idFor }: OrgSectionProps<ProjectDraft>) {
   return (
     <FieldGroup id={idFor("facts-group")} title={P.groups.facts}>

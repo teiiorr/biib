@@ -58,7 +58,7 @@ export function selectNeighbours(
 ): { previous: NewsArticle | null; next: NewsArticle | null } {
   const index = s.news.findIndex((n) => n.slug === slug);
   const count = s.news.length;
-  // Halqa: birinchining oldingisi oxirgisi — maqola navigatsiyasida yarim qator boʻsh qolmaydi.
+  // Halqa: birinchining oldingisi oxirgisi, shunda maqola navigatsiyasida yarim qator boʻsh qolmaydi.
   if (index < 0 || count < 2) return { previous: null, next: null };
   return {
     previous: s.news[(index - 1 + count) % count] ?? null,
@@ -78,7 +78,7 @@ export function selectPartners(s: ContentSnapshot): readonly Partner[] {
   return s.partners;
 }
 
-/** Faqat tasdiqlangan hamkorlar; oltitadan kam boʻlsa bosh sahifada boʻlim chiqmaydi (15.2.6). */
+/** Faqat tasdiqlangan hamkorlar; oltitadan kam boʻlsa bosh sahifada boʻlim chiqmaydi. */
 export function selectConfirmedPartners(s: ContentSnapshot): readonly Partner[] {
   return s.partners.filter((p) => p.status === "confirmed" && p.name && p.logo);
 }
@@ -87,7 +87,7 @@ export function selectContacts(s: ContentSnapshot): Contacts {
   return s.contacts;
 }
 
-/** Rozilik yozuvi toʻliq boʻlgan tasdiqlangan ishlar (25.4.1). */
+/** Rozilik yozuvi toʻliq boʻlgan tasdiqlangan ishlar. */
 export function selectArtworks(s: ContentSnapshot): readonly Artwork[] {
   return s.artworks.filter((a) => a.status === "confirmed" && a.consent.parent && a.consent.child);
 }
@@ -107,7 +107,7 @@ export function pageContentStatus(statuses: readonly ContentStatus[]): ContentSt
   return "confirmed";
 }
 
-/** Sahifadagi eng «xom» yozuv holati: noindex va sitemap sanalari shu orqali hal boʻladi (18.1). */
+/** Sahifadagi eng «xom» yozuv holati: noindex va sitemap sanalari shu orqali hal boʻladi. */
 export function statusForPage(s: ContentSnapshot, key: PageKey, slug?: string): ContentStatus {
   switch (key) {
     case "home":

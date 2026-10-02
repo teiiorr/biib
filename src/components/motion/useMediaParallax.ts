@@ -10,15 +10,15 @@ import { useEngineEffect } from "./engine";
 import { buildParallax, mediaTargets } from "./media-motion";
 import { useMotionPrefs } from "./motion-context";
 
-/** Joriy breakpoint uchun parallaks chuqurligi (media balandligiga nisbatan). */
+/** Joriy ekran kengligi uchun parallaks chuqurligi, media balandligiga nisbatan. */
 export function useParallaxDepth(): number {
   const prefs = useMotionPrefs();
   return prefs.breakpoint === "expanded" ? PARALLAX.expanded : PARALLAX.compact;
 }
 
 /**
- * media-parallax (motion-plan 3.7, 5.3): boʻlimning bosh mediasi. Dvigatel kech kelganda ekranda
- * turgan media sakramaydi: unda parallaks qurilmaydi (sahifa oʻtishidan keyin esa quriladi).
+ * Boʻlimning bosh mediasi uchun parallaks. Dvigatel kech kelsa ekranda turgan media sakramasin deb parallaks
+ * qurilmaydi; sahifa oʻtishidan keyin esa quriladi.
  */
 export function useMediaParallax(
   ref: RefObject<HTMLElement | null>,

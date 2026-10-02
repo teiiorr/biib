@@ -7,7 +7,6 @@ import { NEWS_COPY } from "./copy-news";
 import { dbErrorKind } from "./db-errors";
 import type { FieldErrors } from "./news/types";
 
-/** Tahrir shaklining server javobi: odam va hamkor (yangilik ham xuddi shu tuzilmada). */
 export type RecordSaveState<A> =
   | { readonly status: "idle"; readonly revision: number }
   | {
@@ -23,7 +22,7 @@ export type RecordSaveState<A> =
 export type BuildResult<T> =
   { readonly ok: true; readonly input: T } | { readonly ok: false; readonly errors: FieldErrors };
 
-/** Tartiblash natijasi: yangi tartib va yangilangan updated_at (keyingi oʻchirish shu bilan ishlaydi). */
+/** Yangilangan updated_at keyingi oʻchirish uchun kerak. */
 export type ReorderResult<R> =
   | { readonly ok: true; readonly rows: readonly R[] }
   | { readonly ok: false; readonly message: string };
@@ -46,7 +45,7 @@ export function requireAll(
   }
 }
 
-/** Ixtiyoriy besh tilli maydon: boʻsh boʻlsa null; yozilgan boʻlsa bazadagi domen beshala tilni talab qiladi. */
+/** Boʻsh boʻlsa null; yozilgan boʻlsa bazadagi domen besh tilni ham talab qiladi. */
 export function optionalLocalized(
   errors: Record<string, string>,
   path: string,
@@ -57,7 +56,7 @@ export function optionalLocalized(
   return value;
 }
 
-/** Saqlash RPC si rad etganda: eskirgan yozuv alohida holat, qolgani holat qatoridagi xabar. */
+/** Eskirgan yozuv alohida holat boʻladi, qolgan rad javoblari holat qatorida chiqadi. */
 export function recordFailure<A>(revision: number, code: string | undefined): RecordSaveState<A> {
   const kind = dbErrorKind({ code });
   if (kind === "conflict") return { status: "conflict", revision };
@@ -75,8 +74,8 @@ export function recordFailure<A>(revision: number, code: string | undefined): Re
 }
 
 /**
- * Oʻchirish va tartiblash xabari (dialog yoki roʻyxat ostida). Tartiblashda «invalid» = kalitlar
- * roʻyxati bazadagisiga mos emas: boshqa oynada kimdir qoʻshilgan yoki oʻchirilgan.
+ * Tartiblashda «invalid» kalitlar roʻyxati bazadagisiga mos emasligini bildiradi: boshqa oynada
+ * kimdir yozuv qoʻshgan yoki oʻchirgan.
  */
 export function recordMessage(code: string | undefined): string {
   const kind = dbErrorKind({ code });

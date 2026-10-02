@@ -3,10 +3,8 @@
 import dynamic from "next/dynamic";
 
 /*
- * Sakkiz boʻlim bitta [section] marshrutida: oddiy import bilan aloqa formasi, video va dialog kodi
- * hamma boʻlim sahifasining birinchi yuklanishiga kirardi (≈ 12 KB gzip). Bu barglar alohida chunk:
- * server HTML ni odatdagidek chizadi, chunk faqat barg chizilgan sahifada (past ustuvorlik preload bilan)
- * olinadi va barg shu chunk kelganda gidratsiya boʻladi.
+ * Sakkiz boʻlim bitta [section] marshrutida: oddiy importda forma, video va dialog kodi har bir
+ * boʻlim sahifasiga qoʻshilardi (≈ 12 KB gzip). Shu sabab barglar alohida boʻlakda keladi.
  */
 export const ContactFormLeaf = dynamic(() =>
   import("./contacts/ContactForm").then((mod) => mod.ContactForm),

@@ -14,11 +14,9 @@ export interface SwatchFieldProps {
   readonly itemLabel: string;
   readonly value: ArtSlot;
   readonly onChange: (slot: ArtSlot) => void;
-  /** Tanlangan rangda koʻrinadigan namuna yorliq (masalan mavzu). */
   readonly preview: string;
 }
 
-/** Yetti rang namunasi radio guruh sifatida; ostida tanlangan rangdagi yorliq. */
 export function SwatchField({
   id,
   legend,

@@ -4,22 +4,21 @@ import { useEffect } from "react";
 
 import { PERF_STORAGE_KEY } from "@/lib/perf";
 
-/* Oʻrtacha telefonda ≈ 8–12 ms, eski Android (Cortex-A53) da 40 ms dan ortiq. */
+/* Oʻrtacha telefonda 8–12 ms ketadi, eski Android (Cortex-A53) qurilmalarida 40 ms dan oshadi. */
 const SLOW_MS = 28;
 
 function benchmark(): number {
   const started = performance.now();
   let sum = 0;
   for (let i = 0; i < 1_500_000; i += 1) sum += Math.sqrt(i) * 0.5;
-  // Natija ishlatiladi: aks holda JIT siklni tashlab yuborishi mumkin.
+  // Natija ishlatilmasa, JIT siklni butunlay tashlab yuborishi mumkin.
   return sum > 0 ? performance.now() - started : 0;
 }
 
 /**
- * Qurilma belgilari (bosh skript) koʻrmagan kuchsiz telefonlar uchun: sahifa tinchiganda qisqa hisob
- * oʻlchanadi (ikki marta, eng yaxshisi olinadi) va sekin boʻlsa <html data-perf="lite"> qoʻyiladi,
- * natija 7 kunga saqlanadi. Yengil rejim faqat oynani soddalashtiradi (sinish, katta xiralik, yaltiroq
- * nuqta yoʻq); harakat hamma qurilmada ishlaydi (egasining talabi).
+ * Boshlangʻich skript aniqlay olmagan kuchsiz telefonlar uchun: sahifa tinchiganda qisqa hisob ikki marta
+ * oʻlchanadi, sekin chiqsa data-perf="lite" qoʻyiladi va natija 7 kun saqlanadi.
+ * Yengil rejim faqat oynani soddalashtiradi, harakat hamma qurilmada qoladi.
  */
 export function PerfProbe() {
   useEffect(() => {
@@ -32,7 +31,7 @@ export function PerfProbe() {
       try {
         localStorage.setItem(PERF_STORAGE_KEY, JSON.stringify({ lite: true, at: Date.now() }));
       } catch {
-        // Saqlash taqiqlangan brauzerda faqat shu sahifa yengil.
+        // Saqlab boʻlmasa, yengil rejim faqat shu sahifada ishlaydi.
       }
     };
     const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 1200));

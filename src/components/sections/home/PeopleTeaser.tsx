@@ -19,10 +19,7 @@ interface PeopleTeaserProps {
   readonly dict: Dictionary;
 }
 
-/**
- * Roʻyxat qatoridagi yuz: kichik surat, sichqoncha ustiga kelganda uning ustida katta asl portret
- * ochiladi (egasining talabi). Surati yoʻq odamda belgi plitkasi.
- */
+/** Sichqoncha kelganda kichik surat ustida katta portret ochiladi; surati yoʻq odamda belgi plitkasi. */
 function PersonAvatar({ person, name }: { person: Person; name: string }) {
   if (!hasPortrait(person)) return <FeatureIcon name="user" />;
   return (
@@ -97,8 +94,7 @@ function PeopleGroup({ heading, href, people, locale, offset, className }: Peopl
           ))}
         </ul>
       ) : (
-        /* Suratlar hammada boʻlguncha: yuz yoki belgi, ism (tasdiqlanmagan boʻlsa oʻrinbosar) va lavozim
-           bir qatorda. */
+        /* Suratlar hammada boʻlguncha odamlar ixcham qatorda: yuz yoki belgi, ism va lavozim. */
         <ul className="people-roles" aria-label={heading}>
           {people.map((p, index) => {
             const name = p.name ? t(p.name, locale) : fillerName(offset + index);
@@ -117,11 +113,7 @@ function PeopleGroup({ heading, href, people, locale, offset, className }: Peopl
   );
 }
 
-/**
- * Rahbariyat va ekspertlar: markazdagi sarlavha, ostida ikki teng guruh yonma-yon. Tasdiqlanmagan
- * odamlar lavozim roʻyxati boʻlib chiqadi (kompyuterda ikki ustun, 3 + 3 qator); hammasi tasdiqlangan
- * guruh avtomatik portret kartalariga oʻtadi.
- */
+/** Guruhdagi hamma tasdiqlanganda roʻyxat oʻz-oʻzidan portret kartalariga oʻtadi. */
 export async function PeopleTeaser({ locale, dict }: PeopleTeaserProps) {
   const [allLeaders, allExperts] = await Promise.all([getLeadership(), getExperts()]);
   const leaders = allLeaders.slice(0, 3);

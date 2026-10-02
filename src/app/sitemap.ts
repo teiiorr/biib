@@ -5,10 +5,10 @@ import { LOCALE_META, LOCALES, type Locale } from "@/i18n/locales";
 import { allRoutes, pathFor, type PageKey } from "@/i18n/routes";
 import { siteUrl } from "@/lib/site";
 
-/* Yangi maqola sitemapga soat ichida (saqlashdan keyin esa darhol) tushadi; [locale] maketi bilan bir xil. */
+/* [locale] layout kabi: yangi maqola xaritaga bir soat ichida, saqlangach esa darhol tushadi. */
 export const revalidate = 3600;
 
-/** Tasdiqlanmagan kontentli sahifalar lastModified daʼvo qilmaydi (18.1). */
+/** Mazmuni tasdiqlanmagan sahifa lastModified sanasini koʻrsatmaydi. */
 function lastModifiedFor(
   key: PageKey,
   slug: string | undefined,
@@ -29,7 +29,7 @@ function lastModifiedFor(
   return undefined;
 }
 
-/** Google talabi: alternates ichida sahifaning oʻzi ham boʻlishi kerak; ozbekca klasterga kirmaydi. */
+/** Google alternates ichida sahifaning oʻzini ham talab qiladi; ozbekca hreflang guruhiga kirmaydi. */
 function languagesFor(key: PageKey, slug?: string): Record<string, string> {
   const base = siteUrl();
   const out: Record<string, string> = {};

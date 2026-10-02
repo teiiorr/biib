@@ -3,19 +3,19 @@ import type { TextKind, TextValue } from "@/i18n/text-overrides";
 
 import type { FieldErrors } from "../news/types";
 
-/** Roʻyxatdagi bitta kalit: qidiruv shu maʼlumot ustida brauzerda ishlaydi. */
+/** Qidiruv shu maʼlumot ustida brauzerda ishlaydi. */
 export interface TextListRow {
   readonly key: string;
   readonly namespace: string;
   readonly kind: TextKind;
-  /** Saytdagi amaldagi oʻzbekcha matn (roʻyxat bandlari « · » bilan). */
+  /** Saytdagi amaldagi oʻzbekcha matn; roʻyxat bandlari « · » bilan ulanadi. */
   readonly preview: string;
   readonly changed: boolean;
-  /** Kalit va besh tildagi matn, kichik harflarda: qidiruv uchun. */
+  /** Qidiruv uchun kalit va besh tildagi matn, kichik harflarda. */
   readonly haystack: string;
 }
 
-/** Tahrir oynasiga keladigan kalit maʼlumoti (serverdan, JSON ga oʻtadigan shakl). */
+/** Serverdan tahrir oynasiga JSON koʻrinishida keladi. */
 export interface TextEditorEntry {
   readonly key: string;
   readonly kind: TextKind;

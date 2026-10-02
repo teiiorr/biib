@@ -23,10 +23,9 @@ import { useLeaveGuard } from "./useLeaveGuard";
 
 export interface TextEditorProps {
   readonly entry: TextEditorEntry;
-  /** Bazadagi almashtirish; null — saytda lugʻatdagi asl matn. */
+  /** null boʻlsa saytda lugʻatdagi asl matn turadi. */
   readonly stored: { readonly value: Localized<TextValue>; readonly updatedAt: string } | null;
   readonly viewHref: string;
-  /** Guruh sarlavhasi: matn saytning qaysi qismida (masalan «Bosh sahifa»). */
   readonly section: string;
 }
 
@@ -34,7 +33,7 @@ const IDLE: SaveTextState = { status: "idle", revision: 0 };
 const T = SYSTEM_COPY.texts;
 const S = NEWS_COPY.save;
 const ORDER = ["value"] as const;
-/* Shundan uzun matn koʻp qatorli maydonda: bir qatorli maydonda oxiri koʻrinmay qoladi. */
+/* Uzun matnning oxiri bir qatorli maydonda koʻrinmay qolardi. */
 const LONG_TEXT = 90;
 
 function hintFor(entry: TextEditorEntry): string {
@@ -68,10 +67,7 @@ function barState({ state, pending, dirty, restored, errors }: BarInput): {
   return { message: S.clean, tone: "neutral" };
 }
 
-/**
- * Bitta lugʻat kalitini besh tilda tahrirlash: amaldagi qiymat bilan ochiladi, brauzer ham server kabi
- * tekshiradi (build.ts). Almashtirish bor boʻlsa yuqorida «Asliga qaytarish», pastda repodagi asl matn.
- */
+/** Brauzer ham server kabi tekshiradi: qoidalar build.ts faylida bitta. */
 export function TextEditor({ entry, stored, viewHref, section }: TextEditorProps) {
   const [state, formAction, pending] = useActionState(saveText, IDLE);
   const [draft, setDraft] = useState(() => draftFromValue(stored?.value ?? entry.bundled));
@@ -83,7 +79,7 @@ export function TextEditor({ entry, stored, viewHref, section }: TextEditorProps
   const form = useId().replace(/:/g, "");
   const fieldId = `${form}-value`;
 
-  /* Server javobi kelgan render: meʼyorlangan qiymat tahrirga qaytadi. */
+  /* Yangi server javobi: meʼyorlangan qiymat tahrirga qaytadi. */
   if (state.revision !== seen) {
     setSeen(state.revision);
     if (state.status === "saved") {

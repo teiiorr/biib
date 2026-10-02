@@ -12,10 +12,9 @@ import { useMorph } from "./useMorph";
 export interface GlassPopoverProps {
   readonly open: boolean;
   readonly onOpenChange: (open: boolean) => void;
-  /** Radix Trigger sifatida oʻraladi; `anchor` berilsa tugma tashqarida boshqariladi. */
+  /** anchor berilsa tugma tashqaridan boshqariladi, aks holda Radix Trigger bilan oʻraladi. */
   readonly trigger?: ReactNode;
   readonly anchor?: ReactNode;
-  /** Morf boshlanadigan element (odatda trigger tugma). */
   readonly morphFrom?: RefObject<HTMLElement | null>;
   readonly label: string;
   readonly side?: "top" | "bottom" | "left" | "right";

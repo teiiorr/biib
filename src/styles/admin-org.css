@@ -1,6 +1,4 @@
-/* Boshqaruv paneli: aloqa, tarix, UPOP va galereya tahrirlari — tanlash roʻyxati, juft maydonlar,
-   qatorli roʻyxatlar, kartalar va galereya tuzilishi xaritasi. Qiymatlar sayt tokenlari va boʻshliq
-   shkalasida. */
+/* Panel: aloqa, tarix, UPOP va galereya tahrirlari. */
 
 @layer components {
   /* ---------- Tanlash roʻyxati ---------- */
@@ -26,7 +24,7 @@
     }
   }
 
-  /* ---------- Juft maydonlar: qiymat va uning holati yonma-yon ---------- */
+  /* ---------- Juft maydonlar ---------- */
   .admin-pair {
     display: grid;
     gap: 16px 24px;
@@ -44,7 +42,7 @@
     }
   }
 
-  /* ---------- Qatorli roʻyxat (telefonlar): torda maydon toʻliq, tugmalar ostida oʻngda ---------- */
+  /* ---------- Qatorli roʻyxat (telefonlar) ---------- */
   .admin-rows,
   .admin-items,
   .admin-socials,
@@ -78,7 +76,7 @@
     flex-basis: 100%;
   }
 
-  /* ---------- Karta (tarix bosqichi, dalil, galereya joyi) ---------- */
+  /* ---------- Karta ---------- */
   .admin-item {
     display: flex;
     flex-direction: column;
@@ -96,7 +94,7 @@
       padding: 24px;
     }
   }
-  /* Guruh ichidagi karta: fon yoʻq, faqat ingichka chegara (sirt ustida sirt boʻlmasin). */
+  /* Guruh ichida karta fonsiz, faqat ingichka chegara bilan: sirt ustida sirt boʻlmasin. */
   .admin-group .admin-item {
     padding: 16px;
     background: transparent;
@@ -123,7 +121,7 @@
     }
   }
 
-  /* Belgi tanlovi va yonida saytdagi plitka: plitka 44 px, maydon 48 px — pastki chetlari tekis. */
+  /* Belgi tanlovi yonida saytdagi plitka namunasi: pastki chetlari bir chiziqda turadi. */
   .admin-icon-select {
     display: flex;
     align-items: flex-end;
@@ -133,8 +131,7 @@
     flex: 1;
     min-width: 0;
   }
-  /* Panelda skroll animatsiyasi yoʻq: saytdagi belgi plitkasi chizilib chiqmaydi, doim toʻliq koʻrinadi
-     (aks holda ekrandan pastdagi namuna boʻsh plitka boʻlib turardi). */
+  /* Panelda skroll animatsiyasi ishlamaydi, aks holda ekrandan pastdagi namuna boʻsh plitka boʻlib qolardi. */
   :root[data-admin] .admin-body .feature-icon svg {
     animation: none;
   }
@@ -144,7 +141,7 @@
     padding-bottom: 2px;
   }
 
-  /* ---------- Ijtimoiy tarmoqlar: telefonda karta, kompyuterda jadval qatori ---------- */
+  /* ---------- Ijtimoiy tarmoqlar ---------- */
   .admin-social {
     min-width: 0;
     margin: 0;
@@ -179,7 +176,7 @@
       grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 200px) auto;
       align-items: start;
     }
-    /* Tugmalar maydon qatorida: yorliq balandligi (label + 8 px) qadar pastda. */
+    /* Tugmalar yorliq balandligi (label + 8 px) qadar pastga tushadi va maydon bilan bir qatorda turadi. */
     .admin-social-tools {
       padding-top: 28px;
     }
@@ -188,7 +185,7 @@
     }
   }
 
-  /* ---------- Eslatma (ogohlantirish emas): tint rangida ---------- */
+  /* ---------- Eslatma ---------- */
   .admin-note.admin-note-info {
     background: color-mix(in oklab, var(--tint) 10%, transparent);
   }

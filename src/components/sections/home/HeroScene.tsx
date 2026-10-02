@@ -5,9 +5,8 @@ interface HeroSceneProps {
 }
 
 /**
- * Qahramon sahnasining oʻrami: balandligi 100svh × (1 + --hero-scene-length), ichidagi qahramon
- * yopishqoq (CSS sticky, GSAP pin emas — D-M7). Uzunlik 0 boʻlsa (kamaytirilgan harakat, Harakat = off,
- * past ekran) oddiy bir ekranli blok. Timeline useHeroScene da (qahramon badiiy chunki).
+ * Balandligi 100svh × (1 + --hero-scene-length); ichidagi qahramon CSS sticky bilan yopishadi, GSAP pin ishlatilmaydi.
+ * Uzunlik 0 boʻlsa (kamaytirilgan harakat, Harakat oʻchiq, past ekran) oddiy bir ekranli blok. Timeline useHeroScene ichida.
  */
 export function HeroScene({ children }: HeroSceneProps) {
   return (

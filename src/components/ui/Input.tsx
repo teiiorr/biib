@@ -8,7 +8,7 @@ export interface InputProps extends Omit<
   readonly className?: string;
 }
 
-/* Shrift 16 px dan kichik emas: iOS fokusda kattalashtirmasin. Fokus halqasi global. */
+/* Shrift 16 px dan kichik emas, aks holda iOS fokusda sahifani kattalashtiradi. Fokus halqasi global. */
 export const INPUT_CLASS =
   "t-body w-full rounded-m border border-line-strong bg-surface text-ink placeholder:text-ink-3 aria-invalid:border-danger disabled:text-ink-3 disabled:bg-surface-2";
 

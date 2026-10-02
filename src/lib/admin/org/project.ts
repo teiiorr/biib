@@ -29,7 +29,7 @@ export interface HighlightDraft {
   readonly text: Localized;
 }
 
-/** UPOP tahriri: nom, shior va video fayllari bu yerda yoʻq (bazadagi qiymati saqlashda oʻzgarmaydi). */
+/** UPOP tahririda nom, shior va video fayllari yoʻq: bazadagi qiymati saqlashda oʻzgarmaydi. */
 export interface ProjectDraft {
   readonly status: ContentStatus;
   readonly ageFrom: string;
@@ -105,10 +105,7 @@ export type ProjectBuild =
   | { readonly ok: true; readonly input: ProjectAdmin }
   | { readonly ok: false; readonly errors: ErrorBag };
 
-/**
- * Tahrir holati + bazadagi yozuv → admin_save_project kirishi. base dan faqat panelda
- * tahrirlanmaydigan qismlar (nom, shior, video holati) olinadi.
- */
+/** Bazadagi yozuvdan faqat panelda tahrirlanmaydigan qismlar olinadi: nom, shior va video holati. */
 export function buildProject(draft: ProjectDraft, base: ProjectAdmin): ProjectBuild {
   const errors: ErrorBag = {};
   const { from, to } = age(errors, draft);

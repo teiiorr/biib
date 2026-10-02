@@ -92,7 +92,7 @@ export function auditInteractive(): Finding[] {
     return around > own + 1;
   };
 
-  /* ::before/::after mutlaq joylashgan bosish maydoni (inset -2px) nishon oʻlchamiga kiradi (§8 IX.5). */
+  /* ::before/::after mutlaq joylashgan bosish maydoni (inset -2px) nishon oʻlchamiga kiradi. */
   const pseudoInset = (el: Element, which: "::before" | "::after"): Box | null => {
     const ps = getComputedStyle(el, which);
     if (ps.content === "none" || ps.content === "" || ps.position !== "absolute") return null;

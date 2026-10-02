@@ -10,7 +10,7 @@ export const nav: typeof source = {
   partners: "Партнёры",
   contacts: "Контакты",
   privacy: "Политика конфиденциальности",
-  /* Tab-bar uchun qisqa yorliq: 320 px da beshta band bir qatorga sigʻadi (toʻliq nom aria-label da). */
+  /* Beshta tugma 320 px ekranda pastki panelga sigʻsin; toʻliq nom aria-label orqali beriladi. */
   tabShort: { home: "Главная", projects: "UPOP" },
   menu: "Меню",
   openMenu: "Открыть меню",

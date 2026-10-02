@@ -19,8 +19,8 @@ interface OrderButtonsProps {
 const L = PEOPLE_COPY.list;
 
 /**
- * Yuqoriga va pastga: sudrashsiz tartiblash (klaviatura va ekran oʻquvchi bilan ham). Chetdagi tugma
- * yashirin, lekin joyi saqlanadi (ustunlar tekis); fokus qarama-qarshi tugmaga oʻtadi (focusMoved).
+ * Sudrashsiz tartiblash klaviatura va ekran oʻquvchi bilan ham ishlaydi. Chetdagi tugma yashiriladi,
+ * lekin joyi saqlanib ustunlar tekis turadi; fokus qarama-qarshi tugmaga oʻtadi (focusMoved).
  */
 export function OrderButtons({ listId, rowKey, name, first, last, onMove }: OrderButtonsProps) {
   return (

@@ -29,7 +29,7 @@ interface FeatureParts {
   readonly control: HTMLElement | null;
 }
 
-/* Sahna pastidagi boʻshliq (motion.css dagi padding-bottom bilan bir xil). */
+/* Sahna pastidagi boʻshliq, motion.css faylidagi padding-bottom bilan bir xil. */
 const STAGE_BOTTOM = 8;
 
 interface Placement {
@@ -60,7 +60,7 @@ function queryParts(root: HTMLElement): FeatureParts | null {
   };
 }
 
-/* Transformdan mustaqil joylashuv: offsetParent zanjiri boʻyicha sahnaga nisbatan (D-M2 qoidasi). */
+/* Joy offsetParent zanjiri boʻyicha hisoblanadi, shunda transform natijaga taʼsir qilmaydi. */
 function offsetWithin(el: HTMLElement, ancestor: HTMLElement): { left: number; top: number } {
   let left = 0;
   let top = 0;
@@ -84,10 +84,9 @@ function centreOn(el: HTMLElement, stage: HTMLElement, scale: number): Placement
 }
 
 /**
- * Kompyuter sahnasi: kadr butun sahnani qoplab (cover), xiralashgan holda boshlanadi, logotip
- * markazda katta; skroll bilan ikkalasi oʻz katagiga qoʻnadi, soʻng sarlavha, dalillar va
- * harakatlar keladi. Foydalanuvchi allaqachon shu yerda boʻlsa — null (qurilmaydi). Kontent sigʻmasa sahna
- * yakuniy holatda kutadi va har refresh da qayta tekshiriladi (masalan shriftlar kelgach).
+ * Kompyuter sahnasi: kadr avval butun sahnani qoplaydi, skroll bilan kadr va logotip oʻz katagiga qoʻnadi.
+ * Foydalanuvchi allaqachon shu yerda boʻlsa null qaytadi. Kontent sigʻmasa sahna yakuniy holatda kutadi
+ * va har qayta hisoblashda yana tekshiriladi (masalan, shriftlar kelgach).
  */
 function buildScene(
   { gsap, ScrollTrigger }: MotionEngine,
@@ -97,7 +96,7 @@ function buildScene(
 ): (() => void) | null {
   const { root, stage, grid, wordmark, media, head, items, actions, dim, control } = parts;
   if (late && reached(root)) return null;
-  /* Oʻlchamsiz kadr cheksiz «cover» masshtabi berib, sahifa boshini qoplardi. */
+  /* Oʻlchamsiz kadr cheksiz «cover» masshtabini berib, sahifa boshini qoplab qoʻyardi. */
   if (media.offsetWidth === 0 || media.offsetHeight === 0 || wordmark.offsetHeight === 0)
     return null;
   // Sigʻishi sahna holatini yoqmasdan oʻlchanadi: toʻr balandligi sahnaga bogʻliq emas.
@@ -105,8 +104,8 @@ function buildScene(
     const header = parseFloat(getComputedStyle(root).getPropertyValue("--header-h")) || 64;
     return grid.offsetHeight <= window.innerHeight - (header + 12) - STAGE_BOTTOM;
   };
-  /* Sigʻmasa sahna umuman qurilmaydi: «cover» boshlangʻich holati qoʻyilib qolib, sahifa boshini
-     qoplardi (skroll silliqlash tweeni progress(1) ni qaytarib 0 ga olib borardi). */
+  /* Sigʻmasa sahna umuman qurilmaydi: aks holda «cover» holati qolib, sahifa boshini qoplardi
+     (skroll silliqlash tweeni progress(1) ni qaytadan 0 ga olib borardi). */
   if (!fits()) {
     delete root.dataset.scene;
     return null;
@@ -125,7 +124,7 @@ function buildScene(
     );
     return centreOn(media, stage, scale);
   };
-  // Logotip sahna balandligining 60 % idan oshmaydi: kadr ustida sarlavha, ekrandan chiqib ketmaydi.
+  // Logotip sahna balandligining 60 % idan oshmaydi, aks holda sarlavha ekrandan chiqib ketadi.
   const title = (): Placement =>
     centreOn(
       wordmark,
@@ -146,7 +145,7 @@ function buildScene(
     0,
   );
   if (dim) tl.fromTo(dim, { opacity: 0.45 }, { opacity: 0, duration: 0.5 }, 0);
-  // 44 px boshqaruv kadr bilan birga kattalashmasin: qoʻngandan keyin paydo boʻladi.
+  // 44 px boshqaruv tugmasi kadr bilan birga kattalashmasin: u kadr qoʻngandan keyin paydo boʻladi.
   if (control) tl.fromTo(control, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.05 }, 0.45);
   if (head) {
     tl.fromTo(
@@ -157,7 +156,7 @@ function buildScene(
     );
   }
   if (items.length > 0) {
-    // Boshlangʻich holat hamma dalil uchun: pogʻonali fromTo faqat birinchisini darhol yashirardi.
+    // Boshlangʻich holat hamma dalilga beriladi: pogʻonali fromTo faqat birinchisini darhol yashirardi.
     gsap.set(items, { y: 32, autoAlpha: 0 });
     tl.fromTo(
       items,
@@ -174,7 +173,7 @@ function buildScene(
       0.75,
     );
   }
-  // Oxirgi 5 %: tinch turish, keyin sahna boʻshaydi.
+  // Oxirgi 5 % da sahna tinch turadi, keyin boʻshaydi.
   tl.set({}, {}, 1);
 
   const layers = [media, wordmark];
@@ -195,7 +194,7 @@ function buildScene(
     gsap.killTweensOf(tl);
     if (geometryOff) tl.progress(1);
   };
-  // Oʻlcham refresh dan oldin tekshiriladi (joylashuv shu yerda oʻzgarishi mumkin), holat keyin.
+  // Sigʻish qayta hisoblashdan oldin tekshiriladi, chunki joylashuv shu yerda oʻzgarishi mumkin; holat keyin.
   const beforeRefresh = (): void => {
     const off = !fits() || (geometryOff && reached(root));
     if (off === geometryOff) return;
@@ -245,7 +244,7 @@ function buildScene(
   };
 }
 
-/* Blok koʻrinishga kirganda nishonlar doira ritmida koʻtariladi; ekranda turgan blok yashirilmaydi. */
+/* Blok ekranga kirganda nishonlar doira ritmida koʻtariladi; ekranda turgan blok yashirilmaydi. */
 function riseIn(
   { gsap }: MotionEngine,
   trigger: HTMLElement,
@@ -271,8 +270,8 @@ function riseIn(
 }
 
 /**
- * Telefon va sahna sigʻmagan ekran: sarlavha koʻtariladi, logotip va kadr yumshoq ochiladi (kadrda
- * parallaks), dalillar va harakatlar doira ritmida koʻtariladi. Ekranda turgan qism yashirilmaydi.
+ * Telefon va sahna sigʻmagan ekran uchun: sarlavha koʻtariladi, logotip va kadr yumshoq ochiladi,
+ * qolganlari doira ritmida keladi. Ekranda turgan qism yashirilmaydi.
  */
 function buildStacked(
   engine: MotionEngine,
@@ -284,7 +283,7 @@ function buildStacked(
   const { wordmark, media, text, head, items, actions } = parts;
   const disposers: Array<() => void> = [];
 
-  // Sarlavha matndan uzoqda (tepada): oʻz triggeri bilan, aks holda koʻrinib turib yashirin qolardi.
+  // Sarlavha matndan uzoqda turadi: oʻz triggeri boʻlmasa koʻrinib turgan joyda yashirin qolardi.
   const headRise = head ? riseIn(engine, head, [head], distance) : null;
   if (headRise) disposers.push(headRise);
 
@@ -322,9 +321,8 @@ function buildStacked(
 }
 
 /**
- * upop-scene (motion-plan 3.8, 5.5): bosh sahifadagi UPOP TREND boʻlimining yagona muallif
- * harakati. Kompyuterda yopishqoq sahna (CSS sticky, pin emas — D-M7), telefonda ketma-ket kirishlar.
- * Boʻlim DOM i yakuniy holat: harakat oʻchiq yoki dvigatel yoʻq boʻlsa hammasi joyida koʻrinadi.
+ * Bosh sahifadagi UPOP TREND boʻlimi harakati: kompyuterda CSS sticky sahna (GSAP pin emas), telefonda
+ * ketma-ket kirishlar. DOM yakuniy holatda, shuning uchun dvigatelsiz ham hammasi joyida koʻrinadi.
  */
 export function useStickyFeature(
   scope: RefObject<HTMLElement | null>,

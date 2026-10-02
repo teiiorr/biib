@@ -1,6 +1,6 @@
 /*
- * Sahifa oʻtishlari (§14.4, §11.2) va silliq skroll qobigʻi.
- * Qatlam tartibi kaskadni hal qiladi: reduced har doim typed dan ustun.
+ * Sahifa oʻtishlari va silliq skroll qobigʻi.
+ * Qatlamlar tartibi tufayli kamaytirilgan harakat qoidalari har doim oʻtish turlaridan ustun.
  */
 @layer vt-base, vt-typed, vt-reduced, vt-fallback;
 
@@ -22,7 +22,7 @@ html.lenis body {
   pointer-events: none;
 }
 
-/* Taroq-poligonlar: 6 vertikal tasma, har biri oʻz navbatida ochiladi/yigʻiladi (kadrlar hosil qilingan). */
+/* Taroq poligonlar: 6 vertikal tasma navbat bilan ochiladi yoki yigʻiladi. Kadrlar skript bilan hosil qilingan. */
 /* prettier-ignore */
 @keyframes abr-in-ltr {
   0% { clip-path: polygon(0% 0%, 0% 0%, 16.667% 0%, 16.667% 0%, 16.667% 0%, 16.667% 0%, 33.333% 0%, 33.333% 0%, 33.333% 0%, 33.333% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 66.667% 0%, 66.667% 0%, 66.667% 0%, 66.667% 0%, 83.333% 0%, 83.333% 0%, 83.333% 0%, 83.333% 0%, 100% 0%, 100% 0%); }
@@ -78,20 +78,20 @@ html.lenis body {
 @keyframes vt-fade-out { from { opacity: 1; } to { opacity: 0; } }
 
 @layer vt-base {
-  /* Qobiq (header/futer) ildiz guruhida: qisqa oʻzaro soʻnish. */
+  /* Sarlavha va futer ildiz guruhida qoladi: faqat qisqa oʻzaro soʻnish. */
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation-duration: var(--dur-ui);
     animation-timing-function: var(--ease-ui);
   }
-  /* Guruh oʻlchamini morflamaymiz (layout xususiyati); old/new oʻzi hal qiladi. */
+  /* Guruh oʻlchami joylashuv xususiyati, uni animatsiya qilmaymiz: old va new qatlamlari oʻzi moslashadi. */
   ::view-transition-group(.vt-page) {
     animation: none;
   }
   ::view-transition-image-pair(.vt-page) {
     isolation: isolate;
   }
-  /* Sukut = oldinga abr: tasmalar chapdan oʻngga, sahifa pastdan registrga keladi. */
+  /* Sukut boʻyicha oldinga abr: tasmalar chapdan oʻngga, sahifa pastdan oʻz joyiga keladi. */
   ::view-transition-old(.vt-page) {
     animation:
       abr-out-ltr var(--dur-transition) linear both,
@@ -102,7 +102,7 @@ html.lenis body {
       abr-in-ltr var(--dur-transition) linear both,
       abr-shift-in var(--dur-transition) steps(6, end) both;
   }
-  /* Umumiy elementlar (yangilik muqovasi, loyiha mediasi): joy va oʻlcham morfi. */
+  /* Umumiy elementlar (yangilik muqovasi, loyiha mediasi) joyi va oʻlchami silliq oʻzgaradi. */
   ::view-transition-group(.vt-shared) {
     animation-duration: var(--dur-transition);
     animation-timing-function: var(--ease-in-out);
@@ -156,7 +156,7 @@ html.lenis body {
 }
 
 @layer vt-fallback {
-  /* View Transitions boʻlmagan brauzer: TransitionLink body ga nav-fade qoʻyadi, PageTransition oladi. */
+  /* View Transitions yoʻq brauzerda nav-fade klassini TransitionLink qoʻyadi, PageTransition olib tashlaydi. */
   body {
     transition: opacity var(--dur-fade) var(--ease-ui);
   }

@@ -19,7 +19,7 @@ export interface AdminNavGroup {
 const P = ADMIN_COPY.pages;
 const G = ADMIN_COPY.nav.groups;
 
-/** Yon panel va telefon varagʻi bitta roʻyxatdan: tartib ikkalasida bir xil. */
+/** Yon panel va telefon varagʻi shu bitta roʻyxatdan olinadi, tartib ikkalasida bir xil. */
 export const ADMIN_NAV: readonly AdminNavGroup[] = [
   {
     key: "home",
@@ -64,7 +64,7 @@ export const ADMIN_NAV: readonly AdminNavGroup[] = [
   },
 ];
 
-/** Eng uzun mos kelgan band faol: /admin/upop/galereya ochiqda «UPOP» emas, «Galereya» belgilanadi. */
+/** Eng uzun mos band faol: /admin/upop/galereya sahifasida «UPOP» emas, «Galereya» belgilanadi. */
 export function activeHref(pathname: string): AdminPath | null {
   let best: AdminPath | null = null;
   for (const group of ADMIN_NAV) {

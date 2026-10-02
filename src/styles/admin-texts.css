@@ -1,5 +1,4 @@
-/* Boshqaruv paneli: Matnlar daraxti va matn tahriri. Faqat Matnlar sahifalari ulaydi; qiymatlar sayt
-   tokenlari va boʻshliq shkalasida. */
+/* Panel: matnlar daraxti va matn tahriri. Faqat Matnlar sahifalari ulaydi. */
 
 @layer components {
   /* ---------- Matnlar: qidiruv va daraxt ---------- */
@@ -8,7 +7,6 @@
     flex-direction: column;
     gap: 16px;
   }
-  /* Natija soni chapda, filtr oʻngda; telefonda filtr soni ostiga tushadi. */
   .admin-texts-bar {
     display: flex;
     flex-wrap: wrap;

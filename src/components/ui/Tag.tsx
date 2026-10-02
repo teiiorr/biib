@@ -11,7 +11,7 @@ export interface TagProps {
   readonly children: ReactNode;
 }
 
-/* Toʻrtburchak, 6 px radius; hech qachon kapsula emas. Art ranglari ui.css da. */
+/* Kapsula shakli ataylab ishlatilmaydi. Art ranglari ui.css faylida. */
 export function Tag({ tone = "neutral", as: Component = "span", className, children }: TagProps) {
   return (
     <Component

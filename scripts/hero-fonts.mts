@@ -1,7 +1,6 @@
 /*
- * Qahramon sarlavhasi uchun mayda Unbounded UZ toʻplami (til boʻyicha): faqat tashkilot nomidagi harflar,
- * statik 700 nusxadan. Preload bilan birinchi kadrda haqiqiy shrift chiqadi, zaxira shrift almashinuvi
- * va siljish boʻlmaydi. fontTools va brotli kerak (PYTHON muhit oʻzgaruvchisi).
+ * Qahramon sarlavhasi uchun har tilga alohida mayda toʻplam, faqat tashkilot nomidagi harflar bilan.
+ * Fayl oldindan yuklanadi, shuning uchun birinchi kadrdayoq haqiqiy shrift chiqadi va siljish boʻlmaydi.
  */
 import { execFileSync } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -13,11 +12,11 @@ import { LOCALES } from "../src/i18n/locales";
 const SOURCE = path.resolve("src/assets/fonts/UnboundedUZ-700.ttf");
 const OUT = path.resolve("public/fonts");
 mkdirSync(OUT, { recursive: true });
-/* fontTools va brotli oʻrnatilgan Python: PYTHON muhit oʻzgaruvchisi, sukutda python3. */
+/* fontTools va brotli oʻrnatilgan Python kerak; boshqasini PYTHON oʻzgaruvchisi orqali berish mumkin. */
 const python = process.env.PYTHON ?? "python3";
 
 const texts: Record<string, string> = {};
-/* Nom saytda bosh harflarda koʻrsatiladi (text-transform): toʻplamga ikkala shakl ham kiradi. */
+/* Nom text-transform bilan bosh harflarda chiqadi, shuning uchun toʻplamga ikkala shakl ham kiradi. */
 for (const locale of LOCALES) {
   const name = getDictionary(locale).common.brand.name;
   texts[locale] = `${name} ${name.toUpperCase()}`;

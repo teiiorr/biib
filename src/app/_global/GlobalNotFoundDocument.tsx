@@ -12,10 +12,8 @@ import { APPEARANCE_BOOT_SCRIPT } from "@/lib/appearance/boot";
 import { fontPreloads } from "@/lib/fonts";
 
 /**
- * Tildan tashqaridagi 404 hujjati (oʻzbek lotinida, beshta til bosh sahifasiga havola). Ikki yoʻldan
- * keladi: xaritada yoʻq manzil (global-not-found) va nomaʼlum til segmenti (/zz — ildiz not-found).
- * Sarlavha panelisiz hujjat: brend belgisi sarlavha ustida turadi. Tillar bitta tinch havolalar
- * qatori: beshta teng ustuvor yoʻl, bitta asosiy harakat emas.
+ * Til tanlanmagan 404 sahifasi oʻzbek lotinida chiqadi. Unga xaritada yoʻq manzil (global-not-found)
+ * va nomaʼlum til segmenti (/zz) olib keladi. Beshta til teng ustuvor, shuning uchun asosiy tugma yoʻq.
  */
 export function GlobalNotFoundDocument() {
   const dict = getDictionary("uz");

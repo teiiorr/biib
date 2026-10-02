@@ -1,7 +1,7 @@
 import { fetchText, links, mapLimit, metaContent } from "./html.mjs";
 import { SITE_URL, fail, log, pass } from "./util.mjs";
 
-/** G12: ishlab chiqarish manzili; joylashtirishdan keyin alohida ishga tushiriladi. */
+/** Ishlab chiqarishdagi sayt joylashtirilgandan keyin alohida tekshiriladi. */
 export async function runProdSmoke(ctx) {
   const base = SITE_URL;
   log(`G12: ${base}`);

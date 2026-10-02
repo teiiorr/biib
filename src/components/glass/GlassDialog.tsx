@@ -23,7 +23,7 @@ export interface GlassDialogProps {
   readonly children: ReactNode;
 }
 
-/** Markazdagi oyna dialogi (kompyuter). Telefonda GlassSheet ishlatiladi. */
+/** Faqat kompyuter uchun: telefonda GlassSheet ishlatiladi. */
 export function GlassDialog({
   open,
   onOpenChange,

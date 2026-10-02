@@ -5,8 +5,8 @@ import { useLayoutEffect, useRef } from "react";
 import { isNavEntry } from "@/lib/motion/transitions";
 
 /**
- * Nomdagi har soʻzga umumiy oltin plitkadagi oʻrni: --title-w (nom kengligi) va --word-x (soʻzning
- * chap chekkasi). Shunda yaltirash tasmasi butun nom boʻylab bitta boʻlib oʻtadi (motion.css).
+ * Har soʻzga umumiy oltin plitkadagi oʻrni beriladi: --title-w (nom kengligi) va --word-x (soʻzning chap cheti).
+ * Shunda yaltirash tasmasi butun nom boʻylab bitta boʻlib oʻtadi (motion.css).
  */
 function measureShine(title: HTMLElement): void {
   const box = title.getBoundingClientRect();
@@ -20,8 +20,8 @@ function measureShine(title: HTMLElement): void {
 }
 
 /**
- * hero-enter yordamchisi: mijoz navigatsiyasida kirish oʻtkazib yuboriladi (sahifa oʻtishi yagona
- * kirish, bitta element bir marta kiradi), animatsiyalar tugagach data-done qatlamlarni boʻshatadi.
+ * Mijoz navigatsiyasida kirish oʻtkazib yuboriladi, chunki sahifa oʻtishining oʻzi kirish boʻladi.
+ * Animatsiyalar tugagach data-done qatlamlarni boʻshatadi.
  */
 export function HeroEnter() {
   const ref = useRef<HTMLSpanElement>(null);
@@ -31,7 +31,7 @@ export function HeroEnter() {
     if (!hero) return;
     if (isNavEntry()) hero.setAttribute("data-enter", "skip");
     const title = hero.querySelector<HTMLElement>(".home-hero-title");
-    /* Shrift va oʻlcham oʻzgarsa soʻzlar suriladi: oʻrinlar qayta oʻlchanadi. */
+    /* Shrift yoki oʻlcham oʻzgarsa soʻzlar suriladi, shuning uchun oʻrinlar qayta oʻlchanadi. */
     const shine = title ? new ResizeObserver(() => measureShine(title)) : null;
     if (title) {
       measureShine(title);

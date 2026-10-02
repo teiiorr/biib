@@ -36,7 +36,7 @@ function findFonts(dirs) {
   return files;
 }
 
-/** fontTools (brotli bilan) boʻlsa u ishlatiladi, boʻlmasa oʻz oʻquvchimiz. */
+/** fontTools va brotli oʻrnatilmagan boʻlsa, oʻzimizning Node oʻquvchimiz ishlatiladi. */
 function withPython(files) {
   const probe = spawnSync("python3", ["-c", "import fontTools, brotli"], { encoding: "utf8" });
   if (probe.status !== 0) return null;

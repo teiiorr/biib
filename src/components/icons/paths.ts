@@ -1,4 +1,4 @@
-/* 24 px toʻr, 20 px jonli maydon (2…22). Faqat absolyut buyruqlar: M L H V Q C A Z. */
+/* 24 px toʻr, 20 px ish maydoni (2…22). Faqat absolyut buyruqlar: M L H V Q C A Z. */
 
 export const ICON_NAMES = [
   "menu",
@@ -58,7 +58,7 @@ export const ICON_PATHS: Record<IconName, string> = {
   language:
     "M12 21 A9 9 0 1 0 12 3 A9 9 0 1 0 12 21 Z M3 12 H21 M12 3 Q16.5 7.5 16.5 12 Q16.5 16.5 12 21 Q7.5 16.5 7.5 12 Q7.5 7.5 12 3 Z",
   external: "M10 5 H6 Q5 5 5 6 V18 Q5 19 6 19 H18 Q19 19 19 18 V14 M11 13 L20 4 M14 4 H20 V10",
-  /* Strelkalar uchi tomon 1 px siljigan. */
+  /* Optik muvozanat uchun strelkalar uchi tomon 1 px siljigan. */
   "arrow-right": "M5 12 L21 12 M15 6 L21 12 L15 18",
   "arrow-left": "M19 12 L3 12 M9 6 L3 12 L9 18",
   "arrow-up": "M12 19 L12 3 M6 9 L12 3 L18 9",

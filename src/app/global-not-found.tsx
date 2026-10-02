@@ -8,7 +8,7 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-/** Xaritadan tashqari yoʻl: marshrutlash darajasida, layoutsiz toʻliq hujjat. */
+/** Marshrutlar xaritasidan tashqari yoʻl uchun: layout yoʻq, shu sabab toʻliq hujjat qaytadi. */
 export default function GlobalNotFound() {
   return <GlobalNotFoundDocument />;
 }

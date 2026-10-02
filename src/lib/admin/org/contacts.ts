@@ -25,7 +25,7 @@ export interface ContactsSaved {
 
 export type SaveContactsState = OrgSaveState<ContactsSaved>;
 
-/** Tahrir holati: raqamlar va havolalar xom matn, tekshiruv va meʼyorlash buildContacts da. */
+/** Tahrir holatida raqam va havolalar xom matn: tekshiruv va meʼyorlash buildContacts ichida. */
 export interface ContactsDraft {
   readonly address: DetailDraft<Localized>;
   readonly postalCode: string;

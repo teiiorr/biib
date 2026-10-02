@@ -12,13 +12,13 @@ import { pathFor } from "@/i18n/routes";
 const subscribeNever = (): (() => void) => () => undefined;
 
 /**
- * 404: sarlavha va ikki havola. Sahifa xato qobigʻida mijozda chiziladi, Next metadata sarlavhasi
- * boʻsh qoladi: <title> shu yerda (React uni <head> ga koʻtaradi).
+ * 404 xato qobigʻida mijozda chiziladi va Next metadata sarlavhasi boʻsh qoladi, shuning uchun <title>
+ * shu yerda beriladi (React uni <head> ichiga koʻtaradi).
  */
 export function NotFoundView() {
   const params = useParams<{ locale?: string }>();
   const locale = isLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
-  // Serverda boʻsh, brauzerda layout JSON idan; gidratsiya mos boʻlishi uchun tashqi doʻkon.
+  // Gidratsiya mos kelishi uchun tashqi doʻkon: serverda boʻsh, brauzerda layout ichidagi JSON dan oʻqiladi.
   const copy = useSyncExternalStore(subscribeNever, readErrorsCopy, readErrorsCopy);
   return (
     <>

@@ -1,9 +1,8 @@
-/* Boshqaruv paneli: UPOP galereyasi tahriri (saytdagi toʻrning kichik nusxasi, joy kartalari, video
-   muqova kadri) va UPOP tahriridagi video fayllar koʻrinishi. */
+/* Panel: UPOP galereyasi tahriri va UPOP video fayllari. */
 
 @layer components {
-  /* ---------- Tuzilish xaritasi: kompyuterdagi 12 ustunli toʻr (pages.css .upop-gallery-grid) ----------
-     Qator 44 px: eng past katak ham bosish uchun yetarli. */
+  /* ---------- Tuzilish xaritasi: pages.css faylidagi .upop-gallery-grid toʻrining nusxasi ----------
+     Qator 44 px: eng past katak ham bosishga yetadi. */
   .admin-gallery-figure {
     display: flex;
     flex-direction: column;
@@ -75,7 +74,7 @@
     color: var(--ink);
   }
 
-  /* ---------- Joy kartalari: kompyuterda ikki ustun, 1-joy (eng katta ramka) toʻliq kenglikda ---------- */
+  /* ---------- Joy kartalari ---------- */
   @media (min-width: 1024px) {
     .admin-gallery-slots {
       display: grid;
@@ -96,7 +95,7 @@
   }
 
   /* ---------- Video muqova kadri ---------- */
-  /* Telefonda kadr ustida, matn va tugma ostida (tugma yorligʻi tor ustunga sigʻmaydi). */
+  /* Telefonda tugma yorligʻi tor ustunga sigʻmaydi, shu sabab matn va tugma kadr ostiga tushadi. */
   .admin-gallery-poster {
     display: grid;
     gap: 16px;
@@ -116,7 +115,7 @@
     outline-offset: 4px;
   }
 
-  /* ---------- UPOP media: fayl koʻrinishi va tavsif ---------- */
+  /* ---------- UPOP media ---------- */
   .admin-media-role {
     display: flex;
     flex-direction: column;

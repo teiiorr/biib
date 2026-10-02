@@ -48,12 +48,10 @@ function createGate(): Gate {
 }
 
 /**
- * Qahramon videosi: egasining animatsiyasi server posteri ustida sezilmay boshlanadi (poster = 0-kadr),
- * bir marta ijro etiladi va oxirgi kadrda — yigʻilgan belgida — turadi (halqa choki yoʻq, sakramaydi).
- * Belgi yigʻilgan lahzada (HERO_LOCK_AT) sarlavha oltin chaqnaydi; foydalanuvchi video tugamasdan
- * skroll qilsa, video toʻrt baravar tezlashib belgini toʻliq yigʻadi, sahna esa shundan keyingina
- * belgini sarlavhaga olib boradi (gate) — animatsiya chala qolmaydi. Kamaytirilgan
- * harakat, Harakat = off va trafik tejashda — oxirgi kadr posteri (home.css). Chunk boʻsh vaqtda yuklanadi.
+ * Video server posteri (0-kadr) ustida sezilmay boshlanadi, bir marta ijro etiladi va yigʻilgan
+ * belgida toʻxtaydi, shuning uchun halqa choki yoʻq. Video tugamasdan skroll qilinsa, u toʻrt baravar
+ * tezlashib belgini yigʻib boʻladi, sahna esa shundan keyingina uchadi: animatsiya chala qolmaydi.
+ * Kamaytirilgan harakatda, Harakat oʻchiq boʻlsa va trafik tejalganda oxirgi kadr posteri turadi.
  */
 export default function HeroVideo({ copy }: ArtProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -70,7 +68,7 @@ export default function HeroVideo({ copy }: ArtProps) {
   const [gate] = useState(createGate);
   const prefs = useMotionPrefs();
 
-  // Sahna oʻrami va boshqaruv uyasi ota (server) DOM da; layout effekt: useHeroScene shu kadrda oʻqiydi.
+  // Sahna oʻrami va boshqaruv uyasi server chizgan qismda; useHeroScene ularni shu kadrda oʻqiydi.
   useLayoutEffect(() => {
     const layer = layerRef.current;
     if (!layer) return;

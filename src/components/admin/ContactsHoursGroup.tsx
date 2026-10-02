@@ -12,7 +12,6 @@ import type { OrgSectionProps } from "./useOrgEditor";
 
 const C = ORG_COPY.contacts;
 
-/** Ish vaqti (besh tilda) va xarita nuqtasi: kenglik va uzunlik juft holda. */
 export function ContactsHoursGroup({
   draft,
   patch,

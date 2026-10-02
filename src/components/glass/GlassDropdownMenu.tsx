@@ -17,7 +17,7 @@ export interface GlassMenuItem {
   readonly href?: string;
   readonly onSelect?: () => void;
   readonly current?: boolean;
-  /** Til menyusi uchun: har band oʻz tilini eʼlon qiladi. */
+  /** Til menyusida har band ekran oʻquvchiga oʻz tilini bildiradi. */
   readonly lang?: string;
   readonly hrefLang?: string;
   readonly icon?: ReactNode;
@@ -31,11 +31,10 @@ export interface GlassDropdownMenuProps {
   readonly testId?: string;
   readonly className?: string;
   readonly currentLabel?: string;
-  /** Kech yuklangan panel: tugma allaqachon bosilgan boʻlsa ochiq holda chiziladi. */
+  /** Panel kech yuklanadi: tugma oldinroq bosilgan boʻlsa, ochiq holda chiziladi. */
   readonly initialOpen?: boolean;
 }
 
-/** Oyna ustidagi tushuvchi menyu: trigger paneli ichiga morf boʻladi. */
 export function GlassDropdownMenu({
   trigger,
   label,

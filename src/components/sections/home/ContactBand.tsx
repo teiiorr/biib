@@ -15,10 +15,7 @@ interface ContactBandProps {
   readonly dict: Dictionary;
 }
 
-/**
- * Aloqa: markazdagi sarlavha, ostida bitta sokin karta — manzil va telefon ikki teng ustunda
- * (bir xil uslub, bir tepa chiziq), oʻng chetda ikki harakat (kompyuterda shu qatorda).
- */
+/** Manzil va telefon bitta kartada, bir xil uslubdagi ikki teng ustunda; kompyuterda harakatlar shu qatorning oʻng chetida. */
 export async function ContactBand({ locale, dict }: ContactBandProps) {
   const c = await getContacts();
   const h = dict.home.contact;

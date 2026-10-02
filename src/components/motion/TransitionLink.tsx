@@ -19,15 +19,15 @@ type NavigateHandler = NonNullable<LinkProps["onNavigate"]>;
 
 export interface TransitionLinkProps extends Omit<LinkProps, "href"> {
   readonly href: string;
-  /** Yoʻnalishni majburlash; berilmasa tarix va chuqurlikdan aniqlanadi. */
+  /** Yoʻnalishni qoʻlda berish; berilmasa tarix va sahifa chuqurligidan aniqlanadi. */
   readonly direction?: NavDirection;
-  /** Masalan LOCALE_SWITCH: til almashtirgichda yoʻnalish oʻrniga. */
+  /** Masalan, LOCALE_SWITCH: til almashtirgichda yoʻnalish oʻrniga. */
   readonly transitionType?: TransitionType;
 }
 
 let fadeTimer: number | undefined;
 
-/** View Transitions boʻlmagan brauzer: body ga sinf, PageTransition yangi yoʻlda olib tashlaydi. */
+/** View Transitions yoʻq brauzer uchun zaxira: sinf body ga qoʻyiladi, PageTransition uni yangi sahifada olib tashlaydi. */
 function beginFallbackFade(): void {
   document.body.classList.add(NAV_FADE_CLASS);
   window.clearTimeout(fadeTimer);
@@ -38,8 +38,8 @@ function beginFallbackFade(): void {
 }
 
 /**
- * next/link ustidagi oʻram: SPA oʻtishda startTransition + addTransitionType(nav-forward|nav-back)
- * bilan router.push/replace. Modifikator tugmalar, tashqi havolalar va prefetch odatdagidek.
+ * next/link oʻrami: sahifa ichidagi oʻtishda router.push yoki replace startTransition va addTransitionType bilan chaqiriladi.
+ * Modifikator tugmalar, tashqi havolalar va prefetch odatdagidek ishlaydi.
  */
 export function TransitionLink({
   href,

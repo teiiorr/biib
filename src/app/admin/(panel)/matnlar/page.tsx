@@ -18,7 +18,6 @@ interface TextsAdminPageProps {
   readonly searchParams: Promise<{ q?: string | string[] }>;
 }
 
-/** Matnlar: lugʻatdagi har kalit, saytdagi amaldagi matni bilan; qidiruv brauzerda. */
 export default async function TextsAdminPage({ searchParams }: TextsAdminPageProps) {
   const session = await requireAdmin("/admin/matnlar");
   const overrides = await loadTextOverrides(adminDb(session.accessToken));

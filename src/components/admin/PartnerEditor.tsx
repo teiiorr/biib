@@ -35,7 +35,6 @@ const T = PEOPLE_COPY.editor;
 const P = PEOPLE_COPY.partners;
 const FIELD_ORDER = ["name", "href"] as const;
 
-/** Hamkor: chapda holat, nomi, guruh va sayt; oʻngda logotip saytdagi plitkada. */
 export function PartnerEditor({ id, initial, updatedAt, justSaved, library }: PartnerEditorProps) {
   const form = useId().replace(/:/g, "");
   const idFor = (field: string) => `${form}-${field}`;

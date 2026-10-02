@@ -17,18 +17,18 @@ export function emptyLocalized(): Localized {
   return { uz: "", oz: "", ozbekca: "", ru: "", en: "" };
 }
 
-/* Oʻgirish meʼyorlangan matndan: apostrof bilan yozilgan «o'» ham toʻgʻri «ў» boʻladi. */
+/* Oʻgirish meʼyorlangan matndan boshlanadi: apostrof bilan yozilgan «o'» ham toʻgʻri «ў» boʻladi. */
 export function deriveFromUz(locale: DerivedLocale, uz: string): string {
   const source = normalizeUz(uz);
   return locale === "oz" ? latinToCyrillic(source) : latinToReform(source);
 }
 
-/** Qiymat oʻzbekchadan oʻgirilgan holatidami («avto»); aks holda qoʻlda tahrirlangan. */
+/** Avto: qiymat oʻzbekchadan oʻgirilgani bilan bir xil; aks holda qoʻlda tahrirlangan. */
 export function isAuto(value: Localized, locale: DerivedLocale): boolean {
   return value[locale] === deriveFromUz(locale, value.uz);
 }
 
-/** Oʻzbekcha oʻzgarganda: avto tillar yangidan oʻgiriladi, qoʻlda yozilgani tegilmaydi. */
+/** Oʻzbekcha oʻzgarganda avto tillar qayta oʻgiriladi, qoʻlda yozilganiga tegilmaydi. */
 export function withUz(previous: Localized, uz: string): Localized {
   const next = { ...previous, uz };
   for (const locale of DERIVED_LOCALES) {
@@ -48,7 +48,7 @@ export function normalizeLocalized(value: Localized): Localized {
   return next;
 }
 
-/** Matn xatboshilarga: boʻsh qator chegarasi. */
+/** Xatboshilar boʻsh qator bilan ajratiladi. */
 export function toParagraphs(text: string): string[] {
   return text
     .split(/\n\s*\n/)

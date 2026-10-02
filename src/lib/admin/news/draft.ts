@@ -8,7 +8,7 @@ function sameText(a: Localized, b: Localized): boolean {
   return LOCALES.every((locale) => a[locale] === b[locale]);
 }
 
-/** Yangi yangilik: bugungi sana, qoralama emas — egasi odatda darhol chop etadi. */
+/** Yangi yangilik bugungi sana bilan ochiladi va qoralama emas: odatda darhol chop etiladi. */
 export function emptyDraft(today: string): NewsDraft {
   return {
     slug: "",

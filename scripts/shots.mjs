@@ -1,4 +1,4 @@
-// Koʻrik toʻplami (§21.5): sahifalar, 2x kesmalar, portal sahnasi va aloqa varaqlari docs/qa/shots/ ga.
+// Qoʻlda koʻrib chiqish uchun suratlar: sahifalar, 2x kesmalar, portal sahnasi va umumiy varaqlar.
 import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { chromium } from "@playwright/test";
@@ -106,8 +106,8 @@ async function contactSheet(files, target) {
     .toFile(target);
 }
 
-/* Bir (mavzu, til, oʻlcham) uchun bitta kontekst va bitta varaq: sahifalar ketma-ket,
-   kombinatsiyalar 4 tadan parallel. networkidle oʻrniga load + qisqa kutish. */
+/* Har bir mavzu, til va oʻlcham uchun bitta kontekst: sahifalar ketma-ket, toʻplamlar 4 tadan parallel.
+   networkidle oʻrniga load va qisqa kutish yetarli. */
 const browser = await chromium.launch({ channel: "chromium" });
 const index = [];
 const filesByDir = new Map();

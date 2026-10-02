@@ -7,7 +7,6 @@ import { SYSTEM_COPY } from "../copy-system";
 import type { FieldErrors } from "../news/types";
 import { fromParagraphs, normalizeLocalized, toParagraphs } from "../text/locales";
 
-/** Tekshiruv uchun kalit haqida bilinadigani: turi va asl oʻzbekcha matndagi {belgi}lar. */
 export interface TextSpec {
   readonly kind: TextKind;
   readonly tokens: readonly string[];
@@ -20,13 +19,13 @@ export type BuildTextResult =
 const E = SYSTEM_COPY.texts.errors;
 const TOKEN_RE = /\{\w+\}/g;
 
-/** Matndagi {belgi}lar (fill() almashtiradigan), takrorsiz va tartiblangan. */
+/** fill() almashtiradigan {belgi}lar, takrorsiz va tartiblangan. */
 export function tokensOf(value: TextValue): readonly string[] {
   const text = typeof value === "string" ? value : value.join("\n");
   return [...new Set(text.match(TOKEN_RE) ?? [])].sort();
 }
 
-/** Tahrir maydoni uchun: roʻyxat bandlari boʻsh qator bilan bitta matnga. */
+/** Roʻyxat bandlari tahrir maydonida boʻsh qator bilan ajratilgan bitta matnga aylanadi. */
 export function draftFromValue(value: Localized<TextValue>): Localized {
   const out = {} as Record<(typeof LOCALES)[number], string>;
   for (const locale of LOCALES) {
@@ -45,9 +44,8 @@ export function textLimit(key: string): number | undefined {
 }
 
 /**
- * Tahrir holatidan saqlanadigan qiymat: har til meʼyorlanadi (oʻzbekcha apostroflar ʻ va ʼ), boʻsh
- * kirill va 2026 qatori oʻzbekchadan toʻldiriladi. Besh til majburiy, {belgi}lar toʻplami asl matndagi
- * bilan bir xil boʻlishi shart. Brauzer ham, server amali ham shu funksiyani chaqiradi.
+ * Har til meʼyorlanadi, boʻsh kirill va 2026 qatori oʻzbekchadan toʻldiriladi. Besh til majburiy,
+ * {belgi}lar toʻplami asl matndagi bilan bir xil boʻlishi shart. Brauzer ham, server ham shuni chaqiradi.
  */
 export function buildText(spec: TextSpec, draft: Localized): BuildTextResult {
   const errors: Record<string, string> = {};

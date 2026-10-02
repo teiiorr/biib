@@ -16,26 +16,19 @@ import {
 import { ROOT } from "./checks/util.mjs";
 
 /*
- * §18.4 media quvuri: public/brand (egadan kelgan manbalar) → public/media.
- * Byudjetlar §17: har bir video ≤ 1,8 MB (desktop) / ≤ 0,9 MB (mobil), poster ≤ 120 KB AVIF.
- * Halqa videolar (upop-girls) ovozsiz; upop-video bosib koʻriladigan, ovozi saqlanadi. Qahramon videosi
- * alohida: scripts/hero-video.mts (bir marta ijro, halqa emas).
- * Har bir chiqish uchun crf byudjetga sigʻguncha +3 qadam bilan oshiriladi.
+ * Videolar public/media uchun siqiladi, crf har safar hajm chegarasiga sigʻguncha oshiriladi.
+ * Qahramon videosi bu yerda emas, uni hero-video.mts tayyorlaydi.
  *
- * Manba halqalarning birinchi va oxirgi kadri mos kelmaydi (ular 5–11 % farq qiladi, ketma-ket
- * kadrlar esa 1–2 %). Shu sabab halqa xfade bilan yopiladi: oxirgi X soniya boshlanishdagi X soniyaga
- * eriydi, natija D−X soniya va oxirgi kadr birinchi kadrga ulanadi (chok ≈ ketma-ket kadr farqi).
- * Kamera butun kadr davomida siljisa (upop-girls: eng yaqin ikki kadr ham 4,6 % farq), xfade yuzlarni
- * ikkilantiradi. Bunday manba «bumerang» bilan yopiladi: tanlangan oraliq oldinga, keyin teskari
- * oʻynaydi; burilish kadrlari takrorlanmaydi, chok ketma-ket kadr farqiga teng.
+ * Halqa manbalarining birinchi va oxirgi kadri mos kelmaydi, shuning uchun halqa xfade bilan yopiladi.
+ * Kamera butun kadr davomida siljisa, xfade yuzlarni ikkilantiradi; bunday manba «bumerang» usulida
+ * yopiladi: tanlangan oraliq oldinga, keyin teskari oʻynaydi.
  *
- * Qoʻlda takrorlash uchun buyruqlar (crf qiymati byudjetga qarab tanlangan):
+ * Qoʻlda takrorlash uchun:
  *   ffmpeg -y -i public/brand/upop-video.mp4 -map_metadata -1 -fflags +bitexact -vf scale=1280:-2,format=yuv420p \
  *     -c:v libx264 -crf <crf> -preset slow -profile:v high -c:a aac -b:a 96k -ac 2 -movflags +faststart public/media/upop-video.mp4
- *   Poster: tayyor MP4 ning birinchi kadri PNG → sharp AVIF (sifat byudjetga sigʻguncha −8 qadam bilan tushadi).
  */
 const SRC = path.join(ROOT, "public/brand");
-/* Katta manbalar (26 MB) public/ da emas: ular saytga yuklanmaydi, faqat tayyor nusxalar chiqadi. */
+/* Katta manbalar public papkasida turmaydi, shunda saytga faqat tayyor nusxalar chiqadi. */
 const ASSETS = path.join(ROOT, "src/assets/video");
 const sourceOf = (job) => path.join(job.dir ?? SRC, job.source);
 const MB = 1024 * 1024;
@@ -45,7 +38,7 @@ const only = args.includes("--only") ? args[args.indexOf("--only") + 1] : null;
 const dryRun = args.includes("--dry-run");
 const kb = (bytes) => `${(bytes / KB).toFixed(0)} KB`;
 
-/** width: masshtab kengligi; loop: xfade uzunligi (s); audio: false boʻlsa ovoz olib tashlanadi. */
+/** width: masshtab kengligi; loop: xfade uzunligi, soniyada; audio berilmasa ovoz olib tashlanadi. */
 const JOBS = [
   {
     name: "upop-girls-d",
@@ -108,7 +101,7 @@ function videoFilter(job) {
   if (job.boomerang) {
     const { start, end, fps } = job.boomerang;
     const frames = Math.round((end - start) * fps);
-    /* Teskari qism oxirgi va birinchi kadrsiz: burilishda kadr ikki marta turmaydi (qotish yoʻq). */
+    /* Teskari qismda chetki kadrlar tashlanadi, aks holda burilishda kadr ikki marta turib qotib qoladi. */
     return [
       "-filter_complex",
       `[0:v]${crop}fps=${fps},trim=start=${start}:end=${end},setpts=PTS-STARTPTS,split[f][r];[r]reverse,trim=start_frame=1:end_frame=${frames - 1},setpts=PTS-STARTPTS[rv];[f][rv]concat=n=2:v=1:a=0,${scale}`,
@@ -131,7 +124,6 @@ function videoFilter(job) {
 function encode(job, output, codec) {
   let crf = output.crf;
   const target = path.join(OUT, output.file);
-  /* Ovozsiz halqalar uchun -an; upop-video ovozi AAC 96 kbit/s stereo bilan qoladi. */
   const audio = job.audio ? ["-c:a", "aac", "-b:a", "96k", "-ac", "2"] : ["-an"];
   for (let attempt = 0; attempt < 6; attempt++) {
     const list = [
@@ -156,7 +148,7 @@ function encode(job, output, codec) {
   return { size: statSync(target).size, crf: crf - 3, ok: false };
 }
 
-/** Poster: tayyor MP4 ning birinchi kadri (halqa boshi bilan bir xil) yoki JPG → AVIF, byudjetga sigʻguncha sifat pasayadi. */
+/** Poster tayyor MP4 faylning birinchi kadridan olinadi, shunda u halqa boshi bilan bir xil boʻladi. */
 async function makePoster(job) {
   const { poster: spec } = job;
   const target = path.join(OUT, spec.file);
@@ -174,7 +166,7 @@ async function makePoster(job) {
   for (let attempt = 0; attempt < 6; attempt++) {
     const buffer = await base.clone().avif({ quality, effort: 7 }).toBuffer();
     bytes = buffer.length;
-    /* Bufer toʻgʻridan-toʻgʻri yoziladi: sharp orqali qayta saqlash AVIF ni qayta kodlaydi. */
+    /* Bufer toʻgʻridan-toʻgʻri yoziladi, sharp orqali saqlansa AVIF qayta kodlanib qoladi. */
     writeFileSync(target, buffer);
     if (bytes <= spec.budget) break;
     quality -= 8;

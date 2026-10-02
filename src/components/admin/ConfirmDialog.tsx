@@ -14,18 +14,17 @@ export interface ConfirmDialogProps {
   readonly open: boolean;
   readonly onOpenChange: (open: boolean) => void;
   readonly title: string;
-  /** Nima boʻlishini aniq aytadigan bir-ikki gap (dialog tavsifi sifatida oʻqiladi). */
+  /** Nima boʻlishini aniq aytadigan bir-ikki gap, dialog tavsifi sifatida oʻqiladi. */
   readonly text: string;
   readonly confirmLabel: string;
   readonly confirmGraphic?: ReactNode;
   readonly onConfirm: () => void;
   readonly pending: boolean;
   readonly error?: string | null;
-  /** Qaytarib boʻlmaydigan amal: tasdiq yorligʻi xato rangida (alohida tugma turi emas). */
+  /** Qaytarib boʻlmaydigan amal: tasdiq yorligʻi xato rangida, alohida tugma turi kerak emas. */
   readonly danger?: boolean;
 }
 
-/** Tasdiqlash: kompyuterda markazdagi oyna dialogi, telefonda pastki varaq. Harakatlar oʻngda. */
 export function ConfirmDialog({
   open,
   onOpenChange,

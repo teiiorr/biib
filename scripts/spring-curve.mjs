@@ -1,4 +1,4 @@
-// Oyna morfi uchun soʻnuvchi prujina egri chizigʻi: CSS linear() va GSAP CustomEase uchun bir xil nuqtalar.
+// Oyna shakli oʻzgarishi uchun soʻnuvchi prujina: CSS linear() va GSAP CustomEase bir xil nuqtalardan quriladi.
 const response = Number(process.argv[2] ?? 0.4);
 const damping = Number(process.argv[3] ?? 0.86);
 const points = Number(process.argv[4] ?? 32);

@@ -16,10 +16,10 @@ import { isLocale, LOCALES, type Locale } from "@/i18n/locales";
 import { SECTION_KEYS, resolveSection, sectionSegment, type SectionKey } from "@/i18n/routes";
 import { buildMetadata } from "@/lib/seo/metadata";
 
-/* Nomaʼlum segment lokal 404 ni koʻrsatishi uchun (G2): boʻlimlar statik, qolgani notFound(). */
+/* Nomaʼlum segment shu tilning 404 sahifasini koʻrsatishi uchun: boʻlimlar statik, qolgani notFound(). */
 export const dynamicParams = true;
 
-/** 8 boʻlim × 5 til = 40 sahifa; slug segmentlari boshqa faylda. */
+/** 8 boʻlim va 5 til, jami 40 sahifa; slugli sahifalar [slug] segmentida yigʻiladi. */
 export function generateStaticParams() {
   return LOCALES.flatMap((locale) =>
     SECTION_KEYS.map((key) => ({ locale, section: sectionSegment(locale, key) })),

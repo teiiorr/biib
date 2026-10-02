@@ -1,6 +1,4 @@
 @layer components {
-  /* Oʻram: sarlavha, tab-bar, futer, boʻlimlar. */
-
   .skip-link {
     top: 12px;
     left: 12px;
@@ -10,7 +8,7 @@
     z-index: var(--z-toast);
   }
 
-  /* Kompyuter: brend belgisi chap chetda, kapsula navigatsiya tepadan 12 px. */
+  /* Kompyuter sarlavhasi */
   .site-header {
     position: fixed;
     inset: 0 0 auto 0;
@@ -52,8 +50,7 @@
   .nav-item:hover {
     background: color-mix(in oklab, var(--material-ink) 7%, transparent);
   }
-  /* Faol band: yorliq ostida 2 px oltin chiziq. Holatni bildiradi, shu sabab matn oltini (3:1);
-     oyna ohangi almashganda chiziq ham oʻsha ohangdagi oltinga oʻtadi. */
+  /* Chiziq holatni bildiradi, shu sabab matn oltini olinadi (3:1). */
   .nav-item::after {
     content: "";
     position: absolute;
@@ -73,7 +70,7 @@
   .nav-item[data-active="true"]::after {
     opacity: 1;
   }
-  /* Telefon: yupqa yuqori panel va suzuvchi tab-bar. */
+  /* Telefon: yuqori panel va suzuvchi tab-bar */
   .top-bar {
     height: 56px;
     display: flex;
@@ -81,12 +78,11 @@
     justify-content: space-between;
     gap: 8px;
     padding-inline: 8px 8px;
-    /* Kesish soyani ham oʻz ichiga oladi (−32 px); belgi qahramonda boʻlganda chap qism yashiriladi. */
+    /* Kesish soyani ham qamrab oladi (−32 px). */
     clip-path: inset(-32px -32px -32px -32px round 0px 0px 0px 0px);
     transition: clip-path var(--dur-panel) var(--ease-spring);
   }
-  /* Belgi hali qahramon kadrida (bosh sahifa sahnasi): uzun boʻsh kapsula oʻrniga oyna faqat oʻng
-     guruhni oʻraydi; belgi sarlavhaga qoʻnganda kapsula chapga ochiladi (useHeroScene, data-brand-away). */
+  /* Belgi qahramon kadrida turganda oyna faqat oʻng guruhni oʻraydi, uzun boʻsh kapsula koʻrinmaydi. */
   :root[data-brand-away] .top-bar {
     clip-path: inset(
       0px -32px 0px calc(100% - var(--top-bar-group-w, 148px)) round var(--surface-radius) 0px 0px
@@ -106,14 +102,13 @@
     width: min(calc(100vw - 2 * var(--margin)), 560px);
     z-index: var(--z-tabbar);
   }
-  /* 390 px dan tor ekranda suzuvchi panel chetdan 8 px: beshta yorliq (ru «Контакты») kesilmay sigʻadi. */
+  /* 390 px dan tor ekranda panel chetdan 8 px: beshta yorliq («Контакты» bilan) kesilmay sigʻadi. */
   @media (max-width: 389px) {
     .tab-bar-wrap {
       width: calc(100vw - 16px);
     }
   }
-  /* Bandlar teng, lekin yorliqdan tor emas: uzun yorliq («Yangiliklar») oʻz kengligini oladi, qolganlari
-     boʻsh joyni teng boʻladi. Yorliqlar qisqa (tabShort), shu sabab hech qachon kesilmaydi. */
+  /* Bandlar yorliqdan tor boʻlmaydi: uzun yorliq oʻz kengligini oladi, qolganlari boʻsh joyni teng boʻlishadi. */
   .tab-bar {
     display: grid;
     grid-template-columns: repeat(5, minmax(max-content, 1fr));
@@ -138,7 +133,7 @@
     gap: 4px;
     min-width: var(--hit-min);
     min-height: 56px;
-    /* Pastda tanlov chizigʻi uchun joy: yozuv dumlari (g, y) chiziqqa tegmaydi. */
+    /* Yozuv dumlari (g, y) tanlov chizigʻiga tegmasin. */
     padding-bottom: 8px;
     border-radius: var(--surface-radius);
     color: var(--material-ink);
@@ -148,8 +143,8 @@
   .tab-item[data-active="true"] {
     color: var(--tint);
   }
-  /* Tanlangan tab ostida qisqa tint chizigʻi: ramkasiz koʻzgu linza tungi oynada deyarli koʻrinmaydi,
-     holat esa faqat rang bilan bildirilmasin (1.4.1, 1.4.11 — chiziq fonga ≥ 3:1). */
+  /* Ramkasiz linza tungi oynada deyarli koʻrinmaydi, holat esa faqat rang bilan bildirilmasligi kerak
+     (WCAG 1.4.1, 1.4.11): shu sabab ostida qisqa chiziq, fonga ≥ 3:1. */
   .tab-item[aria-current="page"]::after,
   .tab-item[data-active="true"]::after {
     content: "";
@@ -172,7 +167,6 @@
     transition:
       transform var(--dur-panel) var(--ease-spring),
       opacity var(--dur-ui) var(--ease-ui);
-    /* Koʻzgu linza (egasining talabi: ramka chizigʻi yoʻq): yumshoq ichki yorugʻlik va tinch yaltiroq. */
     background:
       linear-gradient(
         158deg,
@@ -184,7 +178,7 @@
       inset 0 0 16px -6px color-mix(in oklab, var(--m-spec) 45%, transparent),
       var(--shadow-raised);
     transform-origin: left center;
-    /* Linza FLIP: joy left/width bilan bir marta, harakat faqat transformda, prujina egri chizigʻi. */
+    /* FLIP: left va width bir marta oʻrnatiladi, harakat esa faqat transform orqali. */
   }
   .tab-mini {
     position: absolute;
@@ -198,8 +192,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    /* Yigʻilgan kapsula ham muz: yorliq pushti emas, material siyohida va tayanch bilan. Kichik kapsula
-       koʻpincha katta matn ustida turadi: tus 0.45 dan, xiralik +4 px — ortdagi harflar yorliq bilan
+    /* Kichik kapsula koʻpincha katta matn ustida turadi, shu sabab muz qalinroq: ortdagi harflar yorliqqa
        aralashmaydi, lekin harakat koʻrinib turadi. */
     color: var(--material-ink);
     opacity: 0;
@@ -220,7 +213,7 @@
     font-weight: var(--fw-micro);
     letter-spacing: var(--ls-micro);
   }
-  /* Sahifa oxiri tab-bar ostida qolmasin. Balandlik: ekran minus futer (body ustun), 100svh emas. */
+  /* Balandlikni body ustuni beradi (ekran minus futer), 100svh emas. */
   .page-main {
     flex: 1 0 auto;
     padding-top: calc(var(--header-h) + 12px + var(--safe-top));
@@ -230,8 +223,7 @@
   }
 
   /* Futer */
-  /* Tepada boʻlim qadamining yarmi: oldingi boʻlim yarmi bilan birga matndan chiziqqacha aynan --section-gap.
-     Telefonda suzuvchi tab-bar hujjat oxirini yopmasin: futer ostida joy qoldiriladi. */
+  /* Telefonda futer ostida joy qoladi: suzuvchi tab-bar hujjat oxirini yopmaydi. */
   .site-footer {
     position: relative;
     padding-top: calc(var(--section-gap) / 2);
@@ -243,8 +235,7 @@
       padding-bottom: calc(24px + var(--safe-bottom));
     }
   }
-  /* Tepada bitta ingichka chiziq: futer sahifadan bezaksiz ajraladi.
-     44 px qatorlar oraligʻisiz: nishon oʻlchami saqlanadi, roʻyxat siyrak koʻrinmaydi. */
+  /* 44 px qatorlar orasiga boʻshliq qoʻshilmaydi: nishon oʻlchami saqlanadi, roʻyxat siyrak koʻrinmaydi. */
   .footer-groups {
     display: grid;
     gap: 24px;
@@ -262,7 +253,7 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
-  /* Qoʻshni 44 px nishonlar orasida 8 px (§16.6): barmoq qoʻshni havolaga tegib ketmaydi. */
+  /* Qoʻshni 44 px nishonlar orasida 8 px: barmoq yonidagi havolaga tegib ketmaydi. */
   .footer-group {
     display: flex;
     flex-direction: column;
@@ -288,8 +279,8 @@
   .footer-link:hover {
     color: var(--tint);
   }
-  /* Telefon va planshet: nom, tillar, pastda maxfiylik va muallif — sigʻsa bir qatorda, sigʻmasa (ru
-     «Конфиденциальность») muallif keyingi qatorga oʻtadi, ustma-ust tushmaydi. Keng ekranda toʻrda. */
+  /* Telefon va planshetda muallif sigʻmasa («Конфиденциальность» bilan) keyingi qatorga oʻtadi,
+     ustma-ust tushmaydi. */
   .footer-bottom {
     display: flex;
     flex-wrap: wrap;
@@ -301,7 +292,6 @@
     border-top: 1px solid var(--line);
     color: var(--ink-3);
   }
-  /* Tashkilot nomi saytda doim bosh harflarda (egasining talabi). */
   .footer-copy {
     flex-basis: 100%;
     padding-block: 12px;
@@ -336,10 +326,8 @@
       order: 3;
     }
   }
-  /* Keng ekranda pastki qator yuqoridagi toʻrt ustunli toʻrda: © 1-ustun, maxfiylik 2-ustun, tillar
-     3-ustun boshidan, muallif 4-ustunda oʻngga tekis — har biri ustidagi guruh boshi bilan bir chiziqda.
-     Beshta til nomi (344 px) bitta ustunga sigʻmaydi: 3–4 ustunlar boʻylab, muallif bilan bir qatorda;
-     1280 px dan boshlab ular orasida kamida 34 px qoladi. */
+  /* Keng ekranda pastki qator yuqoridagi toʻrt ustunli toʻrga tushadi; beshta til nomi bitta ustunga
+     sigʻmagani uchun 3–4 ustunni egallaydi. */
   @media (min-width: 1280px) {
     .footer-bottom {
       display: grid;
@@ -383,14 +371,14 @@
     color: var(--tint);
   }
 
-  /* Sahifa boshi: nonushoq va h1 bitta markaziy oʻqda. */
+  /* Sahifa boshi */
   .page-hero {
     display: grid;
     justify-items: center;
     gap: 16px;
   }
-  /* Grid bandi uzun soʻzdan kengaymasin; shkala 320 px da eng uzun soʻzni sigʻdiradi, bu faqat
-     kutilmagan satr uchun zaxira (soʻz boʻlinmaydi, faqat toshib ketmaydi). */
+  /* Grid bandi uzun soʻzdan kengaymasin. Shkala 320 px da eng uzun soʻzni sigʻdiradi, bu faqat
+     kutilmagan matn uchun zaxira. */
   .page-hero > * {
     min-width: 0;
     max-width: 100%;
@@ -399,9 +387,7 @@
     overflow-wrap: break-word;
   }
 
-  /* Yagona boʻlim boshi (SectionHeader): markazda sarlavha, harakatlar undan keyin oʻngda.
-     Harakatlar qatori kontent kengligidagi ingichka chiziq ustida: oʻngdagi tugma havoda osilmaydi,
-     chiziq chetiga tayanib kompozitsiyani yopadi. Keyingi kontentgacha 32 / 48 px. */
+  /* Harakatlar kontent kengligidagi ingichka chiziq ustida: oʻngdagi tugma havoda osilib qolmaydi. */
   .section-header {
     display: grid;
     gap: 24px;
@@ -419,7 +405,6 @@
     justify-content: flex-end;
     gap: 12px;
   }
-  /* Boʻlim oxiridagi «barchasi» havolasi: kartalar ostida, oʻng chetda. */
   .section-footer {
     display: flex;
     justify-content: flex-end;
@@ -433,7 +418,7 @@
       margin-top: 32px;
     }
   }
-  /* Ghost tugma yozuvi kontent chetiga tekislanadi: ichki chekka optik jihatdan qoplanadi. */
+  /* Ghost tugmaning ichki chekkasi optik qoplanadi: yozuv kontent chetiga tekislanadi. */
   .section-header-actions > .ui-button[data-variant="ghost"]:last-child {
     margin-inline-end: calc(4px - var(--btn-px));
   }
@@ -442,9 +427,8 @@
       margin-bottom: 48px;
     }
   }
-  /* Boʻlimni yopadigan bosh (masalan faqat harakat qatori bor lenta): ostida ortiqcha boʻshliq qolmaydi.
-     Konteyner ham boʻlimning oxirgisi boʻlishi shart: aks holda kontent qoʻshni konteynerda keladi
-     (bosh sahifadagi odamlar boʻlimi) va sarlavha unga yopishib qoladi. */
+  /* Boʻlimni yopadigan boshning ostida ortiqcha boʻshliq qolmaydi. Konteyner ham oxirgi boʻlishi shart:
+     aks holda keyingi konteynerdagi kontent sarlavhaga yopishib qolardi. */
   .container-site:last-child > .section-header:last-child {
     margin-bottom: 0;
   }
@@ -455,12 +439,11 @@
     min-height: 44px;
     color: var(--ink);
   }
-  /* Qorongʻi boʻlim ustida (qahramon kadri, missiya, UPOP maydoni) nomi sut-oq: navy ustida navy koʻrinmaydi. */
+  /* Qorongʻi boʻlim ustida nom oq: navy ustida navy koʻrinmaydi. */
   :root .brand-mark[data-tone="dark"] {
     color: var(--hero-ink);
   }
-  /* Belgi har oʻlchamda oyna ichida: rang oynaning ohangidan (tayanch ham shu ohangda), mayda yozuvga
-     qalinroq tayanch — ingichka glifga uch qavat yetmaydi. */
+  /* Belgi rangi oynaning ohangidan olinadi; mayda yozuvga uch qavatli tayanch yetmaydi, u qalinroq. */
   :root .surface .brand-mark {
     color: var(--material-ink);
   }
@@ -471,8 +454,8 @@
       0 0 4px color-mix(in oklab, var(--material-base) 85%, transparent),
       0 0 10px color-mix(in oklab, var(--material-base) 60%, transparent);
   }
-  /* Qahramon sahnasi: dvigatel kelguncha belgi skrollga bogʻliq CSS bilan yashirin turadi va
-     0.72–0.80 da paydo boʻladi; GSAP sahnani qurgach (html[data-hero-scene]) shu qoida oʻchadi. */
+  /* GSAP sahnasi kelguncha belgi skrollga bogʻliq CSS bilan yashirin turadi va 0.72–0.80 oraligʻida
+     paydo boʻladi. Sahna qurilgach (html[data-hero-scene]) bu qoida oʻchadi. */
   @supports (animation-timeline: scroll()) {
     @media (prefers-reduced-motion: no-preference) and (min-width: 360px) and (min-height: 521px) {
       :root:not([data-motion="off"]):not([data-hero-scene])
@@ -517,7 +500,6 @@
       opacity: 1;
     }
   }
-  /* Yozuv doim bir xil ikki qator (BrandMark), telefonda ham: belgi yonida ixcham 11 px. */
   .brand-name {
     display: flex;
     flex-direction: column;
@@ -527,7 +509,7 @@
     letter-spacing: 0.02em;
     white-space: nowrap;
   }
-  /* 320–359 px: yozuv va til tugmasi sigʻishi uchun til kodi yashiriladi (belgi va aria-label qoladi). */
+  /* 320–359 px: yozuv va til tugmasi sigʻishi uchun til kodi yashiriladi, aria-label qoladi. */
   @media (max-width: 359px) {
     .top-bar [data-testid="language-open"] {
       padding-inline: 12px;
@@ -545,8 +527,7 @@
       letter-spacing: 0.01em;
     }
   }
-  /* 404 va xato: boshqa sahifalar bilan bir ritm — oyna sarlavhasidan qisqa, pastda yarim qadam.
-     Markazda sarlavha, ostida chiziq ustida oʻngda harakatlar (boʻlim boshi bilan bir xil). */
+  /* 404 va xato */
   .error-view {
     display: grid;
     gap: 24px;
@@ -561,12 +542,11 @@
     padding-inline: 0;
     list-style: none;
   }
-  /* Global 404: sarlavha panelisiz hujjat, belgi sarlavha oʻqida uning ustida. */
+  /* Global 404 sahifasida sarlavha paneli yoʻq, shu sabab belgi shu yerda chiziladi. */
   .error-view-brand {
     justify-self: center;
   }
-  /* Beshta til teng ustuvor yoʻl: chiziq ustida markazdagi bitta tinch havolalar qatori. Telefonda
-     markazdagi ustun: qatorga oʻralsa 4 + 1 boʻlib, «English» yolgʻiz osilib qolardi. */
+  /* Telefonda tillar ustunda: qatorga oʻralsa 4 + 1 boʻlib, «English» yolgʻiz osilib qolardi. */
   .error-view-locales {
     display: flex;
     flex-direction: column;
@@ -599,7 +579,7 @@
       text-decoration-color: currentColor;
     }
   }
-  /* Hamkorlar plitkalari (sahifa va bosh sahifa maydoni) */
+  /* Hamkorlar plitkalari */
   .partner-grid {
     display: grid;
     gap: 16px;
@@ -619,8 +599,7 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
-  /* Plitka 3:2, lekin mazmuni (ikki qatorli oʻrinbosar nomi) sigʻmasa oʻsadi — shunda butun toʻr
-     qatorlari teng balandlikda qoladi (1fr): qoʻshni plitkalar birga choʻziladi. */
+  /* Plitka 3:2, lekin ikki qatorli nom sigʻmasa oʻsadi; 1fr qatorlari tufayli qoʻshnilari ham birga choʻziladi. */
   .partner-grid {
     grid-auto-rows: 1fr;
   }
@@ -641,8 +620,7 @@
     background: var(--surface);
     box-shadow: var(--shadow-raised);
   }
-  /* Tungi zaminda logotip sut-oq siyohda (rangli logotip kulrangda xira koʻrinardi); ustiga kelganda yoki
-     fokusda oʻz rangiga qaytadi — havolasiz plitkada ham. */
+  /* Rangli logotip tungi zaminda xira koʻrinardi, shu sabab u oq siyohda; hover va fokusda oʻz rangiga qaytadi. */
   .partner-logo {
     width: min(100%, 200px);
     height: auto;
@@ -665,9 +643,8 @@
   }
 }
 
-/* Rangli lenta chegarasi: qoʻshni oddiy boʻlim ham chegaradan lenta ichidagi masofani oladi, shunda har
-   sarlavha oʻz rang chekkasidan bir xil uzoqlikda turadi (telefonda 48, kattaroq ekranda 64 px).
-   Qatlamdan tashqarida: section-pad utilitasidan ustun. */
+/* Lenta yonidagi oddiy boʻlim ham lenta ichidagi masofani oladi: har sarlavha rang chekkasidan bir xil
+   uzoqlikda turadi. Qatlamdan tashqarida, shunda section-pad utilitasidan ustun. */
 .section-band + .section-pad {
   padding-top: var(--band-pad);
 }

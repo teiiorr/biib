@@ -6,7 +6,7 @@ import { DURATION } from "@/lib/motion/constants";
 import { scheduleScrollRefresh } from "@/lib/motion/refresh";
 import { commitPath, NAV_FADE_CLASS, recordNavigation } from "@/lib/motion/transitions";
 
-/** transitions.css shu sinf boʻyicha ::view-transition-old/new(.vt-page) ni bezaydi. */
+/** transitions.css fayli ::view-transition-old/new(.vt-page) uslubini shu sinf orqali beradi. */
 export const PAGE_TRANSITION_CLASS = "vt-page";
 
 interface PageTransitionProps {
@@ -14,9 +14,8 @@ interface PageTransitionProps {
 }
 
 /**
- * Sahifa mazmunini ViewTransition chegarasiga oʻraydi (layoutda, header/futer tashqarida qoladi).
- * Yoʻl oʻzgarganda tarix yoziladi, zaxira soʻnish sinfi olib tashlanadi va oʻtish tugagach
- * sahnalar joylashuvni bir marta qayta oʻlchaydi (oʻtish davomida sahifa hali siljiyotgan edi).
+ * Sarlavha paneli va sahifa osti chegaradan tashqarida qoladi, oʻtish faqat sahifa mazmuniga tegadi.
+ * Oʻtish tugagach sahnalar joylashuvi qayta oʻlchanadi, chunki oʻtish davomida sahifa hali siljiyotgan boʻladi.
  */
 export function PageTransition({ children }: PageTransitionProps) {
   const pathname = usePathname();

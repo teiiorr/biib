@@ -22,7 +22,7 @@ export interface CoverFieldProps {
   readonly onAlt: (next: Localized) => void;
   readonly altPath: string;
   readonly errors: FieldErrors;
-  /** Tanlash oynasidagi rasmlar (yuklangani ham shu roʻyxatga qoʻshiladi). */
+  /** Tanlash oynasidagi rasmlar; yangi yuklangani ham shu roʻyxatga qoʻshiladi. */
   readonly library: readonly MediaItem[];
   readonly onUploaded: (items: readonly MediaItem[]) => void;
   readonly onBusy: (delta: 1 | -1) => void;
@@ -30,7 +30,6 @@ export interface CoverFieldProps {
 
 const T = NEWS_COPY.editor;
 
-/** Muqova: 3:2 oldindan koʻrish, yuklash yoki tanlash, olib tashlash va besh tilli tavsif. */
 export function CoverField({
   id,
   purpose = "cover",

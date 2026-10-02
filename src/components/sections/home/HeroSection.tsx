@@ -18,13 +18,12 @@ interface HeroSectionProps {
   readonly dict: Dictionary;
 }
 
-/* Tik boʻlmagan hamma ekran 16:9 posterni oladi; preload media <source> bilan bir xil boʻlishi shart. */
+/* Tik boʻlmagan har qanday ekran 16:9 posterni oladi; preload sharti <source> dagi media bilan bir xil boʻlishi shart. */
 const LANDSCAPE_MEDIA = `not (${HERO_PORTRAIT_MEDIA})`;
 
 /**
- * Darvoza: egasining videosi (belgi kadr markazida), nom kadr ostida markazda, ikki harakat uning
- * ostida oʻng chetda. Poster serverda va LCP; video badiiy uyadan boʻsh vaqtda keladi.
- * Kadr ikkala mavzuda ham qorongʻi: ohang doim «dark», matn --hero-ink, ostida lojuvard ostlik.
+ * Poster serverda chiziladi va LCP boʻladi, video esa badiiy uyaga brauzer boʻshaganda keladi.
+ * Kadr ikkala mavzuda ham qorongʻi, shuning uchun ohang doim «dark» va matn --hero-ink rangida.
  */
 export function HeroSection({ locale, dict }: HeroSectionProps) {
   const { landscape, portrait } = HERO_MEDIA;
@@ -42,7 +41,7 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
     >
       <HeroEnter />
       <div className="home-hero-art" data-hero-art="">
-        {/* Ohang faqat shu qatlamda: kadr ikkala mavzuda qorongʻi, sarlavha oynasi shuni oʻqiydi. */}
+        {/* Ohang faqat shu qatlamda beriladi: kadr ikkala mavzuda qorongʻi, sarlavha oynasi shuni oʻqiydi. */}
         <div className="home-hero-media" data-hero-media="" data-tone="dark" aria-hidden="true">
           <picture className="home-hero-picture">
             <source media={HERO_PORTRAIT_MEDIA} srcSet={portrait.poster} type="image/avif" />
@@ -56,7 +55,7 @@ export function HeroSection({ locale, dict }: HeroSectionProps) {
               className="home-hero-poster"
             />
           </picture>
-          {/* Oxirgi kadr: harakat oʻchiq yoki video hali boshlanmagan — belgi darhol yigʻilgan holda. */}
+          {/* Harakat oʻchiq yoki video hali boshlanmagan boʻlsa, belgi darhol yigʻilgan holda koʻrinadi. */}
           <picture className="home-hero-picture home-hero-picture-end">
             <source media={HERO_PORTRAIT_MEDIA} srcSet={portrait.end} type="image/avif" />
             <img

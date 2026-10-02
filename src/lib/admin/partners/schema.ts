@@ -9,7 +9,7 @@ function localized<T extends z.ZodType>(value: T) {
 
 const group = z.enum(["state", "international", "creative", "sponsors"]);
 
-/** Brauzerdan kelgan yuk: tuzilma shu yerda, mazmun qoidalari build.ts da. */
+/** Bu yerda faqat tuzilma tekshiriladi, mazmun qoidalari build.ts faylida. */
 export const partnerPayloadSchema: z.ZodType<PartnerPayload> = z.object({
   id: z.uuid().nullable(),
   expected: z.string().max(64).nullable(),
@@ -20,7 +20,6 @@ export const partnerPayloadSchema: z.ZodType<PartnerPayload> = z.object({
   logoId: z.uuid().nullable(),
 });
 
-/** Bazadagi admin shakli (admin_get, jurnal). */
 export const partnerAdminSchema: z.ZodType<PartnerAdmin> = z.object({
   id: z.uuid().exactOptional(),
   key: z.string().exactOptional(),

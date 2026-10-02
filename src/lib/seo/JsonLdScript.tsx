@@ -2,7 +2,7 @@ interface JsonLdProps {
   readonly data: Record<string, unknown> | ReadonlyArray<Record<string, unknown>> | null;
 }
 
-/** HTML ichida xavfsiz: < va & belgilarini unicode koʻrinishiga oʻtkazadi. */
+/** < va & belgilari unicode koʻrinishiga oʻtkaziladi: matndagi </script> skript tegini yopib qoʻymaydi. */
 function serialize(data: unknown): string {
   return JSON.stringify(data).replace(/</g, "\\u003c").replace(/&/g, "\\u0026");
 }

@@ -4,14 +4,13 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 const GOLD = ".gold-text";
-/* Skroll toʻxtagandan keyin yaltirash shuncha kutib davom etadi (faqat yengil rejim). */
+/* Skroll toʻxtagach yaltirash shuncha kutib davom etadi (faqat yengil rejimda). */
 const SCROLL_IDLE_MS = 180;
 
 /**
- * Oltin yaltirash faqat sarlavha ekranda (±100 px) boʻlganda aylanadi: ekrandan chiqqan sarlavhaga
- * data-gold-off qoʻyiladi, motion.css animatsiyani toʻxtatadi. Koʻrinadigan sarlavhada yaltirash
- * uzluksiz qoladi; sukut holati ishlab turish, shuning uchun JS siz va gidratsiyadan oldin hech narsa
- * oʻzgarmaydi. Yengil rejimda (data-perf="lite") barmoq skroll qilayotganda ham tasma kutib turadi.
+ * Oltin yaltirash faqat ekrandagi (±100 px) sarlavhada aylanadi, qolganlariga data-gold-off qoʻyiladi.
+ * Odatiy holat aylanish, shuning uchun JavaScript ishlaguncha hech narsa oʻzgarmaydi.
+ * Yengil rejimda barmoq bilan skroll qilinayotganda ham tasma kutib turadi.
  */
 export function GoldShineGate() {
   const pathname = usePathname();
@@ -39,7 +38,7 @@ export function GoldShineGate() {
         io.observe(el);
       }
     };
-    /* Keyin keladigan sarlavhalar (oqimli kontent, dialoglar): bir kadrda bitta qayta koʻrish. */
+    /* Keyin qoʻshilgan sarlavhalar (oqimli kontent, dialoglar) bir kadrda bir marta tekshiriladi. */
     let frame = 0;
     const mo = new MutationObserver((records) => {
       if (frame !== 0) return;

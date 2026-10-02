@@ -12,7 +12,7 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://bolalar-ijodkorligi.uz"
 ).replace(/\/$/, "");
 export const LOCALES = ["uz", "oz", "ozbekca", "ru", "en"];
-/* Tekshiruv hech qachon jonli bazani oʻqimaydi: jarayon muhiti .env.local dan ustun turadi. */
+/* Tekshiruv jonli bazani oʻqimasligi kerak; jarayon muhiti .env.local faylidan ustun turadi. */
 export const VERIFY_ENV = { CONTENT_SOURCE: "bundled" };
 
 let logPath = null;
@@ -74,7 +74,7 @@ export function run(cmd, args, options = {}) {
 
 export const pnpm = (args, options) => run("pnpm", ["exec", ...args], options);
 
-/** Uzoq jarayonlar: chiqish run.log ga jonli yoziladi, shunda jurnalni kuzatish mumkin. */
+/** Uzoq jarayon chiqishi run.log fayliga darhol yoziladi, shunda uni ish davomida kuzatish mumkin. */
 export function runLive(cmd, args, options = {}) {
   return new Promise((resolve) => {
     const child = spawn(cmd, args, {
@@ -111,7 +111,7 @@ export function runLive(cmd, args, options = {}) {
   });
 }
 
-/** Kuzatilayotgan va kuzatilmaydigan (lekin eʼtiborga olinadigan) fayllar: git roʻyxati. */
+/** Git kuzatayotgan fayllar hamda .gitignore roʻyxatiga tushmagan yangi fayllar. */
 export function listTreeFiles() {
   const result = run("git", ["ls-files", "-co", "--exclude-standard", "-z"]);
   return result.stdout
@@ -148,7 +148,6 @@ export function writeJson(rel, data) {
   writeText(rel, JSON.stringify(data, null, 2) + "\n");
 }
 
-/** Fayl qatorlari boʻylab regex: natijada fayl:qator koʻrsatiladi. */
 export function grepLines(file, regex, text = readText(file)) {
   const hits = [];
   const lines = text.split("\n");
@@ -173,18 +172,17 @@ export function formatDuration(ms) {
   return `${Math.floor(ms / 60_000)} min ${Math.round((ms % 60_000) / 1000)} s`;
 }
 
-/** tsx yordamchisi: TypeScript manbalarni bajarib JSON qaytaradi. */
+/** TypeScript manbalari tsx orqali bajariladi, yordamchi natijani JSON qilib chiqaradi. */
 export function runHelper(name) {
   const result = pnpm(["tsx", `scripts/checks/${name}`], { timeout: 120_000 });
   if (result.status !== 0) throw new Error(`${name} ishlamadi:\n${tail(result.stderr, 15)}`);
   return JSON.parse(result.stdout);
 }
 
-/* Koʻrik va Lighthouse bir maqolada oʻlchanadi (natijalar solishtirilsin); u kontentdan olib
-   tashlansa, nusxadagi birinchi yangilik olinadi. */
+/* Natijalar solishtirilishi uchun suratlar va Lighthouse doim bitta maqolada olinadi;
+   u kontentdan oʻchirilsa, nusxadagi birinchi yangilik olinadi. */
 const REVIEW_SLUG = "upop-trend-yangi-mavsum";
 
-/** Koʻrik toʻplami va Lighthouse uchun maqola slugi (repodagi kontent nusxasidan). */
 export function reviewNewsSlug() {
   const slugs = runHelper("routes.mts")
     .routes.filter((r) => r.key === "newsItem" && r.locale === "uz")

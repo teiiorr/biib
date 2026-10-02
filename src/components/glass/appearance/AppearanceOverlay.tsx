@@ -16,7 +16,6 @@ export interface AppearanceOverlayProps extends AppearanceControlProps {
   readonly focusTrigger: boolean;
 }
 
-/** Koʻrinish paneli: kompyuterda popover, telefonda pastki varaq. Ikkalasi ham oyna. */
 export default function AppearanceOverlay({
   dict,
   initialOpen,

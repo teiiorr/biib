@@ -5,8 +5,8 @@ import { ICON_NAMES } from "@/components/icons/paths";
 import { UPOP_FRAMES, UPOP_MOTIONS } from "./gallery";
 import type { ContactsAdmin, MilestoneAdmin, ProjectAdmin, ShotAdmin, SocialAdmin } from "./types";
 
-/* Bazadagi admin shakllari (admin_get va jurnal): eski yozuv ham shu bilan oʻqiladi, qaytarishdan oldin
-   shakli tekshiriladi. Mazmun qoidalari build funksiyalarida. */
+/* Jurnaldagi eski yozuv ham shu shakllar bilan oʻqiladi va qaytarishdan oldin tekshiriladi.
+   Mazmun qoidalari build funksiyalarida. */
 
 function localized<T extends z.ZodType>(value: T) {
   return z.object({ uz: value, oz: value, ozbekca: value, ru: value, en: value });
@@ -81,12 +81,11 @@ export const shotsSchema: z.ZodType<readonly ShotAdmin[]> = z
   )
   .max(8);
 
-/** admin_get javobi: maʼlumot va kutilgan updated_at (yakka yozuvlarda null boʻlishi mumkin). */
+/** Yakka yozuvlarda kutilgan updated_at null boʻlishi mumkin. */
 export function getResult<T>(data: z.ZodType<T>) {
   return z.object({ data, updatedAt: z.string().nullable() });
 }
 
-/** Jurnaldagi tartib yozuvi: qaysi roʻyxat va kalitlar tartibi. */
 export const orderSchema = z.object({
   entity: z.enum(["people", "partners", "milestones"]),
   keys: z.array(z.string().max(80)).min(1).max(500),

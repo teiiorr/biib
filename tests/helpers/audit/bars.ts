@@ -42,7 +42,7 @@ export function auditUnderBars(opts: BarsOptions): Finding[] {
     if (!(start instanceof HTMLElement)) continue;
     const cs = getComputedStyle(start);
     if (cs.display === "none" || cs.visibility === "hidden" || px(cs.opacity) === 0) continue;
-    // Testid ichki elementda boʻlishi mumkin; qotirilgan ota quti panel chegarasi.
+    // data-testid ichki elementda boʻlishi mumkin: panel chegarasi uning qotirilgan ota qutisi.
     let bar: HTMLElement = start;
     let cursor: HTMLElement | null = start;
     while (cursor) {

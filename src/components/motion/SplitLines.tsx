@@ -19,14 +19,13 @@ export interface SplitLinesProps {
   readonly className?: string;
   readonly id?: string;
   readonly start?: string;
-  /** words: qisqa sarlavha (≤ 8 soʻz) soʻzma-soʻz; lines: paragraf va iqtibos qatorma-qator. */
+  /** words: qisqa sarlavha (≤ 8 soʻz) soʻzma-soʻz; lines: xatboshi va iqtibos qatorma-qator. */
   readonly mode?: "lines" | "words";
 }
 
 /**
- * split-lines v2: soʻzlar yoki qatorlar niqob ostidan koʻtariladi (1000 ms, doira ritmi, guruh
- * 1.2 s ichida). Matn serverda oddiy holda (SEO); shriftlar kelgach boʻlish navbat orqali kadrlarga
- * taqsimlanadi, kirish tugagach asl DOM qaytariladi (niqob diakritikani kesib qolmaydi).
+ * Matn serverda oddiy holda keladi (SEO uchun). Shriftlar kelgach boʻlish kadrlarga taqsimlanadi,
+ * kirish tugagach asl DOM qaytariladi, shunda niqob diakritik belgilarni kesib qolmaydi.
  */
 export function SplitLines({
   as = "h2",
@@ -84,8 +83,8 @@ export function SplitLines({
                 duration: DURATION.lines,
                 ease: EASE.out,
                 stagger: doiraStaggerFn(doiraUnit(parts.length, 1.2, words ? 0.045 : 0.09)),
-                // Ikki yoʻnalish (egasining talabi): ekrandan chiqqanda soʻzlar niqob ortiga qaytadi,
-                // pastdan ham, yuqoridan ham qaytganda qayta koʻtariladi. Boʻlinish saqlanadi.
+                // Ikki yoʻnalish: ekrandan chiqqanda soʻzlar niqob ortiga qaytadi, yuqoridan ham, pastdan ham
+                // qaytilganda yana koʻtariladi. Boʻlinish saqlanib qoladi.
                 scrollTrigger: {
                   trigger: el,
                   start,
@@ -115,7 +114,7 @@ export function SplitLines({
     [allowed, start, mode],
   );
 
-  // Teg birligi uchun bitta intrinsik tur: barcha ruxsat etilgan teglar HTMLElement beradi.
+  // Ruxsat etilgan barcha teglar HTMLElement beradi, shuning uchun teglar birlashmasiga bitta tur yetadi.
   const Tag = as as "div";
   return (
     <Tag ref={ref} className={className} id={id}>

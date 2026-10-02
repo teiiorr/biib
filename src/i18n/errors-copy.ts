@@ -2,14 +2,14 @@ import type { Dictionary } from "./dictionaries/types";
 
 export type ErrorsCopy = Dictionary["errors"];
 
-/* Layout sahifaga qoʻygan JSON (script#biib-errors): mijoz komponentlari beshta til lugʻatini olib yurmaydi. */
+/* Matn script#biib-errors blokidan oʻqiladi: mijoz komponentlari besh tilli lugʻatni yuklamasin. */
 const EMPTY: ErrorsCopy = {
   notFound: { title: "", home: "", news: "" },
   error: { title: "", retry: "", home: "" },
   global: { title: "" },
 };
 
-/* useSyncExternalStore snapshot i barqaror boʻlishi shart: bir xil JSON uchun bir xil obyekt (aks holda cheksiz render). */
+/* useSyncExternalStore bir xil JSON uchun oʻsha obyektni kutadi, aks holda cheksiz chizaveradi. */
 let cache: { raw: string; value: ErrorsCopy } | null = null;
 
 export function readErrorsCopy(): ErrorsCopy {

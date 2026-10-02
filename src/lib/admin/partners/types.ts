@@ -2,7 +2,7 @@ import type { ContentStatus, Localized, PartnerGroup } from "@/content/types";
 
 import type { MediaItem } from "../news/types";
 
-/** Saytdagi guruhlar tartibi (PartnersPage bilan bir xil). */
+/** Tartib PartnersPage komponentidagi bilan bir xil boʻlishi shart. */
 export const PARTNER_GROUPS: readonly PartnerGroup[] = [
   "state",
   "international",
@@ -10,7 +10,7 @@ export const PARTNER_GROUPS: readonly PartnerGroup[] = [
   "sponsors",
 ];
 
-/** Bazaning admin shakli (private.partner_admin_json): admin_save_partner shuni qabul qiladi. */
+/** private.partner_admin_json: admin_save_partner shu shaklni qabul qiladi. */
 export interface PartnerAdmin {
   readonly id?: string;
   readonly key?: string;

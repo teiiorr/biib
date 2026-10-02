@@ -22,16 +22,13 @@ import { UpopRegisterGroup } from "./UpopRegisterGroup";
 import { useOrgEditor } from "./useOrgEditor";
 
 interface UpopEditorProps {
-  /** Bazadagi yozuv: tekshiruvda panelda tahrirlanmaydigan qismlar shundan olinadi. */
+  /** Panelda tahrirlanmaydigan qismlar tekshiruv uchun shu yozuvdan olinadi. */
   readonly data: ProjectAdmin;
   readonly version: string | null;
   readonly files: Readonly<Partial<Record<MediaRole, ProjectMediaFile>>>;
 }
 
-/**
- * UPOP TREND tahriri (faqat oʻzgartirish, qoʻshish va oʻchirish yoʻq). Kompyuterda ikki ustun: chapda
- * holat, faktlar, narx va havola; oʻngda dalillar va video tavsiflari. Telefonda ketma-ket.
- */
+/** UPOP TREND faqat tahrirlanadi: qoʻshish va oʻchirish yoʻq. */
 export function UpopEditor({ data, version, files }: UpopEditorProps) {
   const form = useId().replace(/:/g, "");
   const idFor = (field: string) => `${form}-${field}`;

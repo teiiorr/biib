@@ -11,7 +11,6 @@ export const KEEP_WORDS: ReadonlySet<string> = new Set([
   "youtube",
   "facebook",
   "google",
-  "higgsfield",
   "vercel",
   "pdf",
   "svg",
@@ -32,7 +31,7 @@ export const KEEP_WORDS: ReadonlySet<string> = new Set([
   "contact",
 ]);
 
-/** Lotin → kirill: qoida bilan notoʻgʻri chiqadigan soʻzlar (yumshoq belgi, ц, atoqli otlar). */
+/** Lotin → kirill: qoida notoʻgʻri beradigan soʻzlar (yumshoq belgi, «ц» harfi, atoqli otlar). */
 export const CYRILLIC_WORDS: Readonly<Record<string, string>> = {
   yanvar: "январь",
   fevral: "февраль",

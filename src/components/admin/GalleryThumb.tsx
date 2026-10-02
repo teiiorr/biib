@@ -8,12 +8,11 @@ interface GalleryThumbProps {
   readonly media: GalleryMedia | null;
   readonly alt: string;
   readonly sizes: string;
-  /** Nisbat ramkasi (kartada 3:2); berilmasa ota katakni toʻldiradi (tuzilish xaritasi). */
+  /** Kartada 3:2; berilmasa rasm ota katakni toʻldiradi, xaritadagidek. */
   readonly ratio?: "3:2" | "1:1";
   readonly className?: string;
 }
 
-/** Galereya kadri: rasmning oʻzi yoki videoning posteri, videoda burchakda «video» yorligʻi. */
 export function GalleryThumb({ media, alt, sizes, ratio, className }: GalleryThumbProps) {
   return (
     <div className={cx("admin-thumb admin-gallery-thumb", className)} data-ratio={ratio}>

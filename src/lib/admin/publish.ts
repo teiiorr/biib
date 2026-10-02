@@ -9,7 +9,7 @@ import { CMS_TAG } from "@/lib/cms/load";
 import { absoluteUrl } from "@/lib/site";
 
 export interface PublishChange {
-  /** Yangi, eski va oʻchirilgan maqola sluglari: ularning keshdagi 404 i ham tozalanadi. */
+  /** Yangi, eski va oʻchirilgan maqola sluglari: keshdagi 404 sahifasi ham tozalanadi. */
   readonly slugs?: readonly (string | null | undefined)[];
   /** Saqlashdan keyin darhol isitiladigan sahifalar (faqat ishlab chiqarishda). */
   readonly warm?: readonly string[];
@@ -32,8 +32,8 @@ async function warmPages(paths: readonly string[]): Promise<void> {
 }
 
 /**
- * Faqat server amali ichida. cms tegi hamma sahifani va maʼlumot keshini darhol eskirtiradi; maqola
- * yoʻllari alohida: hali yigʻilmagan yoki oʻchirilgan slug uchun keshdagi 404 ham qolmasin.
+ * Faqat server amali ichida chaqiriladi. cms tegi hamma sahifa va maʼlumot keshini eskirtiradi.
+ * Maqola yoʻllari alohida tozalanadi, aks holda yangi yoki oʻchirilgan slug uchun keshda eski 404 qoladi.
  */
 export function publish(change: PublishChange = {}): void {
   updateTag(CMS_TAG);
@@ -44,11 +44,10 @@ export function publish(change: PublishChange = {}): void {
     for (const locale of LOCALES) revalidatePath(pathFor(locale, "newsItem", slug));
   }
   const warm = change.warm ?? [];
-  /* Birinchi tashrifchi kutib qolmasin; xatolar eʼtiborsiz — sahifa baribir oʻzi yangilanadi. */
+  /* Birinchi tashrifchi kutib qolmasin. Xato boʻlsa ham farqi yoʻq: sahifa baribir oʻzi yangilanadi. */
   if (process.env.VERCEL_ENV === "production" && warm.length) after(() => warmPages(warm));
 }
 
-/** Yangilik saqlanganda isitiladigan oʻzbekcha sahifalar: bosh sahifa, roʻyxat va maqolaning oʻzi. */
 export function newsWarmPaths(slug: string): readonly string[] {
   return [pathFor("uz", "home"), pathFor("uz", "news"), pathFor("uz", "newsItem", slug)];
 }

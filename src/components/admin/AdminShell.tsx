@@ -11,11 +11,7 @@ interface AdminShellProps {
   readonly children: ReactNode;
 }
 
-/**
- * ≥ 1024 px: chapda qotirilgan oyna yon panel (belgi, guruhlangan boʻlimlar, pastda sayt va chiqish).
- * Kichikroq ekranda: yuqorida yupqa oyna panel va boʻlimlar varagʻi. Ekranda bir vaqtda bitta suzuvchi
- * oyna: yon panel yoki yuqori panel.
- */
+/** Ekranda bir vaqtda bitta suzuvchi oyna boʻladi: 1024 px dan kengda yon panel, torroqda yuqori panel. */
 export function AdminShell({ children }: AdminShellProps) {
   return (
     <div className="admin-frame">

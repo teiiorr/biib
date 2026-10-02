@@ -16,7 +16,7 @@ interface LanguageTriggerProps
   readonly ref?: Ref<HTMLButtonElement>;
 }
 
-/** Til tugmasi: panel kelguncha oddiy, keyin Radix Trigger ichida — bir xil koʻrinish. */
+/** Panel yuklanguncha oddiy tugma, keyin Radix Trigger ichida; tashqi koʻrinishi oʻzgarmaydi. */
 export function LanguageTrigger({ locale, dict, ref, ...rest }: LanguageTriggerProps) {
   return (
     <button

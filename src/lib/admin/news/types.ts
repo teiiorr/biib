@@ -9,8 +9,8 @@ export interface MediaItem {
 }
 
 /**
- * Bazaning admin shakli (private.news_admin_json): admin_save_news aynan shuni qabul qiladi, jurnalda
- * ham shu shaklda turadi, shu sabab qaytarish = before ni qayta saqlash.
+ * Bazaning admin shakli (private.news_admin_json). Jurnalda ham shu shaklda turadi, shu sabab
+ * qaytarish uchun before qiymatini qayta saqlash kifoya.
  */
 export interface NewsAdmin {
   readonly id?: string;

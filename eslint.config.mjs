@@ -36,7 +36,7 @@ export default tseslint.config(
     },
   },
   {
-    /* Picture tayyor AVIF/WebP ni <picture> bilan beradi; manifestda yoʻq manba uchun oddiy <img> ataylab. */
+    /* Picture tayyor AVIF va WebP nusxalarni beradi, manifestda yoʻq manbaga esa ataylab oddiy <img> qoʻyiladi. */
     files: ["src/components/ui/Picture.tsx"],
     rules: { "@next/next/no-img-element": "off" },
   },
@@ -45,7 +45,7 @@ export default tseslint.config(
     rules: { "@typescript-eslint/no-non-null-assertion": "off" },
   },
   {
-    /* tsx va Playwright server-only modulni yuklay olmaydi: kontent faqat sof bundled/select/snapshot orqali. */
+    /* tsx va Playwright server-only modulni yuklay olmaydi, shuning uchun kontent faqat sof modullardan olinadi. */
     files: ["scripts/**/*.{mjs,mts,ts}", "tests/**/*.ts"],
     rules: {
       "no-restricted-imports": [

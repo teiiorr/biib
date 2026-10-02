@@ -1,10 +1,9 @@
 import type { Locale } from "./locales";
 
-/* Brauzerlarda oʻzbekcha boʻgʻin koʻchirish lugʻati yoʻq: ikki chetga tekis matnda soʻzlar orasi katta
-   boʻlib ketardi. Boʻgʻin chegaralariga yumshoq tire (U+00AD) qoʻyiladi — koʻrinmaydi, faqat qator
-   oxirida kerak boʻlsa tire boʻlib chiqadi. Imlo qoidasi: har boʻgʻinda bitta unli; ikki unli orasidagi
-   bitta undosh keyingi boʻgʻinga, bir nechta undoshdan faqat oxirgisi keyingi boʻgʻinga oʻtadi; ng, sh,
-   ch, oʻ, gʻ boʻlinmaydi; soʻz boshida va oxirida bitta harf yolgʻiz qolmaydi. */
+/* Brauzerlarda oʻzbekcha boʻgʻin lugʻati yoʻq, tekislangan matnda soʻzlar orasi kengayib ketardi.
+   Shu sabab boʻgʻin chegarasiga koʻrinmas yumshoq tire (U+00AD) qoʻyiladi. Qoida: har boʻgʻinda
+   bitta unli; unlilar orasidagi undoshlardan faqat oxirgisi keyingi boʻgʻinga oʻtadi; ng, sh, ch, oʻ, gʻ
+   boʻlinmaydi; soʻz chetida bitta harf yolgʻiz qolmaydi. */
 
 const SOFT_HYPHEN = "­";
 const TURNED_COMMA = "ʻ";
@@ -14,7 +13,7 @@ interface Script {
   readonly vowels: ReadonlySet<string>;
   /** Bitta tovush beradigan harf birikmalari (kichik harfda). */
   readonly units: readonly string[];
-  /** Oldingi harfga qoʻshiladigan belgilar (ʼ, ъ, ь): ulardan oldin boʻlinmaydi. */
+  /** Tutuq, qattiq va yumshoq belgi oldingi harfga yopishadi: ulardan oldin boʻlinmaydi. */
   readonly attach: ReadonlySet<string>;
 }
 
@@ -38,7 +37,6 @@ const REFORM: Script = {
 
 const SCRIPTS: Partial<Record<Locale, Script>> = { uz: LATIN, oz: CYRILLIC, ozbekca: REFORM };
 
-/* Soʻz harf birliklariga boʻlinadi: birikmalar va qoʻshiladigan belgilar bitta birlik. */
 function units(word: string, script: Script): string[] {
   const lower = word.toLowerCase();
   const out: string[] = [];
@@ -69,8 +67,7 @@ function hyphenateWord(word: string, script: Script): string {
     const from = vowelAt[k] ?? 0;
     const to = vowelAt[k + 1] ?? 0;
     const consonants = to - from - 1;
-    /* Oraliq undoshlardan faqat oxirgisi keyingi boʻgʻinga (unli-unli: oʻrtadan). Tutuq belgisi, ъ va ь
-       oldingi boʻgʻinda qoladi: «sanʼ-at», «санъ-ат». */
+    /* Tutuq, qattiq va yumshoq belgi oldingi boʻgʻinda qoladi: «sanʼ-at», «санъ-ат». */
     const moved = parts[to - 1] ?? "";
     const closes = [...script.attach].some((mark) => moved.endsWith(mark));
     breaks.add(consonants <= 0 || closes ? to : to - 1);
@@ -86,10 +83,7 @@ function hyphenateWord(word: string, script: Script): string {
   return out;
 }
 
-/**
- * Oʻzbekcha matnga (lotin, kirill, 2026 imlosi) yumshoq tirelar qoʻyadi; rus va ingliz matni oʻzgarmaydi
- * (ular uchun brauzerning hyphens: auto lugʻati bor). Raqamli va boshqa yozuvdagi soʻzlar tegilmaydi.
- */
+/** Rus va ingliz matniga tegilmaydi: ular uchun brauzerning hyphens: auto lugʻati yetarli. */
 export function hyphenate(text: string, locale: Locale): string {
   const script = SCRIPTS[locale];
   if (!script) return text;

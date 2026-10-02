@@ -3,9 +3,8 @@ import { fetchRemoteSnapshot } from "@/lib/cms/remote";
 export const dynamic = "force-dynamic";
 
 /**
- * Kunlik uygʻotish (Vercel Cron, vercel.json): bepul tarifda Supabase loyihasi bir hafta jim tursa
- * uxlab qoladi. Bitta content_snapshot() soʻrovi faollik hisoblanadi va shakl ham tekshiriladi.
- * Faqat Vercel yuborgan maxfiy kalit bilan: boshqa har qanday chaqiruv 401.
+ * Supabase bepul tarifda bir hafta soʻrovsiz qolgan loyihani uxlatadi, shu sabab Vercel Cron uni har kuni
+ * uygʻotadi. Faqat Vercel yuboradigan maxfiy kalit bilan ishlaydi, boshqa chaqiruvga 401 qaytadi.
  */
 export async function GET(request: Request): Promise<Response> {
   const secret = process.env.CRON_SECRET;

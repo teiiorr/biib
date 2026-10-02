@@ -1,12 +1,8 @@
 /*
- * Bosish ovozlari egasining doira yozuvidan (src/assets/audio/doira.mp3, 23 s, 67 zarba) kesiladi. Har zarba
- * balandlik, past tovush (tana), qoʻngʻiroqcha jarangi va keyingi zarbagacha toza soʻnishi boʻyicha
- * oʻlchangan; eng yaxshi oltitasi olindi: toʻrtta toʻla «dum» va ikkita jarangdor «tak». Har biri hujumdan
- * 5 ms oldin boshlanadi, keyingi zarbagacha kesiladi (≤ 0.55 s), oxiri soʻnadi va bir xil balandlikka
- * keltiriladi. Oltovi bitta MP3 ga (sprite) 0.7 s lik kataklarda yoziladi: bitta soʻrov, bitta dekodlash;
- * har katak 50 ms jimlikdan boshlanadi — MP3 kodlovchisi siljishi zarba boshini kesmaydi.
- * Natija: public/sounds/doira-taps.mp3 (katak uzunligi va soni src/lib/sound/synth.ts dagi SLOT, TAPS bilan bir xil).
- * ffmpeg kerak.
+ * Bosish ovozlari doira yozuvidan kesib olinadi: toʻrtta toʻla «dum» va ikkita jarangdor «tak».
+ * Oltovi bitta MP3 spritega 0.7 s lik kataklarda yoziladi, shunda bitta soʻrov va bitta dekodlash yetadi.
+ * Har katak 50 ms jimlikdan boshlanadi, aks holda MP3 kodlovchisining siljishi zarba boshini kesadi.
+ * SLOT va TAPS qiymatlari src/lib/sound/synth.ts fayli bilan bir xil boʻlishi shart. ffmpeg kerak.
  */
 import { execFileSync } from "node:child_process";
 import path from "node:path";
@@ -17,7 +13,7 @@ const SLOT = 0.7;
 const LEAD = 0.05;
 const FADE = 0.2;
 
-/* [hujum, s; keyingi zarbagacha, s]. Oʻlchov: onset + tana/jarang bahosi (sessiya tahlili). */
+/* [hujum vaqti, keyingi zarbagacha oraliq], soniyalarda. */
 const HITS: ReadonlyArray<readonly [number, number]> = [
   [3.1369, 0.58], // dum: eng toʻla va baland
   [1.9458, 0.59], // tak: yorqin qoʻngʻiroqchalar

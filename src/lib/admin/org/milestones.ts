@@ -41,7 +41,6 @@ export interface MilestonesDraft {
   readonly rows: readonly MilestoneRow[];
 }
 
-/** Bazadagi qator: roʻyxat soʻrovi shu shaklni qaytaradi. */
 export interface StoredMilestone {
   readonly id: string;
   readonly key: string;

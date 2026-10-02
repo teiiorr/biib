@@ -21,7 +21,7 @@ interface ContactFormProps {
 
 const INITIAL: ContactState = { status: "idle" };
 
-/** Aloqa shakli: ism, telefon yoki pochta, xabar, rozilik; tuzoq va minimal toʻldirish vaqti. */
+/** Botlardan himoya: yashirin tuzoq maydoni va eng kam toʻldirish vaqti. */
 export function ContactForm({ dict, privacyHref }: ContactFormProps) {
   const [state, action, pending] = useActionState(sendContact, INITIAL);
   const [startedAt] = useState(() => Date.now());
@@ -36,7 +36,7 @@ export function ContactForm({ dict, privacyHref }: ContactFormProps) {
 
   return (
     <form action={action} className="contact-form" data-testid="contact-form" noValidate>
-      {/* Ism va aloqa yonma-yon (600 px dan): teng ustunlar, yorliqlar bir chiziqda. */}
+      {/* 600 px dan boshlab ism va aloqa yonma-yon, teng ustunlarda; yorliqlar bir chiziqda turadi. */}
       <div className="contact-form-pair">
         <Field id={`${id}-name`} label={dict.name} required error={errorText("name")}>
           {(control) => (
@@ -85,7 +85,7 @@ export function ContactForm({ dict, privacyHref }: ContactFormProps) {
       {state.errors?.consent ? (
         <FormMessage tone="error">{dict.consentRequired}</FormMessage>
       ) : null}
-      {/* Bot tuzogʻi: odam koʻrmaydi va toʻldirmaydi. */}
+      {/* Bot tuzogʻi: odam uni koʻrmaydi va toʻldirmaydi. */}
       <div className="contact-trap" aria-hidden="true">
         <label htmlFor={`${id}-website`}>Website</label>
         <input id={`${id}-website`} name="website" type="text" tabIndex={-1} autoComplete="off" />

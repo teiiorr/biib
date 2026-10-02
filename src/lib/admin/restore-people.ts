@@ -17,7 +17,6 @@ import { loadPerson } from "./people/queries";
 import { personAdminSchema } from "./people/schema";
 import { publish } from "./publish";
 
-/** Jurnaldan shu modul qaytaradigan yozuvlar: odam, hamkor va tartib (admin_reorder). */
 export const PEOPLE_ENTITIES: ReadonlySet<string> = new Set(["person", "partner", "order"]);
 
 export interface RestorableEntry {
@@ -58,9 +57,9 @@ function orderWarm(key: string): readonly string[] {
 }
 
 /**
- * Oldingi holatni oʻsha saqlash RPC si bilan qayta yozish. Oʻchirilgan yozuv oʻz id, kalit va oʻrni
- * bilan tiklanadi; mavjudi hozirgi updated_at bilan (oraliqda oʻzgargan boʻlsa ham qaytadi, chunki egasi
- * aynan shu holatni tanladi). Tartib esa faqat roʻyxat tarkibi oʻzgarmagan boʻlsa qaytadi.
+ * Oldingi holat oʻsha saqlash RPC orqali qayta yoziladi. Oʻchirilgan yozuv oʻz id, kalit va oʻrni bilan
+ * tiklanadi; mavjudi hozirgi updated_at bilan yoziladi, oraliqda oʻzgargan boʻlsa ham, chunki aynan shu
+ * holat tanlangan. Tartib esa faqat roʻyxat tarkibi oʻzgarmagan boʻlsa qaytadi.
  */
 export async function restorePeopleEntry(
   db: AdminDb,

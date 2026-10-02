@@ -1,20 +1,18 @@
-/* ATLAS — Oʻzbek hunarmandchiligi. Kunduz «Atlas», tun «Rishton». */
+/* Atlas dizayni tokenlari */
 
 :root {
-  /* Egasining tanlovi: matn Manrope da (oʻzbek belgilari qoʻshilgan nusxa), katta sarlavhalar
-     (display, h1, h2) Unbounded UZ da — Қ Ғ Ҳ qurilgan statik 700 nusxa (scripts/unbounded-uz.mts). */
+  /* Matn Manrope shriftida, katta sarlavhalar Unbounded UZ shriftida: ikkalasiga ham oʻzbek harflari
+     qoʻshilgan (Unbounded uchun scripts/unbounded-uz.mts). */
   --font-ui: "Manrope", "Manrope Fallback", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Unbounded", "Unbounded Fallback", ui-sans-serif, system-ui, sans-serif;
 
-  /* Qatʼiy shkala: sarlavhalar 700, Unbounded keng boʻlgani uchun Manrope dan kichikroq oʻlcham va
-     yengil tracking; matn 400, ochiq qator. */
+  /* Unbounded keng, shu sabab sarlavha oʻlchamlari odatdagidan kichikroq va harf oraligʻi biroz qisilgan. */
   --fs-display-xl: clamp(2.25rem, 1rem + 5.556vw, 6rem);
   --lh-display-xl: 1.05;
   --ls-display-xl: -0.02em;
   --fw-display-xl: 700;
-  /* Egasining talabi: barcha sarlavhalar (bosh sahifa nomi, sahifa h1, boʻlim h2) bitta standart katta
-     oʻlchamda — 28 px dan 64 px gacha (360 → 1440). Unbounded keng: telefonda eng uzun soʻz
-     («конфиденциальности», 14.7 em) boʻgʻin boʻyicha boʻlinadi (ui.css). */
+  /* Sahifa sarlavhalari: 360 px da 28 px, 1440 px da 64 px. Telefonda eng uzun soʻz
+     («конфиденциальности») boʻgʻin boʻyicha boʻlinadi (ui.css). */
   --fs-display-l: clamp(1.75rem, 1rem + 3.333vw, 4rem);
   --lh-display-l: 1.12;
   --ls-display-l: -0.015em;
@@ -60,10 +58,10 @@
 
   --radius-s: 6px;
   --radius-m: 8px;
-  /* Egasining talabi: karta va media chetlari yumshoqroq (12 px qattiq koʻrinardi). */
+  /* 12 px radius katta kartalarda qattiq koʻrinardi. */
   --radius-card: 20px;
   --radius-media: 24px;
-  /* Kapsula emas (egasining talabi): barcha boshqaruvlar bitta aniq radiusda, panel u bilan konsentrik. */
+  /* Boshqaruvlar kapsula emas, bitta aniq radiusda; panel radiusi ular bilan konsentrik. */
   --radius-control: 12px;
   --radius-panel: 24px;
 
@@ -71,7 +69,7 @@
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-ui: cubic-bezier(0.2, 0, 0, 1);
   --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
-  /* scripts/spring-curve.mjs 0.4 0.86 32 */
+  /* scripts/spring-curve.mjs 0.4 0.86 32 buyrugʻi chiqargan egri chiziq */
   --spring-glass: linear(
     0,
     0.0728,
@@ -115,8 +113,7 @@
 
   --material-sat: var(--g-sat);
 
-  /* Oltin sarlavhalar va oltin tugma toʻldirishi: klassik metall oltin oilasi (#D4AF37 atrofida).
-     Toʻldirish ikkala mavzuda bir xil yorqin, ustidagi navy yorliq 8:1 dan yuqori. */
+  /* Klassik metall oltin (#D4AF37 atrofida): ustidagi navy yorliq 8:1 dan yuqori kontrastda. */
   --gold-fill: #d4af37;
   --gold-fill-hi: #f7e08a;
 }
@@ -128,7 +125,7 @@
   }
 }
 
-/* Sayt faqat tungi «Rishton» mavzusida (egasining talabi, 2026-09-26): kunduzgi toʻplam olib tashlandi. */
+/* Sayt faqat tungi «Rishton» mavzusida ishlaydi, kunduzgi toʻplam yoʻq. */
 :root[data-theme="dark"] {
   color-scheme: dark;
   --bg: #0a1026;
@@ -144,7 +141,7 @@
   --on-tint: #0a1026;
   --focus: #e8699f;
   --accent-text: #e3c46e;
-  /* Lojuvard tunda yorqin oltin: asosiy 8.96:1, chuqur qismi 5.79:1. */
+  /* Lojuvard fonda oltin kontrasti: asosiy 8.96:1, chuqur qismi 5.79:1. */
   --gold-lo: #b8860b;
   --gold: #d4af37;
   --gold-flank: #f7e08a;
@@ -172,7 +169,7 @@
   --material-ink-2: #c3cadb;
   --material-rim: #8c95b4;
   --material-shadow: rgba(2, 5, 20, 0.5);
-  /* Yorugʻ rasm ustidagi oyna (iOS moslashuvchan muzi): sut muz, toʻq siyoh, toʻq pushti va oltin. */
+  /* Yorugʻ rasm ustidagi oyna ranglari */
   --glass-light-base: #fffcf6;
   --glass-light-ink: #0e1733;
   --glass-light-ink-2: #3a4466;
@@ -187,9 +184,8 @@
   --shadow-overlay: 0 12px 40px rgba(2, 5, 20, 0.55);
   --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 
-  /* Qahramon (bosh sahifa): matn, ostlik va kadr pardasi. */
   --hero-ink: #f7f3ea;
   --hero-scrim: #0a1026;
-  /* Qahramon videosining fon rangi (scripts/hero-video.mts dagi toʻldirish). */
+  /* scripts/hero-video.mts videoni shu rang bilan toʻldiradi: ikkalasi bir xil boʻlishi shart. */
   --hero-ground: #0a1026;
 }

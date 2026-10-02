@@ -35,11 +35,7 @@ function failure(revision: number, code: string | undefined): SaveTextState {
   return { status: "error", revision, message };
 }
 
-/**
- * Lugʻat matnini almashtirish: kalit oʻzbekcha lugʻatda boʻlishi, turi (satr yoki roʻyxat) va {belgi}lar
- * toʻplami mos kelishi shart; qiymat meʼyorlanadi (build.ts). Keyin eskirganlik, admin_save_text va
- * hamma sahifa darhol yangilanadi.
- */
+/** Kalit oʻzbekcha lugʻatda boʻlishi, turi (satr yoki roʻyxat) va {belgi} toʻplami mos boʻlishi shart. */
 export async function saveText(prev: SaveTextState, formData: FormData): Promise<SaveTextState> {
   const session = await requireAdminAction();
   const revision = prev.revision + 1;

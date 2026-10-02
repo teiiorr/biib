@@ -18,7 +18,7 @@ const SECRETS = [
   ],
 ];
 
-/** Skaner kuzatilmaydigan yashirin papkada turadi; nomi kodda yozilmaydi, shu sabab qidiriladi. */
+/** Skaner git kuzatmaydigan yashirin papkada turadi, nomi kodda yozilmagani uchun qidirib topiladi. */
 export function findHygieneScanner() {
   for (const entry of readdirSync(ROOT)) {
     if (!entry.startsWith(".")) continue;

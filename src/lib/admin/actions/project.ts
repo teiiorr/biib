@@ -10,9 +10,9 @@ import { failure, genericError, ORG_WARM } from "../org/results";
 import { publish } from "../publish";
 
 /**
- * UPOP TREND: bazadagi yozuv qayta oʻqiladi (boshqa oynada oʻzgarganmi va panelda tahrirlanmaydigan
- * qismlar — nom, shior, video holati — oʻzgarmay qolsin), keyin qator, faktlar va tavsiflar bitta
- * tranzaksiyada saqlanadi.
+ * Yozuv bazadan qayta oʻqiladi: boshqa oynadagi oʻzgarish ustidan yozilmasin, panelda
+ * tahrirlanmaydigan nom, shior va video holati esa saqlanib qolsin. Qator, faktlar va tavsiflar
+ * bitta tranzaksiyada yoziladi.
  */
 export async function saveProject(
   prev: SaveProjectState,

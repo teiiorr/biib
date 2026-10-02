@@ -18,7 +18,7 @@ interface NewsEditPageProps {
 
 export default async function NewsEditPage({ params, searchParams }: NewsEditPageProps) {
   const { id } = await params;
-  /* Yoʻl faqat uuid boʻlsa «next» ga qoʻyiladi: boshqa matn kirish sahifasiga olib bormaydi. */
+  /* Yoʻl faqat uuid boʻlsa «next» parametriga yoziladi: kirish sahifasiga ixtiyoriy matn uzatilmaydi. */
   if (!UUID_RE.test(id)) notFound();
   const session = await requireAdmin(`/admin/yangiliklar/${id}`);
   const db = adminDb(session.accessToken);

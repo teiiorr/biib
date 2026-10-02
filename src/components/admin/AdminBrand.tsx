@@ -7,7 +7,6 @@ interface AdminBrandProps {
   readonly size?: BrandLogoSize;
 }
 
-/** Panel belgisi: oltin logotip va panel nomi, bosh sahifaga (Boshqaruv) olib boradi. */
 export function AdminBrand({ size = 40 }: AdminBrandProps) {
   return (
     <Link href="/admin" className="admin-brand">

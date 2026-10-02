@@ -3,7 +3,7 @@ export interface Viewport {
   readonly height: number;
 }
 
-/** §16.1 matritsasi: telefon oʻlchamlari mobil profillarda, kattalari desktop profillarda. */
+/** Oʻlchamlar matritsasi: telefon oʻlchamlari mobil profilda, kattalari desktop profilida. */
 export const PHONE_VIEWPORTS: readonly Viewport[] = [
   { width: 320, height: 568 },
   { width: 360, height: 800 },
@@ -34,7 +34,7 @@ export const FIREFOX_VIEWPORTS: readonly Viewport[] = [
   { width: 1440, height: 900 },
 ];
 
-/** G8 va aloqa varaqlari uchun uchta kenglik. */
+/** G8 etalonlari va skrinshot toʻplamlari uchun uchta kenglik. */
 export const VISUAL_VIEWPORTS: readonly Viewport[] = [
   { width: 390, height: 844 },
   { width: 820, height: 1180 },

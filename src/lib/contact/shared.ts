@@ -1,4 +1,4 @@
-/* Forma va server amali uchun umumiy qiymatlar: zod bu faylga kirmaydi, aks holda mijoz chunkiga tushadi. */
+/* zod bu faylga kirmaydi, aks holda forma bilan birga mijoz JS toʻplamiga tushib qoladi. */
 export const MIN_MESSAGE = 20;
 export const MIN_FILL_MS = 3000;
 

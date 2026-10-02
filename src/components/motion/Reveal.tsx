@@ -29,27 +29,24 @@ export interface RevealProps {
   readonly children: ReactNode;
   readonly className?: string;
   readonly id?: string;
-  /** true: bevosita bolalar doira ritmida kiradi; false: butun blok bitta boʻlib. */
+  /** true: ichki elementlar birma-bir doira ritmida kiradi; false: blok yaxlit kiradi. */
   readonly stagger?: boolean;
-  /** Koʻtarilish masofasi, px: 16 mayda matn, 24 sukut, 40 media bloklari; tor ekranda ×0.66. */
+  /** Koʻtarilish masofasi, px: mayda matnga 16, odatda 24, media bloklariga 40; tor ekranda ×0.66. */
   readonly distance?: 16 | 24 | 40;
-  /** ScrollTrigger start, sukut "top 88%". */
+  /** ScrollTrigger start, odatda "top 88%". */
   readonly start?: string;
   /** Qoʻshimcha kechikish, s. */
   readonly delay?: number;
-  /** Audit va test belgilari (data-*), oʻramga oʻtkaziladi. */
+  /** Audit va test uchun data-* belgilari, oʻramga uzatiladi. */
   readonly attrs?: Readonly<Record<`data-${string}`, string>>;
   readonly label?: string;
   readonly labelledBy?: string;
 }
 
 /**
- * reveal-rise v3 (egasining talabi: harakat kuchliroq va skrollning ikki yoʻnalishida): blok pastdan
- * kirganda pastdan, yuqoridan qaytganda yuqoridan koʻtariladi (opacity 0→1, y ±48, masshtab 0.96→1,
- * doira ritmi); ekrandan chiqqanda chiqish tomoniga yashirinadi va qaytganda yana kiradi. Faqat opacity
- * — visibility emas: yashirin blok ham ekran oʻquvchida oʻqiladi. Ekranda turgan blok birinchi
- * kadrda yashirilmaydi; qoʻriqchi (watchdog) trigger oʻtkazib yuborilsa ham ochadi. Kuchsiz qurilmada
- * (data-perf="lite") masofa yarim, masshtab yoʻq. Matn doim DOM da.
+ * Blok pastdan kirganda pastdan, yuqoridan qaytganda yuqoridan koʻtariladi, ekrandan chiqqanda shu tomonga yashirinadi.
+ * Faqat opacity oʻzgaradi, visibility emas: yashirin blok ham ekran oʻquvchida oʻqiladi. Ekranda turgan blok birinchi
+ * kadrda yashirilmaydi, trigger oʻtkazib yuborilsa qoʻriqchi uni ochadi. Yengil rejimda masofa yarim, masshtab yoʻq.
  */
 export function Reveal({
   as = "div",
@@ -134,7 +131,7 @@ export function Reveal({
     [allowed, stagger, start, delay, distance, compact],
   );
 
-  // Teg birligi uchun bitta intrinsik tur: barcha ruxsat etilgan teglar HTMLElement beradi.
+  // Ruxsat etilgan barcha teglar HTMLElement beradi, shuning uchun teglar birlashmasiga bitta tur yetadi.
   const Tag = as as "div";
   return (
     <Tag

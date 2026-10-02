@@ -13,7 +13,7 @@ import { PEOPLE_ENTITIES, restorePeopleEntry } from "../restore-people";
 
 const J = ADMIN_COPY.journal;
 
-/** Studio da qoʻlda oʻzgartirilgan maʼlumot ham saytga darhol chiqsin: hamma sahifa yangilanadi. */
+/** Supabase Studio orqali qoʻlda oʻzgartirilgan maʼlumot ham saytga darhol chiqsin. */
 export async function refreshSite(): Promise<ActionResult> {
   await requireAdminAction();
   publish();
@@ -21,8 +21,8 @@ export async function refreshSite(): Promise<ActionResult> {
 }
 
 /**
- * Jurnal yozuvini qaytarish: yozuvdagi oldingi holat (admin shakli) oʻsha saqlash RPC si bilan qayta
- * yoziladi. Oʻchirilgan yangilik oʻz id si bilan qayta tiklanadi; odam, hamkor va tartib alohida modulda.
+ * Jurnaldagi oldingi holat oʻsha saqlash funksiyasi orqali qayta yoziladi, oʻchirilgan yangilik
+ * avvalgi id bilan tiklanadi. Odam, hamkor va tartib alohida modulda.
  */
 export async function restoreEntry(logId: number): Promise<ActionResult> {
   const session = await requireAdminAction();

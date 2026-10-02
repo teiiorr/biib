@@ -17,7 +17,7 @@ export interface MenuSheetPanelProps extends MenuSheetProps {
 
 const REST: readonly PageKey[] = ["about", "leadership", "experts", "partners"];
 
-/** Menyu varagʻi: tab-barga sigʻmagan sahifalar va maxfiylik havolasi. */
+/** Pastki panelga sigʻmagan sahifalar va maxfiylik havolasi shu varaqda turadi. */
 export default function MenuSheetPanel({
   locale,
   dict,

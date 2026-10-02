@@ -21,12 +21,11 @@ type SavePartnerState = RecordSaveState<PartnerAdmin>;
 
 const KEY_RE = /^[a-z][a-z0-9-]{0,63}$/;
 
-/** Hamkor bosh sahifadagi maydonda ham (≥ 6 boʻlsa), shu sabab ikkala sahifa isitiladi. */
+/** Hamkorlar 6 tadan kam boʻlmasa bosh sahifada ham chiqadi: ikkala sahifa oldindan yuklanadi. */
 function warmPaths(): readonly string[] {
   return [pathFor("uz", "home"), pathFor("uz", "partners")];
 }
 
-/** Hamkorni saqlash: odamlar bilan bir xil yoʻl (zod → build → RPC → publish). */
 export async function savePartner(
   prev: SavePartnerState,
   formData: FormData,

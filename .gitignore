@@ -15,7 +15,7 @@ playwright-report
 # Vizual etalonlar mahalliy (platformaga bogʻliq)
 tests/__screenshots__/
 
-# Yigʻish paytidagi kontent nusxasi va Supabase CLI ning mahalliy holati
+# Yigʻish paytidagi kontent nusxasi va mahalliy Supabase holati
 .content-cache/
 supabase/.temp
 supabase/.branches

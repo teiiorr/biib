@@ -12,13 +12,11 @@ import { ConfirmDialog } from "./ConfirmDialog";
 
 interface TextRestoreProps {
   readonly textKey: string;
-  /** Almashtirish oʻchgach: tahrir maydoni asl matnga qaytadi. */
   readonly onRestored: () => void;
 }
 
 const T = SYSTEM_COPY.texts;
 
-/** Oʻzgartirilgan matn belgisi va «Asliga qaytarish» (tasdiq bilan). */
 export function TextRestore({ textKey, onRestored }: TextRestoreProps) {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);

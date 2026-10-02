@@ -19,10 +19,9 @@ import { InViewVideoLeaf } from "../lazy-leaves";
 import { AboutLogoVideo } from "./AboutLogoVideo";
 import { HistoryTimeline } from "./HistoryTimeline";
 
-/* Yoʻnalishlar ustavdagi tartibda (6.10): adabiyot, teatr, kino va animatsiya, musiqa, tasviriy sanʼat,
-   media va raqamli ijod. */
+/* Yoʻnalishlar ustavdagi tartibda: adabiyot, teatr, kino va animatsiya, musiqa, tasviriy sanʼat, media va raqamli ijod. */
 const DIRECTION_ICONS: readonly IconName[] = ["news", "mask", "film", "mic", "palette", "play"];
-/* Vazifalar (2.2): kontent, iqtidor izlash, tanlovlar zanjiri, mahorat darslari, xalqaro, inklyuziya. */
+/* Ustavdagi vazifalar: kontent, iqtidor izlash, tanlovlar zanjiri, mahorat darslari, xalqaro aloqa, inklyuziya. */
 const TASK_ICONS: readonly IconName[] = ["projects", "map-pin", "star", "users", "ticket", "heart"];
 const HISTORY_ICONS: Readonly<Record<string, IconName>> = {
   founding: "users",
@@ -33,18 +32,12 @@ interface PageProps {
   readonly dict: Dictionary;
 }
 
-/**
- * Biz haqimizda (15.3), matn birlashma ustavidan: markazdagi sarlavha; chapda belgi animatsiyasi, oʻngda
- * maqsad (ikki xatboshi va ustavdan iqtibos, ikki chetga tekis); yoʻnalishlar
- * va asosiy vazifalar teng toʻrda (belgi va nomi, tavsifsiz);
- * tarix faqat yillari tasdiqlanganda; oxirida UPOP TREND lentasi. Sarlavhalar ostida tavsif yoʻq.
- * Harakat: sarlavhalar soʻzma-soʻz, matn va roʻyxatlar doira ritmida koʻtariladi.
- */
+/** Matn birlashma ustavidan olingan. Sarlavhalar ostida tavsif berilmaydi. */
 export async function AboutPage({ locale, dict }: PageProps) {
   const a = dict.about;
   const [flagship, allMilestones] = await Promise.all([getFlagship(), getMilestones()]);
   const upop = flagship?.media.loop ?? null;
-  /* Tarix faqat yili tasdiqlangan bosqichlar bilan: yilsiz uchta yorliq tugallanmagan koʻrinardi. */
+  /* Faqat yili tasdiqlangan bosqichlar: yilsiz uchta yorliq chala koʻrinardi. */
   const milestones = allMilestones.flatMap((m) =>
     m.status === "confirmed" && m.year !== null
       ? [
@@ -67,11 +60,10 @@ export async function AboutPage({ locale, dict }: PageProps) {
         ]}
         breadcrumbsLabel={dict.common.hints.breadcrumbs}
       />
-      {/* Sahifa sarlavhasidan keyin ikkinchi sarlavha yoʻq (egasining talabi): maqsad matni h1 ostida. */}
+      {/* Maqsad matni alohida sarlavhasiz, toʻgʻridan-toʻgʻri h1 ostida turadi. */}
       <Section labelledBy="page-title">
         <Container>
-          {/* Egasining talabi: chapda belgi animatsiyasi, yonida matn — ikki ustun bir balandlikda, chetlar
-              toʻr ustunlarida. Telefonda ustma-ust: avval belgi, keyin matn. */}
+          {/* Telefonda avval belgi, keyin matn; kompyuterda ikki ustun bir balandlikda, chetlari toʻr ustunlarida. */}
           <div className="grid-site about-intro">
             <Reveal
               className="about-intro-media col-span-4 md:col-span-8 lg:col-span-12 xl:col-span-5"
@@ -141,9 +133,7 @@ export async function AboutPage({ locale, dict }: PageProps) {
           </Container>
         </Section>
       ) : null}
-      {/* Sahifa UPOP TREND lentasi bilan yopiladi (egasining talabi): sarlavha, ostida loyiha videosi
-          (koʻrinishga kirganda oʻzi oʻynaydi, poster videoning oʻz birinchi kadri), eng pastda loyihaga
-          oʻtish tugmasi. Bosh loyiha yozuvi boʻlmasa lenta chizilmaydi. */}
+      {/* Bosh loyiha yozuvi boʻlmasa lenta chizilmaydi; video posteri uning oʻz birinchi kadri. */}
       {upop ? (
         <Section
           labelledBy="about-next"

@@ -27,9 +27,9 @@ export interface NewsEditorProps {
   readonly id: string | null;
   readonly initial: NewsDraft;
   readonly updatedAt: string | null;
-  /** Bazadagi holat: tasdiqlangan boʻlsa havola qulflanadi. */
+  /** Bazadagi holat: tasdiqlangan yangilikda havola qulflanadi. */
   readonly savedStatus: ContentStatus | null;
-  /** Yangi yozuv hozirgina saqlanib shu sahifaga kelindi. */
+  /** Yangi yozuv hozirgina saqlanib, shu sahifaga oʻtildi. */
   readonly justSaved: boolean;
   readonly library: readonly MediaItem[];
 }
@@ -38,8 +38,8 @@ const IDLE: SaveNewsState = { status: "idle", revision: 0 };
 const G = NEWS_COPY.editor.groups;
 
 /**
- * Yangilik tahriri: tabiiy shakl, holat JSON yashirin maydonda server amaliga ketadi. Brauzer ham
- * xuddi server kabi tekshiradi (build.ts): xato boʻlsa soʻrov ketmaydi va fokus birinchi xatoga oʻtadi.
+ * Brauzer ham server kabi tekshiradi (build.ts): xato boʻlsa soʻrov ketmaydi va fokus birinchi xatoga
+ * oʻtadi.
  */
 export function NewsEditor({
   id,
@@ -65,7 +65,7 @@ export function NewsEditor({
   const form = useId().replace(/:/g, "");
   const idFor = (field: string) => `${form}-${field}`;
 
-  /* Server javobi kelgan render: saqlangan (meʼyorlangan) qiymatlar tahrirga qaytadi. */
+  /* Server javobidan keyin saqlangan, meʼyorlangan qiymatlar tahrirga qaytadi. */
   if (state.revision !== seen) {
     setSeen(state.revision);
     if (state.status === "saved") {
@@ -91,7 +91,7 @@ export function NewsEditor({
   const serverTarget =
     state.status === "invalid" ? firstErrorId(state.errors, FIELD_ORDER, focusIdFor) : null;
   useLeaveGuard(dirty && !pending, NEWS_COPY.save.leave);
-  /* Server rad etgan har javobda (bir xil xato qayta kelsa ham) fokus birinchi xatoga. */
+  /* Server bir xil xatoni qayta qaytarsa ham fokus yana birinchi xatoga oʻtadi. */
   useEffect(() => {
     if (serverTarget) focusField(serverTarget);
   }, [state, serverTarget]);

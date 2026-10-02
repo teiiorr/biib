@@ -1,6 +1,6 @@
 import type { Locale } from "@/i18n/locales";
 
-/* Satori CSS oʻzgaruvchilarini bilmaydi: shu sabab tokenlar bu yerda oʻzgarmas qiymat. */
+/* Satori CSS oʻzgaruvchilarini tushunmaydi, shu sabab tokenlar bu yerda tayyor qiymat bilan yozilgan. */
 const ATLAS = {
   bg: "#f7f3ea",
   ink: "#0e1733",
@@ -23,8 +23,8 @@ export function ogAlt(topic: string, title: string): string {
 }
 
 export function OgImage({ title, topic }: OgImageProps) {
-  /* Sarlavha Unbounded da (saytdagi kabi): keng shrift, eng uzun soʻz ham 820 px ga sigʻishi kerak
-     (Satori soʻzni boʻlmaydi) — bir harf ≈ 0.82 em. */
+  /* Sarlavha saytdagi kabi Unbounded shriftida. Satori soʻzni boʻlmaydi, shu sabab eng uzun soʻz ham
+     820 px ichiga sigʻishi kerak: bir harf taxminan 0.82 em. */
   const longest = Math.max(...title.split(/\s+/).map((word) => word.length));
   const size = Math.min(
     title.length > 48 ? 44 : title.length > 28 ? 54 : 66,

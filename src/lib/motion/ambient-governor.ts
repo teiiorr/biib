@@ -1,7 +1,4 @@
-/**
- * Viewportda bir vaqtning oʻzida koʻpi bilan bitta ambient sikl va bitta skroll sahna ishlaydi
- * (§8 XII.3). Eng koʻp koʻrinadigan aʼzo faol, qolganlari pauzada.
- */
+/** Ekranda bir vaqtda faqat bitta ambient sikl ishlaydi: eng koʻp koʻrinadigani faol, qolganlari pauzada. */
 export type AmbientKind = "ambient" | "scene";
 
 export interface AmbientHandlers {
@@ -67,8 +64,7 @@ function reconcile(): void {
   }
   const paused = pauseReasons.size > 0;
   for (const e of entries.values()) {
-    // Skroll sahnalari raqobatlashmaydi (egasining talabi: harakat uzilmasin) — ikkisi chegarada
-    // koʻrinsa ham ikkalasi ishlaydi; faqat ambient sikllardan bittasi faol.
+    // Skroll sahnalari raqobatlashmaydi: harakat uzilmasin deb chegarada ikkalasi ham ishlaydi.
     apply(e, !paused && (e.kind === "scene" || winners.get(e.kind) === e));
   }
 }

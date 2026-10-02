@@ -3,7 +3,7 @@
 import { contactSchema } from "./schema";
 import { MIN_FILL_MS, type ContactState } from "./shared";
 
-/** Xabar Telegram Bot API ga ketadi; token va chat id faqat serverda. */
+/** Xabar Telegram Bot API orqali ketadi; token va chat id faqat serverda turadi. */
 export async function sendContact(_prev: ContactState, formData: FormData): Promise<ContactState> {
   const raw = {
     name: String(formData.get("name") ?? ""),
@@ -22,7 +22,7 @@ export async function sendContact(_prev: ContactState, formData: FormData): Prom
       if (field === "contact") errors.contact = raw.contact.trim() ? "invalidContact" : "required";
       if (field === "message") errors.message = raw.message.trim() ? "tooShort" : "required";
       if (field === "consent") errors.consent = "consentRequired";
-      /* Tuzoq toʻldirilgan boʻlsa jim rad etiladi, botga xato koʻrsatilmaydi. */
+      /* Tuzoq toʻldirilgan boʻlsa jim rad etiladi: botga xato koʻrsatilmaydi. */
       if (field === "website") return { status: "success" };
     }
     return { status: "invalid", errors };

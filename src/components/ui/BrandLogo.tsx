@@ -15,9 +15,8 @@ export interface BrandLogoProps {
 }
 
 /**
- * Birlashmaning yakuniy belgisi: qahramon videosi tugaydigan oltin qirrali lojuvard disk, oltin shakllar
- * (egasining talabi). Sahna belgisi sarlavhaga aynan shu rasmga qoʻnadi, shu sabab u har ohangda bir xil,
- * filtrsiz: lojuvard disk sut zaminda ham, tungi zaminda ham oltin qirrasi bilan ajralib turadi.
+ * Sahna belgisi sarlavhada aynan shu rasmga qoʻnadi, shuning uchun u har ohangda bir xil va filtrsiz:
+ * lojuvard disk ikkala zaminda ham oltin qirrasi bilan ajralib turadi.
  */
 export function BrandLogo({ alt, size = 40, eager = false, className, attrs }: BrandLogoProps) {
   return (

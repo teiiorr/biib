@@ -4,7 +4,7 @@ import type { MediaItem } from "../news/types";
 import { emptyLocalized } from "../text/locales";
 import type { PersonAdmin, PersonDraft, PersonPayload } from "./types";
 
-/** Yangi odam: tasdiqlangan holatda boshlanadi — egasi odatda haqiqiy maʼlumot bilan qoʻshadi. */
+/** Yangi odam odatda haqiqiy maʼlumot bilan qoʻshiladi, shu sabab tasdiqlangan holatda boshlanadi. */
 export function emptyPersonDraft(): PersonDraft {
   return {
     status: "confirmed",
@@ -26,7 +26,7 @@ export function mediaFor(
   return media.get(id) ?? { id, src: "", image: null };
 }
 
-/** Yangi yuklangan rasmlar tanlash oynasi roʻyxatining boshiga (takrorlanmasdan). */
+/** Yangi yuklangan rasmlar tanlash roʻyxatining boshiga takrorlanmasdan qoʻshiladi. */
 export function mergeMedia(
   added: readonly MediaItem[],
   list: readonly MediaItem[],

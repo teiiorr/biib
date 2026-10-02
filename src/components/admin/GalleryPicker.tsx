@@ -28,10 +28,6 @@ function fileName(src: string): string {
   return src.split("/").at(-1) ?? src;
 }
 
-/**
- * Galereya uchun kutubxona: tepada videolar (posteri bilan), keyin oxirgi rasmlar. Bittasi bosilsa
- * darhol tanlanadi. Kompyuterda dialog, telefonda pastki varaq.
- */
 export function GalleryPicker({ id, label, items, onPick }: GalleryPickerProps) {
   const [open, setOpen] = useState(false);
   const desktop = useIsDesktop();

@@ -11,16 +11,16 @@ import { BrandName } from "./BrandName";
 
 interface BrandMarkProps {
   readonly locale: Locale;
-  /** Havolaning ekran oʻquvchi nomi: joriy tildagi toʻliq nom. */
+  /** Ekran oʻquvchi uchun joriy tildagi toʻliq nom. */
   readonly name: string;
   readonly className?: string;
-  /** Serverda chizilgan belgi rasmi (BrandLogo): rasm kodi mijoz chunkiga kirmaydi. */
+  /** Serverda chizilgan belgi (BrandLogo): rasm kodi mijoz chunkiga kirmaydi. */
   readonly children: ReactNode;
 }
 
 /**
- * Brend belgisi badiiy qatlamda turadi, oyna ichida emas (15.1). Ostidagi boʻlim ohangini oʻqiydi:
- * qorongʻi kadr va lojuvard boʻlimlar ustida yozuv sut-oq, belgi oq (ui.css .brand-logo).
+ * Belgi oyna ichida emas, kontent ustida turadi va ostidagi boʻlim ohangini oladi: qorongʻi fonda
+ * yozuv sut-oq, belgi oq (ui.css faylidagi .brand-logo).
  */
 export function BrandMark({ locale, name, className, children }: BrandMarkProps) {
   const ref = useRef<HTMLAnchorElement | null>(null);

@@ -1,6 +1,6 @@
 /**
- * uz/ lugʻatlaridan oz/ (kirill) va ozbekca/ (2026 imlosi) fayllarini yaratadi.
- * Ishga tushirish: pnpm translit. Qoʻlda tuzatishlar oz/overrides.ts va ozbekca/overrides.ts da.
+ * uz lugʻatlaridan oz (kirill) va ozbekca (2026-yilgi imlo) fayllarini yaratadi: pnpm translit.
+ * Qoʻlda tuzatishlar oz/overrides.ts va ozbekca/overrides.ts fayllariga yoziladi.
  */
 import { readdirSync, writeFileSync, mkdirSync } from "node:fs";
 import path from "node:path";
@@ -13,7 +13,7 @@ const SRC = path.join(ROOT, "src/i18n/dictionaries/uz");
 type Leaf = string | number | boolean | null;
 type Tree = { [key: string]: Tree | Leaf | readonly (Tree | Leaf)[] };
 
-/* Texnik kalitlar (id, slug, href, src) oʻgirilmaydi: langar va havolalar buzilmasin. */
+/* Texnik kalitlar transliteratsiya qilinmaydi, aks holda langar va havolalar buziladi. */
 const TECHNICAL_KEYS = new Set(["id", "slug", "href", "src", "key", "url", "anchor"]);
 
 function walk(value: unknown, fn: (s: string) => string, key = ""): unknown {

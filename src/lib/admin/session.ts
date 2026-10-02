@@ -5,8 +5,8 @@ import { cookies } from "next/headers";
 import type { AdminEnv } from "./env";
 import { authClient } from "./supabase";
 
-/* Mahalliy http da Secure cookie saqlanmaydi; ishlab chiqarishda __Secure- oldqoʻshimchasi brauzerni
-   bu cookie ni faqat HTTPS orqali va Secure belgisi bilan qabul qilishga majbur qiladi. */
+/* Mahalliy HTTP ulanishida Secure cookie saqlanmaydi. Ishlab chiqarishda __Secure- old qoʻshimchasi
+   tufayli brauzer bu cookie faqat HTTPS orqali va Secure belgisi bilan kelganda qabul qiladi. */
 const SECURE = process.env.NODE_ENV === "production";
 const PREFIX = SECURE ? "__Secure-" : "";
 const ACCESS_COOKIE = `${PREFIX}biib_at`;
@@ -14,8 +14,8 @@ const REFRESH_COOKIE = `${PREFIX}biib_rt`;
 const ACCESS_MAX_AGE = 60 * 60;
 const REFRESH_MAX_AGE = 14 * 24 * 60 * 60;
 
-/* Lax: Telegram yoki pochtadagi /admin havolasi sessiyani yoʻqotmaydi; Path=/admin — ommaviy sahifalarga
-   bu cookie lar umuman yuborilmaydi. */
+/* Lax: Telegram yoki pochtadagi /admin havolasi sessiyani yoʻqotmaydi. Path=/admin tufayli
+   ommaviy sahifalarga bu cookie umuman yuborilmaydi. */
 const BASE = { httpOnly: true, secure: SECURE, sameSite: "lax", path: "/admin" } as const;
 
 export interface StoredTokens {
@@ -50,7 +50,7 @@ export async function readTokens(): Promise<StoredTokens> {
   };
 }
 
-/** Faqat server amali va Route Handler ichida: render paytida cookie yozib boʻlmaydi. */
+/** Faqat server amali va Route Handler ichida: komponent chizilayotganda cookie yozib boʻlmaydi. */
 export async function writeTokens(session: IssuedSession): Promise<void> {
   const store = await cookies();
   const accessAge = Math.max(60, Math.min(session.expires_in, ACCESS_MAX_AGE));
@@ -65,12 +65,12 @@ export async function writeTokens(session: IssuedSession): Promise<void> {
 
 export async function clearTokens(): Promise<void> {
   const store = await cookies();
-  /* Oʻchirish sarlavhasi ham xuddi shu Path va Secure bilan: aks holda brauzer eski cookie ni qoldiradi. */
+  /* Path va Secure bir xil boʻlmasa, brauzer eski cookie faylini oʻchirmay qoldiradi. */
   store.delete({ ...BASE, name: ACCESS_COOKIE });
   store.delete({ ...BASE, name: REFRESH_COOKIE });
 }
 
-/** Kirish tokeni imzosi, muddati va egasi tekshiriladi; yaroqsiz boʻlsa null (xato tashlanmaydi). */
+/** Imzo, muddat va token kimga tegishliligi tekshiriladi; yaroqsiz boʻlsa xato emas, null qaytadi. */
 export async function verifyAccess(env: AdminEnv, token: string): Promise<AdminSession | null> {
   try {
     const { data, error } = await authClient(env).auth.getClaims(token);
@@ -83,7 +83,7 @@ export async function verifyAccess(env: AdminEnv, token: string): Promise<AdminS
   }
 }
 
-/** Yangi sessiya faqat panel egasiniki boʻlsa saqlanadi. */
+/** Yangi sessiya faqat panel adminiga tegishli boʻlsa saqlanadi. */
 export async function acceptSession(
   env: AdminEnv,
   session: IssuedSession | null,
@@ -97,7 +97,7 @@ export async function acceptSession(
   };
 }
 
-/** Yangilash tokeni bilan yangi juftlik: eski yangilash tokeni Supabase da bir martalik. */
+/** Supabase yangilash tokeni bir martalik, shu sabab har safar yangi juftlik olinadi. */
 export async function refreshTokens(
   env: AdminEnv,
   refreshToken: string,

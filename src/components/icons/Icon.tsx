@@ -6,12 +6,12 @@ export type IconSize = 16 | 20 | 24;
 export interface IconProps {
   readonly name: IconName;
   readonly size?: IconSize;
-  /** Berilsa belgi maʼno tashiydi: role="img" va nom; aks holda bezak (aria-hidden). */
+  /** Berilsa belgi maʼno tashiydi (role="img" va nom), aks holda bezak (aria-hidden). */
   readonly label?: string;
   readonly className?: string;
 }
 
-/* Chizma layoutdagi spritdan (IconSprite): yoʻl maʼlumotlari mijoz JS iga kirmaydi. */
+/* Chizma IconSprite spritidan olinadi: yoʻl maʼlumotlari mijoz skriptiga kirmaydi. */
 export function Icon({ name, size = 20, label, className }: IconProps) {
   const meaningful = typeof label === "string" && label.length > 0;
   return (

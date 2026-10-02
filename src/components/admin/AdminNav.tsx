@@ -9,13 +9,12 @@ import { AdminIcon } from "./AdminIcon";
 import { ADMIN_NAV, activeHref } from "./nav";
 
 interface AdminNavProps {
-  /** Varaqda: band tanlangach varaq yopiladi. */
+  /** Varaqda band tanlangach varaqni yopadi. */
   readonly onNavigate?: () => void;
-  /** Yon panel va varaq bir sahifada: guruh yorliqlarining id lari takrorlanmasin. */
+  /** Yon panel va varaq bitta sahifada turadi: guruh yorliqlarining id qiymatlari takrorlanmasin. */
   readonly idPrefix: string;
 }
 
-/** Guruhlangan boʻlimlar: faol band pushti yorliq va yengil fon bilan, aria-current bilan. */
 export function AdminNav({ onNavigate, idPrefix }: AdminNavProps) {
   const active = activeHref(usePathname());
   return (

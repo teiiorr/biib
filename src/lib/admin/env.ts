@@ -7,8 +7,8 @@ export interface AdminEnv {
 }
 
 /**
- * Panel sozlamalari faqat serverda oʻqiladi. Biri yoʻq boʻlsa panel yopiq: kirish ham, yozish ham yoʻq.
- * ADMIN_USER_ID ikkinchi qulf — maʼlumotlar bazasidagi is_admin() ga qoʻshimcha tekshiruv.
+ * Sozlamalardan bittasi yoʻq boʻlsa panel butunlay yopiq. ADMIN_USER_ID bazadagi is_admin()
+ * tekshiruviga qoʻshimcha ikkinchi qulf.
  */
 export function adminEnv(): AdminEnv | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -18,7 +18,7 @@ export function adminEnv(): AdminEnv | null {
   return { url, key, adminUserId };
 }
 
-/** Vercel sinov nusxasi bazani asosiy sayt bilan boʻlishadi, keshni esa yoʻq: u yerdan yozish taqiq. */
+/** Vercel sinov nusxasi bazani asosiy sayt bilan boʻlishadi, keshni emas: undan yozish taqiq. */
 export function isPreviewDeployment(): boolean {
   return process.env.VERCEL_ENV === "preview";
 }

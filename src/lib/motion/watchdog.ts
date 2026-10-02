@@ -1,7 +1,7 @@
 /**
- * «Havo qolmasin» qoʻriqchisi: reveal yashirgan element (data-reveal="pending") koʻrinishning kamida
- * yarmida 300 ms tursa-yu, trigger ishlamagan boʻlsa (pastki 15 % dagi blok, kech rasm yoki shriftdan
- * keyin oʻtkazib yuborilgan refresh), kirishi triggersiz oʻynaladi. Bitta umumiy IntersectionObserver.
+ * Kirish oʻynamay qolmasligi uchun qoʻriqchi: data-reveal="pending" element ekranning kamida yarmida
+ * 300 ms tursa-yu trigger ishlamagan boʻlsa (pastki 15 % dagi blok, kech rasm yoki shriftdan keyin
+ * oʻtkazib yuborilgan qayta hisoblash), kirish triggersiz oʻynaladi. Bitta umumiy IntersectionObserver.
  */
 const HOLD_MS = 300;
 const VISIBLE_SHARE = 0.5;
@@ -14,7 +14,7 @@ interface Watch {
 const watches = new Map<Element, Set<Watch>>();
 let observer: IntersectionObserver | null = null;
 
-/* Baland blokda nisbat hech qachon 0.5 ga yetmaydi: ulush element yoki viewport balandligidan olinadi. */
+/* Baland blokda nisbat hech qachon 0.5 ga yetmaydi, shu sabab ulush element yoki ekran balandligidan olinadi. */
 function share(entry: IntersectionObserverEntry): number {
   const height = Math.min(entry.boundingClientRect.height, window.innerHeight);
   return height > 0 ? entry.intersectionRect.height / height : 0;
@@ -61,8 +61,8 @@ export interface PendingWatch {
 }
 
 /**
- * Nishonlarga data-reveal="pending" qoʻyadi va qoʻriqchiga topshiradi; `finish` qoʻriqchi
- * ishlaganda chaqiriladi (trigger animatsiyani oʻldirmasdan olinadi, kirish oʻynaladi).
+ * Nishonlarga data-reveal="pending" qoʻyib, qoʻriqchiga topshiradi. finish qoʻriqchi ishlaganda
+ * chaqiriladi: trigger animatsiyani oʻldirmasdan olinadi va kirish oʻynaladi.
  */
 export function watchPending(
   trigger: Element,

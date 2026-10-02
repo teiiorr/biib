@@ -17,16 +17,12 @@ interface HomePageProps {
   readonly dict: Dictionary;
 }
 
-/**
- * Bosh sahifa: Darvoza (video sahnasi) → missiya → UPOP TREND → yangiliklar → galereya (rozilik bilan
- * ishlar boʻlsa) → odamlar → hamkorlar (≥ 6 boʻlsa) → aloqa. Boʻsh boʻlim chizilmaydi.
- */
 export async function HomePage({ locale, dict }: HomePageProps) {
   const [partners, artworks] = await Promise.all([getConfirmedPartners(), getArtworks()]);
   const hasArtworks = artworks.length > 0;
   return (
     <>
-      {/* Missiya sahnaning ikkinchi yarmi: yopishqoq kadr ustidan koʻtariladi, boʻsh xira ekran qolmaydi. */}
+      {/* Missiya sahna ichida: yopishqoq kadr ustidan koʻtariladi, orada boʻsh xira ekran qolmaydi. */}
       <HeroScene>
         <HeroSection locale={locale} dict={dict} />
         <MissionSection

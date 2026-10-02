@@ -14,7 +14,7 @@ interface AdminIconProps {
 
 const OWN: ReadonlySet<string> = new Set(ADMIN_ICON_NAMES);
 
-/** Sayt spritidagi belgi ham, panelniki ham: har doim bezak, nomni yonidagi yorliq beradi. */
+/** Belgi doim bezak: nomini yonidagi yorliq aytadi. */
 export function AdminIcon({ name, size = 20, className }: AdminIconProps) {
   const id = OWN.has(name) ? `ai-${name}` : `i-${name}`;
   return (

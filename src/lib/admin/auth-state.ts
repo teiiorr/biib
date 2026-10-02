@@ -1,4 +1,4 @@
-/* Shakl va server amali uchun umumiy tur: amal fayli faqat async funksiyalar eksport qila oladi. */
+/* Tur alohida faylda, chunki server amali fayli faqat async funksiya eksport qila oladi. */
 export interface SignInState {
   readonly status: "idle" | "invalid" | "closed";
   /** Xatodan keyin pochta maydoni boʻshab qolmasin (parol esa qaytarilmaydi). */

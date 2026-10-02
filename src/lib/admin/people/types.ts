@@ -3,8 +3,8 @@ import type { ContentStatus, Localized, PersonKind } from "@/content/types";
 import type { MediaItem } from "../news/types";
 
 /**
- * Bazaning admin shakli (private.person_admin_json): admin_save_person shuni qabul qiladi, jurnalda ham
- * shu shaklda turadi. key va sortOrder berilmasa bazadagisi saqlanadi.
+ * private.person_admin_json: admin_save_person shu shaklni oladi, jurnalga ham shu yoziladi.
+ * key va sortOrder berilmasa bazadagisi saqlanadi.
  */
 export interface PersonAdmin {
   readonly id?: string;
@@ -20,7 +20,6 @@ export interface PersonAdmin {
   readonly sortOrder?: number;
 }
 
-/** Tahrir oynasi holati: boʻsh maydon boʻsh satr, surat koʻrinishi bilan. */
 export interface PersonDraft {
   readonly status: ContentStatus;
   readonly name: Localized;

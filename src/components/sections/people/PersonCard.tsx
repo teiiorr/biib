@@ -19,10 +19,7 @@ interface PersonCardProps {
   readonly children?: ReactNode;
 }
 
-/**
- * Odam kartasi (egasining talabi): katta 4:5 portret, ostida lavozim, ism-familiya va rasmiy pochta.
- * Qatorlar subgrid: qoʻshni kartalarda lavozim, ism va pochta bir chiziqdan boshlanadi.
- */
+/** Qatorlar subgrid: qoʻshni kartalarda lavozim, ism va pochta bir chiziqdan boshlanadi. */
 export function PersonCard({
   id,
   name,

@@ -15,13 +15,12 @@ interface HeaderProps {
 }
 
 /**
- * Kompyuter (≥1024): belgi chapda, oʻrtada navigatsiya kapsulasi, oʻngda til va koʻrinish guruhi.
- * Telefon: yupqa yuqori panel; sahifalar pastdagi tab-barda. Skroll cheti (§10.1.4) ikkala
- * oʻlchamda bitta: sarlavha ostidan oʻtayotgan matn qattiq chiziq oʻrniga xiralashib soʻnadi.
+ * Kompyuterda belgi chapda, navigatsiya oʻrtada, til va koʻrinish oʻngda; telefonda sahifalar pastki panelda.
+ * Sarlavha ostidan oʻtayotgan matn qattiq chiziq bilan kesilmaydi, asta xiralashib yoʻqoladi.
  */
 export function Header({ locale, dict }: HeaderProps) {
   const brand = dict.common.brand;
-  /* data-brand-mark: qahramon sahnasi belgini shu rasmga qoʻndiradi (useHeroScene). */
+  /* Qahramon sahnasida uchgan belgi aynan shu rasmga qoʻnadi (useHeroScene). */
   const mark = <BrandLogo alt={brand.markAlt} eager attrs={{ "data-brand-mark": "" }} />;
   return (
     <header className="site-header" data-testid="header">

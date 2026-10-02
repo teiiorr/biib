@@ -19,7 +19,7 @@ interface PageProps {
 }
 
 const GROUPS: readonly PartnerGroup[] = ["state", "international", "creative", "sponsors"];
-/* Toʻliq maydon: shundan kam boʻlsa guruhlarga boʻlinmaydi, bitta toʻr oʻrinbosarlar bilan toʻldiriladi. */
+/* Bundan kam hamkor guruhlarga boʻlinmaydi: bitta toʻr oʻrinbosarlar bilan toʻldiriladi. */
 const FULL_FIELD = 6;
 
 interface PartnerTileProps {
@@ -65,10 +65,6 @@ function PartnerTile({ partner, locale, dict }: PartnerTileProps) {
   );
 }
 
-/**
- * Hamkorlar: faqat haqiqiy tashkilotlar. Oltitadan kam boʻlsa bitta toʻr (haqiqiylari birinchi), aks holda
- * har guruh markazdagi sarlavha ostida teng plitkalar toʻrida.
- */
 export async function PartnersPage({ locale, dict }: PageProps) {
   const partners = (await getPartners()).filter((p) => p.status !== "pending" && p.name);
   const p = dict.partners;
@@ -88,8 +84,7 @@ export async function PartnersPage({ locale, dict }: PageProps) {
         breadcrumbsLabel={dict.common.hints.breadcrumbs}
       />
       {partners.length < FULL_FIELD ? (
-        /* Hamkorlar kam boʻlsa (egasining talabi — boʻsh joy emas): bitta toʻr, avval haqiqiy logotiplar,
-           qolgani oʻrinbosar plitkalar bilan toʻldiriladi; guruh sarlavhalari yoʻq, taklif tugmasi oʻngda. */
+        /* Guruh sarlavhalari yoʻq: avval haqiqiy logotiplar, qolgani oʻrinbosar plitkalar. */
         <Section>
           <Container>
             <ul className="partner-grid" data-card-group="" data-audit="gap">

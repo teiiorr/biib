@@ -1,5 +1,5 @@
-/* Boshqaruv paneli: faqat /admin ildiz layoutida ulanadi. Sayt tokenlari ustida asbob zichligi —
-   oyna faqat boshqaruv qatlamida (yon panel, yuqori panel, varaq, kirish paneli), kontent sirtda. */
+/* Boshqaruv paneli qobigʻi. Oyna faqat boshqaruv qatlamida (yon panel, yuqori panel, varaq),
+   kontent oddiy sirtda. */
 
 @layer components {
   .admin-frame {
@@ -10,7 +10,7 @@
     --admin-bar: 56px;
   }
 
-  /* ---------- Telefon va planshet: yuqori oyna panel ---------- */
+  /* ---------- Telefon va planshet: yuqori panel ---------- */
   .admin-topbar-wrap {
     position: fixed;
     inset: 0 0 auto 0;
@@ -29,7 +29,7 @@
     min-height: var(--admin-bar);
   }
 
-  /* ---------- Kompyuter: chapda qotirilgan oyna yon panel ---------- */
+  /* ---------- Kompyuter: yon panel ---------- */
   .surface.admin-sidebar {
     display: none;
   }
@@ -70,7 +70,7 @@
     outline-offset: -2px;
   }
 
-  /* ---------- Boʻlimlar roʻyxati (yon panel va varaq uchun bitta) ---------- */
+  /* ---------- Boʻlimlar roʻyxati ---------- */
   .admin-nav {
     display: flex;
     flex-direction: column;
@@ -119,7 +119,7 @@
       color var(--dur-ui) var(--ease-ui),
       scale 200ms var(--ease-ui);
   }
-  /* Sichqoncha bilan aniq nishon: 40 px (WCAG 2.5.8 dan ancha yuqori); teginishda 44 px qoladi. */
+  /* Sichqonchada 40 px yetarli (WCAG 2.5.8 talabidan ancha yuqori), teginishda 44 px qoladi. */
   @media (pointer: fine) {
     .admin-sidebar .admin-nav-item {
       min-height: 40px;
@@ -136,7 +136,7 @@
   .admin-nav-item:focus-visible {
     outline-offset: -2px;
   }
-  /* Faol band: pushti fon ustida pushti yorliq biroz oqartiriladi — shaffoflikning har holatida ≥ 4.5:1. */
+  /* Pushti fon ustidagi pushti yorliq biroz oqartiriladi: Shaffoflikning har holatida ≥ 4.5:1. */
   .admin-nav-item[aria-current="page"] {
     color: color-mix(in oklab, var(--tint) 75%, var(--material-ink));
     background: color-mix(in oklab, var(--tint) 14%, transparent);

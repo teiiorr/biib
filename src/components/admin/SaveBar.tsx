@@ -6,23 +6,19 @@ import { NEWS_COPY } from "@/lib/admin/copy-news";
 export type SaveTone = "neutral" | "success" | "error";
 
 export interface SaveBarProps {
-  /** Holat qatori (ekran oʻquvchisiga ham eʼlon qilinadi). */
   readonly message: string;
   readonly tone: SaveTone;
   readonly saving: boolean;
-  /** Saqlash hozir mumkin emas (masalan rasmlar yuklanmoqda): sababi tooltipda. */
+  /** Saqlash vaqtincha yopiq boʻlsa (masalan rasm yuklanmoqda), sababi tooltipda chiqadi. */
   readonly blockedReason?: string | null;
-  /** Saqlangan yozuvning saytdagi manzili; yangi yozuvda null. */
+  /** Yangi yozuvda null: u hali saytda yoʻq. */
   readonly viewHref: string | null;
   readonly saveLabel?: string;
 }
 
 const S = NEWS_COPY.save;
 
-/**
- * Shakl oxiridagi yopishqoq oyna panel: telefonda bosh barmoq zonasida. Chapda holat, oʻngda saytda
- * koʻrish va saqlash. Saqlash tugmasi shaklni yuboradi (type=submit).
- */
+/** Panel pastga yopishgan: telefonda saqlash tugmasi bosh barmoq yetadigan joyda turadi. */
 export function SaveBar({
   message,
   tone,

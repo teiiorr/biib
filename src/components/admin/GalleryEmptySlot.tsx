@@ -21,10 +21,7 @@ interface GalleryEmptySlotProps {
 
 const G = UPOP_COPY.gallery;
 
-/**
- * Boʻsh joy: kutubxonadan tanlash (videolar ham) yoki yangi rasm yuklash. Qoʻshilgan kadr shu joyning
- * dizayndagi ramka va harakati bilan boshlanadi (ostida yozilgan).
- */
+/** Qoʻshilgan kadr shu joyning ramkasi va harakati bilan boshlanadi. */
 export function GalleryEmptySlot({
   index,
   idFor,

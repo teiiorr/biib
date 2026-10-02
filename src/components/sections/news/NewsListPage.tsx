@@ -22,13 +22,7 @@ interface PageProps {
   readonly dict: Dictionary;
 }
 
-/**
- * Yangiliklar: markazdagi sarlavha; bosh xabar butun kenglikda (kompyuterda muqova 1–6, matn 7–12
- * muqova balandligida: sarlavha tepada, mavzu va oʻq pastda), qolgan toʻrttasi bir qatorda (planshetda 2 × 2). Kartada faqat
- * sana yoki mavzu va sarlavha: uzun kirish matni yoʻq (egasining talabi). Muqovalar bir nisbatda,
- * sarlavhalar bir chiziqda boshlanadi. Harakat: bosh muqova yumshoq ochiladi va parallaksda yuradi,
- * qolgan muqovalar abr pogʻonalarida doira ritmida ochiladi (matn joyida).
- */
+/** Muqovalar bir nisbatda, shunda sarlavhalar bir chiziqdan boshlanadi. */
 export async function NewsListPage({ locale, dict }: PageProps) {
   const [lead, ...rest] = await getNews();
   const n = dict.news;
@@ -68,16 +62,14 @@ export async function NewsListPage({ locale, dict }: PageProps) {
                     />
                   </ViewTransition>
                 </TransitionLink>
-                {/* Matn ustuni muqova bilan bir balandlikda: sarlavha muqovaning yuqori chizigʻida, mavzu va
-                    oʻq pastki chizigʻida (egasining talabi: matn darajalari surat chetlariga teng). */}
+                {/* Matn ustuni muqova balandligida: sarlavha muqovaning yuqori, mavzu va oʻq pastki chetida. */}
                 <div className="news-grid-lead-text">
                   <h2 className="t-h3 text-balance text-ink news-title" data-card-title="">
                     <TransitionLink href={pathFor(locale, "newsItem", lead.slug)}>
                       {t(lead.title, locale)}
                     </TransitionLink>
                   </h2>
-                  {/* Kompyuterda ustun muqova balandligida yangilik matni bilan toʻladi va pastki chiziq
-                      oldidan sekin soʻnadi (egasining talabi: boʻsh joy qolmasin). */}
+                  {/* Kompyuterda boʻsh joy qolmasin: ustun yangilik matni bilan toʻladi va pastda sekin soʻnadi. */}
                   <div className="news-grid-lead-excerpt" data-clamp="">
                     <p className="t-body-l text-ink-2">{t(lead.lead, locale)}</p>
                     {t(lead.body, locale).map((para, index) => (

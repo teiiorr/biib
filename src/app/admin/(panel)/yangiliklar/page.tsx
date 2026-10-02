@@ -13,7 +13,7 @@ import { listNews } from "@/lib/admin/news/queries";
 
 export const metadata: Metadata = { title: ADMIN_COPY.pages.news };
 
-/* Oʻn ikkitadan koʻp boʻlsa roʻyxat uzun: sahifalarga boʻlish keyingi dizayn vazifasi. */
+/* Yangiliklar oʻn ikkitadan oshsa roʻyxat uzayadi, unda sahifalarga boʻlish kerak boʻladi. */
 const LONG_LIST = 12;
 
 export default async function NewsAdminPage() {

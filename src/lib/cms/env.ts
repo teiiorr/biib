@@ -1,6 +1,6 @@
 import "server-only";
 
-/** bundled: repodagi snapshot.json (standart, mahalliy va verify). supabase: maʼlumotlar bazasi (Vercel). */
+/** bundled: repodagi snapshot.json (sukut, mahalliy ishda va tekshiruvda). supabase: Vercel muhitidagi baza. */
 export type ContentSource = "bundled" | "supabase";
 
 export function contentSource(): ContentSource {

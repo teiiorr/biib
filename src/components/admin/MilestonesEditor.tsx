@@ -26,8 +26,8 @@ import { useOrgEditor } from "./useOrgEditor";
 const H = ORG_COPY.history;
 
 /**
- * Tarix: bosqichlar kartalar roʻyxati, bitta saqlash paneli (oʻzgargan qatorlar va tartib birga
- * saqlanadi). Saqlangan bosqichni oʻchirish tasdiqdan keyin darhol bazada; yangi qator shunchaki olinadi.
+ * Oʻzgargan qatorlar va tartib birga saqlanadi, saqlangan bosqich esa tasdiqdan keyin darhol bazadan
+ * oʻchiriladi.
  */
 export function MilestonesEditor({ initial }: { readonly initial: MilestonesDraft }) {
   const form = useId().replace(/:/g, "");
@@ -75,7 +75,7 @@ export function MilestonesEditor({ initial }: { readonly initial: MilestonesDraf
     requestAnimationFrame(() => document.getElementById(idFor(`${row.local}-year`))?.focus());
   }
 
-  /* Bazadan oʻchgan qator solishtirish asosidan ham olinadi: qolgan tahrirlar saqlanmagan boʻlib qoladi. */
+  /* Bazadan oʻchgan qator asos nusxadan ham olinadi: qolgan tahrirlar saqlanmagan boʻlib qoladi. */
   function drop(local: string): void {
     const without = (d: MilestonesDraft) => ({ rows: d.rows.filter((row) => row.local !== local) });
     setDraft(without);

@@ -11,7 +11,7 @@ function label(map: Readonly<Record<string, string>>, key: string): string {
   return map[key] ?? key;
 }
 
-/** Jurnal jadvali (vaqt, boʻlim, amal, qisqacha, qaytarish): 600 px dan torda kartalar. */
+/** 600 px dan tor ekranda jadval qatorlari kartaga aylanadi. */
 export function JournalTable({ rows }: { readonly rows: readonly JournalRow[] }) {
   if (!rows.length) return <p className="t-body text-ink-2">{J.empty}</p>;
   return (

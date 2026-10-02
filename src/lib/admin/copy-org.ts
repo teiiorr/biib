@@ -1,4 +1,4 @@
-/** Aloqa va Tarix boʻlimlari, ularning umumiy xatolari va jurnaldan qaytarish matnlari. */
+/** Aloqa va Tarix boʻlimlari, umumiy xatolar va jurnaldan qaytarish matnlari. */
 export const ORG_COPY = {
   status: "Holati",
   statusOf: "{field}: holati",

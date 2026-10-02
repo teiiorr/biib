@@ -8,12 +8,11 @@ interface MediaThumbProps {
   readonly ratio: "3:2" | "1:1";
   /** srcset tanlovi uchun ramka kengligi. */
   readonly sizes: string;
-  /** Hozirgina yuklangan rasm oldindan koʻrishi: dangasa yuklanmaydi. */
+  /** Hozirgina yuklangan rasm: darhol koʻrinsin deb kechiktirib yuklanmaydi. */
   readonly eager?: boolean;
   readonly className?: string;
 }
 
-/** Panel ichidagi rasm ramkasi: nisbat qulflangan, rasm yoʻq boʻlsa sokin boʻsh maydon. */
 export function MediaThumb({ item, alt, ratio, sizes, eager = false, className }: MediaThumbProps) {
   return (
     <div className={cx("admin-thumb", className)} data-ratio={ratio}>

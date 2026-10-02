@@ -16,7 +16,7 @@ const TONE_CLASS: Record<FormMessageTone, string> = {
   error: "text-danger",
 };
 
-/* Xato assertive (alert), qolgani polite (status); boʻsh boʻlsa ham DOMda turadi, oʻzgarish eʼlon qilinsin. */
+/* Xato assertive (alert), qolgani polite (status); boʻsh boʻlsa ham sahifada turadi, shunda oʻzgarish eʼlon qilinadi. */
 export function FormMessage({ tone = "info", id, className, children }: FormMessageProps) {
   return (
     <p

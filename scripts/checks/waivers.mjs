@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { ROOT, readJson } from "./util.mjs";
 
-/* Byudjet, qulaylik, kontrast, toshib chiqish va imlo uchun istisno boʻlmaydi (§21.2). */
+/* Byudjet, qulaylik, kontrast, toshib chiqish va imlo uchun istisno berilmaydi. */
 const FORBIDDEN =
   /budget|contrast|overflow|orthograph|apostrophe|glyph|language|a11y|axe|accessib|target|lighthouse|perf|lcp|cls|tbt|inp|\bG3\b|\bG6\b|\bG7\b/i;
 const FIELDS = ["check", "browser", "evidence", "fallback"];
@@ -46,7 +46,7 @@ function matches(waiver, check) {
   return haystack.includes(browser);
 }
 
-/** Faqat muvaffaqiyatsiz tekshiruv istisno qilinadi; qaysi istisno ishlatilgani qaytariladi. */
+/** Istisno faqat yiqilgan tekshiruvga qoʻllanadi, ishlatilganlari hisobot uchun qaytariladi. */
 export function applyWaivers(checks, waivers) {
   const used = [];
   const out = checks.map((check) => {

@@ -7,7 +7,6 @@ export interface DividerProps {
   readonly className?: string;
 }
 
-/* Neytral ingichka chiziq (--line): bezak rangi yoʻq. */
 export function Divider({
   orientation = "horizontal",
   decorative = false,

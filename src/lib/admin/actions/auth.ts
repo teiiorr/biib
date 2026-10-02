@@ -34,7 +34,7 @@ export async function signIn(_prev: SignInState, formData: FormData): Promise<Si
       const { data, error } = await client.auth.signInWithPassword(parsed.data);
       if (!error && data.session) {
         session = await acceptSession(env, data.session);
-        /* Panel egasi emas: yaratilgan sessiya darhol bekor, javob esa oddiy xato bilan bir xil. */
+        /* Admin emas: sessiya darhol bekor qilinadi, javob esa oddiy xatodan farq qilmaydi. */
         if (!session) await client.auth.signOut({ scope: "local" });
       }
     } catch {
@@ -48,7 +48,7 @@ export async function signIn(_prev: SignInState, formData: FormData): Promise<Si
   redirect(safeNext(formData.get("next")));
 }
 
-/** Hamma qurilmalardagi sessiyalar bekor qilinadi, keyin cookie lar oʻchadi. */
+/** Hamma qurilmadagi sessiyalar bekor qilinadi, keyin cookie oʻchiriladi. */
 export async function signOut(): Promise<void> {
   const env = adminEnv();
   const { accessToken, refreshToken } = await readTokens();
@@ -60,7 +60,7 @@ export async function signOut(): Promise<void> {
         : await client.auth.refreshSession({ refresh_token: refreshToken });
       if (!error) await client.auth.signOut({ scope: "global" });
     } catch {
-      /* Tarmoq xatosi chiqishni toʻxtatmaydi: cookie lar baribir oʻchiriladi. */
+      /* Tarmoq xatosi chiqishga xalaqit bermaydi: cookie baribir oʻchiriladi. */
     }
   }
   await clearTokens();

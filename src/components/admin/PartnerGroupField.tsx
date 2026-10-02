@@ -2,7 +2,7 @@ import type { PartnerGroup } from "@/content/types";
 import { partners } from "@/i18n/dictionaries/uz/partners";
 import { PARTNER_GROUPS } from "@/lib/admin/partners/types";
 
-/** Guruh nomlari saytdagi oʻzbekcha sarlavhalarning oʻzi: panel va sayt bir xil ataydi. */
+/** Guruh nomlari saytdagi oʻzbekcha sarlavhalarning oʻzi: panel va sayt ularni bir xil ataydi. */
 export const PARTNER_GROUP_LABELS: Readonly<Record<PartnerGroup, string>> = partners.groups;
 
 interface PartnerGroupFieldProps {
@@ -12,7 +12,7 @@ interface PartnerGroupFieldProps {
   readonly onChange: (group: PartnerGroup) => void;
 }
 
-/** Guruh: toʻrtta tabiiy radio (telefonda ochiladigan roʻyxatdan tezroq), saytdagi tartibda. */
+/** Toʻrtta tabiiy radio telefonda ochiladigan roʻyxatdan tezroq; tartib saytdagidek. */
 export function PartnerGroupField({ id, legend, value, onChange }: PartnerGroupFieldProps) {
   return (
     <fieldset className="admin-choice">

@@ -5,7 +5,7 @@ import { createContext, useContext } from "react";
 export type SurfaceRadius = "control" | "panel" | "sheet" | "round";
 
 export interface SurfaceFrame {
-  /** CSS ifodasi: nested sirt shu qiymatdan oʻz radiusini hisoblaydi. */
+  /** CSS ifodasi: ichki sirt oʻz radiusini shundan hisoblaydi. */
   readonly radius: string;
   readonly padding: number;
 }
@@ -21,7 +21,7 @@ export const RADIUS_EXPRESSION: Record<SurfaceRadius, string> = {
   control: "min(var(--radius-control), 24px)",
   panel: "var(--radius-panel)",
   sheet: "var(--radius-panel)",
-  /* Faqat kvadrat boshqaruv (media ijro tugmasi): toʻliq doira. */
+  /* Faqat kvadrat boshqaruv uchun (media ijro tugmasi). */
   round: "50%",
 };
 

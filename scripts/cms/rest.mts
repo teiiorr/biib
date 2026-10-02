@@ -1,6 +1,6 @@
 /**
- * Kontent skriptlari (seed, pull, prefetch) uchun Supabase PostgREST yordamchilari: kutubxonasiz fetch.
- * Kalitlar faqat muhitdan olinadi (.env.local yoki Vercel), hech qachon chiqarilmaydi va yozilmaydi.
+ * seed, pull va prefetch skriptlari uchun PostgREST yordamchilari, kutubxonasiz oddiy fetch bilan.
+ * Kalitlar faqat muhitdan (.env.local yoki Vercel) olinadi, hech qayerga chiqarilmaydi va yozilmaydi.
  */
 import { parseSnapshot, type ContentSnapshot } from "../../src/content/snapshot";
 
@@ -20,7 +20,7 @@ async function failure(response: Response, what: string): Promise<Error> {
   return new Error(`${what}: HTTP ${response.status}\n${body}`);
 }
 
-/** Ommaviy yoʻl bilan aynan bir xil: faqat publishable kalit va content_snapshot() RPC. */
+/** Ommaviy sahifalar bilan aynan bir xil yoʻl: publishable kalit va content_snapshot() RPC. */
 export async function fetchSnapshot(timeoutMs = 15_000): Promise<ContentSnapshot> {
   const response = await fetch(`${supabaseUrl()}/rest/v1/rpc/content_snapshot`, {
     headers: {
@@ -35,7 +35,7 @@ export async function fetchSnapshot(timeoutMs = 15_000): Promise<ContentSnapshot
 
 type Query = Readonly<Record<string, string>>;
 
-/** Maxfiy kalit bilan jadvalga yozish (RLS chetlab oʻtiladi): faqat mahalliy seed skripti uchun. */
+/** Maxfiy kalit RLS qoidalarini chetlab oʻtadi, shuning uchun bu yoʻl faqat mahalliy seed skripti uchun. */
 export async function serviceRequest<T = unknown>(
   method: "GET" | "POST" | "DELETE",
   table: string,

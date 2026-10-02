@@ -10,7 +10,6 @@ interface ShareButtonsProps {
   readonly dict: Dictionary["common"]["actions"];
 }
 
-/** Telegramda ulashish va havolani nusxalash: ikkita oyna tugma. */
 export function ShareButtons({ url, title, dict }: ShareButtonsProps) {
   const share = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
   return (

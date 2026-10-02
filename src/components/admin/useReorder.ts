@@ -12,9 +12,8 @@ interface OrderedRow {
 }
 
 /**
- * Tartiblash: roʻyxat darhol yangi tartibda chiziladi (kutib turilmaydi), toʻliq kalitlar roʻyxati
- * serverga ketadi. Ketma-ket bosilganda faqat oxirgi javob qabul qilinadi; xato boʻlsa server tartibiga
- * qaytiladi va sahifa yangilanadi. Oʻzgarish ekran oʻquvchiga eʼlon qilinadi.
+ * Roʻyxat javob kutmasdan yangi tartibda chiziladi. Ketma-ket bosishda faqat oxirgi javob olinadi,
+ * xato boʻlsa server tartibi tiklanadi.
  */
 export function useReorder<R extends OrderedRow>(
   rows: readonly R[],
@@ -58,7 +57,6 @@ export function useReorder<R extends OrderedRow>(
     });
   }
 
-  /** Oʻchirilgan qator darhol yoʻqoladi; server roʻyxati kelganda u bilan tenglashadi. */
   function drop(id: string): void {
     setItems((list) => list.filter((item) => item.id !== id));
   }
@@ -66,7 +64,7 @@ export function useReorder<R extends OrderedRow>(
   return { items, move, drop, announcement, error, pending };
 }
 
-/** Surilgan qatorda fokus qayerda qolsin: chetga yetgan boʻlsa qarama-qarshi tugmaga. */
+/** Chetga yetgan qatorda bosilgan tugma yoʻqoladi, shu sabab fokus qarama-qarshi tugmaga oʻtadi. */
 export function focusMoved(listId: string, key: string, edge: "up" | "down"): void {
   requestAnimationFrame(() => document.getElementById(`${listId}-${edge}-${key}`)?.focus());
 }

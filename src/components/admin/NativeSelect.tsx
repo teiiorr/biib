@@ -23,10 +23,7 @@ export interface NativeSelectProps<V extends string> {
   readonly className?: string;
 }
 
-/**
- * Tabiiy tanlash roʻyxati (telefonda tizim gʻildiragi): maydon bilan bir xil 48 px, 16 px matn va oʻngda
- * chevron. Yorliq, izoh va xato Field orqali.
- */
+/** Tabiiy select telefonda tizim gʻildiragini ochadi; balandligi maydon bilan bir xil 48 px. */
 export function NativeSelect<V extends string>({
   id,
   label,
@@ -38,8 +35,8 @@ export function NativeSelect<V extends string>({
   className,
 }: NativeSelectProps<V>) {
   const ref = useRef<HTMLSelectElement | null>(null);
-  /* Server amalidan keyin React shaklni tiklaydi (form.reset): select dastlabki tanloviga qaytib,
-     holatdan ajralib qolmasin — boshlangʻich tanlov doim joriy qiymatga tenglanadi. */
+  /* Server amalidan keyin React shaklni form.reset bilan tiklaydi va select dastlabki tanloviga qaytadi.
+     Holatdan ajralib qolmasin deb boshlangʻich tanlov doim joriy qiymatga tenglanadi. */
   useEffect(() => {
     for (const option of ref.current?.options ?? [])
       option.defaultSelected = option.value === value;

@@ -16,7 +16,7 @@ export interface PersonDialogPanelProps extends PersonDialogProps {
   readonly focusTrigger: boolean;
 }
 
-/** Ekspert kartasi bosilganda oyna dialogi (kompyuter) yoki varaq (telefon) bilan qisqacha maʼlumot. */
+/** Ekspert haqida qisqacha maʼlumot: kompyuterda dialog oynasi, telefonda pastki varaq. */
 export default function PersonDialogPanel({
   name,
   role,

@@ -13,7 +13,6 @@ import {
 import type { StoredText } from "./queries";
 import type { TextListRow } from "./types";
 
-/** Panelda tahrirlanadigan lugʻat kaliti: turi va repodagi besh tildagi qiymati. */
 export interface CatalogEntry {
   readonly key: string;
   /** Birinchi boʻgʻin: «home», «meta», «footer» … */
@@ -25,8 +24,8 @@ export interface CatalogEntry {
 let catalog: ReadonlyMap<string, CatalogEntry> | undefined;
 
 /**
- * Kalitlar manbai oʻzbekcha lugʻat (boshqa tillar shu shaklda). Lugʻat jarayon davomida oʻzgarmaydi:
- * roʻyxat bir marta tuziladi.
+ * Kalitlar oʻzbekcha lugʻatdan olinadi, boshqa tillar ham shu shaklda. Lugʻat ish davomida
+ * oʻzgarmaydi, shu sabab roʻyxat bir marta tuziladi.
  */
 export function textCatalog(): ReadonlyMap<string, CatalogEntry> {
   catalog ??= new Map(
@@ -47,7 +46,7 @@ export function catalogEntry(key: string): CatalogEntry | null {
 
 const SECTION_PAGES: ReadonlySet<string> = new Set(PAGE_KEYS.filter((key) => key !== "newsItem"));
 
-/** Matn saytning qaysi sahifasida koʻrinadi («Saytda koʻrish»); umumiy qismlar uchun bosh sahifa. */
+/** «Saytda koʻrish» ochadigan sahifa; umumiy qismlar uchun bosh sahifa. */
 export function pageForKey(key: string): PageKey {
   const [namespace = "", second = ""] = key.split(".");
   if (namespace === "people") return second === "leadership" ? "leadership" : "experts";
@@ -57,8 +56,8 @@ export function pageForKey(key: string): PageKey {
 }
 
 /**
- * Roʻyxat qatorlari: saytdagi amaldagi oʻzbekcha matn va qidiruv matni (kalit, asl va almashtirilgan
- * qiymat besh tilda). Turi mos kelmaydigan eski almashtirish saytda ham ishlamaydi: bu yerda ham yoʻq.
+ * Qidiruv kalit, asl va almashtirilgan qiymat boʻyicha besh tilda ishlaydi. Turi mos kelmaydigan
+ * eski almashtirish saytda ishlamaydi, shu sabab bu yerda ham koʻrsatilmaydi.
  */
 export function textRows(overrides: ReadonlyMap<string, StoredText>): readonly TextListRow[] {
   return [...textCatalog().values()].map((entry) => {

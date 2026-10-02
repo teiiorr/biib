@@ -9,9 +9,9 @@ import { supabaseReadConfig } from "./env";
 const TIMEOUT_MS = 6000;
 
 /**
- * Ommaviy sahifalarning yagona tashqi oʻqishi: content_snapshot() RPC, publishable kalit bilan.
- * Kutubxonasiz oddiy fetch: ommaviy sahifalarga Supabase kodi tushmaydi. Shakl xatosi ham xato
- * hisoblanadi (parseSnapshot), yarim notoʻgʻri nusxa sahifaga yetib bormaydi.
+ * Ommaviy sahifalar maʼlumotni faqat shu yerdan, content_snapshot() RPC orqali oʻqiydi. Kutubxonasiz
+ * oddiy fetch, shunda ommaviy sahifalarga Supabase kodi tushmaydi. Shakl xatosi ham xato hisoblanadi:
+ * yarim notoʻgʻri nusxa sahifaga yetib bormaydi.
  */
 export async function fetchRemoteSnapshot(): Promise<ContentSnapshot> {
   const { url, key } = supabaseReadConfig();
@@ -23,7 +23,7 @@ export async function fetchRemoteSnapshot(): Promise<ContentSnapshot> {
   return parseSnapshot(await response.json(), "supabase");
 }
 
-/* Har yigʻish jarayonida fayl bir marta oʻqiladi va tekshiriladi, keyin hamma sahifa shu nusxadan. */
+/* Har yigʻishda fayl bir marta oʻqiladi va tekshiriladi, keyin hamma sahifa shu nusxani oladi. */
 const pins = new Map<string, Promise<ContentSnapshot>>();
 
 /** Yigʻish nusxasi (scripts/cms/prefetch.mts yozadi): sahifalar tarmoqsiz, bitta nusxadan yigʻiladi. */

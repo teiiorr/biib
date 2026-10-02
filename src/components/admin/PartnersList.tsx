@@ -22,10 +22,7 @@ import { focusMoved, useReorder } from "./useReorder";
 const L = PEOPLE_COPY.list;
 const P = PEOPLE_COPY.partners;
 
-/**
- * Hamkorlar guruhlab, saytdagi tartibda. Roʻyxat yassi (guruhlar ketma-ket), shu sabab guruh ichida
- * surish = qoʻshni bilan joy almashish; guruh chetidan oʻtilmaydi.
- */
+/** Roʻyxat yassi: surish qoʻshni bilan joy almashtiradi va guruh chegarasidan oʻtmaydi. */
 export function PartnersList({ rows }: { readonly rows: readonly PartnerListRow[] }) {
   const listId = useId().replace(/:/g, "");
   const reorder = useReorder(rows, reorderPartners);

@@ -12,7 +12,7 @@ export interface CheckboxProps extends Omit<
   readonly className?: string;
 }
 
-/* Tabiiy input, appearance yoʻq; sezish maydoni yorliq orqali 48 px. */
+/* Oddiy input, appearance oʻchirilgan; bosish maydoni yorliq hisobiga 48 px. */
 export function Checkbox({ id, label, description, className, ...rest }: CheckboxProps) {
   const descriptionId = description ? `${id}-description` : undefined;
   return (

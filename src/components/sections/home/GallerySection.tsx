@@ -14,8 +14,8 @@ interface GallerySectionProps {
 }
 
 /**
- * Bolalar galereyasi (25.4.1): faqat rozilik yozuvi bor ishlar; imzo — ism, yosh, viloyat, nom.
- * Ish yoʻq boʻlsa boʻlim umuman chizilmaydi (HomePage); kutilayotgani content-pending.md da.
+ * Faqat rozilik yozuvi bor ishlar chiqadi; imzoda ism, yosh, viloyat va asar nomi.
+ * Ish boʻlmasa boʻlim umuman chizilmaydi (HomePage).
  */
 export async function GallerySection({ locale, dict }: GallerySectionProps) {
   const artworks = await getArtworks();

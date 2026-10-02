@@ -2,7 +2,6 @@ import type { Localized } from "@/content/types";
 import { LOCALE_META, LOCALES } from "@/i18n/locales";
 import type { TextValue } from "@/i18n/text-overrides";
 
-/** Repodagi lugʻat matni besh tilda (faqat oʻqish): roʻyxat bandlari alohida qatorda. */
 export function BundledValues({ bundled }: { readonly bundled: Localized<TextValue> }) {
   return (
     <dl className="admin-bundled">

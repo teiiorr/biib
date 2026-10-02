@@ -14,10 +14,7 @@ interface GalleryMapProps {
 
 const G = UPOP_COPY.gallery;
 
-/**
- * Saytdagi toʻrning kichik nusxasi (kompyuterdagi 12 ustunli tuzilish): har katak — joy raqami va
- * kadri; bosilsa oʻsha joy kartasiga oʻtiladi. Havola emas, tugma: saqlanmagan oʻzgarish soʻrovi chiqmasin.
- */
+/** Kataklar havola emas, tugma: aks holda saqlanmagan oʻzgarishlar haqida soʻrov chiqadi. */
 export function GalleryMap({ slots, idFor }: GalleryMapProps) {
   return (
     <figure className="admin-gallery-figure">

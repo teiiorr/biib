@@ -14,13 +14,13 @@ export interface AppearanceControlProps {
 
 const loadOverlay = () => import("./AppearanceOverlay");
 
-/* Button (variant="glass", size="48", iconOnly) chiqaradigan sinflar bilan aynan bir xil: panel kelib
-   oʻz tugmasini qoʻyganda hech narsa siljimaydi. Button bu yerda ishlatilmaydi — u cva va Slot ni
-   birinchi yuklanish JS iga olib kirardi. */
+/* Button (variant="glass", size="48", iconOnly) sinflari bilan aynan bir xil: panel oʻz tugmasini
+   qoʻyganda hech narsa siljimaydi. Button komponenti olinmaydi, aks holda cva va Slot birinchi
+   yuklanadigan skriptga qoʻshilardi. */
 const SHELL_CLASS =
   "ui-button relative inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap select-none material text-material-ink t-label-l";
 
-/** Sarlavhadagi tugma HTML da; panel (Radix, sozlagichlar) boʻsh vaqtda yoki bosilganda yuklanadi. */
+/** Panel (Radix va sozlagichlar) brauzer boʻshaganda yoki tugma bosilganda yuklanadi. */
 export function AppearanceControl({ dict }: AppearanceControlProps) {
   const shellRef = useRef<HTMLButtonElement | null>(null);
   const { Panel, warm, openWhenReady, wantOpen, restoreFocus } = useLazyOverlay(

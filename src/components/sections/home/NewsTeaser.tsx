@@ -21,12 +21,7 @@ interface NewsTeaserProps {
   readonly dict: Dictionary;
 }
 
-/**
- * Yangiliklar: markazdagi sarlavha, bitta bosh xabar (3:2) va yonida qolgan toʻrttasi ustma-ust
- * (1:1 kichik muqova). Kartada faqat sana (yoki mavzu) va nom: parcha matn yoʻq (egasining talabi).
- * Yon ustun bosh xabar balandligiga choʻziladi: ikkala ustun bir chiziqda tugaydi. Telefonda ketma-ket.
- * Harakat: bosh muqova yumshoq ochiladi va parallaksda yuradi, yon qatorlar doira ritmida koʻtariladi.
- */
+/** Yon ustun bosh xabar balandligiga choʻziladi: ikkala ustun bir chiziqda tugaydi. */
 export async function NewsTeaser({ locale, dict }: NewsTeaserProps) {
   const [lead, ...rest] = await getNews();
   const side = rest.slice(0, 4);
@@ -106,7 +101,7 @@ export async function NewsTeaser({ locale, dict }: NewsTeaserProps) {
             ))}
           </Reveal>
         </div>
-        {/* «Barchasi» havolasi kartalar ostida, oʻng chetda (egasining talabi): avval koʻrasiz, keyin oʻtasiz. */}
+        {/* «Barchasi» havolasi kartalardan keyin: avval koʻrasiz, keyin oʻtasiz. */}
         <div className="section-footer">
           <LinkButton
             href={pathFor(locale, "news")}

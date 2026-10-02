@@ -4,10 +4,10 @@ import { useEffect } from "react";
 import type { RefObject } from "react";
 
 const THRESHOLDS = [0, 0.05, 0.25, 0.5, 0.75, 1];
-/* Faqat kontent ohangi: oyna sirtlari (.surface) oʻqilmaydi. Tab-bar va yigʻilgan kapsula bir-birining
-   ustida turadi; bir-birini oʻqisa, biri qorongʻi boʻlgach ikkalasi sut zaminda ham qorongʻi qolardi. */
+/* Faqat kontent ohangi oʻqiladi, oyna sirtlari (.surface) emas. Tab-bar va yigʻilgan kapsula ustma-ust
+   turadi: bir-birini oʻqisa, biri qorongʻilashgach ikkalasi och zaminda ham qorongʻi qolardi. */
 const CONTENT_TONE = ':is([data-tone="light"], [data-tone="dark"]):not(.surface)';
-/* Ohangi shu hook yozadigan elementlar (brend belgisi ham sirt emas): ular ham kontent emas. */
+/* Ohangini shu hook yozadigan elementlar (masalan brend belgisi) ham kontent hisoblanmaydi. */
 const readers = new Set<Element>();
 /* Radix joylashuvi va morf (≈ 420 ms) tugaguncha sirt izi har kadr tekshiriladi. */
 const SETTLE_FRAMES = 45;
@@ -23,10 +23,9 @@ function contentTones(element: HTMLElement): Element[] {
 }
 
 /**
- * Sirt ostidagi kontent ohangini oʻqiydi: kuzatuv maydoni sirtning oʻz izi.
- * Eng katta kesishgan boʻlimning data-tone qiymati sirtga koʻchadi; uning ichidagi ohangli element
- * (qorongʻi surat, video) tasmaning kamida yarmini egallasa, oʻsha ichki element ustun.
- * Ostida ohangli hech narsa boʻlmasa, sirt sahifa zamini ohangiga qaytadi (atribut olib tashlanadi).
+ * Eng katta kesishgan boʻlimning data-tone qiymati sirtga koʻchadi; ichidagi ohangli element (qorongʻi
+ * surat, video) tasmaning kamida yarmini egallasa, ustunlik unda. Ostida ohangli hech narsa
+ * boʻlmasa, atribut olib tashlanadi.
  */
 export function useSurfaceTone(ref: RefObject<HTMLElement | null>, enabled = true): void {
   useEffect(() => {
@@ -39,8 +38,8 @@ export function useSurfaceTone(ref: RefObject<HTMLElement | null>, enabled = tru
       else element.removeAttribute("data-tone");
     };
 
-    /* Oyna ichidagi element (telefondagi brend belgisi) oynaning oʻz ohangini oladi: belgi va yozuv
-       doim oʻz muzi bilan bir ohangda, ostidagi suratga alohida qaramaydi. */
+    /* Oyna ichidagi element (telefondagi brend belgisi) oynaning oʻz ohangini oladi: belgi doim oʻz
+       muzi bilan bir ohangda, ostidagi suratga qaramaydi. */
     const host = element.parentElement?.closest(".surface");
     if (host) {
       const sync = (): void => setTone(host.getAttribute("data-tone"));
@@ -54,8 +53,8 @@ export function useSurfaceTone(ref: RefObject<HTMLElement | null>, enabled = tru
       };
     }
 
-    /* IO faqat nomzodlarni beradi (tasmaga tekkanlar). Maydon IO chegara lahzasida muzlab qoladi
-       (katta surat kichik tasmada 5 % ga ham yetmaydi), shu sabab u har safar joyida oʻlchanadi. */
+    /* IntersectionObserver faqat tasmaga tekkan nomzodlarni beradi. Uning maydoni chegara lahzasida
+       qotib qoladi (katta surat kichik tasmada 5 % ga ham yetmaydi), shu sabab har safar qayta oʻlchanadi. */
     const candidates = new Set<Element>();
     let observer: IntersectionObserver | null = null;
     let rebuildFrame = 0;
@@ -75,7 +74,7 @@ export function useSurfaceTone(ref: RefObject<HTMLElement | null>, enabled = tru
       for (const node of candidates) areas.set(node, areaOf(node));
       let best: Element | null = null;
       let bestArea = 0;
-      /* Ohangsiz zamin ham ovoz beradi: tasma chetiga tekkan qorongʻi tasmacha butun sirtni qoraytirmaydi. */
+      /* Ohangsiz zamin ham hisobga olinadi: tasma chetiga tekkan qorongʻi boʻlak butun sirtni qoraytirmaydi. */
       let ground = own.width * own.height;
       for (const [node, area] of areas) {
         if (area > bestArea) {
@@ -95,7 +94,7 @@ export function useSurfaceTone(ref: RefObject<HTMLElement | null>, enabled = tru
       setTone(bestArea > ground ? best?.getAttribute("data-tone") : null);
 
       /* Sirt yorugʻ surat va tungi zamin chegarasida: qaysi ohang tanlanmasin, yorliqlarning bir qismi
-         notoʻgʻri fonda qoladi. Bunday lahzada oyna qalinlashadi (materials.css), yorliq doim oʻqiladi. */
+         notoʻgʻri fonda qoladi. Shunda oyna qalinlashadi (materials.css), yorliq doim oʻqiladi. */
       let light = 0;
       for (const [node, area] of areas) {
         if (node.getAttribute("data-tone") === "light") light += area;
@@ -105,7 +104,7 @@ export function useSurfaceTone(ref: RefObject<HTMLElement | null>, enabled = tru
     };
 
     const measure = (): string => {
-      /* Tasma sirtning oʻz izi: yuqori-past va chap-oʻng — oʻngdagi til guruhi chapdagi suratni oʻqimaydi. */
+      /* Tasma sirtning oʻz izi boʻyicha ham eniga, ham boʻyiga: oʻngdagi til guruhi chapdagi suratni oʻqimaydi. */
       const rect = element.getBoundingClientRect();
       const top = Math.max(0, Math.round(rect.top));
       const bottom = Math.max(0, Math.round(window.innerHeight - rect.bottom));
@@ -130,7 +129,7 @@ export function useSurfaceTone(ref: RefObject<HTMLElement | null>, enabled = tru
       );
       const targets = contentTones(element);
       for (const target of targets) observer.observe(target);
-      /* Kuzatiladigan hech narsa yoʻq: IO chaqirilmaydi, eski ohang qolib ketmasin. */
+      /* Kuzatiladigan boʻlim yoʻq boʻlsa IntersectionObserver chaqirilmaydi, eski ohang qolib ketmasin. */
       if (targets.length === 0) apply();
     };
 
@@ -143,8 +142,8 @@ export function useSurfaceTone(ref: RefObject<HTMLElement | null>, enabled = tru
       }
     };
 
-    /* transform ResizeObserver ga koʻrinmaydi: tab-bar yigʻilishi, Radix joylashuvi va morf sirtning
-       oʻlchamini oʻzgartirmay suradi. Iz qisqa muddat kuzatiladi, siljisa tasma qayta quriladi. */
+    /* ResizeObserver transform ni sezmaydi: tab-bar yigʻilishi, Radix joylashuvi va morf sirt
+       oʻlchamini oʻzgartirmay, faqat surib qoʻyadi. Shu sabab iz qisqa muddat kuzatiladi. */
     const settle = (): void => {
       cancelAnimationFrame(settleFrame);
       let frames = SETTLE_FRAMES;
@@ -172,9 +171,9 @@ export function useSurfaceTone(ref: RefObject<HTMLElement | null>, enabled = tru
     resize.observe(element);
     element.addEventListener("transitionend", onTransitionEnd);
     window.addEventListener("scroll", onScroll, { passive: true });
-    /* Oʻlchami oʻzgarmagan sirt ham oyna kengligi bilan suriladi (markazdagi kapsula). */
+    /* Markazdagi kapsula oʻlchami oʻzgarmasa ham oyna kengligi bilan suriladi. */
     window.addEventListener("resize", scheduleBuild);
-    /* Boʻlimlar marshrut almashganda keyin paydo boʻladi: roʻyxat oʻzgargandagina qayta yigʻiladi. */
+    /* Marshrut almashganda boʻlimlar keyinroq paydo boʻladi: roʻyxat oʻzgarsagina qayta yigʻiladi. */
     const sectionsSignature = (): string => {
       let next = "";
       for (const section of contentTones(element)) {

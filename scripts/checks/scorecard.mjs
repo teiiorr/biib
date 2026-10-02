@@ -2,7 +2,6 @@ import { existsSync, statSync } from "node:fs";
 import path from "node:path";
 import { ROOT, fail, pass, readText } from "./util.mjs";
 
-/* Atlas dizayni: C1–C12 (§21.6). */
 const SCORE_KEYS = ["atlas"];
 const CRITERIA = Array.from({ length: 12 }, (_, i) => `C${i + 1}`);
 const FINDING_KEYS = ["blocker", "major", "minor", "ideas"];
@@ -14,7 +13,7 @@ function parseScalar(raw) {
   return text.replace(/^["']|["']$/g, "");
 }
 
-/** Oddiy YAML: `kalit: qiymat` va bir qatorli `{ a: 1, b: 2 }` xaritalar. */
+/** Toʻliq YAML emas: faqat `kalit: qiymat` va bir qatorli `{ a: 1, b: 2 }` xaritalar oʻqiladi. */
 export function parseScorecard(text) {
   const lines = text.split("\n");
   const errors = [];
@@ -78,7 +77,7 @@ export function runScorecard(ctx) {
   const missingGroups = SCORE_KEYS.filter((g) => !front[g] || typeof front[g] !== "object");
   if (missingGroups.length)
     checks.push(fail("scorecard:groups", `yoʻq: ${missingGroups.join(", ")}`));
-  /* SCORE_KEYS dan tashqaridagi baho guruhi hisobga olinmaydi, shu sabab u jimgina qolib ketmasin. */
+  /* SCORE_KEYS roʻyxatida yoʻq guruh hisoblanmaydi, shuning uchun u jimgina qolib ketmasligi kerak. */
   const staleGroups = Object.entries(front).filter(
     ([key, value]) =>
       !SCORE_KEYS.includes(key) &&

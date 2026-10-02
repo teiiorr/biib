@@ -5,9 +5,8 @@ import { useLayoutEffect } from "react";
 import { applyAppearance, readStorage } from "./dom";
 
 /**
- * 404 xato qobigʻida chiziladi (html#__next_error__): React qoʻygan <head> dagi boot skript bajarilmaydi.
- * Boot izi (data-boot) boʻlmasa, saqlangan koʻrinish shu yerda, birinchi chizishdan oldin qoʻyiladi:
- * oyna, Harakat va Ovoz tashrifchi tanlaganidek boʻladi.
+ * 404 xato qobigʻida (html#__next_error__) React qoʻygan boot skript bajarilmaydi. data-boot izi
+ * boʻlmasa, saqlangan koʻrinish shu yerda birinchi chizishdan oldin qoʻyiladi.
  */
 export function AppearanceBootFallback(): null {
   useLayoutEffect(() => {

@@ -1,6 +1,6 @@
 /**
- * Boshqaruv paneli matnlari. Panel bir tilli (oʻzbek lotini), shu sabab lugʻatlarga kirmaydi:
- * u yerda har kalit besh tilda talab qilinadi.
+ * Panel faqat oʻzbek lotinida, shu sabab matnlari lugʻatga kirmaydi: u yerda har kalit besh tilda
+ * talab qilinadi.
  */
 export const ADMIN_COPY = {
   title: "Boshqaruv paneli",

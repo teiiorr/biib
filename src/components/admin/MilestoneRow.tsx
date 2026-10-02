@@ -29,7 +29,6 @@ interface MilestoneRowProps {
 
 const H = ORG_COPY.history;
 
-/** Bitta bosqich kartasi: yil, belgi, holat va besh tilli nom; tartib va oʻchirish tugmalari tepada. */
 export function MilestoneRow({
   row,
   index,

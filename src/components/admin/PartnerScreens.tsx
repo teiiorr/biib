@@ -17,8 +17,8 @@ import { PartnersList } from "./PartnersList";
 const P = PEOPLE_COPY.partners;
 
 /**
- * Hamkorlar roʻyxati. Izohdagi son selectConfirmedPartners bilan bir xil sanaladi (tasdiqlangan, nomli
- * va logotipli): bosh sahifadagi maydon oltitadan boshlab chiqadi.
+ * Izohdagi son selectConfirmedPartners kabi sanaladi: bosh sahifadagi hamkorlar maydoni oltitadan
+ * boshlab chiqadi.
  */
 export async function PartnersListScreen({ db }: { readonly db: AdminDb }) {
   const rows = await listPartners(db);

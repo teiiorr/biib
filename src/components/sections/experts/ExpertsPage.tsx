@@ -19,8 +19,8 @@ interface PageProps {
 }
 
 /**
- * Ekspertlar kengashi: markazdagi sarlavha, ostida katta portretli teng kartalar (2 / 3 / 3 ustun):
- * oltita aʼzo har kenglikda toʻliq qatorlar beradi. Tarjimai hol faqat tasdiqlangan aʼzoda, oynada.
+ * Kartalar 2 / 3 / 3 ustunda: oltita aʼzo har qanday kenglikda toʻliq qatorlarni egallaydi.
+ * Tarjimai hol faqat tasdiqlangan aʼzoda bor va dialog oynasida ochiladi.
  */
 export async function ExpertsPage({ locale, dict }: PageProps) {
   const experts = await getExperts();

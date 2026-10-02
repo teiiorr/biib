@@ -2,12 +2,12 @@ import type { ReactNode } from "react";
 
 import { cn } from "@/lib/cn";
 
-/* Sahifa zamini tungi: boʻlim faqat qorongʻi lenta sifatida belgilanadi; yorugʻ ohang faqat yorugʻ rasmlarda. */
+/* Sahifa zamini tungi, shuning uchun boʻlim ohangi faqat qorongʻi boʻladi. */
 export type SectionTone = "dark";
 
 /**
- * section — qoʻshni boʻlimlar orasida 48/64/96 (har tomonda yarmi); band — rangli lenta ichi;
- * hero — sahifa boshi (oyna sarlavhasi ostidan qisqa); none — boʻshliqni boʻlimning oʻzi beradi.
+ * section: qoʻshni boʻlimlar orasida 48/64/96 px (har tomonda yarmi); band: rangli lenta ichi;
+ * hero: oyna sarlavhasi ostidagi sahifa boshi; none: boʻshliqni boʻlimning oʻzi beradi.
  */
 export type SectionRhythm = "section" | "band" | "hero" | "none";
 
@@ -20,7 +20,7 @@ const RHYTHM_CLASS: Record<SectionRhythm, string | null> = {
 
 interface SectionProps {
   readonly id?: string;
-  /** Oyna shu qiymatni oʻqib ohangini moslaydi (10.1.3). */
+  /** Oyna paneli shu qiymatga qarab oʻz ohangini moslaydi. */
   readonly tone?: SectionTone;
   readonly as?: "section" | "div" | "article" | "aside";
   readonly rhythm?: SectionRhythm;
@@ -29,7 +29,6 @@ interface SectionProps {
   readonly children: ReactNode;
 }
 
-/** Boʻlim ritmi: boʻlimlar orasida 48/64/96 px; ichida 16/24/32. */
 export function Section({
   id,
   tone,

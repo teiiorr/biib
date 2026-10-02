@@ -6,7 +6,7 @@ import type { OrgSaveState } from "./types";
 
 const E = ORG_COPY.errors;
 
-/** Saqlangandan keyin darhol isitiladigan oʻzbekcha sahifalar (qolganlari birinchi tashrifda). */
+/** Saqlashdan keyin darhol isitiladigan oʻzbekcha sahifalar; qolganlari birinchi tashrifda isiydi. */
 export const ORG_WARM = {
   contacts: [pathFor("uz", "home"), pathFor("uz", "contacts")],
   history: [pathFor("uz", "about")],
@@ -16,7 +16,6 @@ export const ORG_WARM = {
   partners: [pathFor("uz", "home"), pathFor("uz", "partners")],
 } as const satisfies Record<string, readonly string[]>;
 
-/** Baza xatosi → foydalanuvchiga tushunarli xabar (bir xil matnlar hamma tahrirda). */
 export function dbMessage(code: string | undefined): string {
   switch (dbErrorKind({ code })) {
     case "notFound":

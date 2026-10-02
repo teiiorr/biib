@@ -4,8 +4,8 @@ const S = ORG_COPY.journal;
 const ORDERS: Readonly<Record<string, string>> = S.orders;
 
 /**
- * Jurnaldagi qisqacha nom: sarlavhasi yoʻq yakka yozuvlar (aloqa, tarmoqlar, galereya) va tartib
- * yozuvlari uchun. Boshqa obyekt boʻlsa null.
+ * Sarlavhasi yoʻq yakka yozuvlar (aloqa, tarmoqlar, galereya) va tartib yozuvlari uchun jurnaldagi
+ * qisqa nom. Boshqa obyektga null qaytadi.
  */
 export function orgSummary(entity: string, key: string): string | null {
   switch (entity) {

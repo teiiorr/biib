@@ -12,11 +12,11 @@ export interface HeadingProps {
   readonly size?: HeadingSize;
   /** Bir qatorli sarlavha: cap-height va baseline boʻyicha kesish. */
   readonly trim?: boolean;
-  /** Berilmasa 1–2 darajalar markazda (egasining talabi), 3–4 chapda. */
+  /** Berilmasa 1–2 darajalar markazda, 3–4 chapda. */
   readonly align?: HeadingAlign;
   readonly id?: string;
   readonly className?: string;
-  /** Audit belgilari (masalan data-card-title) DOM ga yetib borishi uchun. */
+  /** Audit belgilari (masalan data-card-title) sarlavha elementiga yetib borishi uchun. */
   readonly attrs?: Readonly<Record<`data-${string}`, string>>;
   readonly children: ReactNode;
 }
@@ -44,13 +44,10 @@ const DEFAULT_ALIGN: Record<HeadingLevel, HeadingAlign> = {
   4: "start",
 };
 
-/* Katta sarlavhalar doim oltin va yaltiraydi (motion.css .gold-text): egasining talabi. */
+/* Katta sarlavhalar doim oltin va yaltiraydi (motion.css, .gold-text). */
 const GOLD_SIZES: ReadonlySet<HeadingSize> = new Set(["display-xl", "display-l", "h1", "h2"]);
 
-/**
- * Sarlavha sinflari: Heading ham, boʻlib koʻtariladigan sarlavha ham (SplitLines) bir xil koʻrinishni
- * shu funksiyadan oladi.
- */
+/** Heading ham, SplitLines ham bir xil koʻrinishni shu funksiyadan oladi. */
 export function headingClass(
   level: HeadingLevel,
   size?: HeadingSize,

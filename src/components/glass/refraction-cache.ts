@@ -44,8 +44,8 @@ function renderOnMainThreadWhenIdle(
 }
 
 /**
- * Bir xil oʻlcham va radius uchun xarita bir marta hisoblanadi (sarlavha, tab-bar, tugmalar
- * koʻpincha bir xil). Chromium da worker, aks holda boʻsh vaqtda asosiy oqim.
+ * Sarlavha, tab-bar va tugmalar koʻpincha bir oʻlchamda, shu sabab xarita bir marta hisoblanadi.
+ * Chromium brauzerida worker ishlaydi, aks holda asosiy oqim boʻsh vaqtda hisoblaydi.
  */
 export function refractionMap(
   width: number,

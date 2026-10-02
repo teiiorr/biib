@@ -16,10 +16,10 @@ function localized<T extends z.ZodType>(item: T) {
   return z.object({ uz: item, oz: item, ozbekca: item, ru: item, en: item });
 }
 
-/* Bazaning l10n_text / l10n_list domenlari bilan bir xil shakl. */
+/* Bazadagi l10n_text va l10n_list domenlari bilan bir xil shakl. */
 const storedValue = z.union([localized(z.string()), localized(z.array(z.string()))]);
 
-/** Paneldan yozilgan hamma almashtirish (kalit → qiymat va updated_at); shakli buzugʻi tashlanadi. */
+/** Shakli buzilgan almashtirish tashlab yuboriladi. */
 export async function loadTextOverrides(db: AdminDb): Promise<ReadonlyMap<string, StoredText>> {
   const { data, error } = await db.from("site_texts").select("key, value, updated_at");
   if (error) throw new Error(`site_texts: ${error.code}`);
@@ -44,8 +44,8 @@ export async function loadTextOverride(db: AdminDb, key: string): Promise<Stored
 }
 
 /**
- * Tahrir boshlangandan beri almashtirish oʻzgarmaganmi: yoʻq edi — hali ham yoʻq, bor edi — aynan
- * shu updated_at bilan. RPC ham rad etadi, bu esa javobni RPC siz va darhol beradi.
+ * Tahrir boshlangandan beri almashtirish oʻzgarmaganmi: yoʻq boʻlsa hali ham yoʻq, bor boʻlsa aynan
+ * shu updated_at bilan. RPC ham rad etadi, lekin bu tekshiruv javobni darhol beradi.
  */
 export async function textIsFresh(db: AdminDb, key: string, expected: string | null) {
   const query = db.from("site_texts").select("key").eq("key", key);

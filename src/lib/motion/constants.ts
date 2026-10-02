@@ -1,4 +1,4 @@
-/** Kadr byudjeti (§14.5, §17): testlar shu qiymatlarni oʻlchaydi. */
+/** Kadr byudjeti: testlar shu qiymatlarni oʻlchaydi. */
 
 /** GSAP uchun sekundlarda; CSS tomoni --dur-* tokenlarida (globals.css). */
 export const DURATION = {
@@ -27,26 +27,22 @@ export const MEDIA = {
   touch: "(hover: none), (pointer: coarse)",
 } as const;
 
-/** Pin uzunligi viewportga nisbatan (§8 XII.5): desktop ≤150 %, mobil ≤100 %. */
+/** Mahkamlangan sahna uzunligi ekran balandligiga nisbatan. */
 export const PIN_LENGTH = {
   expanded: 1.5,
   compact: 1,
 } as const;
 
-/** Skrablangan sahnalar shu yumshatish bilan yuradi. */
 export const SCRUB = 0.8;
 
-/**
- * Qahramon sahnasi uzunligi viewportga nisbatan (CSS --hero-scene-length bilan bir xil):
- * kompyuter 0.8, telefon 0.6; PIN_LENGTH dan oshmaydi.
- */
+/** Ekran balandligiga nisbatan; CSS --hero-scene-length bilan bir xil, PIN_LENGTH qiymatidan oshmaydi. */
 export const SCENE_LENGTH = {
   hero: { expanded: 0.8, compact: 0.6 },
 } as const;
 
 /**
- * GSAP nomlari CSS tokenlari bilan bir xil egri chiziq: out, in-out, ui va spring-glass dvigatel
- * yaratilganda CustomEase sifatida roʻyxatga olinadi (gsap.ts), CSS oʻtishi va tween farq qilmaydi.
+ * CSS tokenlari bilan bir xil egri chiziqlar: dvigatel yaratilganda CustomEase sifatida roʻyxatga
+ * olinadi (gsap.ts), shunda CSS oʻtishi bilan tween farq qilmaydi.
  */
 export const EASE = {
   out: "out",
@@ -56,11 +52,11 @@ export const EASE = {
   none: "none",
 } as const;
 
-/** Magnit tugmalar (faqat aniq koʻrsatkich): koʻpi bilan 6 px, belgili tugmada 4 px; yorliq 40 % ergashadi. */
+/** Faqat aniq koʻrsatkichda ishlaydi (sichqoncha, sensorli panel). */
 export const MAGNET = { max: 6, icon: 4, strength: 0.35, inner: 0.4 } as const;
 
-/** Parallaks chuqurligi media balandligiga nisbatan: kompyuterda 8 %, tor ekranda 5 %. */
+/** Media balandligiga nisbatan; tor ekranda chuqurlik kamroq. */
 export const PARALLAX = { expanded: 0.08, compact: 0.05 } as const;
 
-/** Dvigatel gidratsiyadan keyin koʻpi bilan shuncha kutadi (ms), foydalanuvchi niyati undan oldin. */
+/** Dvigatel gidratsiyadan keyin koʻpi bilan shuncha ms kutadi, foydalanuvchi niyati boʻlsa undan oldin. */
 export const ENGINE_IDLE_TIMEOUT = 800;

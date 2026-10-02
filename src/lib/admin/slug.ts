@@ -1,11 +1,10 @@
 /* Havola 60 belgidan oshmaydi: Telegram va pochtada toʻliq koʻrinadi, -2 qoʻshimchasiga ham joy qoladi. */
 const SLUG_MAX = 60;
-/* Band boʻlsa sinab koʻriladigan qoʻshimchalar soni (-2 … -20). */
 const SUFFIX_LIMIT = 20;
 
 /**
- * Oʻzbekcha sarlavhadan ASCII havola: oʻ/gʻ → o/g, tutuq va apostroflar tushadi, diakritika olinadi,
- * qolgan hamma belgi «-» boʻladi. Uzun boʻlsa soʻz chegarasida qirqiladi.
+ * Oʻzbekcha sarlavhadan ASCII havola: oʻ/gʻ → o/g, tutuq va apostroflar tushib qoladi, diakritika
+ * olinadi, qolgan belgilar «-» boʻladi. Uzun sarlavha soʻz chegarasida qirqiladi.
  */
 export function slugFromUz(title: string): string {
   const base = title
@@ -22,7 +21,7 @@ export function slugFromUz(title: string): string {
   return (boundary > 0 ? cut.slice(0, boundary) : base.slice(0, SLUG_MAX)).replace(/-+$/, "");
 }
 
-/** Birinchisi asl havola, keyin -2, -3 …: birinchi boʻshi olinadi. */
+/** Asl havola, keyin -2, -3 …: ulardan birinchi boʻshi olinadi. */
 export function slugCandidates(base: string): readonly string[] {
   return [base, ...Array.from({ length: SUFFIX_LIMIT - 1 }, (_, i) => `${base}-${i + 2}`)];
 }

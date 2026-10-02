@@ -2,7 +2,7 @@ import { ENGINE_IDLE_TIMEOUT } from "./constants";
 
 /* Foydalanuvchi niyati: birinchisi boʻsh vaqtni kutmasdan dvigatelni chaqiradi. */
 const INTENT_EVENTS = ["scroll", "wheel", "touchstart", "pointerdown", "keydown"] as const;
-/* Safari da requestIdleCallback yoʻq: gidratsiyadan keyin qisqa taymer. */
+/* Safari brauzerida requestIdleCallback yoʻq, shu sabab gidratsiyadan keyin qisqa taymer. */
 const SAFARI_DELAY_MS = 250;
 
 interface NetworkInformationLike {
@@ -22,10 +22,9 @@ function constrained(): boolean {
 }
 
 /**
- * Dvigatel qachon yuklanadi (motion-plan 2.2): gidratsiyadan keyin boʻsh vaqtda, koʻpi bilan
- * 800 ms kutib, yoki foydalanuvchining birinchi niyatida — qaysi biri oldin boʻlsa. window.load
- * kutilmaydi: LCP posteri HTML dan oldinroq soʻralgan, dvigatel u bilan raqobatlashmaydi.
- * Qaytgan funksiya rejani bekor qiladi.
+ * Dvigatel gidratsiyadan keyingi boʻsh vaqtda (koʻpi bilan 800 ms kutib) yoki foydalanuvchining
+ * birinchi niyatida yuklanadi, qaysi biri oldin boʻlsa. window.load kutilmaydi: LCP posteri HTML
+ * orqali oldinroq soʻralgan, dvigatel u bilan raqobatlashmaydi.
  */
 export function loadEngineWhen(load: () => void): () => void {
   if (typeof window === "undefined") return () => undefined;

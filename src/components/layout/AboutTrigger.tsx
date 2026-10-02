@@ -25,7 +25,7 @@ interface AboutTriggerProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>
   readonly ref?: Ref<HTMLButtonElement>;
 }
 
-/** Guruh tugmasi: faol boʻlsa ostida oltin chiziq (layout.css); menyu kelguncha ham shu koʻrinish. */
+/** Menyu yuklanguncha ham aynan shu tugma koʻrinadi; faol holatdagi oltin chiziq layout.css faylida. */
 export function AboutTrigger({ dict, active, ref, ...rest }: AboutTriggerProps) {
   return (
     <button

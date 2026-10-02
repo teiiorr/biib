@@ -1,4 +1,4 @@
-/* Sinish xaritasi: skvirkl qirra profilidan feDisplacementMap uchun R=x, G=y tasviri. */
+/* feDisplacementMap uchun xarita: skvirkl qirra profilidan, R kanal x, G kanal y. */
 
 /* Xarita haqiqiy oʻlchamga yaqin chiziladi: past aniqlikda qirra tasmasi zinapoyaga aylanardi. */
 const MAX_EDGE = 640;
@@ -13,8 +13,8 @@ export interface RefractionPixels {
 }
 
 /**
- * Linza qirrasining kengligi (CSS px): sinish faqat shu tasmada, markaz buzilmaydi.
- * surface-effects siljish kuchini ham shundan oladi, shu sabab bitta funksiya.
+ * Sinish faqat shu kenglikdagi qirra tasmasida, markaz buzilmaydi. surface-effects siljish kuchini ham
+ * shu funksiyadan oladi.
  */
 export function bezelWidth(width: number, height: number): number {
   const short = Math.min(width, height);
@@ -34,7 +34,7 @@ function squircleDistance(
   return Math.max(px, py) - radius;
 }
 
-/** Sof hisob: asosiy oqimda ham, workerda ham bir xil. Qirra tasmasidan tashqari piksellar neytral. */
+/** Sof funksiya: asosiy oqimda ham, worker ichida ham bir xil natija beradi. */
 export function renderRefractionPixels(
   width: number,
   height: number,
@@ -46,8 +46,8 @@ export function renderRefractionPixels(
   const halfWidth = w / 2;
   const halfHeight = h / 2;
   const bezel = Math.max(2, bezelWidth(width, height) * scale);
-  /* Burchak radiusi kamida qirra kengligicha: aks holda burchak diagonalida normal sakrab,
-     tasmada chok koʻrinardi. Haqiqiy burchak baribir elementning oʻz radiusi bilan kesiladi. */
+  /* Burchak radiusi kamida qirra kengligicha: aks holda diagonalda normal sakrab, tasmada chok
+     koʻrinardi. Haqiqiy burchakni baribir elementning oʻz radiusi kesadi. */
   const r = Math.min(Math.max(radius * scale, bezel), halfWidth, halfHeight);
   const inner = Math.max(bezel, r) + 1;
   const distance = (x: number, y: number): number =>
@@ -64,7 +64,7 @@ export function renderRefractionPixels(
       const d = distance(x + 0.5, y + 0.5);
       if (d <= -bezel) continue;
       /* Qavariq linza: nur normal tomon sinadi, qirrada ichkaridagi kontent choʻzilib koʻrinadi.
-         (1 − t)² ichki chegarada silliq nolga tushadi, shu sabab tasma chegarasi koʻrinmaydi. */
+         (1 − t)² ichki chegarada silliq nolga tushadi, shu sabab tasma chegarasi bilinmaydi. */
       const t = Math.min(1, Math.max(0, -d / bezel));
       const magnitude = (1 - t) ** 2;
       const gx = distance(x + 1.5, y + 0.5) - distance(x - 0.5, y + 0.5);
@@ -77,7 +77,7 @@ export function renderRefractionPixels(
   return { width: w, height: h, data };
 }
 
-/** Asosiy oqimdagi zaxira yoʻl (worker yoki OffscreenCanvas boʻlmasa): data URL. */
+/** Worker yoki OffscreenCanvas boʻlmasa asosiy oqimdagi zaxira yoʻl. */
 export function renderRefractionDataUrl(
   width: number,
   height: number,

@@ -12,7 +12,6 @@ export interface AboutMenuPanelProps extends AboutMenuProps {
   readonly focusTrigger: boolean;
 }
 
-/** «Biz haqimizda» guruhi menyusi: trigger paneli ichiga morf boʻladi. */
 export default function AboutMenuPanel({
   dict,
   items,

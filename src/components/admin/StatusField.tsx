@@ -8,11 +8,10 @@ export interface StatusFieldProps {
   readonly legend: string;
   readonly value: ContentStatus;
   readonly onChange: (status: ContentStatus) => void;
-  /** Har holat saytda nima qilishi (yozuv turiga qarab farq qiladi). */
+  /** Holat saytda nima qilishi yozuv turiga qarab farq qiladi. */
   readonly hints: Readonly<Record<ContentStatus, string>>;
 }
 
-/** Holat: tabiiy radio tugmalar, har birining ostida bir qatorli izoh. */
 export function StatusField({ id, legend, value, onChange, hints }: StatusFieldProps) {
   return (
     <fieldset className="admin-choice">

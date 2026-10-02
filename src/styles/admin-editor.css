@@ -1,5 +1,4 @@
-/* Boshqaruv paneli: tahrir shakli, besh tilli maydonlar, rasm yuklash, saqlash paneli va jadvallar.
-   Faqat /admin ildiz layoutida ulanadi; qiymatlar sayt tokenlari va boʻshliq shkalasida. */
+/* Panel tahrir shakli: besh tilli maydonlar, rasm yuklash, saqlash paneli. Faqat /admin sahifalarida ulanadi. */
 
 @layer components {
   /* ---------- Guruh va maydonlar ---------- */
@@ -42,7 +41,7 @@
     min-width: 0;
   }
 
-  /* Fieldset flex konteynerida legend oddiy band boʻlsin: gap unga ham tegadi. */
+  /* legend fieldset ichida oddiy element boʻlsin, shunda gap unga ham taʼsir qiladi. */
   .admin-locale,
   .admin-choice {
     display: flex;
@@ -118,7 +117,7 @@
   .admin-radio:has(input:checked) {
     background: color-mix(in oklab, var(--tint) 12%, transparent);
   }
-  /* Yorliqning birinchi qatori (16 × 1.6) markaziga: 20 px doira 3 px pastda. */
+  /* 20 px doira yorliqning birinchi qatori (16 × 1.6) markaziga tushishi uchun 3 px pastga surilgan. */
   .admin-radio input {
     flex: none;
     width: 20px;
@@ -147,7 +146,7 @@
     box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--ink) 18%, transparent);
     cursor: pointer;
   }
-  /* Tanlov rangsiz ham koʻrinsin: halqa va markazdagi kvadrat. */
+  /* Tanlov faqat rang bilan bildirilmasin: halqa va markazda kvadrat. */
   .admin-swatch:has(input:checked) {
     outline: 2px solid var(--ink);
     outline-offset: 2px;
@@ -209,8 +208,8 @@
   }
 }
 
-/* Qisqa koʻp qatorli maydonlar (qisqa matn, iqtibos): umumiy 128 px dan pastroq. Qatlamsiz qoida:
-   Textarea dagi min-h-32 utilitasidan ustun turadi. */
+/* Qisqa matn va iqtibos maydonlari umumiy 128 px dan past. Qoida qatlamdan tashqarida, shunda
+   min-h-32 utilitasidan ustun turadi. */
 .admin-locale-row > textarea[rows="3"] {
   min-height: 96px;
 }

@@ -6,9 +6,8 @@ import { willChangeDuring } from "@/lib/motion/will-change";
 import type { MotionEngine } from "./engine-core";
 
 /**
- * Media ramkasi ichida nima kesiladi va nima kattalashadi: ramkaning oʻzi kesiladi (12 px radius,
- * soya yoʻq). Masshtab doim surat yoki videoning oʻzida: ustidagi 44 px boshqaruv tugmasi
- * kattalashmaydi va parallaksda ramka chetidan chiqib ketmaydi.
+ * Ramkaning oʻzi kesiladi (12 px radius, soyasiz), masshtab esa doim surat yoki videoga beriladi:
+ * ustidagi 44 px boshqaruv tugmasi kattalashmaydi, parallaksda media ramka chetidan chiqmaydi.
  */
 export interface MediaTargets {
   readonly clip: HTMLElement;
@@ -32,9 +31,8 @@ export interface RevealBuild {
 }
 
 /**
- * media-reveal (motion-plan 3.6): bitta clip-path pardasi (chapdan oʻngga; abr — olti pogʻona) va
- * ichki qatlamning qarama-qarshi masshtabi 1.12 → 1. Blur yoʻq, qoʻshimcha DOM yoʻq.
- * Qaytgan funksiya qoʻriqchini tozalaydi (tweenlarni useEngineEffect konteksti qaytaradi).
+ * Bitta clip-path pardasi (chapdan oʻngga, abr turida olti pogʻona) va ichki qatlamning teskari masshtabi 1.12 → 1.
+ * Blur ham, qoʻshimcha DOM ham yoʻq. Qaytgan funksiya kuzatuvchini tozalaydi, tweenlarni useEngineEffect konteksti bekor qiladi.
  */
 export function buildMediaReveal(
   { gsap }: MotionEngine,
@@ -88,8 +86,8 @@ export function buildMediaReveal(
 }
 
 /**
- * media-parallax (motion-plan 3.7): qatlam 1 + chuqurlik masshtabda ±chuqurlik/2 yuradi, chetlar
- * hech qachon ochilmaydi; scrub: true (D-M1). Boshqaruvchi orqali ekranda bitta skroll sahna.
+ * Qatlam 1 + chuqurlik masshtabda ±chuqurlik/2 yuradi, shuning uchun chetlar hech qachon ochilmaydi; scrub: true.
+ * Boshqaruvchi ekranda bir vaqtda faqat bitta skroll sahnasini qoldiradi.
  */
 export function buildParallax(
   { gsap }: MotionEngine,

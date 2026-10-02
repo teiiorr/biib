@@ -13,7 +13,7 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
-  // Sahifa va layout parallel chiziladi: nomaʼlum til bu yerda ham toʻxtatiladi, aks holda 500.
+  // Sahifa layout bilan parallel chiziladi: nomaʼlum til shu yerda ham toʻxtatiladi, aks holda 500.
   if (!isLocale(locale)) return notFoundMetadata();
   return buildMetadata({
     locale,

@@ -12,7 +12,7 @@ export interface StoredAppearance {
   readonly motion?: boolean;
 }
 
-/** Sahifa skriptlaridan oldin localStorage ga yoziladi: boot skript birinchi chizilishda oʻqiydi. */
+/** Qiymat sahifa skriptlaridan oldin yoziladi: boot skript uni birinchi chizishdayoq oʻqiydi. */
 export async function primeAppearance(page: Page, stored: StoredAppearance = {}): Promise<void> {
   const value: Appearance = {
     transparency: stored.transparency ?? 50,
@@ -35,7 +35,7 @@ export async function primeAppearance(page: Page, stored: StoredAppearance = {})
   );
 }
 
-/** Boot skript, shriftlar va tarmoq tinchigach davom etadi; video oqimi networkidle ni ushlab qolmasin. */
+/** Boot skript, shriftlar va tarmoq tinchishini kutadi. Video oqimi tufayli tarmoq tinchimasligi mumkin, shu sabab kutish vaqti cheklangan. */
 export async function settle(page: Page): Promise<void> {
   await page.waitForSelector("html[data-theme]", { state: "attached" });
   await page.waitForLoadState("domcontentloaded");

@@ -2,7 +2,7 @@ import type { MediaPurpose, UploadType } from "@/lib/admin/media/purposes";
 import { UPLOAD_MAX_BYTES, UPLOAD_TYPES } from "@/lib/admin/media/purposes";
 import type { MediaItem } from "@/lib/admin/news/types";
 
-/* Telefon surati 12–48 MP: serverga 2560 px dan katta yuborilmaydi, yuklash bir necha barobar tez. */
+/* Telefon surati 12–48 MP: 2560 px gacha kichraytirilsa yuklash bir necha barobar tezlashadi. */
 const LONG_EDGE = 2560;
 const QUALITY = 0.92;
 
@@ -23,10 +23,8 @@ function canvasBlob(canvas: HTMLCanvasElement, type: string): Promise<Blob | nul
 }
 
 /**
- * Brauzerda kichraytirish: EXIF burilishi qoʻllanadi va metamaʼlumot (joylashuv) qurilmadan chiqmaydi.
- * WebP ni kodlay olmaydigan brauzer PNG qaytaradi: unda JPEG. Shaffof PNG PNG boʻlib qoladi;
- * alpha (logotip) soʻralsa WebP oʻrniga PNG, JPEG hech qachon (fon qorayardi).
- * Brauzer ocholmagan fayl (masalan eski Safari da AVIF) oʻzgarishsiz yuboriladi.
+ * EXIF burilishi qoʻllanadi, joylashuv maʼlumoti qurilmadan chiqmaydi. WebP kodlanmasa JPEG olinadi,
+ * shaffoflik kerak boʻlsa esa PNG (JPEG fonni qoraytirardi). Ochilmagan fayl oʻzgarishsiz ketadi.
  */
 export async function shrink(file: File, alpha = false): Promise<Blob> {
   let bitmap: ImageBitmap;
@@ -66,7 +64,7 @@ async function postJson<T>(url: string, body: unknown): Promise<T> {
   return (await response.json()) as T;
 }
 
-/* XMLHttpRequest: fetch yuklash jarayonini (foizni) bermaydi. */
+/* fetch yuklash foizini bermaydi, shu sabab XMLHttpRequest. */
 function put(url: string, blob: Blob, onProgress: (share: number) => void): Promise<void> {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -87,7 +85,6 @@ function put(url: string, blob: Blob, onProgress: (share: number) => void): Prom
 
 export type UploadPhase = "preparing" | "uploading" | "processing";
 
-/** Bitta rasm: kichraytirish → imzoli manzil → toʻgʻridan-toʻgʻri yuklash → serverda nusxalar. */
 export async function uploadImage(
   file: File,
   purpose: MediaPurpose,
@@ -108,7 +105,7 @@ export async function uploadImage(
   return postJson<MediaItem>("/admin/api/media/finalize", { path, purpose });
 }
 
-/** Bir vaqtda koʻpi bilan limit ta vazifa; natijalar kirish tartibida. */
+/** Natijalar bajarilish emas, kirish tartibida qaytadi. */
 export async function runLimited<T, R>(
   items: readonly T[],
   limit: number,

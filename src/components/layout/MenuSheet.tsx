@@ -8,7 +8,7 @@ import { MenuTrigger, isMenuPage, type MenuSheetProps } from "./MenuTrigger";
 
 const loadPanel = () => import("./MenuSheetPanel");
 
-/** Menyu: tugma HTML da, varaq (Radix Dialog) boʻsh vaqtda yoki bosilganda yuklanadi. */
+/** Tugma darhol HTML ichida keladi, Radix Dialog varagʻi esa brauzer boʻshaganda yoki bosilganda yuklanadi. */
 export function MenuSheet(props: MenuSheetProps) {
   const shellRef = useRef<HTMLButtonElement | null>(null);
   const { Panel, warm, openWhenReady, wantOpen, restoreFocus } = useLazyOverlay(

@@ -10,9 +10,8 @@ import { failure, genericError, ORG_WARM } from "../org/results";
 import { publish } from "../publish";
 
 /**
- * Aloqa va ijtimoiy tarmoqlar bitta shaklda: tekshiruv (brauzerdagi bilan bir xil) → boshqa oynada
- * oʻzgarmaganmi → faqat oʻzgargan qism saqlanadi (jurnalda ortiqcha yozuv boʻlmasin) → hamma sahifa
- * yangilanadi (pastki qism va JSON-LD har sahifada).
+ * Faqat oʻzgargan qism saqlanadi, jurnalda ortiqcha yozuv paydo boʻlmasin. Aloqa maʼlumoti pastki
+ * qismda va JSON-LD ichida har sahifada bor, shu sabab hamma sahifa yangilanadi.
  */
 export async function saveContacts(
   prev: SaveContactsState,

@@ -1,9 +1,7 @@
 /*
- * Manrope UZ va Unbounded UZ toʻplamlari manba TTF dan (src/assets/fonts) fontTools bilan yasaladi:
- * Manrope wght oʻqi saytda ishlatiladigan 400–800 ga qisqartiriladi (Unbounded — statik 700), Google
- * unicode-range toʻplamlari boʻyicha boʻlinadi va woff2 ga yoziladi. Manbalar — oʻzbek belgilari
- * qoʻshilgan nusxalar (scripts/manrope-uz.mts, scripts/unbounded-uz.mts), CDN dagi shriftlar emas.
- * Natija: public/fonts/*.woff2 va src/styles/fonts.css. Qahramon toʻplami alohida (hero-fonts.mts).
+ * Manrope UZ va Unbounded UZ manba fayllari fontTools bilan Google unicode-range toʻplamlariga boʻlinadi.
+ * Manba sifatida CDN shriftlari emas, oʻzbek belgilari qoʻshilgan nusxalar olinadi.
+ * Qahramon sarlavhasi toʻplami alohida, hero-fonts.mts skriptida yasaladi.
  */
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
@@ -11,10 +9,10 @@ import path from "node:path";
 
 const OUT = path.resolve("public/fonts");
 mkdirSync(OUT, { recursive: true });
-/* fontTools va brotli oʻrnatilgan Python: PYTHON muhit oʻzgaruvchisi, sukutda python3. */
+/* fontTools va brotli oʻrnatilgan Python kerak; boshqasini PYTHON oʻzgaruvchisi orqali berish mumkin. */
 const python = process.env.PYTHON ?? "python3";
 
-/* Google Fonts CSS API bilan bir xil diapazonlar: brauzer faqat sahifadagi yozuv uchun kerak faylni oladi. */
+/* Diapazonlar Google Fonts bilan bir xil: brauzer faqat sahifadagi yozuvga kerakli faylni yuklaydi. */
 const SUBSETS: Record<string, string> = {
   latin:
     "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
@@ -35,8 +33,8 @@ interface Family {
 
 const FAMILIES: readonly Family[] = [
   {
-    /* Egasining tanlovi: bitta oila matn va sarlavhalar uchun. Manba — oʻzbek belgilari qoʻshilgan
-       Manrope UZ (scripts/manrope-uz.mts). hhea 2132/−600 (upm 2000); size-adjust a–z chastotasi boʻyicha. */
+    /* Matn va sarlavhalar uchun bitta oila. Zaxira metrikalari hhea 2132/−600 (upm 2000) qiymatidan,
+       size-adjust esa a–z harflarining chastotasi boʻyicha hisoblangan. */
     name: "Manrope",
     file: "manrope",
     source: "src/assets/fonts/ManropeUZ[wght].ttf",
@@ -45,9 +43,8 @@ const FAMILIES: readonly Family[] = [
     fallback: { local: "Arial", ascent: "106.6%", descent: "30%", sizeAdjust: "109.7%" },
   },
   {
-    /* Egasining tanlovi: katta sarlavhalar. Manba — Қ Ғ Ҳ qurilgan statik 700 nusxa
-       (scripts/unbounded-uz.mts). hhea 995/−245 (upm 1000); Arial Bold dan a–z boʻyicha 1.355 keng,
-       override qiymatlari size-adjust ga boʻlingan. */
+    /* Katta sarlavhalar uchun Қ Ғ Ҳ harflari qurilgan statik 700 nusxa, hhea 995/−245 (upm 1000).
+       a–z boʻyicha Arial Bold shriftidan 1.355 marta keng, shuning uchun override qiymatlari size-adjust qiymatiga boʻlingan. */
     name: "Unbounded",
     file: "unbounded",
     source: "src/assets/fonts/UnboundedUZ-700.ttf",
@@ -97,10 +94,7 @@ for fam in spec["families"]:
         print(f"{fam['file']}-{name}.woff2\\t{os.path.getsize(target)//1024} KB")
 `;
 
-/*
- * Faqat sayt ishlatadigan OpenType xususiyatlari: matn shakllanishi (kern, liga, calt, belgilar),
- * raqamlar (tnum va boshqalar). Boshqa muqobil gliflar tushib qoladi: birinchi ekran yuklamasi yengil.
- */
+/* Faqat sayt ishlatadigan OpenType xususiyatlari qoladi, ortiqcha muqobil gliflar tashlanib fayl yengillashadi. */
 const FEATURES = [
   "kern",
   "liga",

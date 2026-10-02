@@ -9,14 +9,13 @@ import { mediaFor } from "./draft";
 import { personResultSchema } from "./schema";
 import type { PersonAdmin, PersonListRow } from "./types";
 
-/** Besh tilli JSON dan oʻzbekcha qator (roʻyxat va jurnal uchun). */
 export function uzText(value: Json | null): string | null {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
   const uz = value.uz;
   return typeof uz === "string" && uz ? uz : null;
 }
 
-/** Panel roʻyxati: saytdagi tartib bilan (sort_order, keyin key — content_snapshot bilan bir xil). */
+/** Tartib saytdagidek: sort_order, keyin key (content_snapshot bilan bir xil). */
 export async function listPeople(db: AdminDb, kind: PersonKind): Promise<readonly PersonListRow[]> {
   const { data, error } = await db
     .from("people")

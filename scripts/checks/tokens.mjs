@@ -3,11 +3,11 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { ROOT, fail, pass, readText } from "./util.mjs";
 
-/* Atlas tokenlari: mavzusiz :root va yagona tungi mavzu bloki (kunduzgi mavzu egasi talabi bilan olib tashlangan). */
+/* Kunduzgi mavzu yoʻq: fayl mavzusiz :root va yagona tungi mavzu blokidan iborat. */
 export const TOKEN_FILE = "src/styles/designs/atlas.css";
 export const THEMES = ["dark"];
 
-/** :root va :root[data-theme] bloklaridagi --nom: qiymat juftliklari; base = mavzusiz blok. */
+/** :root va :root[data-theme] bloklaridagi tokenlar; base kaliti mavzusiz blokni bildiradi. */
 export function parseTokenScopes(file = TOKEN_FILE) {
   const css = readText(file).replace(/\/\*[\s\S]*?\*\//g, "");
   const scopes = { base: {}, dark: {} };
@@ -25,12 +25,12 @@ export function parseTokenScopes(file = TOKEN_FILE) {
 
 const list = (names) => names.map((n) => "--" + n).join(", ");
 
-/** Mavzu bloki bitta (tungi); mavzusiz tokenlar unda takrorlanmaydi; ortiqcha mavzu bloki xato. */
+/** Mavzu bloki faqat bitta (tungi) boʻladi va unda mavzusiz tokenlar takrorlanmaydi. */
 export function checkTokenParity() {
   if (!existsSync(path.join(ROOT, TOKEN_FILE))) return [fail("tokens:file", `${TOKEN_FILE} yoʻq`)];
   const checks = [];
   const css = readText(TOKEN_FILE);
-  /* Tokenlar faqat :root va :root[data-theme] da: data-design kabi ortiqcha atribut bloklarni koʻrinmas qiladi. */
+  /* data-design kabi ortiqcha atributli blok hech qachon mos kelmaydi va tokenlari jimgina yoʻqoladi. */
   checks.push(
     /data-design/.test(css)
       ? fail("tokens:selectors", `${TOKEN_FILE} da data-design selektori qolgan`)

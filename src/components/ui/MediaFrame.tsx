@@ -6,15 +6,14 @@ import { cx } from "@/lib/cx";
 
 export interface MediaFrameProps {
   readonly ratio?: AspectRatio;
-  /** Kirish va parallaks (motion-plan 3.6, 3.7): berilmasa ramka harakatsiz. */
+  /** Kirish va parallaks; berilmasa ramka harakatsiz. */
   readonly motion?: MediaRevealProps;
   readonly className?: string;
-  /** Qorongʻi surat yoki video: ustidan oʻtgan oyna tungi ohangga oʻtadi (10.1.3, useSurfaceTone). */
+  /** Qorongʻi surat yoki video: ustidan oʻtgan oyna tungi ohangga oʻtadi (useSurfaceTone). */
   readonly tone?: "dark";
   readonly children?: ReactNode;
 }
 
-/** Toʻrtburchak media ramkasi: nisbat qulflangan, 12 px radius, ichidagi media kesiladi. */
 export function MediaFrame({ ratio = "3:2", motion, className, tone, children }: MediaFrameProps) {
   const vars = { "--frame-ratio": ratioCss(ratio) } as CSSProperties;
   return (

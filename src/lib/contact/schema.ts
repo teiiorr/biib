@@ -13,7 +13,7 @@ export const contactSchema = z.object({
     .refine((v) => phone.test(v) || email.test(v), { message: "contact" }),
   message: z.string().trim().min(MIN_MESSAGE).max(2000),
   consent: z.literal("on"),
-  /* Bot tuzogʻi: odam toʻldirmaydi. */
+  /* Bot tuzogʻi: odam uni toʻldirmaydi. */
   website: z.string().max(0),
   startedAt: z.coerce.number().int().positive(),
 });

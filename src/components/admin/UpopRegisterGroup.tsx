@@ -11,7 +11,6 @@ import type { OrgSectionProps } from "./useOrgEditor";
 
 const P = UPOP_COPY.project;
 
-/** Roʻyxatdan oʻtish tugmasining manzili (faqat https) va yorligʻi. */
 export function UpopRegisterGroup({ draft, patch, errors, idFor }: OrgSectionProps<ProjectDraft>) {
   return (
     <FieldGroup id={idFor("register-group")} title={P.groups.register}>

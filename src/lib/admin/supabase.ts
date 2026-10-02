@@ -4,13 +4,13 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 import type { AdminEnv } from "./env";
 
-/* Next maʼlumot keshi avtorizatsiyali soʻrovni ham saqlaydi (fetch.md): auth javoblari hech qachon keshlanmaydi. */
+/* Next maʼlumot keshi avtorizatsiyali soʻrovni ham saqlab qoladi, auth javoblari esa keshlanmasligi shart. */
 export const noStoreFetch: typeof fetch = (input, init) =>
   fetch(input, { ...init, cache: "no-store" });
 
 /**
- * Sessiyasiz mijoz: tokenlar faqat panelning httpOnly cookie larida turadi, kutubxona ularni saqlamaydi
- * va oʻzi yangilamaydi (yangilash faqat server amali va yangilash yoʻlida).
+ * Sessiyasiz mijoz: tokenlar faqat panelning httpOnly cookie fayllarida turadi. Kutubxona ularni
+ * saqlamaydi va oʻzi yangilamaydi, yangilash faqat server amali va yangilash yoʻlida.
  */
 export function authClient(env: AdminEnv): SupabaseClient {
   return createClient(env.url, env.key, {

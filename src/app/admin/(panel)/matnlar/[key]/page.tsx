@@ -27,14 +27,14 @@ interface TextEditPageProps {
 
 export default async function TextEditPage({ params, searchParams }: TextEditPageProps) {
   const { key } = await params;
-  /* Yoʻl faqat kalit shaklida boʻlsa «next» ga qoʻyiladi: boshqa matn kirish sahifasiga olib bormaydi. */
+  /* Yoʻl faqat kalit shaklida boʻlsa «next» parametriga yoziladi: ixtiyoriy matn uzatilmaydi. */
   if (key.length > 160 || !TEXT_KEY_RE.test(key)) notFound();
   const session = await requireAdmin(`/admin/matnlar/${key}`);
   const entry = catalogEntry(key);
   if (!entry) notFound();
   const found = await loadTextOverride(adminDb(session.accessToken), key);
-  /* Turi lugʻatdagidan boshqa boʻlib qolgan eski almashtirish saytda ishlamaydi: tahrir asl matndan,
-     lekin updated_at saqlanadi — yangi qiymat uning ustiga yoziladi yoki «Asliga qaytarish» oʻchiradi. */
+  /* Turi lugʻatdagidan farq qilib qolgan eski almashtirish saytda ishlamaydi. Tahrir asl matndan boshlanadi,
+     lekin updated_at saqlanadi: yangi qiymat uning ustiga yoziladi yoki «Asliga qaytarish» uni oʻchiradi. */
   const stored = found
     ? {
         value: textKind(found.value.uz) === entry.kind ? found.value : entry.bundled,

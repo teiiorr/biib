@@ -2,7 +2,7 @@ import type { ComponentType } from "react";
 
 export type ArtSlot = "home-hero";
 
-/** Badiiy modullar lugʻatni oʻzi yuklamaydi (beshta til chunkka kirib qolmasin): matn serverdan keladi. */
+/** Badiiy modullar lugʻatni oʻzi yuklamaydi, aks holda beshta til bitta boʻlakka kirib qoladi: matn serverdan keladi. */
 export interface ArtCopy {
   /** Qahramon videosi: tavsif va 44 px boshqaruv yorliqlari. */
   readonly videoAlt?: string;
@@ -18,7 +18,7 @@ export interface ArtProps {
 export type ArtLoader = () => Promise<{ default: ComponentType<ArtProps> }>;
 export type ArtMap = Record<ArtSlot, ArtLoader>;
 
-/** Badiiy qatlam birinchi yuklanish JS iga kirmaydi: har uya alohida chunk, kerak boʻlganda olinadi. */
+/** Badiiy qatlam birinchi yuklanadigan skriptga kirmaydi: har uya alohida boʻlak, kerak paytda olinadi. */
 export function loadArt(): Promise<ArtMap> {
   return import("./atlas").then((m) => m.art);
 }

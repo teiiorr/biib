@@ -15,7 +15,7 @@ import type { AdminPath } from "@/lib/admin/paths";
 import { AdminIcon } from "./AdminIcon";
 
 interface LoginFormProps {
-  /** Kirishdan keyin qaytiladigan panel sahifasi (serverda tekshirilgan). */
+  /** Kirishdan keyin qaytiladigan panel sahifasi, serverda tekshirilgan. */
   readonly next: AdminPath;
   /** Server sozlamalari toʻliq emas: shakl koʻrinadi, lekin yuborilmaydi. */
   readonly closed: boolean;
@@ -23,7 +23,7 @@ interface LoginFormProps {
 
 const T = ADMIN_COPY.login;
 
-/** Kirish shakli: pochta va parol, bitta umumiy xato matni (qaysi maydon notoʻgʻriligi aytilmaydi). */
+/** Xato matni bitta: qaysi maydon notoʻgʻri ekani ataylab aytilmaydi. */
 export function LoginForm({ next, closed }: LoginFormProps) {
   const [state, action, pending] = useActionState(signIn, SIGN_IN_IDLE);
   const id = useId();

@@ -1,4 +1,4 @@
-/** Rahbariyat, ekspertlar va hamkorlar boʻlimlari matnlari (panel bir tilli: oʻzbek lotini). */
+/** Rahbariyat, ekspertlar va hamkorlar boʻlimlari matnlari. */
 export const PEOPLE_COPY = {
   kinds: {
     leader: {

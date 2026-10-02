@@ -17,11 +17,10 @@ import { UploadDrop } from "./UploadDrop";
 export interface PhotosFieldProps {
   readonly id: string;
   readonly value: readonly MediaItem[];
-  /** Tartiblash va olib tashlash: joriy roʻyxatdan. */
   readonly onChange: (items: readonly MediaItem[]) => void;
-  /** Yangi suratlar oxiriga (yuklash tugaganda holat oʻzgargan boʻlishi mumkin: qoʻshish chaqiruvchida). */
+  /** Yuklash tugaguncha roʻyxat oʻzgargan boʻlishi mumkin, shu sabab qoʻshishni chaqiruvchi bajaradi. */
   readonly onAdd: (items: readonly MediaItem[]) => void;
-  /** Muqova: suratlar orasiga qayta qoʻshilmaydi. */
+  /** Muqova suratlar roʻyxatiga qayta qoʻshilmaydi. */
   readonly coverId: string | null;
   readonly error?: string | undefined;
   readonly library: readonly MediaItem[];
@@ -31,10 +30,7 @@ export interface PhotosFieldProps {
 
 const T = NEWS_COPY.editor;
 
-/**
- * Tartibli suratlar: har biri oldinga, orqaga va olib tashlash tugmalari bilan (faqat sudrash emas),
- * oʻzgarish ekran oʻquvchiga eʼlon qilinadi. Bir nechtasini birdan yuklash yoki tanlash mumkin.
- */
+/** Tartib sudrashsiz, tugmalar bilan ham oʻzgaradi va ekran oʻquvchiga eʼlon qilinadi. */
 export function PhotosField({
   id,
   value,
@@ -56,7 +52,7 @@ export function PhotosField({
     next.splice(to, 0, item);
     onChange(next);
     setAnnouncement(fill(T.photoMoved, { to: to + 1 }));
-    /* Tugma yangi oʻrinda qayta chiziladi: fokus oʻsha surat bilan birga ketadi. */
+    /* Tugma yangi oʻrinda qayta chiziladi, fokus surat bilan birga koʻchishi kerak. */
     const edge = to === 0 ? "down" : to === next.length - 1 ? "up" : from > to ? "up" : "down";
     requestAnimationFrame(() => document.getElementById(`${id}-${edge}-${item.id}`)?.focus());
   }

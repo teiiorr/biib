@@ -12,7 +12,6 @@ import type { OrgSectionProps } from "./useOrgEditor";
 
 const P = UPOP_COPY.project;
 
-/** Loyiha holati (radio va izohlar) hamda yosh oraligʻi oʻz holati bilan. */
 export function UpopBasicsGroup({ draft, patch, errors, idFor }: OrgSectionProps<ProjectDraft>) {
   const age = (key: "ageFrom" | "ageTo", label: string) => (
     <Field id={idFor(key)} label={label} error={errors[key]}>

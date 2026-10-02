@@ -1,4 +1,4 @@
-/** 24 px toʻr, 20 px jonli maydon, 1.75 px shtrix: boshqa piktogrammalar bilan bir oilada. */
+/** Boshqa belgilar bilan bir xil: 24 px toʻr, 20 px ish maydoni, 1.75 px chiziq. */
 export function CloseGlyph() {
   return (
     <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">

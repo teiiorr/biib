@@ -6,7 +6,7 @@ import { checkId, recordCheck, summarize } from "./helpers/results";
 
 const FRAME_BUDGET_MS = 16.7;
 
-/* G7 (kadrlar): Chromium, CPU 4× sekinlashtirilgan, skript skroll; ≥95% kadr < 16.7 ms, uzun vazifa yoʻq. */
+/* G7 (kadrlar): Chromium, CPU 4× sekinlashtirilgan, skript bilan skroll; ≥95% kadr < 16.7 ms, uzun vazifa yoʻq. */
 test.describe("G7 kadr byudjeti", () => {
   test.skip(({ browserName }) => browserName !== "chromium", "faqat Chromium (CDP)");
   for (const type of PAGE_TYPES) {

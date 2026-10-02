@@ -13,7 +13,7 @@ export interface GlassSwitchProps {
   readonly className?: string;
 }
 
-/** Harakat va Ovoz uchun kalit: butun qator 44 px bosiladigan maydon. */
+/** Butun qator bosiladi: telefonda 44 px dan kichik nishon qolmasin. */
 export function GlassSwitch({
   checked,
   onCheckedChange,

@@ -3,7 +3,7 @@ import { getEngine } from "@/components/motion/engine";
 let pending = false;
 let fontsHooked = false;
 
-/** Bir kadrga birlashtirilgan yagona refresh: dvigatel boʻlmasa yangilanadigan narsa ham yoʻq. */
+/** Bir kadrda bitta qayta hisoblash; dvigatel boʻlmasa hisoblanadigan narsa ham yoʻq. */
 export function scheduleScrollRefresh(): void {
   if (pending || typeof window === "undefined" || !getEngine()) return;
   pending = true;
@@ -18,7 +18,7 @@ export function notifyHeroReady(): void {
   scheduleScrollRefresh();
 }
 
-/** Shriftlar kelganda oʻlchamlar oʻzgaradi; faqat bir marta ulanadi. */
+/** Shriftlar kelganda oʻlchamlar oʻzgaradi; tinglovchi bir marta ulanadi. */
 export function refreshAfterFonts(): void {
   if (fontsHooked || typeof document === "undefined") return;
   fontsHooked = true;

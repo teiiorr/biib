@@ -22,15 +22,15 @@ import { useOrgEditor } from "./useOrgEditor";
 
 interface ContactsEditorProps {
   readonly initial: ContactsDraft;
-  /** Aloqa va tarmoqlarning birgalikdagi kutilgan versiyasi. */
+  /** Aloqa va tarmoqlar uchun umumiy kutilgan versiya. */
   readonly version: string;
 }
 
 const C = ORG_COPY.contacts;
 
 /**
- * Aloqa tahriri: manzil, telefonlar, pochta, Telegram, ish vaqti, xarita va toʻrtta tarmoq bitta shaklda.
- * Tepada ogohlantirish: saqlash hamma sahifaning pastki qismi va JSON-LD ni oʻzgartiradi.
+ * Saqlash hamma sahifaning pastki qismini va JSON-LD maʼlumotini oʻzgartiradi, shu sabab tepada
+ * ogohlantirish turadi.
  */
 export function ContactsEditor({ initial, version }: ContactsEditorProps) {
   const form = useId().replace(/:/g, "");

@@ -3,10 +3,9 @@ import { MAGNET } from "./constants";
 const FINE_POINTER = "(hover: hover) and (pointer: fine)";
 
 /**
- * magnetic (motion-plan 3.12): [data-magnetic] tugmalar koʻrsatkichga koʻpi bilan 6 px tortiladi
- * (data-magnetic="4" — belgili tugma), yorliq 40 % ergashadi. Hujjatda bitta tinglovchi, kadrda bir
- * oʻlchov; qiymat --mag-x/--mag-y orqali CSS translate ga beriladi (ui.css), shuning uchun bosishdagi
- * scale bilan toʻqnashmaydi (D-M4). Bosilganda, aria-disabled da va sensorli kiritishda tortilmaydi.
+ * [data-magnetic] tugmalar koʻrsatkichga tortiladi. Qiymat --mag-x/--mag-y orqali CSS translate
+ * xossasiga beriladi (ui.css), shuning uchun bosishdagi scale bilan toʻqnashmaydi. Hujjatda bitta
+ * tinglovchi, kadrda bitta oʻlchov. Bosilganda, aria-disabled holatida va sensorli kiritishda tortilmaydi.
  */
 export function mountMagnetic(): () => void {
   if (typeof window === "undefined" || !window.matchMedia(FINE_POINTER).matches) {
@@ -34,7 +33,7 @@ export function mountMagnetic(): () => void {
     }
     if (!target || event.buttons !== 0 || target.getAttribute("aria-disabled") === "true") return;
     const rect = target.getBoundingClientRect();
-    // Oʻlchangan quti oʻtish davomida siljigan: markaz joriy translate siz hisoblanadi (tebranish yoʻq).
+    // Oʻtish davomida quti siljigan boʻladi: markaz joriy translate hisobga olinmasdan topiladi, aks holda tebranadi.
     const [shiftX = 0, shiftY = 0] = getComputedStyle(target)
       .translate.split(" ")
       .map((part) => parseFloat(part) || 0);

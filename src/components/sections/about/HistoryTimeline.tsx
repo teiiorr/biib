@@ -11,13 +11,13 @@ export interface HistoryItem {
 
 interface HistoryTimelineProps {
   readonly items: readonly HistoryItem[];
-  /** Roʻyxatning nomi (aria-label), lugʻatdan. */
+  /** Roʻyxat nomi (aria-label), lugʻatdan. */
   readonly label: string;
 }
 
 /**
- * Tarix: yoʻnalish va vazifalar bilan bir xil katta bandlar — belgi va bitta qator «Ustav tasdiqlandi
- * (2026)» (egasining talabi). Faqat yili tasdiqlangan bosqichlar keladi (AboutPage).
+ * Tarix bandlari yoʻnalish va vazifalar bilan bir xil: belgi va bitta qator, masalan «Ustav tasdiqlandi (2026)».
+ * Bu yerga faqat yili tasdiqlangan bosqichlar keladi (AboutPage).
  */
 export function HistoryTimeline({ items, label }: HistoryTimelineProps) {
   return (

@@ -14,12 +14,7 @@ interface UpopGalleryProps {
   readonly dict: Dictionary;
 }
 
-/**
- * UPOP TREND galereyasi: 8 joyli tahririy toʻr (kompyuterda 12, planshetda 8, telefonda 2 ustun).
- * Har joyning oʻz ramkasi (sahna, oltin, oyna, chipta, kino lentasi, paspartu) va skroll bilan oʻz
- * kirishi bor; joylar maʼlumotlar bazasidagi upop_shots jadvalidan (kontent nusxasi orqali). Roʻyxat
- * boʻsh boʻlsa boʻlim umuman chizilmaydi.
- */
+/** Har joyning oʻz ramkasi va skroll bilan oʻz kirishi bor. Roʻyxat boʻsh boʻlsa boʻlim chizilmaydi. */
 export async function UpopGallery({ locale, dict }: UpopGalleryProps) {
   const shots = await getUpopGallery();
   if (shots.length === 0) return null;

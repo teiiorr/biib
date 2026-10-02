@@ -6,7 +6,7 @@ import { AdminIcon } from "./AdminIcon";
 
 const L = NEWS_COPY.locale;
 
-/** Besh tilli maydon sarlavhasi: majburiy boʻlsa pushti yulduzcha (oʻqilmaydi, maydonlar oʻzi aytadi). */
+/** Majburiy maydondagi yulduzcha ekran oʻquvchiga oʻqilmaydi, buni maydonning oʻzi aytadi. */
 export function FieldLegend({
   label,
   required,
@@ -26,7 +26,7 @@ export function FieldLegend({
   );
 }
 
-/** Kirill va 2026 qatorining holati: oʻzbekchadan oʻgirilgan yoki qoʻlda yozilgan. */
+/** Kirill va 2026 qatori oʻzbekchadan oʻgirilganmi yoki qoʻlda yozilganmi. */
 export function LocaleModeTag({ auto }: { readonly auto: boolean }) {
   return <Tag tone={auto ? "neutral" : "art-3"}>{auto ? L.auto : L.manual}</Tag>;
 }
@@ -36,7 +36,7 @@ interface StalePromptProps {
   readonly onRetranslit: () => void;
 }
 
-/** Qoʻlda yozilgan qator ustidan oʻzbekcha oʻzgardi: avtomatik yozilmaydi, taklif qilinadi. */
+/** Oʻzbekcha oʻzgarganda qoʻlda yozilgan qator ustidan yozilmaydi, faqat taklif qilinadi. */
 export function StalePrompt({ id, onRetranslit }: StalePromptProps) {
   return (
     <div className="admin-stale">

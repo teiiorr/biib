@@ -11,7 +11,7 @@ export interface AppearancePanelProps {
   readonly dict: Dictionary["appearance"];
 }
 
-/** Koʻrinish paneli: Shaffoflik, Zichlik, Harakat, Ovoz, Asliga qaytarish (mavzu yagona — tungi). */
+/** Mavzu tanlovi yoʻq: sayt faqat tungi mavzuda. */
 export function AppearancePanel({ dict }: AppearancePanelProps) {
   const { appearance, reducedTransparency, set, reset } = useAppearance();
   const valueText = (v: number) => fill(dict.valueText, { value: v });

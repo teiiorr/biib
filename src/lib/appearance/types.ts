@@ -1,9 +1,9 @@
 export interface Appearance {
-  /** Shaffoflik, 0–100. */
+  /** 0–100. */
   readonly transparency: number;
-  /** Zichlik, 0–100. */
+  /** 0–100. */
   readonly density: number;
-  /** Bosish ovozi. Eski `sound` maydoni (sukutda oʻchiq edi) ataylab oʻqilmaydi: endi hammada yoqiq. */
+  /** Eski sound maydoni ataylab oʻqilmaydi: u sukutda oʻchiq edi, endi bosish ovozi hammada yoqiq. */
   readonly tapSound: boolean;
   readonly motion: boolean;
 }
@@ -24,8 +24,8 @@ function clampPercent(value: unknown, fallback: number): number {
 }
 
 /**
- * localStorage dan kelgan ixtiyoriy qiymatni xavfsiz Appearance ga keltiradi; eski ortiqcha kalitlar
- * (jumladan kunduzgi mavzu olib tashlangunga qadar saqlangan `theme`) tashlanadi.
+ * localStorage qiymatiga ishonib boʻlmaydi: u xavfsiz Appearance shakliga keltiriladi, eski ortiqcha
+ * kalitlar (jumladan olib tashlangan kunduzgi mavzuning theme kaliti) tashlanadi.
  */
 export function normalizeAppearance(raw: unknown): Appearance {
   const r = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;

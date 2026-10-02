@@ -26,7 +26,6 @@ interface GallerySlotCardProps {
   readonly idFor: (field: string) => string;
   readonly errors: FieldErrors;
   readonly library: readonly GalleryMedia[];
-  /** Muqova kadri uchun rasmlar. */
   readonly images: readonly MediaItem[];
   readonly onChange: (slot: GallerySlot) => void;
   readonly onReplace: (media: GalleryMedia) => void;
@@ -39,7 +38,6 @@ const G = UPOP_COPY.gallery;
 const FRAMES = UPOP_FRAMES.map((value) => ({ value, label: G.frames[value] }));
 const MOTIONS = UPOP_MOTIONS.map((value) => ({ value, label: G.motions[value] }));
 
-/** Toʻla joy: koʻrinish, ramka va harakat, videoda muqova kadri, ixtiyoriy tavsif. */
 export function GallerySlotCard(props: GallerySlotCardProps) {
   const { index, slot, idFor, errors, library, images, onChange } = props;
   const n = index + 1;

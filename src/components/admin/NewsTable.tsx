@@ -10,7 +10,7 @@ import type { NewsListRow } from "@/lib/admin/news/types";
 
 import { NewsRowActions } from "./NewsRowActions";
 
-/** Holat tegi: tasdiqlangan pushti, qoralama neytral, kutilmoqda rangli (hech qachon kapsula emas). */
+/** Holat tegi: tasdiqlangan pushti, qoralama neytral, kutilmoqda rangli. */
 export const STATUS_TONE: Readonly<Record<ContentStatus, TagTone>> = {
   confirmed: "accent",
   draft: "neutral",
@@ -19,7 +19,7 @@ export const STATUS_TONE: Readonly<Record<ContentStatus, TagTone>> = {
 
 const C = NEWS_COPY.list.columns;
 
-/** Yangiliklar jadvali: 600 px dan torda har qator kartaga aylanadi (ustun nomi katak oldida). */
+/** 600 px dan tor ekranda har qator kartaga aylanadi, ustun nomi katak oldida yoziladi. */
 export function NewsTable({ rows }: { readonly rows: readonly NewsListRow[] }) {
   return (
     <table className="admin-table">

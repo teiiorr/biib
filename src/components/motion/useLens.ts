@@ -6,15 +6,13 @@ import { useMotionPrefs } from "./motion-context";
 
 const useIsoLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
-/* Linza yorliqdan har tomonga 4 px keng (bandlar orasidagi 8 px ga kiradi), kamida 56 px. */
+/* Linza yorliqdan har tomonga 4 px keng (bandlar orasidagi 8 px ichida), kamida 56 px. */
 const LENS_PAD = 4;
 const LENS_MIN = 56;
 
 /**
- * lens: konteyner ichidagi [data-lens] element faol [data-lens-item] ustiga prujina bilan siljiydi.
- * Joy left/width bilan yoziladi, harakat CSS oʻtishida faqat transformda (FLIP): eski joydan
- * yangisiga translate + scaleX, prujina egri chizigʻi --ease-spring. Oʻlcham oʻzgarsa qayta oʻlchanadi.
- * activeIndex < 0: faol band yoʻq (masalan 404), linza yashiriladi.
+ * Joy left va width bilan yoziladi, harakat esa CSS oʻtishida faqat transform orqali (FLIP): translate va scaleX,
+ * egri chiziq --ease-spring. activeIndex < 0 boʻlsa (masalan, 404) linza yashiriladi.
  */
 export function useLens(ref: RefObject<HTMLElement | null>, activeIndex: number): void {
   const prefs = useMotionPrefs();
@@ -36,8 +34,8 @@ export function useLens(ref: RefObject<HTMLElement | null>, activeIndex: number)
       }
       lens.style.opacity = "";
       const before = lens.getBoundingClientRect();
-      /* Oʻlcham layout qiymatlaridan (offset*): panel yigʻilish animatsiyasida scale qilingan boʻlsa ham
-         linza bandning haqiqiy kengligi va markazida turadi (getBoundingClientRect transformni ham oʻlchardi). */
+      /* Oʻlcham offset* qiymatlaridan olinadi: getBoundingClientRect transformni ham hisoblaydi va panel
+         yigʻilayotganda linza bandning haqiqiy kengligi va markazidan siljib ketardi. */
       const itemWidth = target.offsetWidth;
       if (itemWidth === 0) return;
       const rootWidth = root.clientWidth;
@@ -47,7 +45,7 @@ export function useLens(ref: RefObject<HTMLElement | null>, activeIndex: number)
       const left = Math.min(Math.max(inset, center - width / 2), rootWidth - inset - width);
       lens.style.left = `${left}px`;
       lens.style.width = `${width}px`;
-      // Birinchi joylashuv, oʻlcham oʻzgarishi va harakat taqiqi: animatsiyasiz.
+      // Birinchi joylashuvda, oʻlcham oʻzgarganda va harakat cheklanganda animatsiya yoʻq.
       if (!withMotion || !settled.current || before.width === 0) {
         settled.current = true;
         return;
@@ -61,8 +59,8 @@ export function useLens(ref: RefObject<HTMLElement | null>, activeIndex: number)
       lens.style.transform = "";
     };
     place(animate);
-    /* Panel oʻlchami oʻzgarmasa ham bandlar kengayishi mumkin (shrift yuklandi, til almashdi): har band
-       kuzatiladi, shriftlar tayyor boʻlgach yana bir bor joylanadi. */
+    /* Panel oʻlchami oʻzgarmasa ham bandlar kengayishi mumkin (shrift yuklandi, til almashdi), shuning uchun
+       har band kuzatiladi va shriftlar tayyor boʻlgach linza yana bir bor joylanadi. */
     const observer = new ResizeObserver(() => place(false));
     observer.observe(root);
     for (const item of root.querySelectorAll<HTMLElement>("[data-lens-item]"))

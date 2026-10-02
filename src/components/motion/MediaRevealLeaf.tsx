@@ -10,8 +10,8 @@ import { useMediaReveal } from "./useMediaReveal";
 import type { LateProps } from "./with-engine";
 
 /**
- * Server media ramkasi (MediaFrame) ichidagi koʻrinmas barg: ota ramkaga media-reveal va
- * media-parallax ulaydi. Oʻram yoʻq — ramka DOM i, nisbati va umumiy element nomi oʻzgarmaydi.
+ * Server ramkasi (MediaFrame) ichidagi koʻrinmas barg: ota ramkaga kirish va parallaksni ulaydi.
+ * Oʻram qoʻshilmaydi, shuning uchun ramkaning DOM tuzilishi, nisbati va umumiy element nomi oʻzgarmaydi.
  */
 export function MediaRevealLeaf({
   mode = "abr",
@@ -24,7 +24,7 @@ export function MediaRevealLeaf({
   const depth = useParallaxDepth();
   const activeDepth = parallax ? depth : 0;
 
-  // Hooklardan oldin: ular shu kadrda ota ramkani oʻqiydi.
+  // Hooklardan oldin turishi kerak: ular shu kadrda ota ramkani oʻqiydi.
   useLayoutEffect(() => {
     box.current = anchor.current?.closest<HTMLElement>(".media-frame") ?? null;
   }, []);

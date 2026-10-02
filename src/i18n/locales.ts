@@ -4,11 +4,10 @@ export const DEFAULT_LOCALE: Locale = "uz";
 
 export interface LocaleMeta {
   readonly code: Locale;
-  /** `<html lang>` qiymati. */
   readonly htmlLang: "uz-Latn" | "uz-Cyrl" | "ru" | "en";
   /** Intl uchun BCP-47 tegi. 2026 imlosi ham uz-Latn orqali formatlanadi. */
   readonly intl: "uz-Latn" | "uz-Cyrl" | "ru" | "en";
-  /** hreflang: 2026 imlosi uchun alohida kod yoʻq, shu sabab null (6.5). */
+  /** 2026 imlosi uchun alohida hreflang kodi yoʻq, shu sabab null. */
   readonly hreflang: "uz-Latn" | "uz-Cyrl" | "ru" | "en" | null;
   readonly nativeName: string;
   readonly shortName: string;

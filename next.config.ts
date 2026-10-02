@@ -1,8 +1,7 @@
 import type { NextConfig } from "next";
 
-// Statik sahifalar uchun CSP: Next oʻz yuklovchi skriptlarini inline qoʻyadi,
-// nonce esa dinamik renderga majbur qilardi, shu sabab 'unsafe-inline'.
-/* Ishlab chiqish rejimida React eval() ishlatadi; ishlab chiqarishda hech qachon. */
+// Next yuklovchi skriptlarini inline qoʻyadi, nonce esa sahifalarni dinamik chizishga majbur qilardi.
+// eval() chaqiruviga ruxsat faqat dev rejimida kerak, React uni oʻsha yerdagina ishlatadi.
 const scriptSrc =
   process.env.NODE_ENV === "production"
     ? "script-src 'self' 'unsafe-inline'"
@@ -30,9 +29,8 @@ const securityHeaders = [
   { key: "X-Frame-Options", value: "DENY" },
 ];
 
-/* Yuklangan rasmlar Supabase ochiq bucketida; manzil berilmasa /uploads faqat public/uploads dan.
-   Panel brauzerdan Supabase ga toʻgʻridan-toʻgʻri yuklaydi (imzoli URL) va blob: oldindan koʻrishni
-   ishlatadi: ruxsat faqat /admin da, ommaviy CSP bir bayt ham oʻzgarmaydi. */
+/* Panel faylni imzoli manzil orqali toʻgʻridan-toʻgʻri Supabase omboriga yuklaydi va oldindan koʻrish
+   uchun blob: ishlatadi. Bu ruxsatlar faqat /admin uchun, ommaviy sahifalar qoidasi oʻzgarmaydi. */
 const supabaseOrigin = (() => {
   try {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -49,7 +47,7 @@ const adminCsp = csp
 
 const adminHeaders = [
   { key: "Content-Security-Policy", value: adminCsp },
-  /* Imzoli yuklash URL larida kalit bor: panel hech qayerga manzil yubormaydi. */
+  /* Imzoli yuklash manzilida kalit bor, u Referer orqali tashqariga chiqmasligi kerak. */
   { key: "Referrer-Policy", value: "no-referrer" },
   { key: "X-Robots-Tag", value: "noindex, nofollow" },
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
@@ -62,14 +60,14 @@ const nextConfig: NextConfig = {
     globalNotFound: true,
   },
   async redirects() {
-    // 307: keyinroq til aniqlash qoʻshilsa kesh zaharlanmaydi.
+    // 307: keyinroq tilni avtomatik aniqlash qoʻshilsa, keshda eski yoʻnaltirish qolib ketmaydi.
     return [{ source: "/", destination: "/uz", permanent: false }];
   },
   async headers() {
-    /* Bir kalit ikki yozuvda boʻlsa oxirgisi gʻolib (headers.md): panel yozuvi umumiydan keyin. */
+    /* Bir sarlavha ikki yozuvda boʻlsa oxirgisi ustun keladi, shuning uchun panel yozuvi eng oxirida. */
     return [
       { source: "/(.*)", headers: securityHeaders },
-      /* Fayl nomida mazmun xeshi bor: nusxa hech qachon oʻzgarmaydi. */
+      /* Fayl nomida mazmun xeshi bor, shu nomdagi fayl hech qachon oʻzgarmaydi. */
       {
         source: "/uploads/:path*",
         headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
@@ -77,7 +75,7 @@ const nextConfig: NextConfig = {
       { source: "/admin/:path*", headers: adminHeaders },
     ];
   },
-  /* Massiv = afterFiles: public/uploads ga tortilgan fayl ustun, baza toʻxtasa ham ishlaydi. */
+  /* Massiv afterFiles kabi ishlaydi: public/uploads papkasidagi fayl ustun turadi va baza toʻxtasa ham ochiladi. */
   async rewrites() {
     return supabaseOrigin
       ? [

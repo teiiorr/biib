@@ -9,7 +9,6 @@ import { RefreshSiteButton } from "./RefreshSiteButton";
 const H = ADMIN_COPY.health;
 const C = ADMIN_COPY.common;
 
-/** «Sayt holati»: sahifalar manbai, bazaga ulanish, bazadagi nusxa vaqti va yangilash tugmasi. */
 export function HealthCard({ health }: { readonly health: SiteHealth }) {
   const news = health.news;
   return (

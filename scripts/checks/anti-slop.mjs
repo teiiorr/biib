@@ -2,7 +2,7 @@ import { fileURLToPath } from "node:url";
 import { fail, grepLines, listSourceFiles, pass, readText } from "./util.mjs";
 
 const TEXT_EXT = [".ts", ".tsx", ".mts", ".css", ".mjs", ".json", ".md", ".svg"];
-/* .gold-text qoidasi ichidagi qator: yuqoridagi eng yaqin selektor .gold-text ni oʻz ichiga olishi kerak. */
+/* Qator .gold-text qoidasi ichidami: undan yuqoridagi eng yaqin selektorga qaraladi. */
 function goldTextBlock(text, hit) {
   const before = text
     .split("\n")
@@ -19,7 +19,7 @@ const PALETTES =
 const COLOR_UTILS =
   "bg|text|border|from|to|via|ring|fill|stroke|outline|decoration|accent|caret|divide|placeholder|shadow";
 
-/* §8 XIV klishelar: ingliz, rus va oʻzbek muqobillari. Roʻyxat docs/qa/anti-slop-checklist.md da ham bor. */
+/* Ingliz, rus va oʻzbek tillaridagi klishelar; roʻyxat qoʻlda koʻrish varagʻiga ham chiqadi. */
 export const CLICHES = [
   ["en", "unlock", /\bunlock/i],
   ["en", "elevate", /\belevat(?:e|es|ed|ing)\b/i],
@@ -56,7 +56,7 @@ export const CLICHES = [
   ["uz", "shiddatli dunyoda", /shiddatli dunyo|tez oʻzgarayotgan dunyo/i],
 ];
 
-/** CSS blokining ichida `!important` faqat reduced-motion va [hidden] uchun qoladi. */
+/** !important faqat prefers-reduced-motion bloki va [hidden] qoidasida ruxsat etiladi. */
 function importantAllowed(text, hit) {
   const offset = text
     .split("\n")
@@ -87,8 +87,7 @@ const RULES = [
   {
     id: "gradient-text",
     re: /bg-clip-text|background-clip:\s*text/,
-    /* Yagona istisno: egasi soʻragan doimiy yaltiroq oltin sarlavhalar (docs/qa/decisions.md DO3) —
-       faqat motion.css dagi .gold-text bloki; boshqa har qanday gradient matn taqiqligicha qoladi. */
+    /* Yagona istisno: motion.css faylidagi yaltiroq oltin sarlavhalar (.gold-text bloki). */
     allow: (file, hit, text) => file === "src/styles/motion.css" && goldTextBlock(text, hit),
   },
   {
@@ -106,15 +105,14 @@ const RULES = [
   {
     id: "z-index",
     re: /(?<![\w-])-?z-\d+(?![\w-])|zIndex:\s*-?\d+|z-index:\s*-?\d+/,
-    /* CSS da -1/0/1 izolyatsiyalangan komponent ichidagi mahalliy qatlam; sahifa qatlamlari faqat token. */
+    /* CSS faylidagi -1, 0 va 1 izolyatsiyalangan komponent ichidagi mahalliy qatlam; sahifa qatlamlari faqat token bilan. */
     allow: (file, hit) => file.endsWith(".css") && /z-index:\s*(?:-1|0|1)\b/.test(hit.match),
   },
   { id: "dead-link", re: /href\s*[:=]\s*["'`]#["'`]/ },
   {
     id: "lorem",
     re: /\blorem\b/i,
-    /* Egasining qarori (2026-09-26, decisions D44): tasdiq kutilayotgan boʻsh joylar uchun lorem faqat
-       bitta oʻrinbosar modulida; boshqa har qanday faylda taqiq oʻz kuchida. */
+    /* Tasdiq kutilayotgan boʻsh joylar uchun lorem faqat bitta oʻrinbosar modulida ruxsat etiladi. */
     allow: (file) => file.replace(/\\/g, "/").endsWith("src/content/placeholder.ts"),
   },
   {

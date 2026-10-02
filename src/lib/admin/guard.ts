@@ -27,7 +27,7 @@ export const getAdminSession = cache(async (): Promise<AdminSession | null> => {
 });
 
 /**
- * Sahifalar uchun. Render paytida cookie yozib boʻlmaydi: muddati oʻtgan token yangilash yoʻliga
+ * Sahifa chizilayotganda cookie yozib boʻlmaydi: muddati oʻtgan token yangilash yoʻliga
  * (Route Handler) yuboriladi, u yangi juftlikni yozib, shu sahifaga qaytaradi.
  */
 export async function requireAdmin(next: AdminPath = ADMIN_HOME): Promise<AdminSession> {
@@ -44,8 +44,8 @@ interface ActionGuardOptions {
 }
 
 /**
- * Har bir server amalining birinchi qatori. Amal cookie yoza oladi, shu sabab kerak boʻlsa shu yerning
- * oʻzida yangilanadi. Sessiya tiklanmasa kirish sahifasiga.
+ * Har server amali shu chaqiruvdan boshlanadi. Amal cookie yoza oladi, shu sabab token kerak boʻlsa
+ * shu yerning oʻzida yangilanadi.
  */
 export async function requireAdminAction(options: ActionGuardOptions = {}): Promise<AdminSession> {
   const env = adminEnv();

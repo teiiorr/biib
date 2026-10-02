@@ -8,8 +8,8 @@ import { partnerResultSchema } from "./schema";
 import { PARTNER_GROUPS, type PartnerAdmin, type PartnerListRow } from "./types";
 
 /**
- * Panel roʻyxati: guruhlar saytdagi tartibda, guruh ichida sort_order va key (content_snapshot bilan
- * bir xil). Tartiblash shu yassi roʻyxatni butunligicha yuboradi.
+ * Tartib saytdagidek: guruh, keyin sort_order va key (content_snapshot bilan bir xil).
+ * Tartiblash shu yassi roʻyxatni butunligicha yuboradi.
  */
 export async function listPartners(db: AdminDb): Promise<readonly PartnerListRow[]> {
   const { data, error } = await db

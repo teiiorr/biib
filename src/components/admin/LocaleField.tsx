@@ -14,7 +14,7 @@ import { FieldLegend, LocaleModeTag, StalePrompt } from "./LocaleBits";
 import { useLocaleEditing } from "./useLocaleEditing";
 
 export interface LocaleFieldProps {
-  /** Har til maydonining id si: `${id}-${til}` (xatoga fokus shu orqali). */
+  /** Har til maydoniga `${id}-${til}` id beriladi, xatoga fokus shunga tayanadi. */
   readonly id: string;
   readonly label: string;
   readonly hint?: string;
@@ -23,15 +23,15 @@ export interface LocaleFieldProps {
   /** Xato kalitlari `${path}.${til}` shaklida. */
   readonly path: string;
   readonly errors?: FieldErrors;
-  /** Tavsiya etilgan uzunlik: hisoblagich, oshsa ogohlantirish (saqlashni toʻxtatmaydi). */
+  /** Tavsiya etilgan uzunlik: oshsa ogohlantiradi, lekin saqlashni toʻxtatmaydi. */
   readonly max?: number;
   readonly multiline?: boolean;
   readonly required?: boolean;
 }
 
 /**
- * Besh tilli qisqa maydon: hammasi koʻrinib turadi. Kirill va 2026 qatorlari oʻzbekchadan oʻgiriladi,
- * qoʻlda tuzatilgani esa keyin oʻzbekcha oʻzgarsa ham saqlanadi va qayta oʻgirish taklif qilinadi.
+ * Kirill va 2026 qatorlari oʻzbekchadan oʻgiriladi. Qoʻlda tuzatilgan qator oʻzbekcha oʻzgarsa ham
+ * saqlanadi, faqat qayta oʻgirish taklif qilinadi.
  */
 export function LocaleField({
   id,

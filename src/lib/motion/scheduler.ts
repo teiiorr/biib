@@ -1,6 +1,6 @@
 /**
- * Dvigatel kelganda oʻnlab sahnalar bir vaqtda quriladi (SplitText, ScrollTrigger oʻlchovlari):
- * bitta uzun vazifa oʻrniga ishlar kadrlarga boʻlinadi. Koʻrinishdagi elementlar navbatda oldinda.
+ * Dvigatel kelganda oʻnlab sahnalar bir vaqtda quriladi (SplitText, ScrollTrigger oʻlchovlari),
+ * shu sabab ish bitta uzun vazifa emas, kadrlarga boʻlinadi. Ekrandagi elementlar navbatda oldinda.
  * Kadr byudjeti: foydalanuvchi kiritayotgan yoki yaqinda skroll qilgan boʻlsa 8 ms, aks holda 12 ms.
  */
 type Job = { readonly run: () => void; readonly priority: number; readonly order: number };
@@ -60,7 +60,7 @@ function schedule(): void {
   window.requestAnimationFrame(flush);
 }
 
-/** Element viewportga qancha yaqin boʻlsa, shuncha oldin ishlaydi (0 = koʻrinishda). */
+/** Element ekranga qancha yaqin boʻlsa, shuncha oldin ishlaydi (0 = ekranda). */
 export function viewportPriority(element: Element | null): number {
   if (!element) return 1;
   const rect = element.getBoundingClientRect();
@@ -68,7 +68,7 @@ export function viewportPriority(element: Element | null): number {
   return Math.abs(rect.top) / Math.max(1, window.innerHeight);
 }
 
-/** Ishni navbatga qoʻyadi; qaytgan funksiya uni bekor qiladi (unmount). */
+/** Qaytgan funksiya ishni bekor qiladi (unmount uchun). */
 export function enqueueSliced(run: () => void, priority: number): () => void {
   watchScroll();
   const job: Job = { run, priority, order: order++ };
@@ -80,7 +80,7 @@ export function enqueueSliced(run: () => void, priority: number): () => void {
   };
 }
 
-/** Navbat oxirgi ishdan keyin boʻshaganda chaqiriladi (masalan bitta ScrollTrigger.refresh). */
+/** Navbat oxirgi ishdan keyin boʻshaganda chaqiriladi, masalan bitta ScrollTrigger.refresh uchun. */
 export function onQueueDrain(listener: () => void): () => void {
   drainListeners.add(listener);
   return () => {

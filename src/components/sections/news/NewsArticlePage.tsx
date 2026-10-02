@@ -37,11 +37,7 @@ interface NewsArticlePageProps {
   readonly article: NewsArticle;
 }
 
-/**
- * Maqola: markazdagi bosh qism (nonushoq, h1, mavzu, sana va oʻqish vaqti), umumiy muqova, markazdagi
- * 65ch matn ustuni, iqtibos, ulashish, oddiy oʻqish chizigʻi, oldingi/keyingi. Matn ustuni va maqola
- * oxiri bir kenglikda, bir oʻqda. Muqova roʻyxatdan umumiy element boʻlib keladi, faqat parallaks.
- */
+/** Muqova roʻyxatdan umumiy element boʻlib keladi, shu sabab bu yerda unga faqat parallaks qoladi. */
 export async function NewsArticlePage({ locale, dict, article }: NewsArticlePageProps) {
   const { slug } = article;
   const [{ previous, next }, news, media] = await Promise.all([
@@ -56,7 +52,6 @@ export async function NewsArticlePage({ locale, dict, article }: NewsArticlePage
   const minutes = readingMinutes(body);
   const n = dict.news;
   const quote = article.quote ? t(article.quote, locale) : null;
-  /* Bir nechta surat: muqova birinchi, keyin qolganlari — maqolada varaqlanadi. */
   const slides =
     article.photos && article.photos.length > 0 && article.cover.src
       ? [article.cover.src, ...article.photos]
@@ -79,8 +74,8 @@ export async function NewsArticlePage({ locale, dict, article }: NewsArticlePage
       />
       <Section as="article" rhythm="hero" labelledBy="article-title" className="article">
         <Container grid>
-          {/* Yangilik nomi — butun gap: umumiy katta sarlavha oʻlchamida ekranni egallardi. Oʻz oʻlchami
-              (44 px gacha) va 10 ustun: muqova ustida ikki tekis qator. */}
+          {/* Yangilik nomi butun gap boʻladi: umumiy sarlavha oʻlchamida ekranni egallardi, shu sabab
+             44 px gacha va 10 ustun. */}
           <header
             className="col-span-4 md:col-span-8 lg:col-span-10 lg:col-start-2 article-head"
             data-grid-item=""
@@ -102,7 +97,7 @@ export async function NewsArticlePage({ locale, dict, article }: NewsArticlePage
               <span>{fill(dict.common.time.readingTime, { minutes })}</span>
             </p>
           </header>
-          {/* Muqova matn ustuni bilan aynan bir kenglikda (egasining talabi): surat xatboshilardan chiqmaydi. */}
+          {/* Muqova matn ustuni kengligida: surat xatboshilardan chiqib ketmaydi. */}
           <div
             className="col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3 xl:col-span-6 xl:col-start-4 article-cover"
             data-grid-item=""
@@ -180,8 +175,7 @@ export async function NewsArticlePage({ locale, dict, article }: NewsArticlePage
             data-grid-item=""
           >
             <nav className="article-nav" aria-label={n.title}>
-              {/* Halqa: ikkala katak doim toʻla (content/select.ts). */}
-              {/* Ikkala katak bir xil karta: kichik muqova, yoʻnalish va sarlavha. */}
+              {/* Roʻyxat halqa boʻlib aylanadi: ikkala katak doim toʻla. */}
               {previous ? (
                 <TransitionLink
                   href={pathFor(locale, "newsItem", previous.slug)}
@@ -238,7 +232,6 @@ export async function NewsArticlePage({ locale, dict, article }: NewsArticlePage
         <Section labelledBy="article-related" className="article-related">
           <Container>
             <SectionHeader id="article-related" title={n.related} />
-            {/* Roʻyxatdagi kartalar bilan bir xil: muqova 3:2, mavzu, sarlavha; uchtasi teng. */}
             <Reveal
               as="div"
               className="related-grid"

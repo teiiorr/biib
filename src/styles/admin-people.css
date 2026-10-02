@@ -1,5 +1,4 @@
-/* Boshqaruv paneli: rahbariyat, ekspertlar va hamkorlar — tartiblanadigan roʻyxat, portret va logotip
-   oldindan koʻrishi. Qiymatlar sayt tokenlari va boʻshliq shkalasida. */
+/* Panel: rahbariyat, ekspertlar va hamkorlar roʻyxatlari, portret va logotip koʻrinishi. */
 
 @layer components {
   .admin-hints {
@@ -9,8 +8,7 @@
   }
 
   /* ---------- Tartiblanadigan roʻyxat ----------
-     Telefonda: rasm chapda ikki qatorga, ism va menyu yuqorida, oʻrin va oʻq tugmalari pastda (bosh
-     barmoq yetadigan joyda). Keng ekranda hammasi bir qatorda. */
+     Telefonda oʻrin va oʻq tugmalari pastki qatorda: bosh barmoq yetadigan joyda. */
   .admin-order {
     display: flex;
     flex-direction: column;
@@ -65,11 +63,11 @@
     display: flex;
     gap: 8px;
   }
-  /* Oʻchiq chetdagi tugma faol tugmalardan yorqinroq chegara olardi: yashiriladi, joyi qoladi. */
+  /* Chetdagi oʻchiq tugma faollaridan yorqinroq koʻrinardi: u yashiriladi, joyi saqlanadi. */
   .admin-order-edge {
     visibility: hidden;
   }
-  /* Kichik ramkada media radiusi (24 px) portretni doiraga aylantirardi: boshqaruv radiusi. */
+  /* Media radiusi (24 px) kichik ramkada portretni doiraga aylantirardi, shu sabab boshqaruv radiusi olinadi. */
   .admin-order-media .media-frame {
     border-radius: var(--radius-m);
   }
@@ -109,7 +107,7 @@
     max-width: 240px;
   }
 
-  /* ---------- Logotip plitkasi: saytdagi partner-tile kabi sirt, tarkib nisbat ichida qoladi ---------- */
+  /* ---------- Logotip plitkasi: saytdagi .partner-tile bilan bir xil ---------- */
   .admin-logo-tile {
     display: grid;
     grid-template: minmax(0, 1fr) / minmax(0, 1fr);

@@ -18,7 +18,7 @@ import type { ContactsAdmin, ProjectAdmin, ShotAdmin, SocialAdmin } from "./type
 
 export interface Loaded<T> {
   readonly data: T;
-  /** Kutilgan versiya: updated_at yoki (yakka roʻyxatlarda) maʼlumotning oʻz izi. */
+  /** updated_at yoki yakka roʻyxatlarda maʼlumotning oʻz izi. */
   readonly version: string | null;
 }
 
@@ -42,8 +42,8 @@ function sortKeys(value: unknown): unknown {
 }
 
 /**
- * Maʼlumot izi (kalitlar tartibidan qatʼi nazar): vaqt belgisi yoʻq roʻyxatlar (tarmoqlar, galereya)
- * boshqa oynada oʻzgarganini va saqlashda haqiqatan oʻzgarish borligini bilish uchun.
+ * Kalitlar tartibiga bogʻliq boʻlmagan maʼlumot izi. Vaqt belgisi yoʻq roʻyxatlarda (tarmoqlar,
+ * galereya) boshqa oynadagi oʻzgarish va saqlashdagi haqiqiy farq shu iz orqali bilinadi.
  */
 export function fingerprint(value: unknown): string {
   return JSON.stringify(sortKeys(value));
@@ -53,7 +53,7 @@ export function loadContacts(db: AdminDb): Promise<Loaded<ContactsAdmin>> {
   return adminGet(db, "contacts", contactsSchema);
 }
 
-/** Aloqa shakli ikki yozuvni birga tahrirlaydi: kutilgan versiya ikkalasining izi. */
+/** Aloqa shakli ikki yozuvni birga tahrirlaydi, shu sabab kutilgan versiya ikkalasining izi. */
 export function contactsVersion(updatedAt: string | null, socials: readonly SocialAdmin[]): string {
   return JSON.stringify([updatedAt, fingerprint(socials)]);
 }
@@ -74,7 +74,7 @@ export async function loadShots(db: AdminDb): Promise<Loaded<readonly ShotAdmin[
 
 const ICONS: ReadonlySet<string> = new Set(ICON_NAMES);
 
-/** Tarix saytdagi tartibda; belgi saytdagi roʻyxatda boʻlmasa taqvim. */
+/** Tartib saytdagidek. Belgi saytdagi roʻyxatda boʻlmasa, taqvim belgisi qoʻyiladi. */
 export async function listMilestones(db: AdminDb): Promise<readonly StoredMilestone[]> {
   const { data, error } = await db
     .from("milestones")

@@ -1,4 +1,4 @@
-/** Media kutubxonasi, Matnlar va Xavfsizlik boʻlimlari matnlari (panel bir tilli: oʻzbek lotini). */
+/** Media kutubxonasi, Matnlar va Xavfsizlik boʻlimlari matnlari. */
 export const SYSTEM_COPY = {
   media: {
     intro: "Saytdagi barcha rasm va videolar: oʻlchami, hajmi va necha joyda ishlatilgani.",

@@ -9,8 +9,8 @@ import { noStoreFetch } from "./supabase";
 export type AdminDb = SupabaseClient<Database>;
 
 /**
- * Panel egasi nomidan ishlaydigan mijoz: har soʻrov uning tokeni bilan, shu sabab RLS va is_admin()
- * amal qiladi. Maxfiy kalit ishlatilmaydi; sessiya saqlanmaydi va oʻzi yangilanmaydi.
+ * Har soʻrov adminning oʻz tokeni bilan ketadi, shu sabab RLS va is_admin() amal qiladi. Maxfiy
+ * kalit ishlatilmaydi, sessiya saqlanmaydi va oʻzi yangilanmaydi.
  */
 export function adminDb(accessToken: string): AdminDb {
   const env = adminEnv();

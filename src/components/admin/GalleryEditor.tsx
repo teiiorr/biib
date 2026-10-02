@@ -36,10 +36,7 @@ interface GalleryEditorProps {
 
 const G = UPOP_COPY.gallery;
 
-/**
- * UPOP galereyasi: tepada saytdagi toʻrning kichik nusxasi, ostida sakkiz joy kartasi (kompyuterda
- * 1-joy toʻliq kenglikda). Hammasi bitta saqlash bilan: joylar almashishi bir tranzaksiyada.
- */
+/** Hamma joy bitta saqlash bilan yoziladi, shunda joylar almashishi bitta tranzaksiyada boʻladi. */
 export function GalleryEditor({ initial, version, library }: GalleryEditorProps) {
   const form = useId().replace(/:/g, "");
   const idFor = (field: string) => `${form}-${field}`;

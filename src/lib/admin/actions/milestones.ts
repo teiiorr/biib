@@ -14,9 +14,8 @@ import { publish } from "../publish";
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
 /**
- * Tarix: hamma qator tekshiriladi, faqat oʻzgargani yoki yangisi saqlanadi (har biri oʻz kutilgan
- * vaqti bilan), tartib oʻzgargan boʻlsa toʻliq roʻyxat bilan qayta tartiblanadi. Oxirida roʻyxat
- * bazadan qayta oʻqiladi: yangi qatorlar kaliti va vaqti bilan tahrirga qaytadi.
+ * Faqat oʻzgargan yoki yangi qatorlar saqlanadi, har biri oʻz kutilgan vaqti bilan. Oxirida roʻyxat
+ * bazadan qayta oʻqiladi: yangi qatorlar tahrirga kaliti va vaqti bilan qaytadi.
  */
 export async function saveMilestones(
   prev: SaveMilestonesState,
@@ -71,7 +70,7 @@ export async function saveMilestones(
   }
 }
 
-/** Bosqichni oʻchirish: sayt darhol yangilanadi, jurnaldan qaytarish mumkin. */
+/** Oʻchirilgan bosqichni jurnaldan qaytarish mumkin. */
 export async function deleteMilestone(id: string, expected: string): Promise<ActionResult> {
   const session = await requireAdminAction();
   if (!UUID_RE.test(id) || expected.length > 64)

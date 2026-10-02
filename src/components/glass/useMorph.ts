@@ -11,9 +11,8 @@ const MORPH_SECONDS = 0.42;
 const useIsoLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 /**
- * Oyna morfi: tugma panelga aylanadi, yopilganda panel tugmaga qaytadi.
- * Faqat transform animatsiya qilinadi (scale: true); dvigatel kelmagan yoki kamaytirilgan
- * harakatda CSS 150 ms fade ishlaydi.
+ * Faqat transform animatsiya qilinadi (scale: true). Dvigatel yuklanmagan yoki harakat kamaytirilgan
+ * boʻlsa CSS dagi 150 ms oʻtish ishlaydi.
  */
 export function useMorph(
   open: boolean,

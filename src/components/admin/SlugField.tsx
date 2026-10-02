@@ -17,9 +17,9 @@ export interface SlugFieldProps {
   readonly id: string;
   readonly value: string;
   readonly mode: SlugMode;
-  /** Saqlangan havola: u oʻzniki, tekshirilmaydi. */
+  /** Yozuvning oʻz havolasi, bandlikka tekshirilmaydi. */
   readonly savedSlug: string | null;
-  /** Tasdiqlangan yozuv: havola tarqalgan boʻlishi mumkin, oʻzgartirish ogohlantirish bilan. */
+  /** Tasdiqlangan yozuv havolasi tarqalgan boʻlishi mumkin, shu sabab oʻzgartirish ogohlantirish bilan. */
   readonly locked: boolean;
   readonly check: SlugCheck["result"];
   readonly error?: string | undefined;
@@ -36,7 +36,7 @@ function statusText(props: SlugFieldProps): string {
   return mode === "auto" && check.free ? T.slugSuffixed : NEWS_COPY.errors.slugTaken;
 }
 
-/** Havola: sarlavhadan avtomatik; tasdiqlangandan keyin qulf ortida (eski manzil 308 bilan qoladi). */
+/** Tasdiqlangach havola qulflanadi; oʻzgartirilsa eski manzil 308 yoʻnaltirish bilan ishlayveradi. */
 export function SlugField(props: SlugFieldProps) {
   const { id, value, mode, locked, check, error, onChange } = props;
   const [editing, setEditing] = useState(false);

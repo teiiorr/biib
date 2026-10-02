@@ -11,7 +11,7 @@ interface FooterLangsProps {
   readonly label: string;
 }
 
-/** Futerdagi til roʻyxati: shu sahifaning boshqa tillardagi manzillari. */
+/** Sahifa ostidagi til roʻyxati: shu sahifaning boshqa tillardagi manzillari. */
 export function FooterLangs({ locale, label }: FooterLangsProps) {
   const resolved = resolvePath(usePathname());
   const alternates = resolved ? alternatesFor(resolved.key, resolved.slug) : null;

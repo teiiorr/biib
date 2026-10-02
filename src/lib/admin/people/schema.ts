@@ -8,10 +8,10 @@ function localized<T extends z.ZodType>(value: T) {
 
 export const statusSchema = z.enum(["confirmed", "draft", "pending"]);
 const kind = z.enum(["leader", "expert"]);
-/* Maydon uzunligi chegarasi: tasodifiy yoki zararli katta yuk bazagacha bormaydi. */
+/* Uzunlik chegarasi tasodifiy yoki zararli katta yukni bazagacha yetkazmaydi. */
 const short = localized(z.string().max(400));
 
-/** Brauzerdan kelgan yuk: tuzilma shu yerda, mazmun qoidalari build.ts da. */
+/** Bu yerda faqat tuzilma tekshiriladi, mazmun qoidalari build.ts faylida. */
 export const personPayloadSchema: z.ZodType<PersonPayload> = z.object({
   id: z.uuid().nullable(),
   expected: z.string().max(64).nullable(),
@@ -27,7 +27,6 @@ export const personPayloadSchema: z.ZodType<PersonPayload> = z.object({
 
 const text = localized(z.string());
 
-/** Bazadagi admin shakli (admin_get, jurnal). */
 export const personAdminSchema: z.ZodType<PersonAdmin> = z.object({
   id: z.uuid().exactOptional(),
   key: z.string().exactOptional(),

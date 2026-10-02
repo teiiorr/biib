@@ -71,8 +71,8 @@ function replaceAt(node: unknown, segments: readonly string[], value: TextValue)
 }
 
 /**
- * Lugʻat ustidan paneldagi matnlar. Almashtirish boʻlmasa aynan oʻsha obyekt qaytadi (sahifa HTML i
- * baytma-bayt bir xil). Kod oʻzgarib yoʻqolgan yoki turi boshqa boʻlib qolgan kalit jimgina tashlanadi.
+ * Almashtirish boʻlmasa aynan oʻsha obyekt qaytadi, sahifa HTML kodi baytma-bayt oʻzgarmaydi.
+ * Koddan yoʻqolgan yoki turi oʻzgargan kalit jimgina tashlab ketiladi.
  */
 export function withTextOverrides<T extends object>(
   dict: T,

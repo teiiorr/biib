@@ -30,11 +30,11 @@ interface Fact {
   readonly label: string;
   readonly value: string | null;
   readonly href?: string;
-  /** Bir nechta qiymat (telefonlar): har biri oʻz havolasi, alohida qatorda. */
+  /** Bir nechta qiymat (masalan, telefonlar) alohida qatorlarda, har biri oʻz havolasi bilan. */
   readonly links?: ReadonlyArray<{ readonly text: string; readonly href: string }>;
 }
 
-/* Uzun manzil (pochta, havola) tor ekranda soʻz oʻrtasidan emas, «@» va «/» dan keyin boʻlinadi. */
+/* Uzun manzil (pochta, havola) tor ekranda soʻz oʻrtasidan emas, «@» va «/» belgilaridan keyin boʻlinadi. */
 function breakable(text: string): ReactNode {
   return text.split(/(?<=[@/])/).map((part, index) => (
     <Fragment key={index}>
@@ -46,11 +46,7 @@ function breakable(text: string): ReactNode {
 
 const telHref = (phone: string): string => `tel:${phone.replace(/\s/g, "")}`;
 
-/**
- * Aloqa: markazdagi sarlavha ostida oltita teng rekvizit kartasi (3 / 2 / 1 ustun). Har kartada bir xil
- * uch qator: yorliq, qiymat, oʻngda harakat; qatorlar subgrid, qoʻshni kartalarda bir chiziqda turadi.
- * Keyin yozish boʻlimi: shakl (tugma oʻngda) yoki Telegram havolasi.
- */
+/** Rekvizitlar bitta guruhlangan roʻyxatda, undan keyin bot ulangan boʻlsa yozish shakli keladi. */
 export async function ContactsPage({ locale, dict }: PageProps) {
   const c = await getContacts();
   const d = dict.contacts;
@@ -86,7 +82,7 @@ export async function ContactsPage({ locale, dict }: PageProps) {
     },
   ];
   const map = c.map.value;
-  /* Telegram boshqa tarmoqlar qatorida (egasining talabi: takror yoʻq, bitta maqsadga bitta havola). */
+  /* Telegram boshqa tarmoqlar qatorida turadi: bitta maqsadga bitta havola, takror yoʻq. */
   const socials = c.socials.filter((s) => s.status === "confirmed");
   const external = dict.common.hints.external;
 
@@ -102,13 +98,13 @@ export async function ContactsPage({ locale, dict }: PageProps) {
       />
       <Section labelledBy="contacts-details">
         <Container>
-          {/* Sahifa sarlavhasi darhol kartalar ustida: koʻrinadigan ikkinchi sarlavha ortiqcha,
+          {/* Sahifa sarlavhasi roʻyxat ustida turibdi, koʻrinadigan ikkinchi sarlavha ortiqcha;
               ekran oʻquvchisi uchun boʻlim nomi saqlanadi. */}
           <h2 id="contacts-details" className="sr-only">
             {d.details.heading}
           </h2>
-          {/* Egasining talabi: boʻshliqsiz, tekis. Bitta guruhlangan roʻyxat (iOS sozlamalari kabi): har
-              rekvizit bir qator — belgi, qiymat, oʻngda harakatlar; qatorlar orasida ingichka chiziq. */}
+          {/* Boʻshliqsiz bitta guruhlangan roʻyxat (iOS sozlamalari kabi): har rekvizit bir qator,
+              qatorlar orasida ingichka chiziq. */}
           <div className="grid-site">
             <Reveal
               as="dl"
@@ -224,8 +220,8 @@ export async function ContactsPage({ locale, dict }: PageProps) {
           </div>
         </Container>
       </Section>
-      {/* Yozish shakli faqat bot ulangan boʻlsa. Aks holda alohida «Telegram orqali yozing» boʻlimi yoʻq:
-          Telegram yuqoridagi tarmoqlar qatorida (takror boʻlmasin). */}
+      {/* Yozish shakli faqat bot ulangan boʻlsa chiqadi. Alohida «Telegram orqali yozing» boʻlimi yoʻq:
+          Telegram yuqoridagi tarmoqlar qatorida bor. */}
       {formEnabled ? (
         <Section labelledBy="contacts-write">
           <Container grid>

@@ -2,10 +2,7 @@
 
 import { useEffect, useEffectEvent, useState, type RefObject } from "react";
 
-/**
- * Sichqoncha bilan fayl tashlash maydoni. Tinglovchilar DOM ga toʻgʻridan-toʻgʻri: bu faqat qoʻshimcha
- * yoʻl, asosiysi (klaviatura va teginish) oddiy fayl tanlagich.
- */
+/** Sudrab tashlash qoʻshimcha yoʻl: klaviatura va teginish uchun asosiysi oddiy fayl tanlagich. */
 export function useFileDrop(
   ref: RefObject<HTMLElement | null>,
   onFiles: (files: readonly File[]) => void,

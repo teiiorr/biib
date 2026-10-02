@@ -11,11 +11,11 @@ export interface MenuSheetProps {
   readonly locale: Locale;
   readonly dict: Dictionary["nav"];
   readonly hints: Dictionary["common"]["hints"];
-  /** null: xaritada yoʻq yoʻl (404) — hech bir band faol emas. */
+  /** null: manzil yoʻllar xaritasida yoʻq (404), hech bir band faol emas. */
   readonly current: PageKey | null;
 }
 
-/** Tab-barda oʻz bandi yoʻq sahifalar: ular menyu varagʻida, shu sabab faol band «Menyu». */
+/** Bu sahifalar menyu varagʻida turadi, shuning uchun pastki panelda «Menyu» faol boʻladi. */
 export const MENU_PAGES: readonly PageKey[] = [
   "about",
   "leadership",
@@ -35,7 +35,6 @@ interface MenuTriggerProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>,
   readonly ref?: Ref<HTMLButtonElement>;
 }
 
-/** Tab-bardagi «Menyu» tugmasi: varaq kelguncha ham, keyin ham bir xil. */
 export function MenuTrigger({ label, openLabel, active, ref, ...rest }: MenuTriggerProps) {
   return (
     <button

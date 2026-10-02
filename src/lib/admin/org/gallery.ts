@@ -27,7 +27,7 @@ export const UPOP_MOTIONS = [
   "zoom",
 ] as const satisfies readonly UpopMotion[];
 
-/** Egasi dizaynda koʻrgan joy-joy ramka va harakat: yangi kadr shu bilan boshlanadi. */
+/** Har bir joyning dizayndagi ramkasi va harakati: yangi kadr shulardan boshlanadi. */
 export const SLOT_DEFAULTS: readonly { readonly frame: UpopFrame; readonly motion: UpopMotion }[] =
   [
     { frame: "stage", motion: "curtain" },
@@ -68,7 +68,6 @@ export function slotsFromShots(
   return slots;
 }
 
-/** Yangi yuklangan rasm galereya mediasi sifatida. */
 export function galleryFromUpload(item: MediaItem): GalleryMedia {
   return {
     id: item.id,
@@ -107,7 +106,7 @@ export function galleryErrorOrder(): readonly string[] {
   ]).flat();
 }
 
-/** Serverga ketadigan joy: faqat id lar, tur esa bazadagi media qatoridan tekshiriladi. */
+/** Serverga faqat id ketadi, tur esa bazadagi media qatoridan tekshiriladi. */
 export interface SlotPayload {
   readonly mediaId: string;
   readonly kind: "image" | "video";

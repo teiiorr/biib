@@ -19,8 +19,8 @@ function chain(anim: Animation, name: Callback, extra: () => void): void {
 }
 
 /**
- * will-change faqat animatsiya davomida turadi (§14.5): doimiy qatlam GPU xotirasini yeydi.
- * Timeline uchun nishonlar aniq berilishi kerak, chunki timeline oʻz nishonlarini bilmaydi.
+ * will-change faqat animatsiya davomida turadi: doimiy qatlam GPU xotirasini band qiladi.
+ * Timeline oʻz nishonlarini bilmaydi, shu sabab ular aniq beriladi.
  */
 export function willChangeDuring<T extends Animation>(
   anim: T,

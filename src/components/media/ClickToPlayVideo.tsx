@@ -18,18 +18,17 @@ export interface CaptionTrack {
 export interface ClickToPlayVideoProps {
   readonly src: string;
   readonly poster: string;
-  /** Poster oʻlchami (px): ramkasiz ishlatilganda ham oʻrin oldindan band. */
+  /** Poster oʻlchami, px: ramkasiz ishlatilganda ham joy oldindan ajratiladi. */
   readonly width?: number;
   readonly height?: number;
   /** Davomiyligi soniyada; tugmada m:ss koʻrinadi. */
   readonly duration?: number;
-  /** Video nomi (aria-label). */
+  /** aria-label sifatida ishlatiladi. */
   readonly title: string;
-  /** Tugma matni: «Videoni ijro etish». */
   readonly playLabel: string;
   /**
-   * Ovozli film uchun subtitr (WCAG 1.2.2). Berilmasa video ovozsiz boshlanadi (brauzer
-   * boshqaruvi ovozni yoqadi), matnli muqobil — blok tavsifi.
+   * Ovozli film uchun subtitr (WCAG 1.2.2). Berilmasa video ovozsiz boshlanadi, ovozni brauzer
+   * boshqaruvi yoqadi; matnli muqobil blok tavsifida beriladi.
    */
   readonly captions?: CaptionTrack;
   readonly className?: string;
@@ -43,11 +42,9 @@ function formatDuration(seconds: number): string {
 }
 
 /**
- * Bosilganda yuklanadigan film: manba faqat foydalanuvchi bosganda qoʻyiladi, ovoz saqlanadi,
- * brauzer boshqaruvi koʻrsatiladi. play() bosish ichida chaqiriladi: Safari ovozli ijroni
- * faqat foydalanuvchi ishorasida boshlaydi. Yashirin varaqda va koʻrinishdan chiqqanda toʻxtaydi.
- * Tugma qorongʻi poster ustida: sut muz ostida navy yorliq kulrangda 4.5:1 dan tushardi, shu sabab
- * sirt doim tungi materialda.
+ * Manba faqat foydalanuvchi bosganda qoʻyiladi. play() bosish ichida chaqiriladi, chunki Safari ovozli ijroni
+ * faqat foydalanuvchi ishorasi bilan boshlaydi. Tugma sirti doim tungi materialda: qorongʻi poster ustida
+ * sutrang oyna ostidagi toʻq koʻk yorliq kulrangga oʻtib, 4.5:1 dan pastga tushardi.
  */
 export function ClickToPlayVideo({
   src,
@@ -98,7 +95,7 @@ export function ClickToPlayVideo({
           />
         </video>
       ) : (
-        /* Subtitr kelguncha ovozsiz boshlanadi: muted literal boʻlishi kerak (media-has-caption). */
+        /* Subtitr kelguncha ovozsiz boshlanadi: media-has-caption qoidasi uchun muted literal boʻlishi kerak. */
         <video {...videoProps} muted />
       )}
       {started ? null : (

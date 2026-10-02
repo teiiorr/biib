@@ -81,7 +81,7 @@ export interface Project {
 }
 
 export interface NewsArticle {
-  /** ASCII slug (routes.ts dagi NEWS_SLUG_RE): roʻyxat kontentdan olinadi, kodda qotirilmaydi. */
+  /** ASCII slug (routes.ts faylidagi NEWS_SLUG_RE): roʻyxat kontentdan olinadi, kodda qotirilmaydi. */
   readonly slug: string;
   readonly status: ContentStatus;
   /** ISO sana. Faqat confirmed boʻlganda koʻrsatiladi. */
@@ -148,12 +148,12 @@ export interface Contacts {
   readonly hours: ContactDetail<Localized>;
   readonly map: ContactDetail<{ readonly lat: number; readonly lng: number }>;
   readonly socials: readonly SocialLink[];
-  /** JSON-LD manzili uchun; berilmasa jsonld.ts dagi hozirgi qiymat. */
+  /** JSON-LD manzili uchun; berilmasa jsonld.ts faylidagi hozirgi qiymat. */
   readonly postalCode?: string;
   readonly locality?: string;
 }
 
-/** Bolalar galereyasi (25.4.1): rozilik yozuvisiz element qurilmaydi. */
+/** Bolalar galereyasi: rozilik yozuvisiz element qurilmaydi. */
 export interface Artwork {
   readonly id: string;
   readonly status: ContentStatus;
@@ -172,7 +172,7 @@ export interface Milestone {
   readonly status: ContentStatus;
   readonly year: number | null;
   readonly title: Localized;
-  /** Berilmasa AboutPage dagi id boʻyicha belgi. */
+  /** Berilmasa AboutPage komponentidagi id boʻyicha belgi. */
   readonly icon?: IconName;
 }
 
@@ -186,7 +186,7 @@ export type UpopMotion =
 /** UPOP TREND galereyasining bitta joyi (8 tagacha; tartib = joy, 1-joy eng katta kadr). */
 export interface UpopShot {
   readonly kind: "photo" | "video";
-  /** Sayt ichidagi yoʻl: public/ dagi fayl yoki /uploads/… (tashqi havola CSP da bloklanadi). */
+  /** Sayt ichidagi yoʻl: public/ papkasidagi fayl yoki /uploads/…; tashqi havolani CSP bloklaydi. */
   readonly src: string;
   /** Faqat video uchun: birinchi kadr surati (boʻlmasa kadr video yuklanguncha boʻsh turadi). */
   readonly poster?: string;

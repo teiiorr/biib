@@ -15,7 +15,6 @@ interface NewsPublishFieldsProps extends EditorSectionProps {
 
 const T = NEWS_COPY.editor;
 
-/** Chop etish: holat, sana, havola va rang. */
 export function NewsPublishFields({ draft, patch, errors, idFor, slug }: NewsPublishFieldsProps) {
   return (
     <>

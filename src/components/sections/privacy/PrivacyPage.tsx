@@ -12,7 +12,7 @@ import { fill, formatDate } from "@/i18n/format";
 import type { Locale } from "@/i18n/locales";
 import { pathFor } from "@/i18n/routes";
 
-/* Bolalar uchun qisqa izoh: maʼlumot yigʻilmaydi, rozilik, olib tashlash. */
+/* Bolalar xulosasidagi uch band: maʼlumot yigʻilmaydi, rozilik, olib tashlash. */
 const KID_ICONS = ["shield", "heart", "check"] as const;
 interface PageProps {
   readonly locale: Locale;
@@ -21,15 +21,10 @@ interface PageProps {
 
 const UPDATED = "2026-09-24";
 
-/* Oʻqish ustuni maqola va «Biz haqimizda» bilan bir xil: kompyuterda 3–10, kengroq ekranda 4–9.
-   Xulosa kartasi, matn va sana shu ustunning chetlarida turadi. */
+/* Oʻqish ustuni maqola va «Biz haqimizda» bilan bir xil: kompyuterda 3–10, keng ekranda 4–9. */
 const COLUMN = "col-span-4 md:col-span-8 lg:col-span-8 lg:col-start-3 xl:col-span-6 xl:col-start-4";
 
-/**
- * Maxfiylik: sarlavha, bolalar uchun qisqa xulosa va toʻrtta huquqiy band (qisqa bandlar birlashtirilgan:
- * har sarlavha ostida toʻliq matn bloki). Har band markazdagi sarlavha va uning ostida 12 ustunli
- * toʻrdagi 65ch ustunda chapdan oʻqiladigan matn. Yangilangan sana — matn oxirida sokin izoh.
- */
+/** Qisqa bandlar birlashtirilgan: har sarlavha ostida bitta toʻliq matn bloki. */
 export function PrivacyPage({ locale, dict }: PageProps) {
   const p = dict.privacy;
   const last = p.sections.at(-1)?.id;

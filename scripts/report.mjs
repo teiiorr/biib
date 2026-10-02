@@ -10,7 +10,6 @@ const LABEL = {
 const count = (gate, status) => gate.checks.filter((c) => c.status === status).length;
 const firstFailure = (gate) => gate.checks.find((c) => c.status === "fail")?.id ?? "";
 
-/** Terminal uchun ixcham jadval: darvoza, holat, hisob, vaqt, birinchi xato. */
 export function formatTable(gates) {
   const rows = gates.map((g) => [
     g.id,

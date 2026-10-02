@@ -22,7 +22,7 @@ interface ButtonOwnProps {
   readonly iconPosition?: "start" | "end";
   readonly loading?: boolean;
   readonly disabled?: boolean;
-  /** Oʻchirilgan sabab: tooltip sifatida koʻrsatiladi, tugma fokuslanadigan boʻlib qoladi. */
+  /** Nega oʻchiqligi: tooltip boʻlib chiqadi, tugma esa fokuslanadigan boʻlib qoladi. */
   readonly disabledReason?: string;
   readonly asChild?: boolean;
   readonly className?: string;
@@ -64,7 +64,7 @@ export function Button(props: ButtonProps) {
   const Component = asChild ? Slot : "button";
   const hasIcon = Boolean(icon || customGraphic);
   const iconSlot = iconOnly ? "only" : hasIcon || loading ? iconPosition : undefined;
-  // Magnit (≥ 48 px asosiy va oyna tugmalari, oyna belgili tugmasi 4 px): MotionProvider dagi umumiy tinglovchi.
+  // Magnitni MotionProvider ichidagi umumiy tinglovchi boshqaradi, tugma faqat atribut orqali qatnashadi.
   const magnetic = inactive
     ? undefined
     : variant === "glass" && iconOnly

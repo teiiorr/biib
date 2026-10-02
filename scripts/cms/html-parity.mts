@@ -1,13 +1,11 @@
 /**
- * HTML tengligi: kontent qatlami almashganda ommaviy sahifalar bir xil qolganini isbotlaydi.
+ * Kontent manbai almashganda ommaviy sahifalar oʻzgarmaganini tekshiradi.
  *
  *   pnpm exec tsx scripts/cms/html-parity.mts fetch <papka> [--base http://localhost:3200]
  *   pnpm exec tsx scripts/cms/html-parity.mts diff <oldingi> <keyingi>
  *
- * Manzillar ishlab turgan serverning /sitemap.xml faylidan olinadi (skript kod holatiga bogʻliq emas),
- * ustiga bir nechta 404 namunasi qoʻshiladi. Har sahifadan: <head> meta/link/title, <main> matni,
- * skriptsiz <body>, JSON bloklari va OG rasmning sha256 xeshi. Yigʻish izlari (build id, chunk
- * xeshlari) olib tashlanadi, qolgan har bir farq xato hisoblanadi.
+ * Manzillar ishlab turgan serverning sitemap.xml faylidan olinadi, shuning uchun skript kod holatiga
+ * bogʻliq emas. Yigʻishga xos izlar olib tashlanadi, qolgan har bir farq xato hisoblanadi.
  */
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -34,8 +32,8 @@ function routeId(pathname: string): string {
   return pathname.replace(/^\/+/, "").replace(/[/?=&]+/g, "_") || "root";
 }
 
-/* Yigʻishdan yigʻishga oʻzgaradigan izlar: build id, chunk nomlari, deploy parametri va OG manzilidagi
-   kesh xeshi (u rasm faylining manba matnidan olinadi; rasmning oʻzi alohida xesh bilan solishtiriladi). */
+/* OG manzilidagi xesh rasm faylining manba kodidan olinadi, shuning uchun u ham tashlanadi;
+   rasmning oʻzi alohida xesh bilan solishtiriladi. */
 function normalize(text: string): string {
   return text
     .replace(/(\/opengraph-image(?:\/[A-Za-z0-9_-]+)?)\?[0-9a-f]{16}\b/g, "$1?<hash>")
@@ -79,7 +77,7 @@ function dataBlocks(html: string): string {
 }
 
 function sitemapNormalized(xml: string): string {
-  /* Tasdiqlangan loyiha sanasi yigʻish vaqtidan olinadi (new Date): yarim tundan boshqa vaqt — «hozir». */
+  /* Tasdiqlangan loyiha sanasi yigʻish vaqtidan olinadi, shuning uchun yarim tun boʻlmagan vaqt «hozir» deb olinadi. */
   return xml.replace(
     /<lastmod>(\d{4}-\d{2}-\d{2}T(?!00:00:00\.000Z)[^<]+)<\/lastmod>/g,
     "<lastmod><build-time></lastmod>",
@@ -125,7 +123,7 @@ async function fetchAll(out: string, base: string): Promise<void> {
   writeFileSync(path.join(out, "_sitemap.xml"), sitemapNormalized(xml));
   const pages = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1] ?? "").pathname);
   const all = [...pages, ...PROBES];
-  /* Bir vaqtda sakkiztadan: server va OG chizish ortiqcha yuklanmaydi. */
+  /* Bir vaqtda sakkiztadan olinadi, aks holda server va OG chizish ortiqcha yuklanadi. */
   let cursor = 0;
   const worker = async (): Promise<void> => {
     while (cursor < all.length) {

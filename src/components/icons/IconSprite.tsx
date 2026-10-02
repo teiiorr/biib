@@ -1,9 +1,6 @@
 import { ICON_NAMES, ICON_PATHS } from "./paths";
 
-/**
- * Belgilar toʻplami (1.75 px chiziq) bir marta layoutda: Icon <use> bilan ishora qiladi, shuning
- * uchun yoʻl maʼlumotlari mijoz JS iga kirmaydi.
- */
+/** Belgilar sahifa qolipida bir marta chiziladi, Icon ularga <use> orqali murojaat qiladi. */
 export function IconSprite() {
   return (
     <svg width="0" height="0" aria-hidden="true" focusable="false" style={{ position: "absolute" }}>

@@ -21,7 +21,7 @@ const ABOUT_GROUP: readonly PageKey[] = ["about", "leadership", "experts", "part
 const PRIMARY: readonly PageKey[] = ["projects", "news", "contacts"];
 const loadAboutMenu = () => import("./AboutMenuPanel");
 
-/** Kompyuter navigatsiyasi: bitta oyna kapsulasi, ichida bir guruh boshqaruv (oyna ustiga oyna yoʻq). */
+/** Boshqaruvlar bitta oyna ichida: oyna ustiga oyna qoʻyilmaydi. */
 export function DesktopNav({ locale, dict }: DesktopNavProps) {
   const pathname = usePathname();
   const current = resolvePath(pathname)?.key ?? "home";

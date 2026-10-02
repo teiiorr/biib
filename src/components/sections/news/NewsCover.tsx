@@ -12,20 +12,17 @@ export interface NewsCoverProps {
   readonly article: Pick<NewsArticle, "cover">;
   readonly ratio: AspectRatio;
   readonly locale: Locale;
-  /** Ramka viewportning qancha qismini egallaydi (srcset tanlovi uchun). */
+  /** Ramka ekranning qancha qismini egallaydi: srcset tanlovi uchun. */
   readonly sizes: string;
   /** Maʼnoli surat (maqola boshi): alt matni oʻqiladi; aks holda bezak, sarlavha havolasi yetarli. */
   readonly meaningful?: boolean;
   readonly priority?: boolean;
-  /** Muqova kirishi va parallaks; maqola boshida umumiy element kirish oʻrnida (faqat parallaks). */
+  /** Maqola boshida kirishni umumiy element bajaradi, u yerda faqat parallaks qoladi. */
   readonly motion?: MediaRevealProps;
   readonly className?: string;
 }
 
-/**
- * Yangilik muqovasi: surat bor va tasdiq kutmayotgan boʻlsa tayyor rasm (ContentPicture), aks holda
- * sokin oʻrin (neytral yengil zamin va markazda birlashma belgisi).
- */
+/** Surat yoʻq yoki tasdiq kutilayotgan boʻlsa neytral zamin va markazda belgi chiziladi. */
 export function NewsCover({
   article,
   ratio,

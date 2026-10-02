@@ -14,9 +14,8 @@ async function load(file: string): Promise<ArrayBuffer> {
 }
 
 /**
- * Satori uchun kirillcha glifli TTF fayllar aniq beriladi (§17 SEO).
- * Oʻzgaruvchan shriftlarni Satori oʻqiy olmaydi: fontTools instancer bilan statik nusxalar
- * (Manrope UZ 700 va 400) yonida saqlanadi; sarlavha — statik Unbounded UZ 700. ʻ ʼ Қ Ғ Ҳ ikkalasida bor.
+ * Satori oʻzgaruvchan shriftni oʻqiy olmaydi, shu sabab kirillcha glifli statik TTF nusxalar
+ * (fontTools instancer bilan olingan) aniq beriladi. ʻ ʼ Қ Ғ Ҳ belgilari ikkala shriftda ham bor.
  */
 export async function loadOgFonts(): Promise<OgFont[]> {
   const [unbounded, manropeBold, manrope] = await Promise.all([

@@ -178,7 +178,7 @@ const artwork = z.object({
   age: z.number().int(),
   region: text,
   title: text,
-  /* Rozilik yozuvisiz ish nusxaga umuman kirmaydi (25.4.1). */
+  /* Rozilik yozuvisiz ish nusxaga umuman kirmaydi. */
   consent: z.object({ parent: z.literal(true), child: z.literal(true), date: z.string() }),
 });
 

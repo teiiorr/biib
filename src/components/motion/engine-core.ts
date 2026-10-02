@@ -9,14 +9,13 @@ import { loadGsap, type GsapKit } from "./gsap";
 import { setCurrentLenis } from "./lenis-context";
 
 export interface MotionEngine extends GsapKit {
-  /** Lenis GSAP tikerida (autoRaf: false); touch qurilmada va harakat taqiqida oʻchiq. */
+  /** Lenis GSAP ticker orqali aylanadi (autoRaf: false); sensorli ekranda va harakat cheklanganda oʻchiq. */
   setSmoothScroll(enabled: boolean): void;
 }
 
 /**
- * Dvigatel alohida chunk: GSAP va plaginlar birinchi chizishdan keyin keladi, Lenis esa faqat
- * silliq skroll kerak boʻlganda (touch qurilma uni umuman yuklamaydi).
- * Shu modul faqat engine.ts dagi requestEngine orqali yuklanadi.
+ * Alohida boʻlak: GSAP birinchi chizishdan keyin keladi, Lenis esa faqat silliq skroll kerak boʻlsa yuklanadi,
+ * sensorli qurilma uni umuman olmaydi. Modul faqat engine.ts faylidagi requestEngine orqali chaqiriladi.
  */
 export async function createEngine(): Promise<MotionEngine> {
   const kit = await loadGsap();
@@ -42,7 +41,7 @@ export async function createEngine(): Promise<MotionEngine> {
   const stop = (): void => {
     off?.();
     if (tick) gsap.ticker.remove(tick);
-    // GSAP ning sukut qiymatlari qaytariladi: Lenis boʻlmasa yumshatish yana foydali.
+    // Lenis boʻlmasa lagSmoothing yana foydali, shuning uchun GSAP odatiy qiymatlari qaytariladi.
     gsap.ticker.lagSmoothing(500, 33);
     lenis?.destroy();
     lenis = null;

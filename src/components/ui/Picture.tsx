@@ -7,14 +7,14 @@ interface PictureBase {
   /** public/ ichidagi manba yoʻli (masalan /brand/news-teatr.jpg); tayyor nusxalar manifestdan. */
   readonly src: string;
   readonly alt: string;
-  /** Ramkaning viewport ulushi; berilmasa kenglik boʻyicha qatʼiy oʻlcham. */
+  /** Ramkaning ekrandagi ulushi; berilmasa kenglik boʻyicha qatʼiy oʻlcham. */
   readonly sizes?: string;
   /** LCP rasmi: HTML bilan birga yuqori ustuvorlikda soʻraladi, dangasa yuklanmaydi. */
   readonly priority?: boolean;
   /** Birinchi ekrandagi kichik rasm (belgi): dangasa emas, lekin preload ham qilinmaydi. */
   readonly eager?: boolean;
   readonly className?: string;
-  /** <img> ga data-* belgilar (harakat sahnasi shu belgi orqali topadi). */
+  /** <img> elementiga data-* belgilar: harakat sahnasi uni shu orqali topadi. */
   readonly attrs?: Readonly<Record<`data-${string}`, string>>;
   readonly ariaHidden?: boolean;
   /** Tayyor nusxalar tashqaridan (ContentPicture: yuklangan rasm); berilmasa manifestdan. */
@@ -33,8 +33,7 @@ function srcSet(image: PreparedImage, format: "avif" | "webp"): string {
 }
 
 /**
- * Server rasmi: scripts/images.mjs tayyorlagan AVIF/WebP nusxalar <picture> ichida. Mijozga hech
- * qanday JS kirmaydi (next/image komponenti birinchi yuklanishda ≈ 6 KB edi). Manifestda yoʻq manba
+ * Mijozga JS kirmaydi: next/image birinchi yuklanishga ≈ 6 KB qoʻshardi. Manifestda yoʻq manba
  * (masalan keyin qoʻshilgan hamkor logotipi) oddiy <img> boʻlib chiqadi.
  */
 export function Picture(props: PictureProps) {

@@ -24,12 +24,12 @@ function percentFromVariable(value: string, fallback: number): number {
   return Math.round(Math.min(1, Math.max(0, n)) * 100);
 }
 
-/** Boot skript qoʻygan atributlardan oʻqiladi: server bilan gidratsiya mos keladi, miltillash yoʻq. */
+/** Boot skript qoʻygan atributlardan oʻqiladi, shunda gidratsiya server bilan mos keladi. */
 export function readAppearanceFromDocument(): Appearance {
   if (typeof document === "undefined") return DEFAULT_APPEARANCE;
   const html = document.documentElement;
   const stored = readStorage();
-  /* Boot skript ishlamagan (404 xato qobigʻi): atributlar server sukutlari, haqiqat saqlangan qiymatda. */
+  /* 404 xato qobigʻida boot skript ishlamaydi: atributlar sukut boʻyicha qolgan, haqiqiy qiymat xotirada. */
   if (!html.hasAttribute("data-boot")) return stored;
   const motion = html.getAttribute("data-motion");
   const sound = html.getAttribute("data-sound");

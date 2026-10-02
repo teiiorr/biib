@@ -8,15 +8,14 @@ import { getEngine, useEngine } from "./engine";
 import { useMotionPrefs } from "./motion-context";
 
 export interface LateProps {
-  /** Dvigatel barg oʻrnatilgandan keyin keldi (sovuq yuklash): ekrandagi narsa sakramasligi kerak. */
+  /** Dvigatel barg oʻrnatilgandan keyin keldi (sovuq yuklash): ekrandagi narsa sakramasin. */
   readonly late: boolean;
 }
 
 /**
- * Faqat harakat uchun kerak boʻlgan barg (UPOP sahnasi, media ochilishi, futer kirishi) birinchi
- * yuklamaga kirmaydi: dvigatel kelgach va harakat ruxsat etilsa alohida chunk sifatida olinadi.
- * Barg hech narsa koʻrsatmaydi (yashirin langar). Suspense ishlatilmaydi: uning ochilishi React da
- * sahifa View Transition ini ishga tushirardi — oddiy holat yangilanishi oʻtishsiz.
+ * Faqat harakat uchun kerak boʻlgan barg birinchi yuklamaga kirmaydi: dvigatel kelib, harakatga ruxsat boʻlsa
+ * alohida boʻlak sifatida olinadi. Suspense ishlatilmaydi, chunki u ochilganda React sahifa oʻtishini
+ * (View Transition) ishga tushiradi; oddiy holat yangilanishi esa oʻtishsiz.
  */
 export function withEngine<P extends object>(
   load: () => Promise<{ default: ComponentType<P & LateProps> }>,
@@ -27,7 +26,7 @@ export function withEngine<P extends object>(
     const prefs = useMotionPrefs();
     const allowed = prefs.ready && motionAllowed(prefs);
     const [Impl, setImpl] = useState<ComponentType<P & LateProps> | null>(() => loaded);
-    // Birinchi chizishda dvigatel yoʻq boʻlsa — kech keldi (gidratsiyada doim shunday).
+    // Birinchi chizishda dvigatel yoʻq boʻlsa, u kech kelgan hisoblanadi (gidratsiyada doim shunday).
     const [late] = useState(() => getEngine() === null);
 
     useEffect(() => {

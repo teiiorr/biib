@@ -18,10 +18,7 @@ import type { OrgSectionProps } from "./useOrgEditor";
 
 const P = UPOP_COPY.project;
 
-/**
- * Uchtagacha dalil: har biri bitta besh tilli maydon, shu sabab har tilda soni teng. Belgi tartibga
- * bogʻliq (bosh sahifadagi kabi), yonida koʻrinadi; tartib va olib tashlash tugmalari.
- */
+/** Har dalil bitta besh tilli maydon, shu sabab tillar orasida soni doim teng. */
 export function UpopHighlightsGroup({
   draft,
   patch,

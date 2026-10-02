@@ -3,17 +3,17 @@ import { optionalLocalized, requireAll, type BuildResult } from "../record";
 import { normalizeLocalized } from "../text/locales";
 import type { PersonAdmin, PersonPayload } from "./types";
 
-/* Bazadagi tekshiruv bilan bir xil (people.email). */
+/* people.email ustunidagi baza tekshiruvi bilan bir xil. */
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
 /**
- * Tahrir holatidan bazaga yuboriladigan shakl: har til meʼyorlanadi, boʻsh kirill va 2026 qatori
- * oʻzbekchadan toʻldiriladi, keyin tekshiriladi. Brauzer ham, server amali ham shuni chaqiradi.
+ * Har til meʼyorlanadi, boʻsh kirill va 2026 qatori oʻzbekchadan toʻldiriladi, keyin tekshiriladi.
+ * Brauzer ham, server amali ham shu funksiyani chaqiradi.
  */
 export function buildPerson(payload: PersonPayload): BuildResult<PersonAdmin> {
   const errors: Record<string, string> = {};
   const nameText = normalizeLocalized(payload.name);
-  /* Tasdiqlangan odam ismsiz boʻlolmaydi (bazadagi tekshiruv); boshqa holatda ism ixtiyoriy. */
+  /* Tasdiqlangan odam ismsiz boʻlolmaydi, bazada ham shunday tekshiriladi; qolgan holatda ism ixtiyoriy. */
   const confirmed = payload.status === "confirmed";
   if (confirmed) requireAll(errors, "name", nameText);
   const name = confirmed ? nameText : optionalLocalized(errors, "name", nameText);

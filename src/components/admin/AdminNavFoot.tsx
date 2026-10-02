@@ -3,7 +3,7 @@ import { ADMIN_COPY } from "@/lib/admin/copy";
 
 import { AdminIcon } from "./AdminIcon";
 
-/** Saytga oʻtish (yangi oynada: tahrir shu oynada qoladi) va chiqish. Chiqish JS siz ham ishlaydi. */
+/** Sayt yangi oynada ochiladi, tahrir shu oynada qolsin. Chiqish JavaScript oʻchiq boʻlsa ham ishlaydi. */
 export function AdminNavFoot() {
   return (
     <div className="admin-nav-foot">

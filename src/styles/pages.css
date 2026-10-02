@@ -1,12 +1,11 @@
 @layer components {
   /* UPOP TREND sahifasi */
-  /* Halqa sarlavhaning davomi: yuqorida yarim qadam (sarlavhadan), pastda ham — keyingi boʻlim bilan toʻliq qadam. */
+  /* Halqa sarlavhaning davomi: tepada va pastda yarim qadam, keyingi boʻlim bilan qoʻshilib toʻliq qadam boʻladi. */
   .upop-stage {
     padding-bottom: calc(var(--section-gap) / 2);
   }
 
-  /* Faktlar teng toʻrda (1 / 2 / 3 ustun, oraliq = toʻr oraligʻi): har katak ustida bitta chiziq,
-     qatordagi yorliqlar va qiymatlar bir chiziqdan boshlanadi. */
+  /* Faktlar teng toʻrda: qatordagi yorliq va qiymatlar bir chiziqdan boshlanadi. */
   .upop-facts {
     display: grid;
     column-gap: var(--gutter);
@@ -33,9 +32,7 @@
     }
   }
 
-  /* Film markazda: kompyuterda 2–11 ustun, sarlavha bilan bir oʻqda. */
-  /* Egasining talabi: bir sahifada takrorlanadigan media bir xil oʻlchamda — film ramkasi yuqoridagi sahna
-     videosi bilan bir kenglikda (toʻliq konteyner, 16:9). */
+  /* Bir sahifadagi media bir xil oʻlchamda: film ramkasi yuqoridagi sahna videosi bilan bir kenglikda. */
   .upop-film-media {
     grid-column: 1 / -1;
   }
@@ -48,19 +45,18 @@
   .about-media-figure {
     margin: 0;
   }
-  /* Loyihaga oʻtish tugmasi video ostida, markazda: sarlavha va kadr bilan bitta oʻq. */
+  /* Loyihaga oʻtish tugmasi video ostida, sarlavha va kadr bilan bir oʻqda. */
   .about-next-cta {
     display: flex;
     justify-content: center;
     margin-top: 32px;
   }
-  /* Belgi animatsiyasi va matn yonma-yon (egasining talabi): ikki ustun vertikal markazda, bir balandlikda. */
+  /* Belgi animatsiyasi va matn yonma-yon, ikki ustun bir balandlikda. */
   .about-intro {
     row-gap: 32px;
     align-items: center;
   }
-  /* Kompyuterda kadr matn ustuni bilan aynan bir balandlikda: tepa va past chetlari matnning birinchi
-     va oxirgi qatori bilan bir chiziqda (egasining talabi). */
+  /* Kompyuterda kadrning tepa va past chetlari matnning birinchi va oxirgi qatori bilan bir chiziqda. */
   @media (min-width: 1280px) {
     .about-intro {
       align-items: stretch;
@@ -73,8 +69,7 @@
       height: 100%;
     }
   }
-  /* 1280 px dan tor ekranda belgi kichikroq va markazda, matn uning ostida: tor ustunda yonma-yon kadr
-     choʻzilib ketardi. */
+  /* 1280 px dan tor ekranda belgi matn ustida turadi: tor ustunda yonma-yon kadr choʻzilib ketardi. */
   @media (max-width: 1279px) {
     .about-intro-media {
       width: 100%;
@@ -109,16 +104,15 @@
   .about-logo[data-state="still"] .about-logo-video {
     opacity: 0;
   }
-  /* Matn har kenglikda ikki chetga tekis (egasining talabi: oʻngda boʻshliq va notekislik yoʻq). Soʻzlar
-     orasi kengayib ketmasligi uchun boʻgʻin koʻchirish: oʻzbekchaga yumshoq tirelar (i18n/hyphenate.ts),
-     rus va inglizga brauzer lugʻati. Iqtibos ham shunday; kadr izohi markazda. */
+  /* Matn ikki chetga tekislanadi. Soʻzlar orasi kengayib ketmasligi uchun boʻgʻin koʻchiriladi:
+     oʻzbekchada yumshoq tirelar (i18n/hyphenate.ts), rus va ingliz tilida brauzer lugʻati. */
   .about-mission .ui-prose p,
   .about-mission .ui-pullquote-text {
     text-align: justify;
     text-align-last: start;
     hyphens: auto;
   }
-  /* Matndan keyingi ajratuvchi chiziq yoʻq (egasining talabi): iqtibos oddiy oraliq bilan ajraladi. */
+  /* Iqtibos matndan chiziq bilan emas, oddiy oraliq bilan ajraladi. */
   .about-mission .ui-pullquote {
     border-top: 0;
     padding-top: 0;
@@ -129,9 +123,8 @@
       text-align: start;
     }
   }
-  /* Yoʻnalishlar, vazifalar va tarix: bitta teng toʻr, har band ustida bitta chiziq. Yoʻnalish va
-     vazifalar: 900 px gacha bir, undan ikki, 1440 px dan uch ustun (egasining talabi: belgi va yozuv
-     katta, har band bir qatorda); tarix ham shunday bandlar, eng koʻpi ikki ustun. */
+  /* Yoʻnalishlar, vazifalar va tarix bitta teng toʻrda. Har band bir qatorga sigʻishi uchun ustunlar
+     kam: tarixda eng koʻpi ikkita. */
   .about-list {
     display: grid;
     column-gap: var(--gutter);
@@ -161,7 +154,6 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
-  /* Katta belgi va yozuv: 56 px plitka, 28 px chizma; yozuv telefonda 18, kengroq ekranda 20–22 px. */
   .about-list[data-columns] .about-list-item {
     font-size: 1.125rem;
     line-height: 1.25;
@@ -203,7 +195,7 @@
     gap: 12px;
     align-content: start;
   }
-  /* Muqovalar bir nisbat va bir kenglikda, sana bir qator: sarlavhalar qatorda bir chiziqda boshlanadi. */
+  /* Muqovalar bir nisbatda, sana bir qatorda: shunda qatordagi sarlavhalar bir chiziqdan boshlanadi. */
   @media (min-width: 600px) {
     .news-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -235,7 +227,7 @@
       line-height: 1.2;
     }
   }
-  /* Telefon va planshet: faqat qisqa kirish, uch qator. */
+  /* Telefon va planshetda kirish matni uch qator bilan cheklanadi. */
   .news-grid-lead-excerpt {
     display: grid;
     gap: 12px;
@@ -250,8 +242,8 @@
   .news-grid-lead-excerpt > :not(:first-child) {
     display: none;
   }
-  /* Kompyuter: matn ustuni qator balandligini oʻzgartirmaydi (height 0 + min-height 100%, qatorni muqova
-     belgilaydi), oʻrtadagi matn qolgan joyni toʻldirib pastda soʻnadi. */
+  /* Kompyuterda qator balandligini muqova belgilaydi: height 0 va min-height 100% tufayli matn ustuni
+     uni choʻzmaydi, oʻrtadagi matn esa qolgan joyni toʻldirib pastda soʻnadi. */
   @media (min-width: 1024px) {
     .news-grid-lead-text {
       grid-template-rows: auto minmax(0, 1fr) auto;
@@ -303,7 +295,7 @@
     }
   }
 
-  /* Maqola: bosh qism markazda, bitta oʻqda. */
+  /* Maqola: bosh qism markazda. */
   .article-head {
     display: grid;
     justify-items: center;
@@ -328,7 +320,7 @@
     padding-bottom: 8px;
     border-bottom: 1px solid var(--line);
   }
-  /* Harakatlar qatori oʻngda (egasining qoidasi). */
+  /* Tugmalar butun saytdagi kabi oʻngda. */
   .share-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -342,7 +334,7 @@
       flex: 1 1 100%;
     }
   }
-  /* Maqola oxiri maqolaning davomi: yuqorida yarim qadam (maqola boʻlimidan), pastda yarim qadam futergacha. */
+  /* Maqola oxiri maqolaning davomi: tepada ham, futergacha ham yarim qadam. */
   .article-end {
     padding-bottom: calc(var(--section-gap) / 2);
   }
@@ -364,7 +356,7 @@
       gap: 24px;
     }
   }
-  /* Oldingi/keyingi: ikkita teng karta — 72 px muqova, yoʻnalish va sarlavha; hoverda qirra oltin. */
+  /* Oldingi va keyingi maqola: ikkita teng karta. */
   .article-nav-link {
     display: grid;
     grid-template-columns: 72px minmax(0, 1fr);
@@ -399,7 +391,7 @@
       color: var(--tint);
     }
   }
-  /* Keyingi karta oyna aksi: muqova oʻngda, matn oʻngga tekis (telefonda ham ikkalasi bir xil tuzilish). */
+  /* Keyingi karta oldingisining koʻzgudagi aksi: muqova oʻngda, matn oʻngga tekis, telefonda ham. */
   @media (min-width: 600px) {
     .article-nav-next {
       grid-template-columns: minmax(0, 1fr) 72px;
@@ -412,7 +404,7 @@
       justify-content: flex-end;
     }
   }
-  /* Boshqa yangiliklar: roʻyxat kartalari bilan bir xil, uchta teng ustun. */
+  /* Boshqa yangiliklar: roʻyxatdagi kartalar uchta teng ustunda. */
   .related-grid {
     display: grid;
     gap: 32px;
@@ -431,17 +423,16 @@
 }
 
 @layer components {
-  /* Rasmiy sahifalar: sarlavha tinch lojuvard lentada (home.css .navy-band), bezaksiz. */
-  /* Bolalar uchun qisqa izoh kartasi (maxfiylik): sokin sirt, 1 px chiziq. */
+  /* Rasmiy sahifalar: sarlavha bezaksiz lojuvard lentada (home.css faylidagi .navy-band). */
+  /* Maxfiylik sahifasida bolalar uchun qisqa izoh kartasi. */
   .privacy-kid {
     border: 1px solid var(--line);
     border-radius: var(--radius-card);
     background: var(--surface);
   }
 
-  /* Ekspertlar va rahbariyat (egasining talabi): katta portretli teng kartalar. Karta 8 px ichki chetli
-     sokin sirt, portret burchagi karta bilan konsentrik. Toʻrt qatorli subgrid: qoʻshni kartalarda
-     lavozim, ism va pochta bir chiziqdan boshlanadi. Ekspertlar 2 / 3 / 3, rahbariyat 2 / 2 / 4 ustun. */
+  /* Ekspertlar va rahbariyat: katta portretli teng kartalar. Toʻrt qatorli subgrid tufayli qoʻshni
+     kartalarda lavozim, ism va pochta bir chiziqdan boshlanadi. */
   .person-tiles {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -518,9 +509,8 @@
     }
   }
 
-  /* Aloqa: bitta guruhlangan roʻyxat (egasining talabi: boʻshliqsiz, tekis). Sirt bitta, qatorlar orasida
-     ingichka chiziq; qator: belgi, qiymat, oʻngda harakatlar — hammasi bir chiziqda. Telefonda harakatlar
-     qiymat ostiga tushadi (qiymat bilan bir chetdan). */
+  /* Aloqa: bitta sirtdagi guruhlangan roʻyxat, qatorlar ingichka chiziq bilan ajraladi. Telefonda
+     tugmalar qiymat ostiga, uning chetidan tushadi. */
   .contact-list {
     margin: 0;
     padding: 4px 16px;
@@ -546,12 +536,12 @@
     min-width: 0;
     margin: 0;
   }
-  /* Uzun manzil avval «@» va «/» dan keyin boʻlinadi (<wbr>), soʻz oʻrtasidan faqat oxirgi chora. */
+  /* Uzun manzil avval «@» va «/» belgilaridan keyin boʻlinadi (<wbr>), soʻz oʻrtasidan esa oxirgi chora sifatida. */
   .contact-row-value > a {
     overflow-wrap: break-word;
   }
-  /* Nusxa tugmasi har qatorda bir joyda: qiymat bilan bir chiziqda, oʻng chetda. Xarita tugmalari
-     telefonda manzil ostida (qiymat chetidan), kengroq ekranda nusxa tugmasi yonida. */
+  /* Nusxa tugmasi har qatorda oʻng chetda. Xarita tugmalari telefonda manzil ostida, kengroq
+     ekranda nusxa tugmasi yonida. */
   .contact-row.feature > .contact-row-actions {
     grid-column: 3;
     grid-row: 1;
@@ -568,7 +558,7 @@
     gap: 8px;
     margin: 0;
   }
-  /* Telefonlar: telefonda ustma-ust, kengroq ekranda bir qatorda. */
+  /* Telefon raqamlari tor ekranda ustma-ust, kengroq ekranda bir qatorda. */
   .contact-row-links {
     display: grid;
     gap: 0;
@@ -606,8 +596,8 @@
     padding: 0;
     list-style: none;
   }
-  /* Koʻrinish qoʻshni kartadagi 40 px «Nusxa olish» tugmasi bilan bir qatorda (yozuvlar bir chiziqda),
-     44 px sezish maydoni psevdoelementda; qatorlar orasi 12 px, shunda nishonlar orasida 8 px qoladi. */
+  /* Koʻrinishi 40 px, qoʻshni «Nusxa olish» tugmasi bilan bir chiziqda; 44 px sezish maydoni
+     psevdoelementda. Qatorlar orasi 12 px: nishonlar orasida 8 px qoladi. */
   .contact-social {
     position: relative;
     display: inline-flex;
@@ -666,9 +656,7 @@
     padding-top: 8px;
   }
 
-  /* Hamkorlar roʻyxati boʻsh: halol holat chapda, keyingi qadam oʻngda (telefonda ostida, oʻngda). */
-  /* Bitta minmax(0, 1fr) ustun: uzun tugma yorligʻi ustunni kengaytirib karta va ekrandan chiqmasin. */
-  /* Tasdiqlanmagan hamkor plitkasi: haqiqiy plitka oʻlchamida, belgi va oʻrinbosar nom markazda. */
+  /* Tasdiqlanmagan hamkor plitkasi haqiqiysi oʻlchamida, markazda belgi va vaqtinchalik nom. */
   .partner-tile-placeholder {
     display: flex;
     flex-direction: column;
@@ -683,15 +671,15 @@
     margin-top: 32px;
   }
 
-  /* Maxfiylik: yangilangan sana matn ustunining oxirida, chiziq ostida sokin izoh. Oʻram matn oʻlchamida
-     (65ch matn ustuni bilan bir kenglik), izohning oʻzi kichik. */
+  /* Maxfiylik: yangilangan sana matn ustuni oxirida. Oʻram oddiy matn oʻlchamida, shunda 65ch
+     ustun bilan bir kenglikda boʻladi; izohning oʻzi kichik. */
   .privacy-updated {
     max-width: var(--measure);
     padding-top: 16px;
     border-top: 1px solid var(--line);
   }
-  /* Bolalar uchun xulosa: matn ustuni bilan bir chetdagi 65ch karta (oʻlchov oddiy matn shriftida,
-     shunda karta va xatboshilar bir kenglikda); belgilar matn chetidan tashqarida osiladi. */
+  /* Bolalar uchun xulosa: 65ch oddiy matn shriftida oʻlchanadi, shunda karta xatboshilar bilan bir
+     kenglikda. Roʻyxat belgilari matn chetidan tashqarida osiladi. */
   .privacy-kid {
     display: grid;
     gap: 16px;
@@ -718,7 +706,7 @@
   .privacy-section {
     scroll-margin-top: calc(var(--header-h) + 24px);
   }
-  /* Yolgʻiz havola (matn ichida emas): 44 px nishon. */
+  /* Matn ichida emas, alohida turgan havola: 44 px nishon. */
   .privacy-contact-link {
     display: inline-flex;
     align-items: center;
@@ -728,8 +716,8 @@
 }
 
 @layer utilities {
-  /* Lenta oyna sarlavhasi ostidan boshlanadi. Sarlavha balandligi ::before da, shunda boʻlimning oʻz
-     boʻshligʻi shkalada qoladi va nonushoq oddiy sahifalar bilan bir balandlikda turadi. */
+  /* Lenta oyna sarlavhasi ostidan boshlanadi. Sarlavha balandligi ::before ichida: boʻlimning oʻz
+     boʻshligʻi shkalada qoladi, yoʻl zanjiri esa oddiy sahifalardagi balandlikda turadi. */
   :root .page-hero-band {
     margin-top: calc(-1 * (var(--header-h) + 12px + var(--safe-top)));
     padding-top: var(--hero-pad-top);
@@ -741,8 +729,8 @@
   }
 }
 
-/* Qatlamdan tashqarida: t-h1 utilitasidan ustun. Maqola nomi sahifa sarlavhalaridan kichik (26 → 44 px):
-   uzun gap ikki-uch muvozanatli qatorda, muqova bilan uygʻun (egasining talabi). */
+/* Qatlamdan tashqarida, shu sabab t-h1 utilitasidan ustun. Maqola nomi sahifa sarlavhalaridan
+   kichik: uzun gap ikki-uch muvozanatli qatorga tushadi. */
 :root .article-title {
   font-size: clamp(1.625rem, 1.2rem + 1.9vw, 2.75rem);
   line-height: 1.15;
@@ -750,9 +738,9 @@
 }
 
 @layer components {
-  /* UPOP TREND galereyasi: 8 joyli tahririy toʻr. Qator oʻlchami konteyner kengligidan hisoblanadi —
-     ikki qator = bitta 4:5 portret (4 ustunli katak), shunda katta kadr, yonidagi ikkita kichik va
-     pastdagi portretlar bir xil chetlarda tugaydi. Telefonda 2, planshetda 8, kompyuterda 12 ustun. */
+  /* UPOP TREND galereyasi: 8 joyli toʻr. Qator balandligi konteyner kengligidan hisoblanadi: ikki qator
+     bitta 4:5 portretga teng, shunda katta kadr, yonidagi ikki kichik va pastdagi portretlar bir
+     chetda tugaydi. */
   .upop-gallery-frame {
     container-type: inline-size;
   }
@@ -777,7 +765,7 @@
     isolation: isolate;
     view-timeline-name: --upop-shot;
   }
-  /* Telefon: 1 va 6 toʻliq kenglikda, 2–3 kichik juftlik, qolganlari portret. */
+  /* Telefonda 1- va 6-kadr toʻliq kenglikda, 2- va 3-kadr kichik juftlik, qolganlari portret. */
   .upop-shot:nth-child(8n + 1),
   .upop-shot:nth-child(8n + 6) {
     grid-column: span 2;
@@ -835,8 +823,7 @@
     inset: 0;
   }
 
-  /* Ramkalar. Sahna: ikki qavat pushti ingichka chiziq (tashqisi 6 px narida) va tepadan yumshoq yorugʻ
-     dogʻ — sahna chirogʻi; nur emas, faqat kadr ustidagi iliq yoritish. */
+  /* Ramkalar. Sahna: ikki qavat ingichka pushti chiziq va tepadan sahna chirogʻidek yumshoq yorugʻ dogʻ. */
   .upop-shot[data-frame="stage"] {
     outline: 1px solid color-mix(in oklab, var(--tint) 55%, transparent);
     outline-offset: 6px;
@@ -854,7 +841,7 @@
       transparent 70%
     );
   }
-  /* Oltin: 2 px oltin qirra (sarlavhalardagi oltin bilan bir oila), ichki kadr kontsentrik. */
+  /* Oltin: qirra sarlavhalardagi oltin bilan bir oiladan, ichki kadr konsentrik. */
   .upop-shot[data-frame="gold"] {
     --shot-inset: 2px;
     background: linear-gradient(
@@ -867,12 +854,11 @@
     );
     box-shadow: var(--shadow-floating);
   }
-  /* Oyna: 10 px muz paspartu (material — materials.css), ichki kadr kontsentrik. */
+  /* Oyna: muz paspartu (material materials.css faylida), ichki kadr konsentrik. */
   .upop-shot[data-frame="glass"] {
     --shot-inset: 10px;
   }
-  /* Chipta (kasting chiptasi): pastda qirqma qism, ikki yonida yarim doira oʻyiq va oltin
-     punktir; qismda loyiha nomi va joy raqami. */
+  /* Kasting chiptasi: pastda yirtiladigan qism, yonlarida yarim doira oʻyiq va oltin punktir. */
   .upop-shot[data-frame="ticket"] {
     --stub: 52px;
     background: var(--surface-2);
@@ -903,7 +889,7 @@
     color: var(--accent-text);
     letter-spacing: 0.08em;
   }
-  /* Kino lentasi: ikki yonida perforatsiya tasmasi (portret kadr), ichki kadr ingichka radiusda. */
+  /* Kino lentasi: ikki yonida perforatsiya tasmasi. */
   .upop-shot[data-frame="film"] {
     --film: 22px;
     background: #060a1c;
@@ -932,7 +918,7 @@
   .upop-shot[data-frame="film"]::after {
     right: 7px;
   }
-  /* Paspartu: kadr ichida 10 px narida ingichka oltin chiziq — muzey ramkasi. */
+  /* Paspartu: kadr ichida muzey ramkasidek ingichka oltin chiziq. */
   .upop-shot[data-frame="mat"] .upop-shot-media::after {
     content: "";
     position: absolute;
@@ -943,8 +929,8 @@
     border-radius: calc(var(--shot-radius) - 10px);
   }
 
-  /* Kirishlar: skroll bilan (view timeline), orqaga skrollda teskari qaytadi. Faqat transform, opacity
-     va clip-path. Qoʻllab-quvvatlanmasa, kamaytirilgan harakatda va Harakat = off da kadrlar joyida. */
+  /* Kirish animatsiyalari view timeline bilan, orqaga skrollda teskari qaytadi. Brauzer qoʻllamasa,
+     harakat kamaytirilgan yoki oʻchiq boʻlsa, kadrlar oʻz joyida turadi. */
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
       :root:not([data-motion="off"]) .upop-shot {
@@ -1073,8 +1059,8 @@
 }
 
 @layer components {
-  /* Maqola suratlari (NewsSlider): 3:2 kadrlar gorizontal skroll-snap tasmasida, boshqaruv oyna
-     guruhi kadr ostida markazda — suratni yopmaydi. Varaqlash telefonda barmoq bilan. */
+  /* Maqola suratlari (NewsSlider): gorizontal skroll-snap tasmasi. Boshqaruv guruhi suratni
+     yopmasligi uchun kadr ostida turadi. */
   .news-slider {
     display: grid;
     gap: 16px;

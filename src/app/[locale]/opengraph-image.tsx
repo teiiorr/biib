@@ -13,7 +13,7 @@ interface ImageProps {
   readonly params: Promise<{ locale: Locale }>;
 }
 
-/* Sahifa maʼlumoti yigʻilayotganda params boʻsh kelishi mumkin: shunda umumiy alt. */
+/* Metamaʼlumot yigʻilayotganda params boʻsh kelishi mumkin, unda umumiy alt matni olinadi. */
 export async function generateImageMetadata({ params }: ImageProps) {
   const { locale } = await params;
   if (!isLocale(locale)) return [{ id: "og", alt: SITE_ALT, size, contentType }];

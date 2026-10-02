@@ -1,7 +1,6 @@
-/* Boshqaruv paneli: Media kutubxonasi (filtr va fayllar toʻri). Faqat Media sahifasi ulaydi. */
+/* Panel: media kutubxonasi. Faqat Media sahifasi ulaydi. */
 
 @layer components {
-  /* ---------- Media: filtr va fayllar toʻri ---------- */
   .admin-media-bar {
     display: flex;
     flex-wrap: wrap;

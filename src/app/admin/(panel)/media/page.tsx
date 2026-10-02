@@ -13,7 +13,6 @@ import "@/styles/admin-library.css";
 
 export const metadata: Metadata = { title: ADMIN_COPY.pages.media };
 
-/** Media: hamma rasm va video, ishlatilish soni bilan; yuklash va ishlatilmaganini oʻchirish. */
 export default async function MediaAdminPage() {
   const session = await requireAdmin("/admin/media");
   const items = await listLibrary(adminDb(session.accessToken));

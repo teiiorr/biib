@@ -8,10 +8,7 @@ export interface ScrollEdgeProps {
 
 const LAYERS = [1, 3] as const;
 
-/**
- * Progressiv xiralik: ikki qatlam, har biri kuchliroq blur va torroq maska. Faqat oyna ustidagi
- * ingichka tasmada: oyna ortidagi kontent pardasiz koʻrinadi.
- */
+/** Xiralik faqat oyna chetidagi ingichka tasmada, oyna ortidagi kontent esa pardasiz qoladi. */
 export function ScrollEdge({ position = "bottom", className }: ScrollEdgeProps) {
   return (
     <div className={cn("scroll-edge", className)} data-position={position} aria-hidden="true">

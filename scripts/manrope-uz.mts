@@ -1,10 +1,8 @@
 /*
- * Manrope (egasining tanlovi) oʻzbek belgilarini toʻliq qamramaydi: ʻ ʼ va Қ қ Ғ ғ Ҳ ҳ yoʻq.
- * Bu skript ularni Manrope ning oʻz shakllaridan quradi va «Manrope UZ» ni yozadi:
- * ʻ → Manrope ning ’ glifi 180° burilgan (agʻdarilgan vergul), ʼ → ’ glifi; Қ қ Ҳ ҳ → К к Х х + Ц ц dumining chuqurligida oʻng oyoq ostida dum
- * (kengligi I / l ustuni); Ғ ғ → Г г + ustun orqali koʻndalang chiziq. Ikkala master (wght 200 va 800)
- * alohida quriladi, farqi gvar ga yoziladi: oraliq qalinliklar toʻgʻri interpolyatsiya boʻladi.
- * Natija: src/assets/fonts/ManropeUZ[wght].ttf va OG uchun Manrope-400/700.ttf. fontTools va brotli kerak (PYTHON muhit oʻzgaruvchisi).
+ * Manrope shriftida ʻ ʼ va Қ қ Ғ ғ Ҳ ҳ yoʻq, skript ularni shriftning oʻz shakllaridan quradi.
+ * ʻ uchun ’ glifi 180° buriladi, Қ қ Ҳ ҳ harflari К к Х х asosida Ц ц chuqurligidagi dum bilan,
+ * Ғ ғ esa Г г asosida koʻndalang chiziq bilan quriladi. Ikkala master (wght 200 va 800) alohida
+ * quriladi va farqi gvar jadvaliga yoziladi, shunda oraliq qalinliklar toʻgʻri interpolyatsiya boʻladi.
  */
 import { execFileSync } from "node:child_process";
 import path from "node:path";
@@ -56,7 +54,7 @@ def build(font, base, extra):
     return pen.glyph()
 
 def turned(font, base):
-    # ʻ (U+02BB) — «agʻdarilgan vergul»: ’ belgisi oʻz qutisi markazi atrofida 180° buriladi.
+    # ʻ (U+02BB), «agʻdarilgan vergul»: ’ belgisi oʻz qutisi markazi atrofida 180° buriladi.
     # Manrope ‘ belgisi qalin oʻlchamda shaklsiz ponaga oʻxshaydi, burilgan ’ esa aniq «6» shakl.
     x0, y0, x1, y1 = bounds(font, base)
     pen = TTGlyphPen(font.getGlyphSet())
@@ -116,7 +114,7 @@ for cp, (base_cp, make) in JOBS.items():
     add(cp, base_cp, build(lo, base, make(lo)), build(hi, base, make(hi)))
 add(0x2BB, 0x2019, turned(lo, name(0x2019)), turned(hi, name(0x2019)))
 
-# Tutuq belgisi ʼ — ’ kavs glifining oʻzi (kenglik va shakl Manrope niki)
+# Tutuq belgisi ʼ uchun ’ kavs glifi oʻzgarishsiz olinadi (kenglik va shakl Manrope shriftiniki)
 for t in vf["cmap"].tables:
     if t.isUnicode():
         t.cmap[0x2BC] = cmap[0x2019]

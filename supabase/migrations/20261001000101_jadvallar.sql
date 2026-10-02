@@ -1,9 +1,9 @@
--- Kontent jadvallari: src/content/types.ts dagi turlarning maʼlumotlar bazasidagi shakli
+-- Kontent jadvallari: src/content/types.ts faylidagi turlarning maʼlumotlar bazasidagi shakli
 
 create table public.media (
   id uuid primary key default gen_random_uuid(),
   kind public.media_kind not null,
-  origin public.media_origin not null,          -- static: public/ dagi fayl; storage: yuklangan
+  origin public.media_origin not null,          -- static: public/ papkasidagi fayl; storage: yuklangan fayl
   -- CSP tashqi manzilni bloklaydi: faqat sayt ichidagi yoʻl
   src text not null unique check (src ~ '^/[A-Za-z0-9._/-]+$'),
   storage_prefix text,                          -- 'i/<hash>': oʻchirishda barcha nusxalar shu bilan topiladi
@@ -19,7 +19,7 @@ create table public.media (
   created_at timestamptz not null default now(),
   check (kind <> 'image' or (width is not null and height is not null)),
   check (origin <> 'storage' or storage_prefix is not null),
-  -- Yuklangan rasm snapshot dagi media xaritasiga tushadi: <picture> uchun asos va kengliklar shart
+  -- Yuklangan rasm snapshot ichidagi media xaritasiga tushadi: <picture> uchun asos va kengliklar shart
   check (origin <> 'storage' or kind <> 'image'
          or (variant_base is not null and cardinality(variant_widths) > 0))
 );
@@ -92,7 +92,7 @@ create table public.site_contacts (
   address public.l10n_text,
   address_status public.content_status not null default 'pending',
   postal_code text check (postal_code ~ '^[0-9]{6}$'),
-  locality text,                                -- hozir jsonld.ts da qattiq yozilgan
+  locality text,                                -- hozircha jsonld.ts faylida qattiq yozilgan
   phones text[] not null default '{}',
   phones_status public.content_status not null default 'pending',
   email text check (email ~* '^[^@\s]+@[^@\s]+\.[^@\s]+$'),
@@ -127,7 +127,7 @@ create table public.milestones (
   updated_at timestamptz not null default now()
 );
 
-create table public.projects (                  -- egasi: faqat UPOP TREND, qoʻshilmaydi va oʻchmaydi
+create table public.projects (                  -- faqat UPOP TREND: loyiha qoʻshilmaydi va oʻchmaydi
   key text primary key check (key = 'upop-trend'),
   status public.content_status not null,
   flagship boolean not null default true check (flagship),
@@ -164,7 +164,7 @@ create table public.project_media (
   alt public.l10n_text not null,
   status public.content_status,
   primary key (project_key, role),
-  -- Shakl types.ts dagi LoopMedia, FilmMedia va WordmarkMedia bilan bir xil boʻlishi uchun
+  -- Shakl types.ts faylidagi LoopMedia, FilmMedia va WordmarkMedia bilan bir xil boʻlishi uchun
   check (role <> 'loop' or (webm_id is not null and mobile_mp4_id is not null
                             and mobile_webm_id is not null and poster_id is not null)),
   check (role <> 'film' or poster_id is not null),
@@ -189,12 +189,12 @@ create table public.site_texts (
   updated_at timestamptz not null default now()
 );
 
--- Egasi tasdiqlagan nom va atamalar: saqlashdagi va G3 dagi «inglizcha soʻz» tekshiruvi ularni oʻtkazadi
+-- Tasdiqlangan nom va atamalar: saqlashdagi va G3 tekshiruvidagi «inglizcha soʻz» qoidasi ularga tegmaydi
 create table public.site_word_allowlist (
   word text primary key check (word ~ '^[A-Za-z][A-Za-z0-9-]{1,40}$')
 );
 
-create table public.artworks (                  -- 5-bosqich, ixtiyoriy: rozilik cheklov sifatida
+create table public.artworks (                  -- ixtiyoriy jadval: rozilik cheklov orqali tekshiriladi
   id uuid primary key default gen_random_uuid(),
   status public.content_status not null default 'pending',
   media_id uuid not null references public.media (id) on delete restrict,

@@ -29,14 +29,13 @@ export interface SurfaceLight {
 
 export interface SurfaceOwnProps {
   readonly variant?: SurfaceVariant;
-  /** Matnli sirt: --g-tint-text pastki chegarasi bilan. */
+  /** Yozuv oʻqilishi uchun shaffoflik --g-tint-text bilan cheklanadi. */
   readonly text?: boolean;
   readonly as?: SurfaceTag;
   readonly radius?: SurfaceRadius;
-  /** Ichki padding (px); nested sirtlar shundan konsentrik radius oladi. */
+  /** Ichki sirtlar konsentrik radiusni shundan hisoblaydi (px). */
   readonly padding?: SurfacePadding;
   readonly light?: SurfaceLight;
-  /** Ostidagi boʻlimlarning data-tone qiymatini oʻqib, oʻz ohangini moslaydi. */
   readonly adaptiveTone?: boolean;
   readonly refraction?: boolean;
   readonly className?: string;
@@ -84,8 +83,8 @@ export function Surface({
     [ref],
   );
 
-  /* Ohang birinchi kadrdan kerak (qorongʻi qahramon ustida yorliq oq). Yaltiroq nuqta va sinish esa
-     bezak: alohida chunk, sahifa yuklanib boʻshaganda ulanadi (birinchi yuklanish JS ida emas). */
+  /* Ohang birinchi kadrdan kerak: qorongʻi qahramon ustida yorliq oq boʻladi. Sinish esa bezak,
+     alohida chunk sahifa boʻshaganda ulanadi. */
   useSurfaceTone(localRef, adaptiveTone);
   useEffect(() => {
     const element = localRef.current;

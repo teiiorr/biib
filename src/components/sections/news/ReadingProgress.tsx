@@ -7,14 +7,10 @@ import { fill } from "@/i18n/format";
 
 interface ReadingProgressProps {
   readonly dict: Dictionary["common"]["reading"];
-  /** Oʻqiladigan matn bloki (maqola tanasi) id si. */
   readonly targetId: string;
 }
 
-/**
- * Oʻqish jarayoni: ekran tepasida 2 px ingichka chiziq. Har kadrda faqat transform oʻzgaradi;
- * React qayta chizilmaydi, aria qiymati foiz oʻzgargandagina yangilanadi.
- */
+/** Har kadrda faqat transform oʻzgaradi: React qayta chizmaydi, aria qiymati foiz oʻzgargandagina yangilanadi. */
 export function ReadingProgress({ dict, targetId }: ReadingProgressProps) {
   const ref = useRef<HTMLDivElement>(null);
 

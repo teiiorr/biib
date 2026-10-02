@@ -15,9 +15,9 @@ const CORNERS = [
 
 test.describe.configure({ mode: "parallel" });
 
-/* G6: axe WCAG 2.2 AA har sahifa × til; panel toʻrt burchakda; klaviatura yoʻli. */
+/* G6: har sahifa va tilda axe WCAG 2.2 AA, slayderlarning toʻrt chekka holati va klaviatura yoʻli. */
 for (const route of routes) {
-  /* Har manzil bir yuklash; sayt faqat tungi mavzuda. */
+  /* Har manzil bir marta yuklanadi: sayt faqat tungi mavzuda. */
   test(`axe ${route.path}`, async ({ page }, testInfo) => {
     await primeAppearance(page);
     await page.goto(route.path);

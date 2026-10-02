@@ -1,11 +1,11 @@
 /**
- * Maʼlumotlar bazasidagi kontentni repoga tortadi: content_snapshot() → src/content/snapshot.json.
- * Bu fayl saytning zaxira manbai, til tekshiruvi (G3) korpusi va zaxira nusxa.
+ * Bazadagi kontentni content_snapshot() orqali src/content/snapshot.json fayliga tortadi.
+ * Bu fayl saytning zaxira manbai va til tekshiruvining matn korpusi.
  *
  *   pnpm content:pull           faylni yangilaydi (prettier bilan)
- *   pnpm content:pull --check   yozmaydi: baza repodagi nusxa bilan aynan tengmi (farq boʻlsa 1)
+ *   pnpm content:pull --check   hech narsa yozmaydi, baza nusxadan farq qilsa 1 bilan chiqadi
  *
- * Ommaviy sahifalar bilan bir xil yoʻl: publishable kalit va bitta RPC.
+ * Ommaviy sahifalar bilan bir xil yoʻl ishlatiladi: publishable kalit va bitta RPC.
  */
 import { writeFileSync } from "node:fs";
 import path from "node:path";
@@ -16,7 +16,7 @@ import type { ContentSnapshot } from "../../src/content/snapshot";
 import { fetchSnapshot } from "./rest.mts";
 
 const TARGET = path.resolve("src/content/snapshot.json");
-/* Repodagi eski TS nusxada bu qismlar yoʻq edi: faqat kontent solishtiriladi. */
+/* Bu qismlar repodagi eski nusxada yoʻq edi, shuning uchun faqat kontent solishtiriladi. */
 const IGNORED = new Set<string>(["media", "redirects", "texts", "allowWords"]);
 
 function show(value: unknown): string {
@@ -24,7 +24,7 @@ function show(value: unknown): string {
   return text === undefined ? "(yoʻq)" : text.length > 120 ? `${text.slice(0, 117)}…` : text;
 }
 
-/** Chuqur solishtirish: har farq yoʻli bilan (news[0].title.ru). Kalit tartibi ahamiyatsiz. */
+/** Har bir farq yoʻli bilan yoziladi (news[0].title.ru); kalitlar tartibi hisobga olinmaydi. */
 function differences(left: unknown, right: unknown, at: string, out: string[]): void {
   if (Object.is(left, right)) return;
   const bothArrays = Array.isArray(left) && Array.isArray(right);

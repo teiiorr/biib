@@ -9,7 +9,7 @@ interface FieldGroupProps {
   readonly children: ReactNode;
 }
 
-/** Shakl guruhi: sirtdagi karta, ixcham h2 (asbob zichligi: sahifa sarlavhasidan ancha kichik). */
+/** h2 ataylab ixcham: panelda u sahifa sarlavhasidan ancha kichik. */
 export function FieldGroup({ id, title, className, children }: FieldGroupProps) {
   return (
     <section id={id} className={cx("admin-group", className)} aria-labelledby={`${id}-title`}>

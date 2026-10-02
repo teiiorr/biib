@@ -27,10 +27,7 @@ interface PeopleListProps {
 
 const L = PEOPLE_COPY.list;
 
-/**
- * Rahbariyat yoki ekspertlar saytdagi tartibda: portret, ism, lavozim, holat; oʻq tugmalari bilan
- * tartiblash va qator menyusi. Telefonda tugmalar ism ostida, bosh barmoq yetadigan qatorda.
- */
+/** Telefonda tartib tugmalari ism ostida, bosh barmoq yetadigan qatorda turadi. */
 export function PeopleList({ kind, rows }: PeopleListProps) {
   const listId = useId().replace(/:/g, "");
   const reorder = useReorder(rows, (keys) => reorderPeople(kind, keys));

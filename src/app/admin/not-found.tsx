@@ -2,7 +2,7 @@ import { AdminStatus } from "@/components/admin/AdminStatus";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { ADMIN_COPY } from "@/lib/admin/copy";
 
-/** Panel ichidagi nomaʼlum yoʻl: sayt 404 iga emas, panelning oʻz sahifasiga tushadi. */
+/** Panel ichidagi nomaʼlum yoʻl sayt 404 sahifasiga emas, panelning oʻz sahifasiga tushadi. */
 export default function AdminNotFound() {
   return (
     <AdminStatus

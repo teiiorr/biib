@@ -13,7 +13,6 @@ export const metadata: Metadata = { title: ADMIN_COPY.pages.security };
 
 const S = SYSTEM_COPY.security;
 
-/** Xavfsizlik: kim kirgan, hamma qurilmadan chiqish va parolni qayerda almashtirish. */
 export default async function SecurityAdminPage() {
   const session = await requireAdmin("/admin/xavfsizlik");
   const account = await loadAccount(session);

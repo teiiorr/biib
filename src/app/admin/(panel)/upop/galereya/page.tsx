@@ -20,7 +20,7 @@ export default async function UpopGalleryAdminPage() {
     db,
     shots.data.flatMap((s) => [s.mediaId, ...(s.posterId ? [s.posterId] : [])]),
   );
-  /* Media qatori topilmagan joy boʻsh koʻrinadi: saqlansa, u joy galereyadan chiqadi. */
+  /* Media yozuvi topilmagan joy boʻsh koʻrinadi va saqlangach galereyadan chiqadi. */
   const slots = slotsFromShots(shots.data, (shot) => {
     const item = media.get(shot.mediaId);
     if (!item) return null;

@@ -13,7 +13,7 @@ export interface GlassSliderProps {
   readonly max?: number;
   readonly step?: number;
   readonly disabled?: boolean;
-  /** Ekran oʻquvchisi uchun mahalliylashtirilgan qiymat, masalan «50%». */
+  /** Ekran oʻquvchisi uchun mahalliy qiymat, masalan «50%». */
   readonly valueText: (value: number) => string;
   readonly label: string;
   readonly id?: string;

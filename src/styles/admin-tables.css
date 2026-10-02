@@ -1,5 +1,5 @@
-/* Boshqaruv paneli: jadvallar (yangiliklar, jurnal) va sayt holati kartasi. 600 px dan torda har qator
-   kartaga aylanadi: ustun nomi katak oldida, amal tugmasi oʻng yuqorida. */
+/* Panel jadvallari va sayt holati kartasi. 600 px dan tor ekranda jadval sigʻmaydi, shu sabab har
+   qator kartaga aylanadi. */
 
 @layer components {
   .admin-table {

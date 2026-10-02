@@ -10,19 +10,16 @@ import { buildMediaReveal, mediaTargets } from "./media-motion";
 import { useMotionPrefs } from "./motion-context";
 
 export interface MediaRevealOptions {
-  /** false: kirish yoʻq (masalan umumiy element bilan kelgan maqola muqovasi). */
+  /** false: kirish yoʻq (masalan, umumiy element bilan kelgan maqola muqovasi). */
   readonly enabled?: boolean;
-  /** abr: chapdan oʻngga olti pogʻonada (ikat registri); smooth: yumshoq. */
+  /** abr: ikat iplari kabi chapdan oʻngga olti pogʻonada; smooth: yumshoq ochilish. */
   readonly mode?: "abr" | "smooth";
   readonly delay?: number;
   /** Kirish tugagandagi masshtab: parallaks bor boʻlsa uning asosi (1 + chuqurlik). */
   readonly restScale?: number;
 }
 
-/**
- * media-reveal (motion-plan 3.6, 5.4): ramka kesilib ochiladi, ichki qatlam 1.12 → 1.
- * Bitta element bir marta kiradi: ekranda turgan media (kech dvigatel, sahifa oʻtishi) yashirilmaydi.
- */
+/** Ramka kesilib ochiladi, ichki qatlam 1.12 → 1. Ekranda turgan media (kech dvigatel, sahifa oʻtishi) yashirilmaydi. */
 export function useMediaReveal(
   ref: RefObject<HTMLElement | null>,
   { enabled = true, mode = "abr", delay = 0, restScale = 1 }: MediaRevealOptions = {},

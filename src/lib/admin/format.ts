@@ -23,7 +23,7 @@ export function todayInTashkent(now = new Date()): string {
   return `${p.year}-${p.month}-${p.day}`;
 }
 
-/** «2026-yil 27-sentabr, 14:05» — jurnal va roʻyxatdagi oʻzgartirilgan vaqt. */
+/** Jurnal va roʻyxatdagi oʻzgarish vaqti: «2026-yil 27-sentabr, 14:05». */
 export function formatStamp(iso: string): string {
   const p = parts(new Date(iso));
   return `${formatDate("uz", `${p.year}-${p.month}-${p.day}`)}, ${p.hour}:${p.minute}`;

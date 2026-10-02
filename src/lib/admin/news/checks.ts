@@ -27,9 +27,8 @@ export async function firstFreeSlug(
 export type Freshness = "fresh" | "stale" | "missing";
 
 /**
- * Yozuv tahrir boshlangandan beri oʻzgarmaganmi: RPC dan oldin tekshiriladi. Eskirgan yozuvni RPC ning
- * oʻzi ham rad etadi, lekin uning 40001 kodi PostgREST da cheksiz qayta urinishga olib keladi
- * (20261001000106 migratsiyasi uni PT409 ga almashtiradi) — bu tekshiruv javobni darhol beradi.
+ * Tahrir boshlangandan beri yozuv oʻzgarmaganini RPC chaqiruvidan oldin tekshiramiz. Bazaning oʻzi ham
+ * eskirgan yozuvni rad etadi (PT409), bu yerda esa javob tarmoqqa chiqmasdan darhol qaytadi.
  */
 export async function freshness(db: AdminDb, id: string, expected: string): Promise<Freshness> {
   const same = await db

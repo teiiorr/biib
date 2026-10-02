@@ -1,10 +1,9 @@
 import { clsx, type ClassValue } from "clsx";
 
 /**
- * Mijozga yetib boradigan komponentlar uchun: faqat birlashtirish, tailwind-merge siz (≈ 8 KB gzip
- * birinchi yuklanish JS idan chiqadi). Bu komponentlarning bazaviy sinflari oʻz nomli sinflari —
- * chaqiruvchi ular bilan toʻqnashadigan utilita bermaydi, shu sabab birlashtirish natijasi bir xil.
- * Toʻqnashuvni yechish kerak boʻlgan server komponentlari cn dan foydalanadi.
+ * Mijozdagi komponentlar uchun oddiy birlashtirish: tailwind-merge ishlatilmaydi va birinchi yuklanish
+ * JS ≈ 8 KB gzip yengillashadi. Bu komponentlarning bazaviy sinflari oʻz nomli sinflari, ular bilan
+ * toʻqnashadigan utilita berilmaydi. Toʻqnashuvni yechish kerak boʻlsa, server komponentlari cn ishlatadi.
  */
 export function cx(...inputs: ClassValue[]): string {
   return clsx(inputs);

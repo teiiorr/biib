@@ -15,7 +15,7 @@ const input = z.object({
   purpose: z.enum(MEDIA_PURPOSES),
 });
 
-/* Fayl nomida xesh: bir yil keshlanadi va hech qachon oʻzgarmaydi. */
+/* Fayl nomida xesh bor va mazmuni oʻzgarmaydi, shu sabab bir yilga keshlanadi. */
 const CACHE_SECONDS = "31536000";
 
 async function storeVariants(db: AdminDb, prepared: PreparedUpload): Promise<boolean> {
@@ -28,14 +28,13 @@ async function storeVariants(db: AdminDb, prepared: PreparedUpload): Promise<boo
       }),
     ),
   );
-  /* Bir xil rasm avval ham yuklangan: fayl allaqachon bor, bu xato emas. */
+  /* Bir xil rasm oldin ham yuklangan boʻlsa, fayl allaqachon bor: bu xato emas. */
   return results.every(({ error }) => !error || /exist|duplicate/i.test(error.message));
 }
 
 /**
- * Brauzer yuklagan asl nusxadan sahifa nusxalari: sharp bilan tayyorlanadi, ochiq «media» bucketiga
- * qoʻyiladi, media jadvaliga yoziladi, asl nusxa oʻchiriladi. Javob tahrir oynasida darhol
- * koʻrinadigan <Picture image> shakli bilan.
+ * Asl nusxadan sharp bilan sahifa nusxalari tayyorlanadi va ochiq «media» omboriga qoʻyiladi, asl nusxa
+ * oʻchiriladi. Javob tahrir oynasida darhol koʻrinadigan <Picture image> shaklida qaytadi.
  */
 export async function POST(request: Request): Promise<Response> {
   const session = await requireAdminRoute(request);
@@ -75,7 +74,7 @@ export async function POST(request: Request): Promise<Response> {
     if (registerError || !row) return adminJson(502, { error: "register" });
     return adminJson(200, toMediaItem(row));
   } finally {
-    /* Asl nusxa (EXIF va joylashuv bilan) hech qayerda qolmaydi, xato boʻlsa ham. */
+    /* EXIF va joylashuv yozilgan asl nusxa xato boʻlsa ham saqlanib qolmaydi. */
     await originals.remove([path]).catch(() => undefined);
   }
 }

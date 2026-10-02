@@ -18,7 +18,7 @@ import "@/styles/admin-people.css";
 import "@/styles/admin-org.css";
 import "@/styles/admin-gallery.css";
 
-/* Panel har soʻrovda serverda: sessiya cookie si oʻqiladi, hech bir sahifa oldindan yigʻilmaydi. */
+/* Sessiya cookie qiymati har soʻrovda oʻqiladi, shu sabab panel sahifalari oldindan yigʻilmaydi. */
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
@@ -40,8 +40,8 @@ interface AdminLayoutProps {
 }
 
 /**
- * Panelning oʻz ildiz layouti: sayt bilan bir xil tokenlar, oyna va shriftlar, lekin koʻrinish skripti,
- * teginish ovozi, silliq skroll, sarlavha, tab-bar va futersiz. Faqat tungi mavzu, faqat oʻzbek lotini.
+ * Tokenlar, oyna va shriftlar sayt bilan bir xil, lekin koʻrinish skripti, ovoz, silliq skroll, sarlavha,
+ * tab-bar va futer yoʻq. Mavzu faqat tungi, til faqat oʻzbek lotini.
  */
 export default function AdminLayout({ children }: AdminLayoutProps) {
   for (const href of fontPreloads("uz")) {

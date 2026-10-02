@@ -13,9 +13,8 @@ import { publish } from "../publish";
 const E = SYSTEM_COPY.media.errors;
 
 /**
- * Ishlatilmagan yuklangan faylni oʻchirish: avval bazadagi yozuv (admin_delete_media; ishlatilayotgan
- * fayl tashqi kalit bilan rad etiladi), keyin Storage dagi hamma nusxasi. Kod bilan keladigan (static)
- * fayl panel orqali oʻchirilmaydi: public/ dagi fayl baribir qolardi.
+ * Avval bazadagi yozuv oʻchiriladi (ishlatilayotgan faylni tashqi kalit rad etadi), keyin Storage
+ * nusxalari. Kod bilan keladigan fayl oʻchirilmaydi: public/ papkasida u baribir qolib ketardi.
  */
 export async function deleteMedia(id: string): Promise<DeleteMediaResult> {
   const session = await requireAdminAction();

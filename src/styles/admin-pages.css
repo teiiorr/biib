@@ -1,5 +1,4 @@
-/* Boshqaruv paneli: ish maydoni, sahifa, karta, harakatlar qatori va qobiqsiz sahifalar (kirish, 404,
-   xato). Qobiq va boʻlimlar roʻyxati admin.css da. */
+/* Panel: ish maydoni, sahifa, karta, harakatlar qatori va qobiqsiz sahifalar (kirish, 404, xato). */
 
 @layer components {
   /* ---------- Ish maydoni ---------- */
@@ -56,7 +55,6 @@
     color: var(--accent-text);
   }
 
-  /* Harakatlar qatori doim oʻngda (egasining talabi). */
   .admin-actions {
     display: flex;
     flex-wrap: wrap;
@@ -65,7 +63,7 @@
     gap: 12px;
   }
 
-  /* ---------- Kirish, 404 va xato: qobiqsiz, markazdagi tor ustun ---------- */
+  /* ---------- Kirish, 404 va xato ---------- */
   .admin-login,
   .admin-status {
     flex: 1;
@@ -89,7 +87,6 @@
   .admin-mark {
     align-self: center;
   }
-  /* Kirishda belgi asosiy, sarlavha ixcham va bir qatorda (egasining talabi). */
   .admin-login .admin-mark {
     width: 160px;
     height: 160px;
@@ -98,7 +95,7 @@
     white-space: nowrap;
     font-size: clamp(1.5rem, 1.1rem + 2vw, 2.25rem);
   }
-  /* Parol maydoni ichidagi koʻz tugmasi: 44 px nishon, matn uning ostiga kirmaydi. */
+  /* Parol maydonidagi koʻz tugmasi: 44 px nishon, matn uning ostiga kirmaydi. */
   .admin-password {
     position: relative;
     display: block;

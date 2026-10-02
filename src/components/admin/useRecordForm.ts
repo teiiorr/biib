@@ -13,24 +13,19 @@ import { useLeaveGuard } from "./useLeaveGuard";
 export interface RecordFormOptions<D, A, P> {
   readonly action: (prev: RecordSaveState<A>, formData: FormData) => Promise<RecordSaveState<A>>;
   readonly initial: D;
-  /** null: yangi yozuv (saqlangach server oʻz sahifasiga yoʻnaltiradi). */
+  /** null: yangi yozuv, saqlangach server uni oʻz sahifasiga yoʻnaltiradi. */
   readonly id: string | null;
   readonly updatedAt: string | null;
   readonly justSaved: boolean;
   readonly toPayload: (draft: D, meta: RecordMeta) => P;
   readonly build: (payload: P) => BuildResult<A>;
-  /** Saqlangan (meʼyorlangan) maʼlumotdan yangi tahrir holati; rasm koʻrinishi joriy tahrirdan. */
+  /** Rasm koʻrinishi joriy tahrirdan olinadi, qolgani saqlangan maʼlumotdan. */
   readonly fromSaved: (data: A, draft: D) => D;
-  /** Xatoga fokus tartibi = sahifadagi tartib. */
   readonly fieldOrder: readonly string[];
   readonly idFor: (field: string) => string;
   readonly leaveMessage: string;
 }
 
-/**
- * Tahrir shaklining umumiy holati (odam, hamkor): server javobi, saqlanmagan oʻzgarish, eskirganlik
- * kaliti, brauzerdagi tekshiruv, xatoga fokus, chiqishdan himoya va rasmlar yuklanishi.
- */
 export function useRecordForm<D extends object, A, P>(options: RecordFormOptions<D, A, P>) {
   const { action, initial, id, updatedAt, justSaved, toPayload, build, fromSaved } = options;
   const { fieldOrder, idFor, leaveMessage } = options;
@@ -46,7 +41,7 @@ export function useRecordForm<D extends object, A, P>(options: RecordFormOptions
   const [clientErrors, setClientErrors] = useState<FieldErrors>({});
   const [uploads, setUploads] = useState(0);
 
-  /* Server javobi kelgan render: saqlangan qiymatlar tahrirga qaytadi, yangi updated_at kutiladi. */
+  /* Yangi server javobi: saqlangan qiymat tahrirga qaytadi, keyingi saqlash yangi updated_at ni kutadi. */
   if (state.revision !== seen) {
     setSeen(state.revision);
     if (state.status === "saved") {
@@ -63,7 +58,7 @@ export function useRecordForm<D extends object, A, P>(options: RecordFormOptions
   const serverTarget =
     state.status === "invalid" ? firstErrorId(state.errors, fieldOrder, idFor) : null;
   useLeaveGuard(dirty && !pending, leaveMessage);
-  /* Server rad etgan har javobda (bir xil xato qayta kelsa ham) fokus birinchi xatoga. */
+  /* Bir xil xato qayta kelsa ham fokus yana birinchi xatoga tushadi. */
   useEffect(() => {
     if (serverTarget) focusField(serverTarget);
   }, [state, serverTarget]);
@@ -89,7 +84,7 @@ export function useRecordForm<D extends object, A, P>(options: RecordFormOptions
     /** Funksional yangilash: kech tugagan yuklash ham eng soʻnggi holat ustiga yozadi. */
     patch: (next: Partial<D>) => {
       setDraft((d) => ({ ...d, ...next }));
-      /* Tuzatilayotgan maydonning eski xatosi darhol yoʻqoladi; qolganlari keyingi saqlashgacha. */
+      /* Tuzatilayotgan maydonning eski xatosi darhol yoʻqoladi, qolganlari keyingi saqlashgacha turadi. */
       const fields = Object.keys(next);
       setClientErrors((current) => {
         const kept = Object.entries(current).filter(

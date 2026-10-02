@@ -1,6 +1,5 @@
-/* Maqsad, yoʻnalishlar va vazifalar birlashma ustavidan (2026, Adliya vazirligida roʻyxatdan oʻtgan):
-   1.1, 1.3, 2.1, 2.2 va 6.10-bandlar. Vazifalar 2.2-banddan qisqa nom boʻlib olingan: har band bir
-   qatorda, belgi bilan bir chiziqda (egasining talabi). */
+/* Maqsad, yoʻnalishlar va vazifalar ustavning 1.1, 1.3, 2.1, 2.2 va 6.10-bandlaridan olingan.
+   Vazifalar qisqartirilgan: har biri belgisi bilan bir qatorga sigʻadi. */
 export const about = {
   title: "Biz haqimizda",
   mission: {

@@ -9,13 +9,12 @@ import { LocaleListField } from "./LocaleListField";
 import type { EditorSectionProps } from "./news-editor-shared";
 
 interface NewsTextFieldsProps extends EditorSectionProps {
-  /** Sarlavha alohida: oʻzbekchasidan havola ham chiqadi. */
+  /** Havola oʻzbekcha sarlavhadan yasaladi, shu sabab sarlavha alohida keladi. */
   readonly onTitle: (next: Localized) => void;
 }
 
 const T = NEWS_COPY.editor;
 
-/** Matn: mavzu, sarlavha, qisqa matn, asosiy matn (tablar) va ixtiyoriy iqtibos — besh tilda. */
 export function NewsTextFields({ draft, patch, errors, idFor, onTitle }: NewsTextFieldsProps) {
   return (
     <>

@@ -17,7 +17,6 @@ interface RestoreButtonProps {
 
 const J = ADMIN_COPY.journal;
 
-/** Jurnal yozuvini qaytarish: tasdiqdan keyin oldingi holat qayta saqlanadi va saytga chiqadi. */
 export function RestoreButton({ logId, summary }: RestoreButtonProps) {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);

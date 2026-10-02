@@ -28,12 +28,12 @@ function segments(path: string): string[] {
   return clean.split("/").filter(Boolean);
 }
 
-/** Til prefiksi chuqurlikka kirmaydi: /uz/yangiliklar/x va /ru/novosti/x bir xil chuqurlik. */
+/** Til prefiksi chuqurlikka kirmaydi: /uz/yangiliklar/x va /ru/novosti/x bir xil chuqurlikda. */
 export function routeDepth(path: string): number {
   return Math.max(0, segments(path).length - 1);
 }
 
-/** Oxirgi sahifalar; orqaga qaytishni chuqurlik yolgʻon aytganda ham taniydi. */
+/** Chuqurlik aldaganda ham orqaga qaytishni tanish uchun oxirgi sahifalar saqlanadi. */
 const history: string[] = [];
 const HISTORY_LIMIT = 24;
 
@@ -44,10 +44,10 @@ export function recordNavigation(path: string): void {
 }
 
 /*
- * Bitta element bir marta kiradi: mijoz navigatsiyasida birinchi ekrandagi bloklar oʻz kirishini
- * oʻynamaydi, sahifa oʻtishi (abr) ularning kirishi. Belgi TransitionLink bosilganda qoʻyiladi,
- * PageTransition yangi yoʻlni qayd etgandan bir kadr keyin olib tashlaydi. Oddiy Link va orqaga
- * tugmasi uchun: yangi sahifaning effektlari ishlaganda manzil qayd etilgan yoʻldan farq qiladi.
+ * Element bir marta kiradi: mijoz navigatsiyasida birinchi ekrandagi bloklar uchun sahifa oʻtishining
+ * oʻzi kirish. Belgini TransitionLink bosilganda qoʻyadi, PageTransition yangi yoʻlni qayd etgandan
+ * bir kadr keyin oladi. Oddiy Link va orqaga tugmasida esa yangi sahifa effektlari ishlaganda manzil
+ * hali qayd etilgan yoʻldan farq qiladi.
  */
 let navEntry = false;
 let committedPath: string | null = null;

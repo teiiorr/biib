@@ -17,10 +17,7 @@ interface UpopMediaGroupProps extends OrgSectionProps<ProjectDraft> {
 
 const P = UPOP_COPY.project;
 
-/**
- * Sahna halqasi, film va logotip: fayllar faqat koʻrsatiladi (hozircha kodda), tavsiflari esa besh
- * tilda tahrirlanadi.
- */
+/** Fayllar hozircha kodda turadi, shu sabab faqat koʻrsatiladi; tavsiflari tahrirlanadi. */
 export function UpopMediaGroup({ draft, patch, errors, idFor, files }: UpopMediaGroupProps) {
   return (
     <FieldGroup id={idFor("media-group")} title={P.groups.media}>

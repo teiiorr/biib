@@ -25,7 +25,6 @@ export interface GlassSheetProps {
   readonly children: ReactNode;
 }
 
-/** Pastdan chiqadigan oyna varagʻi: safe-area hisobga olinadi, fokus ichida qoladi. */
 export function GlassSheet({
   open,
   onOpenChange,

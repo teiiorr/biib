@@ -9,30 +9,28 @@ import { isMotionOff } from "@/lib/motion/prefs";
 
 export interface InViewPlaybackOptions {
   /**
-   * Ambient halqa (sukut): reyestrda bir turdan bittasi ishlaydi, kamaytirilgan harakat va
-   * Harakat = off da manba qoʻyilmaydi. false: foydalanuvchi boshlagan ijro — faqat yashirin
-   * varaqda va koʻrinishdan chiqqanda toʻxtaydi, oʻzi qayta boshlamaydi.
+   * Fon halqasi (odatiy): reyestrda bir turdan faqat bittasi ishlaydi; kamaytirilgan harakatda va Harakat
+   * oʻchiq boʻlsa manba qoʻyilmaydi. false: foydalanuvchi oʻzi boshlagan ijro, u faqat varaq yashirinsa yoki
+   * ekrandan chiqsa toʻxtaydi va oʻz-oʻzidan qayta boshlanmaydi.
    */
   readonly ambient?: boolean;
   readonly kind?: AmbientKind;
-  /** Koʻrinish ulushi: shundan boshlab ijro (sukut 0.4). */
+  /** Ijro boshlanadigan koʻrinish ulushi (odatda 0.4). */
   readonly threshold?: number;
   /**
-   * Bir marta ijro (qahramon videosi): oxiriga yetgach oxirgi kadrda turadi, koʻrinishga qaytganda
-   * qayta boshlanmaydi; toggle uni boshidan qayta oʻynaydi.
+   * Bir marta ijro (qahramon videosi): oxirgi kadrda toʻxtaydi, ekranga qaytganda qayta boshlanmaydi;
+   * toggle uni boshidan oʻynaydi.
    */
   readonly once?: boolean;
 }
 
 export interface InViewPlayback {
-  /** Manba qoʻyish mumkin: kamaytirilgan harakat yoki Harakat = off boʻlsa false. */
+  /** Kamaytirilgan harakatda yoki Harakat oʻchiq boʻlsa false, manba qoʻyilmaydi. */
   readonly allowed: boolean;
-  /** Ruxsat bir marta aniqlandi (boʻsh vaqtda, ≤ 2 s): shungacha allowed=false «hali nomaʼlum» degani. */
+  /** Ruxsat brauzer boʻshaganda (koʻpi bilan 2 s) bir marta aniqlanadi; shungacha allowed=false «hali nomaʼlum» degani. */
   readonly settled: boolean;
   readonly inView: boolean;
-  /** Foydalanuvchi toʻxtatgan; toggle bilan almashadi. */
   readonly paused: boolean;
-  /** once: video oxiriga yetgan (oxirgi kadrda turibdi). */
   readonly finished: boolean;
   readonly toggle: () => void;
 }
@@ -43,10 +41,7 @@ function saveData(): boolean {
   return nav.connection?.saveData === true;
 }
 
-/**
- * Video ijrosini koʻrinish, varaq holati va harakat sozlamalari bilan bogʻlaydi.
- * Ambient rejimda ijro sharti: ruxsat + koʻrinishda + reyestr gʻolibi + varaq ochiq + toʻxtatilmagan.
- */
+/** Fon rejimida ijro sharti: ruxsat bor, ekranda, reyestrda gʻolib, varaq ochiq va foydalanuvchi toʻxtatmagan. */
 export function useInViewPlayback(
   ref: RefObject<HTMLVideoElement | null>,
   { ambient = true, kind = "ambient", threshold = 0.4, once = false }: InViewPlaybackOptions = {},
@@ -87,8 +82,8 @@ export function useInViewPlayback(
       attributes: true,
       attributeFilter: ["data-motion"],
     });
-    /* Halqa (≈ 0,9 MB) birinchi yuklanish bilan raqobatlashmaydi: manba sahifa yuklanib, brauzer
-       boʻshagandan keyin qoʻyiladi; LCP posteri va skriptlar undan oldin keladi. */
+    /* Halqa (taxminan 0,9 MB) birinchi yuklanish bilan raqobatlashmasin: manba sahifa yuklanib, brauzer
+       boʻshagandan keyin qoʻyiladi, LCP posteri va skriptlar undan oldin keladi. */
     const cancelIdle = whenIdle(() => {
       apply();
       // Trafik tejash rejimida halqa oʻzi boshlanmaydi; tugma bilan yoqiladi.
@@ -149,7 +144,6 @@ export function useInViewPlayback(
 
   const toggle = useCallback(() => {
     if (finished) {
-      // Tugagan videoni qayta koʻrish: boshidan, toʻxtatilmagan holda.
       const video = ref.current;
       if (video) video.currentTime = 0;
       setPaused(false);

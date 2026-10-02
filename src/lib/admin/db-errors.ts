@@ -1,10 +1,10 @@
-/** Bazadan kelgan xato turi: RPC lar Postgres kodlari bilan xato beradi. */
+/** Baza funksiyalari xatoni Postgres kodi bilan qaytaradi. */
 export type DbErrorKind =
   "conflict" | "notFound" | "slugTaken" | "media" | "denied" | "invalid" | "unknown";
 
 export function dbErrorKind(error: { readonly code?: string | undefined } | null): DbErrorKind {
   switch (error?.code) {
-    /* PT409: 20261001000106 dan keyingi kod (HTTP 409); 40001: undan oldingi. */
+    /* PT409 (HTTP 409) 20261001000106-migratsiyadan beri keladi, 40001 undan oldingi bazadan. */
     case "PT409":
     case "40001":
       return "conflict";

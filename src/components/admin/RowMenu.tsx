@@ -14,7 +14,7 @@ import { ConfirmDialog } from "./ConfirmDialog";
 interface RowMenuProps {
   readonly name: string;
   readonly editHref: string;
-  /** Saytdagi joyi (yangi oynada); yoʻq boʻlsa band chiqmaydi. */
+  /** Yoʻq boʻlsa «saytda ochish» bandi chiqmaydi. */
   readonly openHref?: string | null;
   readonly deleteTitle: string;
   readonly onDelete: () => Promise<ActionResult>;
@@ -23,7 +23,6 @@ interface RowMenuProps {
 
 const L = PEOPLE_COPY.list;
 
-/** Qator menyusi: tahrirlash, saytda ochish, oʻchirish (nomi aytilgan tasdiq bilan). */
 export function RowMenu({
   name,
   editHref,

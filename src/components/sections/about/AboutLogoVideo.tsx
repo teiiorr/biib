@@ -11,20 +11,20 @@ const POSTER = "/media/about-logo-poster.avif";
 const END = "/media/about-logo-end.avif";
 
 interface AboutLogoVideoProps {
-  /** Videoning ekran oʻquvchi tavsifi (lugʻatdan). */
+  /** Ekran oʻquvchi uchun video tavsifi, lugʻatdan. */
   readonly label: string;
 }
 
 /**
- * «Biz haqimizda» dagi belgi animatsiyasi: koʻrinishga kirganda bir marta oʻynaydi va yigʻilgan belgida
- * toʻxtaydi (halqa emas, chok yoʻq). Kamaytirilgan harakat va Harakat = off da darhol oxirgi kadr.
+ * Ekranga kirganda bir marta oʻynaydi va yigʻilgan belgida toʻxtaydi: halqa emas, shuning uchun chok koʻrinmaydi.
+ * Kamaytirilgan harakatda va Harakat oʻchiq boʻlsa darhol oxirgi kadr koʻrsatiladi.
  */
 export function AboutLogoVideo({ label }: AboutLogoVideoProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const { allowed } = useInViewPlayback(videoRef, { once: true });
   return (
     <div className="about-logo" data-state={allowed ? "play" : "still"}>
-      {/* Oxirgi kadr: harakat oʻchiq boʻlsa koʻrinadigan tayyor belgi (oldindan tayyor AVIF). */}
+      {/* Harakat oʻchiq boʻlsa koʻrinadigan tayyor oxirgi kadr (AVIF). */}
       <picture className="about-logo-end">
         <img src={END} alt="" width={720} height={720} decoding="async" />
       </picture>

@@ -10,13 +10,13 @@ export interface CoverRect {
 }
 
 /**
- * Qahramon kadrining vertikal langari (home.css object-position: 50% 75%): kadr ekrandan baland boʻlsa
- * ortiqchaning chorak qismi pastdan, uch chorak qismi yuqoridan kesiladi — kadr tepasi va pasti bir
- * xil tekis fon, belgi yuqoriroq turadi va noutbukda matn bilan tugmalar bir ekranga sigʻadi.
+ * Qahramon kadrining vertikal langari (home.css faylidagi object-position: 50% 75%). Kadr ekrandan
+ * baland boʻlsa ortiqchaning chorak qismi pastdan kesiladi: belgi yuqoriroq turadi va noutbukda matn
+ * bilan tugmalar bir ekranga sigʻadi.
  */
 export const HERO_FOCUS_Y = 0.75;
 
-/** object-fit: cover ostidagi media toʻrtburchagi: quti toʻlguncha kattalashtiriladi, ortiqchasi kesiladi. */
+/** object-fit: cover qilingan media toʻrtburchagi. */
 export function coverRect(
   mediaW: number,
   mediaH: number,
@@ -31,9 +31,8 @@ export function coverRect(
 }
 
 /**
- * Qahramon media qatlami (home.css .home-hero-art): doim bir ekran balandligida. Kadr shu qutiga
- * cover boʻladi; qahramon matni uzun boʻlsa ham belgi pastga surilmaydi (aks holda sikl: kadr oʻssa
- * belgi tushadi, matn tushadi, qahramon yana oʻsadi va telefonda sahna ishlamay qolardi).
+ * Doim bir ekran balandligida: matn uzun boʻlsa ham belgi pastga surilmaydi. Aks holda sikl hosil
+ * boʻladi: kadr oʻssa belgi va matn tushadi, qahramon yana oʻsadi va telefonda sahna buziladi.
  */
 export function heroMediaBox(hero: HTMLElement): {
   readonly width: number;

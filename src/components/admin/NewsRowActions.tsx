@@ -16,13 +16,12 @@ interface NewsRowActionsProps {
   readonly id: string;
   readonly slug: string;
   readonly title: string;
-  /** Oʻchirishda kutilgan updated_at: boshqa oynada oʻzgargan yozuv oʻchirilmaydi. */
+  /** Kutilgan updated_at: boshqa oynada oʻzgargan yozuv oʻchirilmaydi. */
   readonly updatedAt: string;
 }
 
 const T = NEWS_COPY.list;
 
-/** Qator menyusi: tahrirlash, saytda ochish (yangi oynada), oʻchirish (tasdiq bilan). */
 export function NewsRowActions({ id, slug, title, updatedAt }: NewsRowActionsProps) {
   const [confirming, setConfirming] = useState(false);
   const [error, setError] = useState<string | null>(null);

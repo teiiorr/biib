@@ -1,11 +1,9 @@
 /**
- * Yigʻishdan oldin kontentni bir marta oladi: `pnpm build` shu skriptdan keyin
- * CMS_BUILD_PIN=.content-cache/snapshot.json bilan next build ni ishga tushiradi. Shunda hamma sahifa
- * (va yigʻish ishchilari) tarmoqsiz, aynan bitta nusxadan yigʻiladi.
+ * Kontent yigʻishdan oldin bir marta olinadi, keyin next build CMS_BUILD_PIN orqali shu nusxani oʻqiydi.
+ * Shunda barcha sahifalar va yigʻish ishchilari tarmoqsiz, bitta nusxadan yigʻiladi.
  *
- * CONTENT_SOURCE=supabase boʻlmasa hech narsa qilmaydi (sayt repodagi snapshot.json dan yigʻiladi).
- * Baza javob bermasa: CMS_BUILD_FALLBACK=fail (Vercel production da standart) yigʻishni toʻxtatadi,
- * oldingi deploy ishlab turaveradi; aks holda repodagi nusxa ogohlantirish bilan ishlatiladi.
+ * Baza javob bermasa, CMS_BUILD_FALLBACK=fail (Vercel production uchun standart) yigʻishni toʻxtatadi
+ * va oldingi deploy ishlashda davom etadi; aks holda repodagi nusxa ogohlantirish bilan ishlatiladi.
  */
 import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";

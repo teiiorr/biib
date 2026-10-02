@@ -8,10 +8,10 @@ import { isLocale, LOCALES, type Locale } from "@/i18n/locales";
 import { isNewsSlug, pathFor, resolveSection, sectionSegment } from "@/i18n/routes";
 import { buildMetadata, notFoundMetadata } from "@/lib/seo/metadata";
 
-/* Nomaʼlum segment lokal 404 ni koʻrsatishi uchun (G2): maqolalar statik, qolgani notFound(). */
+/* Nomaʼlum segment shu tilning 404 sahifasini koʻrsatishi uchun: maqolalar statik, qolgani notFound(). */
 export const dynamicParams = true;
 
-/** Faqat yangiliklar: har maqola × 5 til; sluglar kontent nusxasidan. */
+/** Bu segmentda faqat yangiliklar oldindan yigʻiladi, sluglar kontent nusxasidan olinadi. */
 export async function generateStaticParams() {
   const news = await getNews();
   return LOCALES.flatMap((locale) =>

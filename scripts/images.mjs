@@ -6,10 +6,9 @@ import sharp from "sharp";
 import { ROOT } from "./checks/util.mjs";
 
 /*
- * Rasmlar oldindan tayyorlanadi (§11.2, §17): public/brand dagi manbadan public/img ga AVIF va WebP,
- * bir nechta kenglikda. Sahifa ularni <picture> bilan oladi (src/components/ui/Picture.tsx), shu sabab
- * mijozga next/image komponenti kirmaydi va lokal optimizator AVIF da qotib qolsa ham sahifa kutmaydi.
- * Natija: public/img/*.{avif,webp} va src/lib/images/manifest.ts (qoʻlda tahrir qilinmaydi).
+ * Rasmlar AVIF va WebP koʻrinishida, bir nechta kenglikda oldindan tayyorlanadi. Sahifa ularni Picture
+ * komponenti orqali oladi, shuning uchun mijozga next/image kirmaydi va lokal optimizator AVIF kodlashda
+ * qotib qolsa ham sahifa kutib qolmaydi.
  *
  *   node scripts/images.mjs
  */
@@ -19,7 +18,7 @@ const MANIFEST = path.join(ROOT, "src/lib/images/manifest.ts");
 /* Oʻrtacha nisbiy yorugʻlik shundan yuqori boʻlsa rasm «yorugʻ» (oq fonli portret ≈ 0.44, sahna ≈ 0.08). */
 const BRIGHT_MIN = 0.35;
 
-/** widths: srcset kengliklari (manbadan katta boʻlsa manba kengligi bilan cheklanadi). */
+/** Manbadan katta srcset kengligi manba kengligiga tushiriladi. */
 const JOBS = [
   { src: "/brand/logo-hero.png", widths: [40, 80, 120, 240, 408] },
   { src: "/brand/upop-logo.png", widths: [240, 360, 480, 720, 900] },
@@ -39,13 +38,13 @@ const JOBS = [
   { src: "/brand/news-multfilm.jpg", widths: [256, 384, 640, 1024], blur: true },
   { src: "/brand/news-seminar.jpg", widths: [256, 384, 640, 1024], blur: true },
   { src: "/brand/news-teatr.jpg", widths: [256, 384, 640, 1024], blur: true },
-  /* Rahbariyat portretlari (egasidan): EXIF va joylashuv olib tashlangan, burilish qoʻllangan. */
+  /* Rahbariyat portretlarida EXIF va joylashuv olib tashlangan, burilish oldindan qoʻllangan. */
   { src: "/brand/leader-chair.jpg", widths: [320, 480, 640, 960], blur: true },
   { src: "/brand/leader-director.jpg", widths: [320, 480, 640, 960], blur: true },
   { src: "/brand/partner-uzbekgidroenergo.png", widths: [240, 480, 720] },
 ];
 
-/* Sifat: AVIF 52 fotosuratda koʻzga farqsiz, WebP 78 — zaxira (eski Safari). Shaffof PNG sifatli qoladi. */
+/* AVIF 52 sifatda fotosuratdagi farq koʻzga tashlanmaydi; WebP eski Safari uchun zaxira. */
 const AVIF = { quality: 52, effort: 6 };
 const WEBP = { quality: 78, effort: 5 };
 
@@ -76,16 +75,16 @@ for (const job of JOBS) {
   }
   let blur = null;
   if (job.blur) {
-    /* Kichik xira nusxa fon sifatida: rasm kelguncha ramka boʻsh qolmaydi. */
+    /* Rasm yuklanguncha ramka boʻsh turmasligi uchun kichik xira nusxa. */
     const tiny = await sharp(input).resize({ width: 16 }).blur(1).webp({ quality: 40 }).toBuffer();
     blur = `data:image/webp;base64,${tiny.toString("base64")}`;
   }
-  /* Yorugʻ rasm (oq fonli portret): ustidagi oyna yorugʻ muzga oʻtadi, yorliq toʻq siyohda oʻqiladi.
-     Shaffof logotiplar hisoblanmaydi — ular qorongʻi plitkada turadi. */
+  /* Yorugʻ rasm ustidagi oyna yorugʻ ohangga oʻtadi va yorliq toʻq rangda oʻqiladi.
+     Shaffof logotiplar hisoblanmaydi, ular doim qorongʻi plitkada turadi. */
   let bright = false;
   if (!meta.hasAlpha) {
-    /* Har piksel nisbiy yorugʻligining oʻrtachasi (oʻrtacha rangning yorugʻligi oq-qora suratni
-       pasaytirib koʻrsatadi); 64 px nusxa yetarli. */
+    /* Oʻrtacha rangning yorugʻligi oq-qora suratni qorongʻiroq koʻrsatadi, shuning uchun har piksel
+       yorugʻligining oʻrtachasi olinadi; 64 px nusxa yetarli. */
     const { data } = await sharp(input).resize({ width: 64 }).removeAlpha().raw().toBuffer({
       resolveWithObject: true,
     });

@@ -11,7 +11,6 @@ import { ConfirmDialog } from "./ConfirmDialog";
 
 const S = SYSTEM_COPY.security;
 
-/** «Hamma qurilmalardan chiqish»: tasdiqdan keyin hamma sessiya bekor, kirish sahifasi ochiladi. */
 export function SignOutEverywhere() {
   const [open, setOpen] = useState(false);
   const [pending, startTransition] = useTransition();

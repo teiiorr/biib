@@ -10,16 +10,13 @@ interface PageHeroProps {
   readonly title: string;
   readonly breadcrumbs?: readonly BreadcrumbItem[];
   readonly breadcrumbsLabel?: string;
-  /** Rasmiy sahifalar: sarlavha tinch lojuvard lentada, bezaksiz. */
+  /** Rasmiy sahifalarda sarlavha bezaksiz, tinch lojuvard lentada turadi. */
   readonly band?: boolean;
   readonly titleId?: string;
   readonly className?: string;
 }
 
-/**
- * Sahifa boshi: markazda nonushoq yoʻli va bitta katta oltin h1 (display-l). Sarlavha ostida
- * tavsif yoʻq (egasining talabi); nonushoq ham markazda, ikkalasi bir oʻqda turadi.
- */
+/** Nonushoq yoʻli va oltin h1 bir oʻqda, markazda turadi; sarlavha ostida tavsif berilmaydi. */
 export function PageHero({
   title,
   breadcrumbs,

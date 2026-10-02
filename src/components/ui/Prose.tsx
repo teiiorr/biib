@@ -10,7 +10,7 @@ export interface ProseProps {
   readonly children: ReactNode;
 }
 
-/* Maqola tanasi: 65ch, xatboshilar, osilgan belgili roʻyxatlar, izohlar. Stil ui.css da. */
+/* Uslublar ui.css faylida. */
 export function Prose({ size = "body", as: Tag = "div", id, className, children }: ProseProps) {
   return (
     <Tag

@@ -4,9 +4,8 @@ import { defineConfig, devices } from "@playwright/test";
 const BASE_URL = process.env.BASE_URL ?? "http://localhost:3100";
 
 /**
- * Beshta dvigatel profili (§16.2): WebKit iPhone va Chromium Android telefon oʻlchamlarini,
- * kompyuter profillari katta oʻlchamlarni yuradi. Natijalar gate-check ilovalari orqali
- * tests/reporter.ts da .verify/results/<gate>.json ga yigʻiladi.
+ * Telefon oʻlchamlarini WebKit (iPhone) va Chromium (Android), katta oʻlchamlarni kompyuter profillari
+ * tekshiradi. Natijalarni tests/reporter.ts har bir tekshiruv uchun .verify/results papkasiga yigʻadi.
  */
 export default defineConfig({
   testDir: "./tests",
@@ -26,7 +25,7 @@ export default defineConfig({
     ["./tests/reporter.ts"],
   ],
   outputDir: "test-results",
-  /* Birinchi yurishda yoʻq etalon yoziladi, yiqilmaydi; yangilash faqat koʻrib chiqilgan yaxshilanishdan keyin. */
+  /* Etalon yoʻq boʻlsa test yiqilmaydi, yangisi yoziladi; borini faqat koʻrib chiqilgandan keyin yangilang. */
   updateSnapshots: "missing",
   use: {
     baseURL: BASE_URL,
@@ -36,7 +35,7 @@ export default defineConfig({
     colorScheme: "dark",
   },
   projects: [
-    /* channel: "chromium" — yangi headless rejim, GPU (Metal) bilan: kadr oʻlchovi haqiqiy, SwiftShader emas. */
+    /* Yangi headless rejim Metal bilan ishlaydi, kadrlar SwiftShader emas, haqiqiy videokartada oʻlchanadi. */
     {
       name: "chromium-mobile",
       use: { ...devices["Pixel 7"], browserName: "chromium", channel: "chromium" },

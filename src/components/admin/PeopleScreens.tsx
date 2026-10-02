@@ -20,7 +20,6 @@ interface ScreenProps {
   readonly db: AdminDb;
 }
 
-/** Roʻyxat sahifasi: qoʻshish tugmasi, bosh sahifa haqida izoh va tartiblanadigan roʻyxat. */
 export async function PeopleListScreen({ kind, db }: ScreenProps) {
   const rows = await listPeople(db, kind);
   const K = PEOPLE_COPY.kinds[kind];
@@ -59,7 +58,6 @@ export async function PeopleListScreen({ kind, db }: ScreenProps) {
   );
 }
 
-/** Yangi odam: boʻsh tahrir oynasi, saqlangach oʻz sahifasiga oʻtiladi. */
 export async function PersonCreateScreen({ kind, db }: ScreenProps) {
   const library = await recentMedia(db);
   return (
@@ -83,7 +81,7 @@ interface EditScreenProps extends ScreenProps {
   readonly justSaved: boolean;
 }
 
-/** Mavjud odam: boshqa boʻlimdagi (rahbar ↔ ekspert) id oʻz boʻlimiga yoʻnaltiriladi. */
+/** Boshqa boʻlimdagi id (rahbar ↔ ekspert) oʻz boʻlimiga yoʻnaltiriladi. */
 export async function PersonEditScreen({ kind, db, id, justSaved }: EditScreenProps) {
   const loaded = await loadPerson(db, id);
   if (!loaded) notFound();

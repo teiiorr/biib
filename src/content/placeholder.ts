@@ -1,9 +1,7 @@
 /**
- * Egasining talabi (2026-09-26): tasdiq kutilayotgan boʻsh joylar lorem ipsum bilan toʻldiriladi, sayt
- * toʻla va jiddiy koʻrinsin. Bu oʻylab topilgan fakt emas — koʻrinib turgan oʻrinbosar matn: odam, hamkor
- * yoki manzil tasdiqlanganda content/ dagi yozuv toʻldiriladi va shu matn oʻz-oʻzidan yoʻqoladi.
- * Telefon va pochta havolaga aylanmaydi (soxta raqamga qoʻngʻiroq qilinmasin). Tekshiruvlar lorem ni
- * faqat shu faylda qabul qiladi.
+ * Tasdiq kutilayotgan boʻsh joylar lorem ipsum bilan toʻldiriladi: bu fakt emas, koʻrinib turgan
+ * oʻrinbosar matn. Yozuv tasdiqlanganda u oʻz-oʻzidan yoʻqoladi. Telefon va pochta havolaga
+ * aylanmaydi: soxta raqamga qoʻngʻiroq qilinmasin. Tekshiruvlar lorem matnini faqat shu faylda qabul qiladi.
  */
 const NAMES = [
   "Lorem Ipsum",

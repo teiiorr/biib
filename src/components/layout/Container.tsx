@@ -10,7 +10,7 @@ interface ContainerProps {
   readonly children: ReactNode;
 }
 
-/** Toʻr konteyneri: 1312 px + chetlar; grid=true 4/8/12 ustun beradi. */
+/** Toʻr konteyneri: 1312 px va chetlar; grid=true boʻlsa 4/8/12 ustun. */
 export function Container({
   as: Tag = "div",
   grid = false,

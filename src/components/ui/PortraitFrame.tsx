@@ -16,10 +16,7 @@ export interface PortraitFrameProps {
   readonly className?: string;
 }
 
-/**
- * Portret ramkasi. Surat yoʻq (pending) boʻlsa yuz oʻylab topilmaydi: tinch zamin va belgi.
- * Lavozim kartaning imzosida bir marta yoziladi, ramka ichida takrorlanmaydi (Art. XV).
- */
+/** Lavozim kartaning imzosida bir marta yoziladi, ramka ichida takrorlanmaydi. */
 export function PortraitFrame({ ratio = "4:5", children, motion, className }: PortraitFrameProps) {
   const pending = children === undefined || children === null;
   return (

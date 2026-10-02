@@ -13,8 +13,8 @@ interface LogoTileProps {
 }
 
 /**
- * Hamkor plitkasi: saytdagi kabi qorongʻi sirt va partner-logo filtri. Shaffof boʻlmagan logotip shu
- * yerda oq toʻrtburchak boʻlib koʻrinadi — egasi yuklashdan keyin darhol sezadi.
+ * Saytdagidek qorongʻi sirt va partner-logo filtri: shaffof boʻlmagan logotip shu yerdayoq oq
+ * toʻrtburchak boʻlib koʻrinadi.
  */
 export function LogoTile({ item, sizes, original = false, alt = "" }: LogoTileProps) {
   return (

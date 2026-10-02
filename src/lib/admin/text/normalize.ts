@@ -1,6 +1,6 @@
 import type { Locale } from "@/i18n/locales";
 
-/* Qatorlar orasidagi boʻsh qator (xatboshi chegarasi) saqlanadi: faqat qator ichidagi ortiqcha boʻshliq. */
+/* Xatboshi chegarasi boʻlgan boʻsh qator saqlanadi, faqat qator ichidagi ortiqcha boʻshliq olinadi. */
 function tidy(text: string): string {
   return text
     .replace(/\r\n?/g, "\n")
@@ -17,8 +17,8 @@ function guillemets(text: string): string {
 }
 
 /**
- * Joriy oʻzbek lotini (7.1): o va g dan keyingi har qanday apostrof → ʻ (U+02BB), boshqa harflar
- * orasidagisi → tutuq belgisi ʼ (U+02BC).
+ * Joriy lotin imlosi: o va g dan keyingi har qanday apostrof ʻ (U+02BB) boʻladi,
+ * boshqa harflar orasidagisi tutuq belgisi ʼ (U+02BC).
  */
 export function normalizeUz(text: string): string {
   const letters = text
@@ -45,7 +45,7 @@ function normalizeCyrillic(text: string): string {
   return tidy(guillemets(text));
 }
 
-/** Ingliz: “…” va soʻz ichidagi ’. */
+/** Inglizcha matn: “…” va soʻz ichida ’. */
 function normalizeEn(text: string): string {
   return tidy(text.replace(/"([^"\n]*)"/g, "“$1”").replace(/(\p{L})'(?=\p{L})/gu, "$1’"));
 }

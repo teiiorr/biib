@@ -11,7 +11,6 @@ import { ReorderButtons } from "./ReorderButtons";
 interface GallerySlotHeadProps {
   readonly index: number;
   readonly idFor: (field: string) => string;
-  /** Toʻla joyda tartib va boʻshatish tugmalari. */
   readonly filled: boolean;
   readonly onMove?: (to: number) => void;
   readonly onClear?: () => void;
@@ -20,7 +19,6 @@ interface GallerySlotHeadProps {
 
 const G = UPOP_COPY.gallery;
 
-/** Joy sarlavhasi: raqam (1-joy eng katta ramka), holat yorligʻi va toʻla joyda asboblar. */
 export function GallerySlotHead({
   index,
   idFor,

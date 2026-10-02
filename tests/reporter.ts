@@ -11,13 +11,13 @@ interface Check {
   readonly evidence?: string;
 }
 
-/** gate-check ilovalarini darvoza boʻyicha .verify/results/<gate>.json ga yigʻadi (kelishuv: conventions). */
+/** gate-check ilovalarini tekshiruv nomi boʻyicha .verify/results/<gate>.json fayliga yigʻadi. */
 class GateReporter implements Reporter {
   private readonly checks = new Map<string, Check[]>();
   private rootDir = process.cwd();
 
   onBegin(config: FullConfig): void {
-    /* rootDir bu testDir (tests/): natijalar loyiha ildizidagi .verify/ ga yoziladi. */
+    /* rootDir bu yerda tests/ papkasi: natijalar loyiha ildizidagi .verify/ papkasiga yoziladi. */
     this.rootDir = config.configFile ? path.dirname(config.configFile) : process.cwd();
   }
 
@@ -34,7 +34,7 @@ class GateReporter implements Reporter {
         continue;
       }
     }
-    /* Ilovasiz yiqilgan test ham darvozani yiqitadi: spec nomidan darvoza taxmin qilinadi. */
+    /* Ilovasiz yiqilgan test ham tekshiruvni yiqitadi: tekshiruv nomi spec faylidan taxmin qilinadi. */
     if (result.status !== "passed" && result.status !== "skipped") {
       const gate = gateFromFile(test.location.file);
       const list = this.checks.get(gate) ?? [];

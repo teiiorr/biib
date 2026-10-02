@@ -87,8 +87,8 @@ export function checkContrast() {
 
     const base = color("material-base");
     const ink = color("material-ink");
-    /* §10.1.3: yorugʻ rasm ustida oyna yorugʻ muzga oʻtadi (--glass-light-*, Picture data-tone), shu
-       sabab oq fonda ikkinchi ohang sinaladi. */
+    /* Yorugʻ rasm ustida oyna yorugʻ ohangga oʻtadi (--glass-light-*, Picture data-tone), shu sabab
+       oq fonda ikkinchi ohang ham sinaladi. */
     const lightBase = color("glass-light-base");
     const lightInk = color("glass-light-ink");
     for (const [t, d] of CORNERS) {

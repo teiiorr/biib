@@ -23,7 +23,7 @@
     padding-inline: var(--btn-px);
     border-radius: var(--radius-control);
     -webkit-tap-highlight-color: transparent;
-    /* Bosish scale xususiyatida, magnit translate da: ikkalasi transform bilan toʻqnashmaydi (D-M4). */
+    /* Bosish scale, magnit esa translate xususiyatida: ikkalasi transform ustida toʻqnashmaydi. */
     transition:
       scale 200ms var(--ease-ui),
       translate 500ms var(--ease-out);
@@ -64,8 +64,7 @@
   .ui-button:active:not([aria-disabled="true"]) {
     scale: 0.97;
   }
-  /* magnetic (3.12): tugma koʻrsatkichga ≤ 6 px tortiladi, yorliq va belgi 40 % ergashadi. Qiymatlar
-     lib/motion/magnetic.ts dan; sensorli ekran, kamaytirilgan harakat va Harakat = off da hech narsa. */
+  /* Magnit tugma: siljish qiymatlari lib/motion/magnetic.ts faylidan keladi. */
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
     :root:not([data-motion="off"]) .ui-button[data-magnetic] {
       translate: var(--mag-x, 0px) var(--mag-y, 0px);
@@ -83,17 +82,16 @@
   .ui-button[data-variant="link"]::after {
     content: none;
   }
-  /* Matn havolasi yolgʻiz turadi (matn ichida emas): sezish maydoni 44 px gacha psevdoelement bilan
-     kengayadi. ::after ostchiziq animatsiyasi uchun band, shu sabab ::before. */
+  /* Alohida turgan havolaning sezish maydoni 44 px gacha kengayadi. ::after ostchiziqqa band,
+     shu sabab ::before ishlatiladi. */
   .ui-button[data-variant="link"]::before {
     content: "";
     position: absolute;
     inset-block: min(0px, calc((100% - var(--hit)) / 2));
     inset-inline: min(0px, calc((100% - var(--hit)) / 2));
   }
-  /* underline-draw (3.11), matn havolasi: tinch holatda yarim rangli chiziq, hover/fokusda toʻliq chiziq
-     chapdan chiziladi va chiqishda oʻngga qarab qisqaradi (oʻqish yoʻnalishi). Chiziq tayanch chizigʻiga
-     text-box orqali bogʻlanadi; qoʻllamaydigan brauzerda faqat rang toʻladi. */
+  /* Matn havolasi: ostchiziq oʻqish yoʻnalishida chapdan chiziladi va oʻngga qarab qisqaradi. Chiziq
+     tayanch chiziqqa text-box orqali bogʻlanadi; uni qoʻllamaydigan brauzerda faqat rang oʻzgaradi. */
   .ui-button[data-variant="link"] {
     text-decoration-color: color-mix(in oklab, currentColor 40%, transparent);
     transition:
@@ -161,7 +159,7 @@
   }
 
   /* ---------- Teg ---------- */
-  /* 12 px yorliq: 10 % fonda pushti matn ≥ 4.5:1 (16 % da 4.22 edi). */
+  /* 12 px yorliq: fon 10 % dan quyuq boʻlsa pushti matn 4.5:1 kontrastdan tushadi. */
   .ui-tag[data-tone="art-1"] {
     background: color-mix(in oklab, var(--art-1) 10%, transparent);
     color: var(--art-1-text);
@@ -274,8 +272,6 @@
     font-weight: var(--fw-display-strong);
   }
 
-  /* Iqtibos kamtar (egasining talabi: katta matn yoʻq): body-l oʻlchamida (qalinligi faylning oxirida).
-     Osilgan « yoʻq: egasi uchun ustun chetlari — matn, iqtibos va surat — bitta tekis chiziq. */
   /* ---------- Media: halqa video, film va muqova oʻrni ---------- */
   /* Picture: <picture> oʻrami qutisiz, joylashuvni ichidagi <img> belgilaydi (next/image dagi kabi). */
   picture.picture {
@@ -312,7 +308,7 @@
     object-fit: contain;
     background: var(--bg);
   }
-  /* Oyna boshqaruvi media ustida (matnli tint chegarasi bilan): 44 px, pastki oʻng burchakdan 16 px. */
+  /* Media ustidagi oyna boshqaruvi: tusi matnli oyna chegarasidan tushmaydi, belgi har kadrda koʻrinadi. */
   .media-video-control {
     position: absolute;
     right: 16px;
@@ -330,7 +326,7 @@
     display: grid;
     place-items: center;
   }
-  /* Egasining talabi: yozuvsiz, faqat ijro belgisi — 56 px dumaloq shisha tugma (nomi aria-label da). */
+  /* Yozuvsiz ijro tugmasi: nomi aria-label orqali beriladi. */
   .media-film-play {
     display: grid;
     place-items: center;
@@ -350,7 +346,7 @@
   .media-film-play:active {
     scale: 0.97;
   }
-  /* Uchburchak belgi oʻz uchi tomon 1 px siljiydi (Art. III.3). */
+  /* Uchburchak optik markazda koʻrinishi uchun uchi tomon 1 px siljiydi. */
   .icon-play {
     translate: 1px 0;
   }
@@ -364,10 +360,9 @@
     color: var(--ink-3);
   }
 
-  /* ---------- Tugma shakli (egasining talabi: kapsula emas) ----------
-     Aniq toʻrtburchak (--radius-control 12 px), ichida 3 px chekinishda 1 px nozik chiziq. Material —
-     oyna (materials.css «Tugmalar ham oyna»): bosh tugma pushti tusli muz, ustiga kelinganda navbar kabi
-     tiniq muzga aylanadi; ghost tugma ustiga kelinganda muz koʻrinadi. */
+  /* ---------- Tugma shakli ----------
+     Kapsula emas, toʻrtburchak; ichida 3 px chekinishda nozik chiziq. Material oyna (materials.css):
+     bosh tugma pushti tusli muz, ustiga kelinganda tiniq muzga aylanadi. */
   :root .ui-button[data-variant="primary"],
   :root .ui-button[data-variant="glass"]:not([data-icon="only"]) {
     position: relative;
@@ -383,14 +378,14 @@
     pointer-events: none;
   }
 
-  /* Markazdagi sarlavha (Heading 1–2 darajalar sukut boʻyicha): oʻz kengligida balanslanadi. */
+  /* Markazdagi sarlavha oʻz kengligida muvozanatlanadi. */
   .heading-center {
     text-align: center;
     margin-inline: auto;
   }
 
   /* ---------- Media ramkasi ----------
-     Nisbat qulflangan toʻrtburchak, yumshoq media radiusi; ichida bezak yoʻq. */
+     Nisbati qulflangan toʻrtburchak, ichida bezak yoʻq. */
   .media-frame {
     position: relative;
     width: 100%;
@@ -441,7 +436,7 @@
   }
 
   /* ---------- Oʻqish chizigʻi ----------
-     Ekran tepasida 2 px; holatni bildiradi, shu sabab matn oltini (3:1). Faqat transform oʻzgaradi. */
+     Holatni bildiradi, shu sabab matn oltini ishlatiladi (3:1 kontrast). */
   .reading-progress {
     position: fixed;
     top: var(--safe-top);
@@ -456,13 +451,13 @@
   }
 }
 
-/* Qatlamdan tashqarida: t-body-l utilitasining 400 qalinligidan ustun — iqtibos oʻrta qalinlikda. */
+/* Qatlamdan tashqarida, shu sabab t-body-l utilitasidagi 400 qalinlikdan ustun. */
 :root .ui-pullquote-text {
   font-weight: 500;
 }
 
-/* Unbounded keng: telefonda eng uzun soʻz («конфиденциальности», 14.7 em) sarlavha oʻlchamida ekranga
-   sigʻmaydi — til boʻyicha boʻgʻin koʻchirish, lugʻati yoʻq brauzerda soʻz chetda boʻlinadi (toshmaydi). */
+/* Unbounded keng shrift: telefonda eng uzun soʻz («конфиденциальности») sarlavha oʻlchamida ekranga
+   sigʻmaydi. Boʻgʻin koʻchiriladi, lugʻati yoʻq brauzerda esa soʻz chetda boʻlinadi. */
 @media (max-width: 599px) {
   :root :is(.t-display-xl, .t-display-l, .t-h1, .t-h2) {
     hyphens: auto;
@@ -471,8 +466,7 @@
 }
 
 @layer components {
-  /* Punkt fichasi (egasining talabi: punkt faqat matn emas). Chapda belgi plitkasi — belgi skroll bilan
-     chiziladi (view timeline, ikki yoʻnalishda), hoverda plitka qirrasi oltin boʻladi. */
+  /* Belgili punkt: chapdagi plitkada belgi skroll bilan ikki yoʻnalishda chiziladi (view timeline). */
   .feature {
     position: relative;
     display: grid;
@@ -491,8 +485,7 @@
     grid-row: span 2;
     align-self: center;
   }
-  /* Yorliq faqat ekran oʻquvchisi uchun (egasining talabi: belgi ustida izoh yoʻq): belgi va asosiy matn
-     bir qatorda, matn belgi markazida. */
+  /* Yorliq faqat ekran oʻquvchisi uchun: koʻzga belgi va asosiy matn bir qatorda koʻrinadi. */
   li.feature > .feature-icon,
   .feature:has(> dt.sr-only) > .feature-icon {
     grid-row: auto;

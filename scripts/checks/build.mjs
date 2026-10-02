@@ -7,8 +7,8 @@ const CLIENT_TEXT = /\.(?:js|mjs|css|json|html|txt|map)$/;
 const LOCALE_PATH = /^\/(uz|oz|ozbekca|ru|en)(?:\/|$)/;
 const METADATA_FILE =
   /\/(?:opengraph-image|twitter-image|icon|apple-icon)(?:-[\w]+)?(?:\.\w+)?$|\.(?:xml|txt|webmanifest|png|ico)$/;
-/* Faqat 404 zaxirasi va boshqaruv paneli (/admin, uning Route Handler lari /admin/api da) dinamik boʻlishi
-   mumkin; aloqa shakli server action, marshrut emas. */
+/* Faqat 404 zaxirasi va /admin panel (/admin/api ostidagi Route Handler fayllari bilan) dinamik boʻla oladi;
+   aloqa shakli marshrut emas, server action. */
 const ALLOWED_DYNAMIC =
   /^\/(?:_not-found|_global-not-found|global-not-found)$|\[|not-found|^\/admin(?:\/|$)/;
 
@@ -47,7 +47,7 @@ export function checkManifest(
   ];
 }
 
-/* Loyiha ref i Supabase manzilining birinchi boʻlagi; manzil maxfiy emas, .env.local dan faqat shu qator. */
+/* Loyiha identifikatori Supabase manzilining birinchi boʻlagi; manzil maxfiy emas, .env.local faylidan faqat shu qator olinadi. */
 function supabaseProjectRef() {
   let url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const envFile = path.join(ROOT, ".env.local");

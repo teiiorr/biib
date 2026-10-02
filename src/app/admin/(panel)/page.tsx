@@ -15,7 +15,6 @@ export const metadata: Metadata = { title: ADMIN_COPY.pages.dashboard };
 
 const D = ADMIN_COPY.dashboard;
 
-/** Boshqaruv: asosiy ish (yangilik qoʻshish), sayt holati va oxirgi oʻzgarishlar. */
 export default async function DashboardPage() {
   const session = await requireAdmin("/admin");
   const db = adminDb(session.accessToken);

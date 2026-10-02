@@ -9,7 +9,6 @@ import { ADMIN_COPY } from "@/lib/admin/copy";
 import { AdminNav } from "./AdminNav";
 import { AdminNavFoot } from "./AdminNavFoot";
 
-/** Telefon va planshet: yuqori paneldagi tugma boʻlimlar varagʻini ochadi (tugmadan morf bilan). */
 export function AdminMenu() {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement | null>(null);

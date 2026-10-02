@@ -12,7 +12,6 @@ import type { OrgSectionProps } from "./useOrgEditor";
 
 const C = ORG_COPY.contacts;
 
-/** Manzil besh tilda va uning holati, ostida qidiruv tizimlari uchun indeks va shahar. */
 export function ContactsAddressGroup({
   draft,
   patch,

@@ -7,8 +7,8 @@ const HREF_MAX = 300;
 const E = PEOPLE_COPY.errors;
 
 /**
- * Sxemasiz yozilgan manzil (masalan «unicef.org/uz») https bilan toʻldiriladi. «http:», «mailto:»
- * kabi boshqa sxema oʻzgarmaydi va tekshiruvda rad etiladi; «sayt.uz:8080» dagi port sxema emas.
+ * Sxemasiz manzilga («unicef.org/uz») https qoʻshiladi. «http:», «mailto:» kabi boshqa sxema
+ * oʻzgarmaydi va tekshiruvda rad etiladi; «sayt.uz:8080» manzilidagi port esa sxema emas.
  */
 export function normalizeHref(value: string): string {
   const trimmed = value.trim();
@@ -29,8 +29,8 @@ function hrefError(href: string): string | null {
 }
 
 /**
- * Hamkor: nomi besh tilda (tasdiqlangan va qoralama saytda koʻrinadi, shu sabab majburiy), manzil
- * faqat https. Brauzer ham, server amali ham shuni chaqiradi.
+ * Nom besh tilda majburiy, chunki qoralama ham saytda koʻrinadi; manzil faqat https.
+ * Brauzer ham, server amali ham shu funksiyani chaqiradi.
  */
 export function buildPartner(payload: PartnerPayload): BuildResult<PartnerAdmin> {
   const errors: Record<string, string> = {};

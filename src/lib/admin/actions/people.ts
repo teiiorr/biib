@@ -27,9 +27,7 @@ function isKind(value: unknown): value is PersonKind {
 }
 
 /**
- * Odamni saqlash: tuzilma (zod) → meʼyorlash va tekshiruv (build.ts) → admin_save_person (eskirgan
- * yozuvni baza oʻzi PT409 bilan rad etadi) → sahifalar darhol yangilanadi. Yangisi saqlangach oʻz
- * tahrir sahifasiga oʻtiladi.
+ * Eskirgan yozuvni baza PT409 bilan rad etadi. Yangi yozuv saqlangach tahrir sahifasiga oʻtiladi.
  */
 export async function savePerson(
   prev: SavePersonState,

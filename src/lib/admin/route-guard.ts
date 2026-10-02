@@ -4,7 +4,7 @@ import { ADMIN_COPY } from "./copy";
 import { adminEnv, isPreviewDeployment } from "./env";
 import { readTokens, refreshTokens, verifyAccess, type AdminSession } from "./session";
 
-/** Panel Route Handler lari uchun JSON javob: kesh va sniffing yoʻq. */
+/** Panel javoblari keshlanmaydi va brauzer MIME turini taxmin qilmaydi. */
 export function adminJson(status: number, body: unknown): Response {
   return Response.json(body, {
     status,
@@ -13,9 +13,9 @@ export function adminJson(status: number, body: unknown): Response {
 }
 
 /**
- * Yuklash yoʻllari: faqat oʻz sahifamizdan (Origin), maxsus sarlavha bilan (boshqa saytdan kelgan
- * soʻrov CORS oldindan tekshiruvidan oʻtolmaydi) va tirik sessiya bilan. Yoʻnaltirish oʻrniga 401 JSON:
- * brauzerdagi yuklovchi uni oʻqib, xabar koʻrsatadi. Muddati oʻtgan token shu yerda yangilanadi.
+ * Yuklash yoʻllari faqat oʻz sahifamizdan (Origin), maxsus sarlavha va tirik sessiya bilan ochiladi:
+ * boshqa saytdan kelgan soʻrov CORS tekshiruvidan oʻtolmaydi. Yoʻnaltirish oʻrniga 401 JSON qaytadi,
+ * chunki yuklovchi uni oʻqib xabar koʻrsatadi. Muddati oʻtgan token shu yerda yangilanadi.
  */
 export async function requireAdminRoute(request: Request): Promise<AdminSession | Response> {
   const origin = request.headers.get("origin");

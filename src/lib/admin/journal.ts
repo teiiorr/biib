@@ -44,7 +44,7 @@ function summarize(entity: string, key: string, before: Json, after: Json): stri
   );
 }
 
-/** Jurnal: yangisi birinchi; before berilsa shu id dan oldingilari (sahifalash). */
+/** Yangi yozuv birinchi; before berilsa undan oldingi yozuvlar keladi. */
 export async function loadJournal(
   db: AdminDb,
   limit: number,

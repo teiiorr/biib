@@ -5,10 +5,10 @@ import { PAGE_TYPES, pagePath } from "./helpers/pages";
 import { checkId, recordCheck } from "./helpers/results";
 import { VISUAL_VIEWPORTS, viewportLabel } from "./helpers/viewports";
 
-/* Etalon fayl nomlari oldingi yurishlardagi Atlas skrinshotlari bilan bir xil qoladi: solishtirish uzilmaydi. */
+/* Etalon fayl nomlari avvalgi Atlas skrinshotlari bilan bir xil qoladi, shunda solishtirish uzilmaydi. */
 const BASELINE_PREFIX = "atlas";
 
-/* G8: etalon skrinshotlar — 11 sahifa turi × uz × 2 mavzu × 390/820/1440. */
+/* G8: etalon skrinshotlar, har sahifa turi uz tilida 390/820/1440 kengliklarda. */
 test.describe("G8 vizual etalonlar", () => {
   test.skip(
     ({ browserName, isMobile }) => browserName !== "chromium" || isMobile,

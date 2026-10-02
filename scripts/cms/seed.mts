@@ -1,13 +1,13 @@
 /**
- * Kontent nusxasini maʼlumotlar bazasiga yozadi. Idempotent: tabiiy kalitlar boʻyicha upsert
- * (news.slug, people.key, partners.key, milestones.key, projects.key, social_links.network, media.src).
+ * Kontent nusxasini bazaga yozadi. Upsert tabiiy kalitlar boʻyicha ishlaydi (news.slug, people.key,
+ * partners.key, milestones.key, projects.key, social_links.network, media.src), shuning uchun yarim
+ * yoʻlda uzilgan skriptni qayta ishga tushirish xavfsiz, natija bir xil chiqadi.
  *
  *   pnpm content:seed                                    repodagi nusxa (bundledSnapshot)
  *   pnpm content:seed --from src/content/snapshot.json   boshqa fayldan (yangi loyihani tiklash)
- *   pnpm content:seed --prune                            nusxada yoʻq qatorlar oʻchiriladi
+ *   pnpm content:seed --prune                            nusxada yoʻq qatorlarni oʻchiradi
  *
- * Maxfiy kalit (SUPABASE_SERVICE_ROLE_KEY) faqat shu mahalliy skriptda: Vercel ga hech qachon qoʻyilmaydi.
- * Har jadval alohida soʻrov: yarim yoʻlda uzilsa skript qayta ishga tushiriladi, natija bir xil.
+ * SUPABASE_SERVICE_ROLE_KEY faqat shu mahalliy skript uchun, Vercel sozlamalariga qoʻyilmaydi.
  */
 import { existsSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
@@ -42,7 +42,7 @@ async function upsert<T extends Record<string, unknown>>(
   return serviceRequest<T[]>("POST", table, { on_conflict: conflict, select }, rows, UPSERT);
 }
 
-/* PostgREST roʻyxat filtri: qiymatlar qoʻshtirnoqda (kalitlarda nuqta va chiziqcha bor). */
+/* Kalitlarda nuqta va chiziqcha bor, shuning uchun PostgREST filtrida qiymatlar qoʻshtirnoqqa olinadi. */
 function inList(values: readonly (string | number)[]): string {
   return `(${values.map((v) => (typeof v === "number" ? String(v) : `"${v}"`)).join(",")})`;
 }
@@ -126,7 +126,7 @@ async function mediaRow(
     kind: need.kind,
     origin: uploaded ? "storage" : "static",
     src,
-    /* Yuklangan rasm: /uploads/i/<hash> → bucket ichidagi i/<hash> */
+    /* Yuklangan rasmning /uploads/i/<hash> manzili bucket ichida i/<hash> boʻlib saqlanadi. */
     storage_prefix: uploaded ? uploaded.base.replace(/^\/uploads\//, "") : null,
     variant_base: prepared?.base ?? null,
     variant_widths: prepared?.widths ?? [],
@@ -140,7 +140,7 @@ async function mediaRow(
   };
 }
 
-/* Avval rasmlar (videoning poster_id si ularga ishora qiladi), keyin videolar. */
+/* Videoning poster_id maydoni rasmga ishora qiladi, shuning uchun rasmlar oldin yoziladi. */
 async function seedMedia(s: ContentSnapshot): Promise<Map<string, string>> {
   const needs = collectMedia(s);
   const ids = new Map<string, string>();
@@ -247,7 +247,7 @@ async function seedNews(s: ContentSnapshot, ids: ReadonlyMap<string, string>) {
     cover_status: n.cover.status,
     story_primary: n.story.primary,
     story_secondary: n.story.secondary,
-    /* Bir kunlik maqolalar created_at bilan tartiblanadi: nusxadagi tartib saqlanadi. */
+    /* Bir kundagi maqolalar created_at boʻyicha tartiblanadi, soniyalar farqi nusxadagi tartibni saqlaydi. */
     created_at: new Date(Date.parse(`${n.date}T12:00:00Z`) - index * 1000).toISOString(),
   }));
   const saved = await upsert<{ id: string; slug: string }>("news", "slug", rows, "id,slug");

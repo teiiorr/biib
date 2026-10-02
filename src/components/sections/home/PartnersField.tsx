@@ -16,7 +16,7 @@ interface PartnersFieldProps {
   readonly partners: readonly Partner[];
 }
 
-/** Hamkorlar maydoni: faqat haqiqiy logotiplar, siyoh rangida, hover/fokusda asl rang (15.2.6). */
+/** Logotiplar siyoh rangida turadi, hover yoki fokusda asl rangiga qaytadi. */
 export function PartnersField({ locale, dict, partners }: PartnersFieldProps) {
   const h = dict.home.partners;
   return (
@@ -47,7 +47,7 @@ export function PartnersField({ locale, dict, partners }: PartnersFieldProps) {
             );
           })}
         </ul>
-        {/* «Barchasi» havolasi kartalar ostida, oʻng chetda (egasining talabi): avval koʻrasiz, keyin oʻtasiz. */}
+        {/* «Barchasi» havolasi kartalardan keyin: avval koʻrasiz, keyin oʻtasiz. */}
         <div className="section-footer">
           <LinkButton
             href={pathFor(locale, "partners")}

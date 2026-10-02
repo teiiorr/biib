@@ -31,7 +31,7 @@ export function isFilled(value: Localized): boolean {
   return LOCALES.some((locale) => value[locale].trim() !== "");
 }
 
-/** Beshala til majburiy (bazada l10n_text): meʼyorlangan qiymat qaytadi. */
+/** Besh tilning hammasi majburiy (bazada l10n_text). */
 export function requiredLocalized(errors: ErrorBag, path: string, value: Localized): Localized {
   const next = normalizeLocalized(value);
   for (const locale of LOCALES) {

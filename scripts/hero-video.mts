@@ -1,17 +1,8 @@
 /*
- * Bosh sahifa qahramoni: egasining Higgsfield videosi (src/assets/video/new-hero.mp4, 1920×1080, 10 s) —
- * oltin kitob, bolalar, samolyotcha va yulduzlar belgiga yigʻiladi. Bir marta ijro etiladi (halqa emas),
- * oxirgi kadrda belgi turadi, keyin skroll sahnasi belgini sarlavhaga olib boradi.
- *   kompyuter: 1920×1080 AV1 (webm) + H.264 (mp4) — belgi tafsilotlari aniq koʻrinsin;
- *   telefon: 1080×1920 — butun animatsiya kengligi (kadrning 21–75 %) sigʻadi: markaziy qism videoning
- *   zamin rangida (#0A1026) tekis maydonga qoʻyiladi, yuqori va pastki cheti 140 px da eriydi (chok
- *   koʻrinmaydi), belgi HERO_LOGO_BOX.portrait oʻrniga tushadi;
- *   posterlar: birinchi kadr (ijro oldidan) va oxirgi kadr (harakat oʻchiq, belgi tayyor);
- *   «Biz haqimizda» dagi belgi videosi (720×720, belgi atrofidagi kvadrat) ham shu manbadan.
- * Fon bir tusda (egasining talabi): manbadagi viñetka va markazdagi yorugʻ dogʻ sayt zamini (#0A1026)
- * rangiga tekislanadi — yorugʻligi 34 dan past piksel zamin rangini oladi, 50 dan yuqorisi (belgi,
- * oltin, uchqunlar) oʻzgarmaydi, oraligʻi yumshoq oʻtadi. Oraliq nusxa bir marta tayyorlanadi.
- * Byudjet (§17): kompyuter ≤ 1.8 MB, telefon ≤ 0.9 MB (kerak boʻlsa crf oshiriladi). ffmpeg kerak.
+ * Qahramon videosi bir marta ijro etiladi va oxirgi kadrda belgi turadi, keyin skroll uni sarlavhaga olib boradi.
+ * Fon bir tusda qolishi uchun chetlardagi qoraytirish va markazdagi yorugʻ dogʻ sayt zaminiga tekislanadi:
+ * yorugʻligi 34 dan past piksel zamin rangini oladi, 50 dan yuqorisi (belgi, oltin, uchqunlar) oʻzgarmaydi.
+ * Hajm chegarasi: kompyuter uchun 1.8 MB, telefon uchun 0.9 MB. ffmpeg kerak.
  */
 import { execFileSync } from "node:child_process";
 import { mkdirSync, statSync } from "node:fs";
@@ -23,7 +14,7 @@ const SOURCE = path.join(CACHE, "hero-flat.mkv");
 const OUT = path.resolve("public/media");
 const MB = 1024 * 1024;
 
-/* Zamin: sayt foni (atlas.css --bg, --hero-ground). */
+/* atlas.css faylidagi --bg va --hero-ground bilan bir xil boʻlishi shart. */
 const GROUND = { r: 10, g: 16, b: 38 };
 const MASK =
   "st(0,0.2126*r(X,Y)+0.7152*g(X,Y)+0.0722*b(X,Y));" +
@@ -34,9 +25,9 @@ const FLATTEN =
   `g='${MASK};${GROUND.g}*(1-ld(1))+g(X,Y)*ld(1)':` +
   `b='${MASK};${GROUND.b}*(1-ld(1))+b(X,Y)*ld(1)'`;
 
-/* Telefon kadri: manbadan 1152×1080 markaz (x 384) — animatsiyaning eng keng lahzasi ham ichida —
-   1080×1013 ga, tepadan 303 px: belgi 1080×1920 kadrning shu nuqtasiga tushadi. Fon — videoning chekka
-   rangi (yuqori 12/21/48 va pastki 10/18/43 oʻrtachasi), chegara alfa bilan eritiladi. */
+/* Telefon kadri: manbaning 1152×1080 markazi (animatsiyaning eng keng lahzasi ham sigʻadi) tepadan 303 px
+   pastga qoʻyiladi, shunda belgi HERO_LOGO_BOX.portrait oʻrniga tushadi. Chok koʻrinmasligi uchun yuqori va
+   pastki chet 140 px davomida eriydi. */
 const PORTRAIT =
   "color=c=0x0A1026:s=1080x1920:r=24[bg];" +
   "[0:v]crop=1152:1080:384:0,scale=1080:1013,format=rgba," +
@@ -95,7 +86,7 @@ function encode(graph: string, file: string, codec: "av1" | "h264", crf: number)
   return statSync(target).size;
 }
 
-/* Byudjetga sigʻguncha crf +2 qadam bilan. */
+/* Hajm chegarasiga sigʻguncha crf ikki birlikdan oshiriladi. */
 function fit(
   graph: string,
   file: string,
@@ -112,7 +103,7 @@ function fit(
   console.log(`${file}\t${(size / 1024).toFixed(0)} KB\tcrf ${value}`);
 }
 
-/* Poster tayyor MP4 dan olinadi: kadr ijro etiladigan video bilan piksel-piksel bir xil. */
+/* Poster tayyor MP4 fayldan olinadi, shunda kadr ijro etiladigan video bilan piksel-piksel bir xil. */
 function poster(video: string, file: string, at: "first" | "last"): void {
   const seek = at === "first" ? ["-ss", "0"] : ["-sseof", "-0.1"];
   run([
@@ -132,7 +123,7 @@ function poster(video: string, file: string, at: "first" | "last"): void {
   console.log(`${file}\t${(statSync(path.join(OUT, file)).size / 1024).toFixed(0)} KB`);
 }
 
-/* Tekislangan oraliq nusxa (siqilmagan FFV1): keyingi kodlashlar undan, filtr bir marta ishlaydi. */
+/* Ogʻir filtr bir marta ishlashi uchun tekislangan nusxa siqilmagan FFV1 formatida saqlanadi. */
 mkdirSync(CACHE, { recursive: true });
 run(["-i", ORIGINAL, "-an", "-vf", FLATTEN, "-c:v", "ffv1", "-pix_fmt", "gbrp", SOURCE]);
 
@@ -145,7 +136,7 @@ poster("hero-d.mp4", "hero-d-end.avif", "last");
 poster("hero-m.mp4", "hero-m-poster.avif", "first");
 poster("hero-m.mp4", "hero-m-end.avif", "last");
 
-/* «Biz haqimizda» belgisi: 0.8 s dan (qorongʻi boshlanish tashlanadi), belgi atrofidagi 800 px kvadrat. */
+/* «Biz haqimizda» belgisi: qorongʻi boshlanish tashlanadi, belgi atrofidagi 800 px kvadrat olinadi. */
 const ABOUT =
   "[0:v]trim=start=0.8,setpts=PTS-STARTPTS,crop=800:800:555:47,scale=720:720,format=yuv420p[v]";
 fit(ABOUT, "about-logo.webm", "av1", 34, 0.6 * MB);

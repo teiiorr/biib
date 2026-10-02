@@ -9,7 +9,7 @@ export interface AdminAccount {
   readonly lastSignInAt: string | null;
 }
 
-/** Sessiya egasining pochtasi va oxirgi kirish vaqti (Supabase Auth dan); olinmasa null. */
+/** Kirgan adminning pochtasi va oxirgi kirish vaqti (Supabase Auth); olinmasa null. */
 export async function loadAccount(session: AdminSession): Promise<AdminAccount | null> {
   const env = adminEnv();
   if (!env) return null;

@@ -20,10 +20,6 @@ type Filter = "all" | "unused";
 const M = SYSTEM_COPY.media;
 const FILTERS: readonly Filter[] = ["all", "unused"];
 
-/**
- * Media kutubxonasi: yuklash, «Ishlatilmagan» filtri va fayllar toʻri. Yuklangach sahifa serverdan
- * qayta oʻqiladi (ishlatilish soni bazadan); oʻchirish bitta tasdiq oynasi orqali.
- */
 export function MediaLibrary({ items }: { readonly items: readonly LibraryItem[] }) {
   const router = useRouter();
   const [filter, setFilter] = useState<Filter>("all");

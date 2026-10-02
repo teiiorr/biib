@@ -14,18 +14,15 @@ import {
 } from "@/lib/admin/text/locales";
 
 export interface LocaleEditing {
-  /** Qoʻlda yozilgan qator ustidan oʻzbekcha oʻzgardimi (qayta oʻgirish taklifi). */
+  /** Qoʻlda yozilgan qatordan keyin oʻzbekcha matn oʻzgargan: qayta oʻgirish taklif qilinadi. */
   readonly stale: Readonly<Record<DerivedLocale, boolean>>;
   readonly change: (locale: Locale, text: string) => void;
-  /** Maydondan chiqqanda meʼyorlash (apostrof, qoʻshtirnoq, uch nuqta). */
+  /** Apostrof, qoʻshtirnoq va uch nuqtani meʼyorga keltiradi. */
   readonly tidy: (locale: Locale) => void;
   readonly retranslit: (locale: DerivedLocale) => void;
 }
 
-/**
- * Besh tilli qiymatni tahrirlash qoidalari (LocaleField va LocaleListField uchun bitta): oʻzbekcha
- * oʻzgarsa avto qatorlar qayta oʻgiriladi, qoʻlda yozilgani saqlanadi va belgilanadi.
- */
+/** Oʻzbekcha oʻzgarsa avto qatorlar qayta oʻgiriladi, qoʻlda yozilgani esa saqlanib belgilanadi. */
 export function useLocaleEditing(
   value: Localized,
   onChange: (next: Localized) => void,
@@ -48,7 +45,7 @@ export function useLocaleEditing(
     onChange({ ...value, [locale]: text });
   }
 
-  /* Yozish paytida emas, maydondan chiqqanda: boshqariladigan maydonda kursor sakramaydi. */
+  /* Yozish paytida emas, maydondan chiqqanda: boshqariladigan maydonda kursor sakramasin. */
   function tidy(locale: Locale): void {
     const normalized = normalizeFor(locale, value[locale]);
     if (normalized === value[locale]) return;

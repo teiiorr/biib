@@ -5,8 +5,8 @@ import { useCallback, useEffect, useRef, useState, type ComponentType } from "re
 import { whenIdle } from "@/lib/idle";
 
 /**
- * Oddiy tugma fokusda turganida panel kelib uni almashtirsa fokus yoʻqoladi:
- * yangi tugma bir marta fokuslanadi (faqat panel yopiq boʻlsa; ochiq panel oʻzi fokus oladi).
+ * Panel kelib fokusdagi oddiy tugmani almashtirsa fokus yoʻqoladi, shu sabab yangi tugma bir marta
+ * fokuslanadi. Ochiq panel fokusni oʻzi oladi.
  */
 export function useFocusTrigger(ref: React.RefObject<HTMLElement | null>, enabled: boolean): void {
   useEffect(() => {
@@ -15,11 +15,10 @@ export function useFocusTrigger(ref: React.RefObject<HTMLElement | null>, enable
 }
 
 export interface LazyOverlay<P> {
-  /** Yuklangan panel komponenti; kelguncha oddiy tugma koʻrsatiladi. */
+  /** null boʻlsa hozircha oddiy tugma koʻrsatiladi. */
   readonly Panel: ComponentType<P> | null;
-  /** Tugma ustiga kelganda yoki fokus olganda chaqiriladi: chunk oldindan olinadi. */
+  /** Ustiga kelganda yoki fokusda chunk oldindan olinadi. */
   readonly warm: () => void;
-  /** Bosilganda: panel kelishi bilan ochiq holda chiziladi. */
   readonly openWhenReady: () => void;
   readonly wantOpen: boolean;
   /** Oddiy tugma fokusda edi: panel oʻz tugmasini fokuslashi kerak. */
@@ -27,8 +26,8 @@ export interface LazyOverlay<P> {
 }
 
 /**
- * Radix ustidagi oyna panellari (menyu, varaq, popover) birinchi yuklanish JS ida emas:
- * sahifa yuklangach boʻsh vaqtda, tugmaga yaqinlashganda yoki bosilganda olinadi.
+ * Radix panellari birinchi yuklanadigan skriptga kirmaydi: brauzer boʻshaganda, tugmaga
+ * yaqinlashganda yoki bosilganda olinadi.
  */
 export function useLazyOverlay<P>(
   loader: () => Promise<{ default: ComponentType<P> }>,

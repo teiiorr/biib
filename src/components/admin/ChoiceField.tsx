@@ -12,7 +12,6 @@ interface ChoiceFieldProps<V extends string> {
   readonly onChange: (value: V) => void;
 }
 
-/** Bir nechta variantdan bittasi: tabiiy radio tugmalar, har birining ostida bir qatorli izoh. */
 export function ChoiceField<V extends string>({
   id,
   legend,

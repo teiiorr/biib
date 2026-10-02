@@ -8,10 +8,9 @@ interface HeroTitleProps {
 }
 
 /**
- * Nom serverda soʻzlarga boʻlinadi: har soʻz oʻz niqogʻi ostidan CSS bilan koʻtariladi (hero-enter),
- * JS kutilmaydi. aria-label butun nomni beradi, soʻz qutilari yordamchi texnologiyaga koʻrinmaydi
- * (SplitText aria: "auto" bilan bir xil). h1 hech qachon SplitText bilan boʻlinmaydi (§13.2).
- * data-text: koʻtariladigan oltin nusxa (::after) matni; DOM matni joyida qolib LCP boʻladi (motion.css).
+ * Nom serverda soʻzlarga boʻlinadi va har soʻz CSS bilan koʻtariladi, JS kutilmaydi. Toʻliq nom aria-label da,
+ * soʻz qutilari yordamchi texnologiyalardan yashirilgan. h1 hech qachon SplitText bilan boʻlinmaydi.
+ * data-text: koʻtariladigan oltin nusxa (::after) matni; DOM matni joyida qolib, LCP boʻladi (motion.css).
  */
 export function HeroTitle({ name }: HeroTitleProps) {
   const words = name.split(/\s+/).filter(Boolean);

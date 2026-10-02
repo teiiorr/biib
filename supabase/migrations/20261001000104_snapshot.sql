@@ -21,7 +21,7 @@ language sql stable set search_path = '' as $$
                  where p.news_id = n.id having count(*) > 0), '{}'::jsonb)
 $$;
 
--- Person: id = key (DOM id), qabul jadvali saqlanmaydi (egasi, 4-davra)
+-- Person: id = key (DOM id), qabul jadvali saqlanmaydi
 create function private.person_json(x public.people) returns jsonb
 language sql stable set search_path = '' as $$
   select jsonb_build_object(

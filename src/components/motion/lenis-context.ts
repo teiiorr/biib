@@ -2,7 +2,7 @@
 
 import type Lenis from "lenis";
 
-/** Yagona faol Lenis: kichik tashqi doʻkon, shunda provayder effektda setState chaqirmaydi. */
+/** Faol Lenis kichik tashqi doʻkonda turadi, shunda provayder effekt ichida setState chaqirmaydi. */
 let current: Lenis | null = null;
 const listeners = new Set<() => void>();
 

@@ -1,76 +1,79 @@
-# Bolalar Ijodkorligi Ijodiy Birlashmasi — sayt
+# Bolalar Ijodkorligi Ijodiy Birlashmasi sayti
 
-Birlashmaning rasmiy sayti. Next.js (App Router), TypeScript, Tailwind CSS 4, GSAP, Lenis.
-Beshta til, bitta dizayn (Atlas), faqat tungi mavzu.
+Birlashmaning rasmiy sayti. Next.js (App Router), TypeScript, Tailwind CSS 4, GSAP va Lenis asosida.
+Sayt beshta tilda, bitta dizaynda (Atlas) va faqat tungi mavzuda ishlaydi.
 
 ## Ishga tushirish
 
 ```bash
 pnpm install
-pnpm dev              # http://localhost:3000
+pnpm dev                   # http://localhost:3000
 pnpm build && pnpm start   # ishlab chiqarish yigʻmasi, port 3100
-pnpm verify:quick     # tur tekshiruvi, lint, imlo, gigiyena
-pnpm verify:full      # toʻliq tekshiruv: yigʻma, 70 sahifa, brauzer matritsasi
+pnpm verify:quick          # tiplar, lint, imlo va gigiyena
+pnpm verify:full           # toʻliq tekshiruv: yigʻma, 70 sahifa, brauzerlar matritsasi
 ```
 
-`pnpm build` ni dev server ishlab turganda ishga tushirmang.
+Dev server ishlab turganda `pnpm build` buyrugʻini ishga tushirmang.
 
 ## Tuzilma
 
 | Papka                     | Vazifasi                                                          |
 | ------------------------- | ----------------------------------------------------------------- |
-| `src/app`                 | Marshrutlar: `[locale]/…`. Faqat yupqa sahifa fayllari.           |
+| `src/app`                 | Marshrutlar (`[locale]/…`), faqat yupqa sahifa fayllari.          |
 | `src/components/ui`       | Tugma, matn, shakl maydonlari, jadval, ikonkalar.                 |
-| `src/components/glass`    | Boshqaruv qatlami materiali Oyna va koʻrinish paneli.             |
-| `src/components/motion`   | Harakat: GSAP sozlovi, Lenis, ochilishlar, sahifa oʻtishlari.     |
+| `src/components/glass`    | Boshqaruv qatlamining Oyna materiali va koʻrinish paneli.         |
+| `src/components/motion`   | GSAP sozlamalari, Lenis, ochilish va sahifa oʻtishlari.           |
 | `src/components/layout`   | Sarlavha, tab-bar, futer, boʻlim ramkalari.                       |
-| `src/components/sections` | Sahifalar boʻlimlari.                                             |
+| `src/components/sections` | Sahifa boʻlimlari.                                                |
 | `src/designs/atlas`       | Kechiktirib yuklanadigan badiiy qatlam (qahramon videosi).        |
 | `src/content`             | Kontent: loyihalar, yangiliklar, odamlar, hamkorlar, aloqa.       |
-| `src/i18n`                | Tillar, marshrut xaritasi, lugʻatlar, transliteratsiya.           |
-| `src/styles`              | Tokenlar (tungi mavzu), Tailwind mavzusi, materiallar.            |
+| `src/i18n`                | Tillar, marshrutlar xaritasi, lugʻatlar, transliteratsiya.        |
+| `src/styles`              | Tokenlar, Tailwind mavzusi, materiallar.                          |
 | `scripts`                 | Tekshiruv (`verify.mjs`), transliteratsiya, media, rasmlar.       |
 | `tests`                   | Playwright: marshrutlar, joylashuv, qulaylik, unumdorlik, vizual. |
 
 ## Tillar
 
-Beshta til: `uz` (lotin, joriy imlo), `oz` (kirill), `ozbekca` (2026 imlosi), `ru`, `en`.
-Interfeys matnlari `src/i18n/dictionaries/uz` da yoziladi, `ru` va `en` qoʻlda tarjima qilinadi,
-`oz` va `ozbekca` esa `pnpm translit` bilan yaratiladi. Qoʻlda tuzatishlar `oz/overrides.ts` va
-`ozbekca/overrides.ts` ga yoziladi, avtomatik fayllar tegilmaydi.
+Beshta til bor: `uz` (lotin, joriy imlo), `oz` (kirill), `ozbekca` (2026-yilgi imlo), `ru`, `en`.
+Interfeys matnlari `src/i18n/dictionaries/uz` papkasida yoziladi, `ru` va `en` qoʻlda tarjima
+qilinadi, `oz` va `ozbekca` esa `pnpm translit` buyrugʻi bilan yaratiladi. Qoʻlda kiritiladigan
+tuzatishlar `oz/overrides.ts` va `ozbekca/overrides.ts` fayllariga yoziladi, avtomatik yaratilgan
+fayllarga tegilmaydi.
 
-Imlo qoidasi: oʻ va gʻ da ʻ (U+02BB), tutuq belgisida ʼ (U+02BC). Oddiy apostrof taqiqlangan,
-tekshiruv uni ushlaydi.
+Imlo qoidasi: oʻ va gʻ harflarida ʻ (U+02BB), tutuq belgisida ʼ (U+02BC) ishlatiladi. Oddiy
+apostrof taqiqlangan, tekshiruv uni darhol topadi.
 
 ## Kontentni tahrirlash
 
-Kontent (loyiha, yangiliklar, odamlar, hamkorlar, aloqa, tarix, UPOP TREND galereyasi) Supabase
-maʼlumotlar bazasida, beshta tilda. Sayt uni bitta `content_snapshot()` soʻrovi bilan oʻqiydi.
-Har yozuvning `status` maydoni bor: `confirmed` (tashkilot tasdiqlagan), `draft` (qoralama),
-`pending` (fakt kutilmoqda). Tasdiqlanmagan sahifalar `noindex` bilan chiqadi va sitemapda sana
-daʼvo qilmaydi.
+Kontent (loyihalar, yangiliklar, odamlar, hamkorlar, aloqa, tarix, UPOP TREND galereyasi) beshta
+tilda Supabase maʼlumotlar bazasida saqlanadi. Sayt uni bitta `content_snapshot()` soʻrovi bilan
+oʻqiydi. Har bir yozuvda `status` maydoni bor: `confirmed` (tasdiqlangan), `draft` (qoralama),
+`pending` (maʼlumot kutilmoqda). Tasdiqlanmagan sahifalar `noindex` bilan chiqadi va sitemapda
+sanasi koʻrsatilmaydi.
 
-`src/content/snapshot.json` — bazaning repodagi nusxasi: zaxira manba (baza ishlamasa), tekshiruvlar
-(`verify`) va testlar faqat shuni oʻqiydi. Uni qoʻlda tahrirlamang:
+`src/content/snapshot.json` bazaning repodagi nusxasi. Baza ishlamay qolsa sayt shundan oʻqiydi,
+tekshiruvlar (`verify`) va testlar esa faqat shu nusxadan foydalanadi. Uni qoʻlda tahrirlamang:
 
 ```bash
-pnpm content:pull            # bazadan snapshot.json ni yangilaydi
-pnpm content:pull --check    # baza va nusxa aynan tengmi (farq boʻlsa roʻyxat va xato)
-pnpm content:seed            # nusxani bazaga yozadi (tiklash; maxfiy kalit faqat .env.local da)
+pnpm content:pull            # snapshot.json faylini bazadan yangilaydi
+pnpm content:pull --check    # baza va nusxa bir xilmi, farq boʻlsa roʻyxatini chiqarib xato beradi
+pnpm content:seed            # nusxani bazaga yozadi (tiklash uchun; maxfiy kalit faqat .env.local faylida)
 ```
 
-Sayt qaysi manbani oʻqishini `CONTENT_SOURCE` belgilaydi: `bundled` (standart, mahalliy va
-tekshiruvda) yoki `supabase` (Vercel). `supabase` rejimida `pnpm build` avval
-`scripts/cms/prefetch.mts` bilan bitta nusxani `.content-cache/` ga oladi va hamma sahifa shundan
-yigʻiladi; keyin sahifalar soatda bir marta (admin saqlaganda esa darhol) yangilanadi. Yuklangan
-rasmlar `/uploads/…` manzilida: avval `public/uploads`, boʻlmasa Supabase ochiq bucketi.
+Manbani `CONTENT_SOURCE` belgilaydi: `bundled` (standart, mahalliy ishlash va tekshiruv uchun) yoki
+`supabase` (Vercel). `supabase` rejimida `pnpm build` avval `scripts/cms/prefetch.mts` orqali
+kontentning bitta nusxasini `.content-cache/` papkasiga oladi va barcha sahifalar shu nusxadan
+yigʻiladi. Keyin sahifalar soatiga bir marta, admin panelda saqlanganda esa darhol yangilanadi.
+Yuklangan rasmlar `/uploads/…` manzilidan beriladi: avval `public/uploads` qidiriladi, topilmasa
+Supabase ochiq bucketidan olinadi.
 
-Surat va logotiplar `public/brand` ga qoʻyiladi va `scripts/images.mjs` roʻyxatiga qoʻshiladi
-(`node scripts/images.mjs` AVIF/WebP nusxalarni yaratadi); bolalar suratlari faqat ota-ona roziligi
-bilan.
+Surat va logotiplar `public/brand` papkasiga qoʻyiladi va `scripts/images.mjs` roʻyxatiga
+qoʻshiladi. AVIF va WebP nusxalarni `node scripts/images.mjs` yaratadi. Bolalar suratlari faqat
+ota-onaning roziligi bilan joylanadi.
 
 ## Muhit oʻzgaruvchilari
 
-`.env.example` ga qarang: `NEXT_PUBLIC_SITE_URL`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`,
-Supabase manzili va kalitlari, `CONTENT_SOURCE`, `CMS_BUILD_FALLBACK`. Telegram qiymatlari boʻlmasa aloqa shakli oʻrniga toʻgʻridan-toʻgʻri
-havola chiqadi. `SUPABASE_SERVICE_ROLE_KEY` faqat `.env.local` da turadi va Vercel ga qoʻyilmaydi.
+Roʻyxat `.env.example` faylida: `NEXT_PUBLIC_SITE_URL`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`,
+Supabase manzili va kalitlari, `CONTENT_SOURCE`, `CMS_BUILD_FALLBACK`. Telegram qiymatlari
+berilmasa, aloqa shakli oʻrnida Telegramga toʻgʻridan-toʻgʻri havola chiqadi.
+`SUPABASE_SERVICE_ROLE_KEY` faqat `.env.local` faylida turadi va Vercel sozlamalariga qoʻyilmaydi.

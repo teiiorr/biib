@@ -5,24 +5,20 @@ import { Heading, headingClass, type HeadingSize } from "@/components/ui/Heading
 import { cx } from "@/lib/cx";
 
 export interface SectionHeaderProps {
-  /** Sarlavha id si: boʻlim shu id orqali nomlanadi (Section labelledBy). */
+  /** Section shu id orqali aria-labelledby bilan nomlanadi. */
   readonly id: string;
   readonly title: string;
-  /** Sukut 2; ichki kichik boʻlim (masalan maxfiylik bandlari) uchun 3. */
+  /** Odatda 2; ichki kichik boʻlim (masalan, maxfiylik bandlari) uchun 3. */
   readonly level?: 2 | 3;
-  /** Sukut: daraja boʻyicha (2 → t-h1). Faqat tizim ichidagi oʻlcham beriladi. */
+  /** Berilmasa darajadan olinadi (2 → t-h1); faqat tizimdagi oʻlchamlar. */
   readonly size?: HeadingSize;
-  /** Sarlavha koʻrinishga kirganda soʻzma-soʻz koʻtariladi (split-lines). */
   readonly split?: boolean;
-  /** Sarlavha ostida oʻng tomonda turadigan harakatlar qatori (masalan «Barchasi»). */
+  /** Sarlavhadan keyin oʻngda turadigan harakatlar (masalan, «Barchasi»). */
   readonly actions?: ReactNode;
   readonly className?: string;
 }
 
-/**
- * Yagona boʻlim boshi: katta, markazdagi oltin sarlavha; ixtiyoriy harakatlar undan keyin oʻngda.
- * Sarlavha ostida tavsif yoʻq (egasining talabi). Pastki masofa 32 / 48 px (ui.css .section-header).
- */
+/** Markazdagi katta oltin sarlavha, ostida tavsif yoʻq. Pastki masofa 32 / 48 px (ui.css, .section-header). */
 export function SectionHeader({
   id,
   title,

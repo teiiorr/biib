@@ -1,7 +1,7 @@
 /**
- * Bosh sahifa qahramoni: egasining Higgsfield videosi (oltin kitob, bolalar, samolyotcha va yulduzlar
- * belgiga yigʻiladi), scripts/hero-video.mts chiqishi. Bir marta ijro etiladi: poster = 0-kadr (video
- * uning ustida sezilmay boshlanadi), end = oxirgi kadr (harakat oʻchiq yoki video hali kelmagan).
+ * Bosh sahifa qahramoni videosi (scripts/hero-video.mts chiqishi), bir marta ijro etiladi.
+ * poster 0-kadr, shunda video uning ustida sezilmay boshlanadi; end oxirgi kadr, harakat
+ * oʻchiq yoki video hali kelmagan boʻlsa koʻrinadi.
  */
 export interface HeroMediaVariant {
   readonly webm: string;
@@ -49,9 +49,9 @@ export interface LogoBox {
 }
 
 /**
- * Oxirgi kadrdagi oltin belgining oʻrni, kadrdan piksel boʻyicha oʻlchangan (2026-09-26): kompyuter
- * 1920×1080 — x 754…1157, y 245…649 (Ø 404); telefon 1080×1920 — markaz 0.4944 / 0.375, Ø 376.
- * Pastki chekka (cy + size/2): 0.6010 va 0.4729 — home.css dagi --hero-logo-bottom shu qiymatlar.
+ * Oxirgi kadrdagi oltin belgining oʻrni, kadrdan piksel boʻyicha oʻlchangan. Kompyuter 1920×1080:
+ * x 754…1157, y 245…649 (Ø 404); telefon 1080×1920: markaz 0.4944 / 0.375, Ø 376.
+ * home.css faylidagi --hero-logo-bottom pastki chekka bilan bir xil: 0.6010 va 0.4729.
  */
 export const HERO_LOGO_BOX = {
   landscape: { cx: 0.4977, cy: 0.4139, size: 0.3741 },

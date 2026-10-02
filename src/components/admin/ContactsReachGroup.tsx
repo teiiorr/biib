@@ -13,7 +13,6 @@ import type { OrgSectionProps } from "./useOrgEditor";
 
 const C = ORG_COPY.contacts;
 
-/** Telefonlar, elektron pochta va Telegram: har biri oʻz holati bilan. */
 export function ContactsReachGroup({
   draft,
   patch,

@@ -6,7 +6,7 @@ import type { RecordSaveState } from "@/lib/admin/record";
 import type { SaveTone } from "./SaveBar";
 
 interface SaveBarInput {
-  /* Yangilik, odam va hamkor javoblari bir xil tuzilmada: maʼlumot turi bu yerda ahamiyatsiz. */
+  /* Yangilik, odam va hamkor javoblari bir xil tuzilmada, maʼlumot turi bu yerda ahamiyatsiz. */
   readonly state: RecordSaveState<unknown>;
   readonly pending: boolean;
   readonly dirty: boolean;
@@ -17,7 +17,7 @@ interface SaveBarInput {
 
 const S = NEWS_COPY.save;
 
-/** Saqlash paneli holat qatori: bir vaqtda bittasi, muhimi birinchi. */
+/** Bir vaqtda bitta xabar chiqadi, eng muhimi birinchi tekshiriladi. */
 export function saveBarState(input: SaveBarInput): { message: string; tone: SaveTone } {
   const { state, pending, dirty, uploads, justSaved, errors } = input;
   if (pending) return { message: S.saving, tone: "neutral" };

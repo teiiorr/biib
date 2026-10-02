@@ -20,8 +20,8 @@ const input = z.object({
 });
 
 /**
- * Yuklash uchun imzoli manzil: brauzer faylni toʻgʻridan-toʻgʻri yopiq «originals» bucketiga qoʻyadi
- * (server amali orqali emas — ular navbat bilan ishlaydi, oʻnta surat bir-birini kutib qolardi).
+ * Brauzer faylni imzoli manzil orqali yopiq «originals» omboriga oʻzi yuklaydi: server amallari
+ * navbat bilan ishlaydi va oʻnta rasm bir-birini kutib qolardi.
  */
 export async function POST(request: Request): Promise<Response> {
   const session = await requireAdminRoute(request);

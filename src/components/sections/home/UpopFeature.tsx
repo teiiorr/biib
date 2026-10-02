@@ -25,11 +25,8 @@ interface UpopFeatureProps {
 }
 
 /**
- * UPOP TREND: bosh loyiha boʻlimi. Lojuvard maydonda tepada markazdagi sarlavha, ostida logotip
- * (1–5 ustun) va sahna halqasi 16:9 (6–12), keyin uchta teng dalil bir qatorda va oʻng chetda ikki
- * harakat. Telefonda hammasi ketma-ket. Maydon missiya lojuvardidan choksiz davom etadi.
- * Harakat (upop-scene) UpopMotion da: kompyuterda kadr butun sahnadan oʻz katagiga qoʻnadi, telefonda
- * ketma-ket ochiladi; DOM yakuniy holat.
+ * Maydon missiya lojuvardidan choksiz davom etadi. Harakat UpopMotion komponentida:
+ * DOM yakuniy holatda turadi, sahna kadrni oʻz katagiga olib keladi.
  */
 export async function UpopFeature({ locale, dict }: UpopFeatureProps) {
   const project = await getFlagship();

@@ -25,27 +25,27 @@ import { TapSound } from "@/lib/sound/TapSound";
 
 import "@/styles/globals.css";
 
-/* Fallback ochiq: aks holda ichki nomaʼlum yoʻllar ham global 404 ga tushadi (NoFallbackError).
-   Nomaʼlum til pastdagi notFound() bilan global 404 ga boradi. */
+/* dynamicParams yopilsa, ichki nomaʼlum yoʻllar ham global 404 sahifasiga tushadi (NoFallbackError).
+   Nomaʼlum til esa pastdagi notFound() orqali global 404 sahifasiga boradi. */
 export const dynamicParams = true;
 
-/* Kontent maʼlumotlar bazasidan: sahifalar soatda bir marta yangilanadi (saqlashdan keyin esa darhol,
-   cms tegi orqali). Qiymat literal boʻlishi shart; lib/cms/load.ts dagi bilan bir xil. */
+/* Sahifalar soatiga bir marta, admin saqlaganda esa cms tegi orqali darhol yangilanadi.
+   Qiymat literal boʻlishi shart va lib/cms/load.ts faylidagi qiymat bilan bir xil turadi. */
 export const revalidate = 3600;
 
-/* Segment darajasidagi opengraph-image fayllari sahifa metadatasidan oldin yigʻiladi: asos shu yerda
-   boʻlmasa ular localhost ga bogʻlanardi (yigʻishda va har 404 da ogohlantirish). */
+/* opengraph-image fayllari sahifa metadatasidan oldin yigʻiladi; asos shu yerda berilmasa, ular
+   localhost manziliga bogʻlanib, yigʻishda va har 404 sahifada ogohlantirish chiqaradi. */
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
 };
 
-/* viewport-fit=cover: tab-bar va sarlavha safe-area bilan ishlaydi. Qoʻlda <meta> qoʻyilsa Next oʻzinikini
-   ham chiqarardi va sahifada ikkita viewport boʻlardi. */
+/* viewport-fit=cover tab-bar va sarlavha safe-area bilan ishlashi uchun kerak. Qoʻlda <meta> qoʻyilsa,
+   Next oʻzinikini ham chiqaradi va sahifada ikkita viewport boʻlib qoladi. */
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  /* Sayt faqat tungi mavzuda (egasining talabi): brauzer panellari va aylantirgich ham qorongʻi. */
+  /* Sayt faqat tungi mavzuda, shuning uchun brauzer panellari va aylantirgich ham qorongʻi. */
   colorScheme: "dark",
   themeColor: "#0a1026",
 };
@@ -64,7 +64,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   if (!isLocale(locale)) notFound();
   const [dict, contacts] = await Promise.all([getLiveDictionary(locale), getContacts()]);
   const meta = LOCALE_META[locale];
-  /* Til toʻplamlari (≤4) sarlavhaga preload sifatida koʻchadi; JSX link ikki marta chiqar edi. */
+  /* Shrift toʻplamlari preload orqali <head> qismiga koʻchadi; JSX ichidagi link ikki marta chiqib qolardi. */
   for (const href of fontPreloads(locale)) {
     preload(href, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
   }
@@ -99,7 +99,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
             <TabBar locale={locale} nav={dict.nav} hints={dict.common.hints} />
           </MotionProvider>
         </AppearanceProvider>
-        {/* Xato va 404 sahifalari (mijoz komponentlari) matnni shu yerdan oʻqiydi: lugʻat JS ga kirmaydi. */}
+        {/* Xato va 404 sahifalari matnni shu yerdan oʻqiydi, shunda lugʻat mijoz JS boʻlagiga kirmaydi. */}
         <script
           id="biib-errors"
           type="application/json"

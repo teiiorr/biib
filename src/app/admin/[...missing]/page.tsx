@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-/* /admin ostidagi har qanday nomaʼlum yoʻl shu yerda tugaydi: [locale] ga yoki global 404 ga tushmaydi. */
+/* /admin ostidagi nomaʼlum yoʻl shu yerda qoladi, [locale] yoki global 404 sahifasiga tushmaydi. */
 export default function AdminMissingPage(): never {
   notFound();
 }

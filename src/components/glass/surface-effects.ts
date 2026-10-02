@@ -4,9 +4,8 @@ import { refractionMap } from "./refraction-cache";
 import { bezelWidth } from "./refraction-map";
 
 /*
- * Oyna sirtining qirra sinishi (Chromium). Birinchi chizish uchun kerak emas, shu sabab alohida chunk:
- * Surface uni boʻsh vaqtda ulaydi. React DOM ga faqat oʻzi qoʻymagan narsalar yoziladi (--surface-refract,
- * data-refract, filtr <svg>). Yaltiroq harakatlanuvchi nuqta yoʻq (egasining talabi: oq dogʻ yoʻq).
+ * Qirra sinishi (Chromium) birinchi chizishga kerak emas, shu sabab alohida chunk: Surface uni boʻsh
+ * vaqtda ulaydi. DOM ga faqat React qoʻymagan narsalar yoziladi (--surface-refract, data-refract, filtr).
  */
 
 const REDUCED_TRANSPARENCY = "(prefers-reduced-transparency: reduce)";
@@ -20,7 +19,7 @@ let supportCache: boolean | null = null;
 
 /**
  * Orqa fon piksellarini JS oʻqiy olmaydi, shu sabab dvigatel boʻyicha aniqlanadi.
- * Safari backdrop-filter ichida SVG filtrni qoʻllamaydi: unga sinishsiz variant.
+ * Safari backdrop-filter ichida SVG filtrni qoʻllamaydi, unga sinishsiz variant.
  */
 function refractionSupported(): boolean {
   if (supportCache !== null) return supportCache;
@@ -52,13 +51,12 @@ function quantize(value: number): number {
 
 let filterCount = 0;
 
-/* Siljish qirra kengligiga nisbatan (egasining talabi: oyna yana kuchliroq): Zichlik 0 da 1.8 qirra,
-   50 da 3.9, 100 da 6 (qalin muz, chetda tasvir linzadagi kabi aniq egiladi). feDisplacementMap eng
-   koʻpi scale / 2 suradi. */
+/* Siljish qirra kengligiga nisbatan: Zichlik 0 da 1.8 qirra, 50 da 3.9, 100 da 6 (qalin muzdagidek
+   chetda tasvir aniq egiladi). feDisplacementMap eng koʻpi scale / 2 ga suradi. */
 const REFRACT_BASE = 1.8;
 const REFRACT_RANGE = 4.2;
 
-/** Har sirt uchun alohida filtr: xarita oʻsha sirt oʻlchamidan chizilgan, kuchi Zichlikdan. */
+/** Xarita sirt oʻlchamidan chiziladi, shu sabab har sirtga alohida filtr. */
 function mountRefraction(element: HTMLElement): () => void {
   if (!refractionSupported()) return () => undefined;
   const reduced = window.matchMedia(REDUCED_TRANSPARENCY);
@@ -124,7 +122,7 @@ function mountRefraction(element: HTMLElement): () => void {
     if (rect.width === 0 || rect.height === 0) return;
     const width = quantize(rect.width);
     const height = quantize(rect.height);
-    // Doira tugmada radius foizda (50%): pikselga oʻtkaziladi va yarim tomondan oshmaydi.
+    // Doira tugmada radius foizda (50%), xarita esa piksel kutadi.
     const raw = getComputedStyle(element).borderTopLeftRadius;
     const value = Number.parseFloat(raw) || 0;
     const short = Math.min(rect.width, rect.height);
@@ -137,7 +135,7 @@ function mountRefraction(element: HTMLElement): () => void {
     bezel = bezelWidth(width, height);
     setScale();
     void refractionMap(width, height, radius).then((next) => {
-      // Oʻlcham yana oʻzgargan boʻlsa eski xarita qoʻyilmaydi.
+      // Kutish paytida oʻlcham yana oʻzgargan boʻlsa, eskirgan xarita qoʻyilmaydi.
       if (cancelled || lastKey !== key) return;
       href = next;
       render();

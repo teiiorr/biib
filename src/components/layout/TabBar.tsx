@@ -17,7 +17,7 @@ import { isMenuPage } from "./MenuTrigger";
 
 interface TabBarProps {
   readonly locale: Locale;
-  /* Butun lugʻat emas, faqat kerakli boʻlimlar: RSC yukiga ortiqcha matn kirmaydi. */
+  /* Lugʻatning faqat kerakli qismi uzatiladi, aks holda RSC yukiga ortiqcha matn qoʻshiladi. */
   readonly nav: Dictionary["nav"];
   readonly hints: Dictionary["common"]["hints"];
 }
@@ -31,7 +31,7 @@ const TABS: ReadonlyArray<{ key: TabKey; icon: IconName }> = [
   { key: "contacts", icon: "contact" },
 ];
 
-/** Tab yorligʻi qisqa («Bosh», «UPOP»): 320 px da ham toʻliq sigʻadi; toʻliq nom aria-label da. */
+/** Yorliq qisqa («Bosh», «UPOP»), 320 px ekranga ham sigʻadi; toʻliq nom aria-label orqali beriladi. */
 function tabLabel(nav: Dictionary["nav"], key: TabKey): string {
   if (key === "home") return nav.tabShort.home;
   if (key === "projects") return nav.tabShort.projects;
@@ -39,9 +39,8 @@ function tabLabel(nav: Dictionary["nav"], key: TabKey): string {
 }
 
 /**
- * Suzuvchi tab-bar: pastga aylantirganda joriy belgili kichik kapsulaga yigʻiladi,
- * yuqoriga aylantirganda yoki bosilganda yoyiladi. Linza tanlangan band ostida suriladi.
- * Menyu varagʻidagi sahifalarda «Menyu» faol, xaritada yoʻq yoʻlda (404) hech biri.
+ * Pastga skroll qilinganda panel joriy belgili kichik kapsulaga yigʻiladi, yuqoriga qilinganda yoki bosilganda yoyiladi.
+ * Menyu varagʻidagi sahifalarda «Menyu» faol, 404 sahifasida hech biri faol emas.
  */
 export function TabBar({ locale, nav, hints }: TabBarProps) {
   const pathname = usePathname();

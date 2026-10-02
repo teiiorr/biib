@@ -1,9 +1,9 @@
-/* Egasining talabi: yozuv hech qachon oʻzgarmaydi — har tilda va har mavzuda aynan shu ikki qator. */
+/* Yozuv hech qachon tarjima qilinmaydi: har tilda va har mavzuda aynan shu ikki qator. */
 const WORDMARK = ["BOLALAR IJODKORLIGI", "IJODIY BIRLASHMASI"] as const;
 
 /**
- * Brend yozuvi (ikki qator, lotin). Ekran oʻquvchisidan yashirin: nom joriy tilda sr-only matnda beriladi.
- * Hooksiz: sarlavhadagi mijoz belgisi ham, global 404 server hujjati ham shu bitta nusxani ishlatadi.
+ * Ekran oʻquvchidan yashirin, nom joriy tilda sr-only matnda beriladi. Hook ishlatilmaydi: mijozdagi
+ * sarlavha ham, server chizadigan global 404 ham shu bitta nusxadan foydalanadi.
  */
 export function BrandName() {
   return (

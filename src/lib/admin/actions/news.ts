@@ -33,10 +33,7 @@ function failure(revision: number, code: string | undefined): SaveNewsState {
   return { status: "error", revision, message };
 }
 
-/**
- * Yangilikni saqlash: tuzilma (zod) → meʼyorlash va tekshiruv (build.ts) → eskirganlik → admin_save_news
- * → sahifalar darhol yangilanadi. Yangi yozuv saqlangach oʻz tahrir sahifasiga oʻtiladi.
- */
+/** Eskirgan yozuv saqlanmaydi. Yangi yozuv saqlangach oʻz tahrir sahifasiga oʻtiladi. */
 export async function saveNews(prev: SaveNewsState, formData: FormData): Promise<SaveNewsState> {
   const session = await requireAdminAction();
   const revision = prev.revision + 1;

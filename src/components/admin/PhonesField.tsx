@@ -14,7 +14,7 @@ import { AdminIcon } from "./AdminIcon";
 import { ReorderButtons } from "./ReorderButtons";
 
 interface PhonesFieldProps {
-  /** Id lar xato kalitlari bilan bir xil: phone-N maydonlar, phones-add qoʻshish tugmasi. */
+  /** id qiymatlari xato kalitlari bilan bir xil: phone-N maydonlar va phones-add tugmasi. */
   readonly idFor: (field: string) => string;
   readonly value: readonly string[];
   readonly onChange: (next: readonly string[]) => void;
@@ -24,8 +24,8 @@ interface PhonesFieldProps {
 const C = ORG_COPY.contacts;
 
 /**
- * Telefonlar roʻyxati: har biri alohida maydon, maydondan chiqqanda «+998 XX XXX XX XX» ga keltiriladi.
- * Tartib saytdagi tartib (birinchisi sayt pastida): oldinga va orqaga tugmalari, olib tashlash.
+ * Maydondan chiqqanda raqam «+998 XX XXX XX XX» koʻrinishiga keltiriladi. Birinchi raqam sayt
+ * futerida chiqadi.
  */
 export function PhonesField({ idFor, value, onChange, errors }: PhonesFieldProps) {
   const [announcement, setAnnouncement] = useState("");

@@ -109,7 +109,7 @@ export const galleryPayload = z.object({
   version,
 });
 
-/** Yashirin maydondagi JSON: buzilgan yoki begona shakl — null. */
+/** Yashirin maydondagi JSON buzilgan yoki begona shaklda boʻlsa null. */
 export function readPayload<T>(schema: z.ZodType<T>, formData: FormData): T | null {
   try {
     const parsed = schema.safeParse(JSON.parse(String(formData.get("payload") ?? "")));

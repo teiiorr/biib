@@ -8,7 +8,7 @@ export const DESKTOP_QUERY = "(min-width: 1024px)";
 
 type Subscribe = (listener: () => void) => () => void;
 
-/* Har renderda yangi obuna funksiyasi yaratilsa, useSyncExternalStore qayta obuna boʻlaverardi. */
+/* Har chizishda yangi obuna funksiyasi yaratilsa, useSyncExternalStore qayta-qayta obuna boʻlardi. */
 const subscribers = new Map<string, Subscribe>();
 
 function subscribe(query: string): Subscribe {

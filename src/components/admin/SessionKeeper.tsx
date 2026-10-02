@@ -4,15 +4,12 @@ import { startTransition, useEffect } from "react";
 
 import { keepSession } from "@/lib/admin/actions/auth";
 
-/* Kirish tokeni 60 daqiqa yashaydi: 45 daqiqada bir yangilanadi, uzun tahrir yarmida uzilmaydi. */
+/* Token 60 daqiqa yashaydi: 45 daqiqada yangilansa, uzun tahrir yarmida sessiya uzilmaydi. */
 const INTERVAL_MS = 45 * 60 * 1000;
-/* Oynaga qaytilganda tez-tez almashinuv har safar serverga bormasin. */
+/* Oynalar orasida tez-tez almashilganda har safar serverga soʻrov ketmasin. */
 const MIN_GAP_MS = 60 * 1000;
 
-/**
- * Ochiq panelning sessiyasini ushlab turadi. Server amali token tugashiga oz qolganda uni yangilaydi,
- * aks holda hech narsa yozmaydi (sahifa qayta chizilmaydi). Hech narsa chizmaydi.
- */
+/** Token faqat tugashiga oz qolganda yangilanadi, aks holda server hech narsa yozmaydi va sahifa qayta chizilmaydi. */
 export function SessionKeeper(): null {
   useEffect(() => {
     let last = Date.now();

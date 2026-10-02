@@ -11,13 +11,13 @@ const OPTIONS: readonly SelectOption<ContentStatus>[] = (
 
 interface StatusSelectProps {
   readonly id: string;
-  /** Qaysi maydonning holati: yorliq «Manzil: holati». Berilmasa «Holati» (qator oʻz guruhida). */
+  /** Berilsa yorliq «Manzil: holati», aks holda «Holati» (qator oʻz guruhida turadi). */
   readonly field?: string;
   readonly value: ContentStatus;
   readonly onChange: (status: ContentStatus) => void;
 }
 
-/** Bitta maydon holati: ixcham tanlash roʻyxati (uchta radio har maydon ostida juda koʻp joy olardi). */
+/** Tanlash roʻyxati: har maydon ostidagi uchta radio juda koʻp joy olardi. */
 export function StatusSelect({ id, field, value, onChange }: StatusSelectProps) {
   return (
     <NativeSelect

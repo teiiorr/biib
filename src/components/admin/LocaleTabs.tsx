@@ -6,13 +6,12 @@ import { LOCALE_META, LOCALES, type Locale } from "@/i18n/locales";
 
 export interface LocaleTabItem {
   readonly locale: Locale;
-  /** Toʻldirilganmi: nuqta toʻla yoki boʻsh. */
   readonly complete: boolean;
   readonly invalid: boolean;
 }
 
 interface LocaleTabsProps {
-  /** Tab va panel id lari: `${id}-tab-${til}`, `${id}-panel-${til}`. */
+  /** Tab va panel id qiymatlari: `${id}-tab-${til}`, `${id}-panel-${til}`. */
   readonly id: string;
   readonly label: string;
   readonly emptyLabel: string;
@@ -21,10 +20,7 @@ interface LocaleTabsProps {
   readonly onSelect: (locale: Locale) => void;
 }
 
-/**
- * Til tablari: qisqa kod (UZ, ЎЗ …) va toʻliqlik nuqtasi. Klaviatura: chap/oʻng, Home, End — fokus
- * bilan birga tab ham tanlanadi (roving tabindex).
- */
+/** Chap va oʻng strelka, Home va End bilan fokus koʻchganda tab ham tanlanadi (roving tabindex). */
 export function LocaleTabs({ id, label, emptyLabel, active, items, onSelect }: LocaleTabsProps) {
   function move(event: KeyboardEvent<HTMLButtonElement>): void {
     const index = LOCALES.indexOf(active);

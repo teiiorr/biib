@@ -16,20 +16,20 @@ const ITEMS_XIV = [
   "Kapsula (pill) badge/teg yoʻq; «Trusted by» logotip devori yoʻq; oʻylab topilgan odamlar bilan testimonial karusel yoʻq.",
   'Lorem, «Coming soon», oʻlik havola, href="#" yoʻq (pending kontent uchun dizayn qilingan oʻrinbosar bundan mustasno).',
   "Tashkilot, odamlar va hamkorlar haqida oʻylab topilgan faktlar yoʻq.",
-  "Qahramon boʻlimida serif kursiv urgʻu soʻzi yoʻq; bir ekranda bitta maqsadga ikki CTA yoʻq (Art. XV).",
+  "Qahramon boʻlimida serif kursiv urgʻu soʻzi yoʻq; bir ekranda bitta maqsadga ikki CTA yoʻq.",
 ];
 
-/** G9 uchun inson koʻrigi roʻyxati: greplar tutolmaydigan bandlar. */
+/** Grep tutolmaydigan bandlar uchun qoʻlda koʻrib chiqish roʻyxati. */
 export function writeChecklist(mode) {
   const lines = [
     "# Anti-slop koʻrik roʻyxati · docs/qa/anti-slop-checklist.md",
     "",
     `Yangilangan: ${new Date().toISOString()} (${mode}). Avtomatik greplar G0/G9 da; quyidagilar inson koʻrigi uchun.`,
     "",
-    "## §8 Art. X · Kartalar va kontent bloklari",
+    "## Kartalar va kontent bloklari",
     ...ITEMS_X.map((item) => `- [ ] ${item}`),
     "",
-    "## §8 Art. XIV · Taqiqlar",
+    "## Taqiqlar",
     ...ITEMS_XIV.map((item) => `- [ ] ${item}`),
     "",
     "## Klishelar (grep bilan tekshiriladi)",

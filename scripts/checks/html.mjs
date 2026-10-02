@@ -1,4 +1,4 @@
-/* Olingan HTML dan SEO belgilarini ajratish: DOM emas, chidamli regexlar. */
+/* SEO belgilari HTML matnidan DOM tahlilchisiz, chidamli regexlar bilan olinadi. */
 const decode = (text) =>
   text
     .replace(/&amp;/g, "&")
@@ -74,7 +74,7 @@ export function pathOf(url) {
   }
 }
 
-/** Sahifadagi absolyut manzil ishlab chiqarish domenida boʻladi; lokal serverga qayta yoʻnaltiriladi. */
+/** Sahifadagi absolyut manzillar ishlab chiqarish domeniga qaraydi, tekshiruvda ular lokal serverga buriladi. */
 export function toLocal(url, baseUrl) {
   try {
     const u = new URL(url);
@@ -95,7 +95,7 @@ export async function fetchText(url, options = {}) {
   };
 }
 
-/* Chegaralangan parallel bajarish: 70 sahifa uchun serverni bosib qoʻymaslik. */
+/* Parallellik cheklanadi, aks holda 70 sahifa soʻrovi serverni bosib qoʻyadi. */
 export async function mapLimit(items, limit, fn) {
   const results = new Array(items.length);
   let next = 0;

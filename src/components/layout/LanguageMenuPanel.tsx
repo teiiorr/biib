@@ -15,7 +15,7 @@ export interface LanguageMenuPanelProps extends LanguageMenuProps {
   readonly focusTrigger: boolean;
 }
 
-/** Til almashtirgich menyusi: shu sahifa va slugni saqlaydi; har band oʻz tilini eʼlon qiladi. */
+/** Til almashganda sahifa va maqola manzili saqlanadi; har band oʻz tilini lang orqali bildiradi. */
 export default function LanguageMenuPanel({
   locale,
   dict,

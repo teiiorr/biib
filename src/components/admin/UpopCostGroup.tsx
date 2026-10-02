@@ -15,7 +15,6 @@ const OPTIONS: readonly ChoiceOption<CostChoice>[] = (["free", "paid", "unknown"
   (value) => ({ value, label: P.costOptions[value], hint: P.costHints[value] }),
 );
 
-/** Ishtirok narxi va uning holati. */
 export function UpopCostGroup({ draft, patch, idFor }: OrgSectionProps<ProjectDraft>) {
   return (
     <FieldGroup id={idFor("cost-group")} title={P.groups.cost}>

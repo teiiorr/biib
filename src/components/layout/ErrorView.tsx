@@ -9,10 +9,7 @@ interface ErrorViewProps {
   readonly actions: ReactNode;
 }
 
-/**
- * 404 va xato sahifalari: bezaksiz tipografik tuzilma — markazda katta oltin sarlavha, ostida tavsif
- * yoʻq (egasining talabi), harakatlar chiziq ustida oʻngda (tugmalar qatori butun saytda oʻng tomonda).
- */
+/** Harakatlar oʻng tomonda: saytdagi barcha tugmalar qatori shu tartibda. */
 export function ErrorView({ title, actions }: ErrorViewProps) {
   return (
     <Container className="error-view">

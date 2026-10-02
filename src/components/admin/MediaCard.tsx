@@ -30,9 +30,8 @@ interface MediaCardProps {
 }
 
 /**
- * Bitta fayl: rasm (video uchun belgi), nomi, oʻlchami va ishlatilishi. Oʻchirish tugmasi faqat
- * ishlatilmagan yuklangan faylda: qolganida sababni teglar aytadi («N joyda ishlatilgan», «Kodda»),
- * oʻchiq tugmalar toʻri esa shovqin boʻlardi.
+ * Oʻchirish tugmasi faqat ishlatilmagan yuklangan faylda: qolganlarida sababni teglar aytadi, oʻchiq
+ * tugmalar toʻri esa shovqin boʻlardi.
  */
 export function MediaCard({ item, onDelete }: MediaCardProps) {
   const removable = item.origin === "storage" && item.uses === 0;

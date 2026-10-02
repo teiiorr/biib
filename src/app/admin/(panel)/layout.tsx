@@ -9,11 +9,9 @@ interface PanelLayoutProps {
 }
 
 /**
- * Qobiq faqat tekshirilgan sessiya bilan chiziladi. Yoʻnaltirishni esa sahifa qiladi (requireAdmin):
- * layout yoʻlni bilmaydi va navigatsiyada qayta chizilmaydi, sahifa esa oʻz yoʻlini «next» ga qoʻyadi —
- * muddati oʻtgan sessiyadan keyin aynan oʻsha sahifaga qaytiladi. Sessiyasiz sahifa qobiqsiz, lekin
- * daraxtda qoladi: uning yoʻnaltirishi birinchi baytdan oldin tushadi va javob 307 boʻladi (oqimdagi
- * mijoz yoʻnaltirishi emas). Tekshiruv soʻrov ichida bir marta (React cache).
+ * Qobiq faqat tekshirilgan sessiya bilan chiziladi, yoʻnaltirishni esa sahifa qiladi: layout yoʻlni
+ * bilmaydi, sahifa esa oʻz yoʻlini «next» parametriga yozadi va sessiya tugagach unga qaytiladi.
+ * Sessiyasiz sahifa daraxtda qoladi, shunda yoʻnaltirish oqim boshlanmasdan 307 javobi boʻlib tushadi.
  */
 export default async function PanelLayout({ children }: PanelLayoutProps) {
   if (!(await getAdminSession())) return children;

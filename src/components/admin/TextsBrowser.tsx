@@ -20,7 +20,7 @@ interface TextsBrowserProps {
 }
 
 const T = SYSTEM_COPY.texts;
-/* Sahifalar tartibida, keyin SEO va butun saytdagi umumiy qismlar. */
+/* Avval sahifalar tartibida, keyin SEO va butun saytdagi umumiy qismlar. */
 const ORDER = [
   "home",
   "about",
@@ -44,7 +44,7 @@ function rank(namespace: string): number {
   return index < 0 ? ORDER.length : index;
 }
 
-/* Qidiruv manzilda ham turadi: tahrirdan orqaga qaytganda roʻyxat oʻsha holatda ochiladi. */
+/* Tahrirdan orqaga qaytganda roʻyxat oʻsha qidiruv bilan ochilishi uchun. */
 function rememberQuery(value: string): void {
   try {
     const url = new URL(window.location.href);
@@ -56,10 +56,7 @@ function rememberQuery(value: string): void {
   }
 }
 
-/**
- * Lugʻat kalitlari daraxti: boʻlimlar yigʻiladigan guruhlar, qidiruv kalit va besh tildagi matn
- * boʻyicha. Qidirilganda yoki faqat oʻzgartirilganlar tanlanganda hamma guruh ochiq.
- */
+/** Qidiruv yoki «faqat oʻzgartirilganlar» tanlanganda hamma guruh ochiq turadi. */
 export function TextsBrowser({ rows, initialQuery }: TextsBrowserProps) {
   const [query, setQuery] = useState(initialQuery);
   const [onlyChanged, setOnlyChanged] = useState(false);

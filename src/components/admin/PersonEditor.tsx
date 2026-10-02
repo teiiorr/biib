@@ -25,7 +25,7 @@ export interface PersonEditorProps {
   readonly kind: PersonKind;
   /** null: yangi odam. */
   readonly id: string | null;
-  /** Saytdagi karta kaliti (saqlangan odamda): «Saytda koʻrish» shu joyga olib boradi. */
+  /** Saytdagi karta kaliti: «Saytda koʻrish» shu joyga olib boradi. */
   readonly personKey: string | null;
   readonly initial: PersonDraft;
   readonly updatedAt: string | null;
@@ -36,7 +36,6 @@ export interface PersonEditorProps {
 const T = PEOPLE_COPY.editor;
 const FIELD_ORDER = ["name", "role", "field", "bio", "email"] as const;
 
-/** Rahbar yoki ekspert: chapda holat va besh tilli matnlar, oʻngda portret; pastda saqlash paneli. */
 export function PersonEditor({
   kind,
   id,

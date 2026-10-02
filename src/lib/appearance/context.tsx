@@ -66,7 +66,7 @@ export function AppearanceProvider({ children }: { readonly children: ReactNode 
   return <AppearanceContext.Provider value={value}>{children}</AppearanceContext.Provider>;
 }
 
-/** Provider boʻlmasa ham ishlaydi: doʻkon modul darajasida, kontekst faqat qulaylik. */
+/** Provider boʻlmasa ham ishlaydi: doʻkon modul darajasida, kontekst faqat qulaylik uchun. */
 export function useAppearance(): AppearanceValue {
   const fromContext = useContext(AppearanceContext);
   const direct = useAppearanceValue();
